@@ -6517,10 +6517,15 @@ document.addEventListener("DOMContentLoaded", function () {
    3) Aktifkan App Check jika sudah production.
    4) Bila model error, ganti AI_MODEL di bawah sesuai model yang tersedia di console.
 ============================================================ */
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAI, getGenerativeModel, GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-ai.js";
+import { initializeApp, getApps, getApp } from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { initializeAppCheck, ReCaptchaEnterpriseProvider } from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-app-check.js";
+import { getAI, getGenerativeModel, GoogleAIBackend } from
+"https://www.gstatic.com/firebasejs/12.3.0/firebase-ai.js";
 
 const AI_MODEL = "gemini-3.5-flash";
+const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LdleDEtAAAAAMzV6NFUP_bRnMSrYYJPMKzZiu8N";
 const FIREBASE_CONFIG_AI = {
   apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
   authDomain: 'tyniverse-5a3b2.firebaseapp.com',
@@ -6540,7 +6545,16 @@ async function getModel() {
   if (!modelPromise) {
     modelPromise = Promise.resolve().then(function () {
       const app = getApps().length ? getApp() : initializeApp(FIREBASE_CONFIG_AI);
-      const ai = getAI(app, { backend: new GoogleAIBackend() });
+
+initializeAppCheck(app, {
+  provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
+  isTokenAutoRefreshEnabled: true
+});
+
+const ai = getAI(app, {
+  backend: new GoogleAIBackend(),
+  useLimitedUseAppCheckTokens: true
+});
       return getGenerativeModel(ai, {
         model: AI_MODEL,
         systemInstruction: "Anda adalah asisten penulisan untuk aplikasi Tyniverse, alat bantu edukasi klinis anak. Jawab dalam Bahasa Indonesia yang jelas, ringkas, aman, dan selalu ingatkan bahwa keputusan klinis tetap oleh tenaga kesehatan profesional. Jangan membuat diagnosis pasti tanpa konteks klinis lengkap."
