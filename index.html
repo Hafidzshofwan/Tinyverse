@@ -1235,6 +1235,53 @@
     .tk-cdc-value { text-align: left; }
   }
 
+  .tk-cdc-materi {
+    margin-top: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(234,251,241,0.92));
+    border: 1px solid rgba(78,174,46,0.22);
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+  .tk-cdc-materi-title {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--hijau-tua);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .tk-cdc-materi h4 {
+    font-size: 0.82rem;
+    color: var(--biru-tua);
+    margin: 10px 0 5px;
+  }
+  .tk-cdc-materi ul { padding-left: 18px; margin: 4px 0; }
+  .tk-cdc-materi li { margin: 3px 0; }
+  .tk-cdc-materi .tk-cdc-grid-kriteria {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .tk-cdc-materi .tk-cdc-kriteria-box {
+    background: rgba(255,255,255,0.75);
+    border-radius: 12px;
+    padding: 9px;
+    border: 1px dashed rgba(43,169,214,0.22);
+  }
+  .tk-cdc-materi .tk-cdc-kriteria-box strong { color: var(--teks); }
+  .tk-cdc-materi-note {
+    margin-top: 10px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    background: rgba(255, 197, 41, 0.14);
+    font-weight: 700;
+  }
+  @media (max-width: 720px) {
+    .tk-cdc-materi .tk-cdc-grid-kriteria { grid-template-columns: 1fr; }
+  }
+
   /* ===== TUMBUH KEMBANG: WIZARD PEMILIHAN CHART ===== */
   .tk-stepper {
     display: flex;
@@ -5465,8 +5512,8 @@ function tkWarnaIndikatorWho(ind) {
    Untuk interpretasi numerik ringkas di web ini:
    - BB/U dan TB/U ditampilkan sebagai estimasi posisi persentil
      berdasarkan rasio terhadap median/P50 CDC yang diinterpolasi.
-   - BB/TB memakai rumus: BB aktual / BB standar P50 untuk tinggi
-     badan tersebut × 100% (Waterlow / percent ideal body weight).
+   - BB/TB memakai rumus: BB aktual / BB ideal berdasarkan tinggi
+     pada median/P50 × 100% (Waterlow / percent ideal body weight).
    Catatan: ini alat skrining, bukan pengganti penilaian klinis.
 ============================================================ */
 const TK_CDC_P50 = {
@@ -5501,26 +5548,55 @@ function tkCdcMedianByAge(kelamin, field, usiaBulan) {
   return tkInterpLinear(ref.age, ref[field], usiaBulan);
 }
 
-function tkCdcMedianWeightForHeight(kelamin, tinggiCm) {
+function tkCdcCariUsiaTinggiDariP50(kelamin, tinggiCm) {
   const ref = TK_CDC_P50[kelamin];
-  if (!ref) return null;
-  // Median BB/TB diestimasi dari kurva P50 berat-umur dan tinggi-umur CDC.
-  return tkInterpLinear(ref.height, ref.weight, tinggiCm);
+  if (!ref || !isFinite(tinggiCm)) return null;
+  const h = ref.height;
+  const age = ref.age;
+  if (!Array.isArray(h) || !Array.isArray(age) || h.length !== age.length) return null;
+
+  let diLuarRentang = false;
+  if (tinggiCm <= h[0]) { diLuarRentang = true; return { usiaTinggi: age[0], diLuarRentang }; }
+  if (tinggiCm >= h[h.length - 1]) { diLuarRentang = true; return { usiaTinggi: age[age.length - 1], diLuarRentang }; }
+
+  for (let i = 0; i < h.length - 1; i++) {
+    if (tinggiCm >= h[i] && tinggiCm <= h[i + 1]) {
+      const f = (tinggiCm - h[i]) / (h[i + 1] - h[i]);
+      return { usiaTinggi: age[i] + f * (age[i + 1] - age[i]), diLuarRentang };
+    }
+  }
+  return null;
+}
+
+function tkCdcBbIdealBerdasarkanTinggi(kelamin, tinggiCm) {
+  const ref = TK_CDC_P50[kelamin];
+  const usiaObj = tkCdcCariUsiaTinggiDariP50(kelamin, tinggiCm);
+  if (!ref || !usiaObj) return null;
+
+  // Cara CDC/Waterlow sesuai alur grafik:
+  // 1) TB aktual dicari pada median TB/U (P50) untuk mendapatkan "usia tinggi".
+  // 2) Dari usia tinggi tersebut, ambil BB pada median BB/U (P50).
+  // 3) BB/TB % median = BB aktual / BB ideal P50 berdasarkan tinggi × 100%.
+  const bbIdeal = tkInterpLinear(ref.age, ref.weight, usiaObj.usiaTinggi);
+  const tbMedianDiUsiaTinggi = tkInterpLinear(ref.age, ref.height, usiaObj.usiaTinggi);
+  if (!bbIdeal) return null;
+  return { bbIdeal, usiaTinggi: usiaObj.usiaTinggi, tbMedianDiUsiaTinggi, diLuarRentang: usiaObj.diLuarRentang };
 }
 
 function tkCdcKategoriPercentMedian(indikator, persenMedian) {
-  let status = "", color = "#1A7A1A", posisi = "sekitar P50";
+  let status = "", color = "#1A7A1A", posisi = "% terhadap median/P50";
   if (indikator === "bbu") {
-    if (persenMedian < 75)      { posisi = "sangat rendah, kira-kira <P3"; status = "BB/U sangat rendah"; color = "#B22222"; }
-    else if (persenMedian < 85) { posisi = "rendah, kira-kira P3–P5"; status = "BB/U rendah"; color = "#E06000"; }
-    else if (persenMedian < 90) { posisi = "di bawah rata-rata, kira-kira P5–P10"; status = "BB/U perlu dipantau"; color = "#D98B00"; }
-    else if (persenMedian <= 110) { posisi = "sekitar P10–P90"; status = "BB/U sesuai rentang umum"; color = "#1A7A1A"; }
-    else if (persenMedian <= 120) { posisi = "tinggi, kira-kira P90–P95"; status = "BB/U tinggi"; color = "#D98B00"; }
-    else { posisi = "sangat tinggi, kira-kira >P95"; status = "BB/U sangat tinggi"; color = "#E06000"; }
+    // BB/U berdasarkan % median: <60 gizi buruk; 60–80 gizi kurang; 80–120 gizi baik.
+    if (persenMedian < 60)       { posisi = "<60% dari P50"; status = "Gizi buruk menurut BB/U"; color = "#B22222"; }
+    else if (persenMedian < 80)  { posisi = "60–80% dari P50"; status = "Gizi kurang menurut BB/U"; color = "#E06000"; }
+    else if (persenMedian <= 120){ posisi = "80–120% dari P50"; status = "Gizi baik menurut BB/U"; color = "#1A7A1A"; }
+    else                         { posisi = ">120% dari P50"; status = "BB/U di atas rentang gizi baik"; color = "#D98B00"; }
   } else if (indikator === "tbu") {
-    if (persenMedian < 95)      { posisi = "rendah, kira-kira <P5"; status = "TB/U pendek / perlu evaluasi"; color = "#E06000"; }
-    else if (persenMedian <= 105) { posisi = "sekitar P5–P95"; status = "TB/U sesuai rentang umum"; color = "#1A7A1A"; }
-    else { posisi = "tinggi, kira-kira >P95"; status = "TB/U tinggi"; color = "#1565C0"; }
+    // TB/U berdasarkan % median: <70 sangat kurang; 70–90 kurang; 90–110 normal/baik.
+    if (persenMedian < 70)       { posisi = "<70% dari P50"; status = "Tinggi badan sangat kurang"; color = "#B22222"; }
+    else if (persenMedian < 90)  { posisi = "70–90% dari P50"; status = "Tinggi badan kurang"; color = "#E06000"; }
+    else if (persenMedian <= 110){ posisi = "90–110% dari P50"; status = "Tinggi badan normal/baik"; color = "#1A7A1A"; }
+    else                         { posisi = ">110% dari P50"; status = "Tinggi badan di atas rentang normal/baik"; color = "#1565C0"; }
   }
   return { posisi, status, color };
 }
@@ -5538,27 +5614,78 @@ function tkInterpretasiCdcPercentile(kelamin, indikator, usiaBulan, nilai) {
 
 function tkInterpretasiCdcBbtb(kelamin, beratKg, tinggiCm) {
   if (!isFinite(beratKg) || !isFinite(tinggiCm)) return null;
-  const standar = tkCdcMedianWeightForHeight(kelamin, tinggiCm);
-  if (!standar) return null;
-  const pct = (beratKg / standar) * 100;
+  const ideal = tkCdcBbIdealBerdasarkanTinggi(kelamin, tinggiCm);
+  if (!ideal) return null;
+  const pct = (beratKg / ideal.bbIdeal) * 100;
   let status = "", color = "#1A7A1A";
-  if (pct < 70)       { status = "Gizi buruk / wasting berat (<70% median)"; color = "#B22222"; }
-  else if (pct < 80)  { status = "Gizi kurang sedang (70–79% median)"; color = "#E06000"; }
-  else if (pct < 90)  { status = "Gizi kurang ringan (80–89% median)"; color = "#D98B00"; }
-  else if (pct <= 110){ status = "BB/TB dalam rentang baik (90–110% median)"; color = "#1A7A1A"; }
-  else if (pct <= 120){ status = "Risiko berat badan lebih (111–120% median)"; color = "#D98B00"; }
-  else                { status = "Berat badan lebih menurut % median (>120%)"; color = "#E06000"; }
-  return { judul: "BB/TB CDC — % median", standar, pct, status, color };
+  if (pct < 70)       { status = "Gizi buruk menurut BB/TB (<70% median)"; color = "#B22222"; }
+  else if (pct < 90)  { status = "Gizi kurang menurut BB/TB (70–90% median)"; color = "#E06000"; }
+  else if (pct <= 110){ status = "Gizi baik menurut BB/TB (90–110% median)"; color = "#1A7A1A"; }
+  else if (pct <= 120){ status = "Gizi lebih / overweight menurut BB/TB (110–120% median)"; color = "#D98B00"; }
+  else                { status = "Obesitas menurut BB/TB (>120% median)"; color = "#E06000"; }
+  return {
+    judul: "BB/TB CDC — % median",
+    standar: ideal.bbIdeal,
+    usiaTinggi: ideal.usiaTinggi,
+    tbMedianDiUsiaTinggi: ideal.tbMedianDiUsiaTinggi,
+    diLuarRentang: ideal.diLuarRentang,
+    pct,
+    status,
+    color
+  };
+}
+
+function tkHtmlMateriCdcWaterlow() {
+  return `
+    <div class="tk-cdc-materi">
+      <div class="tk-cdc-materi-title">📚 Materi interpretasi CDC — % median / Waterlow</div>
+      <p><strong>BB/TB (Berat Badan menurut Tinggi Badan)</strong> mencerminkan proporsi tubuh dan status gizi saat ini. Indeks ini berguna untuk membedakan <em>wasting</em> (kurus akibat malnutrisi akut) dan <em>stunting</em> (perawakan pendek akibat gangguan pertumbuhan kronis).</p>
+      <div class="tk-cdc-grid-kriteria">
+        <div class="tk-cdc-kriteria-box">
+          <strong>BB/TB</strong>
+          <ul>
+            <li>&lt;70%: Gizi buruk</li>
+            <li>70–90%: Gizi kurang</li>
+            <li>90–110%: Gizi baik</li>
+            <li>110–120%: Gizi lebih / overweight</li>
+            <li>&gt;120%: Obesitas</li>
+          </ul>
+        </div>
+        <div class="tk-cdc-kriteria-box">
+          <strong>TB/U</strong>
+          <ul>
+            <li>&lt;70%: Tinggi badan sangat kurang</li>
+            <li>70–90%: Tinggi badan kurang</li>
+            <li>90–110%: Tinggi badan normal/baik</li>
+          </ul>
+        </div>
+        <div class="tk-cdc-kriteria-box">
+          <strong>BB/U</strong>
+          <ul>
+            <li>&lt;60%: Gizi buruk</li>
+            <li>60–80%: Gizi kurang</li>
+            <li>80–120%: Gizi baik</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tk-cdc-materi-note">Catatan: BB/TB merupakan indeks yang baik untuk menilai status gizi saat ini karena menggambarkan proporsi tubuh. Gunakan bersama tren pertumbuhan dan kondisi klinis pasien.</div>
+    </div>`;
 }
 
 function tkHtmlCdcInterpretasi(item) {
   if (!item) return "";
   if (item.judul === "BB/TB CDC — % median") {
+    const tahun = Math.floor(item.usiaTinggi / 12);
+    const bulan = Math.round(item.usiaTinggi - tahun * 12);
+    const usiaTinggiText = `${item.usiaTinggi.toFixed(1)} bulan${tahun > 0 ? ` (±${tahun} th ${bulan} bln)` : ""}`;
     return `
       <div class="tk-cdc-block">
         <div class="tk-cdc-row"><span class="tk-cdc-label">${escapeHtml(item.judul)}</span><span class="tk-cdc-value">${item.pct.toFixed(1)}%</span></div>
-        <div class="tk-cdc-row"><span class="tk-cdc-label">Rumus</span><span class="tk-cdc-value">BB aktual ÷ BB standar P50 × 100%</span></div>
-        <div class="tk-cdc-row"><span class="tk-cdc-label">BB standar P50</span><span class="tk-cdc-value">${item.standar.toFixed(1)} kg</span></div>
+        <div class="tk-cdc-row"><span class="tk-cdc-label">Langkah 1</span><span class="tk-cdc-value">TB aktual → median TB/P50 = usia tinggi ${usiaTinggiText}</span></div>
+        <div class="tk-cdc-row"><span class="tk-cdc-label">Langkah 2</span><span class="tk-cdc-value">Pada usia tinggi itu, ambil BB median/P50</span></div>
+        <div class="tk-cdc-row"><span class="tk-cdc-label">BB ideal P50</span><span class="tk-cdc-value">${item.standar.toFixed(1)} kg</span></div>
+        <div class="tk-cdc-row"><span class="tk-cdc-label">Rumus</span><span class="tk-cdc-value">BB aktual ÷ BB ideal berdasarkan tinggi × 100%</span></div>
+        ${item.diLuarRentang ? `<div class="tk-cdc-note">⚠️ TB aktual berada di luar rentang P50 CDC 2–20 tahun pada tabel internal, sehingga nilai usia tinggi dibatasi pada tepi rentang.</div>` : ""}
         <div class="tk-cdc-status" style="border-left:4px solid ${item.color}; background:${item.color}18;"><span style="color:${item.color};">● ${escapeHtml(item.status)}</span></div>
       </div>`;
   }
@@ -5642,7 +5769,8 @@ function plotTumbuhKembang() {
 
   if (tkState.standar === "cdc" && isFinite(seriVal.berat) && isFinite(seriVal.tinggi)) {
     interpretasiHtml += tkHtmlCdcInterpretasi(tkInterpretasiCdcBbtb(tkState.kelamin, seriVal.berat, seriVal.tinggi));
-    interpretasiHtml += `<div class="tk-cdc-note">📌 CDC ditampilkan sebagai persentil/estimasi posisi terhadap P50, bukan Z-score. Interpretasi BB/TB memakai rumus: BB aktual ÷ BB standar P50 × 100%. Growth chart adalah alat skrining dan perlu dilihat bersama tren pertumbuhan serta kondisi klinis.</div>`;
+    interpretasiHtml += tkHtmlMateriCdcWaterlow();
+    interpretasiHtml += `<div class="tk-cdc-note">📌 CDC ditampilkan sebagai persentil/estimasi posisi terhadap P50, bukan Z-score. Interpretasi BB/TB memakai rumus: BB aktual ÷ BB ideal berdasarkan tinggi pada median/P50 × 100%. Growth chart adalah alat skrining dan perlu dilihat bersama tren pertumbuhan serta kondisi klinis.</div>`;
   }
 
   const stdLabel = GROWTH_CHART_CONFIG[tkState.standar].label;
