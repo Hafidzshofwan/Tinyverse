@@ -1974,6 +1974,79 @@
     color: var(--teks); font-size: .82rem; font-weight: 700; line-height: 1.45;
   }
 
+
+  /* ===== ASISTEN AI MENGAMBANG ===== */
+  .tv-ai-fab {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 8500;
+    width: 52px;
+    height: 52px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    background: linear-gradient(160deg, var(--biru), var(--pink));
+    color: #fff;
+    box-shadow: 0 6px 0 rgba(43,169,214,.45), 0 12px 28px rgba(0,0,0,.18);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .tv-ai-fab:hover { transform: translateY(-2px) scale(1.03); }
+  .tv-ai-fab:active { transform: translateY(1px) scale(.98); }
+  .tv-ai-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 8490;
+    display: none;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 18px;
+    background: rgba(74,55,40,.20);
+  }
+  .tv-ai-panel.tampil { display: flex; }
+  .tv-ai-panel-card {
+    width: min(560px, calc(100vw - 36px));
+    max-height: min(78vh, 720px);
+    overflow: auto;
+    background: var(--putih);
+    border-radius: 26px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.24);
+    padding: 18px;
+    border: 3px solid #EAF6FB;
+  }
+  .tv-ai-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-family: 'Fredoka', sans-serif;
+    color: var(--teks);
+  }
+  .tv-ai-panel-title { display: inline-flex; align-items: center; gap: 8px; font-size: 1rem; }
+  .tv-ai-close {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1;
+    background: #FFE3EC;
+    color: var(--pink-tua);
+  }
+  @media (max-width: 640px) {
+    .tv-ai-fab { right: 14px; bottom: 14px; width: 48px; height: 48px; font-size: 1.22rem; }
+    .tv-ai-panel { padding: 10px; align-items: flex-end; }
+    .tv-ai-panel-card { width: 100%; max-height: 84vh; border-radius: 22px; padding: 14px; }
+    .tv-ai-area { min-height: 110px; }
+  }
+
 </style>
 </head>
 <body>
@@ -2066,9 +2139,7 @@
 <button class="sidebar-item" data-page="imunisasi" type="button">
 <span class="ikon">📅</span><span class="label">Jadwal Imunisasi</span>
 </button>
-<button class="sidebar-item" data-page="asisten-ai" type="button">
-<span class="ikon">🤖</span><span class="label">Asisten AI</span>
-</button>
+
 </div>
 </aside>
 <div class="app-content">
@@ -2540,17 +2611,16 @@
 </div>
 </main>
 
-<!-- ===== HALAMAN ASISTEN AI FIREBASE ===== -->
-<main class="page" id="page-asisten-ai">
-  <section>
-    <div class="judul-section">
-      <div class="ikon-bulat" style="background:#EAF6FB;">🤖</div>
-      <div>
-        <h2>Asisten AI Firebase</h2>
-        <p>Fitur ini memakai Firebase AI Logic / Gemini untuk membantu membuat teks.</p>
-      </div>
+
+<!-- ===== ASISTEN AI MENGAMBANG (tersedia di semua menu) ===== -->
+<button class="tv-ai-fab" id="tvAiFab" type="button" aria-label="Buka Asisten AI" title="Asisten AI">🤖</button>
+<div class="tv-ai-panel" id="tvAiPanel" aria-hidden="true">
+  <div class="tv-ai-panel-card">
+    <div class="tv-ai-panel-head">
+      <div class="tv-ai-panel-title"><span>🤖</span><strong>Asisten AI Firebase</strong></div>
+      <button class="tv-ai-close" id="tvAiClose" type="button" aria-label="Tutup Asisten AI">×</button>
     </div>
-    <div class="kartu tv-ai-box">
+    <div class="tv-ai-box">
       <div class="tv-ai-warning">
         Catatan: hasil AI adalah alat bantu, bukan pengganti penilaian klinis. Jangan masukkan identitas pasien atau data sensitif.
       </div>
@@ -2567,8 +2637,8 @@
       <div class="tv-ai-status" id="tvAiStatus">Siap. Pastikan Firebase AI Logic sudah diaktifkan di Firebase Console.</div>
       <div class="tv-ai-output" id="tvAiOutput">Jawaban AI akan muncul di sini.</div>
     </div>
-  </section>
-</main>
+  </div>
+</div>
 
 </div>
 </div>
@@ -6525,7 +6595,7 @@ import { getAI, getGenerativeModel, GoogleAIBackend } from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-ai.js";
 
 const AI_MODEL = "gemini-3.5-flash";
-const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LdleDEtAAAAAMzV6NFUP_bRnMSrYYJPMKzZiu8N";
+const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LdIeDEtAAAAAMzV6NFUP_bRnMSrYYJPMKzZiu8N";
 const FIREBASE_CONFIG_AI = {
   apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
   authDomain: 'tyniverse-5a3b2.firebaseapp.com',
@@ -6597,6 +6667,44 @@ document.addEventListener('DOMContentLoaded', function () {
     btn.addEventListener('click', function () { if (prompt) { prompt.value = btn.getAttribute('data-ai-contoh') || ''; prompt.focus(); } });
   });
 });
+</script>
+
+
+<script>
+(function () {
+  function el(id) { return document.getElementById(id); }
+  function bukaAI() {
+    var panel = el('tvAiPanel');
+    var prompt = el('tvAiPrompt');
+    if (!panel) return;
+    panel.classList.add('tampil');
+    panel.setAttribute('aria-hidden', 'false');
+    setTimeout(function () { if (prompt) prompt.focus(); }, 60);
+  }
+  function tutupAI() {
+    var panel = el('tvAiPanel');
+    if (!panel) return;
+    panel.classList.remove('tampil');
+    panel.setAttribute('aria-hidden', 'true');
+  }
+  window.TVBukaAsistenAI = bukaAI;
+  window.TVTutupAsistenAI = tutupAI;
+  document.addEventListener('click', function (e) {
+    var pembuka = e.target.closest && e.target.closest('#tvAiFab, [data-page="asisten-ai"], [data-ai-open]');
+    if (pembuka) {
+      e.preventDefault();
+      e.stopPropagation();
+      bukaAI();
+      return;
+    }
+    if (e.target && e.target.id === 'tvAiPanel') tutupAI();
+  }, true);
+  document.addEventListener('DOMContentLoaded', function () {
+    var close = el('tvAiClose');
+    if (close) close.addEventListener('click', tutupAI);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') tutupAI(); });
+  });
+})();
 </script>
 
 </body>
