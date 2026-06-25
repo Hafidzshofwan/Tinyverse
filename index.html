@@ -766,7 +766,7 @@
   .page { display: none; }
   .page.page-aktif { display: block; }
 
-  /* ===== PROTOKOL TERAPI: GALERI DIAGNOSIS ===== */
+  /* ===== GUIDELINE: GALERI DIAGNOSIS ===== */
   #grid-protokol {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -799,7 +799,7 @@
   .protokol-card .nama-protokol-card { font-size: 0.95rem; font-weight: 600; color: var(--teks); margin-bottom: 6px; }
   .protokol-card .badge-dosis { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--teks-lembut); background: var(--putih); padding: 4px 10px; border-radius: 20px; }
 
-  /* ===== PROTOKOL TERAPI: DETAIL DIAGNOSIS ===== */
+  /* ===== GUIDELINE: DETAIL DIAGNOSIS ===== */
   .btn-kembali {
     display: inline-flex;
     align-items: center;
@@ -990,7 +990,7 @@
     padding: 20px;
   }
 
-  /* ===== FITUR BARU: DOSIS CAIRAN & TUMBUH KEMBANG (draft) ===== */
+  /* ===== FITUR BARU: TERAPI CAIRAN & TUMBUH KEMBANG (draft) ===== */
   .draft-notice {
     background: linear-gradient(135deg, #FFF7E0, #FFEFD0);
     border: 2px dashed var(--kuning-tua);
@@ -2533,6 +2533,183 @@
     .summary-print-area pre { white-space: pre-wrap; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.45; }
   }
 
+
+
+  /* ===== RACIK PUYER MULTI-OBAT ===== */
+  .puyer-shell { display: grid; gap: 14px; }
+  .puyer-alert {
+    border-radius: 18px; padding: 12px 14px; background: #FFF1BF;
+    color: var(--teks); font-size: .82rem; font-weight: 700; line-height: 1.45;
+    border: 2px solid #FFE4A0;
+  }
+  .puyer-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .puyer-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .puyer-obat-list { display: grid; gap: 12px; }
+  .puyer-obat-card {
+    border: 2px solid #EAF6FB; border-radius: 20px; background: #fff;
+    padding: 14px; box-shadow: 0 5px 14px rgba(0,0,0,.045);
+  }
+  .puyer-obat-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .puyer-obat-title { font-family: 'Fredoka', sans-serif; font-weight: 700; color: var(--biru-tua); }
+  .puyer-remove {
+    border: 0; border-radius: 999px; width: 30px; height: 30px; cursor: pointer;
+    background: #FFE8E8; color: #B71C1C; font-weight: 800;
+  }
+  .puyer-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+  .puyer-btn {
+    border: 0; border-radius: 16px; padding: 11px 14px; cursor: pointer;
+    font-family: 'Fredoka', sans-serif; font-weight: 700;
+    background: var(--biru); color: #fff; box-shadow: 0 4px 0 var(--biru-tua);
+  }
+  .puyer-btn.green { background: var(--hijau); box-shadow: 0 4px 0 var(--hijau-tua); }
+  .puyer-btn.yellow { background: var(--kuning); color: var(--teks); box-shadow: 0 4px 0 var(--kuning-tua); }
+  .puyer-btn.pink { background: var(--pink); color: #fff; box-shadow: 0 4px 0 var(--pink-tua); }
+  .puyer-btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+  .puyer-result { display: grid; gap: 12px; }
+  .puyer-summary-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+  .puyer-metric {
+    border-radius: 18px; background: #FFFBF0; border: 2px solid #FFE4A0;
+    padding: 12px; min-height: 74px;
+  }
+  .puyer-metric .label { font-size: .72rem; color: var(--teks-lembut); font-weight: 800; }
+  .puyer-metric .value { font-family: 'Fredoka', sans-serif; font-size: 1.1rem; color: var(--teks); margin-top: 4px; }
+  .puyer-table-wrap { overflow-x: auto; }
+  .puyer-table { width: 100%; border-collapse: collapse; font-size: .78rem; min-width: 760px; }
+  .puyer-table th, .puyer-table td { padding: 10px 8px; border-bottom: 1px solid #EEE7D8; text-align: left; vertical-align: top; }
+  .puyer-table th { font-family: 'Fredoka', sans-serif; color: var(--biru-tua); background: #F4FBFF; }
+  .puyer-ok { color: #2E7D32; font-weight: 800; }
+  .puyer-warn { color: #B26A00; font-weight: 800; }
+  .puyer-danger { color: #B71C1C; font-weight: 800; }
+  .puyer-note-list { display: grid; gap: 8px; }
+  .puyer-note { border-radius: 14px; padding: 10px 12px; background: #FFF7E2; border: 1px solid #FFE4A0; font-size: .8rem; font-weight: 700; line-height: 1.45; }
+  .puyer-output-text { white-space: pre-wrap; background: #fff; border: 2px dashed #EAF6FB; border-radius: 16px; padding: 12px; font-size: .82rem; line-height: 1.55; }
+
+  .puyer-resep-box {
+    white-space: pre-wrap;
+    background: #F8FBF6;
+    border: 2px solid #D9F0CF;
+    border-left: 7px solid var(--hijau);
+    border-radius: 18px;
+    padding: 14px;
+    font-size: .86rem;
+    line-height: 1.6;
+    color: var(--teks);
+    font-family: 'Courier New', monospace;
+  }
+  .puyer-resep-title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 800;
+    color: var(--hijau-tua);
+    margin: 2px 0 8px;
+  }
+
+  @media (max-width: 720px) {
+    .puyer-grid-2, .puyer-grid-3, .puyer-summary-grid { grid-template-columns: 1fr; }
+    .puyer-actions { display: grid; grid-template-columns: 1fr; }
+  }
+
+
+  /* ===== RACIK PUYER: SEARCH OBAT ===== */
+  .puyer-obat-search-wrap { position: relative; }
+  .puyer-search-hint {
+    display: block;
+    margin-top: 5px;
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--teks-lembut);
+    line-height: 1.35;
+  }
+  .puyer-preset-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #EAF6FB;
+    color: var(--biru-tua);
+    font-size: .66rem;
+    font-weight: 800;
+  }
+
+
+
+/* ===== PERAPIHAN PROFIL DI SIDEBAR: center visual terhadap bilah ===== */
+#tvSidebarProfil {
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  display: block !important;
+  text-align: center !important;
+  margin: 0 0 8px 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar {
+  position: relative !important;
+  width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 !important;
+  text-align: center !important;
+  box-sizing: border-box !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar.tampil {
+  display: block !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-user-pill {
+  width: 100% !important;
+  min-width: 100% !important;
+  min-height: 82px !important;
+  display: grid !important;
+  grid-template-rows: auto auto !important;
+  place-items: center !important;
+  justify-items: center !important;
+  align-items: center !important;
+  gap: 7px !important;
+  padding: 8px 0 10px !important;
+  margin: 0 !important;
+  text-align: center !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  box-sizing: border-box !important;
+}
+/* nudge kecil agar sejajar secara visual dengan kartu menu hijau */
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-ava,
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-user-nama {
+  transform: translateX(16px) !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-ava {
+  width: 46px !important;
+  height: 46px !important;
+  flex: 0 0 46px !important;
+  margin: 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  background-position: center !important;
+  background-size: cover !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-user-nama {
+  width: 100% !important;
+  max-width: 190px !important;
+  display: block !important;
+  margin: 0 auto !important;
+  text-align: center !important;
+  line-height: 1.18 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+#tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-user-drop {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  width: min(100%, 220px) !important;
+  text-align: left !important;
+}
+
 </style>
 </head>
 <body>
@@ -2606,29 +2783,40 @@
 </button>
 </div>
 <div class="tv-side-grup">
-<div class="tv-side-judul">Obat &amp; Cairan</div>
+<div class="tv-side-judul">Kalkulator Klinis</div>
 <button class="sidebar-item" data-page="dosis" type="button">
 <span class="ikon">💊</span><span class="label">Dosis Obat</span>
 </button>
 <button class="sidebar-item" data-page="cairan" type="button">
-<span class="ikon">💧</span><span class="label">Dosis Cairan</span>
+<span class="ikon">💧</span><span class="label">Terapi Cairan</span>
+</button>
+<button class="sidebar-item" data-page="puyer" type="button">
+<span class="ikon">⚗️</span><span class="label">Racik Puyer</span>
 </button>
 </div>
 <div class="tv-side-grup">
 <div class="tv-side-judul">Pemantauan Klinis</div>
-<button class="sidebar-item" data-page="protokol" type="button">
-<span class="ikon">🩺</span><span class="label">Protokol Terapi</span>
-</button>
 <button class="sidebar-item" data-page="tumbuh-kembang" type="button">
 <span class="ikon">📈</span><span class="label">Tumbuh Kembang</span>
 </button>
+</div>
+<div class="tv-side-grup">
+<div class="tv-side-judul">Referensi</div>
+<button class="sidebar-item" data-page="protokol" type="button">
+<span class="ikon">🩺</span><span class="label">Guideline</span>
+</button>
+</div>
+<div class="tv-side-grup">
+<div class="tv-side-judul">Preventif</div>
 <button class="sidebar-item" data-page="imunisasi" type="button">
 <span class="ikon">📅</span><span class="label">Jadwal Imunisasi</span>
 </button>
+</div>
+<div class="tv-side-grup">
+<div class="tv-side-judul">Dokumentasi</div>
 <button class="sidebar-item" data-page="ringkasan" type="button">
 <span class="ikon">📄</span><span class="label">Ringkasan Klinis</span>
 </button>
-
 </div>
 </aside>
 <div class="app-content">
@@ -2643,8 +2831,8 @@
 <p>Semua alat bantu pediatri dalam satu tempat.</p>
 </div>
 <div class="tv-home-mini-status">
-<strong id="tvHomeTodayTools">5</strong>
-              Quick Access siap digunakan
+<strong id="tvHomeTodayTools">4</strong>
+              fitur paling sering digunakan
             </div>
 </div>
 </section>
@@ -2652,7 +2840,7 @@
 <div class="tv-home-section-head">
 <div>
 <h3 id="tvQuickAccessTitle">Quick Access</h3>
-<p>Akses fitur utama tanpa membuka menu lain.</p>
+<p>Otomatis menampilkan 4 fitur yang paling sering digunakan.</p>
 </div>
 </div>
 <div class="tv-home-grid" id="tvHomeQuickGrid">
@@ -2680,17 +2868,23 @@
 <h4>Asisten AI</h4>
 <p>Tanya Gemini untuk merapikan edukasi pasien, ringkasan, atau ide klinis.</p>
 </article>
-<article class="tv-home-tool" data-page="cairan" data-tool-id="kalkulator-pediatri" data-tool-title="Dosis Cairan" role="button" tabindex="0">
-<button aria-label="Tambahkan Dosis Cairan ke favorit" class="tv-home-fav-btn" data-fav-id="kalkulator-pediatri" type="button">☆</button>
+<article class="tv-home-tool" data-page="cairan" data-tool-id="kalkulator-pediatri" data-tool-title="Terapi Cairan" role="button" tabindex="0">
+<button aria-label="Tambahkan Terapi Cairan ke favorit" class="tv-home-fav-btn" data-fav-id="kalkulator-pediatri" type="button">☆</button>
 <div class="tv-home-icon" style="background:#DCF3FB;">💧</div>
-<h4>Dosis Cairan</h4>
+<h4>Terapi Cairan</h4>
 <p>Hitung kebutuhan cairan rumatan dan rencana rehidrasi anak.</p>
 </article>
-<article class="tv-home-tool" data-page="protokol" data-tool-id="referensi-klinis" data-tool-title="Referensi Klinis" role="button" tabindex="0">
-<button aria-label="Tambahkan Referensi Klinis ke favorit" class="tv-home-fav-btn" data-fav-id="referensi-klinis" type="button">☆</button>
+<article class="tv-home-tool" data-page="puyer" data-tool-id="racik-puyer" data-tool-title="Racik Puyer" role="button" tabindex="0">
+<button aria-label="Tambahkan Racik Puyer ke favorit" class="tv-home-fav-btn" data-fav-id="racik-puyer" type="button">☆</button>
+<div class="tv-home-icon" style="background:#F2E8FF;">⚗️</div>
+<h4>Racik Puyer</h4>
+<p>Hitung puyer multi-obat, jumlah tablet, bungkus, dan selisih dosis.</p>
+</article>
+<article class="tv-home-tool" data-page="protokol" data-tool-id="referensi-klinis" data-tool-title="Guideline" role="button" tabindex="0">
+<button aria-label="Tambahkan Guideline ke favorit" class="tv-home-fav-btn" data-fav-id="referensi-klinis" type="button">☆</button>
 <div class="tv-home-icon" style="background:#EFEAFF;">📚</div>
-<h4>Referensi Klinis</h4>
-<p>Buka protokol terapi dan rujukan praktis pediatri.</p>
+<h4>Guideline</h4>
+<p>Buka guideline dan rujukan praktis pediatri.</p>
 </article>
 
 </div>
@@ -2865,14 +3059,14 @@
 </div>
 </section>
 </main>
-<!-- ===== HALAMAN 2: PROTOKOL TERAPI (fitur baru) ===== -->
+<!-- ===== HALAMAN 2: GUIDELINE (fitur baru) ===== -->
 <main class="page" id="page-protokol">
 <!-- ----- Galeri diagnosis ----- -->
 <section id="protokol-gallery-section">
 <div class="judul-section">
 <div class="ikon-bulat" style="background:#FFD7E0;">🩺</div>
 <div>
-<h2>Protokol Terapi</h2>
+<h2>Guideline</h2>
 <p>Pilih diagnosis untuk melihat daftar obat &amp; dosisnya</p>
 </div>
 </div>
@@ -2904,12 +3098,12 @@
 <img alt="Alur/Algoritma diagnosis (diperbesar)" id="alurLightboxImg" src=""/>
 </div>
 </main>
-<!-- ===== HALAMAN 3: DOSIS CAIRAN ===== -->
+<!-- ===== HALAMAN 3: TERAPI CAIRAN ===== -->
 <main class="page" id="page-cairan">
 <div class="judul-section">
 <div class="ikon-bulat" style="background:#DCF3FB;">💧</div>
 <div>
-<h2>Dosis Cairan</h2>
+<h2>Terapi Cairan</h2>
 <span class="referensi-badge" id="cairanReferensiBadge">Holliday–Segar (estimasi cairan rumatan)</span>
 </div>
 </div>
@@ -3207,6 +3401,87 @@
 </div>
 </main>
 
+
+
+<!-- ===== HALAMAN RACIK PUYER MULTI-OBAT ===== -->
+<main class="page" id="page-puyer">
+<div class="judul-section">
+<div class="ikon-bulat" style="background:#F2E8FF;">⚗️</div>
+<div>
+<h2>Racik Puyer</h2>
+<span class="referensi-badge">Kalkulator puyer multi-obat per bungkus</span>
+</div>
+</div>
+<div class="puyer-shell">
+<div class="puyer-alert">
+⚠️ Fitur ini adalah alat bantu hitung. Pastikan dosis, kompatibilitas obat, stabilitas racikan, dan sediaan yang boleh digerus diverifikasi oleh tenaga kesehatan/apoteker. Hindari memasukkan identitas pasien.
+</div>
+<div class="kartu">
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">👤 Data Pasien & Aturan Puyer</h3>
+<div class="puyer-grid-3">
+<div class="form-group">
+<label for="puyerBb">⚖️ Berat Badan (kg)</label>
+<input id="puyerBb" inputmode="decimal" min="0" placeholder="cth: 12" step="0.1" type="number"/>
+</div>
+<div class="form-group">
+<label for="puyerFrekuensi">Frekuensi per hari</label>
+<input id="puyerFrekuensi" inputmode="numeric" min="1" placeholder="cth: 3" step="1" type="number" value="3"/>
+</div>
+<div class="form-group">
+<label for="puyerDurasi">Durasi (hari)</label>
+<input id="puyerDurasi" inputmode="numeric" min="1" placeholder="cth: 3" step="1" type="number" value="3"/>
+</div>
+</div>
+<div class="puyer-grid-2">
+<div class="form-group">
+<label for="puyerJumlah">Jumlah bungkus / pulv</label>
+<input id="puyerJumlah" inputmode="numeric" min="1" placeholder="otomatis frekuensi × durasi" step="1" type="number"/>
+</div>
+<div class="form-group">
+<label for="puyerAturan">Aturan pakai / etiket</label>
+<input id="puyerAturan" placeholder="cth: S 3 dd 1 pulv p.c." type="text"/>
+</div>
+</div>
+<div class="puyer-actions">
+<button class="puyer-btn yellow" id="puyerAutoBungkus" type="button">🔢 Isi otomatis jumlah bungkus</button>
+</div>
+</div>
+<div class="kartu">
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">💊 Daftar Obat dalam Puyer</h3>
+<div class="puyer-obat-list" id="puyerObatList"></div>
+<datalist id="puyerObatOptions">
+<option value="Paracetamol"></option>
+<option value="Ibuprofen"></option>
+<option value="Amoxicillin"></option>
+<option value="Cefixime"></option>
+<option value="CTM"></option>
+<option value="Cetirizine"></option>
+<option value="Loratadine"></option>
+<option value="Ambroxol"></option>
+<option value="Salbutamol"></option>
+<option value="Prednison"></option>
+<option value="Dexamethasone"></option>
+<option value="Zinc"></option>
+<option value="Domperidone"></option>
+<option value="Ondansetron"></option>
+<option value="Metoclopramide"></option>
+</datalist>
+<div class="puyer-actions">
+<button class="puyer-btn" id="puyerTambahObat" type="button">➕ Tambah Obat</button>
+<button class="puyer-btn green" id="puyerHitung" type="button">⚗️ Hitung Racikan</button>
+<button class="puyer-btn pink" id="puyerReset" type="button">↺ Reset Contoh</button>
+</div>
+</div>
+<div class="kartu" id="puyerHasilKartu" style="display:none;">
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">🧾 Hasil Racik Puyer</h3>
+<div class="puyer-result" id="puyerHasil"></div>
+<div class="puyer-actions">
+<button class="puyer-btn" id="puyerCopy" type="button">📋 Salin Hasil</button>
+<button class="puyer-btn green" id="puyerRingkasan" type="button">📄 Tambahkan ke Ringkasan</button>
+</div>
+</div>
+</div>
+</main>
 
 <!-- ===== HALAMAN 6: RINGKASAN KLINIS & EXPORT HASIL ===== -->
 <main class="page" id="page-ringkasan">
@@ -3929,7 +4204,7 @@ const daftarObat = [
 ];
 
 /* ============================================================
-   DATA PROTOKOL TERAPI
+   DATA GUIDELINE
    ------------------------------------------------------------
    Berbeda dari "daftarObat" (rak obat umum per-obat), struktur
    ini dikelompokkan PER DIAGNOSIS/PENYAKIT. Tiap diagnosis berisi
@@ -4609,7 +4884,7 @@ function filterObat() {
 /* ============================================================
    FUNGSI INTI: HITUNG DOSIS (murni, tidak menyentuh DOM)
    Dipakai bersama oleh kalkulator utama (Dosis Obat) MAUPUN
-   kalkulator mini di tiap kartu obat pada Protokol Terapi.
+   kalkulator mini di tiap kartu obat pada Guideline.
    Mendukung 5 mode (doseType): perKg, flat, perKgVolume,
    byAge, ageBands.
    Mengembalikan { error: "..." } bila input tidak valid,
@@ -4749,7 +5024,7 @@ function hitungDosisInti(obat, beratBadanInput, usiaBulanInput, sediaanIndexInpu
 
 /* ============================================================
    BANGUN HTML HASIL PERHITUNGAN dari objek hasil hitungDosisInti
-   Dipakai bersama oleh kalkulator utama & kartu Protokol Terapi.
+   Dipakai bersama oleh kalkulator utama & kartu Guideline.
 ============================================================ */
 function bangunHtmlHasil(obat, hasil) {
   const { peringatan, dosisMinMg, dosisMaxMg, dosisMinMl, dosisMaxMl, dosisHarianMinMg, dosisHarianMaxMg, beratBadan, usiaBulan, band, sedMgFinal, sedMlFinal, sediaanLabelFinal, doseBasisFinal, dosesPerDayFinal } = hasil;
@@ -4843,7 +5118,7 @@ function hitungDosis() {
 }
 
 /* ============================================================
-   KALKULATOR MINI (kartu obat di halaman "Protokol Terapi")
+   KALKULATOR MINI (kartu obat di halaman "Guideline")
    Tiap kartu obat punya input & kotak hasil sendiri, diberi
    ID unik (key) supaya tidak bentrok satu sama lain.
 ============================================================ */
@@ -4872,7 +5147,7 @@ function hitungObatProtokol(key) {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: RENDER GALERI DIAGNOSIS
+   GUIDELINE: RENDER GALERI DIAGNOSIS
 ============================================================ */
 function renderProtokolGallery() {
   const grid = document.getElementById("grid-protokol");
@@ -4917,7 +5192,7 @@ function renderProtokolGallery() {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: FILTER PENCARIAN DIAGNOSIS
+   GUIDELINE: FILTER PENCARIAN DIAGNOSIS
 ============================================================ */
 function filterProtokol() {
   const query = document.getElementById("kotakCariProtokol").value.trim().toLowerCase();
@@ -4934,7 +5209,7 @@ function filterProtokol() {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: BANGUN INPUT (berat/usia) UNTUK SATU OBAT
+   GUIDELINE: BANGUN INPUT (berat/usia) UNTUK SATU OBAT
    sesuai doseType-nya, dengan id unik berdasarkan "key" kartu
 ============================================================ */
 function bangunFormInputObat(obat, key) {
@@ -4955,7 +5230,7 @@ function bangunFormInputObat(obat, key) {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: BANGUN SATU KARTU OBAT (dengan kalkulator
+   GUIDELINE: BANGUN SATU KARTU OBAT (dengan kalkulator
    mini sendiri) di dalam subkategori/kategori
 ============================================================ */
 function bangunKartuObatProtokol(obat, key) {
@@ -4978,7 +5253,7 @@ function bangunKartuObatProtokol(obat, key) {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: BUKA HALAMAN DETAIL SATU DIAGNOSIS
+   GUIDELINE: BUKA HALAMAN DETAIL SATU DIAGNOSIS
 ============================================================ */
 function bukaProtokolDetail(id) {
   const penyakit = daftarProtokol.find(p => p.id === id);
@@ -5034,7 +5309,7 @@ function bukaProtokolDetail(id) {
 }
 
 /* ============================================================
-   PROTOKOL TERAPI: KEMBALI KE GALERI DIAGNOSIS
+   GUIDELINE: KEMBALI KE GALERI DIAGNOSIS
 ============================================================ */
 function tutupProtokolDetail() {
   protokolTerpilih = null;
@@ -5043,7 +5318,7 @@ function tutupProtokolDetail() {
 }
 
 /* ============================================================
-   DOSIS CAIRAN (DRAFT AWAL)
+   TERAPI CAIRAN (DRAFT AWAL)
    Metode Holliday-Segar untuk estimasi kebutuhan cairan rumatan
    harian. Logika ini akan disesuaikan lebih lanjut sesuai detail
    yang diberikan (mis. estimasi defisit cairan dehidrasi, dll).
@@ -5097,7 +5372,7 @@ function hitungKebutuhanCairan() {
 }
 
 /* ============================================================
-   DOSIS CAIRAN — REHIDRASI WHO (Lintas Diare Anak)
+   TERAPI CAIRAN — REHIDRASI WHO (Lintas Diare Anak)
    Rencana A: kartu info statis (tidak ada perhitungan).
    Rencana B: dehidrasi ringan-sedang -> 75 mL/kgBB dalam 3 jam.
    Rencana C: dehidrasi berat -> 100 mL/kgBB, 2 tahap, durasi
@@ -5415,7 +5690,7 @@ function hitungLukaBakar() {
 }
 
 /* ============================================================
-   DOSIS CAIRAN — UI: pindah metode (Holliday-Segar <-> WHO)
+   TERAPI CAIRAN — UI: pindah metode (Holliday-Segar <-> WHO)
    dan pindah rencana (A/B/C) serta kategori usia Rencana C.
 ============================================================ */
 function pindahMetodeCairan(metode) {
@@ -6814,13 +7089,15 @@ function pindahHalaman(halaman) {
     'dosis-obat': { id: 'dosis-obat', title: 'Kalkulator Dosis Obat', label: 'Dosis Paracetamol', icon: '💊', page: 'dosis', subtitle: 'Kalkulator dosis' },
     'tumbuh-kembang': { id: 'tumbuh-kembang', title: 'Tumbuh Kembang', label: 'Growth Chart WHO', icon: '📈', page: 'tumbuh-kembang', subtitle: 'Growth chart' },
     'jadwal-imunisasi': { id: 'jadwal-imunisasi', title: 'Jadwal Imunisasi', label: 'Jadwal Imunisasi IDAI 2024', icon: '📅', page: 'imunisasi', subtitle: 'Jadwal imunisasi' },
-    'kalkulator-pediatri': { id: 'kalkulator-pediatri', title: 'Dosis Cairan', label: 'Dosis Cairan', icon: '💧', page: 'cairan', subtitle: 'Kalkulator cairan & rehidrasi' },
-    'referensi-klinis': { id: 'referensi-klinis', title: 'Referensi Klinis', label: 'Protokol Terapi', icon: '📚', page: 'protokol', subtitle: 'Referensi klinis' },
+    'kalkulator-pediatri': { id: 'kalkulator-pediatri', title: 'Terapi Cairan', label: 'Terapi Cairan', icon: '💧', page: 'cairan', subtitle: 'Terapi cairan & rehidrasi' },
+    'racik-puyer': { id: 'racik-puyer', title: 'Racik Puyer', label: 'Racik Puyer', icon: '⚗️', page: 'puyer', subtitle: 'Puyer multi-obat' },
+    'referensi-klinis': { id: 'referensi-klinis', title: 'Guideline', label: 'Guideline', icon: '📚', page: 'protokol', subtitle: 'Guideline klinis' },
     'dosis-amoksisilin': { id: 'dosis-amoksisilin', title: 'Dosis Amoksisilin', label: 'Dosis Amoksisilin', icon: '💊', page: 'dosis', subtitle: 'Favorit contoh' },
     'growth-cdc': { id: 'growth-cdc', title: 'Growth Chart CDC', label: 'Growth Chart CDC', icon: '📈', page: 'tumbuh-kembang', subtitle: 'Favorit contoh' },
   };
   const DEFAULT_FAVORITES = [TOOL_META['dosis-amoksisilin'], TOOL_META['growth-cdc']];
   const STORAGE_KEY = 'tv_home_favorites_demo';
+  const USAGE_KEY = 'tv_home_usage_counts_demo';
 
   const state = { profile: null, db: null, uid: null, favorites: [], lastRows: [], toastTimer: null, lastTrackedAt: 0, lastTrackedTitle: '' };
 
@@ -6852,6 +7129,7 @@ function pindahHalaman(halaman) {
   function iconForType(tipe, judul) {
     const s = String((tipe || '') + ' ' + (judul || '')).toLowerCase();
     if (s.includes('tumbuh') || s.includes('growth') || s.includes('chart')) return '📈';
+    if (s.includes('puyer') || s.includes('racik')) return '⚗️';
     if (s.includes('cairan') || s.includes('hidrasi')) return '💧';
     if (s.includes('protokol') || s.includes('referensi')) return '📚';
     if (s.includes('imunisasi')) return '📅';
@@ -6864,6 +7142,77 @@ function pindahHalaman(halaman) {
     const id = f.id || f.toolId || String(f.title || f.label || '').toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const base = TOOL_META[id] || {};
     return Object.assign({}, base, f, { id: id, title: f.title || base.title || f.label || 'Favorit', label: f.label || f.title || base.label || base.title || 'Favorit' });
+  }
+  function toolIdFromText(tipe, judul) {
+    const s = String((tipe || '') + ' ' + (judul || '')).toLowerCase();
+    if (s.includes('puyer') || s.includes('racik')) return 'racik-puyer';
+    if (s.includes('cairan') || s.includes('hidrasi')) return 'kalkulator-pediatri';
+    if (s.includes('tumbuh') || s.includes('growth') || s.includes('chart')) return 'tumbuh-kembang';
+    if (s.includes('imunisasi')) return 'jadwal-imunisasi';
+    if (s.includes('guideline') || s.includes('protokol') || s.includes('referensi')) return 'referensi-klinis';
+    if (s.includes('dosis') || s.includes('obat')) return 'dosis-obat';
+    return '';
+  }
+  function readUsageCounts() {
+    try {
+      const data = JSON.parse(localStorage.getItem(USAGE_KEY) || '{}');
+      return data && typeof data === 'object' ? data : {};
+    } catch (e) { return {}; }
+  }
+  function saveUsageCounts(counts) {
+    try { localStorage.setItem(USAGE_KEY, JSON.stringify(counts || {})); } catch (e) {}
+  }
+  function trackLocalUsage(title) {
+    const id = toolIdFromText('', title);
+    if (!id) return;
+    const counts = readUsageCounts();
+    counts[id] = (Number(counts[id]) || 0) + 1;
+    saveUsageCounts(counts);
+  }
+  function getMostUsedTools(rows) {
+    const counts = readUsageCounts();
+    (rows || []).forEach(function (d) {
+      const id = toolIdFromText(d.tipe, d.judul);
+      if (id) counts[id] = (Number(counts[id]) || 0) + 1;
+    });
+    const fallback = ['dosis-obat', 'tumbuh-kembang', 'racik-puyer', 'kalkulator-pediatri'];
+    const ids = Object.keys(TOOL_META).filter(function (id) {
+      return ['dosis-amoksisilin', 'growth-cdc'].indexOf(id) === -1;
+    }).sort(function (a, b) {
+      const ca = Number(counts[a]) || 0;
+      const cb = Number(counts[b]) || 0;
+      if (cb !== ca) return cb - ca;
+      return fallback.indexOf(a) - fallback.indexOf(b);
+    });
+    const chosen = [];
+    ids.forEach(function (id) { if ((Number(counts[id]) || 0) > 0 && chosen.indexOf(id) === -1) chosen.push(id); });
+    fallback.forEach(function (id) { if (chosen.indexOf(id) === -1) chosen.push(id); });
+    ids.forEach(function (id) { if (chosen.indexOf(id) === -1) chosen.push(id); });
+    return chosen.slice(0, 4).map(function (id) { return TOOL_META[id]; }).filter(Boolean);
+  }
+  function renderQuickAccess(rows) {
+    const grid = el('tvHomeQuickGrid');
+    if (!grid) return;
+    const tools = getMostUsedTools(rows || state.lastRows);
+    const warna = {
+      'dosis-obat': '#FFF1BF',
+      'tumbuh-kembang': '#FFE3EC',
+      'jadwal-imunisasi': '#E7F8DA',
+      'kalkulator-pediatri': '#DCF3FB',
+      'racik-puyer': '#F2E8FF',
+      'referensi-klinis': '#EFEAFF'
+    };
+    grid.innerHTML = tools.map(function (m) {
+      return '<article class="tv-home-tool" data-page="' + esc(m.page || '') + '" data-tool-id="' + esc(m.id) + '" data-tool-title="' + esc(m.title) + '" role="button" tabindex="0">'
+        + '<button aria-label="Tambahkan ' + esc(m.title) + ' ke favorit" class="tv-home-fav-btn" data-fav-id="' + esc(m.id) + '" type="button">☆</button>'
+        + '<div class="tv-home-icon" style="background:' + esc(warna[m.id] || '#EAF6FB') + ';">' + esc(m.icon || '🩺') + '</div>'
+        + '<h4>' + esc(m.title) + '</h4>'
+        + '<p>' + esc(m.subtitle || 'Fitur sering digunakan') + '</p>'
+        + '</article>';
+    }).join('');
+    renderQuickStars();
+    const n = el('tvHomeTodayTools');
+    if (n) n.textContent = String(tools.length || 4);
   }
   function getActiveFavorites() {
     const arr = (state.favorites || []).map(normalizeFavorite).filter(function (f) { return f && f.id !== 'catatan-pasien'; });
@@ -6893,7 +7242,7 @@ function pindahHalaman(halaman) {
     const title = el('tvHomeWelcomeTitle');
     if (title) title.textContent = 'Halo, ' + firstName(state.profile && state.profile.nama) + ' 👋';
     const n = el('tvHomeTodayTools');
-    if (n) n.textContent = String(document.querySelectorAll('#tvHomeQuickGrid .tv-home-tool').length || 6);
+    if (n) n.textContent = '4';
   }
   function renderInsight() {
     const box = el('tvHomeInsightText');
@@ -6926,7 +7275,7 @@ function pindahHalaman(halaman) {
     const data = rows && rows.length ? rows : [
       { tipe: 'Dosis Obat', judul: 'Dosis Paracetamol', detail: 'Contoh riwayat penggunaan', waktuLokal: Date.now() - 3600000 },
       { tipe: 'Tumbuh Kembang', judul: 'Growth Chart WHO', detail: 'Contoh riwayat penggunaan', waktuLokal: Date.now() - 7200000 },
-      { tipe: 'Dosis Cairan', judul: 'Kebutuhan Cairan Rumatan', detail: 'Contoh riwayat penggunaan', waktuLokal: Date.now() - 10800000 },
+      { tipe: 'Terapi Cairan', judul: 'Kebutuhan Cairan Rumatan', detail: 'Contoh riwayat penggunaan', waktuLokal: Date.now() - 10800000 },
       { tipe: 'Imunisasi', judul: 'Jadwal Imunisasi', detail: 'Contoh riwayat penggunaan', waktuLokal: Date.now() - 14400000 }
     ];
     box.innerHTML = data.slice(0, 4).map(function (d) {
@@ -6950,7 +7299,7 @@ function pindahHalaman(halaman) {
     if (el('tvStatRef')) el('tvStatRef').textContent = counts.ref;
   }
   function renderAll() {
-    renderWelcome(); renderInsight(); renderFavorites(); renderLastUsed(state.lastRows); renderStats(state.lastRows);
+    renderWelcome(); renderInsight(); renderQuickAccess(state.lastRows); renderFavorites(); renderLastUsed(state.lastRows); renderStats(state.lastRows);
   }
   function showToast(msg) {
     let box = el('tvHomeToast');
@@ -6978,9 +7327,10 @@ function pindahHalaman(halaman) {
       const rows = [];
       q.forEach(function (doc) { rows.push(doc.data() || {}); });
       state.lastRows = rows;
+      renderQuickAccess(rows);
       renderLastUsed(rows);
       renderStats(rows);
-    }).catch(function () { renderLastUsed(state.lastRows); renderStats(state.lastRows); });
+    }).catch(function () { renderQuickAccess(state.lastRows); renderLastUsed(state.lastRows); renderStats(state.lastRows); });
   }
   function toggleFavorite(id) {
     const meta = TOOL_META[id] || { id: id, title: id, label: id, icon: '⭐' };
@@ -6995,10 +7345,13 @@ function pindahHalaman(halaman) {
     saveFavorites(); renderFavorites();
   }
   function trackOpen(title) {
-    if (!title || !state.db || !state.uid) return;
+    if (!title) return;
     const now = Date.now();
     if (state.lastTrackedTitle === title && now - state.lastTrackedAt < 2500) return;
     state.lastTrackedTitle = title; state.lastTrackedAt = now;
+    trackLocalUsage(title);
+    renderQuickAccess(state.lastRows);
+    if (!state.db || !state.uid) return;
     state.db.collection('users').doc(state.uid).collection('riwayat').add({ tipe: 'Buka Fitur', judul: title, detail: 'Dibuka dari dashboard atau navigasi', waktuLokal: now }).then(function () {
       refreshFromFirebase();
     }).catch(function () {});
@@ -7051,6 +7404,7 @@ function pindahHalaman(halaman) {
       const title = item.getAttribute('data-last-title') || '';
       const s = title.toLowerCase();
       if (s.includes('growth') || s.includes('chart')) goFeature(TOOL_META['tumbuh-kembang']);
+      else if (s.includes('puyer') || s.includes('racik')) goFeature(TOOL_META['racik-puyer']);
       else if (s.includes('cairan') || s.includes('hidrasi') || s.includes('rehidrasi') || s.includes('holliday')) goFeature(TOOL_META['kalkulator-pediatri']);
       else if (s.includes('imunisasi')) goFeature(TOOL_META['jadwal-imunisasi']);
       else if (s.includes('protokol') || s.includes('referensi')) goFeature(TOOL_META['referensi-klinis']);
@@ -7419,7 +7773,7 @@ document.addEventListener("DOMContentLoaded", function () {
     pindahHalaman(tombol.dataset.page);
   });
 
-  // ===== Dosis Cairan =====
+  // ===== Terapi Cairan =====
   document.getElementById("btnHitungCairan").addEventListener("click", hitungKebutuhanCairan);
   document.getElementById("cairanBerat").addEventListener("keydown", function (e) {
     if (e.key === "Enter") hitungKebutuhanCairan();
@@ -7527,7 +7881,7 @@ document.addEventListener("DOMContentLoaded", function () {
     tkPindahLangkah(Number(dot.dataset.step));
   });
 
-  // ===== Protokol Terapi: galeri & pencarian =====
+  // ===== Guideline: galeri & pencarian =====
   document.getElementById("grid-protokol").addEventListener("click", function (e) {
     const kartu = e.target.closest(".protokol-card");
     if (!kartu) return;
@@ -7536,7 +7890,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("kotakCariProtokol").addEventListener("input", filterProtokol);
   document.getElementById("btnKembaliProtokol").addEventListener("click", tutupProtokolDetail);
 
-  // ===== Protokol Terapi: kalkulator mini per kartu obat (delegasi event) =====
+  // ===== Guideline: kalkulator mini per kartu obat (delegasi event) =====
   document.getElementById("protokol-detail-konten").addEventListener("click", function (e) {
     const tombol = e.target.closest("[data-aksi='hitung-protokol']");
     if (!tombol) return;
@@ -8168,6 +8522,247 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+
+<script>
+/* ============================================================
+   RACIK PUYER MULTI-OBAT
+============================================================ */
+(function () {
+  const state = { rows: [], lastText: '' };
+  const contoh = [
+    { nama: 'Paracetamol', mode: 'mgkg', dosis: 10, sediaan: 500, step: 0.25, aktual: '' },
+    { nama: 'CTM', mode: 'mgkali', dosis: 1, sediaan: 4, step: 0.25, aktual: '' },
+    { nama: 'Ambroxol', mode: 'mgkali', dosis: 7.5, sediaan: 30, step: 0.25, aktual: '' }
+  ];
+  const OBAT_PRESET = [
+    { nama: 'Paracetamol', alias: ['parasetamol', 'pct', 'pamol'], mode: 'mgkg', dosis: 10, sediaan: 500, catatan: 'Contoh umum: 10 mg/kg/kali; sesuaikan pedoman.' },
+    { nama: 'Ibuprofen', alias: ['ibu'], mode: 'mgkg', dosis: 5, sediaan: 200, catatan: 'Contoh umum: 5 mg/kg/kali; perhatikan kontraindikasi.' },
+    { nama: 'Amoxicillin', alias: ['amoksisilin', 'amox', 'amoxicilin'], mode: 'mgkg', dosis: 15, sediaan: 500, catatan: 'Contoh awal; sesuaikan indikasi dan regimen.' },
+    { nama: 'Cefixime', alias: ['sefiksim', 'cefixim'], mode: 'mgkg', dosis: 4, sediaan: 100, catatan: 'Contoh awal; verifikasi dosis sesuai indikasi.' },
+    { nama: 'CTM', alias: ['chlorpheniramine', 'klorfeniramin', 'chlorpheniramin'], mode: 'mgkali', dosis: 1, sediaan: 4, catatan: 'Contoh manual mg/kali.' },
+    { nama: 'Cetirizine', alias: ['setirizin', 'cetirizin'], mode: 'mgkali', dosis: 5, sediaan: 10, catatan: 'Sesuaikan usia/BB.' },
+    { nama: 'Loratadine', alias: ['loratadin'], mode: 'mgkali', dosis: 5, sediaan: 10, catatan: 'Sesuaikan usia/BB.' },
+    { nama: 'Ambroxol', alias: ['ambroksol'], mode: 'mgkali', dosis: 7.5, sediaan: 30, catatan: 'Contoh manual mg/kali.' },
+    { nama: 'Salbutamol', alias: ['salbu'], mode: 'mgkali', dosis: 1, sediaan: 2, catatan: 'Contoh manual; verifikasi dosis dan indikasi.' },
+    { nama: 'Prednison', alias: ['prednisone'], mode: 'mgkg', dosis: 1, sediaan: 5, catatan: 'Contoh awal; verifikasi regimen.' },
+    { nama: 'Dexamethasone', alias: ['deksametason', 'dexa'], mode: 'mgkg', dosis: 0.15, sediaan: 0.5, catatan: 'Contoh awal; verifikasi regimen.' },
+    { nama: 'Zinc', alias: ['zn'], mode: 'mgkali', dosis: 20, sediaan: 20, catatan: 'Sesuaikan usia dan pedoman diare.' },
+    { nama: 'Domperidone', alias: ['domperidon'], mode: 'mgkg', dosis: 0.25, sediaan: 10, catatan: 'Perhatikan kehati-hatian penggunaan.' },
+    { nama: 'Ondansetron', alias: ['ondansetron'], mode: 'mgkg', dosis: 0.15, sediaan: 4, catatan: 'Contoh awal; verifikasi indikasi.' },
+    { nama: 'Metoclopramide', alias: ['metoklopramid', 'metoclopramid'], mode: 'mgkg', dosis: 0.1, sediaan: 10, catatan: 'Perhatikan efek samping dan kontraindikasi.' }
+  ];
+  function el(id) { return document.getElementById(id); }
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function num(v) { const n = parseFloat(String(v || '').replace(',', '.')); return Number.isFinite(n) ? n : NaN; }
+  function fmt(n, d) {
+    if (!Number.isFinite(n)) return '—';
+    const x = Math.round(n * Math.pow(10, d == null ? 2 : d)) / Math.pow(10, d == null ? 2 : d);
+    return String(x).replace('.', ',');
+  }
+  function fmtResepAngka(n) {
+    if (!Number.isFinite(n)) return '—';
+    const q = Math.round(n * 4);
+    if (Math.abs(n - q / 4) < 0.01) {
+      const whole = Math.floor(q / 4);
+      const rem = q % 4;
+      const frac = rem === 1 ? '¼' : rem === 2 ? '½' : rem === 3 ? '¾' : '';
+      return (whole ? String(whole) : '') + frac || '0';
+    }
+    return fmt(n, 2).replace(/,00$/, '');
+  }
+  function roundTo(n, step) { step = Number(step) || 0.25; return Math.round(n / step) * step; }
+  function makeId() { return 'rx' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function normObat(s) { return String(s || '').trim().toLowerCase().replace(/[^a-z0-9]+/g, ''); }
+  function cariPresetObat(q) {
+    const nq = normObat(q);
+    if (!nq) return null;
+    return OBAT_PRESET.find(o => normObat(o.nama) === nq || (o.alias || []).some(a => normObat(a) === nq)) ||
+      OBAT_PRESET.find(o => normObat(o.nama).includes(nq) || (o.alias || []).some(a => normObat(a).includes(nq))) || null;
+  }
+  function terapkanPresetObat(wrap, preset) {
+    if (!wrap || !preset) return;
+    const nama = wrap.querySelector('[data-field="nama"]');
+    const mode = wrap.querySelector('[data-field="mode"]');
+    const dosis = wrap.querySelector('[data-field="dosis"]');
+    const sediaan = wrap.querySelector('[data-field="sediaan"]');
+    const hint = wrap.querySelector('[data-puyer-preset-hint]');
+    if (nama) nama.value = preset.nama;
+    if (mode) mode.value = preset.mode;
+    if (dosis && (!dosis.value || dosis.dataset.autoFilled === '1')) { dosis.value = preset.dosis; dosis.dataset.autoFilled = '1'; }
+    if (sediaan && (!sediaan.value || sediaan.dataset.autoFilled === '1')) { sediaan.value = preset.sediaan; sediaan.dataset.autoFilled = '1'; }
+    if (hint) hint.innerHTML = '<span class="puyer-preset-chip">✓ ' + esc(preset.nama) + '</span> ' + esc(preset.catatan || 'Preset dipilih. Tetap verifikasi dosis.');
+  }
+  function autoJumlah() {
+    const f = num(el('puyerFrekuensi')?.value), d = num(el('puyerDurasi')?.value);
+    if (Number.isFinite(f) && Number.isFinite(d) && f > 0 && d > 0) el('puyerJumlah').value = Math.round(f * d);
+    if (!el('puyerAturan')?.value && Number.isFinite(f)) el('puyerAturan').value = 'S ' + fmt(f, 0) + ' dd 1 pulv';
+  }
+  function tambahObat(data) {
+    state.rows.push(Object.assign({ id: makeId(), nama: '', mode: 'mgkg', dosis: '', sediaan: '', step: 0.25, aktual: '' }, data || {}));
+    renderObat();
+  }
+  function syncFromDom() {
+    state.rows = state.rows.map(r => {
+      const wrap = document.querySelector('[data-puyer-id="' + r.id + '"]');
+      if (!wrap) return r;
+      return {
+        id: r.id,
+        nama: wrap.querySelector('[data-field="nama"]').value,
+        mode: wrap.querySelector('[data-field="mode"]').value,
+        dosis: wrap.querySelector('[data-field="dosis"]').value,
+        sediaan: wrap.querySelector('[data-field="sediaan"]').value,
+        step: wrap.querySelector('[data-field="step"]').value,
+        aktual: '' 
+      };
+    });
+  }
+  function renderObat() {
+    const box = el('puyerObatList'); if (!box) return;
+    box.innerHTML = state.rows.map((r, idx) => `
+      <div class="puyer-obat-card" data-puyer-id="${esc(r.id)}">
+        <div class="puyer-obat-head">
+          <div class="puyer-obat-title">Obat ${idx + 1}</div>
+          <button class="puyer-remove" type="button" data-puyer-remove="${esc(r.id)}" aria-label="Hapus obat">×</button>
+        </div>
+        <div class="puyer-grid-2">
+          <div class="form-group puyer-obat-search-wrap"><label>Nama obat</label><input data-field="nama" list="puyerObatOptions" type="search" autocomplete="off" placeholder="ketik: para, ctm, ambro... lalu pilih" value="${esc(r.nama)}"/><small class="puyer-search-hint" data-puyer-preset-hint>Ketik beberapa huruf, lalu pilih obat dari saran. Dosis/sediaan akan terisi otomatis jika tersedia.</small></div>
+          <div class="form-group"><label>Dosis per kg / per bungkus</label><select data-field="mode"><option value="mgkg" ${r.mode==='mgkg'?'selected':''}>Dosis per kg (mg/kg/kali)</option><option value="mgkali" ${r.mode==='mgkali'?'selected':''}>Dosis per bungkus (mg/bungkus)</option></select></div>
+        </div>
+        <div class="puyer-grid-3">
+          <div class="form-group"><label>Dosis yang diinginkan</label><input data-field="dosis" inputmode="decimal" type="number" step="0.01" placeholder="cth: 10 mg/kg atau 1 mg/bungkus" value="${esc(r.dosis)}"/></div>
+          <div class="form-group"><label>Isi 1 tablet/kapsul (mg)</label><input data-field="sediaan" inputmode="decimal" type="number" step="0.01" placeholder="cth: 500" value="${esc(r.sediaan)}"/></div>
+          <div class="form-group"><label>Bulatkan ke pecahan tablet</label><select data-field="step"><option value="0.25" ${String(r.step)==='0.25'?'selected':''}>¼ tablet terdekat</option><option value="0.5" ${String(r.step)==='0.5'?'selected':''}>½ tablet terdekat</option><option value="1" ${String(r.step)==='1'?'selected':''}>1 tablet terdekat</option></select></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  function statusClass(pct) {
+    const a = Math.abs(pct);
+    if (a > 15) return 'puyer-danger';
+    if (a > 10) return 'puyer-warn';
+    return 'puyer-ok';
+  }
+  function hitung() {
+    syncFromDom(); autoJumlah();
+    const bb = num(el('puyerBb')?.value), jumlah = num(el('puyerJumlah')?.value);
+    const f = num(el('puyerFrekuensi')?.value), d = num(el('puyerDurasi')?.value);
+    const aturan = (el('puyerAturan')?.value || '').trim() || (Number.isFinite(f) ? ('S ' + fmt(f,0) + ' dd 1 pulv') : 'Sesuai instruksi');
+    const notes = [];
+    if (!Number.isFinite(jumlah) || jumlah <= 0) { alert('Isi jumlah bungkus puyer terlebih dahulu.'); return; }
+    if (!state.rows.length) { alert('Tambahkan minimal 1 obat.'); return; }
+    if (state.rows.length >= 4) notes.push('⚠️ Racikan berisi ' + state.rows.length + ' obat. Pertimbangkan kembali kebutuhan dan kompatibilitas tiap obat.');
+    const risky = /(digoxin|fenitoin|phenytoin|teofilin|theophylline|warfarin|levotiroksin|levothyroxine|carbamazepine|valproat|valproate)/i;
+    const forbidden = /(sr|xr|er|retard|lepas lambat|extended|sustained|enteric|ec\b|salut enterik)/i;
+    const rows = [];
+    for (const r of state.rows) {
+      const nama = (r.nama || '').trim() || 'Obat tanpa nama';
+      const dosisInput = num(r.dosis), sed = num(r.sediaan), step = num(r.step) || 0.25;
+      if (!Number.isFinite(dosisInput) || dosisInput <= 0 || !Number.isFinite(sed) || sed <= 0) {
+        notes.push('⚠️ Data belum lengkap untuk ' + nama + '.');
+        continue;
+      }
+      if (r.mode === 'mgkg' && (!Number.isFinite(bb) || bb <= 0)) { notes.push('⚠️ BB wajib diisi untuk dosis mg/kg/kali pada ' + nama + '.'); continue; }
+      const target = r.mode === 'mgkg' ? bb * dosisInput : dosisInput;
+      const totalTarget = target * jumlah;
+      const teoritis = totalTarget / sed;
+      const aktualManual = num(r.aktual);
+      const aktual = Number.isFinite(aktualManual) && aktualManual > 0 ? aktualManual : roundTo(teoritis, step);
+      const totalAktual = aktual * sed;
+      const perBungkus = totalAktual / jumlah;
+      const selisih = perBungkus - target;
+      const pct = target ? (selisih / target * 100) : 0;
+      const cls = statusClass(pct);
+      if (Math.abs(pct) > 10) notes.push('⚠️ Selisih dosis ' + nama + ' ' + (pct > 0 ? '+' : '') + fmt(pct, 1) + '%. Periksa ulang pembulatan atau gunakan sediaan lain.');
+      if (risky.test(nama)) notes.push('⚠️ ' + nama + ' termasuk obat yang perlu kehati-hatian tinggi. Hindari pembulatan tanpa verifikasi.');
+      if (forbidden.test(nama)) notes.push('⚠️ Pastikan ' + nama + ' bukan sediaan lepas lambat/enteric-coated yang tidak boleh digerus.');
+      rows.push({ nama, mode: r.mode, dosisInput, sed, target, totalTarget, teoritis, aktual, totalAktual, perBungkus, selisih, pct, cls });
+    }
+    notes.push('ℹ️ Pastikan semua obat kompatibel untuk dicampur dalam satu puyer dan boleh digerus.');
+    const valid = rows.length;
+    const table = `<div class="puyer-table-wrap"><table class="puyer-table"><thead><tr><th>Obat</th><th>Target / bungkus</th><th>Total target</th><th>Sediaan</th><th>Tablet teoritis</th><th>Tablet dipakai</th><th>Isi aktual / bungkus</th><th>Selisih</th></tr></thead><tbody>` + rows.map(r => `
+      <tr><td><strong>${esc(r.nama)}</strong><br><span style="color:var(--teks-lembut)">${r.mode==='mgkg' ? fmt(r.dosisInput,2)+' mg/kg/kali' : fmt(r.dosisInput,2)+' mg/bungkus'}</span></td><td>${fmt(r.target,2)} mg</td><td>${fmt(r.totalTarget,2)} mg</td><td>${fmt(r.sed,2)} mg</td><td>${fmt(r.teoritis,2)} tab</td><td>${fmt(r.aktual,2)} tab</td><td>${fmt(r.perBungkus,2)} mg</td><td class="${r.cls}">${r.selisih>=0?'+':''}${fmt(r.selisih,2)} mg<br>(${r.pct>=0?'+':''}${fmt(r.pct,1)}%)</td></tr>`).join('') + `</tbody></table></div>`;
+    const metrics = `<div class="puyer-summary-grid"><div class="puyer-metric"><div class="label">Jumlah puyer</div><div class="value">${fmt(jumlah,0)} bungkus</div></div><div class="puyer-metric"><div class="label">Frekuensi</div><div class="value">${Number.isFinite(f)?fmt(f,0)+'×/hari':'—'}</div></div><div class="puyer-metric"><div class="label">Durasi</div><div class="value">${Number.isFinite(d)?fmt(d,0)+' hari':'—'}</div></div><div class="puyer-metric"><div class="label">Jumlah obat valid</div><div class="value">${valid} obat</div></div></div>`;
+    const noteHtml = `<div class="puyer-note-list">${Array.from(new Set(notes)).map(n => `<div class="puyer-note">${esc(n)}</div>`).join('')}</div>`;
+    const resepLines = [];
+    resepLines.push('R/');
+    rows.forEach(r => {
+      resepLines.push('  ' + r.nama + ' tab ' + fmt(r.sed, 2).replace(/,00$/, '') + ' mg  No. ' + fmtResepAngka(r.aktual));
+    });
+    resepLines.push('  m.f. pulv. dtd. No. ' + fmt(jumlah, 0));
+    resepLines.push('  S ' + aturan.replace(/^S\s*/i, ''));
+    const resepText = resepLines.join('\n');
+    const resepHtml = `<div><div class="puyer-resep-title">📝 Draft Resep Racikan</div><div class="puyer-resep-box">${esc(resepText)}</div></div>`;
+    const catatanText = 'Catatan: verifikasi dosis, kompatibilitas, stabilitas, dan apakah sediaan boleh digerus.';
+
+    const lines = [];
+    lines.push('RACIK PUYER');
+    if (Number.isFinite(bb) && bb > 0) lines.push('BB: ' + fmt(bb,1) + ' kg');
+    lines.push('Jumlah: ' + fmt(jumlah,0) + ' bungkus');
+    lines.push('Aturan: ' + aturan);
+    lines.push('');
+    rows.forEach(r => { lines.push('- ' + r.nama + ': target ' + fmt(r.target,2) + ' mg/bungkus; pakai ' + fmt(r.aktual,2) + ' tab @ ' + fmt(r.sed,2) + ' mg; aktual ' + fmt(r.perBungkus,2) + ' mg/bungkus; selisih ' + (r.selisih>=0?'+':'') + fmt(r.selisih,2) + ' mg (' + (r.pct>=0?'+':'') + fmt(r.pct,1) + '%).'); });
+    lines.push('');
+    lines.push('DRAFT RESEP');
+    lines.push(resepText);
+    lines.push('');
+    lines.push(catatanText);
+    state.lastText = lines.join('\n');
+    el('puyerHasil').innerHTML = metrics + table + noteHtml + resepHtml + `<div class="puyer-output-text">${esc(catatanText)}</div>`;
+    el('puyerHasilKartu').style.display = 'block';
+    if (window.TVHomeDashboard) window.TVHomeDashboard.trackOpen('Racik Puyer');
+  }
+  function resetContoh() {
+    state.rows = [];
+    if (el('puyerBb')) el('puyerBb').value = '12';
+    if (el('puyerFrekuensi')) el('puyerFrekuensi').value = '3';
+    if (el('puyerDurasi')) el('puyerDurasi').value = '3';
+    autoJumlah();
+    contoh.forEach(tambahObat);
+    document.querySelectorAll('#puyerObatList [data-puyer-id]').forEach(function (wrap) {
+      const input = wrap.querySelector('[data-field="nama"]');
+      const preset = input ? cariPresetObat(input.value) : null;
+      if (preset) terapkanPresetObat(wrap, preset);
+    });
+    if (el('puyerHasilKartu')) el('puyerHasilKartu').style.display = 'none';
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    if (!el('puyerObatList')) return;
+    resetContoh();
+    el('puyerTambahObat')?.addEventListener('click', function () { syncFromDom(); tambahObat(); });
+    el('puyerAutoBungkus')?.addEventListener('click', autoJumlah);
+    el('puyerHitung')?.addEventListener('click', hitung);
+    el('puyerReset')?.addEventListener('click', resetContoh);
+    el('puyerObatList')?.addEventListener('click', function (e) {
+      const btn = e.target.closest('[data-puyer-remove]'); if (!btn) return;
+      syncFromDom(); state.rows = state.rows.filter(r => r.id !== btn.getAttribute('data-puyer-remove')); renderObat();
+    });
+    el('puyerObatList')?.addEventListener('input', function (e) {
+      const input = e.target.closest('[data-field="nama"]'); if (!input) return;
+      const wrap = input.closest('[data-puyer-id]');
+      const preset = cariPresetObat(input.value);
+      if (preset && normObat(input.value).length >= 3) {
+        const hint = wrap && wrap.querySelector('[data-puyer-preset-hint]');
+        if (hint) hint.textContent = 'Saran: ' + preset.nama + ' — tekan/ pilih dari daftar untuk mengisi otomatis.';
+      }
+    });
+    el('puyerObatList')?.addEventListener('change', function (e) {
+      const input = e.target.closest('[data-field="nama"]'); if (!input) return;
+      const wrap = input.closest('[data-puyer-id]');
+      const preset = cariPresetObat(input.value);
+      if (preset) terapkanPresetObat(wrap, preset);
+    });
+    ['puyerFrekuensi','puyerDurasi'].forEach(id => el(id)?.addEventListener('change', autoJumlah));
+    el('puyerCopy')?.addEventListener('click', function () { if (state.lastText) navigator.clipboard?.writeText(state.lastText); });
+    el('puyerRingkasan')?.addEventListener('click', function () {
+      if (!state.lastText) hitung();
+      if (typeof window.tvRingkasanTambah === 'function') { window.tvRingkasanTambah('Racik Puyer', state.lastText); }
+      else if (typeof tvRingkasanTambah === 'function') { tvRingkasanTambah('Racik Puyer', state.lastText); }
+      else alert('Ringkasan belum siap. Salin hasil secara manual.');
+    });
+  });
+})();
+</script>
+
 <script type="module">
 /* ============================================================
    FIREBASE AI LOGIC — ASISTEN AI
@@ -8279,6 +8874,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 })();
 </script>
+
+
+
 
 </body>
 </html>
