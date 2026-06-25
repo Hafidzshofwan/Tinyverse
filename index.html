@@ -1208,8 +1208,71 @@
     box-shadow: 0 3px 0 var(--biru-tua);
   }
   .segmented-btn.aktif.aktif-rencana-a { background: var(--hijau); box-shadow: 0 3px 0 var(--hijau-tua); }
-  .segmented-btn.aktif.aktif-rencana-b { background: var(--oranye); box-shadow: 0 3px 0 var(--oranye-tua); }
-  .segmented-btn.aktif.aktif-rencana-c { background: var(--pink); box-shadow: 0 3px 0 var(--pink-tua); }
+  .segmented-btn.aktif.aktif-rencana-b { background: var(--kuning); color: var(--teks); box-shadow: 0 3px 0 var(--kuning-tua); }
+  .segmented-btn.aktif.aktif-rencana-c { background: #E63946; box-shadow: 0 3px 0 #B71C1C; }
+
+  /* Warna isi panel Rehidrasi WHO mengikuti warna rencana */
+  #rencana-a .kartu {
+    background: linear-gradient(135deg, #F0FFE8, #FFFFFF);
+    border-color: rgba(126,217,87,0.45);
+  }
+  #rencana-a h3,
+  #rencana-a .nilai-volume,
+  #rencana-a strong {
+    color: var(--hijau-tua);
+  }
+
+  #rencana-b .kartu {
+    background: linear-gradient(135deg, #FFF8D8, #FFFFFF);
+    border-color: rgba(245,183,0,0.45);
+  }
+  #rencana-b .info-metode h3,
+  #rencana-b strong,
+  #rencana-b .hasil-total-box strong {
+    color: var(--kuning-tua);
+  }
+  #rencana-b .btn-hitung {
+    background: linear-gradient(135deg, var(--kuning), #FFE97A);
+    color: var(--teks);
+    box-shadow: 0 4px 0 var(--kuning-tua);
+  }
+  #rencana-b .hasil-box-cairan {
+    background: linear-gradient(135deg, #FFF6CC, #FFFDF1);
+    border-color: var(--kuning-tua);
+  }
+  #rencana-b .hasil-box-cairan .hasil-dosis,
+  #rencana-b .hasil-tahap-judul {
+    color: var(--kuning-tua);
+  }
+  #rencana-b .hasil-rincian {
+    border-top-color: rgba(245,183,0,0.32);
+  }
+
+  #rencana-c .kartu {
+    background: linear-gradient(135deg, #FFE8E8, #FFFFFF);
+    border-color: rgba(230,57,70,0.38);
+  }
+  #rencana-c .info-metode h3,
+  #rencana-c strong,
+  #rencana-c .hasil-total-box strong {
+    color: #B71C1C;
+  }
+  #rencana-c .btn-hitung {
+    background: linear-gradient(135deg, #E63946, #FF7A7A);
+    color: #FFFFFF;
+    box-shadow: 0 4px 0 #B71C1C;
+  }
+  #rencana-c .hasil-box-cairan {
+    background: linear-gradient(135deg, #FFE0E0, #FFF7F7);
+    border-color: #E63946;
+  }
+  #rencana-c .hasil-box-cairan .hasil-dosis,
+  #rencana-c .hasil-tahap-judul {
+    color: #B71C1C;
+  }
+  #rencana-c .hasil-rincian {
+    border-top-color: rgba(230,57,70,0.28);
+  }
 
   .cairan-metode-panel { display: none; }
   .cairan-metode-panel.tampil { display: block; }
@@ -2357,6 +2420,119 @@
     .tv-ai-area { min-height: 110px; }
   }
 
+
+
+  /* ===== RINGKASAN KLINIS & EXPORT HASIL ===== */
+  .summary-shell { display: flex; flex-direction: column; gap: 14px; }
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .summary-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .summary-btn, .summary-add-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 11px 12px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .summary-btn:hover, .summary-add-btn:hover { transform: translateY(-1px); }
+  .summary-btn.primary { background: var(--biru); color: #fff; box-shadow: 0 4px 0 var(--biru-tua); }
+  .summary-btn.green { background: var(--hijau); color: #fff; box-shadow: 0 4px 0 var(--hijau-tua); }
+  .summary-btn.yellow { background: var(--kuning); color: var(--teks); box-shadow: 0 4px 0 var(--kuning-tua); }
+  .summary-btn.red { background: #E63946; color: #fff; box-shadow: 0 4px 0 #B71C1C; }
+  .summary-add-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin-top: 12px;
+    background: linear-gradient(135deg, var(--hijau), var(--hijau-tua));
+    color: #fff;
+    box-shadow: 0 4px 0 var(--hijau-tua);
+  }
+  .summary-empty {
+    text-align: center;
+    color: var(--teks-lembut);
+    padding: 24px 10px;
+    border: 2px dashed #EAF6FB;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.65);
+  }
+  .summary-item {
+    background: #FFFFFF;
+    border: 2px solid #EAF6FB;
+    border-left: 7px solid var(--biru);
+    border-radius: 18px;
+    padding: 14px;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.04);
+  }
+  .summary-item-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: flex-start;
+    margin-bottom: 8px;
+  }
+  .summary-item-title {
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    color: var(--biru-tua);
+    line-height: 1.3;
+  }
+  .summary-item-time { font-size: .72rem; color: var(--teks-lembut); margin-top: 2px; }
+  .summary-item-body {
+    white-space: pre-wrap;
+    line-height: 1.55;
+    font-size: .86rem;
+    color: var(--teks);
+  }
+  .summary-delete {
+    border: none;
+    background: #FFE8E8;
+    color: #B71C1C;
+    border-radius: 999px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-weight: 800;
+  }
+  .summary-status { margin-top: 8px; font-size: .78rem; color: var(--teks-lembut); }
+  .summary-print-area { display: none; }
+
+  @media (max-width: 640px) {
+    .summary-grid, .summary-actions { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    body * { visibility: hidden !important; }
+    .summary-print-area, .summary-print-area * { visibility: visible !important; }
+    .summary-print-area {
+      display: block !important;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      padding: 24px;
+      color: #222;
+      background: #fff;
+      font-family: Arial, sans-serif;
+    }
+    .summary-print-area h1 { font-size: 22px; margin-bottom: 8px; }
+    .summary-print-area h2 { font-size: 15px; margin: 16px 0 6px; border-bottom: 1px solid #ddd; padding-bottom: 4px; }
+    .summary-print-area pre { white-space: pre-wrap; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.45; }
+  }
+
 </style>
 </head>
 <body>
@@ -2430,7 +2606,7 @@
 </button>
 </div>
 <div class="tv-side-grup">
-<div class="tv-side-judul">Dosis &amp; Cairan</div>
+<div class="tv-side-judul">Obat &amp; Cairan</div>
 <button class="sidebar-item" data-page="dosis" type="button">
 <span class="ikon">💊</span><span class="label">Dosis Obat</span>
 </button>
@@ -2448,6 +2624,9 @@
 </button>
 <button class="sidebar-item" data-page="imunisasi" type="button">
 <span class="ikon">📅</span><span class="label">Jadwal Imunisasi</span>
+</button>
+<button class="sidebar-item" data-page="ringkasan" type="button">
+<span class="ikon">📄</span><span class="label">Ringkasan Klinis</span>
 </button>
 
 </div>
@@ -2665,13 +2844,13 @@
 </div>
 <a class="ganti-link" href="#library">Ganti Obat</a>
 </div>
-<div class="form-group" id="grup-berat">
-<label for="beratBadan">⚖️ Berat Badan Anak (kg)</label>
-<input id="beratBadan" min="0" placeholder="Contoh: 12.5" step="0.1" type="number"/>
-</div>
 <div class="form-group" id="grup-usia" style="display:none;">
 <label for="usiaBulan">👶 Usia Anak (bulan)</label>
 <input id="usiaBulan" min="0" placeholder="Contoh: 8" step="1" type="number"/>
+</div>
+<div class="form-group" id="grup-berat">
+<label for="beratBadan">⚖️ Berat Badan Anak (kg)</label>
+<input id="beratBadan" min="0" placeholder="Contoh: 12.5" step="0.1" type="number"/>
 </div>
 <div class="form-group" id="grup-sediaan" style="display:none;">
 <label for="sediaanObat">🧴 Pilih Sediaan Sirup</label>
@@ -2874,8 +3053,8 @@
 <div class="kartu">
 <div class="segmented-toggle toggle-3" id="cairanRencanaTab">
 <button class="segmented-btn aktif aktif-rencana-a" data-rencana="a" type="button">Rencana A<br/><small>Tanpa Dehidrasi</small></button>
-<button class="segmented-btn" data-rencana="b" type="button">Rencana B<br/><small>Ringan–Sedang</small></button>
-<button class="segmented-btn" data-rencana="c" type="button">Rencana C<br/><small>Dehidrasi Berat</small></button>
+<button class="segmented-btn aktif-rencana-b" data-rencana="b" type="button">Rencana B<br/><small>Ringan–Sedang</small></button>
+<button class="segmented-btn aktif-rencana-c" data-rencana="c" type="button">Rencana C<br/><small>Dehidrasi Berat</small></button>
 </div>
 </div>
 <!-- Rencana A: kartu info statis, tanpa input -->
@@ -3027,6 +3206,57 @@
 </div>
 </div>
 </main>
+
+
+<!-- ===== HALAMAN 6: RINGKASAN KLINIS & EXPORT HASIL ===== -->
+<main class="page" id="page-ringkasan">
+<div class="judul-section">
+<div class="ikon-bulat" style="background:#EAF6FB;">📄</div>
+<div>
+<h2>Ringkasan Klinis</h2>
+<span class="referensi-badge">Kumpulkan, salin, cetak, atau export hasil</span>
+</div>
+</div>
+<div class="summary-shell">
+<div class="kartu">
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">👤 Data Pasien / Identitas Ringkas</h3>
+<div class="summary-grid">
+<div class="form-group">
+<label for="summaryNama">Nama / Inisial</label>
+<input id="summaryNama" placeholder="cth: An. A / inisial saja" type="text"/>
+</div>
+<div class="form-group">
+<label for="summaryNoRm">No. RM / ID</label>
+<input id="summaryNoRm" placeholder="opsional" type="text"/>
+</div>
+<div class="form-group">
+<label for="summaryUsia">Usia</label>
+<input id="summaryUsia" placeholder="cth: 4 tahun 2 bulan" type="text"/>
+</div>
+<div class="form-group">
+<label for="summaryBbTb">BB/TB</label>
+<input id="summaryBbTb" placeholder="cth: 16 kg / 102 cm" type="text"/>
+</div>
+</div>
+<div class="form-group">
+<label for="summaryCatatan">Catatan klinis singkat</label>
+<textarea id="summaryCatatan" placeholder="cth: demam 2 hari, muntah, observasi intake-output..." style="min-height:88px; resize:vertical;"></textarea>
+</div>
+<div class="summary-actions">
+<button class="summary-btn primary" id="summaryCopy" type="button">📋 Salin</button>
+<button class="summary-btn green" id="summaryDownload" type="button">⬇️ Export TXT</button>
+<button class="summary-btn yellow" id="summaryPrint" type="button">🖨️ Print / PDF</button>
+<button class="summary-btn red" id="summaryClear" type="button">🗑️ Bersihkan</button>
+</div>
+<div class="summary-status" id="summaryStatus">Ringkasan hanya mengambil poin klinis utama dari hasil kalkulator, bukan seluruh catatan/perhitungan panjang.</div>
+</div>
+<div class="kartu">
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">🧾 Daftar Hasil</h3>
+<div id="summaryList"></div>
+</div>
+</div>
+</main>
+<div class="summary-print-area" id="summaryPrintArea"></div>
 
 
 <!-- ===== ASISTEN AI MENGAMBANG (tersedia di semua menu) ===== -->
@@ -5210,6 +5440,9 @@ function pindahMetodeCairan(metode) {
 function pindahRencanaCairan(rencana) {
   document.querySelectorAll("#cairanRencanaTab .segmented-btn").forEach(btn => {
     btn.classList.toggle("aktif", btn.dataset.rencana === rencana);
+    btn.classList.toggle("aktif-rencana-a", btn.dataset.rencana === "a");
+    btn.classList.toggle("aktif-rencana-b", btn.dataset.rencana === "b");
+    btn.classList.toggle("aktif-rencana-c", btn.dataset.rencana === "c");
   });
   ["a", "b", "c"].forEach(r => {
     document.getElementById(`rencana-${r}`).classList.toggle("tampil", r === rencana);
@@ -6857,6 +7090,299 @@ function pindahHalaman(halaman) {
 })();
 
 
+
+/* ============================================================
+   RINGKASAN KLINIS & EXPORT HASIL
+   Menyimpan hasil kalkulator yang dipilih user, lalu bisa disalin,
+   diunduh sebagai TXT, atau dicetak/disimpan PDF lewat dialog print.
+============================================================ */
+const TV_SUMMARY_KEY = "tyniverse_ringkasan_klinis_v1";
+const TV_SUMMARY_PATIENT_KEY = "tyniverse_ringkasan_pasien_v1";
+let tvRingkasanItems = [];
+
+function tvRingkasanLoad() {
+  try { tvRingkasanItems = JSON.parse(localStorage.getItem(TV_SUMMARY_KEY) || "[]"); }
+  catch (e) { tvRingkasanItems = []; }
+  return tvRingkasanItems;
+}
+function tvRingkasanSave() {
+  localStorage.setItem(TV_SUMMARY_KEY, JSON.stringify(tvRingkasanItems));
+}
+function tvRingkasanPatientIds() { return ["summaryNama", "summaryNoRm", "summaryUsia", "summaryBbTb", "summaryCatatan"]; }
+function tvRingkasanLoadPatient() {
+  let data = {};
+  try { data = JSON.parse(localStorage.getItem(TV_SUMMARY_PATIENT_KEY) || "{}"); } catch (e) { data = {}; }
+  tvRingkasanPatientIds().forEach(id => { const el = document.getElementById(id); if (el && data[id]) el.value = data[id]; });
+}
+function tvRingkasanSavePatient() {
+  const data = {};
+  tvRingkasanPatientIds().forEach(id => { const el = document.getElementById(id); if (el) data[id] = el.value || ""; });
+  localStorage.setItem(TV_SUMMARY_PATIENT_KEY, JSON.stringify(data));
+}
+function tvRingkasanCleanTextFromHtml(html) {
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html || "";
+  tmp.querySelectorAll("button, .summary-add-btn").forEach(el => el.remove());
+  return (tmp.textContent || "")
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+function tvRingkasanSetStatus(msg) {
+  const el = document.getElementById("summaryStatus");
+  if (el) el.textContent = msg;
+}
+function tvRingkasanNow() {
+  return new Date().toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" });
+}
+function tvRingkasanTambah(title, body) {
+  const clean = (body || "").trim();
+  if (!clean) { tvRingkasanSetStatus("Belum ada hasil yang bisa ditambahkan."); return; }
+  tvRingkasanItems.unshift({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), title, body: clean, time: tvRingkasanNow() });
+  tvRingkasanSave();
+  tvRingkasanRender();
+  tvRingkasanSetStatus(`Ditambahkan: ${title}`);
+}
+function tvText(el) { return (el?.textContent || "").replace(/\s+/g, " ").trim(); }
+function tvRingkasanNilaiSetelahLabel(box, labelText) {
+  const rows = Array.from(box.querySelectorAll(".hasil-row"));
+  const row = rows.find(r => tvText(r.querySelector(".label")).toLowerCase().includes(labelText.toLowerCase()));
+  return row ? tvText(row.querySelector(".value")) : "";
+}
+function tvRingkasanHasilKlinis(title, boxId, box) {
+  const lines = [];
+  if (boxId === "hasil-box") {
+    const nama = document.getElementById("namaTerpilih")?.textContent?.trim() || tvRingkasanNilaiSetelahLabel(box, "Obat") || "Obat";
+    const dosis = tvText(box.querySelector(".hasil-dosis"));
+    const volume = tvText(box.querySelector(".hasil-volume"));
+    const frekuensi = tvText(box.querySelector(".hasil-frekuensi")).replace(/^⏰\s*/, "");
+    const sediaan = tvRingkasanNilaiSetelahLabel(box, "Sediaan");
+    const pasien = tvRingkasanNilaiSetelahLabel(box, "Pasien");
+    const warning = tvText(box.querySelector(".hasil-warning"));
+    lines.push(`Obat: ${nama}`);
+    if (dosis) lines.push(`Dosis: ${dosis}`);
+    if (volume) lines.push(`Volume pemberian: ${volume}`);
+    if (frekuensi) lines.push(`Frekuensi: ${frekuensi}`);
+    if (sediaan) lines.push(`Sediaan: ${sediaan}`);
+    if (pasien) lines.push(`Pasien: ${pasien}`);
+    if (warning) lines.push(warning.replace(/^⚠️\s*/, "Peringatan: "));
+    return { title: `Dosis Obat — ${nama}`, body: lines.join("\n") };
+  }
+
+  if (boxId === "hasilCairanBox") {
+    const total = tvText(box.querySelector(".hasil-dosis"));
+    const jam = tvText(box.querySelector(".hasil-dosis")?.nextElementSibling);
+    const bb = document.getElementById("cairanBerat")?.value;
+    if (bb) lines.push(`BB: ${bb} kg`);
+    if (total) lines.push(`Maintenance: ${total}`);
+    if (jam) lines.push(`Kecepatan: ${jam}`);
+    return { title, body: lines.join("\n") };
+  }
+
+  if (boxId === "hasilRencanaB") {
+    const total = tvText(box.querySelector(".hasil-dosis"));
+    const laju = tvText(box.querySelector(".hasil-dosis")?.nextElementSibling);
+    const bb = document.getElementById("cairanBeratB")?.value;
+    if (bb) lines.push(`BB: ${bb} kg`);
+    if (total) lines.push(`Cairan: ${total}`);
+    if (laju) lines.push(laju);
+    return { title, body: lines.join("\n") };
+  }
+
+  if (boxId === "hasilRencanaC") {
+    const total = tvText(box.querySelector(".hasil-dosis"));
+    const subtitle = tvText(box.querySelector(".hasil-dosis")?.nextElementSibling);
+    const tahap = Array.from(box.querySelectorAll(".hasil-tahap")).map(t => {
+      const judul = tvText(t.querySelector(".hasil-tahap-judul"));
+      const vals = Array.from(t.querySelectorAll(".hasil-tahap-baris")).map(r => `${tvText(r.querySelector(".hasil-tahap-label"))}: ${tvText(r.querySelector(".hasil-tahap-nilai"))}`);
+      return [judul, ...vals].filter(Boolean).join(" — ");
+    });
+    const bb = document.getElementById("cairanBeratC")?.value;
+    if (bb) lines.push(`BB: ${bb} kg`);
+    if (total) lines.push(`Total: ${total}`);
+    if (subtitle) lines.push(subtitle);
+    lines.push(...tahap);
+    return { title, body: lines.join("\n") };
+  }
+
+  if (boxId === "hasilFaktorTetes") {
+    const tetes = tvText(box.querySelector(".hasil-dosis"));
+    const mlJam = tvText(box.querySelector(".hasil-dosis")?.nextElementSibling);
+    const volume = document.getElementById("tetesVolume")?.value;
+    const lama = document.getElementById("tetesLamaJam")?.value;
+    const drip = document.querySelector("#tetesDripTab .segmented-btn.aktif")?.textContent?.replace(/\s+/g, " ").trim();
+    if (tetes) lines.push(`Tetesan: ${tetes}`);
+    if (mlJam) lines.push(`Kecepatan: ${mlJam}`);
+    if (volume) lines.push(`Volume: ${volume} mL`);
+    if (lama) lines.push(`Lama pemberian: ${lama} jam`);
+    if (drip) lines.push(`Drip set: ${drip}`);
+    return { title, body: lines.join("\n") };
+  }
+
+  if (boxId === "hasilLukaBakar") {
+    const cards = Array.from(box.querySelectorAll(".burn-result-card"));
+    const pick = keyword => cards.find(c => tvText(c.querySelector("h4")).toLowerCase().includes(keyword));
+    const tbsaCard = pick("luas");
+    const parklandCard = pick("parkland");
+    const pembagianCard = pick("pembagian");
+    const maintenanceCard = pick("maintenance");
+    const totalCard = pick("total");
+    const urinCard = pick("urin");
+    const tbsa = tvText(tbsaCard?.querySelector(".burn-result-value"));
+    const areaList = Array.from(tbsaCard?.querySelectorAll("li") || []).map(li => tvText(li));
+    if (tbsa) lines.push(`TBSA: ${tbsa}`);
+    if (parklandCard) lines.push(`Parkland: ${tvText(parklandCard.querySelector(".burn-result-value"))}`);
+    if (pembagianCard) lines.push(tvText(pembagianCard.querySelector(".hasil-rincian")));
+    if (maintenanceCard) lines.push(`Maintenance: ${tvText(maintenanceCard.querySelector(".burn-result-value"))}`);
+    if (totalCard) lines.push(`Total 24 jam pertama: ${tvText(totalCard.querySelector(".burn-result-value"))}`);
+    if (urinCard) lines.push(`Target urin: ${tvText(urinCard.querySelector(".burn-result-value"))}`);
+    if (areaList.length) lines.push(`Area: ${areaList.join("; ")}`);
+    return { title, body: lines.join("\n") };
+  }
+
+  if (boxId === "tkHasilBox") {
+    Array.from(box.querySelectorAll(".tk-cdc-block, .tk-zscore-block")).forEach(block => {
+      const rows = Array.from(block.querySelectorAll(".tk-cdc-row, .tk-zscore-row")).map(r => `${tvText(r.children[0])}: ${tvText(r.children[1])}`);
+      const status = tvText(block.querySelector(".tk-cdc-status, .tk-zscore-status"));
+      const cleanRows = rows.filter(x => !x.toLowerCase().includes("indikator") || rows.length <= 2);
+      if (status) cleanRows.push(`Interpretasi: ${status.replace(/^●\s*/, "")}`);
+      if (cleanRows.length) lines.push(cleanRows.join("; "));
+    });
+    if (!lines.length) {
+      Array.from(box.querySelectorAll(".tk-hasil-baris")).forEach(r => lines.push(`${tvText(r.querySelector(".tk-hasil-label"))}: ${tvText(r.querySelector(".tk-hasil-nilai"))}`));
+    }
+    return { title, body: lines.join("\n") };
+  }
+
+  return { title, body: tvRingkasanCleanTextFromHtml(box.innerHTML) };
+}
+function tvRingkasanTambahDariBox(title, boxId) {
+  const box = document.getElementById(boxId);
+  if (!box) return;
+  const isHidden = box.offsetParent === null && getComputedStyle(box).display === "none";
+  if (isHidden) { tvRingkasanSetStatus("Hasil belum tampil. Hitung dulu sebelum menambahkan."); return; }
+  const ringkas = tvRingkasanHasilKlinis(title, boxId, box);
+  tvRingkasanTambah(ringkas.title, ringkas.body || tvRingkasanCleanTextFromHtml(box.innerHTML));
+}
+function tvRingkasanText() {
+  tvRingkasanSavePatient();
+  const get = id => (document.getElementById(id)?.value || "").trim();
+  const lines = [];
+  lines.push("RINGKASAN KLINIS TYNIVERSE");
+  lines.push(`Dibuat: ${tvRingkasanNow()}`);
+  lines.push("");
+  lines.push("DATA PASIEN");
+  lines.push(`Nama/Inisial: ${get("summaryNama") || "-"}`);
+  lines.push(`No. RM/ID: ${get("summaryNoRm") || "-"}`);
+  lines.push(`Usia: ${get("summaryUsia") || "-"}`);
+  lines.push(`BB/TB: ${get("summaryBbTb") || "-"}`);
+  lines.push(`Catatan: ${get("summaryCatatan") || "-"}`);
+  lines.push("");
+  lines.push("HASIL KALKULATOR");
+  if (!tvRingkasanItems.length) lines.push("- Belum ada hasil yang ditambahkan.");
+  tvRingkasanItems.forEach((it, idx) => {
+    lines.push("");
+    lines.push(`${idx + 1}. ${it.title}`);
+    lines.push(`Waktu: ${it.time}`);
+    lines.push(it.body);
+  });
+  lines.push("");
+  lines.push("Catatan: Ringkasan ini adalah alat bantu dokumentasi. Keputusan klinis tetap berdasarkan penilaian tenaga kesehatan.");
+  return lines.join("\n");
+}
+function tvRingkasanRender() {
+  const list = document.getElementById("summaryList");
+  if (!list) return;
+  tvRingkasanLoad();
+  if (!tvRingkasanItems.length) {
+    list.innerHTML = `<div class="summary-empty">Belum ada hasil. Setelah menghitung dosis/cairan/tumbuh kembang, klik <strong>Tambahkan ke Ringkasan</strong>. Hanya poin klinis utama yang akan disimpan.</div>`;
+    return;
+  }
+  list.innerHTML = tvRingkasanItems.map(it => `
+    <div class="summary-item" data-summary-id="${escapeHtml(it.id)}">
+      <div class="summary-item-head">
+        <div><div class="summary-item-title">${escapeHtml(it.title)}</div><div class="summary-item-time">${escapeHtml(it.time)}</div></div>
+        <button class="summary-delete" type="button" aria-label="Hapus item">×</button>
+      </div>
+      <div class="summary-item-body">${escapeHtml(it.body)}</div>
+    </div>
+  `).join("");
+}
+function tvRingkasanPasangTombol() {
+  const targets = [
+    { id: "hasil-box", title: "Dosis Obat" },
+    { id: "hasilCairanBox", title: "Cairan Rumatan — Holliday–Segar" },
+    { id: "hasilRencanaB", title: "Rehidrasi WHO — Rencana B" },
+    { id: "hasilRencanaC", title: "Rehidrasi WHO — Rencana C" },
+    { id: "hasilLukaBakar", title: "Rehidrasi Luka Bakar" },
+    { id: "hasilFaktorTetes", title: "Faktor Tetes" },
+    { id: "tkHasilBox", title: "Tumbuh Kembang" }
+  ];
+  targets.forEach(t => {
+    const box = document.getElementById(t.id);
+    if (!box) return;
+    const hasContent = (box.textContent || "").trim().length > 0;
+    if (!hasContent || box.querySelector(".summary-add-btn")) return;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "summary-add-btn";
+    btn.textContent = "📄 Tambahkan ke Ringkasan";
+    btn.addEventListener("click", function () { tvRingkasanTambahDariBox(t.title, t.id); });
+    box.appendChild(btn);
+  });
+}
+function tvRingkasanCopy() {
+  const text = tvRingkasanText();
+  navigator.clipboard?.writeText(text).then(() => tvRingkasanSetStatus("Ringkasan berhasil disalin."))
+    .catch(() => { tvRingkasanSetStatus("Clipboard tidak tersedia. Gunakan tombol Export TXT."); });
+}
+function tvRingkasanDownload() {
+  const blob = new Blob([tvRingkasanText()], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  const tanggal = new Date().toISOString().slice(0,10);
+  a.href = url; a.download = `ringkasan-klinis-tyniverse-${tanggal}.txt`;
+  document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  tvRingkasanSetStatus("File TXT ringkasan diunduh.");
+}
+function tvRingkasanPrint() {
+  const area = document.getElementById("summaryPrintArea");
+  if (!area) return;
+  area.innerHTML = `<h1>Ringkasan Klinis Tyniverse</h1><pre>${escapeHtml(tvRingkasanText())}</pre>`;
+  setTimeout(() => window.print(), 60);
+}
+function tvRingkasanClear() {
+  if (!confirm("Hapus semua item ringkasan?")) return;
+  tvRingkasanItems = [];
+  tvRingkasanSave();
+  tvRingkasanRender();
+  tvRingkasanSetStatus("Semua item ringkasan dihapus.");
+}
+function tvRingkasanInit() {
+  tvRingkasanLoadPatient();
+  tvRingkasanRender();
+  tvRingkasanPatientIds().forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener("input", tvRingkasanSavePatient);
+  });
+  document.getElementById("summaryCopy")?.addEventListener("click", tvRingkasanCopy);
+  document.getElementById("summaryDownload")?.addEventListener("click", tvRingkasanDownload);
+  document.getElementById("summaryPrint")?.addEventListener("click", tvRingkasanPrint);
+  document.getElementById("summaryClear")?.addEventListener("click", tvRingkasanClear);
+  document.getElementById("summaryList")?.addEventListener("click", function (e) {
+    const btn = e.target.closest(".summary-delete");
+    if (!btn) return;
+    const item = btn.closest(".summary-item");
+    const id = item?.dataset.summaryId;
+    tvRingkasanItems = tvRingkasanItems.filter(x => x.id !== id);
+    tvRingkasanSave(); tvRingkasanRender(); tvRingkasanSetStatus("Item dihapus.");
+  });
+  tvRingkasanPasangTombol();
+  document.addEventListener("click", function () { setTimeout(tvRingkasanPasangTombol, 80); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Enter") setTimeout(tvRingkasanPasangTombol, 80); });
+}
+
 /* ============================================================
    INISIALISASI & EVENT BINDING SAAT HALAMAN DIMUAT
    (pakai DOMContentLoaded, bukan window.onload, supaya tidak
@@ -6867,6 +7393,7 @@ document.addEventListener("DOMContentLoaded", function () {
   renderLibrary();
   toggleInputSesuaiObat(daftarObat[obatTerpilih]);
   renderProtokolGallery();
+  tvRingkasanInit();
 
   document.getElementById("grid-obat").addEventListener("click", function (e) {
     const kartu = e.target.closest(".obat-card");
@@ -7652,21 +8179,20 @@ document.addEventListener("DOMContentLoaded", function () {
 ============================================================ */
 import { initializeApp, getApps, getApp } from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-import { initializeAppCheck, ReCaptchaEnterpriseProvider } from
-"https://www.gstatic.com/firebasejs/12.3.0/firebase-app-check.js";
+
 import { getAI, getGenerativeModel, GoogleAIBackend } from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-ai.js";
 
-const AI_MODEL = "gemini-3.5-flash";
-const RECAPTCHA_ENTERPRISE_SITE_KEY = "6LdIeDEtAAAAAMzV6NFUP_bRnMSrYYJPMKzZiu8N";
+const AI_MODEL = "gemini-2.5-flash";
+
 const FIREBASE_CONFIG_AI = {
-  apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
-  authDomain: 'tyniverse-5a3b2.firebaseapp.com',
-  projectId: 'tyniverse-5a3b2',
-  storageBucket: 'tyniverse-5a3b2.firebasestorage.app',
-  messagingSenderId: '446927338321',
-  appId: '1:446927338321:web:5b48cb060b052855b6b170',
-  measurementId: 'G-RZYE8ZRDSB'
+  apiKey: "AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA",
+  authDomain: "tyniverse-5a3b2.firebaseapp.com",
+  projectId: "tyniverse-5a3b2",
+  storageBucket: "tyniverse-5a3b2.firebasestorage.app",
+  messagingSenderId: "446927338321",
+  appId: "1:446927338321:web:5b48cb060b052855b6b170",
+  measurementId: "G-RZYE8ZRDSB"
 };
 
 function el(id) { return document.getElementById(id); }
@@ -7679,14 +8205,8 @@ async function getModel() {
     modelPromise = Promise.resolve().then(function () {
       const app = getApps().length ? getApp() : initializeApp(FIREBASE_CONFIG_AI);
 
-initializeAppCheck(app, {
-  provider: new ReCaptchaEnterpriseProvider(RECAPTCHA_ENTERPRISE_SITE_KEY),
-  isTokenAutoRefreshEnabled: true
-});
-
 const ai = getAI(app, {
-  backend: new GoogleAIBackend(),
-  useLimitedUseAppCheckTokens: true
+  backend: new GoogleAIBackend()
 });
       return getGenerativeModel(ai, {
         model: AI_MODEL,
