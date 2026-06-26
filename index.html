@@ -766,6 +766,73 @@
   .page { display: none; }
   .page.page-aktif { display: block; }
 
+
+
+/* ===== GUIDELINE PDF LIBRARY ===== */
+.guideline-hero-card { display: grid; gap: 14px; }
+.guideline-search-wrap { margin-bottom: 0; }
+.guideline-filter { display: flex; flex-wrap: wrap; gap: 8px; }
+.guideline-chip {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--teks);
+  background: #F6F3E8;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease, color .15s ease;
+}
+.guideline-chip:hover { transform: translateY(-1px); }
+.guideline-chip.aktif { background: linear-gradient(160deg, var(--biru), var(--biru-tua)); color: #fff; }
+.guideline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px;
+}
+.guideline-card {
+  background: #fff;
+  border: 2px solid #EAF6FB;
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow: 0 6px 16px rgba(74,55,40,0.055);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.guideline-card-head { display: flex; align-items: flex-start; gap: 10px; }
+.guideline-card-icon {
+  width: 38px; height: 38px; border-radius: 14px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: #EFEAFF; font-size: 1.15rem; flex: 0 0 auto;
+}
+.guideline-card h3 { margin: 0; font-size: 0.95rem; color: var(--teks); line-height: 1.25; }
+.guideline-meta { font-size: 0.72rem; font-weight: 800; color: var(--teks-lembut); line-height: 1.35; }
+.guideline-desc { margin: 0; font-size: 0.78rem; font-weight: 600; color: var(--teks-lembut); line-height: 1.45; }
+.guideline-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.guideline-btn {
+  border: 0; border-radius: 13px; padding: 9px 11px;
+  font-family: 'Fredoka', sans-serif; font-size: 0.76rem; font-weight: 700;
+  text-decoration: none; cursor: pointer; color: #fff; background: var(--biru);
+  box-shadow: 0 3px 0 var(--biru-tua);
+}
+.guideline-btn.secondary { background: var(--hijau); box-shadow: 0 3px 0 var(--hijau-tua); }
+.guideline-btn.download { background: var(--kuning); color: var(--teks); box-shadow: 0 3px 0 var(--kuning-tua); }
+.guideline-detail-card { display: grid; gap: 12px; }
+.guideline-pdf-frame-wrap {
+  border: 2px solid #EAF6FB; border-radius: 18px; overflow: hidden;
+  background: #F8F8F2; min-height: 68vh;
+}
+.guideline-pdf-frame { width: 100%; height: 72vh; border: 0; display: block; background: #fff; }
+.guideline-detail-note { font-size: 0.76rem; color: var(--teks-lembut); font-weight: 700; line-height: 1.45; }
+@media (max-width: 720px) {
+  .guideline-grid { grid-template-columns: 1fr; }
+  .guideline-pdf-frame { height: 65vh; }
+  .guideline-actions { display: grid; grid-template-columns: 1fr; }
+  .guideline-btn { text-align: center; }
+}
+
   /* ===== GUIDELINE: GALERI DIAGNOSIS ===== */
   #grid-protokol {
     display: grid;
@@ -2761,6 +2828,80 @@
 #page-beranda .tv-home-update-list li {
   margin-bottom: 4px !important;
 }
+
+
+/* ===== GUIDELINE CARD CLEANUP: 1 ikon/card, isi center, tombol hanya di detail ===== */
+.guideline-grid .guideline-card.protokol-card {
+  background: var(--krem);
+  border-radius: 24px;
+  padding: 18px 16px 20px;
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  text-align: center;
+  cursor: pointer;
+  border: 3px solid transparent;
+  box-shadow: 0 8px 18px rgba(74,55,40,0.06);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.guideline-grid .guideline-card.protokol-card:hover {
+  transform: translateY(-4px);
+  border-color: #DDF4FB;
+  box-shadow: 0 12px 24px rgba(74,55,40,0.10);
+}
+.guideline-grid .guideline-card.protokol-card:focus-visible {
+  outline: 3px solid var(--biru);
+  outline-offset: 3px;
+}
+.guideline-grid .guideline-card-head {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
+.guideline-grid .guideline-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: #EFEAFF;
+  font-size: 1.65rem;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+.guideline-grid .guideline-card h3 {
+  margin: 0;
+  width: 100%;
+  font-size: 1.02rem;
+  line-height: 1.18;
+  text-align: center;
+}
+.guideline-grid .guideline-meta {
+  width: 100%;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-align: center;
+}
+.guideline-grid .guideline-desc {
+  width: 100%;
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  text-align: center;
+}
+.guideline-grid .guideline-actions {
+  display: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -2999,6 +3140,7 @@
 <li>Pencarian obat di Racik Puyer lebih cepat dengan saran nama obat dan pengisian otomatis data dasar.</li>
 <li>Quick Access Beranda kini hanya menampilkan 4 fitur yang paling sering digunakan secara otomatis.</li>
 <li>Struktur menu diperbarui: Kalkulator Klinis, Pemantauan Klinis, Referensi, Preventif, dan Dokumentasi.</li>
+<li>Guideline PDF: baca guideline langsung di web, buka tab baru, atau download file.</li>
 <li>Asisten AI tetap tersedia sebagai ikon mengambang di semua menu.</li>
 </ul>
 </section>
@@ -3108,40 +3250,49 @@
 </div>
 </section>
 </main>
-<!-- ===== HALAMAN 2: GUIDELINE (fitur baru) ===== -->
+<!-- ===== HALAMAN 2: GUIDELINE (PDF LIBRARY) ===== -->
 <main class="page" id="page-protokol">
-<!-- ----- Galeri diagnosis ----- -->
 <section id="protokol-gallery-section">
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#FFD7E0;">🩺</div>
+<div class="ikon-bulat" style="background:#EFEAFF;">📚</div>
 <div>
-<h2>Guideline</h2>
-<p>Pilih diagnosis untuk melihat daftar obat &amp; dosisnya</p>
+<h2>Guideline Anak</h2>
+<p>Kumpulan guideline pediatri untuk dibaca langsung atau diunduh.</p>
 </div>
 </div>
-<div class="kartu">
-<div class="search-wrap">
+<div class="kartu guideline-hero-card">
+<div class="search-wrap guideline-search-wrap">
 <span class="ikon-cari">🔍</span>
-<label class="sr-only" for="kotakCariProtokol">Cari diagnosis</label>
-<input id="kotakCariProtokol" placeholder="Ketik nama diagnosis... contoh: Pneumonia" type="text"/>
+<label class="sr-only" for="kotakCariProtokol">Cari guideline</label>
+<input id="kotakCariProtokol" placeholder="Cari judul, kategori, sumber... contoh: Pneumonia" type="text"/>
 </div>
-<div id="grid-protokol"><!-- Diisi otomatis oleh JavaScript --></div>
-<p id="pesan-kosong-protokol">😅 Diagnosis tidak ditemukan, coba kata kunci lain ya!</p>
+<div class="guideline-filter" id="guidelineKategoriFilter" aria-label="Filter kategori guideline">
+<button class="guideline-chip aktif" data-kategori="Semua" type="button">Semua</button>
+<button class="guideline-chip" data-kategori="Gastroenterologi" type="button">Gastroenterologi</button>
+<button class="guideline-chip" data-kategori="Gawat Darurat" type="button">Gawat Darurat</button>
+<button class="guideline-chip" data-kategori="Infeksi" type="button">Infeksi</button>
+<button class="guideline-chip" data-kategori="Neonatus" type="button">Neonatus</button>
+<button class="guideline-chip" data-kategori="Neurologi" type="button">Neurologi</button>
+<button class="guideline-chip" data-kategori="Nutrisi" type="button">Nutrisi</button>
+<button class="guideline-chip" data-kategori="Respirologi" type="button">Respirologi</button>
+</div>
+<div id="grid-protokol" class="guideline-grid"><!-- Diisi otomatis oleh JavaScript --></div>
+<p id="pesan-kosong-protokol">😅 Guideline tidak ditemukan, coba kata kunci atau kategori lain.</p>
 </div>
 </section>
-<!-- ----- Detail diagnosis (disembunyikan sampai dipilih) ----- -->
 <section id="protokol-detail-section" style="display:none;">
-<button class="btn-kembali" id="btnKembaliProtokol" type="button">⬅️ Kembali ke daftar diagnosis</button>
+<button class="btn-kembali" id="btnKembaliProtokol" type="button">⬅️ Kembali ke daftar guideline</button>
 <div class="judul-section">
-<div class="ikon-bulat" id="protokolDetailIkon" style="background:#FFD7E0;">🩺</div>
+<div class="ikon-bulat" id="protokolDetailIkon" style="background:#EFEAFF;">📚</div>
 <div>
-<h2 id="protokolDetailNama">Nama Diagnosis</h2>
+<h2 id="protokolDetailNama">Judul Guideline</h2>
 <span class="referensi-badge" id="protokolDetailReferensi">Sumber</span>
 </div>
 </div>
-<div id="protokol-detail-konten"><!-- Diisi otomatis oleh JavaScript --></div>
+<div id="protokol-detail-konten"><!-- Detail PDF --></div>
 </section>
-<!-- ----- Lightbox untuk memperbesar gambar alur/algoritma ----- -->
+
+<!-- Legacy lightbox elements kept for script compatibility -->
 <div class="alur-lightbox" id="alurLightbox">
 <button class="alur-lightbox-tutup" id="alurLightboxTutup" type="button">✕ Tutup</button>
 <img alt="Alur/Algoritma diagnosis (diperbesar)" id="alurLightboxImg" src=""/>
@@ -7981,6 +8132,220 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+
+<script>
+/* ===== GUIDELINE PDF LIBRARY OVERRIDE ===== */
+(function () {
+  'use strict';
+  const TV_GUIDELINE_LIST = [
+    {
+      id: 'pneumonia-anak-2025',
+      title: 'Pneumonia',
+      category: 'Respirologi',
+      year: '2025',
+      source: 'IDAI',
+      description: 'Panduan diagnosis dan tata laksana pneumonia pada anak.',
+      pdfUrl: 'assets/guidelines/pneumonia-anak-2025.pdf',
+      icon: '🫁',
+      tags: ['pneumonia', 'respirasi', 'respirologi', 'batuk', 'sesak', 'idai']
+    },
+    {
+      id: 'asma-anak-2022',
+      title: 'Asma',
+      category: 'Respirologi',
+      year: '2022',
+      source: 'IDAI',
+      description: 'Pedoman Nasional Asma Anak.',
+      pdfUrl: 'assets/guidelines/asma-anak-2022.pdf',
+      icon: '🫁',
+      tags: ['asma', 'respirasi', 'respirologi', 'wheezing', 'mengi', 'idai']
+    },
+    {
+      id: 'diare-anak-2011',
+      title: 'Diare',
+      category: 'Gastroenterologi',
+      year: '2011',
+      source: 'Kemenkes',
+      description: 'Lintas Diare Anak.',
+      pdfUrl: 'assets/guidelines/diare-anak-2011.pdf',
+      icon: '💧',
+      tags: ['diare', 'gastroenterologi', 'dehidrasi', 'rehidrasi', 'lintas diare', 'kemenkes']
+    },
+    {
+      id: 'tb-anak-2016',
+      title: 'Tuberkulosis',
+      category: 'Respirologi',
+      year: '2016',
+      source: 'Kemenkes',
+      description: 'Petunjuk Teknis Manajemen dan Tatalaksana TB Anak.',
+      pdfUrl: 'assets/guidelines/tb-anak-2016.pdf',
+      icon: '🫁',
+      tags: ['tuberkulosis', 'tb', 'respirasi', 'respirologi', 'kemenkes']
+    },
+    {
+      id: 'kejangdemam-anak-2016',
+      title: 'Kejang Demam',
+      category: 'Neurologi',
+      year: '2016',
+      source: 'IDAI',
+      description: 'Penatalaksanaan Kejang Demam',
+      pdfUrl: 'assets/guidelines/kejangdemam-anak-2016.pdf',
+      icon: '⚡',
+      tags: ['kejang demam', 'kejang', 'demam', 'neurologi', 'idai']
+    },
+    {
+      id: 'gizi-buruk-anak-2011',
+      title: 'Gizi Buruk',
+      category: 'Nutrisi',
+      year: '2011',
+      source: 'Kemenkes',
+      description: 'Tatalaksana Anak Gizi Buruk',
+      icon: '🥣',
+      tags: ['gizi buruk', 'malnutrisi', 'nutrisi', 'anak', 'kemenkes'],
+      pdfFiles: [
+        { label: 'Bagian 1', url: 'assets/guidelines/gizi-buruk-bagian-1.pdf' },
+        { label: 'Bagian 2', url: 'assets/guidelines/gizi-buruk-bagian-2.pdf' }
+      ]
+    }
+  ];
+  let tvGuidelineKategori = 'Semua';
+  function tvEsc(s) {
+    s = String(s == null ? '' : s);
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function tvGuidelinePdfFiles(item) {
+    const files = Array.isArray(item.pdfFiles) ? item.pdfFiles : [];
+    if (files.length) {
+      return files
+        .map((file, index) => ({
+          label: file.label || ('Bagian ' + (index + 1)),
+          url: file.url || file.pdfUrl || ''
+        }))
+        .filter(file => file.url);
+    }
+    return item.pdfUrl ? [{ label: 'PDF', url: item.pdfUrl }] : [];
+  }
+  function tvGuidelineGalleryLinks(item) {
+    const files = tvGuidelinePdfFiles(item);
+    if (!files.length) return '';
+    if (files.length === 1) {
+      const file = files[0];
+      return `
+          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener">↗️ Tab Baru</a>
+          <a class="guideline-btn download" href="${tvEsc(file.url)}" download>⬇️ Download</a>`;
+    }
+    return `<span class="guideline-meta">${files.length} file PDF dalam 1 guideline</span>`;
+  }
+  function tvGuidelineDetailActions(files) {
+    return files.map(file => `
+          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener">↗️ Buka ${tvEsc(file.label)}</a>
+          <a class="guideline-btn download" href="${tvEsc(file.url)}" download>⬇️ Download ${tvEsc(file.label)}</a>
+    `).join('');
+  }
+  function tvGuidelinePdfFrames(item, files) {
+    return files.map(file => `
+        <div class="guideline-pdf-frame-wrap">
+          <iframe class="guideline-pdf-frame" src="${tvEsc(file.url)}#view=FitH" title="PDF ${tvEsc(item.title)} - ${tvEsc(file.label)}"></iframe>
+        </div>
+    `).join('');
+  }
+  function tvGuidelinePdfPaths(files) {
+    return files.map(file => `<strong>${tvEsc(file.label)}:</strong> ${tvEsc(file.url)}`).join('<br>');
+  }
+  function tvGuidelineMatches(item, query) {
+    query = String(query || '').trim().toLowerCase();
+    const kategoriOk = tvGuidelineKategori === 'Semua' || item.category === tvGuidelineKategori;
+    if (!kategoriOk) return false;
+    if (!query) return true;
+    const hay = [item.title, item.category, item.year, item.source, item.description, (item.tags || []).join(' ')].join(' ').toLowerCase();
+    return hay.includes(query);
+  }
+  window.renderProtokolGallery = function renderProtokolGallery() {
+    const grid = document.getElementById('grid-protokol');
+    if (!grid) return;
+    const q = (document.getElementById('kotakCariProtokol') || {}).value || '';
+    const data = TV_GUIDELINE_LIST.filter(item => tvGuidelineMatches(item, q));
+    grid.innerHTML = data.map(item => `
+      <article class="guideline-card protokol-card" data-id="${tvEsc(item.id)}" data-nama="${tvEsc((item.title + ' ' + item.category + ' ' + item.source + ' ' + (item.tags || []).join(' ')).toLowerCase())}" role="button" tabindex="0" aria-label="Buka guideline ${tvEsc(item.title)}">
+        <div class="guideline-card-head">
+          <span class="guideline-card-icon">${tvEsc(item.icon || '📄')}</span>
+          <div>
+            <h3>${tvEsc(item.title)}</h3>
+            <div class="guideline-meta">${tvEsc(item.category)} • ${tvEsc(item.source)} • ${tvEsc(item.year)}</div>
+          </div>
+        </div>
+        <p class="guideline-desc">${tvEsc(item.description)}</p>
+      </article>
+    `).join('');
+    const empty = document.getElementById('pesan-kosong-protokol');
+    if (empty) empty.style.display = data.length ? 'none' : 'block';
+  };
+  window.filterProtokol = function filterProtokol() { window.renderProtokolGallery(); };
+  window.bukaProtokolDetail = function bukaProtokolDetail(id) {
+    const item = TV_GUIDELINE_LIST.find(x => x.id === id);
+    if (!item) return;
+    const ikon = document.getElementById('protokolDetailIkon');
+    const nama = document.getElementById('protokolDetailNama');
+    const ref = document.getElementById('protokolDetailReferensi');
+    const konten = document.getElementById('protokol-detail-konten');
+    const files = tvGuidelinePdfFiles(item);
+    if (ikon) ikon.textContent = item.icon || '📄';
+    if (nama) nama.textContent = item.title;
+    if (ref) ref.textContent = item.category + ' • ' + item.source + ' • ' + item.year;
+    if (konten) konten.innerHTML = `
+      <div class="kartu guideline-detail-card">
+        <p class="guideline-desc">${tvEsc(item.description)}</p>
+        <div class="guideline-actions">
+          ${tvGuidelineDetailActions(files)}
+        </div>
+        ${tvGuidelinePdfFrames(item, files)}
+        <div class="guideline-detail-note">Jika PDF tidak tampil nyaman di HP, gunakan tombol “Buka Tab Baru”. Pastikan file PDF sudah ada di GitHub pada path:<br>${tvGuidelinePdfPaths(files)}</div>
+      </div>
+    `;
+    const gallery = document.getElementById('protokol-gallery-section');
+    const detail = document.getElementById('protokol-detail-section');
+    if (gallery) gallery.style.display = 'none';
+    if (detail) detail.style.display = 'block';
+    const page = document.getElementById('page-protokol');
+    if (page) page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.TVHomeDashboard) window.TVHomeDashboard.trackOpen('Guideline');
+  };
+  window.tutupProtokolDetail = function tutupProtokolDetail() {
+    const detail = document.getElementById('protokol-detail-section');
+    const gallery = document.getElementById('protokol-gallery-section');
+    if (detail) detail.style.display = 'none';
+    if (gallery) gallery.style.display = 'block';
+  };
+  document.addEventListener('DOMContentLoaded', function () {
+    const filter = document.getElementById('guidelineKategoriFilter');
+    if (filter) filter.addEventListener('click', function (e) {
+      const btn = e.target.closest('[data-kategori]');
+      if (!btn) return;
+      tvGuidelineKategori = btn.getAttribute('data-kategori') || 'Semua';
+      filter.querySelectorAll('[data-kategori]').forEach(b => b.classList.toggle('aktif', b === btn));
+      window.renderProtokolGallery();
+    });
+    const grid = document.getElementById('grid-protokol');
+    if (grid) {
+      grid.addEventListener('click', function (e) {
+        const card = e.target.closest('[data-id]');
+        if (!card) return;
+        e.preventDefault();
+        window.bukaProtokolDetail(card.getAttribute('data-id'));
+      });
+      grid.addEventListener('keydown', function (e) {
+        if (e.key !== 'Enter' && e.key !== ' ') return;
+        const card = e.target.closest('[data-id]');
+        if (!card) return;
+        e.preventDefault();
+        window.bukaProtokolDetail(card.getAttribute('data-id'));
+      });
+    }
+    window.renderProtokolGallery();
+  });
+})();
+</script>
+
 <!-- TV_AUTH_FEATURE -->
 <!-- Firebase SDK (compat) untuk fitur login, profil & riwayat -->
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
