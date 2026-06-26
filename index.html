@@ -8238,7 +8238,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
   function tvGuidelineDetailActions(files) {
     return files.map(file => `
-          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener">↗️ Buka ${tvEsc(file.label)}</a>
+          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener">↗️ Buka PDF</a>
           <a class="guideline-btn download" href="${tvEsc(file.url)}" download>⬇️ Download ${tvEsc(file.label)}</a>
     `).join('');
   }
@@ -8299,8 +8299,7 @@ document.addEventListener("DOMContentLoaded", function () {
           ${tvGuidelineDetailActions(files)}
         </div>
         ${tvGuidelinePdfFrames(item, files)}
-        <div class="guideline-detail-note">Jika PDF tidak tampil nyaman di HP, gunakan tombol “Buka PDF”.
-      </div>
+        <div class="guideline-detail-note">Jika PDF tidak tampil nyaman di HP, gunakan tombol “Buka PDF”.</div>
     `;
     const gallery = document.getElementById('protokol-gallery-section');
     const detail = document.getElementById('protokol-detail-section');
