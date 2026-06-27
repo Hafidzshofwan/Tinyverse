@@ -5453,6 +5453,219 @@ html body .puyer-metric .label {
   }
 }
 
+
+
+/* ============================================================
+   FINAL TITLE ALIGNMENT FIX — Cairan, Puyer, Tumbuh Kembang
+   Menyamakan struktur visual judul menu dengan contoh “Rak Obat”:
+   ikon dan blok teks dibuat satu sumbu, subtitle menjadi teks biasa,
+   bukan badge pill, agar logo + nama terlihat simetris.
+============================================================ */
+html body #page-cairan > .judul-section,
+html body #page-puyer > .judul-section,
+html body #page-tumbuh-kembang > .judul-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+html body #page-cairan > .judul-section > div:last-child,
+html body #page-puyer > .judul-section > div:last-child,
+html body #page-tumbuh-kembang > .judul-section > div:last-child {
+  min-height: 52px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  padding: 0 !important;
+}
+
+html body #page-cairan > .judul-section .ikon-bulat,
+html body #page-puyer > .judul-section .ikon-bulat,
+html body #page-tumbuh-kembang > .judul-section .ikon-bulat {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  flex: 0 0 52px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 17px !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+html body #page-cairan > .judul-section h2,
+html body #page-puyer > .judul-section h2,
+html body #page-tumbuh-kembang > .judul-section h2 {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  font-size: clamp(1.12rem, 2vw, 1.42rem) !important;
+  line-height: 1.04 !important;
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.055em !important;
+}
+
+html body #page-cairan > .judul-section p,
+html body #page-puyer > .judul-section p,
+html body #page-tumbuh-kembang > .judul-section p {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(10,11,95,0.62) !important;
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  line-height: 1.22 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.012em !important;
+}
+
+@media (max-width: 560px) {
+  html body #page-cairan > .judul-section,
+  html body #page-puyer > .judul-section,
+  html body #page-tumbuh-kembang > .judul-section {
+    gap: 11px !important;
+    margin-bottom: 15px !important;
+  }
+
+  html body #page-cairan > .judul-section > div:last-child,
+  html body #page-puyer > .judul-section > div:last-child,
+  html body #page-tumbuh-kembang > .judul-section > div:last-child {
+    min-height: 46px !important;
+  }
+
+  html body #page-cairan > .judul-section .ikon-bulat,
+  html body #page-puyer > .judul-section .ikon-bulat,
+  html body #page-tumbuh-kembang > .judul-section .ikon-bulat {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+
+  html body #page-cairan > .judul-section h2,
+  html body #page-puyer > .judul-section h2,
+  html body #page-tumbuh-kembang > .judul-section h2 {
+    font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
+  }
+
+  html body #page-cairan > .judul-section p,
+  html body #page-puyer > .judul-section p,
+  html body #page-tumbuh-kembang > .judul-section p {
+    font-size: 0.62rem !important;
+    line-height: 1.18 !important;
+  }
+}
+
+
+
+/* ============================================================
+   FINAL TITLE ALIGNMENT FIX — Ringkasan Klinis
+   Menyamakan struktur judul Ringkasan Klinis dengan “Rak Obat”
+   dan menu lain: ikon + nama + subtitle simetris satu sumbu.
+============================================================ */
+html body #page-ringkasan > .judul-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+html body #page-ringkasan > .judul-section > div:last-child {
+  min-height: 52px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  padding: 0 !important;
+}
+
+html body #page-ringkasan > .judul-section .ikon-bulat {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  flex: 0 0 52px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 17px !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+html body #page-ringkasan > .judul-section h2 {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  font-size: clamp(1.12rem, 2vw, 1.42rem) !important;
+  line-height: 1.04 !important;
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.055em !important;
+}
+
+html body #page-ringkasan > .judul-section p {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(10,11,95,0.62) !important;
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  line-height: 1.22 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.012em !important;
+}
+
+@media (max-width: 560px) {
+  html body #page-ringkasan > .judul-section {
+    gap: 11px !important;
+    margin-bottom: 15px !important;
+  }
+
+  html body #page-ringkasan > .judul-section > div:last-child {
+    min-height: 46px !important;
+  }
+
+  html body #page-ringkasan > .judul-section .ikon-bulat {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+
+  html body #page-ringkasan > .judul-section h2 {
+    font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
+  }
+
+  html body #page-ringkasan > .judul-section p {
+    font-size: 0.62rem !important;
+    line-height: 1.18 !important;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -5860,7 +6073,7 @@ html body .puyer-metric .label {
 <div class="ikon-bulat" style="background:#DCF3FB;">💧</div>
 <div>
 <h2>Terapi Cairan</h2>
-<span class="referensi-badge" id="cairanReferensiBadge">Holliday–Segar (estimasi cairan rumatan)</span>
+<p id="cairanReferensiBadge">Holliday–Segar (estimasi cairan rumatan)</p>
 </div>
 </div>
 <div class="kartu">
@@ -6081,7 +6294,7 @@ html body .puyer-metric .label {
 <div class="ikon-bulat" style="background:#FFE3EC;">📈</div>
 <div>
 <h2>Tumbuh Kembang</h2>
-<span class="referensi-badge">Kurva pertumbuhan WHO &amp; CDC</span>
+<p>Kurva pertumbuhan WHO &amp; CDC</p>
 </div>
 </div>
 <div class="kartu">
@@ -6165,7 +6378,7 @@ html body .puyer-metric .label {
 <div class="ikon-bulat" style="background:#F2E8FF;">⚗️</div>
 <div>
 <h2>Racik Puyer</h2>
-<span class="referensi-badge">Kalkulator puyer multi-obat per bungkus</span>
+<p>Kalkulator puyer multi-obat per bungkus</p>
 </div>
 </div>
 <div class="puyer-shell">
@@ -6245,7 +6458,7 @@ html body .puyer-metric .label {
 <div class="ikon-bulat" style="background:#EAF6FB;">📄</div>
 <div>
 <h2>Ringkasan Klinis</h2>
-<span class="referensi-badge">Kumpulkan, salin, cetak, atau export hasil</span>
+<p>Kumpulkan, salin, cetak, atau export hasil</p>
 </div>
 </div>
 <div class="summary-shell">
@@ -10999,27 +11212,325 @@ document.addEventListener("DOMContentLoaded", function () {
   var TV_CSS = `
     body.tv-terkunci { overflow: hidden; }
     body.tv-tanpa-dekorasi .bg-decor, body.tv-tanpa-dekorasi .balon { display: none !important; }
-    #tvAuthOverlay { position: fixed; inset: 0; z-index: 9000; display: none; align-items: center; justify-content: center; padding: 20px; background: linear-gradient(135deg, #54C6EB, #7E7BEB); }
+
+    /* LOGIN — revisi visual agar selaras dengan tema Tyniverse terbaru */
+    #tvAuthOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 3vw, 32px);
+      overflow: auto;
+      background:
+        radial-gradient(circle at 16% 14%, rgba(255,255,255,.92) 0 118px, transparent 119px),
+        radial-gradient(circle at 80% 18%, rgba(217,54,166,.20) 0 180px, transparent 181px),
+        radial-gradient(circle at 72% 82%, rgba(34,199,167,.17) 0 210px, transparent 211px),
+        linear-gradient(140deg, #EEF1F8 0%, #FFFFFF 42%, #F4F5FA 100%);
+    }
     #tvAuthOverlay.tampil { display: flex; }
-    .tv-auth-kartu { width: 100%; max-width: 420px; background: #FFFBF0; border-radius: 22px; padding: 30px 26px; box-shadow: 0 20px 60px rgba(0,0,0,0.28); font-family: 'Fredoka', sans-serif; max-height: 92vh; overflow: auto; }
-    .tv-auth-kartu h2 { margin: 0 0 4px; font-size: 1.5rem; color: #3A3A55; }
-    .tv-auth-sub { margin: 0 0 18px; font-size: 0.86rem; color: #7a7a90; line-height: 1.45; }
-    .tv-field { margin-bottom: 13px; }
-    .tv-field label { display: block; font-size: 0.8rem; font-weight: 600; color: #56566e; margin-bottom: 5px; }
-    .tv-field input, .tv-field textarea { width: 100%; box-sizing: border-box; padding: 11px 13px; border: 2px solid #E6E2D4; border-radius: 12px; font-size: 0.92rem; font-family: inherit; background: #fff; }
-    .tv-field input:focus, .tv-field textarea:focus { outline: none; border-color: #54C6EB; }
-    .tv-btn { width: 100%; border: none; border-radius: 14px; padding: 13px; font-size: 1rem; font-weight: 600; font-family: inherit; cursor: pointer; background: linear-gradient(135deg, #54C6EB, #7E7BEB); color: #fff; box-shadow: 0 6px 16px rgba(86,123,235,0.35); }
-    .tv-btn:active { transform: translateY(1px); }
-    .tv-btn:disabled { opacity: 0.6; cursor: default; }
-    .tv-btn.sekunder { background: #EFEBDD; color: #56566e; box-shadow: none; }
-    .tv-tukar { text-align: center; margin-top: 14px; font-size: 0.86rem; color: #7a7a90; }
-    .tv-tukar a { color: #5566d8; font-weight: 600; cursor: pointer; }
-    .tv-pesan { font-size: 0.82rem; padding: 9px 12px; border-radius: 10px; margin-bottom: 12px; display: none; line-height: 1.4; }
-    .tv-pesan.galat { display: block; background: #FDE2E4; color: #b0283a; }
-    .tv-pesan.info { display: block; background: #E2F0FB; color: #1c6aa8; }
-    .tv-muat { text-align: center; padding: 26px; font-family: 'Fredoka', sans-serif; color: #fff; }
-    .tv-spinner { width: 42px; height: 42px; border: 5px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; margin: 0 auto 14px; animation: tvSpin 0.9s linear infinite; }
+    #tvAuthOverlay::before,
+    #tvAuthOverlay::after {
+      content: '';
+      position: fixed;
+      border-radius: 999px;
+      pointer-events: none;
+      filter: blur(.2px);
+    }
+    #tvAuthOverlay::before {
+      width: min(420px, 58vw);
+      height: min(420px, 58vw);
+      left: -120px;
+      bottom: -140px;
+      background: radial-gradient(circle, rgba(10,11,95,.13), rgba(10,11,95,0) 68%);
+    }
+    #tvAuthOverlay::after {
+      width: min(360px, 52vw);
+      height: min(360px, 52vw);
+      right: -110px;
+      top: -110px;
+      background: radial-gradient(circle, rgba(217,54,166,.16), rgba(217,54,166,0) 70%);
+    }
+    .tv-auth-kartu {
+      position: relative;
+      width: min(960px, 100%);
+      max-height: min(92vh, 760px);
+      display: grid;
+      grid-template-columns: minmax(250px, .9fr) minmax(330px, 1.08fr);
+      overflow: hidden;
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.92);
+      background: rgba(255,255,255,.82);
+      box-shadow: 0 34px 100px rgba(10,11,95,.20), 0 10px 30px rgba(10,11,95,.08);
+      backdrop-filter: blur(22px);
+      font-family: 'Quicksand', 'Inter', system-ui, sans-serif;
+    }
+    .tv-auth-kartu::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(10,11,95,.055), transparent 43%),
+        radial-gradient(circle at 48% 18%, rgba(255,255,255,.82), transparent 34%);
+    }
+    .tv-auth-brand {
+      position: relative;
+      min-height: 100%;
+      padding: clamp(26px, 4vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 30px;
+      overflow: hidden;
+      color: #FFFFFF;
+      background:
+        radial-gradient(circle at 22% 18%, rgba(255,255,255,.26) 0 76px, transparent 77px),
+        radial-gradient(circle at 86% 78%, rgba(217,54,166,.48) 0 118px, transparent 119px),
+        linear-gradient(145deg, var(--etail-navy, #0A0B5F) 0%, #17186F 56%, #D936A6 138%);
+    }
+    .tv-auth-brand::before {
+      content: '';
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      right: -116px;
+      top: -92px;
+      border-radius: 999px;
+      border: 42px solid rgba(255,255,255,.11);
+    }
+    .tv-auth-brand::after {
+      content: '';
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 24px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.42), transparent);
+      opacity: .8;
+    }
+    .tv-auth-logo {
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+      font-size: clamp(1.18rem, 2vw, 1.48rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+    }
+    .tv-auth-logo-badge {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 17px;
+      color: #0A0B5F;
+      background: #FFFFFF;
+      box-shadow: 0 18px 36px rgba(0,0,0,.16);
+    }
+    .tv-auth-brand-copy { position: relative; z-index: 1; }
+    .tv-auth-brand-copy h3 {
+      margin: 0 0 12px;
+      max-width: 360px;
+      color: #FFFFFF;
+      font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+      font-size: clamp(1.78rem, 3.8vw, 2.72rem);
+      line-height: .98;
+      letter-spacing: -.045em;
+    }
+    .tv-auth-brand-copy p {
+      margin: 0;
+      max-width: 330px;
+      color: rgba(255,255,255,.80);
+      font-weight: 700;
+      line-height: 1.48;
+      font-size: .96rem;
+    }
+    .tv-auth-chips {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .tv-auth-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.13);
+      border: 1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.92);
+      font-size: .78rem;
+      font-weight: 800;
+      backdrop-filter: blur(12px);
+    }
+    .tv-auth-panel {
+      position: relative;
+      z-index: 1;
+      padding: clamp(28px, 4.5vw, 50px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.78)),
+        radial-gradient(circle at 94% 6%, rgba(217,54,166,.09), transparent 34%);
+      overflow: auto;
+    }
+    .tv-auth-panel h2 {
+      margin: 0 0 8px;
+      color: var(--etail-navy, #0A0B5F);
+      font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+      font-size: clamp(1.62rem, 3vw, 2.12rem);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+    }
+    .tv-auth-sub {
+      margin: 0 0 24px;
+      max-width: 430px;
+      font-size: .94rem;
+      font-weight: 700;
+      color: rgba(10,11,95,.58);
+      line-height: 1.55;
+    }
+    .tv-field { margin-bottom: 15px; }
+    .tv-field label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 7px;
+      color: rgba(10,11,95,.74);
+      font-size: .78rem;
+      font-weight: 900;
+      letter-spacing: .01em;
+    }
+    .tv-field input,
+    .tv-field textarea {
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 48px;
+      padding: 13px 15px;
+      border: 1.5px solid rgba(10,11,95,.10);
+      border-radius: 17px;
+      outline: none;
+      background: rgba(255,255,255,.88);
+      color: var(--etail-navy, #0A0B5F);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.9), 0 10px 26px rgba(10,11,95,.045);
+      font-size: .95rem;
+      font-weight: 750;
+      font-family: inherit;
+      transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease, background .18s ease;
+    }
+    .tv-field textarea { min-height: 156px; resize: vertical; line-height: 1.48; }
+    .tv-field input::placeholder,
+    .tv-field textarea::placeholder { color: rgba(10,11,95,.34); font-weight: 700; }
+    .tv-field input:focus,
+    .tv-field textarea:focus {
+      border-color: rgba(217,54,166,.58);
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(217,54,166,.10), 0 14px 34px rgba(10,11,95,.08);
+      transform: translateY(-1px);
+    }
+    .tv-btn {
+      position: relative;
+      width: 100%;
+      min-height: 52px;
+      border: none;
+      border-radius: 18px;
+      padding: 14px 18px;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--etail-magenta, #D936A6), #8A4BFF 50%, var(--etail-navy, #0A0B5F));
+      color: #FFFFFF;
+      box-shadow: 0 18px 40px rgba(217,54,166,.24), 0 10px 26px rgba(10,11,95,.18);
+      font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -.01em;
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+    }
+    .tv-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent);
+      transform: translateX(-110%);
+      transition: transform .55s ease;
+    }
+    .tv-btn:hover { transform: translateY(-2px); box-shadow: 0 22px 48px rgba(217,54,166,.30), 0 12px 30px rgba(10,11,95,.20); }
+    .tv-btn:hover::after { transform: translateX(110%); }
+    .tv-btn:active { transform: translateY(0); }
+    .tv-btn:disabled { opacity: .62; cursor: default; filter: grayscale(.1); transform: none; }
+    .tv-btn.sekunder { background: rgba(10,11,95,.08); color: var(--etail-navy, #0A0B5F); box-shadow: none; }
+    .tv-tukar {
+      text-align: center;
+      margin: 16px 0 0;
+      color: rgba(10,11,95,.56);
+      font-size: .88rem;
+      font-weight: 750;
+    }
+    .tv-tukar a {
+      color: var(--etail-magenta, #D936A6);
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .tv-tukar a:hover { text-decoration: underline; text-underline-offset: 3px; }
+    .tv-pesan {
+      display: none;
+      margin: 0 0 14px;
+      padding: 11px 13px;
+      border-radius: 15px;
+      font-size: .84rem;
+      font-weight: 800;
+      line-height: 1.42;
+      border: 1px solid transparent;
+    }
+    .tv-pesan.galat { display: block; background: #FFF0F4; color: #AF1E55; border-color: rgba(217,54,166,.16); }
+    .tv-pesan.info { display: block; background: #EEF7FF; color: #145B99; border-color: rgba(20,91,153,.12); }
+    .tv-muat {
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: var(--etail-navy, #0A0B5F);
+      font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+      font-weight: 700;
+    }
+    .tv-spinner {
+      width: 46px;
+      height: 46px;
+      border: 5px solid rgba(10,11,95,.12);
+      border-top-color: var(--etail-magenta, #D936A6);
+      border-radius: 50%;
+      animation: tvSpin .85s linear infinite;
+    }
     @keyframes tvSpin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 780px) {
+      #tvAuthOverlay { align-items: flex-start; padding: 14px; }
+      .tv-auth-kartu { grid-template-columns: 1fr; max-height: none; border-radius: 28px; }
+      .tv-auth-brand { min-height: auto; padding: 24px; gap: 18px; }
+      .tv-auth-brand-copy h3 { font-size: 1.62rem; }
+      .tv-auth-brand-copy p { font-size: .88rem; }
+      .tv-auth-chips { gap: 8px; }
+      .tv-auth-chip { padding: 8px 10px; font-size: .72rem; }
+      .tv-auth-panel { padding: 24px 20px 26px; }
+    }
+    @media (max-width: 430px) {
+      .tv-auth-brand-copy p { display: none; }
+      .tv-auth-chips { display: none; }
+      .tv-auth-logo-badge { width: 40px; height: 40px; border-radius: 15px; }
+      .tv-auth-panel h2 { font-size: 1.46rem; }
+      .tv-auth-sub { margin-bottom: 18px; font-size: .86rem; }
+      .tv-field input, .tv-field textarea { min-height: 46px; border-radius: 15px; }
+      .tv-btn { min-height: 50px; border-radius: 16px; }
+    }
+
     #tvUserMenu { position: fixed; top: 14px; right: 16px; z-index: 8000; font-family: 'Fredoka', sans-serif; display: none; }
     #tvUserMenu.tampil { display: block; }
     /* Bilah sisi kiri sebagai drawer yang bisa dibuka/tutup */
@@ -11086,40 +11597,54 @@ document.addEventListener("DOMContentLoaded", function () {
     ov.id = 'tvAuthOverlay';
     ov.innerHTML = `
       <div class='tv-auth-kartu'>
-        <div data-view='memuat' class='tv-muat'><div class='tv-spinner'></div><div>Memuat…</div></div>
-        <div data-view='masuk' style='display:none'>
-          <h2>👋 Selamat datang</h2>
-          <p class='tv-auth-sub'>Masuk untuk mengakses Tyniverse.</p>
-          <div id='tvPesanMasuk' class='tv-pesan'></div>
-          <div class='tv-field'><label>Email</label><input id='tvMasukEmail' type='email' autocomplete='username' placeholder='nama@contoh.com'></div>
-          <div class='tv-field'><label>Kata sandi</label><input id='tvMasukPass' type='password' autocomplete='current-password' placeholder='Kata sandi'></div>
-          <button class='tv-btn' id='tvBtnMasuk'>Masuk</button>
-          <p class='tv-tukar'>Belum punya akun? <a data-ke='daftar'>Daftar di sini</a></p>
-        </div>
-        <div data-view='daftar' style='display:none'>
-          <h2>✨ Buat akun</h2>
-          <p class='tv-auth-sub'>Lengkapi data berikut untuk membuat profil Anda.</p>
-          <div id='tvPesanDaftar' class='tv-pesan'></div>
-          <div class='tv-field'><label>Nama lengkap</label><input id='tvDaftarNama' type='text' placeholder='Nama Anda'></div>
-          <div class='tv-field'><label>Institusi / jabatan</label><input id='tvDaftarInst' type='text' placeholder='RS / Puskesmas / dokter umum'></div>
-          <div class='tv-field'><label>Email</label><input id='tvDaftarEmail' type='email' autocomplete='username' placeholder='nama@contoh.com'></div>
-          <div class='tv-field'><label>Kata sandi</label><input id='tvDaftarPass' type='password' autocomplete='new-password' placeholder='Minimal 6 karakter'></div>
-          <button class='tv-btn' id='tvBtnDaftar'>Daftar</button>
-          <p class='tv-tukar'>Sudah punya akun? <a data-ke='masuk'>Masuk di sini</a></p>
-        </div>
-        <div data-view='konfig' style='display:none'>
-          <h2>⚙️ Konfigurasi Firebase</h2>
-          <p class='tv-auth-sub'>Tempelkan konfigurasi proyek Firebase Anda untuk mengaktifkan login. Pengaturan disimpan di perangkat ini.</p>
-          <div id='tvPesanKonfig' class='tv-pesan'></div>
-          <div class='tv-field'><label>firebaseConfig (JSON / objek)</label><textarea id='tvKonfigText' rows='8' placeholder='Tempel objek berisi apiKey, authDomain, projectId, appId di sini'></textarea></div>
-          <div class='tv-field'><label>Email admin (opsional, pisahkan dengan koma)</label><input id='tvKonfigAdmin' type='text' placeholder='admin@contoh.com'></div>
-          <button class='tv-btn' id='tvBtnKonfig'>Simpan &amp; Muat Ulang</button>
-        </div>
-        <div data-view='galat' style='display:none'>
-          <h2>⚠️ Tidak dapat memuat</h2>
-          <p class='tv-auth-sub' id='tvGalatPesan'></p>
-          <button class='tv-btn sekunder' id='tvBtnMuatUlang'>Muat ulang</button>
-        </div>
+        <aside class='tv-auth-brand' aria-hidden='true'>
+          <div class='tv-auth-logo'><span class='tv-auth-logo-badge'>✦</span><span>Tyniverse</span></div>
+          <div class='tv-auth-brand-copy'>
+            <h3>Ruang klinis yang lebih rapi dan cerdas.</h3>
+            <p>Akses kalkulator, guideline, ringkasan, dan asisten AI dalam satu dashboard bernuansa profesional.</p>
+          </div>
+          <div class='tv-auth-chips'>
+            <span class='tv-auth-chip'>🧮 Kalkulator</span>
+            <span class='tv-auth-chip'>📚 Guideline</span>
+            <span class='tv-auth-chip'>🤖 AI Assistant</span>
+          </div>
+        </aside>
+        <main class='tv-auth-panel'>
+          <div data-view='memuat' class='tv-muat'><div class='tv-spinner'></div><div>Memuat…</div></div>
+          <div data-view='masuk' style='display:none'>
+            <h2>Selamat datang kembali</h2>
+            <p class='tv-auth-sub'>Masuk untuk melanjutkan ke Tyniverse dengan tampilan terbaru yang lebih elegan dan fokus.</p>
+            <div id='tvPesanMasuk' class='tv-pesan'></div>
+            <div class='tv-field'><label>Email</label><input id='tvMasukEmail' type='email' autocomplete='username' placeholder='nama@contoh.com'></div>
+            <div class='tv-field'><label>Kata sandi</label><input id='tvMasukPass' type='password' autocomplete='current-password' placeholder='Masukkan kata sandi'></div>
+            <button class='tv-btn' id='tvBtnMasuk'>Masuk ke Tyniverse</button>
+            <p class='tv-tukar'>Belum punya akun? <a data-ke='daftar'>Daftar di sini</a></p>
+          </div>
+          <div data-view='daftar' style='display:none'>
+            <h2>Buat akun Tyniverse</h2>
+            <p class='tv-auth-sub'>Lengkapi data berikut untuk menyiapkan profil dan pengalaman kerja Anda.</p>
+            <div id='tvPesanDaftar' class='tv-pesan'></div>
+            <div class='tv-field'><label>Nama lengkap</label><input id='tvDaftarNama' type='text' placeholder='Nama Anda'></div>
+            <div class='tv-field'><label>Institusi / jabatan</label><input id='tvDaftarInst' type='text' placeholder='RS / Puskesmas / dokter umum'></div>
+            <div class='tv-field'><label>Email</label><input id='tvDaftarEmail' type='email' autocomplete='username' placeholder='nama@contoh.com'></div>
+            <div class='tv-field'><label>Kata sandi</label><input id='tvDaftarPass' type='password' autocomplete='new-password' placeholder='Minimal 6 karakter'></div>
+            <button class='tv-btn' id='tvBtnDaftar'>Buat akun</button>
+            <p class='tv-tukar'>Sudah punya akun? <a data-ke='masuk'>Masuk di sini</a></p>
+          </div>
+          <div data-view='konfig' style='display:none'>
+            <h2>Konfigurasi Firebase</h2>
+            <p class='tv-auth-sub'>Tempelkan konfigurasi proyek Firebase Anda untuk mengaktifkan login. Pengaturan disimpan di perangkat ini.</p>
+            <div id='tvPesanKonfig' class='tv-pesan'></div>
+            <div class='tv-field'><label>firebaseConfig (JSON / objek)</label><textarea id='tvKonfigText' rows='8' placeholder='Tempel objek berisi apiKey, authDomain, projectId, appId di sini'></textarea></div>
+            <div class='tv-field'><label>Email admin (opsional, pisahkan dengan koma)</label><input id='tvKonfigAdmin' type='text' placeholder='admin@contoh.com'></div>
+            <button class='tv-btn' id='tvBtnKonfig'>Simpan &amp; Muat Ulang</button>
+          </div>
+          <div data-view='galat' style='display:none'>
+            <h2>Tidak dapat memuat</h2>
+            <p class='tv-auth-sub' id='tvGalatPesan'></p>
+            <button class='tv-btn sekunder' id='tvBtnMuatUlang'>Muat ulang</button>
+          </div>
+        </main>
       </div>`;
     document.body.appendChild(ov);
     ov.querySelectorAll('[data-ke]').forEach(function (a) { a.addEventListener('click', function () { tampilView(a.getAttribute('data-ke')); }); });
