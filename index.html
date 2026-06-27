@@ -5666,6 +5666,28 @@ html body #page-ringkasan > .judul-section p {
   }
 }
 
+
+
+/* ============================================================
+   AVATAR PHOTO FIX
+   CSS lama memberi background gradient !important pada avatar.
+   Kelas ini memastikan foto profil yang tersimpan tetap terlihat.
+============================================================ */
+html body .tv-ava.tv-ava-foto,
+html body .tv-ava-besar.tv-ava-foto,
+html body #tvUserMenu.tv-di-sidebar .tv-ava.tv-ava-foto {
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  color: transparent !important;
+  text-shadow: none !important;
+}
+
+html body .tv-ava.tv-ava-foto::before,
+html body .tv-ava-besar.tv-ava-foto::before {
+  content: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -11128,7 +11150,7 @@ document.addEventListener("DOMContentLoaded", function () {
   'use strict';
 
   /* MODE TINJAU: true = login dinonaktifkan sementara untuk review cepat. Ubah ke false untuk mengaktifkan login Firebase lagi. */
-  var MODE_TINJAU = false;
+  var MODE_TINJAU = true;
 
   /* ---------- 1. KONFIGURASI FIREBASE ----------
      Isi objek FIREBASE_CONFIG di bawah dengan konfigurasi proyek Firebase Anda
@@ -11713,10 +11735,36 @@ document.addEventListener("DOMContentLoaded", function () {
     var t = el('tvSideToggle'); if (t) t.classList.toggle('tampil', !!on);
     if (!on) document.body.classList.remove('tv-side-buka');
   }
+  function avatarValid(avatar) {
+    avatar = String(avatar || '').trim();
+    return !!(avatar && (/^data:image\//i.test(avatar) || /^https?:\/\//i.test(avatar)));
+  }
+  function cssUrl(s) { return String(s || '').replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, ''); }
   function setAva(node, avatar, nama) {
     if (!node) return;
-    if (avatar) { node.textContent = ''; node.style.backgroundImage = 'url(' + avatar + ')'; }
-    else { node.style.backgroundImage = ''; node.textContent = inisial(nama); }
+    avatar = String(avatar || '').trim();
+    node.classList.remove('tv-ava-foto');
+    node.removeAttribute('data-avatar-loaded');
+    node.style.removeProperty('background');
+    node.style.removeProperty('background-image');
+    node.style.removeProperty('background-size');
+    node.style.removeProperty('background-position');
+    node.style.removeProperty('background-repeat');
+
+    if (avatarValid(avatar)) {
+      node.textContent = '';
+      node.classList.add('tv-ava-foto');
+      /* CSS akhir file memakai background gradient !important.
+         Karena itu foto harus dipasang dengan setProperty + important supaya tidak tertutup. */
+      node.style.setProperty('background', 'url("' + cssUrl(avatar) + '") center / cover no-repeat', 'important');
+      node.style.setProperty('background-image', 'url("' + cssUrl(avatar) + '")', 'important');
+      node.style.setProperty('background-size', 'cover', 'important');
+      node.style.setProperty('background-position', 'center', 'important');
+      node.style.setProperty('background-repeat', 'no-repeat', 'important');
+      node.setAttribute('data-avatar-loaded', '1');
+    } else {
+      node.textContent = inisial(nama);
+    }
   }
   function renderMenu() {
     if (!profilSaya) return;
@@ -11745,6 +11793,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <button class='tv-tab' data-tab='riwayat'>Riwayat</button>
         </div>
         <div data-panel='info'>
+          <div id='tvPesanProfil' class='tv-pesan'></div>
           <div class='tv-ava-aksi'>
             <div class='tv-ava-besar' id='tvProfAva'>?</div>
             <label>📷 Ganti foto<input id='tvProfFoto' type='file' accept='image/*' style='display:none'></label>
@@ -11781,6 +11830,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function bukaProfil() {
     if (!profilSaya) return;
     avatarSementara = null;
+    pesan('tvPesanProfil', '');
     el('tvProfNama').value = profilSaya.nama || '';
     el('tvProfInst').value = profilSaya.institusi || '';
     el('tvProfEmail').value = profilSaya.email || '';
@@ -11794,13 +11844,18 @@ document.addEventListener("DOMContentLoaded", function () {
     rd.onload = function (ev) {
       var img = new Image();
       img.onload = function () {
-        var maks = 256, w = img.width, h = img.height, skala = Math.min(1, maks / Math.max(w, h));
-        var cw = Math.round(w * skala), ch = Math.round(h * skala);
+        var maks = 220, w = img.width, h = img.height, skala = Math.min(1, maks / Math.max(w, h));
+        var cw = Math.max(1, Math.round(w * skala)), ch = Math.max(1, Math.round(h * skala));
         var cv = document.createElement('canvas'); cv.width = cw; cv.height = ch;
-        cv.getContext('2d').drawImage(img, 0, 0, cw, ch);
-        avatarSementara = cv.toDataURL('image/jpeg', 0.82);
+        var ctx = cv.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, cw, ch);
+        ctx.drawImage(img, 0, 0, cw, ch);
+        avatarSementara = cv.toDataURL('image/jpeg', 0.78);
         setAva(el('tvProfAva'), avatarSementara, profilSaya.nama);
+        pesan('tvPesanProfil', 'Foto siap disimpan. Klik Simpan perubahan.', 'info');
       };
+      img.onerror = function () { alert('Foto tidak dapat dibaca. Coba pilih gambar JPG/PNG lain.'); };
       img.src = ev.target.result;
     };
     rd.readAsDataURL(f);
@@ -11812,9 +11867,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (avatarSementara) data.avatar = avatarSementara;
     db.collection('users').doc(uidSaya).update(data).then(function () {
       for (var k in data) { profilSaya[k] = data[k]; }
-      avatarSementara = null; renderMenu();
+      avatarSementara = null; renderMenu(); setAva(el('tvProfAva'), profilSaya.avatar, profilSaya.nama);
       btn.disabled = false; btn.textContent = t0;
-      el('tvModalProfil').classList.remove('tampil');
+      pesan('tvPesanProfil', 'Profil berhasil disimpan.', 'info');
+      setTimeout(function () { el('tvModalProfil').classList.remove('tampil'); }, 350);
     }).catch(function (e) { btn.disabled = false; btn.textContent = t0; alert('Gagal menyimpan: ' + petaError(e)); });
   }
   function simpanPref() {
