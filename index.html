@@ -13129,5 +13129,43 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
+<style>
+/* ===== HOME FONT SIZE ALIGNMENT: samakan teks kecil beranda dengan nama obat-card (contoh Ambroxol) ===== */
+html body #page-beranda .tv-home-tool h4,
+html body #page-beranda .tv-home-tool p,
+html body #page-beranda .tv-home-section-head p,
+html body #page-beranda .tv-home-row-item strong,
+html body #page-beranda .tv-home-row-item span,
+html body #page-beranda .tv-home-insight blockquote,
+html body #page-beranda .tv-home-insight small,
+html body #page-beranda .tv-home-stat span,
+html body #page-beranda .tv-home-update-list,
+html body #page-beranda .tv-home-update-list li,
+html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list,
+html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list li {
+  font-size: 0.82rem !important;
+  line-height: 1.35 !important;
+}
+
+html body #page-beranda .tv-home-tool h4,
+html body #page-beranda .tv-home-row-item strong {
+  font-weight: 700 !important;
+}
+
+html body #page-beranda .tv-home-tool p,
+html body #page-beranda .tv-home-section-head p,
+html body #page-beranda .tv-home-row-item span,
+html body #page-beranda .tv-home-insight small,
+html body #page-beranda .tv-home-stat span,
+html body #page-beranda .tv-home-update-list li {
+  font-weight: 600 !important;
+}
+
+html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list li::marker {
+  font-size: 0.82rem !important;
+}
+</style>
+
 </body>
 </html>
+
