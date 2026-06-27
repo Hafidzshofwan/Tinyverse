@@ -6029,12 +6029,268 @@ html body .puyer-empty strong {
 }
 .burn-tbsa-chart-img {
   display: block;
-  width: 100%;
-  max-width: 980px;
+  width: 50%;
+  max-width: 490px;
+  min-width: 280px;
   height: auto;
   border-radius: 18px;
   image-rendering: auto;
   box-shadow: 0 10px 22px rgba(31, 41, 95, 0.10);
+}
+
+
+@media (max-width: 640px) {
+  .burn-tbsa-chart-img {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* ===== FIX DOSIS OBAT: hilangkan penumpukan kotak nav dengan header ===== */
+html body #page-dosis .nav-mainan {
+  width: fit-content !important;
+  max-width: calc(100% - 24px) !important;
+  margin: 0 auto 22px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  display: flex !important;
+  justify-content: center !important;
+  gap: 10px !important;
+}
+
+html body #page-dosis .nav-mainan .nav-btn {
+  min-width: 112px !important;
+  padding: 10px 18px !important;
+  box-shadow: 0 12px 24px rgba(217,54,166,0.26) !important;
+}
+
+@media (max-width: 560px) {
+  html body #page-dosis .nav-mainan {
+    width: 100% !important;
+    gap: 8px !important;
+  }
+  html body #page-dosis .nav-mainan .nav-btn {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    padding: 10px 12px !important;
+  }
+}
+
+
+/* ===== DOSIS OBAT: kalkulator minimalis & hasil lebih ringkas ===== */
+html body #page-dosis #kalkulator .judul-section {
+  margin-bottom: 10px !important;
+  gap: 10px !important;
+}
+html body #page-dosis #kalkulator .judul-section .ikon-bulat {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  font-size: 1rem !important;
+  border-radius: 14px !important;
+}
+html body #page-dosis #kalkulator .judul-section h2 {
+  font-size: 1rem !important;
+  margin-bottom: 2px !important;
+  line-height: 1.1 !important;
+}
+html body #page-dosis #kalkulator .judul-section p {
+  font-size: .72rem !important;
+  line-height: 1.25 !important;
+}
+
+html body #page-dosis .kalkulator-kartu {
+  display: block !important;
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  padding: 16px !important;
+  border-radius: 22px !important;
+  box-shadow: 0 10px 26px rgba(10,11,95,.07) !important;
+}
+
+/* Beruang dibuat minimal agar tidak mendominasi kalkulator */
+html body #page-dosis .ilustrasi-samping {
+  display: none !important;
+}
+
+html body #page-dosis .kalkulator-isi {
+  width: 100% !important;
+  display: grid !important;
+  gap: 10px !important;
+}
+
+html body #page-dosis .obat-terpilih-box {
+  padding: 8px 10px !important;
+  border-radius: 16px !important;
+  min-height: 0 !important;
+  margin-bottom: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid rgba(10,11,95,.07) !important;
+  background: rgba(255,255,255,.86) !important;
+}
+html body #page-dosis .obat-terpilih-box .info {
+  gap: 8px !important;
+}
+html body #page-dosis .obat-terpilih-box .info .emoji {
+  font-size: 1.05rem !important;
+}
+html body #page-dosis #namaTerpilih {
+  font-size: .86rem !important;
+  line-height: 1.1 !important;
+}
+html body #page-dosis .obat-terpilih-box .info .teks-kecil {
+  font-size: .65rem !important;
+  line-height: 1.15 !important;
+}
+html body #page-dosis .ganti-link {
+  font-size: .64rem !important;
+  padding: 5px 9px !important;
+  border-radius: 999px !important;
+}
+
+html body #page-dosis .form-group {
+  margin-bottom: 0 !important;
+}
+html body #page-dosis .form-group label {
+  font-size: .72rem !important;
+  margin-bottom: 5px !important;
+  line-height: 1.15 !important;
+}
+html body #page-dosis input[type="number"],
+html body #page-dosis select {
+  min-height: 38px !important;
+  height: 38px !important;
+  padding: 8px 12px !important;
+  border-radius: 14px !important;
+  font-size: .78rem !important;
+  box-shadow: none !important;
+}
+html body #page-dosis #btnHitung {
+  min-height: 42px !important;
+  padding: 10px 14px !important;
+  border-radius: 16px !important;
+  font-size: .82rem !important;
+  margin-top: 2px !important;
+  box-shadow: 0 10px 18px rgba(217,54,166,.18) !important;
+}
+
+html body #page-dosis #hasil-box {
+  margin-top: 10px !important;
+  padding: 12px !important;
+  border-radius: 18px !important;
+  border: 1px solid rgba(10,11,95,.08) !important;
+  box-shadow: 0 8px 20px rgba(10,11,95,.06) !important;
+  background: #FFFFFF !important;
+}
+html body #page-dosis #hasil-box h3 {
+  font-size: .66rem !important;
+  margin-bottom: 8px !important;
+  letter-spacing: .08em !important;
+}
+html body #page-dosis .hasil-card-dosis {
+  gap: 8px !important;
+  line-height: 1.3 !important;
+}
+html body #page-dosis .hasil-ringkasan,
+html body #page-dosis .hasil-section,
+html body #page-dosis .hasil-daily,
+html body #page-dosis .hasil-note,
+html body #page-dosis .hasil-warning {
+  padding: 10px !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+}
+html body #page-dosis .hasil-label-kecil {
+  font-size: .62rem !important;
+  padding: 4px 8px !important;
+  margin-bottom: 6px !important;
+}
+html body #page-dosis #hasil-box .hasil-dosis {
+  font-size: clamp(1rem, 2.4vw, 1.28rem) !important;
+  line-height: 1.1 !important;
+}
+html body #page-dosis .hasil-volume {
+  font-size: .92rem !important;
+  margin-top: 3px !important;
+}
+html body #page-dosis .hasil-subtext,
+html body #page-dosis .hasil-daily,
+html body #page-dosis .hasil-note,
+html body #page-dosis .hasil-warning {
+  font-size: .72rem !important;
+  line-height: 1.35 !important;
+}
+html body #page-dosis .hasil-section-title {
+  font-size: .64rem !important;
+  margin-bottom: 5px !important;
+}
+html body #page-dosis .hasil-row {
+  grid-template-columns: minmax(82px, 28%) 1fr !important;
+  gap: 6px !important;
+  padding: 4px 0 !important;
+  font-size: .72rem !important;
+}
+html body #page-dosis .hasil-frekuensi {
+  font-size: .68rem !important;
+  padding: 5px 9px !important;
+  border-radius: 999px !important;
+}
+html body #page-dosis .hasil-pills {
+  gap: 6px !important;
+}
+
+@media (max-width: 560px) {
+  html body #page-dosis .kalkulator-kartu {
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+  html body #page-dosis .obat-terpilih-box {
+    align-items: center !important;
+  }
+  html body #page-dosis .hasil-row {
+    grid-template-columns: 1fr !important;
+    gap: 1px !important;
+  }
+}
+
+
+/* ===== OBAT BARU: indikasi tampil ringkas dalam hasil dosis ===== */
+html body #page-dosis .hasil-row .label,
+html body #page-dosis .hasil-row .value {
+  align-self: start;
+}
+html body #page-dosis .obat-card .varian-label {
+  line-height: 1.18 !important;
+}
+
+
+/* ===== POINT 4: reset body map luka bakar ===== */
+.burn-map-actions {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 2px;
+}
+.burn-reset-btn {
+  border: 0 !important;
+  border-radius: 999px !important;
+  padding: 9px 14px !important;
+  background: #FFFFFF !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  font-size: .76rem !important;
+  font-weight: 900 !important;
+  box-shadow: 0 8px 18px rgba(10,11,95,.08) !important;
+  border: 1px solid rgba(10,11,95,.08) !important;
+  cursor: pointer;
+}
+.burn-reset-btn:hover {
+  transform: translateY(-1px);
+  color: #FFFFFF !important;
+  background: var(--etail-magenta, #D936A6) !important;
 }
 </style>
 </head>
@@ -6450,7 +6706,7 @@ html body .puyer-empty strong {
 </div>
 <div class="kartu">
 <div class="segmented-toggle toggle-4" id="cairanMetodeTab">
-<button class="segmented-btn aktif" data-metode="holliday" type="button">💧 Holliday–Segar</button>
+<button class="segmented-btn aktif" data-metode="holliday" type="button">🧃 Holliday–Segar</button>
 <button class="segmented-btn" data-metode="who" type="button">🩹 Rehidrasi WHO</button>
 <button class="segmented-btn" data-metode="luka-bakar" type="button">🔥 Rehidrasi Luka Bakar</button>
 <button class="segmented-btn" data-metode="tetes" type="button">💉 Faktor Tetes</button>
@@ -6699,6 +6955,9 @@ html body .puyer-empty strong {
 <button class="burn-area burn-quick-chip" data-burn-area="armLeftFull" type="button">Seluruh lengan kiri</button>
 <button class="burn-area burn-quick-chip" data-burn-area="legRightFull" type="button">Seluruh tungkai kanan</button>
 <button class="burn-area burn-quick-chip" data-burn-area="legLeftFull" type="button">Seluruh tungkai kiri</button>
+</div>
+<div class="burn-map-actions">
+<button class="burn-reset-btn" id="btnResetBurnMap" type="button">↺ Reset pilihan area</button>
 </div>
 <div class="hasil-box-cairan tampil" id="hasilLukaBakar"></div>
 </div>
@@ -7058,6 +7317,7 @@ html body .puyer-empty strong {
         <button class="tv-ai-chip" type="button" data-ai-contoh="Ringkas poin penting tentang tanda bahaya dehidrasi pada anak.">Tanda bahaya</button>
         <button class="tv-ai-chip" type="button" data-ai-contoh="Buat checklist observasi singkat untuk anak dengan batuk pilek tanpa tanda gawat.">Checklist observasi</button>
       </div>
+      <label class="sr-only" for="tvAiPrompt">Prompt Asisten AI</label>
       <textarea class="tv-ai-area" id="tvAiPrompt" placeholder="Tulis pertanyaan di sini. Contoh: Buatkan edukasi singkat untuk orang tua tentang pemberian cairan saat diare anak."></textarea>
       <div class="tv-ai-actions">
         <button class="tv-ai-btn" id="tvAiKirim" type="button">✨ Tanya AI</button>
@@ -7193,6 +7453,42 @@ const daftarObat = [
     dosisMaksimalHarianMg: 45
   },
   {
+    nama: "Albendazole",
+    varian: "Anthelmintik / antiparasit",
+    doseType: "ageBands",
+    doseBasis: "singleDose",
+    unitLabel: "mg dosis tunggal",
+    frekuensi: "dosis tunggal; ulang/lanjutan sesuai jenis cacing dan instruksi dokter",
+    indikasi: "Obat cacing spektrum luas untuk soil-transmitted helminths/STH seperti askariasis (cacing gelang), cacing tambang, trichuriasis/cacing cambuk; juga sering digunakan untuk enterobiasis/cacing kremi dan beberapa infeksi cacing lain sesuai diagnosis.",
+    catatan: "Rujukan WHO dan Permenkes RI: albendazole 400 mg dosis tunggal untuk program/pengobatan STH; anak 12–23 bulan memakai 200 mg. Efikasi baik untuk Ascaris dan cacing tambang, namun Trichuris dapat memerlukan regimen/alternatif sesuai dokter. Untuk taeniasis, neurocysticercosis, echinococcosis, atau strongyloidiasis, regimen berbeda dan perlu tata laksana dokter.",
+    sediaanCustomText: "Tablet kunyah/tablet 400 mg; beberapa produk tersedia suspensi. Dapat dikunyah/dihancurkan bila sesuai sediaan.",
+    icon: "🪱",
+    bands: [
+      {
+        usiaMinBulan: 12,
+        usiaMaxBulan: 23,
+        labelUsia: "12–23 bulan",
+        tipe: "flat",
+        dosisFlatMin: 200,
+        dosisFlatMax: 200,
+        doseBasis: "singleDose",
+        frekuensi: "dosis tunggal",
+        catatan: "WHO merekomendasikan setengah dosis albendazole (200 mg) untuk anak <24 bulan pada program deworming."
+      },
+      {
+        usiaMinBulan: 24,
+        usiaMaxBulan: 216,
+        labelUsia: "≥2 tahun – remaja",
+        tipe: "flat",
+        dosisFlatMin: 400,
+        dosisFlatMax: 400,
+        doseBasis: "singleDose",
+        frekuensi: "dosis tunggal",
+        catatan: "Dosis tunggal 400 mg untuk STH; pertimbangkan ulang/regimen lain sesuai jenis cacing, gejala, dan kebijakan lokal."
+      }
+    ]
+  },
+  {
     nama: "Amoxicillin",
     doseType: "perKg",
     dosisMinPerKg: 25,
@@ -7206,6 +7502,44 @@ const daftarObat = [
     doseBasis: "perDay",
     dosesPerDay: 3,
     dosisMaksimalHarianMg: 2000
+  },
+  {
+    nama: "Asetilsistein",
+    varian: "Mukolitik",
+    doseType: "ageBands",
+    doseBasis: "perDose",
+    unitLabel: "mg/kali",
+    frekuensi: "2–4 kali sehari sesuai usia dan produk",
+    indikasi: "Mukolitik untuk membantu mengencerkan dahak pada batuk berdahak.",
+    catatan: "Dosis dihitung untuk indikasi mukolitik. Hindari penggunaan rutin pada anak <2 tahun kecuali atas instruksi dokter.",
+    sediaanCustomText: "Granul/sachet 100 mg pediatric dan granul/kapsul/tablet 200 mg; larutkan/berikan sesuai petunjuk produk.",
+    icon: "🫧",
+    bands: [
+      {
+        usiaMinBulan: 24,
+        usiaMaxBulan: 71,
+        labelUsia: "2–5 tahun",
+        tipe: "flat",
+        dosisFlatMin: 100,
+        dosisFlatMax: 100,
+        doseBasis: "perDose",
+        maxDosesPerDay: 4,
+        frekuensi: "100 mg, 2–4 kali sehari",
+        catatan: "Gunakan sediaan pediatric 100 mg; sesuaikan frekuensi dengan usia, berat gejala, dan instruksi dokter."
+      },
+      {
+        usiaMinBulan: 72,
+        usiaMaxBulan: 216,
+        labelUsia: "≥6 tahun – remaja",
+        tipe: "flat",
+        dosisFlatMin: 200,
+        dosisFlatMax: 200,
+        doseBasis: "perDose",
+        maxDosesPerDay: 3,
+        frekuensi: "200 mg, 2–3 kali sehari",
+        catatan: "Batas lazim mukolitik oral total sekitar 600 mg/hari pada anak besar/dewasa; sesuaikan dengan produk."
+      }
+    ]
   },
   {
     nama: "Asiklovir",
@@ -7515,6 +7849,53 @@ const daftarObat = [
     catatan: "Volume dihitung per episode diare/muntah, bukan dosis harian. Sesuaikan dengan derajat dehidrasi dan toleransi minum.",
     icon: "💦",
     doseBasis: "perEpisode"
+  },
+  {
+    nama: "Mebendazole",
+    varian: "Anthelmintik / antiparasit",
+    doseType: "ageBands",
+    doseBasis: "perDose",
+    unitLabel: "mg/kali",
+    frekuensi: "tergantung jenis cacing",
+    indikasi: "Obat cacing untuk enterobiasis/cacing kremi, askariasis/cacing gelang, cacing tambang, dan trichuriasis/cacing cambuk. Cocok dipakai bila diagnosis/dugaan klinis sesuai dan tersedia di Indonesia.",
+    catatan: "Regimen umum: cacing kremi 100 mg dosis tunggal dan ulang setelah ±2 minggu bila perlu; cacing gelang/tambang/cambuk dapat 100 mg 2 kali sehari selama 3 hari. WHO juga merekomendasikan mebendazole 500 mg dosis tunggal untuk deworming preventif di daerah endemis. Kalkulator ini memakai regimen 100 mg/kali agar cocok untuk cacing kremi dan regimen 3 hari; sesuaikan regimen dengan diagnosis.",
+    sediaanCustomText: "Tablet kunyah 100 mg atau 500 mg tergantung produk. Untuk regimen 500 mg dosis tunggal, gunakan sediaan 500 mg bila tersedia dan sesuai instruksi dokter/program.",
+    icon: "🪱💊",
+    bands: [
+      {
+        usiaMinBulan: 24,
+        usiaMaxBulan: 216,
+        labelUsia: "≥2 tahun – remaja",
+        tipe: "flat",
+        dosisFlatMin: 100,
+        dosisFlatMax: 100,
+        doseBasis: "perDose",
+        maxDosesPerDay: 2,
+        frekuensi: "cacing kremi: dosis tunggal; cacing gelang/tambang/cambuk: 2 kali sehari selama 3 hari",
+        catatan: "Untuk cacing kremi, terapi anggota serumah dan pengulangan dosis sering diperlukan. Untuk STH selain kremi, gunakan 100 mg 2 kali sehari selama 3 hari atau regimen program sesuai kebijakan."
+      }
+    ]
+  },
+  {
+    nama: "Pyrantel Pamoate",
+    varian: "Anthelmintik / antiparasit",
+    doseType: "perKg",
+    dosisMinPerKg: 11,
+    dosisMaxPerKg: 11,
+    sediaanMg: 125,
+    sediaanMl: 5,
+    sediaanOptions: [
+      { label: "Suspensi 125 mg/5 mL", sediaanMg: 125, sediaanMl: 5 },
+      { label: "Suspensi 250 mg/5 mL", sediaanMg: 250, sediaanMl: 5 }
+    ],
+    unitLabel: "mg/kg dosis tunggal",
+    frekuensi: "dosis tunggal; dapat diulang sesuai jenis cacing/instruksi dokter",
+    indikasi: "Alternatif obat cacing untuk enterobiasis/cacing kremi, askariasis/cacing gelang, dan cacing tambang. Di Indonesia tercantum dalam pedoman STH sebagai pilihan untuk cacing tambang.",
+    catatan: "Dosis umum 11 mg/kgBB dosis tunggal, maksimum 1 gram. Untuk cacing kremi sering diulang setelah ±2 minggu untuk mencegah reinfeksi; terapi kontak serumah dan higiene penting.",
+    icon: "🐛",
+    doseBasis: "singleDose",
+    maxDosesPerDay: 1,
+    dosisMaksimalTunggalMg: 1000
   },
   {
     nama: "Oseltamivir",
@@ -8184,6 +8565,9 @@ let protokolTerpilih = null; // id diagnosis yang sedang dibuka
 
 
 // Warna label kartu, akan berputar otomatis sesuai urutan obat (tidak perlu diisi manual)
+// Urutkan rak obat berdasarkan abjad agar daftar selalu rapi.
+daftarObat.sort((a, b) => String(a.nama || "").localeCompare(String(b.nama || ""), "id", { sensitivity: "base" }));
+
 const warnaLabel = ["#54C6EB"];
 
 let obatTerpilih = 0; // index obat yang sedang aktif di kalkulator
@@ -8351,9 +8735,10 @@ function toggleInputSesuaiObat(obat) {
     grupBerat.style.display = "none";
     grupUsia.style.display = "block";
   } else if (obat.doseType === "ageBands") {
-    // perlu DUA input sekaligus: usia (untuk menentukan kelompok/band)
-    // dan berat badan (dipakai hanya jika band yang cocok bertipe perKg)
-    grupBerat.style.display = "block";
+    // Usia selalu diperlukan untuk memilih band. Berat badan hanya ditampilkan
+    // bila ada band yang memakai perhitungan per kg.
+    const perluBerat = Array.isArray(obat.bands) && obat.bands.some(b => b.tipe === "perKg");
+    grupBerat.style.display = perluBerat ? "block" : "none";
     grupUsia.style.display = "block";
   } else {
     grupBerat.style.display = "block";
@@ -8583,6 +8968,7 @@ function bangunHtmlHasil(obat, hasil) {
         <div class="hasil-section-title">Detail perhitungan</div>
         <div class="hasil-row"><span class="label">Obat</span><span class="value"><strong>${escapeHtml(obat.nama)}${obat.varian ? " — " + escapeHtml(obat.varian) : ""}</strong></span></div>
         <div class="hasil-row"><span class="label">Acuan dosis</span><span class="value"><strong>${acuanDosis}</strong></span></div>
+        ${obat.indikasi ? `<div class="hasil-row"><span class="label">Indikasi</span><span class="value">${escapeHtml(obat.indikasi)}</span></div>` : ""}
         ${sediaanText ? `<div class="hasil-row"><span class="label">Sediaan</span><span class="value">${sediaanText}</span></div>` : ""}
         <div class="hasil-row"><span class="label">Pasien</span><span class="value">${pasienText}</span></div>
       </div>
@@ -9172,6 +9558,12 @@ function burnSyncButtons() {
   document.querySelectorAll(".burn-area[data-burn-area]").forEach(btn => {
     btn.classList.toggle("aktif", burnAreaState.has(btn.dataset.burnArea));
   });
+}
+
+function burnResetAreas() {
+  burnAreaState.clear();
+  burnSyncButtons();
+  hitungLukaBakar();
 }
 
 function burnHollidaySegar(berat) {
@@ -11403,6 +11795,8 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("#panel-luka-bakar .burn-parts-grid .burn-area[data-burn-area]").forEach(function (btn) {
     btn.addEventListener("click", function () { burnToggleArea(btn.dataset.burnArea); });
   });
+  const btnResetBurnMap = document.getElementById("btnResetBurnMap");
+  if (btnResetBurnMap) btnResetBurnMap.addEventListener("click", burnResetAreas);
   ["burnUsia", "burnBerat"].forEach(function (id) {
     document.getElementById(id).addEventListener("input", hitungLukaBakar);
     document.getElementById(id).addEventListener("keydown", function (e) {
