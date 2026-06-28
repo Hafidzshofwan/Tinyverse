@@ -12408,7 +12408,7 @@ document.addEventListener("DOMContentLoaded", function () {
   'use strict';
 
   /* MODE TINJAU: true = login dinonaktifkan sementara untuk review cepat. Ubah ke false untuk mengaktifkan login Firebase lagi. */
-  var MODE_TINJAU = false;
+  var MODE_TINJAU = true;
 
   /* ---------- 1. KONFIGURASI FIREBASE ----------
      Isi objek FIREBASE_CONFIG di bawah dengan konfigurasi proyek Firebase Anda
@@ -13771,6 +13771,12 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       #${HARD_BTN_ID}:active { transform: scale(.96) !important; }
       #tvSideToggle { display: none !important; }
+      /* FIX TOMBOL BILAH DI LAYAR TERKUNCI: saat login/memuat (body.tv-terkunci),
+         tombol menu, drawer, dan overlay tidak boleh tampil menutupi layar login. */
+      body.tv-terkunci #${HARD_BTN_ID},
+      body.tv-terkunci #tvSideToggle { display: none !important; }
+      body.tv-terkunci #tvSideOverlay { display: none !important; }
+      body.tv-terkunci #sidebar { transform: translate3d(-112%,0,0) !important; }
       /* FIX IKON BILAH KECIL: tombol menu diperkecil agar tidak menutupi emot/maskot boneka. */
       #tvSideOverlay {
         position: fixed !important;
@@ -14400,7 +14406,7 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
     var ov=document.createElement('div');ov.id='tvPasienOverlay';
     ov.innerHTML='<div class="tv-pas-card" role="dialog" aria-label="Profil Pasien">'+
       '<h3>👤 Profil Pasien</h3>'+
-      '<p class="tv-pas-sub">Isi sekali — otomatis terpakai di Dosis, Cairan, Puyer &amp; Ringkasan.</p>'+
+      '<p class="tv-pas-sub">Isi sekali — otomatis terpakai di Dosis, Cairan, Puyer, Tumbuh Kembang, &amp; Ringkasan.</p>'+
       '<div class="tv-pas-f"><label>Nama / Inisial</label><input id="tvPasNama" type="text" placeholder="cth: An. A"></div>'+'<div class="tv-pas-f"><label>Jenis Kelamin</label><div class="tv-jk" id="tvPasJk"><button type="button" class="tv-jk-btn" data-jk="male">\ud83d\udc66 Laki-laki</button><button type="button" class="tv-jk-btn" data-jk="female">\ud83d\udc67 Perempuan</button></div></div>'+
       '<div class="tv-pas-row"><div class="tv-pas-f"><label>Usia (tahun)</label><input id="tvPasThn" type="number" min="0" step="1" placeholder="0"></div>'+
       '<div class="tv-pas-f"><label>+ bulan</label><input id="tvPasBln" type="number" min="0" max="11" step="1" placeholder="0"></div></div>'+
