@@ -12408,7 +12408,7 @@ document.addEventListener("DOMContentLoaded", function () {
   'use strict';
 
   /* MODE TINJAU: true = login dinonaktifkan sementara untuk review cepat. Ubah ke false untuk mengaktifkan login Firebase lagi. */
-  var MODE_TINJAU = true;
+  var MODE_TINJAU = false;
 
   /* ---------- 1. KONFIGURASI FIREBASE ----------
      Isi objek FIREBASE_CONFIG di bawah dengan konfigurasi proyek Firebase Anda
@@ -14291,6 +14291,168 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
 }
 </style>
 
+<style>
+/* ===== TYNIVERSE: PROFIL PASIEN TERPUSAT + SAFETY GUARD ===== */
+#tvPasienFab{position:fixed;left:18px;bottom:18px;z-index:8500;width:52px;height:52px;border:0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.35rem;background:linear-gradient(160deg,#7C5CFC,#2BA9D6);color:#fff;box-shadow:0 0 0 5px rgba(124,92,252,.20),0 8px 22px rgba(0,0,0,.20);transition:transform .15s}
+#tvPasienFab:hover{transform:translateY(-2px) scale(1.03)}
+#tvPasienFab:active{transform:translateY(1px) scale(.98)}
+#tvPasienFab.terisi::after{content:'';position:absolute;top:5px;right:5px;width:11px;height:11px;border-radius:50%;background:#36C26F;border:2px solid #fff}
+@media (max-width:560px){#tvPasienFab{left:14px;bottom:14px;width:48px;height:48px;font-size:1.22rem}}
+#tvPasienOverlay{position:fixed;inset:0;z-index:8600;display:none;align-items:flex-end;justify-content:flex-start;padding:18px;background:rgba(10,11,40,.28)}
+#tvPasienOverlay.tampil{display:flex}
+.tv-pas-card{width:min(380px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:'Quicksand',sans-serif}
+.tv-pas-card h3{margin:0 0 2px;font-family:'Fredoka',sans-serif;color:#1B2A6B;font-size:1.08rem}
+.tv-pas-sub{margin:0 0 12px;font-size:.78rem;color:#6B7280;line-height:1.4}
+.tv-pas-row{display:flex;gap:8px}
+.tv-pas-f{flex:1;margin-bottom:10px}
+.tv-pas-f label{display:block;font-size:.74rem;font-weight:700;color:#374151;margin-bottom:4px}
+.tv-pas-f input{width:100%;box-sizing:border-box;padding:9px 10px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.9rem;font-family:inherit}
+.tv-pas-f input:focus{outline:0;border-color:#7C5CFC}
+.tv-jk{display:flex;gap:8px;margin-bottom:10px}
+.tv-jk-btn{flex:1;padding:9px;border:1.5px solid #E5E7EB;border-radius:10px;background:#fff;font-family:'Fredoka',sans-serif;font-weight:700;font-size:.84rem;color:#374151;cursor:pointer}
+.tv-jk-btn.aktif{border-color:#7C5CFC;background:#F1ECFF;color:#5B3FD6}
+.tv-pas-act{display:flex;gap:8px;margin-top:2px}
+.tv-pas-btn{border:0;border-radius:10px;padding:10px;font-weight:700;cursor:pointer;font-family:'Fredoka',sans-serif;font-size:.86rem}
+.tv-pas-save{flex:1;background:linear-gradient(160deg,#7C5CFC,#2BA9D6);color:#fff}
+.tv-pas-reset{flex:0 0 auto;background:#F3F4F6;color:#374151}
+.tv-pas-note{margin:10px 0 0;font-size:.72rem;color:#9CA3AF;line-height:1.4}
+.tv-safety{margin:0 0 12px;border-radius:14px;padding:11px 14px;font-size:.84rem;line-height:1.45}
+.tv-safety.ok{background:#ECFDF3;border:1.5px solid #ABEFC6;color:#067647}
+.tv-safety.warn{background:#FFFAEB;border:1.5px solid #FEDF89;color:#B54708}
+.tv-safety.danger{background:#FEF3F2;border:1.5px solid #FECDCA;color:#B42318}
+.tv-safety b{font-family:'Fredoka',sans-serif;display:block;margin-bottom:2px}
+.tv-safety ul{margin:6px 0 0;padding-left:18px}
+.tv-safety li{margin:2px 0}
+</style>
+<script>
+(function(){
+  'use strict';
+  var LSKEY='tv_pasien_aktif';
+  function $(id){return document.getElementById(id);}
+  function num(v){var n=parseFloat(v);return isFinite(n)?n:null;}
+  function norm(s){return String(s||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'');}
+  function load(){try{return JSON.parse(localStorage.getItem(LSKEY))||{};}catch(e){return {};}}
+  function simpanLS(p){try{localStorage.setItem(LSKEY,JSON.stringify(p));}catch(e){}}
+  var pasien=load();
+
+  function setVal(id,val){var el=$(id);if(!el||val==null||val==='')return;el.value=val;}
+  function usiaTeks(b){if(b==null)return '';if(b<24)return b+' bulan';var th=Math.floor(b/12),s=b%12;return s?(th+' th '+s+' bln'):(th+' tahun');}
+
+  // Sebar profil ke semua kalkulator (semua page selalu ada di DOM)
+  function terapkan(){
+    var bb=pasien.bb,ub=pasien.usiaBulan,tb=pasien.tb,nm=pasien.nama;
+    setVal('beratBadan',bb);setVal('usiaBulan',ub);
+    setVal('cairanBerat',bb);setVal('cairanBeratB',bb);setVal('cairanBeratC',bb);
+    setVal('burnBerat',bb);
+    if(ub!=null)setVal('burnUsia',Math.round((ub/12)*10)/10);
+    if(ub!=null){var tab=$('cairanUsiaCTab');if(tab){var key=ub<12?'bayi':'anak';tab.querySelectorAll('[data-usia-c]').forEach(function(b){b.classList.toggle('aktif',b.getAttribute('data-usia-c')===key);});}}
+    setVal('puyerBb',bb);
+    setVal('summaryNama',nm);
+    if(ub!=null)setVal('summaryUsia',usiaTeks(ub));
+    if(bb!=null||tb!=null)setVal('summaryBbTb',(bb!=null?bb+' kg':'')+(tb!=null?((bb!=null?' / ':'')+tb+' cm'):''));
+    setVal('tkInputX',ub);setVal('tkInput_berat',bb);setVal('tkInput_tinggi',tb);
+    try{var _tk=(typeof tkState!=='undefined')?tkState:null;if(_tk&&pasien.jk&&_tk.kelamin!==pasien.jk){_tk.kelamin=pasien.jk;if(window.tkRenderKelamin)window.tkRenderKelamin();if(window.tkRenderRingkasan)window.tkRenderRingkasan();if(window.tkRenderStepper)window.tkRenderStepper();}}catch(e){}
+  }
+
+  function plausibilitas(){
+    var w=[],bb=pasien.bb,ub=pasien.usiaBulan;
+    if(bb!=null&&(bb<=0||bb>150))w.push('Berat badan tampak tidak wajar untuk pasien anak.');
+    if(ub!=null&&ub>216)w.push('Usia melebihi 18 tahun — periksa kembali.');
+    return w;
+  }
+  function tampilSafetyPanel(){
+    var box=$('tvPasSafety');if(!box)return;
+    var w=plausibilitas();
+    if(!pasien.bb&&!pasien.usiaBulan){box.style.display='none';return;}
+    box.style.display='block';
+    if(w.length){box.className='tv-safety warn';box.innerHTML='<b>⚠️ Periksa data</b>'+w.join('<br>');}
+    else{box.className='tv-safety ok';box.innerHTML='<b>✓ Safety Guard aktif</b>Profil tersinkron ke semua kalkulator.';}
+  }
+
+  function isiForm(){
+    var ub=pasien.usiaBulan;
+    if($('tvPasNama'))$('tvPasNama').value=pasien.nama||'';
+    if($('tvPasThn'))$('tvPasThn').value=(ub!=null)?Math.floor(ub/12):'';
+    if($('tvPasBln'))$('tvPasBln').value=(ub!=null)?(ub%12):'';
+    if($('tvPasBb'))$('tvPasBb').value=(pasien.bb!=null)?pasien.bb:'';
+    if($('tvPasTb'))$('tvPasTb').value=(pasien.tb!=null)?pasien.tb:'';
+    var _jk=pasien.jk||null;if($('tvPasJk'))$('tvPasJk').querySelectorAll('[data-jk]').forEach(function(b){b.classList.toggle('aktif',b.getAttribute('data-jk')===_jk);});
+    tampilSafetyPanel();
+  }
+  function tandaiFab(){var f=$('tvPasienFab');if(f)f.classList.toggle('terisi',!!(pasien.bb||pasien.usiaBulan||pasien.nama));}
+
+  function buka(){isiForm();$('tvPasienOverlay').classList.add('tampil');}
+  function tutup(){$('tvPasienOverlay').classList.remove('tampil');}
+  function simpan(){
+    var thn=num($('tvPasThn').value),bln=num($('tvPasBln').value);
+    var ub=(thn!=null||bln!=null)?((thn||0)*12+(bln||0)):null;
+    var _jkEl=$('tvPasJk')?$('tvPasJk').querySelector('[data-jk].aktif'):null;
+    pasien={nama:($('tvPasNama').value||'').trim(),usiaBulan:ub,bb:num($('tvPasBb').value),tb:num($('tvPasTb').value),jk:_jkEl?_jkEl.getAttribute('data-jk'):null};
+    simpanLS(pasien);terapkan();tandaiFab();tampilSafetyPanel();
+    var b=$('tvPasSimpan');if(b){var t=b.innerHTML;b.innerHTML='✓ Tersimpan';setTimeout(function(){b.innerHTML=t;tutup();},650);}
+  }
+  function reset(){pasien={};simpanLS(pasien);isiForm();tandaiFab();}
+
+  function buatUI(){
+    if($('tvPasienFab'))return;
+    var fab=document.createElement('button');fab.id='tvPasienFab';fab.type='button';fab.setAttribute('aria-label','Profil Pasien');fab.title='Profil Pasien';fab.textContent='👤';
+    document.body.appendChild(fab);
+    var ov=document.createElement('div');ov.id='tvPasienOverlay';
+    ov.innerHTML='<div class="tv-pas-card" role="dialog" aria-label="Profil Pasien">'+
+      '<h3>👤 Profil Pasien</h3>'+
+      '<p class="tv-pas-sub">Isi sekali — otomatis terpakai di Dosis, Cairan, Puyer &amp; Ringkasan.</p>'+
+      '<div class="tv-pas-f"><label>Nama / Inisial</label><input id="tvPasNama" type="text" placeholder="cth: An. A"></div>'+'<div class="tv-pas-f"><label>Jenis Kelamin</label><div class="tv-jk" id="tvPasJk"><button type="button" class="tv-jk-btn" data-jk="male">\ud83d\udc66 Laki-laki</button><button type="button" class="tv-jk-btn" data-jk="female">\ud83d\udc67 Perempuan</button></div></div>'+
+      '<div class="tv-pas-row"><div class="tv-pas-f"><label>Usia (tahun)</label><input id="tvPasThn" type="number" min="0" step="1" placeholder="0"></div>'+
+      '<div class="tv-pas-f"><label>+ bulan</label><input id="tvPasBln" type="number" min="0" max="11" step="1" placeholder="0"></div></div>'+
+      '<div class="tv-pas-row"><div class="tv-pas-f"><label>Berat (kg)</label><input id="tvPasBb" type="number" min="0" step="0.1" placeholder="cth: 12.5"></div>'+
+      '<div class="tv-pas-f"><label>Tinggi (cm)</label><input id="tvPasTb" type="number" min="0" step="0.1" placeholder="opsional"></div></div>'+
+      '<div id="tvPasSafety" class="tv-safety ok" style="display:none"></div>'+
+      '<div class="tv-pas-act"><button type="button" class="tv-pas-btn tv-pas-save" id="tvPasSimpan">💾 Simpan &amp; Terapkan</button>'+
+      '<button type="button" class="tv-pas-btn tv-pas-reset" id="tvPasReset" title="Reset">↺</button></div>'+
+      '<p class="tv-pas-note">Data tersimpan lokal di perangkat ini, tidak dikirim ke server.</p></div>';
+    document.body.appendChild(ov);
+    fab.addEventListener('click',buka);
+    ov.addEventListener('click',function(e){if(e.target===ov)tutup();});
+    $('tvPasSimpan').addEventListener('click',simpan);
+    $('tvPasReset').addEventListener('click',reset);
+    var jkw=$('tvPasJk');if(jkw)jkw.addEventListener('click',function(e){var b=e.target.closest('[data-jk]');if(!b)return;jkw.querySelectorAll('[data-jk]').forEach(function(x){x.classList.remove('aktif');});b.classList.add('aktif');});
+    var fp=$('tkFormPlot');if(fp&&!fp.dataset.tvObs){fp.dataset.tvObs='1';new MutationObserver(function(){setVal('tkInputX',pasien.usiaBulan);setVal('tkInput_berat',pasien.bb);setVal('tkInput_tinggi',pasien.tb);}).observe(fp,{childList:true});}
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')tutup();});
+    tandaiFab();terapkan();
+  }
+
+  /* ===== SAFETY GUARD: PUYER (duplikasi & interaksi) ===== */
+  var INX=[
+    {a:/ibuprofen|mefenamat|ketorolac|aspirin|asetosal|diklofenak|piroksikam|ketoprofen/,b:/ibuprofen|mefenamat|ketorolac|aspirin|asetosal|diklofenak|piroksikam|ketoprofen/,dup:true,msg:'Dua obat antiinflamasi/antinyeri (NSAID) sekaligus — risiko perdarahan & gangguan ginjal meningkat.'},
+    {a:/domperidon|metoclopramide|metoklopramid/,b:/domperidon|metoclopramide|metoklopramid/,dup:true,msg:'Dua obat prokinetik bersamaan — risiko efek ekstrapiramidal.'},
+    {a:/ondansetron|domperidon|metoclopramide|metoklopramid/,b:/eritromisin|erythromycin|klaritromisin|clarithromycin|azitromisin|azithromycin/,msg:'Kombinasi ini dapat memperpanjang interval QT (risiko aritmia).'},
+    {a:/ctm|chlorphenir|klorfenir|cetirizine|setirizin|loratadin|loratadine|difenhidramin|diphenhydramin/,b:/ctm|chlorphenir|klorfenir|cetirizine|setirizin|loratadin|loratadine|difenhidramin|diphenhydramin/,dup:true,msg:'Dua antihistamin sekaligus — efek sedasi/antikolinergik bertumpuk.'},
+    {a:/prednison|prednisone|dexamethasone|deksametason|metilprednisolon|methylprednisolone/,b:/ibuprofen|mefenamat|ketorolac|aspirin|asetosal|diklofenak/,msg:'Kortikosteroid + NSAID — meningkatkan risiko ulkus/perdarahan saluran cerna.'}
+  ];
+  function scanPuyer(){
+    var box=$('puyerHasil');if(!box)return;
+    var inputs=document.querySelectorAll('#puyerObatList [data-field="nama"]');
+    var names=[];inputs.forEach(function(i){var v=(i.value||'').trim();if(v)names.push(v);});
+    var old=$('tvSafetyPuyer');if(old)old.remove();
+    if(names.length<1)return;
+    var hits=[],seen={};
+    names.forEach(function(n){var k=norm(n);if(!k)return;seen[k]=(seen[k]||0)+1;});
+    Object.keys(seen).forEach(function(k){if(seen[k]>1)hits.push({lv:'danger',t:'Obat \"'+k+'\" tercantum lebih dari sekali — periksa kemungkinan dosis ganda.'});});
+    var low=names.map(function(n){return n.toLowerCase();});
+    INX.forEach(function(p){var ia=[],ib=[];low.forEach(function(n,idx){if(p.a.test(n))ia.push(idx);if(p.b.test(n))ib.push(idx);});var f=false;for(var i=0;i<ia.length&&!f;i++)for(var j=0;j<ib.length;j++){if(ia[i]!==ib[j]){f=true;break;}}if(f)hits.push({lv:'warn',t:p.msg});});
+    var el=document.createElement('div');el.id='tvSafetyPuyer';
+    if(!hits.length){el.className='tv-safety ok';el.innerHTML='<b>🛡️ Safety Guard</b>Tidak terdeteksi duplikasi atau interaksi umum. Tetap verifikasi sesuai kondisi pasien.';}
+    else{var danger=hits.some(function(h){return h.lv==='danger';});el.className='tv-safety '+(danger?'danger':'warn');el.innerHTML='<b>🛡️ Safety Guard — perhatian</b><ul>'+hits.map(function(h){return '<li>'+h.t+'</li>';}).join('')+'</ul>';}
+    box.insertBefore(el,box.firstChild);
+  }
+  document.addEventListener('click',function(e){var t=e.target;if(t&&(t.id==='puyerHitung'||(t.closest&&t.closest('#puyerHitung'))))setTimeout(scanPuyer,150);});
+
+  function boot(){buatUI();setTimeout(buatUI,400);setTimeout(terapkan,800);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
+  window.addEventListener('load',boot);
+  window.TVPasien={get:function(){return pasien;},terapkan:terapkan};
+})();
+</script>
 </body>
 </html>
 
