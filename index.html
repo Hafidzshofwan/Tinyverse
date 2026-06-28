@@ -359,6 +359,76 @@
   }
   .obat-card.selected .centang { display: flex; }
 
+  /* ===== TAG JENIS OBAT (di kartu) ===== */
+  .obat-card .jenis-tag {
+    display: inline-block;
+    max-width: calc(100% - 6px);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--cjenis, #0A0B5F);
+    background: color-mix(in srgb, var(--cjenis, #0A0B5F) 13%, white);
+    border: 1px solid color-mix(in srgb, var(--cjenis, #0A0B5F) 26%, white);
+    padding: 3px 9px;
+    border-radius: 999px;
+    margin: 2px 0 8px;
+    line-height: 1.25;
+  }
+
+  /* ===== JUDUL KATEGORI (memenuhi satu baris penuh di grid) ===== */
+  #grid-obat .kategori-judul {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 2px 2px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--cjenis, #0A0B5F);
+  }
+  #grid-obat .kategori-judul:first-child { margin-top: 0; }
+  #grid-obat .kategori-judul::before {
+    content: "";
+    width: 12px; height: 12px;
+    border-radius: 4px;
+    background: var(--cjenis, #0A0B5F);
+    flex: 0 0 auto;
+  }
+  #grid-obat .kategori-judul .jumlah {
+    font-family: inherit;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--teks-lembut);
+    background: rgba(10,11,95,0.06);
+    padding: 2px 9px;
+    border-radius: 999px;
+  }
+
+  /* ===== FILTER KATEGORI (di atas galeri) ===== */
+  #kategori-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 2px 0 16px;
+  }
+  .kategori-chip {
+    border: 0;
+    border-radius: 999px;
+    padding: 8px 12px;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--teks);
+    background: #F6F3E8;
+    cursor: pointer;
+    transition: transform .15s ease, background .15s ease, color .15s ease;
+    user-select: none;
+  }
+  .kategori-chip:hover { transform: translateY(-1px); }
+  .kategori-chip.aktif { background: linear-gradient(160deg, var(--biru), var(--biru-tua)); color: #fff; }
+
   #pesan-kosong {
     display: none;
     text-align: center;
@@ -6582,6 +6652,7 @@ html body #page-dosis .obat-card .varian-label {
 <label class="sr-only" for="kotakCari">Cari nama obat</label>
 <input id="kotakCari" placeholder="Ketik nama obat... contoh: Paracetamol" type="text"/>
 </div>
+<div id="kategori-filter"><!-- Filter kategori, diisi otomatis oleh JavaScript --></div>
 <div id="grid-obat"><!-- Diisi otomatis oleh JavaScript --></div>
 <p id="pesan-kosong">😅 Obat tidak ditemukan, coba kata kunci lain ya!</p>
 </div>
@@ -6680,7 +6751,7 @@ html body #page-dosis .obat-card .varian-label {
 <section id="protokol-detail-section" style="display:none;">
 <button class="btn-kembali" id="btnKembaliProtokol" type="button">⬅️ Kembali ke daftar guideline</button>
 <div class="judul-section">
-<div class="ikon-bulat" id="protokolDetailIkon" style="background:#EFEAFF;">📚</div>
+<div class="ikon-bulat" id="protokolDetailIkon" style="background:#EFEAFF;">    </div>
 <div>
 <h2 id="protokolDetailNama">Judul Guideline</h2>
 <span class="referensi-badge" id="protokolDetailReferensi">Sumber</span>
@@ -6805,7 +6876,7 @@ html body #page-dosis .obat-card .varian-label {
 </g>
 <g class="burn-area burn-area-svg" data-burn-area="armLeftLowerFront" tabindex="0" role="button" aria-label="Lengan kiri bawah anterior">
 <path d="M309 253 L272 260 L287 343 C290 361 302 371 315 368 C328 365 334 351 330 333 Z"/>
-<text x="302" y="310">1½</text>
+<text x="302" y="310">1  </text>
 </g>
 <g class="burn-area burn-area-svg burn-hand" data-burn-area="handLeftFront" tabindex="0" role="button" aria-label="Telapak tangan kiri anterior">
 <path d="M318 371 C329 378 332 392 326 405 C320 418 305 420 294 411 C286 404 283 390 289 379 C294 369 307 365 318 371 Z"/>
@@ -6965,7 +7036,7 @@ html body #page-dosis .obat-card .varian-label {
 <h3>📐 Rumus yang digunakan</h3>
 <div class="burn-tbsa-chart-block">
 <h4>TBSA: Lund-Browder sesuai chart</h4>
-<img class="burn-tbsa-chart-img" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAwIiBoZWlnaHQ9IjUyMCIgdmlld0JveD0iMCAwIDE2MDAgNTIwIiByb2xlPSJpbWciIGFyaWEtbGFiZWw9IlRCU0EgTHVuZCBCcm93ZGVyIHNlc3VhaSBjaGFydCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImhlYWRlciIgeDE9IjAiIHgyPSIxIiB5MT0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjQTk4M0Y1Ii8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0I5OTJGRiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxsaW5lYXJHcmFkaWVudCBpZD0iY2VsbCIgeDE9IjAiIHgyPSIxIiB5MT0iMCIgeTI9IjEiPgogICAgICA8c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjRjRFQ0ZGIi8+CiAgICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI0U5REZGRiIvPgogICAgPC9saW5lYXJHcmFkaWVudD4KICAgIDxmaWx0ZXIgaWQ9InNvZnRTaGFkb3ciIHg9Ii01JSIgeT0iLTEwJSIgd2lkdGg9IjExMCUiIGhlaWdodD0iMTI1JSI+CiAgICAgIDxmZURyb3BTaGFkb3cgZHg9IjAiIGR5PSIxMCIgc3RkRGV2aWF0aW9uPSIxMiIgZmxvb2QtY29sb3I9IiMzQjI1NkYiIGZsb29kLW9wYWNpdHk9IjAuMTYiLz4KICAgIDwvZmlsdGVyPgogICAgPHN0eWxlPgogICAgICAudGl0bGUgeyBmb250OiA4MDAgNDZweCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmaWxsOiAjMkExNTRBOyB9CiAgICAgIC5oZWFkIHsgZm9udDogODAwIDQwcHggQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZmlsbDogIzFGMTIzODsgfQogICAgICAubGFiZWwgeyBmb250OiA4MDAgMzhweCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmaWxsOiAjMkExNTRBOyB9CiAgICAgIC52YWwgeyBmb250OiA3MDAgMzhweCBBcmlhbCwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmaWxsOiAjNUI0QjcyOyB9CiAgICAgIC5ub3RlIHsgZm9udDogNjAwIDI0cHggQXJpYWwsIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZmlsbDogIzcyNUQ5MjsgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHJlY3QgeD0iMjQiIHk9IjIyIiB3aWR0aD0iMTU1MiIgaGVpZ2h0PSI0NzYiIHJ4PSIzOCIgZmlsbD0iI0ZGRkZGRiIgZmlsdGVyPSJ1cmwoI3NvZnRTaGFkb3cpIi8+CiAgPHRleHQgeD0iODAwIiB5PSI3NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InRpdGxlIj5UQlNBOiBMdW5kLUJyb3dkZXIgc2VzdWFpIGNoYXJ0PC90ZXh0PgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUyLDExMikiPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE0OTYiIGhlaWdodD0iMzYwIiByeD0iMjQiIGZpbGw9IiNGRkZGRkYiLz4KICAgIDwhLS0gcm93IGJhY2tncm91bmRzIC0tPgogICAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjE0OTYiIGhlaWdodD0iODIiIHJ4PSIxOCIgZmlsbD0idXJsKCNoZWFkZXIpIi8+CiAgICA8cmVjdCB4PSIwIiB5PSI5MiIgd2lkdGg9IjE0OTYiIGhlaWdodD0iODIiIHJ4PSIxOCIgZmlsbD0idXJsKCNjZWxsKSIvPgogICAgPHJlY3QgeD0iMCIgeT0iMTg0IiB3aWR0aD0iMTQ5NiIgaGVpZ2h0PSI4MiIgcng9IjE4IiBmaWxsPSJ1cmwoI2NlbGwpIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIyNzYiIHdpZHRoPSIxNDk2IiBoZWlnaHQ9IjgyIiByeD0iMTgiIGZpbGw9InVybCgjY2VsbCkiLz4KICAgIDwhLS0gZ3JpZCB2ZXJ0aWNhbCBzZXBhcmF0b3JzIC0tPgogICAgPGcgc3Ryb2tlPSIjRkZGRkZGIiBzdHJva2Utd2lkdGg9IjEyIj4KICAgICAgPGxpbmUgeDE9IjI1MCIgeTE9IjAiIHgyPSIyNTAiIHkyPSIzNTgiLz4KICAgICAgPGxpbmUgeDE9IjQ1OCIgeTE9IjAiIHgyPSI0NTgiIHkyPSIzNTgiLz4KICAgICAgPGxpbmUgeDE9IjY2NiIgeTE9IjAiIHgyPSI2NjYiIHkyPSIzNTgiLz4KICAgICAgPGxpbmUgeDE9Ijg3NCIgeTE9IjAiIHgyPSI4NzQiIHkyPSIzNTgiLz4KICAgICAgPGxpbmUgeDE9IjEwODIiIHkxPSIwIiB4Mj0iMTA4MiIgeTI9IjM1OCIvPgogICAgICA8bGluZSB4MT0iMTI5MCIgeTE9IjAiIHgyPSIxMjkwIiB5Mj0iMzU4Ii8+CiAgICA8L2c+CiAgICA8ZyBzdHJva2U9IiNGRkZGRkYiIHN0cm9rZS13aWR0aD0iMTIiPgogICAgICA8bGluZSB4MT0iMCIgeTE9Ijg3IiB4Mj0iMTQ5NiIgeTI9Ijg3Ii8+CiAgICAgIDxsaW5lIHgxPSIwIiB5MT0iMTc5IiB4Mj0iMTQ5NiIgeTI9IjE3OSIvPgogICAgICA8bGluZSB4MT0iMCIgeTE9IjI3MSIgeDI9IjE0OTYiIHkyPSIyNzEiLz4KICAgIDwvZz4KICAgIDwhLS0gaGVhZGVyIC0tPgogICAgPHRleHQgeD0iMzIiIHk9IjUzIiBjbGFzcz0iaGVhZCI+QWdlPC90ZXh0PgogICAgPHRleHQgeD0iMzU0IiB5PSI1MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhlYWQiPjA8L3RleHQ+CiAgICA8dGV4dCB4PSI1NjIiIHk9IjUzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iaGVhZCI+MTwvdGV4dD4KICAgIDx0ZXh0IHg9Ijc3MCIgeT0iNTMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJoZWFkIj41PC90ZXh0PgogICAgPHRleHQgeD0iOTc4IiB5PSI1MyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9ImhlYWQiPjEwPC90ZXh0PgogICAgPHRleHQgeD0iMTE4NiIgeT0iNTMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJoZWFkIj4xNTwvdGV4dD4KICAgIDx0ZXh0IHg9IjEzOTQiIHk9IjUzIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0iaGVhZCI+QWR1bHQ8L3RleHQ+CiAgICA8IS0tIGxhYmVscyAtLT4KICAgIDx0ZXh0IHg9IjMyIiB5PSIxNDQiIGNsYXNzPSJsYWJlbCI+QSAoSGVhZCk8L3RleHQ+CiAgICA8dGV4dCB4PSIzMiIgeT0iMjM2IiBjbGFzcz0ibGFiZWwiPkIgKFRoaWdoKTwvdGV4dD4KICAgIDx0ZXh0IHg9IjMyIiB5PSIzMjgiIGNsYXNzPSJsYWJlbCI+QyAoTGVnKTwvdGV4dD4KICAgIDwhLS0gdmFsdWVzIC0tPgogICAgPHRleHQgeD0iMzU0IiB5PSIxNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjnCvSU8L3RleHQ+CiAgICA8dGV4dCB4PSI1NjIiIHk9IjE0NCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+OMK9JTwvdGV4dD4KICAgIDx0ZXh0IHg9Ijc3MCIgeT0iMTQ0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsIj42wr0lPC90ZXh0PgogICAgPHRleHQgeD0iOTc4IiB5PSIxNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjXCvSU8L3RleHQ+CiAgICA8dGV4dCB4PSIxMTg2IiB5PSIxNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjTCvSU8L3RleHQ+CiAgICA8dGV4dCB4PSIxMzk0IiB5PSIxNDQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjPCvSU8L3RleHQ+CiAgICA8dGV4dCB4PSIzNTQiIHk9IjIzNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+MsK+JTwvdGV4dD4KICAgIDx0ZXh0IHg9IjU2MiIgeT0iMjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsIj4zwrwlPC90ZXh0PgogICAgPHRleHQgeD0iNzcwIiB5PSIyMzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjQlPC90ZXh0PgogICAgPHRleHQgeD0iOTc4IiB5PSIyMzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjUlPC90ZXh0PgogICAgPHRleHQgeD0iMTE4NiIgeT0iMjM2IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsIj42JTwvdGV4dD4KICAgIDx0ZXh0IHg9IjEzOTQiIHk9IjIzNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+NsK9JTwvdGV4dD4KICAgIDx0ZXh0IHg9IjM1NCIgeT0iMzI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsIj4ywr0lPC90ZXh0PgogICAgPHRleHQgeD0iNTYyIiB5PSIzMjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGNsYXNzPSJ2YWwiPjLCviU8L3RleHQ+CiAgICA8dGV4dCB4PSI3NzAiIHk9IjMyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+MsK+JTwvdGV4dD4KICAgIDx0ZXh0IHg9Ijk3OCIgeT0iMzI4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBjbGFzcz0idmFsIj4zJTwvdGV4dD4KICAgIDx0ZXh0IHg9IjExODYiIHk9IjMyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+M8K8JTwvdGV4dD4KICAgIDx0ZXh0IHg9IjEzOTQiIHk9IjMyOCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgY2xhc3M9InZhbCI+M8K9JTwvdGV4dD4KICA8L2c+Cjwvc3ZnPg==" alt="Tabel nilai A kepala, B paha, dan C tungkai pada chart Lund-Browder berdasarkan usia"/>
+<img class="burn-tbsa-chart-img" src="assets/images/tbsa-lund-browder.svg" loading="lazy" alt="Tabel nilai A kepala, B paha, dan C tungkai pada chart Lund-Browder berdasarkan usia"/>
 </div>
 <ul>
 <li><strong>Parkland:</strong> 4 × BB × %TBSA = cairan resusitasi 24 jam pertama.</li>
@@ -7454,7 +7525,6 @@ const daftarObat = [
   },
   {
     nama: "Albendazole",
-    varian: "Anthelmintik / antiparasit",
     doseType: "ageBands",
     doseBasis: "singleDose",
     unitLabel: "mg dosis tunggal",
@@ -7505,7 +7575,6 @@ const daftarObat = [
   },
   {
     nama: "Asetilsistein",
-    varian: "Mukolitik",
     doseType: "ageBands",
     doseBasis: "perDose",
     unitLabel: "mg/kali",
@@ -7852,7 +7921,6 @@ const daftarObat = [
   },
   {
     nama: "Mebendazole",
-    varian: "Anthelmintik / antiparasit",
     doseType: "ageBands",
     doseBasis: "perDose",
     unitLabel: "mg/kali",
@@ -7878,7 +7946,6 @@ const daftarObat = [
   },
   {
     nama: "Pyrantel Pamoate",
-    varian: "Anthelmintik / antiparasit",
     doseType: "perKg",
     dosisMinPerKg: 11,
     dosisMaxPerKg: 11,
@@ -8568,6 +8635,75 @@ let protokolTerpilih = null; // id diagnosis yang sedang dibuka
 // Urutkan rak obat berdasarkan abjad agar daftar selalu rapi.
 daftarObat.sort((a, b) => String(a.nama || "").localeCompare(String(b.nama || ""), "id", { sensitivity: "base" }));
 
+/* ============================================================
+   PETA JENIS / KATEGORI OBAT
+   Memetakan tiap obat ke kategori farmakologisnya. Dipakai untuk
+   tag jenis di kartu + filter kategori di atas galeri.
+============================================================ */
+const PETA_JENIS_OBAT = {
+  "Ambroxol": "Mukolitik & Ekspektoran",
+  "Asetilsistein": "Mukolitik & Ekspektoran",
+  "Amoxicillin": "Antibiotik",
+  "Azithromycin": "Antibiotik",
+  "Cefixime": "Antibiotik",
+  "Co-Amoxiclav": "Antibiotik",
+  "Cotrimoxazole": "Antibiotik",
+  "Eritromisin": "Antibiotik",
+  "Metronidazole": "Antibiotik",
+  "Albendazole": "Anthelmintik",
+  "Mebendazole": "Anthelmintik",
+  "Pyrantel Pamoate": "Anthelmintik",
+  "Domperidone": "Antiemetik",
+  "Ondansetron": "Antiemetik",
+  "Cetirizine": "Antihistamin",
+  "Chlorpheniramine Maleate (CTM)": "Antihistamin",
+  "Loratadine": "Antihistamin",
+  "Ketoconazole": "Antijamur",
+  "Nystatin": "Antijamur",
+  "Ibuprofen": "Antipiretik & Analgesik",
+  "Paracetamol": "Antipiretik & Analgesik",
+  "Asiklovir": "Antivirus",
+  "Oseltamivir": "Antivirus",
+  "Salbutamol": "Bronkodilator",
+  "Dexamethasone": "Kortikosteroid",
+  "Prednisolone": "Kortikosteroid",
+  "Prednison": "Kortikosteroid",
+  "Oral Rehydration Salt (ORS)": "Rehidrasi / Cairan & Elektrolit",
+  "Vitamin A": "Vitamin & Suplemen",
+  "Vitamin D": "Vitamin & Suplemen",
+  "Zat Besi": "Vitamin & Suplemen",
+  "Zinc": "Vitamin & Suplemen"
+};
+
+// Warna aksen tiap kategori (untuk tag jenis & chip filter)
+const WARNA_JENIS_OBAT = {
+  "Anthelmintik": "#8B5E34",
+  "Antibiotik": "#2E7D6B",
+  "Antiemetik": "#C2557A",
+  "Antihistamin": "#3F6DB5",
+  "Antijamur": "#B07A2E",
+  "Antipiretik & Analgesik": "#D9534F",
+  "Antivirus": "#7E57C2",
+  "Bronkodilator": "#2F9BB3",
+  "Kortikosteroid": "#C77D3E",
+  "Mukolitik & Ekspektoran": "#3F8FCB",
+  "Rehidrasi / Cairan & Elektrolit": "#1FA08A",
+  "Vitamin & Suplemen": "#C99A2E"
+};
+
+// Lekatkan kategori ke tiap objek obat + sediakan daftar kategori urut abjad
+daftarObat.forEach(function (o) {
+  o.jenis = PETA_JENIS_OBAT[o.nama] || "Lainnya";
+});
+function warnaJenis(jenis) {
+  return WARNA_JENIS_OBAT[jenis] || "#0A0B5F";
+}
+const daftarKategoriObat = Array.from(new Set(daftarObat.map(function (o) { return o.jenis; })))
+  .sort(function (a, b) { return a.localeCompare(b, "id", { sensitivity: "base" }); });
+
+// Kategori yang sedang difilter di galeri ("Semua" = tampilkan semua)
+let kategoriObatAktif = "Semua";
+
 const warnaLabel = ["#54C6EB"];
 
 let obatTerpilih = 0; // index obat yang sedang aktif di kalkulator
@@ -8654,18 +8790,22 @@ function renderLibrary() {
 
   const frag = document.createDocumentFragment();
 
+  // Galeri rata (flat): kartu urut abjad -- daftarObat sudah diurutkan A-Z.
   daftarObat.forEach((obat, index) => {
     const warna = warnaLabel[index % warnaLabel.length];
+    const warnaKat = warnaJenis(obat.jenis);
     const kartu = document.createElement("div");
     kartu.className = "obat-card" + (index === obatTerpilih ? " selected" : "");
     kartu.dataset.index = index;
     kartu.dataset.nama = obat.nama.toLowerCase();
+    kartu.dataset.jenis = obat.jenis;
 
     const labelDosis = labelDosisObat(obat);
 
     kartu.innerHTML = `
       <span class="centang">✓</span>
       <div class="label-atas" style="background:${warna};"></div>
+      <span class="jenis-tag" style="--cjenis:${warnaKat};">${escapeHtml(obat.jenis)}</span>
       <div class="nama-obat-card">${escapeHtml(obat.nama)}</div>
       ${Array.isArray(obat.sediaanOptions) && obat.sediaanOptions.length > 1 ? `<div class="varian-label">${obat.sediaanOptions.length} pilihan sediaan sirup</div>` : (obat.varian ? `<div class="varian-label">${escapeHtml(obat.varian)}</div>` : "")}
       <span class="badge-dosis">${escapeHtml(labelDosis)}</span>
@@ -8674,6 +8814,31 @@ function renderLibrary() {
   });
 
   grid.appendChild(frag);
+  renderFilterKategori();
+  terapkanFilterObat();
+}
+
+/* ============================================================
+   FILTER KATEGORI (chip di atas galeri)
+   Mengikuti format menu Guideline: chip seragam, aktif gradient biru,
+   galeri rata tanpa judul grup.
+============================================================ */
+function renderFilterKategori() {
+  const wrap = document.getElementById("kategori-filter");
+  if (!wrap) return;
+  const chips = ["Semua"].concat(daftarKategoriObat);
+  wrap.innerHTML = chips.map(function (k) {
+    const aktif = k === kategoriObatAktif ? " aktif" : "";
+    return `<button type="button" class="kategori-chip${aktif}" data-kategori="${escapeHtml(k)}">${escapeHtml(k)}</button>`;
+  }).join("");
+}
+
+function setKategoriObat(kategori) {
+  kategoriObatAktif = kategori || "Semua";
+  document.querySelectorAll("#kategori-filter .kategori-chip").forEach(function (chip) {
+    chip.classList.toggle("aktif", chip.dataset.kategori === kategoriObatAktif);
+  });
+  terapkanFilterObat();
 }
 
 /* ============================================================
@@ -8749,18 +8914,25 @@ function toggleInputSesuaiObat(obat) {
 /* ============================================================
    FILTER PENCARIAN OBAT
 ============================================================ */
-function filterObat() {
-  const query = document.getElementById("kotakCari").value.trim().toLowerCase();
+function terapkanFilterObat() {
+  const query = (document.getElementById("kotakCari").value || "").trim().toLowerCase();
   const kartuList = document.querySelectorAll("#grid-obat .obat-card");
   let adaYangTampil = false;
 
-  kartuList.forEach(kartu => {
-    const cocok = kartu.dataset.nama.includes(query);
-    kartu.style.display = cocok ? "" : "none";
-    if (cocok) adaYangTampil = true;
+  kartuList.forEach(function (kartu) {
+    const cocokNama = kartu.dataset.nama.includes(query);
+    const cocokKategori = kategoriObatAktif === "Semua" || kartu.dataset.jenis === kategoriObatAktif;
+    const tampil = cocokNama && cocokKategori;
+    kartu.style.display = tampil ? "" : "none";
+    if (tampil) adaYangTampil = true;
   });
 
   document.getElementById("pesan-kosong").style.display = adaYangTampil ? "none" : "block";
+}
+
+// Kompatibilitas: input pencarian tetap memanggil filterObat()
+function filterObat() {
+  terapkanFilterObat();
 }
 
 /* ============================================================
@@ -11727,6 +11899,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   document.getElementById("kotakCari").addEventListener("input", filterObat);
+  document.getElementById("kategori-filter").addEventListener("click", function (e) {
+    const chip = e.target.closest(".kategori-chip");
+    if (chip) setKategoriObat(chip.dataset.kategori);
+  });
   document.getElementById("btnHitung").addEventListener("click", hitungDosis);
 
   // izinkan tekan Enter di field berat badan / usia untuk langsung menghitung
