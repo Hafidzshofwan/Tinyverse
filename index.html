@@ -8133,7 +8133,7 @@ const daftarObat = [
         dosisFlatMin: 60,
         dosisFlatMax: 60,
         frekuensi: "2 kali per minggu, selama 3 bulan berturut-turut setiap tahun",
-        catatan: "Dosis tetap 60 mg/hari zat besi elemental, tidak dihitung dari berat badan. Khusus remaja perempuan: tambahkan asam folat 400 µg.",
+        catatan: "Dosis tetap 60 mg/hari zat besi elemental, tidak dihitung dari berat badan. Khusus remaja perempuan: tambahkan asam folat 400   g.",
         doseBasis: "perDay",
         dosesPerDay: 1,
         dosisMaksimalHarianMg: 60
@@ -13770,7 +13770,12 @@ document.addEventListener('DOMContentLoaded', function () {
         pointer-events: auto !important;
       }
       #${HARD_BTN_ID}:active { transform: scale(.96) !important; }
-      #tvSideToggle { display: none !important; }
+      /* HAPUS KOTAK PUTIH DI BELAKANG: #tvSideToggle (tombol lama, lebih besar)
+         disembunyikan total dengan selector ber-specificity tinggi agar mengalahkan
+         aturan 'html body #tvSideToggle { display:flex !important }'. Sisakan hanya tombol ☰. */
+      html body #tvSideToggle,
+      html body #tvSideToggle.tampil,
+      html body button#tvSideToggle { display: none !important; }
       /* FIX TOMBOL BILAH DI LAYAR TERKUNCI: saat login/memuat (body.tv-terkunci),
          tombol menu, drawer, dan overlay tidak boleh tampil menutupi layar login. */
       body.tv-terkunci #${HARD_BTN_ID},
@@ -14329,6 +14334,24 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
 .tv-safety b{font-family:'Fredoka',sans-serif;display:block;margin-bottom:2px}
 .tv-safety ul{margin:6px 0 0;padding-left:18px}
 .tv-safety li{margin:2px 0}
+</style>
+<style>
+/* ===== TINYVERSE: SIMETRIKAN FAB PROFIL & ASISTEN AI (tinggi sama, posisi mirror) ===== */
+#tvPasienFab, .tv-ai-fab {
+  width: 64px !important;
+  height: 64px !important;
+  bottom: 18px !important;
+  border: 5px solid #FFFFFF !important;
+  box-sizing: border-box !important;
+  border-radius: 999px !important;
+}
+#tvPasienFab { left: 18px !important; right: auto !important; box-shadow: 0 22px 44px rgba(124,92,252,0.34) !important; }
+.tv-ai-fab { right: 18px !important; left: auto !important; }
+@media (max-width: 640px) {
+  #tvPasienFab, .tv-ai-fab { width: 58px !important; height: 58px !important; bottom: 14px !important; }
+  #tvPasienFab { left: 14px !important; right: auto !important; }
+  .tv-ai-fab { right: 14px !important; left: auto !important; }
+}
 </style>
 <script>
 (function(){
