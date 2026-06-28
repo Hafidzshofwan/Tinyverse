@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-label="TBSA Lund Browder sesuai chart">
+  <defs>
+    <linearGradient id="header" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#A983F5"/>
+      <stop offset="100%" stop-color="#B992FF"/>
+    </linearGradient>
+    <linearGradient id="cell" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#F4ECFF"/>
+      <stop offset="100%" stop-color="#E9DFFF"/>
+    </linearGradient>
+    <filter id="softShadow" x="-5%" y="-10%" width="110%" height="125%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#3B256F" flood-opacity="0.16"/>
+    </filter>
+    <style>
+      .title { font: 800 46px Arial, Helvetica, sans-serif; fill: #2A154A; }
+      .head { font: 800 40px Arial, Helvetica, sans-serif; fill: #1F1238; }
+      .label { font: 800 38px Arial, Helvetica, sans-serif; fill: #2A154A; }
+      .val { font: 700 38px Arial, Helvetica, sans-serif; fill: #5B4B72; }
+      .note { font: 600 24px Arial, Helvetica, sans-serif; fill: #725D92; }
+    </style>
+  </defs>
+  <rect x="24" y="22" width="1552" height="476" rx="38" fill="#FFFFFF" filter="url(#softShadow)"/>
+  <text x="800" y="76" text-anchor="middle" class="title">TBSA: Lund-Browder sesuai chart</text>
+  <g transform="translate(52,112)">
+    <rect x="0" y="0" width="1496" height="360" rx="24" fill="#FFFFFF"/>
+    <!-- row backgrounds -->
+    <rect x="0" y="0" width="1496" height="82" rx="18" fill="url(#header)"/>
+    <rect x="0" y="92" width="1496" height="82" rx="18" fill="url(#cell)"/>
+    <rect x="0" y="184" width="1496" height="82" rx="18" fill="url(#cell)"/>
+    <rect x="0" y="276" width="1496" height="82" rx="18" fill="url(#cell)"/>
+    <!-- grid vertical separators -->
+    <g stroke="#FFFFFF" stroke-width="12">
+      <line x1="250" y1="0" x2="250" y2="358"/>
+      <line x1="458" y1="0" x2="458" y2="358"/>
+      <line x1="666" y1="0" x2="666" y2="358"/>
+      <line x1="874" y1="0" x2="874" y2="358"/>
+      <line x1="1082" y1="0" x2="1082" y2="358"/>
+      <line x1="1290" y1="0" x2="1290" y2="358"/>
+    </g>
+    <g stroke="#FFFFFF" stroke-width="12">
+      <line x1="0" y1="87" x2="1496" y2="87"/>
+      <line x1="0" y1="179" x2="1496" y2="179"/>
+      <line x1="0" y1="271" x2="1496" y2="271"/>
+    </g>
+    <!-- header -->
+    <text x="32" y="53" class="head">Age</text>
+    <text x="354" y="53" text-anchor="middle" class="head">0</text>
+    <text x="562" y="53" text-anchor="middle" class="head">1</text>
+    <text x="770" y="53" text-anchor="middle" class="head">5</text>
+    <text x="978" y="53" text-anchor="middle" class="head">10</text>
+    <text x="1186" y="53" text-anchor="middle" class="head">15</text>
+    <text x="1394" y="53" text-anchor="middle" class="head">Adult</text>
+    <!-- labels -->
+    <text x="32" y="144" class="label">A (Head)</text>
+    <text x="32" y="236" class="label">B (Thigh)</text>
+    <text x="32" y="328" class="label">C (Leg)</text>
+    <!-- values -->
+    <text x="354" y="144" text-anchor="middle" class="val">9½%</text>
+    <text x="562" y="144" text-anchor="middle" class="val">8½%</text>
+    <text x="770" y="144" text-anchor="middle" class="val">6½%</text>
+    <text x="978" y="144" text-anchor="middle" class="val">5½%</text>
+    <text x="1186" y="144" text-anchor="middle" class="val">4½%</text>
+    <text x="1394" y="144" text-anchor="middle" class="val">3½%</text>
+    <text x="354" y="236" text-anchor="middle" class="val">2¾%</text>
+    <text x="562" y="236" text-anchor="middle" class="val">3¼%</text>
+    <text x="770" y="236" text-anchor="middle" class="val">4%</text>
+    <text x="978" y="236" text-anchor="middle" class="val">5%</text>
+    <text x="1186" y="236" text-anchor="middle" class="val">6%</text>
+    <text x="1394" y="236" text-anchor="middle" class="val">6½%</text>
+    <text x="354" y="328" text-anchor="middle" class="val">2½%</text>
+    <text x="562" y="328" text-anchor="middle" class="val">2¾%</text>
+    <text x="770" y="328" text-anchor="middle" class="val">2¾%</text>
+    <text x="978" y="328" text-anchor="middle" class="val">3%</text>
+    <text x="1186" y="328" text-anchor="middle" class="val">3¼%</text>
+    <text x="1394" y="328" text-anchor="middle" class="val">3½%</text>
+  </g>
+</svg>
