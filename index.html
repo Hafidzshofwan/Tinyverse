@@ -49,7 +49,6 @@
 
   h1, h2, h3, .tombol, .nama-obat-card { font-family: 'Fredoka', sans-serif; }
 
-  /* ===== BACKGROUND DEKORASI MAINAN (tidak mengganggu teks) ===== */
   .bg-decor {
     position: fixed;
     top: 0; left: 0;
@@ -59,7 +58,6 @@
     pointer-events: none;
   }
 
-  /* ===== HEADER / SPANDUK ===== */
   header {
     position: relative;
     background: linear-gradient(135deg, var(--biru) 0%, #8FE0F5 45%, var(--kuning) 100%);
@@ -139,7 +137,6 @@
     letter-spacing: 0.2px;
   }
 
-  /* Garis bergelombang transisi header -> konten */
   .gelombang {
     position: absolute;
     bottom: -2px; left: 0;
@@ -149,7 +146,6 @@
   }
   .gelombang svg { width: 100%; height: 60px; display: block; }
 
-  /* ===== NAVIGASI MAINAN ===== */
   nav.nav-mainan {
     position: relative;
     z-index: 3;
@@ -180,18 +176,16 @@
   .nav-btn:hover { transform: translateY(-3px); }
   .nav-btn:active { transform: translateY(1px); box-shadow: 0 2px 0 rgba(0,0,0,0.12); }
 
-  /* bentuk balon untuk tombol 1 */
   .nav-btn.bentuk-balon {
     background: linear-gradient(160deg, var(--pink), var(--pink-tua));
     border-radius: 50px 50px 46px 46px;
   }
-  /* bentuk balok mainan untuk tombol 2 */
+  
   .nav-btn.bentuk-balok {
     background: linear-gradient(160deg, var(--oranye), var(--oranye-tua));
     border-radius: 14px;
   }
 
-  /* ===== MAIN ===== */
   main {
     position: relative;
     z-index: 1;
@@ -230,7 +224,6 @@
     font-weight: 600;
   }
 
-  /* ===== KARTU UMUM ===== */
   .kartu {
     background: var(--putih);
     border-radius: 26px;
@@ -239,7 +232,6 @@
     position: relative;
   }
 
-  /* ===== SEARCH BAR ===== */
   .search-wrap {
     position: relative;
     margin-bottom: 20px;
@@ -269,7 +261,6 @@
     opacity: 0.6;
   }
 
-  /* ===== LIBRARY OBAT (kartu botol) ===== */
   #grid-obat {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -365,7 +356,6 @@
   }
   .obat-card.selected .centang { display: flex; }
 
-  /* ===== TAG JENIS OBAT (di kartu) ===== */
   .obat-card .jenis-tag {
     display: inline-block;
     max-width: calc(100% - 6px);
@@ -382,37 +372,6 @@
     line-height: 1.25;
   }
 
-  /* ===== JUDUL KATEGORI (memenuhi satu baris penuh di grid) ===== */
-  #grid-obat .kategori-judul {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 12px 2px 2px;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700;
-    font-size: 1.02rem;
-    color: var(--cjenis, #0A0B5F);
-  }
-  #grid-obat .kategori-judul:first-child { margin-top: 0; }
-  #grid-obat .kategori-judul::before {
-    content: "";
-    width: 12px; height: 12px;
-    border-radius: 4px;
-    background: var(--cjenis, #0A0B5F);
-    flex: 0 0 auto;
-  }
-  #grid-obat .kategori-judul .jumlah {
-    font-family: inherit;
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: var(--teks-lembut);
-    background: rgba(10,11,95,0.06);
-    padding: 2px 9px;
-    border-radius: 999px;
-  }
-
-  /* ===== FILTER KATEGORI (di atas galeri) ===== */
   #kategori-filter {
     display: flex;
     flex-wrap: wrap;
@@ -443,7 +402,6 @@
     padding: 20px;
   }
 
-  /* ===== KALKULATOR ===== */
   .kalkulator-kartu {
     display: flex;
     align-items: flex-start;
@@ -535,7 +493,6 @@
   .btn-hitung:hover { transform: translateY(-2px); }
   .btn-hitung:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--hijau-tua); }
 
-  /* ===== HASIL ===== */
   #hasil-box {
     display: none;
     background: linear-gradient(135deg, #FFF7E0, #EAFBF1);
@@ -566,9 +523,6 @@
     margin-bottom: 4px;
   }
 
-  .hasil-detail { font-size: 0.92rem; margin-top: 8px; }
-  .hasil-detail strong { color: var(--biru-tua); }
-
   .hasil-frekuensi {
     margin-top: 8px;
     display: inline-block;
@@ -580,9 +534,6 @@
     font-weight: 700;
   }
 
-
-
-  /* ===== HASIL DOSIS OBAT - RAPI & TERSTRUKTUR ===== */
   #hasil-box,
   .hasil-mini {
     background: linear-gradient(135deg, #FFFDF4, #F1FFF6);
@@ -722,7 +673,6 @@
     .hasil-row { grid-template-columns: 1fr; gap: 2px; }
   }
 
-  /* ===== FOOTER ===== */
   footer {
     position: relative;
     z-index: 1;
@@ -769,7 +719,6 @@
   }
   .watermark a:hover { text-decoration: underline; }
 
-  /* ===== LAYOUT: SIDEBAR + KONTEN HALAMAN ===== */
   .app-layout {
     position: relative;
     z-index: 1;
@@ -791,11 +740,6 @@
     z-index: 4;
   }
 
-  /* Jika ruang di kiri konten terlalu sempit, sidebar otomatis
-     pindah ke atas konten (lihat media query 768px di bawah) */
-
-  /* Layar sedang: ruang di kiri konten tidak cukup untuk sidebar 196px+gap,
-     jadi sidebar diturunkan ke atas konten sebagai baris horizontal */
   @media (max-width: 1100px) and (min-width: 769px) {
     .app-layout { padding-top: 0; }
     .sidebar {
@@ -843,9 +787,6 @@
   .page { display: none; }
   .page.page-aktif { display: block; }
 
-
-
-/* ===== GUIDELINE PDF LIBRARY ===== */
 .guideline-hero-card { display: grid; gap: 14px; }
 .guideline-search-wrap { margin-bottom: 0; }
 .guideline-filter { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -910,7 +851,6 @@
   .guideline-btn { text-align: center; }
 }
 
-  /* ===== GUIDELINE: GALERI DIAGNOSIS ===== */
   #grid-protokol {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
@@ -943,7 +883,6 @@
   .protokol-card .nama-protokol-card { font-size: 0.95rem; font-weight: 600; color: var(--teks); margin-bottom: 6px; }
   .protokol-card .badge-dosis { display: inline-block; font-size: 0.7rem; font-weight: 700; color: var(--teks-lembut); background: var(--putih); padding: 4px 10px; border-radius: 20px; }
 
-  /* ===== GUIDELINE: DETAIL DIAGNOSIS ===== */
   .btn-kembali {
     display: inline-flex;
     align-items: center;
@@ -983,7 +922,6 @@
     border-bottom: 3px dashed #EAF6FB;
   }
 
-  /* ===== GAMBAR ALUR / ALGORITMA DIAGNOSIS ===== */
   .alur-block {
     background: var(--putih);
     border-radius: 16px;
@@ -1017,7 +955,6 @@
     text-align: center;
   }
 
-  /* Lightbox sederhana untuk memperbesar gambar alur */
   .alur-lightbox {
     display: none;
     position: fixed;
@@ -1134,31 +1071,6 @@
     padding: 20px;
   }
 
-  /* ===== FITUR BARU: TERAPI CAIRAN & TUMBUH KEMBANG (draft) ===== */
-  .draft-notice {
-    background: linear-gradient(135deg, #FFF7E0, #FFEFD0);
-    border: 2px dashed var(--kuning-tua);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .draft-badge {
-    display: inline-block;
-    align-self: flex-start;
-    background: var(--kuning-tua);
-    color: white;
-    font-family: 'Fredoka', sans-serif;
-    font-weight: 700;
-    font-size: 0.7rem;
-    padding: 5px 14px;
-    border-radius: 50px;
-  }
-  .draft-notice p {
-    font-size: 0.88rem;
-    color: var(--teks);
-    line-height: 1.5;
-  }
-
   .form-row-group {
     display: flex;
     gap: 10px;
@@ -1179,8 +1091,6 @@
   }
   select:focus { outline: none; border-color: var(--biru); }
 
-
-  /* ===== REHIDRASI LUKA BAKAR ===== */
   .burn-map-wrap {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1200,17 +1110,7 @@
     margin-bottom: 10px;
     text-align: center;
   }
-  .burn-body {
-    display: grid;
-    grid-template-columns: 1fr 1.25fr 1fr;
-    gap: 8px;
-    align-items: stretch;
-  }
-  .burn-body .col {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+
   .burn-area {
     border: 2px solid #FFE1CF;
     background: #FFFFFF;
@@ -1234,7 +1134,7 @@
   }
   .burn-area.small { min-height: 38px; padding: 8px 6px; font-size: 0.7rem; }
   .burn-area.head { border-radius: 999px 999px 16px 16px; min-height: 56px; }
-  .burn-area.trunk { min-height: 104px; }
+  
   .burn-area.perineum { min-height: 36px; }
   .burn-parts-grid {
     display: grid;
@@ -1271,7 +1171,7 @@
   .burn-rincian-list li { margin-bottom: 3px; }
   @media (max-width: 640px) {
     .burn-map-wrap, .burn-result-grid { grid-template-columns: 1fr; }
-    .burn-body { grid-template-columns: 0.9fr 1.2fr 0.9fr; gap: 6px; }
+    
     .burn-area { font-size: 0.7rem; padding: 8px 5px; }
   }
 
@@ -1321,7 +1221,6 @@
     font-style: italic;
   }
 
-  /* ===== Segmented toggle (pilih metode / rencana / kategori usia) ===== */
   .segmented-toggle {
     display: flex;
     gap: 6px;
@@ -1355,7 +1254,6 @@
   .segmented-btn.aktif.aktif-rencana-b { background: var(--kuning); color: var(--teks); box-shadow: 0 3px 0 var(--kuning-tua); }
   .segmented-btn.aktif.aktif-rencana-c { background: #E63946; box-shadow: 0 3px 0 #B71C1C; }
 
-  /* Warna isi panel Rehidrasi WHO mengikuti warna rencana */
   #rencana-a .kartu {
     background: linear-gradient(135deg, #F0FFE8, #FFFFFF);
     border-color: rgba(126,217,87,0.45);
@@ -1479,22 +1377,6 @@
     border-top: 2px dashed rgba(240,99,135,0.3);
   }
 
-  .chart-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 260px;
-    text-align: center;
-    color: var(--teks-lembut);
-    font-weight: 600;
-    background: repeating-linear-gradient(135deg, var(--krem), var(--krem) 12px, #FFF7E0 12px, #FFF7E0 24px);
-    border: 3px dashed var(--pink);
-    border-radius: 18px;
-    padding: 20px;
-  }
-
-
-  /* ===== TUMBUH KEMBANG: INTERPRETASI CDC PERSENTIL ===== */
   .tk-cdc-block {
     background: #FFFFFF;
     border: 1px solid rgba(43,169,214,0.22);
@@ -1523,37 +1405,7 @@
     line-height: 1.45;
     font-weight: 700;
   }
-  .tk-cdc-arti {
-    margin-top: 8px;
-    border-radius: 14px;
-    padding: 9px 11px;
-    background: rgba(43,169,214,0.10);
-    color: var(--teks);
-    font-size: 0.82rem;
-    line-height: 1.5;
-    font-weight: 700;
-  }
-  .tk-cdc-rumus-mini {
-    margin-top: 8px;
-    border-radius: 12px;
-    padding: 8px 10px;
-    background: rgba(255,255,255,0.72);
-    border: 1px dashed rgba(117,100,83,0.18);
-    color: var(--teks-lembut);
-    font-size: 0.78rem;
-    line-height: 1.45;
-    font-weight: 700;
-  }
-  .tk-cdc-note {
-    margin-top: 8px;
-    border-radius: 14px;
-    padding: 9px 11px;
-    background: rgba(255,197,41,0.14);
-    color: var(--teks);
-    font-size: 0.78rem;
-    line-height: 1.5;
-    font-weight: 700;
-  }
+
   @media (max-width: 480px) {
     .tk-cdc-row { flex-direction: column; gap: 2px; }
     .tk-cdc-value { text-align: left; }
@@ -1606,7 +1458,6 @@
     .tk-cdc-materi .tk-cdc-grid-kriteria { grid-template-columns: 1fr; }
   }
 
-  /* ===== TUMBUH KEMBANG: WIZARD PEMILIHAN CHART ===== */
   .tk-stepper {
     display: flex;
     gap: 6px;
@@ -1700,11 +1551,6 @@
   .tk-kartu-pilihan .tk-nama-pilihan { font-weight: 700; font-size: 0.95rem; color: var(--teks); }
   .tk-kartu-pilihan .tk-sub-pilihan { font-size: 0.75rem; color: var(--teks-lembut); font-weight: 600; margin-top: 3px; }
 
-  .tk-gallery-usia {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 10px;
-  }
   .tk-kartu-usia {
     background: var(--putih);
     border: 3px solid #EAF6FB;
@@ -1730,7 +1576,6 @@
   .tk-usia-status.ada { background: #EAFBF1; color: var(--hijau-tua); }
   .tk-usia-status.belum { background: #FFF1E0; color: var(--oranye-tua); }
 
-  .tk-tombol-lanjut-wrap { margin-top: 18px; display: flex; justify-content: flex-end; }
   .tk-btn-kembali-mini {
     display: inline-flex;
     align-items: center;
@@ -1747,7 +1592,6 @@
     margin-bottom: 14px;
   }
 
-  /* ===== VIEWER CHART + ENGINE PLOTTING ===== */
   .tk-chart-stage {
     position: relative;
     width: 100%;
@@ -1822,7 +1666,6 @@
     to { transform: scale(1); opacity: 1; }
   }
 
-  /* ── GARIS BANTU (crosshair) dari titik pasien menuju kedua sumbu ── */
   .tk-garis-bantu {
     position: absolute;
     z-index: 4;
@@ -1834,7 +1677,6 @@
   .tk-garis-bantu.vertikal { width: 2px; transform: translateX(-1px); --arah: 0deg; }
   .tk-garis-bantu.horizontal { height: 2px; transform: translateY(-1px); --arah: 90deg; }
 
-  /* ── KOTAK KALIBRASI CHART (untuk menambah chart baru secara manual) ── */
   .tk-kalibrasi-toggle {
     display: inline-flex;
     align-items: center;
@@ -1965,7 +1807,6 @@
     .btn-hitung-mini { width: 100%; }
   }
 
-  /* ── Z-SCORE INTERPRETASI BLOCK ── */
   .tk-zscore-block {
     margin-top: 12px;
     border-top: 2px dashed #E0E0E0;
@@ -1996,8 +1837,6 @@
     font-family: 'Fredoka', sans-serif;
   }
 
-
-  /* ===== BERANDA / HOME DASHBOARD TINYVERSE ===== */
   .tv-home-shell {
     display: flex;
     flex-direction: column;
@@ -2046,18 +1885,7 @@
     gap: 10px;
     align-items: flex-end;
   }
-  .tv-home-mini-status {
-    min-width: 122px;
-    border-radius: 16px;
-    padding: 10px 12px;
-    background: rgba(255,255,255,0.74);
-    border: 1px solid rgba(255,255,255,0.8);
-    box-shadow: 0 8px 22px rgba(0,0,0,0.06);
-    color: var(--teks);
-    font-size: 0.68rem;
-    font-weight: 700;
-  }
-  .tv-home-mini-status strong { display: block; font-size: 1.35rem; line-height: 1; margin-bottom: 4px; }
+
   .tv-home-section-head {
     display: flex;
     justify-content: space-between;
@@ -2136,17 +1964,7 @@
   }
   .tv-home-fav-btn:hover { transform: scale(1.06); }
   .tv-home-fav-btn.aktif { background: #FFF0B8; color: #E0A400; }
-  .tv-coming-badge {
-    display: inline-flex;
-    align-items: center;
-    margin-top: 7px;
-    padding: 3px 7px;
-    border-radius: 999px;
-    background: #F3F1EA;
-    color: #8D8778;
-    font-size: 0.68rem;
-    font-weight: 800;
-  }
+  
   .tv-home-two-col {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -2289,8 +2107,6 @@
     .tv-home-tool { min-height: 92px; }
   }
 
-
-  /* Compact override Home Dashboard */
   #page-beranda .tv-home-shell { gap: 14px; }
   #page-beranda .tv-home-hero { border-radius: 20px; padding: 18px 20px; box-shadow: 0 8px 22px rgba(74,55,40,0.07); }
   #page-beranda .tv-home-eyebrow { padding: 5px 10px; font-size: 0.7rem; margin-bottom: 8px; }
@@ -2302,27 +2118,6 @@
   #page-beranda .tv-home-tool h4 { font-size: 0.84rem; margin-bottom: 3px; }
   #page-beranda .tv-home-tool p { font-size: 0.7rem; line-height: 1.3; }
   #page-beranda .tv-home-fav-btn { top: 10px; right: 10px; width: 28px; height: 28px; border-radius: 10px; font-size: 0.86rem; }
-
-  #page-beranda .tv-update-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: inherit;
-    font-size: 0.98rem;
-    line-height: 1.2;
-  }
-  #page-beranda .tv-update-title-icon {
-    width: 34px;
-    height: 34px;
-    border-radius: 12px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: #EAF6FB;
-    font-size: 1.05rem;
-    line-height: 1;
-    flex: 0 0 auto;
-  }
 
   #page-beranda .tv-home-card { border-radius: 18px; padding: 14px; box-shadow: 0 5px 14px rgba(74,55,40,0.055); }
   #page-beranda .tv-home-section-head h3 { font-size: 0.98rem; }
@@ -2350,8 +2145,6 @@
   @media (max-width: 860px) { #page-beranda .tv-home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 560px) { #page-beranda .tv-home-grid, #page-beranda .tv-home-two-col, #page-beranda .tv-home-stat-grid { grid-template-columns: 1fr; } }
 
-
-  /* ===== FITUR JADWAL IMUNISASI ===== */
   #page-imunisasi .imunisasi-shell { display: flex; flex-direction: column; gap: 14px; }
   #page-imunisasi .imunisasi-hero {
     border-radius: 20px;
@@ -2374,34 +2167,15 @@
   #page-imunisasi .imunisasi-image { display: block; width: 100%; min-width: 720px; height: auto; cursor: zoom-in; }
   #page-imunisasi .imunisasi-toolbar { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 10px; }
   #page-imunisasi .imunisasi-toolbar h3 { margin: 0; font-size: 0.98rem; color: var(--teks); }
-  #page-imunisasi .imunisasi-badge { display: inline-flex; align-items: center; padding: 5px 9px; border-radius: 999px; background: #E7F8DA; color: #2f7a1f; font-size: 0.68rem; font-weight: 800; white-space: nowrap; }
-  #page-imunisasi .imunisasi-form { display: grid; gap: 9px; }
-  #page-imunisasi .imunisasi-form label { font-size: 0.76rem; color: var(--teks); font-weight: 800; }
-  #page-imunisasi .imunisasi-form input {
-    width: 100%; box-sizing: border-box; border: 2px solid #E6E2D4; border-radius: 12px; padding: 10px 11px;
-    font-family: inherit; font-size: 0.86rem; background: #fff;
-  }
-  #page-imunisasi .imunisasi-form input:focus { outline: none; border-color: #54C6EB; }
-  #page-imunisasi .imunisasi-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  #page-imunisasi .imunisasi-btn { border: none; border-radius: 12px; padding: 10px 11px; font-family: inherit; font-weight: 800; cursor: pointer; font-size: 0.78rem; }
-  #page-imunisasi .imunisasi-btn.primary { background: var(--hijau); color: #fff; box-shadow: 0 3px 0 var(--hijau-tua); }
-  #page-imunisasi .imunisasi-btn.secondary { background: #F3F1EA; color: var(--teks); }
-  #page-imunisasi .imunisasi-result { margin-top: 12px; display: none; }
-  #page-imunisasi .imunisasi-result.tampil { display: block; }
-  #page-imunisasi .imunisasi-result h4 { margin: 0 0 8px; font-size: 0.9rem; color: var(--teks); }
-  #page-imunisasi .imunisasi-list { display: grid; gap: 7px; }
+
   #page-imunisasi .imunisasi-item { border-radius: 12px; padding: 9px 10px; background: #FAF8F1; border-left: 4px solid #54C6EB; }
   #page-imunisasi .imunisasi-item strong { display: block; color: var(--teks); font-size: 0.78rem; }
   #page-imunisasi .imunisasi-item span { display: block; color: var(--teks-lembut); margin-top: 2px; font-size: 0.68rem; font-weight: 700; line-height: 1.35; }
   #page-imunisasi .imunisasi-note { margin-top: 10px; color: var(--teks-lembut); font-size: 0.7rem; font-weight: 600; line-height: 1.45; }
-  #page-imunisasi .imunisasi-legend { display: grid; gap: 7px; margin-top: 10px; }
-  #page-imunisasi .imunisasi-legend div { display: flex; gap: 8px; align-items: center; font-size: 0.7rem; color: var(--teks); font-weight: 700; }
-  #page-imunisasi .legend-dot { width: 24px; height: 12px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.12); flex: 0 0 auto; }
+
   @media (max-width: 900px) { #page-imunisasi .imunisasi-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { #page-imunisasi .imunisasi-hero { padding: 16px; } #page-imunisasi .imunisasi-actions { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { #page-imunisasi .imunisasi-hero { padding: 16px; }  }
 
-
-  /* ===== REVISI GALERI DOSIS OBAT: warna lebih tenang ===== */
   #grid-obat { gap: 12px; }
   #grid-obat .obat-card {
     background: #FFFFFF;
@@ -2430,8 +2204,6 @@
     background: #7DBE8C;
   }
 
-
-  /* ===== REVISI GALERI DOSIS OBAT: satu warna tema ===== */
   #grid-obat .obat-card {
     background: #FFFFFF;
     border: 1px solid #E6F4FA;
@@ -2459,8 +2231,6 @@
     color: #247CA0;
   }
 
-
-  /* ===== REVISI JADWAL IMUNISASI: full-page chart + zoom ===== */
   #page-imunisasi .imunisasi-shell { gap: 12px; }
   #page-imunisasi .imunisasi-hero { padding: 14px 18px; }
   #page-imunisasi .imunisasi-grid { display: block; }
@@ -2509,7 +2279,6 @@
     #page-imunisasi .imunisasi-toolbar-actions { justify-content: flex-start; }
   }
 
-  /* ===== REVISI IKON BERANDA: rata tengah dan proporsional ===== */
   #page-beranda .tv-home-row-icon {
     display: inline-flex !important;
     align-items: center !important;
@@ -2529,8 +2298,6 @@
   #page-beranda .tv-home-row-item { align-items: center; }
   #page-beranda .tv-home-row-item > div { min-width: 0; }
 
-
-  /* ===== FIREBASE AI LOGIC: ASISTEN AI ===== */
   .tv-ai-box { display: grid; gap: 14px; }
   .tv-ai-toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
   .tv-ai-chip {
@@ -2565,8 +2332,6 @@
     color: var(--teks); font-size: .82rem; font-weight: 700; line-height: 1.45;
   }
 
-
-  /* ===== ASISTEN AI MENGAMBANG ===== */
   .tv-ai-fab {
     position: fixed; right: 18px; bottom: 18px; z-index: 8500;
     width: 52px; height: 52px; border: 0; border-radius: 50%; cursor: pointer;
@@ -2597,9 +2362,6 @@
     .tv-ai-area { min-height: 110px; }
   }
 
-
-
-  /* ===== RINGKASAN KLINIS & EXPORT HASIL ===== */
   .summary-shell { display: flex; flex-direction: column; gap: 14px; }
   .summary-grid {
     display: grid;
@@ -2710,9 +2472,6 @@
     .summary-print-area pre { white-space: pre-wrap; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.45; }
   }
 
-
-
-  /* ===== RACIK PUYER MULTI-OBAT ===== */
   .puyer-shell { display: grid; gap: 14px; }
   .puyer-alert {
     border-radius: 18px; padding: 12px 14px; background: #FFF1BF;
@@ -2785,8 +2544,6 @@
     .puyer-actions { display: grid; grid-template-columns: 1fr; }
   }
 
-
-  /* ===== RACIK PUYER: SEARCH OBAT ===== */
   .puyer-obat-search-wrap { position: relative; }
   .puyer-search-hint {
     display: block;
@@ -2809,9 +2566,6 @@
     font-weight: 800;
   }
 
-
-
-/* ===== PERAPIHAN PROFIL DI SIDEBAR: center visual terhadap bilah ===== */
 #tvSidebarProfil {
   align-self: stretch !important;
   width: 100% !important;
@@ -2850,7 +2604,7 @@
   box-shadow: none !important;
   box-sizing: border-box !important;
 }
-/* nudge kecil agar sejajar secara visual dengan kartu menu hijau */
+
 #tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-ava,
 #tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-user-nama {
   transform: translateX(16px) !important;
@@ -2887,9 +2641,6 @@
   text-align: left !important;
 }
 
-
-
-/* ===== FIX: font isi update disamakan dengan judul kartu Quick Access ===== */
 #page-beranda .tv-home-update-list,
 #page-beranda .tv-home-update-list li {
   font-family: inherit !important;
@@ -2906,8 +2657,6 @@
   margin-bottom: 4px !important;
 }
 
-
-/* ===== GUIDELINE CARD CLEANUP: 1 ikon/card, isi center, tombol hanya di detail ===== */
 .guideline-grid .guideline-card.protokol-card {
   background: var(--krem);
   border-radius: 24px;
@@ -2979,14 +2728,6 @@
   display: none !important;
 }
 
-
-
-/* ============================================================
-   TINYVERSE — ETAIL.ME INSPIRED LANDING DESIGN OVERRIDE
-   Hanya CSS: struktur HTML, konten, ID, class, dan JavaScript asli
-   tetap dipertahankan. Visual mengikuti contoh: hero besar dengan
-   nuansa 3D soft, navbar putih pill, navy typography, CTA magenta.
-============================================================ */
 :root {
   --kuning: #F9D85C;
   --kuning-tua: #E7B900;
@@ -3043,7 +2784,6 @@ h1, h2, h3, .tombol, .nama-obat-card, button,
 
 .bg-decor, .balon, .gelombang { display: none !important; }
 
-/* ===== TOP HERO: soft 3D storefront feel ===== */
 header {
   width: min(1190px, calc(100% - 48px));
   min-height: clamp(560px, 78vh, 760px);
@@ -3060,7 +2800,6 @@ header {
   position: relative;
 }
 
-/* white pill navbar floating inside hero */
 header::before {
   content: 'Tinyverse        Beranda      Fitur      Guideline      Ringkasan      Login      Mulai';
   white-space: pre;
@@ -3150,7 +2889,6 @@ header p.slogan {
   text-shadow: none;
 }
 
-/* pseudo CTA search bar like the sample */
 .logo-row::after {
   content: '🩺  Mulai pakai Tinyverse     →';
   display: inline-flex;
@@ -3182,7 +2920,6 @@ header p.slogan {
   z-index: 3;
 }
 
-/* ===== In-page menu adapted as real sticky navigation ===== */
 .app-layout {
   width: min(1190px, calc(100% - 48px));
   max-width: 1190px;
@@ -3261,7 +2998,6 @@ header p.slogan {
 .page.page-aktif { display: block; }
 @keyframes etailRise { from { opacity: 0; transform: translateY(12px); } to { opacity:1; transform:none; } }
 
-/* ===== Cards / surfaces ===== */
 .kartu,
 .tv-home-card,
 #page-imunisasi .imunisasi-card,
@@ -3335,9 +3071,7 @@ header p.slogan {
 }
 .tv-home-hero-row, .tv-home-hero > *, #page-imunisasi .imunisasi-hero > * { position: relative; z-index: 2; }
 .tv-home-eyebrow,
-.imunisasi-badge,
-.referensi-badge,
-.draft-badge {
+.referensi-badge{
   width: fit-content;
   display: inline-flex;
   align-items: center;
@@ -3380,7 +3114,6 @@ header p.slogan {
   line-height: 1.68;
 }
 
-/* ===== Feature cards ===== */
 .tv-home-grid,
 .guideline-grid,
 #grid-obat,
@@ -3399,7 +3132,6 @@ header p.slogan {
 .tv-home-insight,
 .summary-empty,
 .hasil-mini,
-.draft-notice,
 .obat-terpilih-box {
   border-radius: 30px !important;
   background: #FFFFFF !important;
@@ -3448,7 +3180,6 @@ header p.slogan {
 }
 .tv-home-stat strong { color: var(--etail-navy) !important; font-size: clamp(1.85rem, 4vw, 2.9rem) !important; }
 
-/* ===== Forms and controls ===== */
 .search-wrap,
 .guideline-search-wrap {
   border-radius: 999px !important;
@@ -3460,8 +3191,7 @@ header p.slogan {
 .search-wrap input,
 input[type='number'], input[type='text'], input[type='search'], input[type='email'],
 select, textarea, .tv-ai-area,
-.obat-protokol-form input[type='number'],
-#page-imunisasi .imunisasi-form input {
+.obat-protokol-form input[type='number']{
   background: #FFFFFF !important;
   color: var(--etail-navy) !important;
   border: 1px solid rgba(10,11,95,0.10) !important;
@@ -3470,8 +3200,7 @@ select, textarea, .tv-ai-area,
   font-weight: 800;
 }
 .search-wrap input { border: 0 !important; }
-input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input:focus,
-#page-imunisasi .imunisasi-form input:focus {
+input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input:focus{
   outline: none !important;
   border-color: rgba(217,54,166,0.62) !important;
   box-shadow: 0 0 0 5px rgba(217,54,166,0.10) !important;
@@ -3486,7 +3215,6 @@ input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input
 .puyer-btn,
 .tv-ai-btn,
 .imunisasi-zoom-btn,
-.imunisasi-btn,
 .tk-kalibrasi-btn,
 .nav-btn {
   border: 0 !important;
@@ -3507,7 +3235,6 @@ input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input
 .puyer-btn:hover,
 .tv-ai-btn:hover,
 .imunisasi-zoom-btn:hover,
-.imunisasi-btn:hover,
 .tk-kalibrasi-btn:hover,
 .nav-btn:hover {
   transform: translateY(-2px) !important;
@@ -3516,7 +3243,6 @@ input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input
 }
 .guideline-btn.secondary,
 .tv-ai-btn.sekunder,
-.imunisasi-btn.secondary,
 .puyer-btn.yellow,
 .summary-btn.yellow,
 .tk-kalibrasi-btn.reset {
@@ -3585,7 +3311,6 @@ input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input
 }
 .burn-area.aktif, .burn-area:hover { background: var(--etail-magenta) !important; color: #FFFFFF !important; }
 
-/* Floating AI as magenta CTA */
 .tv-ai-fab {
   width: 64px !important;
   height: 64px !important;
@@ -3654,16 +3379,6 @@ input:focus, select:focus, textarea:focus, .tv-ai-area:focus, .search-wrap input
   .segmented-toggle, .guideline-filter, .summary-actions, .puyer-actions { border-radius: 26px !important; }
 }
 
-
-/* ============================================================
-   TINYVERSE — FINAL REQUEST FIXES
-   1) Hapus CTA pseudo "Mulai pakai Tinyverse →"
-   2) Samakan font ke gaya desain baru: modern rounded sans
-   3) Perbaiki sidebar/drawer agar bisa dibuka
-   4) Samakan warna ikon Quick Access
-============================================================ */
-
-/* Font modern bawaan style etail-like: bersih, bold, tidak campur Fredoka/Quicksand */
 html body,
 html body *:not(svg):not(path):not(circle):not(ellipse):not(line) {
   font-family: 'Inter', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif !important;
@@ -3673,10 +3388,6 @@ html body *:not(svg):not(path):not(circle):not(ellipse):not(line) {
   font-synthesis-weight: none;
 }
 
-/* FIX FONT MOBILE
-   Di HP, font sebelumnya bisa tampak lebih tipis karena Inter tidak diload
-   dan @import Plus Jakarta berada di tengah CSS sehingga diabaikan browser.
-   Font kini diload dari <head>, lalu bobot teks dinaikkan sedikit untuk layar kecil. */
 @media (max-width: 768px) {
   html body {
     -webkit-text-size-adjust: 100%;
@@ -3697,7 +3408,6 @@ html body *:not(svg):not(path):not(circle):not(ellipse):not(line) {
   html body .tv-home-tool p,
   html body .tv-home-update-list,
   html body .tv-home-update-list li,
-  html body .hasil-detail,
   html body .hasil-row,
   html body .disclaimer,
   html body .guideline-desc {
@@ -3729,14 +3439,12 @@ html body textarea {
   font-weight: 800;
 }
 
-/* Hapus tulisan pseudo CTA yang sebelumnya muncul dan menumpuk */
 html body .logo-row::after,
 html body .logo-row::before {
   content: none !important;
   display: none !important;
 }
 
-/* Header/hero stabil, tanpa bar kosong/pseudo navbar yang menimpa */
 html body header {
   width: min(1190px, calc(100% - 48px)) !important;
   min-height: auto !important;
@@ -3796,7 +3504,6 @@ html body header p.slogan {
   margin: 0 !important;
 }
 
-/* Layout konten tidak ditarik naik ke hero */
 html body .app-layout {
   width: min(1190px, calc(100% - 48px)) !important;
   max-width: 1190px !important;
@@ -3806,8 +3513,6 @@ html body .app-layout {
   z-index: 5 !important;
 }
 
-/* SIDEBAR: kembalikan sebagai drawer yang benar-benar bisa dibuka.
-   Selector dibuat sangat spesifik agar mengalahkan style auth yang muncul di akhir body. */
 html body #sidebar {
   position: fixed !important;
   top: 0 !important;
@@ -3931,7 +3636,6 @@ html body #sidebar .sidebar-item.aktif .ikon {
   color: #FFFFFF !important;
 }
 
-/* Area halaman tetap lapang */
 html body .app-content {
   position: relative !important;
   z-index: 1 !important;
@@ -3966,7 +3670,6 @@ html body .puyer-actions {
   border-radius: 28px !important;
 }
 
-/* Quick Access: semua icon satu warna dan satu latar, mengalahkan inline background. */
 html body #page-beranda .tv-home-tool .tv-home-icon,
 html body .tv-home-tool .tv-home-icon,
 html body #page-beranda .tv-home-row-icon,
@@ -4049,12 +3752,6 @@ html body #page-beranda .tv-home-tool:nth-child(4n+1) .tv-home-icon {
   }
 }
 
-
-
-/* ============================================================
-   QUICK ACCESS WHITE FIX
-   Semua kartu Quick Access dibuat putih seragam, tidak ada kartu biru/navy.
-============================================================ */
 html body #page-beranda .tv-home-grid .tv-home-tool,
 html body #page-beranda .tv-home-grid .tv-home-tool:nth-child(3n+1),
 html body #page-beranda .tv-home-grid .tv-home-tool:nth-child(4n+1),
@@ -4093,15 +3790,6 @@ html body #page-beranda .tv-home-grid .tv-home-tool:nth-child(4n+1) .tv-home-fav
   border: 1px solid rgba(10,11,95,0.08) !important;
 }
 
-
-
-/* ============================================================
-   MINIMAL TYPOGRAPHY FIX
-   Mengecilkan tulisan hero/header dan judul halaman agar tampil
-   lebih minimalis di semua menu.
-============================================================ */
-
-/* Header paling atas: Tinyverse dibuat lebih kecil dan ringan */
 html body header {
   padding: clamp(26px, 4vw, 46px) clamp(24px, 5vw, 54px) !important;
   border-radius: 34px !important;
@@ -4141,7 +3829,6 @@ html body header::after {
   opacity: 0.28 !important;
 }
 
-/* Hero dashboard / judul tiap menu dibuat lebih kecil */
 html body .tv-home-hero,
 html body #page-imunisasi .imunisasi-hero {
   padding: clamp(22px, 3.6vw, 38px) !important;
@@ -4164,9 +3851,7 @@ html body #page-imunisasi .imunisasi-hero p {
 }
 
 html body .tv-home-eyebrow,
-html body .imunisasi-badge,
-html body .referensi-badge,
-html body .draft-badge {
+html body .referensi-badge{
   font-size: 0.62rem !important;
   padding: 6px 11px !important;
   margin-bottom: 10px !important;
@@ -4176,7 +3861,6 @@ html body #page-beranda .tv-home-eyebrow {
   font-size: clamp(0.78rem, 1.3vw, 0.94rem) !important;
 }
 
-/* Judul section pada semua halaman: Dosis, Guideline, Cairan, dll. */
 html body .judul-section h2,
 html body .tv-home-section-head h3,
 html body #page-imunisasi .imunisasi-toolbar h3,
@@ -4203,7 +3887,6 @@ html body .ikon-bulat {
   font-size: 1rem !important;
 }
 
-/* Kartu Quick Access lebih compact */
 html body #page-beranda .tv-home-grid .tv-home-tool {
   padding: 18px 18px !important;
   border-radius: 24px !important;
@@ -4234,7 +3917,6 @@ html body #page-beranda .tv-home-grid .tv-home-fav-btn {
   font-size: 0.9rem !important;
 }
 
-/* Cards lain dibuat lebih minimal */
 html body .kartu,
 html body .tv-home-card,
 html body #page-imunisasi .imunisasi-card,
@@ -4265,21 +3947,11 @@ html body .tk-kalibrasi-box {
   }
 }
 
-
-
-/* ============================================================
-   DRUG GALLERY MINIMAL PALETTE
-   Menyesuaikan galeri obat dengan palette etail/Tinyverse:
-   putih, navy, magenta lembut, dan garis abu-lavender halus.
-============================================================ */
-
-/* Grid galeri dibuat lapang dan rapi */
 html body #page-dosis #grid-obat {
   gap: 16px !important;
   grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)) !important;
 }
 
-/* Kartu obat: putih minimal, tanpa warna-warni bawaan */
 html body #page-dosis #grid-obat .obat-card {
   min-height: 128px !important;
   padding: 18px 16px 16px !important;
@@ -4293,7 +3965,6 @@ html body #page-dosis #grid-obat .obat-card {
   transform: none !important;
 }
 
-/* Strip warna lama diganti menjadi aksen tipis seragam */
 html body #page-dosis #grid-obat .obat-card .label-atas {
   position: absolute !important;
   inset: 0 auto auto 0 !important;
@@ -4305,14 +3976,12 @@ html body #page-dosis #grid-obat .obat-card .label-atas {
   opacity: 0.88 !important;
 }
 
-/* Hover halus, tetap minimal */
 html body #page-dosis #grid-obat .obat-card:hover {
   transform: translateY(-3px) !important;
   border-color: rgba(217,54,166,0.18) !important;
   box-shadow: 0 20px 46px rgba(10,11,95,0.11) !important;
 }
 
-/* State terpilih: navy lembut, bukan hijau/warna lama */
 html body #page-dosis #grid-obat .obat-card.selected {
   background:
     radial-gradient(circle at 86% 16%, rgba(217,54,166,0.10) 0 42px, transparent 43px),
@@ -4327,7 +3996,6 @@ html body #page-dosis #grid-obat .obat-card.selected .label-atas {
   opacity: 1 !important;
 }
 
-/* Nama obat dibuat clean, readable, dan sesuai palette */
 html body #page-dosis #grid-obat .obat-card .nama-obat-card {
   margin: 8px 34px 7px 0 !important;
   color: var(--etail-navy, #0A0B5F) !important;
@@ -4337,7 +4005,6 @@ html body #page-dosis #grid-obat .obat-card .nama-obat-card {
   letter-spacing: -0.035em !important;
 }
 
-/* Varian obat lebih soft */
 html body #page-dosis #grid-obat .obat-card .varian-label {
   margin: 0 0 10px !important;
   color: rgba(10,11,95,0.50) !important;
@@ -4346,7 +4013,6 @@ html body #page-dosis #grid-obat .obat-card .varian-label {
   font-weight: 700 !important;
 }
 
-/* Badge dosis: pill putih-lavender seragam */
 html body #page-dosis #grid-obat .obat-card .badge-dosis {
   display: inline-flex !important;
   align-items: center !important;
@@ -4362,7 +4028,6 @@ html body #page-dosis #grid-obat .obat-card .badge-dosis {
   box-shadow: none !important;
 }
 
-/* Centang terpilih mengikuti palette navy-magenta */
 html body #page-dosis #grid-obat .obat-card .centang {
   top: 12px !important;
   right: 12px !important;
@@ -4375,7 +4040,6 @@ html body #page-dosis #grid-obat .obat-card .centang {
   border: 2px solid rgba(255,255,255,0.92) !important;
 }
 
-/* Jika ikon botol muncul dari struktur lama/halaman lain, samakan juga */
 html body #page-dosis #grid-obat .obat-card .ikon-botol {
   width: 42px !important;
   height: 42px !important;
@@ -4388,7 +4052,6 @@ html body #page-dosis #grid-obat .obat-card .ikon-botol {
   font-size: 1.15rem !important;
 }
 
-/* Search/library card ikut dibuat lebih menyatu dengan palette */
 html body #page-dosis #library .kartu {
   background: rgba(255,255,255,0.92) !important;
   border: 1px solid rgba(10,11,95,0.07) !important;
@@ -4417,13 +4080,6 @@ html body #page-dosis #library .search-wrap {
     font-size: 0.84rem !important;
   }
 }
-
-
-
-/* ============================================================
-   USER NAME FONT FIX
-   Menyamakan font nama user/profil dengan font web etail/Tinyverse.
-============================================================ */
 
 html body #tvUserMenu,
 html body #tvUserMenu *,
@@ -4473,14 +4129,6 @@ html body .tv-drop-info .e {
   font-weight: 650 !important;
 }
 
-
-
-/* ============================================================
-   HOME HERO COMPACT FIX
-   Mengecilkan kartu "Halo, Mode" di beranda sekitar setengah
-   dari ukuran sebelumnya agar lebih minimalis.
-============================================================ */
-
 html body #page-beranda .tv-home-hero {
   min-height: 0 !important;
   max-width: 100% !important;
@@ -4523,11 +4171,6 @@ html body #page-beranda .tv-home-hero::after {
   opacity: 0.10 !important;
 }
 
-html body #page-beranda .tv-home-mini-status {
-  transform: scale(0.72) !important;
-  transform-origin: right center !important;
-}
-
 @media (max-width: 560px) {
   html body #page-beranda .tv-home-hero {
     padding: 14px 14px !important;
@@ -4543,14 +4186,6 @@ html body #page-beranda .tv-home-mini-status {
     content: none !important;
   }
 }
-
-
-
-/* ============================================================
-   HOME HERO WIDTH RESTORE — FONT ONLY SMALLER
-   Kotak "Halo, Mode" dikembalikan selebar area judul utama,
-   sementara yang diperkecil hanya ukuran font/teksnya.
-============================================================ */
 
 html body #page-beranda .tv-home-hero {
   width: 100% !important;
@@ -4568,7 +4203,6 @@ html body #page-beranda .tv-home-hero-row {
   align-items: center !important;
 }
 
-/* Yang dikecilkan hanya teks */
 html body #page-beranda .tv-home-eyebrow {
   font-size: clamp(0.72rem, 1.15vw, 0.88rem) !important;
   padding: 5px 10px !important;
@@ -4589,16 +4223,11 @@ html body #page-beranda .tv-home-hero p {
   max-width: 520px !important;
 }
 
-/* Dekorasi kanan tetap proporsional dengan kotak besar */
 html body #page-beranda .tv-home-hero::after {
   width: clamp(120px, 20vw, 230px) !important;
   height: clamp(120px, 20vw, 230px) !important;
   right: 7% !important;
   opacity: 0.13 !important;
-}
-
-html body #page-beranda .tv-home-mini-status {
-  transform: none !important;
 }
 
 @media (max-width: 560px) {
@@ -4616,15 +4245,6 @@ html body #page-beranda .tv-home-mini-status {
   }
 }
 
-
-
-/* ============================================================
-   HOME HERO MATCH HEADER WIDTH + SMALLER FONT
-   Menyamakan lebar kartu "Halo, Mode" dengan kartu judul utama
-   di atasnya, dan mengecilkan font sedikit lagi.
-============================================================ */
-
-/* Pastikan area beranda tidak memberi inset tambahan */
 html body .app-layout,
 html body .app-content,
 html body #page-beranda,
@@ -4638,7 +4258,6 @@ html body #page-beranda .tv-home-shell {
   box-sizing: border-box !important;
 }
 
-/* Lebar kotak hero beranda disamakan persis dengan header utama */
 html body #page-beranda .tv-home-hero {
   width: min(1190px, calc(100vw - 48px)) !important;
   max-width: min(1190px, calc(100vw - 48px)) !important;
@@ -4650,7 +4269,6 @@ html body #page-beranda .tv-home-hero {
   box-sizing: border-box !important;
 }
 
-/* Font dibuat sedikit lebih kecil lagi */
 html body #page-beranda .tv-home-eyebrow {
   font-size: clamp(0.66rem, 1vw, 0.80rem) !important;
   padding: 4px 9px !important;
@@ -4672,7 +4290,6 @@ html body #page-beranda .tv-home-hero p {
   max-width: 500px !important;
 }
 
-/* Dekorasi tetap proporsional, tidak membuat kotak terasa berat */
 html body #page-beranda .tv-home-hero::after {
   width: clamp(110px, 18vw, 205px) !important;
   height: clamp(110px, 18vw, 205px) !important;
@@ -4715,15 +4332,6 @@ html body #page-beranda .tv-home-hero::after {
   }
 }
 
-
-
-/* ============================================================
-   HEADER + HOME HERO VERTICAL COMPACT
-   Mengecilkan tinggi kotak judul utama dan kotak "Halo, Mode"
-   (atas-bawahnya) agar lebih ramping/minimalis.
-============================================================ */
-
-/* Kotak judul utama paling atas: height dibuat jauh lebih ramping */
 html body header {
   min-height: 0 !important;
   padding: clamp(16px, 2.4vw, 28px) clamp(22px, 4vw, 48px) !important;
@@ -4766,7 +4374,6 @@ html body header::after {
   opacity: 0.18 !important;
 }
 
-/* Kotak Halo Mode: tinggi/padding dibuat lebih ramping, lebar tetap sama */
 html body #page-beranda .tv-home-hero {
   min-height: 0 !important;
   padding: clamp(14px, 2vw, 24px) clamp(22px, 4vw, 48px) !important;
@@ -4805,7 +4412,6 @@ html body #page-beranda .tv-home-hero::after {
   opacity: 0.08 !important;
 }
 
-/* Jarak antar section di beranda sedikit dirapatkan */
 html body #page-beranda .tv-home-shell {
   gap: 8px !important;
 }
@@ -4840,16 +4446,6 @@ html body #page-beranda .tv-home-shell {
   }
 }
 
-
-
-/* ============================================================
-   BERANDA MENU MINIMAL ICON FIX
-   Menjaga ukuran judul web dan kartu "Halo, Mode" tetap seperti
-   sekarang, lalu mengecilkan ikon/menu di bawahnya agar lebih
-   simetris, ringan, dan minimalis.
-============================================================ */
-
-/* Quick Access: kartu dan ikon dibuat lebih compact */
 html body #page-beranda .tv-home-grid {
   gap: 10px !important;
 }
@@ -4899,7 +4495,6 @@ html body #page-beranda .tv-home-grid .tv-home-fav-btn {
   font-size: 0.68rem !important;
 }
 
-/* Section bawah: ikon/list/status ikut diperkecil supaya tidak mengalahkan hero */
 html body #page-beranda .tv-home-card {
   border-radius: 18px !important;
   padding: 12px !important;
@@ -5011,14 +4606,6 @@ html body #page-beranda .tv-home-update-list {
   }
 }
 
-
-
-/* ============================================================
-   MENU HEADER BALANCE FIX — SEMUA MENU KECUALI BERANDA
-   Logo header menu sedikit dibesarkan, teks judul/subjudul sedikit
-   diperkecil, dan alignment dibuat center agar simetris.
-============================================================ */
-
 html body .page:not(#page-beranda) .judul-section {
   display: flex !important;
   align-items: center !important;
@@ -5071,7 +4658,6 @@ html body .page:not(#page-beranda) .judul-section .referensi-badge {
   border-radius: 999px !important;
 }
 
-/* Halaman Imunisasi kini memakai struktur logo + teks yang sama */
 html body #page-imunisasi .imunisasi-hero {
   min-height: 0 !important;
   padding: 18px 20px !important;
@@ -5086,7 +4672,6 @@ html body #page-imunisasi .imunisasi-hero p {
   max-width: none !important;
 }
 
-/* Responsif: tetap proporsional di layar kecil */
 @media (max-width: 560px) {
   html body .page:not(#page-beranda) .judul-section {
     gap: 11px !important;
@@ -5117,14 +4702,6 @@ html body #page-imunisasi .imunisasi-hero p {
   }
 }
 
-
-
-/* ============================================================
-   QUICK ACCESS TITLE ALIGNMENT FIX
-   Geser judul/subjudul Quick Access sedikit ke kanan agar sejajar
-   lebih rapi dengan kartu menu di bawahnya.
-============================================================ */
-
 html body #page-beranda section[aria-labelledby="tvQuickAccessTitle"] .tv-home-section-head {
   padding-left: 12px !important;
   margin-left: 0 !important;
@@ -5136,14 +4713,6 @@ html body #page-beranda section[aria-labelledby="tvQuickAccessTitle"] .tv-home-s
     padding-left: 10px !important;
   }
 }
-
-
-
-/* ============================================================
-   UPDATE TINYVERSE CONTENT FONT FIX
-   Isi daftar Update Tinyverse di Beranda dibuat sedikit lebih kecil
-   agar tampil lebih ringan dan minimalis.
-============================================================ */
 
 html body #page-beranda .tv-home-update-list {
   font-size: 0.66rem !important;
@@ -5161,13 +4730,6 @@ html body #page-beranda .tv-home-update-list li {
   }
 }
 
-
-
-/* ============================================================
-   UPDATE TINYVERSE CONTENT FONT — EXTRA SMALL
-   Isi daftar Update Tinyverse diperkecil lagi sesuai revisi terakhir.
-============================================================ */
-
 html body #page-beranda .tv-home-update-list {
   font-size: 0.58rem !important;
   line-height: 1.30 !important;
@@ -5183,14 +4745,6 @@ html body #page-beranda .tv-home-update-list li {
     line-height: 1.28 !important;
   }
 }
-
-
-
-/* ============================================================
-   UPDATE TINYVERSE BULLET LIST — TARGETED SMALLER FIX
-   Target langsung ke setiap bullet <li> agar isi daftar Update
-   Tinyverse benar-benar mengecil, bukan hanya wrapper <ul>.
-============================================================ */
 
 html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list,
 html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list li {
@@ -5222,14 +4776,6 @@ html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update
   }
 }
 
-
-
-/* ============================================================
-   UPDATE TINYVERSE = PEDIATRIC INSIGHT FONT SIZE
-   Mengembalikan isi bullet Update Tinyverse agar sama dengan
-   ukuran catatan Pediatric Insight.
-============================================================ */
-
 html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list,
 html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update-list li {
   font-size: 0.72rem !important;
@@ -5260,15 +4806,6 @@ html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update
   }
 }
 
-
-
-/* ============================================================
-   FIX FONT SESUAI CONTOH
-   Kembalikan karakter font Tinyverse ke rounded/playful:
-   - Judul/logo/tombol: Fredoka
-   - Isi kecil: Quicksand
-   - Hindari Inter + weight 850/900 yang membuat tampilan HP aneh
-============================================================ */
 html body,
 html body *:not(svg):not(path):not(circle):not(ellipse):not(line) {
   font-family: 'Quicksand', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
@@ -5303,7 +4840,6 @@ html body .tv-ai-btn {
   letter-spacing: -0.015em !important;
 }
 
-/* Logo utama dibuat seperti contoh: tebal, rounded, navy, tidak terlalu pipih */
 html body header h1,
 html body .logo-row h1 {
   font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
@@ -5314,7 +4850,6 @@ html body .logo-row h1 {
   text-shadow: none !important;
 }
 
-/* Hero greeting: rounded bold seperti contoh */
 html body #page-beranda .tv-home-hero h2,
 html body .tv-home-hero h2,
 html body .judul-section h2 {
@@ -5324,7 +4859,6 @@ html body .judul-section h2 {
   letter-spacing: -0.035em !important;
 }
 
-/* Teks deskripsi tetap bulat tapi tidak terlalu berat */
 html body p,
 html body li,
 html body small,
@@ -5333,7 +4867,6 @@ html body .tv-home-section-head p,
 html body .tv-home-tool p,
 html body .tv-home-update-list,
 html body .tv-home-update-list li,
-html body .hasil-detail,
 html body .hasil-row,
 html body .disclaimer,
 html body .guideline-desc {
@@ -5342,14 +4875,11 @@ html body .guideline-desc {
   letter-spacing: -0.005em !important;
 }
 
-/* Badge/pill kecil jangan memakai Inter supaya tidak terlihat asing */
 html body .tv-home-eyebrow,
 html body header p.slogan,
 html body .badge-dosis,
 html body .referensi-badge,
-html body .tv-side-judul,
-html body .tv-home-tag,
-html body .tv-home-tool-badge {
+html body .tv-side-judul{
   font-family: 'Quicksand', system-ui, sans-serif !important;
   font-weight: 700 !important;
   letter-spacing: 0 !important;
@@ -5385,13 +4915,6 @@ html body textarea {
   }
 }
 
-
-
-/* ============================================================
-   FIX SEMUA JUDUL IKON BOLD + MOBILE FRIENDLY
-   Menebalkan label/judul pada semua kartu berbasis ikon agar konsisten
-   di desktop dan HP, tanpa membuat paragraf/deskripsi ikut terlalu berat.
-============================================================ */
 html body .sidebar-item .label,
 html body #sidebar .sidebar-item .label,
 html body .tv-home-tool h4,
@@ -5418,7 +4941,6 @@ html body .puyer-table th,
 html body .puyer-resep-title,
 html body #page-imunisasi .imunisasi-item strong,
 html body #page-imunisasi .imunisasi-card h3,
-html body #page-imunisasi .imunisasi-result h4,
 html body .hasil-section-title,
 html body .burn-map-title,
 html body .burn-result-card h4,
@@ -5437,7 +4959,6 @@ html body .btn-kembali,
 html body .ganti-link,
 html body .badge-dosis,
 html body .referensi-badge,
-html body .draft-badge,
 html body .tk-ringkasan-chip,
 html body .tk-step-dot,
 html body .tk-step-dot .tk-step-num {
@@ -5448,7 +4969,6 @@ html body .tk-step-dot .tk-step-num {
   text-rendering: geometricPrecision !important;
 }
 
-/* Label kecil di bawah ikon tetap jelas tetapi tidak terlalu besar */
 html body .tv-home-tool p,
 html body .tv-home-row-item span,
 html body .tk-kartu-pilihan .tk-sub-pilihan,
@@ -5461,7 +4981,6 @@ html body .puyer-metric .label {
   font-weight: 700 !important;
 }
 
-/* Sentuhan khusus mobile: judul ikon tetap bold, rapi, dan tidak pecah layout */
 @media (max-width: 768px) {
   html body .sidebar-item .label,
   html body #sidebar .sidebar-item .label,
@@ -5533,14 +5052,6 @@ html body .puyer-metric .label {
   }
 }
 
-
-
-/* ============================================================
-   FINAL TITLE ALIGNMENT FIX — Cairan, Puyer, Tumbuh Kembang
-   Menyamakan struktur visual judul menu dengan contoh “Rak Obat”:
-   ikon dan blok teks dibuat satu sumbu, subtitle menjadi teks biasa,
-   bukan badge pill, agar logo + nama terlihat simetris.
-============================================================ */
 html body #page-cairan > .judul-section,
 html body #page-puyer > .judul-section,
 html body #page-tumbuh-kembang > .judul-section {
@@ -5650,13 +5161,6 @@ html body #page-tumbuh-kembang > .judul-section p {
   }
 }
 
-
-
-/* ============================================================
-   FINAL TITLE ALIGNMENT FIX — Ringkasan Klinis
-   Menyamakan struktur judul Ringkasan Klinis dengan “Rak Obat”
-   dan menu lain: ikon + nama + subtitle simetris satu sumbu.
-============================================================ */
 html body #page-ringkasan > .judul-section {
   display: flex !important;
   align-items: center !important;
@@ -5746,13 +5250,6 @@ html body #page-ringkasan > .judul-section p {
   }
 }
 
-
-
-/* ============================================================
-   AVATAR PHOTO FIX
-   CSS lama memberi background gradient !important pada avatar.
-   Kelas ini memastikan foto profil yang tersimpan tetap terlihat.
-============================================================ */
 html body .tv-ava.tv-ava-foto,
 html body .tv-ava-besar.tv-ava-foto,
 html body #tvUserMenu.tv-di-sidebar .tv-ava.tv-ava-foto {
@@ -5768,13 +5265,6 @@ html body .tv-ava-besar.tv-ava-foto::before {
   content: none !important;
 }
 
-
-
-/* ============================================================
-   SIDEBAR PROFILE COMPACT FIX
-   Mengurangi ruang kosong di atas profil agar avatar dan nama lebih
-   rapat ke tombol close serta area sidebar lebih efisien.
-============================================================ */
 html body #sidebar {
   padding-top: 18px !important;
 }
@@ -5803,12 +5293,6 @@ html body #tvSidebarProfil #tvUserMenu.tv-di-sidebar .tv-ava {
   }
 }
 
-
-
-/* ============================================================
-   RACIK PUYER EMPTY STATE
-   Menghapus obat contoh otomatis; user menambahkan obat sendiri.
-============================================================ */
 html body .puyer-empty {
   border: 1.5px dashed rgba(10,11,95,0.16) !important;
   border-radius: 20px !important;
@@ -5826,9 +5310,6 @@ html body .puyer-empty strong {
   font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
 }
 
-
-
-/* ===== INTERACTIVE LUND-BROWDER BODY MAP ===== */
 .burn-svg-map-wrap {
   grid-template-columns: repeat(2, minmax(260px, 1fr));
   gap: 18px;
@@ -5891,11 +5372,7 @@ html body .puyer-empty strong {
   overflow: visible;
 }
 .burn-body-back { animation-delay: -.9s; }
-.burn-silhouette {
-  fill: rgba(255,255,255,.48);
-  stroke: rgba(89,68,160,.18);
-  stroke-width: 5;
-}
+
 .burn-body-svg .burn-area {
   cursor: pointer;
   outline: none;
@@ -5983,8 +5460,6 @@ html body .puyer-empty strong {
   .burn-body-svg { width: min(100%, 285px); }
 }
 
-
-/* ===== DETAILED BODY MAP REFINEMENT ===== */
 .burn-detailed-stage { min-height: 375px; }
 .burn-body-detailed { width: min(100%, 245px); max-height: 455px; }
 .burn-body-svg .burn-area > polygon,
@@ -6054,8 +5529,6 @@ html body .puyer-empty strong {
   .burn-body-detailed { width: min(100%, 230px); }
 }
 
-
-/* ===== BODY MAP REVISION: split head/neck, smaller map, visible genital area ===== */
 .burn-neck path { filter: drop-shadow(0 3px 6px rgba(109,76,187,.12)); }
 .burn-perineum { position: relative; z-index: 5; }
 .burn-body-svg .burn-perineum > circle {
@@ -6070,8 +5543,6 @@ html body .puyer-empty strong {
 .burn-chart-stage { padding-top: 2px; }
 .burn-chart-hint { top: 2px; transform: translate(-50%, -2px) scale(.86); }
 
-
-/* ===== BODY MAP SIZE REVISION: compact body map ===== */
 .burn-detailed-card { padding: 10px 12px !important; }
 .burn-svg-map-wrap { gap: 12px; }
 .burn-chart-stage { padding: 0 2px 0; }
@@ -6081,8 +5552,6 @@ html body .puyer-empty strong {
   .burn-svg-map-wrap { gap: 10px; }
 }
 
-
-/* ===== HEAD/NECK FRONT-BACK SPLIT ===== */
 .burn-body-front [data-burn-area="headFront"] text,
 .burn-body-front [data-burn-area="neckFront"] text,
 .burn-body-back [data-burn-area="headBack"] text,
@@ -6090,8 +5559,6 @@ html body .puyer-empty strong {
   letter-spacing: .02em;
 }
 
-
-/* ===== HD Lund-Browder TBSA table in formula notes ===== */
 .burn-tbsa-chart-block {
   margin: 10px 0 14px;
   padding: 14px;
@@ -6118,7 +5585,6 @@ html body .puyer-empty strong {
   box-shadow: 0 10px 22px rgba(31, 41, 95, 0.10);
 }
 
-
 @media (max-width: 640px) {
   .burn-tbsa-chart-img {
     width: 100%;
@@ -6127,8 +5593,6 @@ html body .puyer-empty strong {
   }
 }
 
-
-/* ===== FIX DOSIS OBAT: hilangkan penumpukan kotak nav dengan header ===== */
 html body #page-dosis .nav-mainan {
   width: fit-content !important;
   max-width: calc(100% - 24px) !important;
@@ -6161,8 +5625,6 @@ html body #page-dosis .nav-mainan .nav-btn {
   }
 }
 
-
-/* ===== DOSIS OBAT: kalkulator minimalis & hasil lebih ringkas ===== */
 html body #page-dosis #kalkulator .judul-section {
   margin-bottom: 10px !important;
   gap: 10px !important;
@@ -6193,7 +5655,6 @@ html body #page-dosis .kalkulator-kartu {
   box-shadow: 0 10px 26px rgba(10,11,95,.07) !important;
 }
 
-/* Beruang dibuat minimal agar tidak mendominasi kalkulator */
 html body #page-dosis .ilustrasi-samping {
   display: none !important;
 }
@@ -6338,8 +5799,6 @@ html body #page-dosis .hasil-pills {
   }
 }
 
-
-/* ===== OBAT BARU: indikasi tampil ringkas dalam hasil dosis ===== */
 html body #page-dosis .hasil-row .label,
 html body #page-dosis .hasil-row .value {
   align-self: start;
@@ -6348,8 +5807,6 @@ html body #page-dosis .obat-card .varian-label {
   line-height: 1.18 !important;
 }
 
-
-/* ===== POINT 4: reset body map luka bakar ===== */
 .burn-map-actions {
   display: flex;
   justify-content: center;
@@ -7235,8 +6692,6 @@ html body #page-dosis .obat-card .varian-label {
 </div>
 </main>
 
-
-
 <!-- ===== HALAMAN RACIK PUYER MULTI-OBAT ===== -->
 <main class="page" id="page-puyer">
 <div class="judul-section">
@@ -7367,7 +6822,6 @@ html body #page-dosis .obat-card .varian-label {
 </main>
 <div class="summary-print-area" id="summaryPrintArea"></div>
 
-
 <!-- ===== ASISTEN AI MENGAMBANG (tersedia di semua menu) ===== -->
 <button class="tv-ai-fab" id="tvAiFab" type="button" aria-label="Buka Asisten AI" title="Asisten AI">🤖</button>
 <div class="tv-ai-panel" id="tvAiPanel" aria-hidden="true">
@@ -7413,149 +6867,9 @@ html body #page-dosis .obat-card .varian-label {
 </p>
 </footer>
 <script>
-/* ============================================================
-   DATA OBAT
-   ------------------------------------------------------------
-   Cara menambah obat baru: tambahkan object baru ke "daftarObat"
-   mengikuti salah satu dari 3 pola "doseType" di bawah.
 
-   doseType: "perKg"        -> dosis dihitung dari mg per kg berat badan
-                                (kasus paling umum: antibiotik, antipiretik, dst)
-             "flat"         -> dosis TETAP, tidak tergantung berat badan
-                                (mis. Nystatin: selalu 100.000 IU per pemberian
-                                 untuk semua bayi/anak, bukan dikali berat badan)
-             "perKgVolume"  -> dosis dihitung langsung dalam mL per kg
-                                (mis. ORS: dosis ditulis dokter dalam mL/kgBB,
-                                 bukan mg/kgBB, jadi tidak butuh konversi sediaan)
-             "byAge"        -> dosis TETAP tapi berbeda di 2 kelompok usia
-                                (ambang batas tunggal, mis. Vitamin D <1th/≥1th)
-             "ageBands"     -> SATU obat dengan dosis yang berbeda-beda di
-                                BEBERAPA kelompok usia (>2 kelompok), dan tiap
-                                kelompok usia boleh punya cara hitung sendiri
-                                (perKg ATAU flat). Dipakai supaya obat yang
-                                dosisnya "berjenjang sesuai usia" (mis. Zat
-                                Besi, CTM) tidak perlu dipecah jadi banyak
-                                entri kartu terpisah — cukup 1 kartu, lalu
-                                kalkulator otomatis memilih kelompok usia yang
-                                sesuai dan menghitung dengan rumus kelompok itu.
-
-   Field umum (semua tipe):
-   - nama                 : Nama obat (tampil di kartu rak)
-   - varian (opsional)    : Penjelasan sediaan untuk membedakan obat dengan
-                             nama sama tapi konsentrasi beda, mis. dua entri
-                             "Paracetamol" dengan sediaan 120mg/5ml vs 160mg/5ml
-                             WAJIB diisi kalau ada >1 entri dengan nama sama.
-   - frekuensi            : Teks anjuran frekuensi pemberian per hari
-   - catatan (opsional)   : Catatan tambahan
-   - icon (opsional)      : Emoji kartu, default "💊"
-   - unitLabel            : Label satuan dosis yang tampil di badge kartu
-                             (mis. "mg/kg", "IU/dosis", "mL/kg")
-   - satuanDosis (opsional) : Satuan dosis utama yang tampil di hasil
-                             perhitungan, default "mg" (mis. "IU" untuk
-                             Vitamin D yang dosisnya dalam IU, bukan mg).
-   - sediaanCustomText (opsional) : Teks bebas pengganti baris "Sediaan:..."
-                             di hasil, dipakai bila ada >1 bentuk sediaan
-                             (mis. sirup + tetes) atau bila sediaan perlu
-                             dijelaskan dengan catatan khusus.
-
-   ⚠️ TIDAK ADA SEDIAAN SIRUP: jika obat tidak punya sediaan sirup,
-   CUKUP hilangkan field sediaanMg & sediaanMl (jangan diisi). Kalkulator
-   otomatis akan menyembunyikan konversi ke mL dan menampilkan dosis
-   dalam satuan utama saja (mg/IU/dll), dengan catatan "tidak tersedia
-   sirup" — silakan lengkapi info sediaan yang sebenarnya tersedia
-   (tablet/tetes/dll) lewat field "catatan" atau "sediaanCustomText".
-
-   Field khusus per doseType:
-   - perKg        : dosisMinPerKg, dosisMaxPerKg (mg/kg),
-                     sediaanMg, sediaanMl (konsentrasi sirup),
-                     dosisMaksimalTunggalMg (opsional, plafon dosis per
-                       kali minum yang tidak boleh dilampaui meski hasil
-                       perhitungan mg/kg lebih besar — WAJIB diverifikasi
-                       ke literatur/textbook sebelum dipakai produksi)
-   - flat         : dosisFlatMin, dosisFlatMax (nilai tetap),
-                     sediaanMg, sediaanMl (untuk konversi ke mL bila perlu)
-   - perKgVolume  : volumeMinPerKg, volumeMaxPerKg (mL/kg langsung)
-   - byAge        : ambangUsiaBulan, dosisDibawahAmbangMg, dosisDiatasAmbangMg
-                     usiaMinValidBulan, usiaMaxValidBulan (opsional, beri
-                       peringatan bila usia di luar indikasi obat ini, mis.
-                       Vitamin A hanya untuk usia 6–59 bulan)
-                     catatanDibawahAmbang, catatanDiatasAmbang (opsional,
-                       catatan tambahan spesifik per kelompok usia, mis.
-                       warna kapsul Vitamin A yang berbeda per kelompok)
-   - ageBands     : bands -> array kelompok usia, tiap elemen berisi:
-                       usiaMinBulan, usiaMaxBulan (rentang usia, inklusif)
-                       tipe: "perKg" -> pakai dosisMinPerKg, dosisMaxPerKg,
-                              dosisMaksimalTunggalMg (opsional)
-                             "flat"  -> pakai dosisFlatMin, dosisFlatMax,
-                              dosisMaksimalHarianMg (opsional, ditampilkan
-                              sebagai info, bukan plafon otomatis)
-                       frekuensi (opsional, override frekuensi level obat)
-                       catatan (opsional, ditambahkan ke catatan level obat)
-                       labelUsia (opsional, teks usia yang mudah dibaca,
-                         mis. "2–5 tahun", ditampilkan di hasil)
-                     sediaanMg, sediaanMl tetap diisi di level obat (dipakai
-                       semua kelompok usia, kecuali kelompok tertentu mau
-                       override dengan sediaanMg/sediaanMl di level band).
-
-   ⚠️ CATATAN PENTING: dosisMaksimalTunggalMg baru diisi untuk Paracetamol
-   & Ibuprofen sebagai contoh implementasi plafon dosis. Untuk obat lain,
-   field ini sengaja dikosongkan (tidak diisi) — silakan lengkapi sendiri
-   setelah verifikasi ke literatur (mis. IDAI, BNF for Children, Lexicomp),
-   jangan mengandalkan nilai yang belum tervalidasi.
-============================================================ */
-
-// Data obat kini dimuat dari Cloud Firestore (koleksi "obat"), bukan hardcode.
-// Lihat fungsi muatObatDariFirestore() di bawah.
 let daftarObat = [];
 
-/* ============================================================
-   DATA GUIDELINE
-   ------------------------------------------------------------
-   Berbeda dari "daftarObat" (rak obat umum per-obat), struktur
-   ini dikelompokkan PER DIAGNOSIS/PENYAKIT. Tiap diagnosis berisi
-   beberapa "kategori" (mis. Rawat Jalan vs Rawat Inap), dan tiap
-   kategori berisi beberapa "subkategori" (mis. Lini Pertama,
-   Lini Kedua). Tiap subkategori berisi daftar OBAT yang memakai
-   field & doseType PERSIS SAMA seperti objek pada "daftarObat"
-   (perKg / flat / perKgVolume / byAge / ageBands), sehingga
-   kalkulator usia/berat badan otomatis berfungsi sama di sini.
-
-   Cara menambah diagnosis baru: tambahkan object baru ke
-   "daftarProtokol" dengan struktur:
-   {
-     id            : slug unik (huruf kecil, tanpa spasi)
-     nama          : nama diagnosis (tampil di kartu galeri)
-     icon          : emoji kartu
-     referensi     : nama sumber acuan saja, mis. "PNPK IDAI Pneumonia"
-                     (tidak perlu mencantumkan grade rekomendasi)
-     gambarAlur (opsional) : { src, caption } — gambar alur/algoritma
-                     diagnosis yang ditampilkan di paling atas halaman
-                     detail, sebelum daftar obat. Tidak wajib diisi;
-                     bila tidak ada, blok ini otomatis tidak muncul.
-                       src     : data URI base64 (disarankan, supaya
-                                 file tetap satu HTML mandiri tanpa
-                                 perlu hosting gambar terpisah) atau
-                                 URL gambar biasa.
-                       caption : teks singkat di bawah gambar (opsional)
-                     Gambar otomatis bisa diklik untuk diperbesar
-                     (lightbox bawaan), tidak perlu setup tambahan.
-     kategori: [
-       {
-         nama: "Pasien Rawat Jalan",
-         subkategori: [
-           {
-             nama: "Lini pertama",
-             obat: [ {...objek obat, format sama seperti daftarObat...} ]
-           }
-         ]
-       }
-     ]
-   }
-
-   Boleh juga tanpa subkategori (langsung obat di level kategori)
-   dengan menambahkan field "obat" langsung di level kategori,
-   bila suatu diagnosis tidak perlu pembagian lini/subkelompok.
-============================================================ */
 const daftarProtokol = [
   {
     id: "pneumonia",
@@ -7971,25 +7285,13 @@ const daftarProtokol = [
     ]
   }
 
-  // 👉 Tambahkan diagnosis baru di sini, ikuti format di atas.
-  // Jangan lupa tambahkan tanda koma (,) setelah '}' diagnosis sebelumnya.
 ];
 
-// Registry obat protokol: diisi otomatis saat kartu diagnosis dibuka,
-// memetakan key unik kartu -> objek obat, dipakai oleh hitungObatProtokol()
 let protokolObatRegistry = {};
 let protokolTerpilih = null; // id diagnosis yang sedang dibuka
 
-
-// Warna label kartu, akan berputar otomatis sesuai urutan obat (tidak perlu diisi manual)
-// Urutkan rak obat berdasarkan abjad agar daftar selalu rapi.
 daftarObat.sort((a, b) => String(a.nama || "").localeCompare(String(b.nama || ""), "id", { sensitivity: "base" }));
 
-/* ============================================================
-   PETA JENIS / KATEGORI OBAT
-   Memetakan tiap obat ke kategori farmakologisnya. Dipakai untuk
-   tag jenis di kartu + filter kategori di atas galeri.
-============================================================ */
 const PETA_JENIS_OBAT = {
   "Ambroxol": "Mukolitik & Ekspektoran",
   "Asetilsistein": "Mukolitik & Ekspektoran",
@@ -8025,7 +7327,6 @@ const PETA_JENIS_OBAT = {
   "Zinc": "Vitamin & Suplemen"
 };
 
-// Warna aksen tiap kategori (untuk tag jenis & chip filter)
 const WARNA_JENIS_OBAT = {
   "Anthelmintik": "#8B5E34",
   "Antibiotik": "#2E7D6B",
@@ -8041,7 +7342,6 @@ const WARNA_JENIS_OBAT = {
   "Vitamin & Suplemen": "#C99A2E"
 };
 
-// Lekatkan kategori ke tiap objek obat + sediakan daftar kategori urut abjad
 daftarObat.forEach(function (o) {
   o.jenis = PETA_JENIS_OBAT[o.nama] || "Lainnya";
 });
@@ -8050,25 +7350,13 @@ function warnaJenis(jenis) {
 }
 let daftarKategoriObat = [];
 
-/* ============================================================
-   SIAPKAN DATA OBAT (dipanggil setelah data dimuat dari Firestore)
-   Mengurutkan obat A-Z, melekatkan kategori farmakologis, dan
-   membangun daftar kategori unik untuk chip filter.
-============================================================ */
 function siapkanDataObat() {
   daftarObat.sort((a, b) => String(a.nama || "").localeCompare(String(b.nama || ""), "id", { sensitivity: "base" }));
-  // Utamakan kategori dari Firestore (field "jenis"); bila belum ada, pakai peta lama sebagai cadangan.
   daftarObat.forEach(function (o) { o.jenis = o.jenis || PETA_JENIS_OBAT[o.nama] || "Lainnya"; });
   daftarKategoriObat = Array.from(new Set(daftarObat.map(function (o) { return o.jenis; })))
     .sort(function (a, b) { return a.localeCompare(b, "id", { sensitivity: "base" }); });
 }
 
-/* ============================================================
-   MUAT DATA OBAT DARI CLOUD FIRESTORE
-   Menggantikan array hardcode lama. Koleksi "obat" boleh dibaca
-   publik (allow read: if true) sehingga galeri tetap tampil
-   walau pengguna belum login.
-============================================================ */
 var FIREBASE_CONFIG_OBAT = {
   apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
   authDomain: 'tyniverse-5a3b2.firebaseapp.com',
@@ -8099,28 +7387,17 @@ async function muatObatDariFirestore() {
   }
 }
 
-// Kategori yang sedang difilter di galeri ("Semua" = tampilkan semua)
 let kategoriObatAktif = "Semua";
 
 const warnaLabel = ["#54C6EB"];
 
 let obatTerpilih = 0; // index obat yang sedang aktif di kalkulator
 
-/* ============================================================
-   UTIL: escape teks sebelum dimasukkan ke innerHTML
-   (mencegah XSS bila suatu saat data obat berasal dari sumber
-   luar / input dinamis, bukan hardcoded seperti sekarang)
-============================================================ */
 function escapeHtml(str) {
   const div = document.createElement("div");
   div.textContent = String(str ?? "");
   return div.innerHTML;
 }
-
-/* ============================================================
-   LABEL DOSIS RINGKAS untuk badge kartu (Rak Obat & Protokol
-   Terapi sama-sama memakai fungsi ini supaya konsisten)
-============================================================ */
 
 function pilihSediaanAktif(obat, sediaanIndexInput) {
   if (!obat || !Array.isArray(obat.sediaanOptions) || !obat.sediaanOptions.length) return null;
@@ -8179,16 +7456,12 @@ function labelDosisObat(obat) {
           : `${obat.dosisMinPerKg}-${obat.dosisMaxPerKg} ${obat.unitLabel}`;
 }
 
-/* ============================================================
-   RENDER KARTU RAK OBAT (dipanggil SEKALI saat inisialisasi)
-============================================================ */
 function renderLibrary() {
   const grid = document.getElementById("grid-obat");
   grid.innerHTML = "";
 
   const frag = document.createDocumentFragment();
 
-  // Galeri rata (flat): kartu urut abjad -- daftarObat sudah diurutkan A-Z.
   daftarObat.forEach((obat, index) => {
     const warna = warnaLabel[index % warnaLabel.length];
     const warnaKat = warnaJenis(obat.jenis);
@@ -8216,11 +7489,6 @@ function renderLibrary() {
   terapkanFilterObat();
 }
 
-/* ============================================================
-   FILTER KATEGORI (chip di atas galeri)
-   Mengikuti format menu Guideline: chip seragam, aktif gradient biru,
-   galeri rata tanpa judul grup.
-============================================================ */
 function renderFilterKategori() {
   const wrap = document.getElementById("kategori-filter");
   if (!wrap) return;
@@ -8239,12 +7507,6 @@ function setKategoriObat(kategori) {
   terapkanFilterObat();
 }
 
-/* ============================================================
-   PILIH OBAT DARI RAK
-   (tidak lagi rebuild seluruh grid -- hanya update class
-    "selected" pada kartu lama & kartu baru, jadi state filter
-    pencarian tidak pernah rusak / tidak perlu di-reapply manual)
-============================================================ */
 function pilihObat(index) {
   const kartuLama = document.querySelector(`#grid-obat .obat-card[data-index="${obatTerpilih}"]`);
   if (kartuLama) kartuLama.classList.remove("selected");
@@ -8258,23 +7520,13 @@ function pilihObat(index) {
   document.getElementById("namaTerpilih").textContent = obat.nama;
   document.getElementById("emojiTerpilih").textContent = obat.icon || "💊";
 
-  // sembunyikan hasil lama jika ganti obat
   document.getElementById("hasil-box").style.display = "none";
 
-  // tampilkan input yang relevan: berat badan (default) atau usia (untuk obat doseType "byAge")
   toggleInputSesuaiObat(obat);
 
-  // scroll halus ke kalkulator
   document.getElementById("kalkulator").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-/* ============================================================
-   TOGGLE INPUT BERAT BADAN <-> USIA
-   Sebagian besar obat dihitung dari berat badan, tapi beberapa
-   (mis. Zinc) dosisnya ditentukan oleh kategori usia, bukan
-   berat badan. Field yang tidak relevan disembunyikan supaya
-   tidak membingungkan pengguna.
-============================================================ */
 function toggleInputSesuaiObat(obat) {
   const grupBerat = document.getElementById("grup-berat");
   const grupUsia = document.getElementById("grup-usia");
@@ -8298,8 +7550,6 @@ function toggleInputSesuaiObat(obat) {
     grupBerat.style.display = "none";
     grupUsia.style.display = "block";
   } else if (obat.doseType === "ageBands") {
-    // Usia selalu diperlukan untuk memilih band. Berat badan hanya ditampilkan
-    // bila ada band yang memakai perhitungan per kg.
     const perluBerat = Array.isArray(obat.bands) && obat.bands.some(b => b.tipe === "perKg");
     grupBerat.style.display = perluBerat ? "block" : "none";
     grupUsia.style.display = "block";
@@ -8309,9 +7559,6 @@ function toggleInputSesuaiObat(obat) {
   }
 }
 
-/* ============================================================
-   FILTER PENCARIAN OBAT
-============================================================ */
 function terapkanFilterObat() {
   const query = (document.getElementById("kotakCari").value || "").trim().toLowerCase();
   const kartuList = document.querySelectorAll("#grid-obat .obat-card");
@@ -8328,30 +7575,10 @@ function terapkanFilterObat() {
   document.getElementById("pesan-kosong").style.display = adaYangTampil ? "none" : "block";
 }
 
-// Kompatibilitas: input pencarian tetap memanggil filterObat()
 function filterObat() {
   terapkanFilterObat();
 }
 
-/* ============================================================
-   FUNGSI UTAMA: HITUNG DOSIS
-   Mendukung 4 mode (doseType): perKg, flat, perKgVolume, byAge.
-   - perKg & byAge bisa dibatasi oleh dosisMaksimalTunggalMg
-     (bila field tersebut diisi pada data obat) supaya rekomendasi
-     tidak pernah melebihi plafon dosis tunggal yang aman.
-   - byAge memakai input usia (bulan), bukan berat badan, karena
-     beberapa obat (mis. Zinc) dosisnya ditentukan oleh kategori
-     usia, bukan dihitung per kilogram.
-============================================================ */
-/* ============================================================
-   FUNGSI INTI: HITUNG DOSIS (murni, tidak menyentuh DOM)
-   Dipakai bersama oleh kalkulator utama (Dosis Obat) MAUPUN
-   kalkulator mini di tiap kartu obat pada Guideline.
-   Mendukung 5 mode (doseType): perKg, flat, perKgVolume,
-   byAge, ageBands.
-   Mengembalikan { error: "..." } bila input tidak valid,
-   atau objek hasil lengkap bila berhasil.
-============================================================ */
 function hitungDosisInti(obat, beratBadanInput, usiaBulanInput, sediaanIndexInput) {
   const peringatan = [];
   let dosisMinMg = null, dosisMaxMg = null;
@@ -8484,10 +7711,6 @@ function hitungDosisInti(obat, beratBadanInput, usiaBulanInput, sediaanIndexInpu
   return { error: null, peringatan, dosisMinMg, dosisMaxMg, dosisMinMl, dosisMaxMl, dosisHarianMinMg, dosisHarianMaxMg, beratBadan, usiaBulan, band, sedMgFinal, sedMlFinal, sediaanLabelFinal, doseBasisFinal, dosesPerDayFinal };
 }
 
-/* ============================================================
-   BANGUN HTML HASIL PERHITUNGAN dari objek hasil hitungDosisInti
-   Dipakai bersama oleh kalkulator utama & kartu Guideline.
-============================================================ */
 function bangunHtmlHasil(obat, hasil) {
   const { peringatan, dosisMinMg, dosisMaxMg, dosisMinMl, dosisMaxMl, dosisHarianMinMg, dosisHarianMaxMg, beratBadan, usiaBulan, band, sedMgFinal, sedMlFinal, sediaanLabelFinal, doseBasisFinal, dosesPerDayFinal } = hasil;
   const adaSediaan = dosisMinMl !== null && dosisMinMl !== undefined && obat.doseType !== "perKgVolume";
@@ -8553,11 +7776,6 @@ function bangunHtmlHasil(obat, hasil) {
   `;
 }
 
-/* ============================================================
-   KALKULATOR UTAMA (halaman "Dosis Obat")
-   Membaca input #beratBadan / #usiaBulan, lalu menampilkan
-   hasil di #hasil-box / #hasil-konten.
-============================================================ */
 function hitungDosis() {
   const hasilBox = document.getElementById("hasil-box");
   const hasilKonten = document.getElementById("hasil-konten");
@@ -8580,11 +7798,6 @@ function hitungDosis() {
   hasilKonten.innerHTML = bangunHtmlHasil(obat, hasil);
 }
 
-/* ============================================================
-   KALKULATOR MINI (kartu obat di halaman "Guideline")
-   Tiap kartu obat punya input & kotak hasil sendiri, diberi
-   ID unik (key) supaya tidak bentrok satu sama lain.
-============================================================ */
 function hitungObatProtokol(key) {
   const obat = protokolObatRegistry[key];
   if (!obat) return;
@@ -8609,18 +7822,12 @@ function hitungObatProtokol(key) {
   hasilBox.innerHTML = bangunHtmlHasil(obat, hasil);
 }
 
-/* ============================================================
-   GUIDELINE: RENDER GALERI DIAGNOSIS
-============================================================ */
 function renderProtokolGallery() {
   const grid = document.getElementById("grid-protokol");
   grid.innerHTML = "";
 
   const frag = document.createDocumentFragment();
 
-  // Urutkan diagnosis berdasarkan abjad (A-Z), sama seperti Rak Obat,
-  // supaya diagnosis baru otomatis ada di posisi alfabetis yang tepat
-  // tanpa perlu disisipkan manual di tengah array "daftarProtokol".
   const daftarProtokolUrut = [...daftarProtokol].sort((a, b) =>
     a.nama.localeCompare(b.nama, "id", { sensitivity: "base" })
   );
@@ -8628,7 +7835,6 @@ function renderProtokolGallery() {
   daftarProtokolUrut.forEach((penyakit, index) => {
     const warna = warnaLabel[index % warnaLabel.length];
 
-    // hitung total obat di seluruh kategori/subkategori untuk badge
     let totalObat = 0;
     penyakit.kategori.forEach(kat => {
       if (kat.obat) totalObat += kat.obat.length;
@@ -8654,9 +7860,6 @@ function renderProtokolGallery() {
   grid.appendChild(frag);
 }
 
-/* ============================================================
-   GUIDELINE: FILTER PENCARIAN DIAGNOSIS
-============================================================ */
 function filterProtokol() {
   const query = document.getElementById("kotakCariProtokol").value.trim().toLowerCase();
   const kartuList = document.querySelectorAll("#grid-protokol .protokol-card");
@@ -8671,10 +7874,6 @@ function filterProtokol() {
   document.getElementById("pesan-kosong-protokol").style.display = adaYangTampil ? "none" : "block";
 }
 
-/* ============================================================
-   GUIDELINE: BANGUN INPUT (berat/usia) UNTUK SATU OBAT
-   sesuai doseType-nya, dengan id unik berdasarkan "key" kartu
-============================================================ */
 function bangunFormInputObat(obat, key) {
   const inputBerat = `
     <div class="form-group">
@@ -8692,10 +7891,6 @@ function bangunFormInputObat(obat, key) {
   return inputBerat;
 }
 
-/* ============================================================
-   GUIDELINE: BANGUN SATU KARTU OBAT (dengan kalkulator
-   mini sendiri) di dalam subkategori/kategori
-============================================================ */
 function bangunKartuObatProtokol(obat, key) {
   protokolObatRegistry[key] = obat;
 
@@ -8715,9 +7910,6 @@ function bangunKartuObatProtokol(obat, key) {
   `;
 }
 
-/* ============================================================
-   GUIDELINE: BUKA HALAMAN DETAIL SATU DIAGNOSIS
-============================================================ */
 function bukaProtokolDetail(id) {
   const penyakit = daftarProtokol.find(p => p.id === id);
   if (!penyakit) return;
@@ -8771,21 +7963,12 @@ function bukaProtokolDetail(id) {
   document.getElementById("page-protokol").scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
-/* ============================================================
-   GUIDELINE: KEMBALI KE GALERI DIAGNOSIS
-============================================================ */
 function tutupProtokolDetail() {
   protokolTerpilih = null;
   document.getElementById("protokol-detail-section").style.display = "none";
   document.getElementById("protokol-gallery-section").style.display = "block";
 }
 
-/* ============================================================
-   TERAPI CAIRAN (DRAFT AWAL)
-   Metode Holliday-Segar untuk estimasi kebutuhan cairan rumatan
-   harian. Logika ini akan disesuaikan lebih lanjut sesuai detail
-   yang diberikan (mis. estimasi defisit cairan dehidrasi, dll).
-============================================================ */
 function hitungKebutuhanCairan() {
   const beratInput = document.getElementById("cairanBerat");
   const kotak = document.getElementById("hasilCairanBox");
@@ -8834,13 +8017,6 @@ function hitungKebutuhanCairan() {
   kotak.classList.add("tampil");
 }
 
-/* ============================================================
-   TERAPI CAIRAN — REHIDRASI WHO (Lintas Diare Anak)
-   Rencana A: kartu info statis (tidak ada perhitungan).
-   Rencana B: dehidrasi ringan-sedang -> 75 mL/kgBB dalam 3 jam.
-   Rencana C: dehidrasi berat -> 100 mL/kgBB, 2 tahap, durasi
-              berbeda untuk bayi (<1 th) vs anak (>=1 th).
-============================================================ */
 function hitungRencanaB() {
   const beratInput = document.getElementById("cairanBeratB");
   const kotak = document.getElementById("hasilRencanaB");
@@ -8879,7 +8055,6 @@ function hitungRencanaC() {
     return;
   }
 
-  // tahap1Jam/tahap2Jam dalam satuan jam (desimal)
   const config = kategoriUsia === "bayi"
     ? { label: "Bayi (< 1 tahun)", tahap1Jam: 1, tahap1Label: "1 jam", tahap2Jam: 5, tahap2Label: "5 jam", totalJam: 6, totalLabel: "6 jam" }
     : { label: "Anak (≥ 1 tahun)", tahap1Jam: 0.5, tahap1Label: "30 menit", tahap2Jam: 2.5, tahap2Label: "2,5 jam", totalJam: 3, totalLabel: "3 jam" };
@@ -8965,9 +8140,6 @@ function pindahDripTetes(jenis) {
 const burnAreaState = new Set();
 
 function burnLundBrowderByAge(usiaTahun) {
-  // Mengikuti prinsip chart Lund & Browder:
-  // A = 1/2 kepala, B = 1/2 paha, C = 1/2 tungkai bawah.
-  // Nilai dipakai per kelompok usia terdekat pada chart dan dinormalisasi agar total body map = 100%.
   if (!isFinite(usiaTahun)) return { A: 8.5, B: 3.25, C: 2.5, label: "1 tahun" };
   if (usiaTahun < 1) return { A: 9.5, B: 2.75, C: 2.5, label: "0 tahun" };
   if (usiaTahun < 5) return { A: 8.5, B: 3.25, C: 2.5, label: "1 tahun" };
@@ -8984,7 +8156,6 @@ function burnAreaPercent(area, usiaTahun) {
     headBack: age.A,
     neckFront: 1,
     neckBack: 1,
-    // Kompatibilitas data lama: bila ada state lama, tetap dihitung sebagai total depan+belakang.
     head: age.A * 2,
     neck: 2,
     chest: 6.5,
@@ -9025,7 +8196,6 @@ function burnAreaPercent(area, usiaTahun) {
     legRightFull: (age.B + age.C + 1.75) * 2,
     legLeftFull: (age.B + age.C + 1.75) * 2,
 
-    // Kompatibilitas bila ada data lama tersimpan/terpanggil.
     armRightFront: 4.75,
     armRightBack: 4.75,
     armLeftFront: 4.75,
@@ -9230,10 +8400,6 @@ function hitungLukaBakar() {
   box.classList.add("tampil");
 }
 
-/* ============================================================
-   TERAPI CAIRAN — UI: pindah metode (Holliday-Segar <-> WHO)
-   dan pindah rencana (A/B/C) serta kategori usia Rencana C.
-============================================================ */
 function pindahMetodeCairan(metode) {
   document.querySelectorAll("#cairanMetodeTab .segmented-btn").forEach(btn => {
     btn.classList.toggle("aktif", btn.dataset.metode === metode);
@@ -9270,59 +8436,6 @@ function pindahUsiaRencanaC(kategori) {
     btn.classList.toggle("aktif", btn.dataset.usiaC === kategori);
   });
 }
-
-/* ============================================================
-   TUMBUH KEMBANG (DRAFT AWAL)
-   Kerangka form sudah jalan; plotting ke kurva pertumbuhan
-   (WHO/CDC/Kemenkes) menyusul setelah data referensi ditentukan.
-============================================================ */
-/* ============================================================
-   ============================================================
-   GROWTH CHART ENGINE — TUMBUH KEMBANG
-   ============================================================
-   Struktur folder gambar growth chart (ditambahkan manual oleh
-   pengguna, satu per satu, di server/hosting tempat file ini
-   disajikan):
-
-     growthcharts/
-       who/
-         male/    bbu_0-24.png   bbu_24-60.png
-                  tbu_0-24.png   tbu_24-60.png
-                  bbtb_0-24.png  bbtb_24-60.png
-                  imtu_0-24.png  imtu_24-60.png
-         female/  (struktur sama)
-       cdc/
-         male/    bbu_0-36.png   bbu_24-240.png
-                  tbu_0-36.png   tbu_24-240.png
-                  bbtb_0-36.png
-                  imtu_24-240.png
-         female/  (struktur sama)
-
-   CARA MENAMBAH CHART BARU (tanpa mengubah logika apa pun):
-   1. Simpan file gambar chart resmi (PNG/JPG/SVG) ke folder yang
-      sesuai di atas, dengan nama sesuai field `image` di bawah.
-   2. Jika kelompok usia/jenis baru belum ada di GROWTH_CHART_CONFIG,
-      tambahkan satu object baru ke array `ageGroups` indikator yang
-      sesuai — cukup data, tidak perlu menyentuh fungsi JS lain.
-   3. Isi `calibration` sesuai posisi piksel sumbu pada gambar chart
-      resmi tersebut (lihat penjelasan tiap field di bawah).
-
-   PENJELASAN CALIBRATION (fondasi engine plotting universal):
-   - imgWidth / imgHeight : ukuran asli file gambar chart (px).
-   - plot.x0 / plot.x1     : posisi piksel kiri & kanan area kurva
-                             (garis sumbu X paling kiri & kanan).
-   - plot.y0 / plot.y1     : posisi piksel atas & bawah area kurva
-                             (y0 = piksel utk nilai TERTINGGI sumbu Y,
-                              y1 = piksel utk nilai TERENDAH sumbu Y).
-   - xRange [min,max]      : nilai sumbu X paling kiri & kanan pada
-                             chart (sesuai satuan `xField` indikator).
-   - yRange [min,max]      : nilai sumbu Y paling bawah & paling atas.
-
-   Dengan kalibrasi ini, fungsi hitungKoordinatTitik() dapat
-   mengubah (nilai usia/tinggi, nilai berat/tinggi/IMT) APA PUN
-   menjadi posisi piksel pada SEMUA chart yang ditambahkan,
-   tanpa perlu menulis ulang logika plotting.
-============================================================ */
 
 const TKIMG = {
   who_m_bbu: "assets/images/who-male-bbu.jpg",
@@ -9429,7 +8542,6 @@ const GROWTH_CHART_CONFIG = {
   }
 };
 
-/* ----- STATE WIZARD ----- */
 const tkState = {
   langkah: 1,
   standar: null,   // "who" | "cdc"
@@ -9444,7 +8556,6 @@ function tkAmbilIndikatorObj() {
 }
 function tkAmbilAgeGroupObj() { return null; }
 
-/* ----- RENDER: PANEL 1 — STANDAR ----- */
 function tkRenderStandar() {
   const grid = document.getElementById("tkGridStandar");
   grid.innerHTML = Object.keys(GROWTH_CHART_CONFIG).map(key => {
@@ -9459,7 +8570,6 @@ function tkRenderStandar() {
   }).join("");
 }
 
-/* ----- RENDER: PANEL 2 — JENIS KELAMIN ----- */
 function tkRenderKelamin() {
   const grid = document.getElementById("tkGridKelamin");
   if (!tkState.standar) { grid.innerHTML = ""; return; }
@@ -9475,7 +8585,6 @@ function tkRenderKelamin() {
   }).join("");
 }
 
-/* ----- RENDER: PANEL 3 — INDIKATOR ----- */
 function tkRenderIndikator() {
   const grid = document.getElementById("tkGridIndikator");
   if (!tkState.standar || !tkState.kelamin) { grid.innerHTML = ""; return; }
@@ -9491,7 +8600,6 @@ function tkRenderIndikator() {
   }).join("");
 }
 
-/* ----- RENDER: PANEL 4 — KELOMPOK USIA (card gallery, selalu tampil) ----- */
 function tkRenderUsia() {
   const grid = document.getElementById("tkGridUsia");
   const ind = tkAmbilIndikatorObj();
@@ -9508,7 +8616,6 @@ function tkRenderUsia() {
       </div>`;
   }).join("");
 
-  // cek ketersediaan file gambar secara async, lalu perbarui badge status
   ind.ageGroups.forEach(g => {
     const img = new Image();
     img.onload = () => tkSetStatusGambar(g.image, true);
@@ -9525,7 +8632,6 @@ function tkSetStatusGambar(src, tersedia) {
   });
 }
 
-/* ----- RINGKASAN CHIP (sekaligus shortcut ganti pilihan) ----- */
 function tkRenderRingkasan() {
   const wrap = document.getElementById("tkRingkasan");
   const chips = [];
@@ -9537,7 +8643,6 @@ function tkRenderRingkasan() {
     </span>`).join("");
 }
 
-/* ----- STEPPER (indikator langkah aktif/terkunci/selesai) ----- */
 function tkRenderStepper() {
   document.querySelectorAll("#tkStepper .tk-step-dot").forEach(dot => {
     const step = Number(dot.dataset.step);
@@ -9548,7 +8653,6 @@ function tkRenderStepper() {
   });
 }
 
-/* ----- PINDAH LANGKAH WIZARD ----- */
 function tkPindahLangkah(langkah) {
   tkState.langkah = langkah;
   document.querySelectorAll(".tk-panel").forEach(p => p.classList.remove("tk-aktif"));
@@ -9558,7 +8662,6 @@ function tkPindahLangkah(langkah) {
   if (langkah === 3) tkRenderPanelPlot();
 }
 
-/* ----- PANEL 5: VIEWER CHART + FORM INPUT DINAMIS SESUAI INDIKATOR ----- */
 function tkRenderPanelPlot() {
   const ind = tkAmbilIndikatorObj();
   if (!ind || !Array.isArray(ind.charts)) return;
@@ -9621,22 +8724,6 @@ function tkTandaiChartBelumAda(imgEl) {
     </div>`;
 }
 
-/* ============================================================
-   ENGINE PLOTTING UNIVERSAL
-   Mengubah (nilai sumbu X, nilai sumbu Y) -> posisi (%) pada
-   gambar chart, berdasarkan calibration milik ageGroup terpilih.
-   Engine ini SAMA untuk seluruh chart — chart baru hanya perlu
-   menambahkan data `calibration`, tanpa mengubah fungsi ini.
-============================================================ */
-
-/* ============================================================
-   WHO BB/U — DATA Z-SCORE (0–60 BULAN, LAKI-LAKI & PEREMPUAN)
-   Digunakan untuk interpretasi posisi plot secara numerik.
-   Format: [SD-3, SD-2, SD-1, Median, SD+1, SD+2, SD+3]
-   Sumber: WHO Child Growth Standards (Weight-for-age),
-   nilai dibulatkan 1 desimal — verifikasi dengan tabel resmi
-   WHO sebelum penggunaan klinis.
-============================================================ */
 const WHO_BBU_MALE_0_60 = {
   0:  [2.1, 2.5, 3.0, 3.3, 3.9, 4.4, 5.0],
   1:  [2.9, 3.4, 3.9, 4.5, 5.1, 5.8, 6.6],
@@ -9765,12 +8852,6 @@ const WHO_BBU_FEMALE_0_60 = {
   60: [12.1, 13.7, 15.8, 18.2, 21.2, 24.9, 29.5],
 };
 
-/* ===========================================================
-   WHO TB/U LAKI-LAKI 0-60 BULAN — DATA Z-SCORE (Length/height-for-age)
-   Sumber: WHO Child Growth Standards (Length/height-for-age, boys).
-   Nilai dalam cm, dibulatkan 1 desimal.
-   Format: [SD-3, SD-2, SD-1, Median, SD+1, SD+2, SD+3]
-============================================================ */
 const WHO_TBU_MALE_0_60 = {
   0:  [44.2, 46.1, 48.0, 49.9, 51.8, 53.7, 55.6],
   1:  [48.9, 50.8, 52.8, 54.7, 56.7, 58.6, 60.6],
@@ -9835,8 +8916,6 @@ const WHO_TBU_MALE_0_60 = {
   60: [96.1, 100.7, 105.3, 110.0, 114.6, 119.2, 123.9],
 };
 
-/* Registri tabel Z-score: key = "standar_kelamin_indikator_usiaGroupId"
-   Nilai: array 7 elemen [SD-3..SD+3] per bulan/nilai-x */
 const WHO_TBU_FEMALE_0_60 = {
   0:  [43.6, 45.4, 47.3, 49.1, 51.0, 52.9, 54.7],
   1:  [47.8, 49.8, 51.7, 53.7, 55.6, 57.6, 59.5],
@@ -9908,7 +8987,6 @@ const TK_ZSCORE_TABLES = {
   "who_female_tbu_0-60": WHO_TBU_FEMALE_0_60,
 };
 
-/* Interpolasi linear antara dua bulan integer */
 function tkInterpolasiZscoreRow(table, nilaiX) {
   const lo = Math.floor(nilaiX);
   const hi = Math.ceil(nilaiX);
@@ -9918,14 +8996,9 @@ function tkInterpolasiZscoreRow(table, nilaiX) {
   return table[lo].map((v, i) => v + t * (table[hi][i] - v));
 }
 
-/* Hitung Z-score numerik dari nilai Y & row Z-score yang diinterpolasi.
-   Menggunakan metode interpolasi linier antar SD interval (WHO recommended). */
 function tkHitungZscoreNumerik(row, nilaiY) {
-  // row = [SD-3, SD-2, SD-1, Median, SD+1, SD+2, SD+3]
-  // indeks:   0     1     2     3      4     5     6
   const sdLabels = [-3, -2, -1, 0, 1, 2, 3];
 
-  // Cari di antara interval mana nilaiY berada
   for (let i = 0; i < row.length - 1; i++) {
     const lo = row[i], hi = row[i + 1];
     if (nilaiY >= lo && nilaiY <= hi) {
@@ -9933,18 +9006,14 @@ function tkHitungZscoreNumerik(row, nilaiY) {
       return sdLabels[i] + frac; // z-score fraksional
     }
   }
-  // Di luar range
   if (nilaiY < row[0]) {
-    // Ekstrapolasi di bawah SD-3
     const interval = row[1] - row[0];
     return -3 + (nilaiY - row[0]) / interval;
   }
-  // Ekstrapolasi di atas SD+3
   const interval = row[6] - row[5];
   return 3 + (nilaiY - row[6]) / interval;
 }
 
-/* Fungsi utama: kembalikan interpretasi Z-score untuk chart aktif */
 function tkInterpretasiZscore(standar, kelamin, indikator, usiaGroupId, nilaiX, nilaiY) {
   const key = `${standar}_${kelamin}_${indikator}_${usiaGroupId}`;
   const table = TK_ZSCORE_TABLES[key];
@@ -9956,7 +9025,6 @@ function tkInterpretasiZscore(standar, kelamin, indikator, usiaGroupId, nilaiX, 
   const z = tkHitungZscoreNumerik(row, nilaiY);
   const zRounded = Math.round(z * 10) / 10;
 
-  // Label zona simpel
   const sdLabels = [-3, -2, -1, 0, 1, 2, 3];
   const sdNames  = ["-3 SD", "-2 SD", "-1 SD", "0 (median)", "+1 SD", "+2 SD", "+3 SD"];
   let zonaLabel = "";
@@ -9969,7 +9037,6 @@ function tkInterpretasiZscore(standar, kelamin, indikator, usiaGroupId, nilaiX, 
   if (z < -3) zonaLabel = "di bawah -3 SD";
   if (z >= 3) zonaLabel = "di atas +3 SD";
 
-  // Status gizi berdasarkan WHO BB/U
   let statusGizi = "";
   let statusColor = "";
   if (indikator === "bbu") {
@@ -10003,7 +9070,6 @@ function tkHitungKoordinatTitik(calibration, nilaiX, nilaiY) {
   return {
     leftPercent: (pxX / imgWidth) * 100,
     topPercent: (pxY / imgHeight) * 100,
-    // posisi (%) garis sumbu, dipakai untuk menggambar garis bantu crosshair
     sumbuKananPersen: (plot.x1 / imgWidth) * 100, // tepi kanan area kurva
     sumbuKiriPersen: (plot.x0 / imgWidth) * 100,  // tepi kiri  (sumbu Y)
     sumbuBawahPersen: (plot.y1 / imgHeight) * 100, // tepi bawah (sumbu X)
@@ -10013,8 +9079,6 @@ function tkHitungKoordinatTitik(calibration, nilaiX, nilaiY) {
   };
 }
 
-/* ----- Warna garis bantu & titik plot WHO (selaras gaya kurva CDC):
-   garis tipis berwarna solid + titik kecil berwarna, agar garis chart tetap jelas ----- */
 function tkWarnaIndikatorWho(ind) {
   if (!ind) return "#E63946";
   const f = ind.yField;
@@ -10023,18 +9087,6 @@ function tkWarnaIndikatorWho(ind) {
   return "#E63946";                      // merah — BB/U & BB/TB
 }
 
-
-/* ============================================================
-   CDC INTERPRETASI PERSENTIL & BB/TB % MEDIAN
-   ------------------------------------------------------------
-   CDC chart memakai persentil, bukan kategori Z-score seperti WHO.
-   Untuk interpretasi numerik ringkas di web ini:
-   - BB/U dan TB/U ditampilkan sebagai estimasi posisi persentil
-     berdasarkan rasio terhadap median/P50 CDC yang diinterpolasi.
-   - BB/TB memakai rumus: BB aktual / BB ideal berdasarkan tinggi
-     pada median/P50 × 100% (Waterlow / percent ideal body weight).
-   Catatan: ini alat skrining, bukan pengganti penilaian klinis.
-============================================================ */
 const TK_CDC_P50 = {
   male: {
     age:    [24,36,48,60,72,84,96,108,120,132,144,156,168,180,192,204,216,228,240],
@@ -10092,10 +9144,6 @@ function tkCdcBbIdealBerdasarkanTinggi(kelamin, tinggiCm) {
   const usiaObj = tkCdcCariUsiaTinggiDariP50(kelamin, tinggiCm);
   if (!ref || !usiaObj) return null;
 
-  // Cara CDC/Waterlow sesuai alur grafik:
-  // 1) TB aktual dicari pada median TB/U (P50) untuk mendapatkan "usia tinggi".
-  // 2) Dari usia tinggi tersebut, ambil BB pada median BB/U (P50).
-  // 3) BB/TB % median = BB aktual / BB ideal P50 berdasarkan tinggi × 100%.
   const bbIdeal = tkInterpLinear(ref.age, ref.weight, usiaObj.usiaTinggi);
   const tbMedianDiUsiaTinggi = tkInterpLinear(ref.age, ref.height, usiaObj.usiaTinggi);
   if (!bbIdeal) return null;
@@ -10105,13 +9153,11 @@ function tkCdcBbIdealBerdasarkanTinggi(kelamin, tinggiCm) {
 function tkCdcKategoriPercentMedian(indikator, persenMedian) {
   let status = "", color = "#1A7A1A", posisi = "% terhadap median/P50";
   if (indikator === "bbu") {
-    // BB/U berdasarkan % median: <60 gizi buruk; 60–80 gizi kurang; 80–120 gizi baik.
     if (persenMedian < 60)       { posisi = "<60% dari P50"; status = "Gizi buruk"; color = "#B22222"; }
     else if (persenMedian < 80)  { posisi = "60–80% dari P50"; status = "Gizi kurang"; color = "#E06000"; }
     else if (persenMedian <= 120){ posisi = "80–120% dari P50"; status = "Gizi baik"; color = "#1A7A1A"; }
     else                         { posisi = ">120% dari P50"; status = "Di atas rentang gizi baik"; color = "#D98B00"; }
   } else if (indikator === "tbu") {
-    // TB/U berdasarkan % median: <70 sangat kurang; 70–90 kurang; 90–110 normal/baik.
     if (persenMedian < 70)       { posisi = "<70% dari P50"; status = "Tinggi badan sangat kurang"; color = "#B22222"; }
     else if (persenMedian < 90)  { posisi = "70–90% dari P50"; status = "Tinggi badan kurang"; color = "#E06000"; }
     else if (persenMedian <= 110){ posisi = "90–110% dari P50"; status = "Tinggi badan normal/baik"; color = "#1A7A1A"; }
@@ -10211,7 +9257,6 @@ function tkHtmlCdcInterpretasi(item) {
     </div>`;
 }
 
-/* ----- TOMBOL "PLOT": validasi input lalu jalankan engine ----- */
 function plotTumbuhKembang() {
   const ind = tkAmbilIndikatorObj();
   const hasilBox = document.getElementById("tkHasilBox");
@@ -10322,11 +9367,6 @@ function tkGambarTitikSeri(stage, titik, seri) {
   const garisH = document.createElement("div");
   garisH.className = "tk-garis-bantu horizontal";
   garisH.style.top = titik.topPercent + "%";
-  // Pada chart CDC gabungan:
-  // - Skala berat badan yang lebih luas berada di sisi kanan (hingga ±110 kg),
-  //   jadi garis bantu BB diarahkan ke kanan.
-  // - Skala tinggi di sisi kiri hanya praktis sampai sekitar 166 cm; bila TB aktual
-  //   >166 cm, garis bantu TB diarahkan ke kanan karena sisi kanan mencapai ±195 cm.
   const labelLower = String(seri.yLabel || "").toLowerCase();
   const unitLower = String(seri.yUnit || "").toLowerCase();
   const isBerat = labelLower.includes("berat") || unitLower === "kg";
@@ -10611,10 +9651,6 @@ function pindahHalaman(halaman) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-
-/* ============================================================
-   BERANDA: Dashboard, Quick Access, Favorit, Riwayat & Statistik
-============================================================ */
 (function () {
   const INSIGHTS = [
     'WHO merekomendasikan ASI eksklusif hingga usia 6 bulan.',
@@ -10651,8 +9687,6 @@ function pindahHalaman(halaman) {
     nama = String(nama || '').trim();
     if (!nama) return 'Pengguna';
     var parts = nama.split(/\s+/).filter(Boolean);
-    // Jika nama diawali gelar dokter, tampilkan gelar + nama pertama,
-    // misalnya "dr. Hafidzuddin" agar tidak menjadi hanya "dr.".
     if (parts.length >= 2 && /^dr\.?$/i.test(parts[0])) return parts[0] + ' ' + parts[1];
     return parts[0] || 'Pengguna';
   }
@@ -10954,10 +9988,6 @@ function pindahHalaman(halaman) {
   });
 })();
 
-
-/* ============================================================
-   JADWAL IMUNISASI: zoom bagan
-============================================================ */
 (function () {
   var zoom = 1;
   function el(id) { return document.getElementById(id); }
@@ -10984,13 +10014,6 @@ function pindahHalaman(halaman) {
   });
 })();
 
-
-
-/* ============================================================
-   RINGKASAN KLINIS & EXPORT HASIL
-   Menyimpan hasil kalkulator yang dipilih user, lalu bisa disalin,
-   diunduh sebagai TXT, atau dicetak/disimpan PDF lewat dialog print.
-============================================================ */
 const TV_SUMMARY_KEY = "tinyverse_ringkasan_klinis_v1";
 const TV_SUMMARY_PATIENT_KEY = "tinyverse_ringkasan_pasien_v1";
 let tvRingkasanItems = [];
@@ -11278,12 +10301,6 @@ function tvRingkasanInit() {
   document.addEventListener("keydown", function (e) { if (e.key === "Enter") setTimeout(tvRingkasanPasangTombol, 80); });
 }
 
-/* ============================================================
-   INISIALISASI & EVENT BINDING SAAT HALAMAN DIMUAT
-   (pakai DOMContentLoaded, bukan window.onload, supaya tidak
-    menunggu font/gambar selesai dimuat dulu; event di-bind
-    lewat addEventListener + delegation, bukan inline onclick)
-============================================================ */
 document.addEventListener("DOMContentLoaded", function () {
   muatObatDariFirestore();
   renderProtokolGallery();
@@ -11302,7 +10319,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.getElementById("btnHitung").addEventListener("click", hitungDosis);
 
-  // izinkan tekan Enter di field berat badan / usia untuk langsung menghitung
   document.getElementById("beratBadan").addEventListener("keydown", function (e) {
     if (e.key === "Enter") hitungDosis();
   });
@@ -11310,14 +10326,12 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Enter") hitungDosis();
   });
 
-  // ===== Sidebar: pindah halaman =====
   document.getElementById("sidebar").addEventListener("click", function (e) {
     const tombol = e.target.closest(".sidebar-item");
     if (!tombol) return;
     pindahHalaman(tombol.dataset.page);
   });
 
-  // ===== Terapi Cairan =====
   document.getElementById("btnHitungCairan").addEventListener("click", hitungKebutuhanCairan);
   document.getElementById("cairanBerat").addEventListener("keydown", function (e) {
     if (e.key === "Enter") hitungKebutuhanCairan();
@@ -11388,12 +10402,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (e.key === "Enter") hitungRencanaC();
   });
 
-  // ===== Tumbuh Kembang =====
   tkRenderStandar();
   tkRenderStepper();
   document.getElementById("btnPlotTumbuhKembang").addEventListener("click", plotTumbuhKembang);
 
-  // ===== Alat Kalibrasi Chart (click-to-calibrate) =====
   document.getElementById("tkKalibrasiToggle").addEventListener("click", tkToggleKalibrasi);
   document.getElementById("tkKalMulai").addEventListener("click", tkKalMulai);
   document.getElementById("tkKalReset").addEventListener("click", tkKalReset);
@@ -11434,7 +10446,6 @@ document.addEventListener("DOMContentLoaded", function () {
     tkPindahLangkah(Number(dot.dataset.step));
   });
 
-  // ===== Guideline: galeri & pencarian =====
   document.getElementById("grid-protokol").addEventListener("click", function (e) {
     const kartu = e.target.closest(".protokol-card");
     if (!kartu) return;
@@ -11443,7 +10454,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("kotakCariProtokol").addEventListener("input", filterProtokol);
   document.getElementById("btnKembaliProtokol").addEventListener("click", tutupProtokolDetail);
 
-  // ===== Guideline: kalkulator mini per kartu obat (delegasi event) =====
   document.getElementById("protokol-detail-konten").addEventListener("click", function (e) {
     const tombol = e.target.closest("[data-aksi='hitung-protokol']");
     if (!tombol) return;
@@ -11457,7 +10467,6 @@ document.addEventListener("DOMContentLoaded", function () {
     hitungObatProtokol(key);
   });
 
-  // ===== Lightbox gambar alur/algoritma diagnosis =====
   const alurLightbox = document.getElementById("alurLightbox");
   const alurLightboxImg = document.getElementById("alurLightboxImg");
 
@@ -11487,7 +10496,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script>
-/* ===== GUIDELINE PDF LIBRARY OVERRIDE ===== */
 (function () {
   'use strict';
   const TV_GUIDELINE_LIST = [
@@ -11797,21 +10805,11 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
 <script>
-/* ============================================================
-   TINYVERSE — AUTENTIKASI, PROFIL & RIWAYAT (Firebase)
-   Login wajib • profil per pengguna • riwayat otomatis • peran admin
-   ============================================================ */
 (function () {
   'use strict';
 
-  /* MODE TINJAU: true = login dinonaktifkan sementara untuk review cepat. Ubah ke false untuk mengaktifkan login Firebase lagi. */
   var MODE_TINJAU = true;
 
-  /* ---------- 1. KONFIGURASI FIREBASE ----------
-     Isi objek FIREBASE_CONFIG di bawah dengan konfigurasi proyek Firebase Anda
-     (Firebase Console > Project settings > Your apps > SDK setup and configuration).
-     Kunci ini AMAN diletakkan di sisi klien. Jika dibiarkan kosong, aplikasi akan
-     menampilkan layar konfigurasi yang menyimpan pengaturan di perangkat ini. */
   var FIREBASE_CONFIG = {
     apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
     authDomain: 'tyniverse-5a3b2.firebaseapp.com',
@@ -11821,8 +10819,6 @@ document.addEventListener("DOMContentLoaded", function () {
     appId: '1:446927338321:web:5b48cb060b052855b6b170',
     measurementId: 'G-RZYE8ZRDSB'
   };
-  /* Email yang otomatis menjadi admin saat mendaftar. Boleh dikosongkan; jika kosong,
-     pengguna PERTAMA yang berhasil mendaftar akan otomatis menjadi admin. */
   var ADMIN_EMAILS = ['m.hafidzuddin.s@gmail.com'];
 
   var LSK_CONFIG = 'tv_fb_config';
@@ -11840,10 +10836,8 @@ document.addEventListener("DOMContentLoaded", function () {
     return arr.map(function (x) { return String(x).trim().toLowerCase(); }).filter(Boolean);
   }
 
-  /* ---------- 2. STATE ---------- */
   var auth = null, db = null, uidSaya = null, profilSaya = null, sedangDaftar = false, avatarSementara = null;
 
-  /* ---------- 3. UTIL ---------- */
   function el(id) { return document.getElementById(id); }
   function esc(s) {
     s = String(s == null ? '' : s);
@@ -11879,7 +10873,6 @@ document.addEventListener("DOMContentLoaded", function () {
     try { return new Date(ms).toLocaleString('id-ID', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; }
   }
 
-  /* ---------- 4. CSS ---------- */
   function injectCSS() {
     var st = document.createElement('style');
     st.textContent = TV_CSS;
@@ -11890,7 +10883,6 @@ document.addEventListener("DOMContentLoaded", function () {
     body.tv-terkunci { overflow: hidden; }
     body.tv-tanpa-dekorasi .bg-decor, body.tv-tanpa-dekorasi .balon { display: none !important; }
 
-    /* LOGIN — revisi visual agar selaras dengan tema Tinyverse terbaru */
     #tvAuthOverlay {
       position: fixed;
       inset: 0;
@@ -12210,7 +11202,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     #tvUserMenu { position: fixed; top: 14px; right: 16px; z-index: 8000; font-family: 'Fredoka', sans-serif; display: none; }
     #tvUserMenu.tampil { display: block; }
-    /* Bilah sisi kiri sebagai drawer yang bisa dibuka/tutup */
     #sidebar { position: fixed; top: 0; left: 0; height: 100vh; width: 248px; padding: 18px 14px 20px; gap: 12px; display: flex; flex-direction: column; overflow-y: auto; background: var(--krem, #FFFBF0); box-shadow: 4px 0 26px rgba(0,0,0,0.14); transform: translateX(-104%); transition: transform .28s ease; z-index: 7200; }
     body.tv-side-buka #sidebar { transform: translateX(0); }
     @media (max-width: 1100px) { #sidebar { display: flex !important; flex-direction: column !important; grid-template-columns: none !important; width: 248px !important; } }
@@ -12268,7 +11259,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .tv-mini.off { background: #D8F5D0; color: #2f7a1f; }
   `;
 
-  /* ---------- 5. OVERLAY (gerbang login) ---------- */
   function buatOverlay() {
     var ov = document.createElement('div');
     ov.id = 'tvAuthOverlay';
@@ -12342,7 +11332,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function tampilGalat(msg) { var g = el('tvGalatPesan'); if (g) g.textContent = msg; tampilView('galat'); kunci(true); }
   function pesan(id, txt, jenis) { var p = el(id); if (!p) return; p.textContent = txt || ''; p.className = 'tv-pesan' + (txt ? (' ' + (jenis || 'galat')) : ''); }
 
-  /* ---------- 6. MENU PENGGUNA ---------- */
   function buatMenuPengguna() {
     var m = document.createElement('div');
     m.id = 'tvUserMenu';
@@ -12409,8 +11398,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (avatarValid(avatar)) {
       node.textContent = '';
       node.classList.add('tv-ava-foto');
-      /* CSS akhir file memakai background gradient !important.
-         Karena itu foto harus dipasang dengan setProperty + important supaya tidak tertutup. */
       node.style.setProperty('background', 'url("' + cssUrl(avatar) + '") center / cover no-repeat', 'important');
       node.style.setProperty('background-image', 'url("' + cssUrl(avatar) + '")', 'important');
       node.style.setProperty('background-size', 'cover', 'important');
@@ -12434,7 +11421,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (window.TVHomeDashboard) window.TVHomeDashboard.setProfile(profilSaya);
   }
 
-  /* ---------- 7. MODAL PROFIL ---------- */
   function buatModalProfil() {
     var md = document.createElement('div');
     md.id = 'tvModalProfil'; md.className = 'tv-modal';
@@ -12559,7 +11545,6 @@ document.addEventListener("DOMContentLoaded", function () {
     db.collection('users').doc(uidSaya).collection('riwayat').add({ tipe: tipe || '', judul: judul || '', detail: detail || '', waktuLokal: Date.now() }).then(function () { if (window.TVHomeDashboard) window.TVHomeDashboard.refreshFromFirebase(); }).catch(function () {});
   }
 
-  /* ---------- 8. MODAL ADMIN ---------- */
   function buatModalAdmin() {
     var md = document.createElement('div');
     md.id = 'tvModalAdmin'; md.className = 'tv-modal';
@@ -12599,7 +11584,6 @@ document.addEventListener("DOMContentLoaded", function () {
   function ubahPeran(id, peran) { db.collection('users').doc(id).update({ role: peran }).catch(function (e) { alert('Gagal: ' + petaError(e)); muatPengguna(); }); }
   function toggleAktif(id, aktif) { db.collection('users').doc(id).update({ aktif: aktif }).then(muatPengguna).catch(function (e) { alert('Gagal: ' + petaError(e)); }); }
 
-  /* ---------- 9. AUTENTIKASI ---------- */
   function masuk() {
     var email = el('tvMasukEmail').value.trim(), pass = el('tvMasukPass').value;
     if (!email || !pass) { pesan('tvPesanMasuk', 'Lengkapi email dan kata sandi.'); return; }
@@ -12674,7 +11658,6 @@ document.addEventListener("DOMContentLoaded", function () {
     location.reload();
   }
 
-  /* ---------- 10. INISIALISASI ---------- */
   function mulai() {
     injectCSS(); buatOverlay(); buatMenuPengguna(); buatModalProfil(); buatModalAdmin();
     if (MODE_TINJAU) { profilSaya = { nama: 'Mode Tinjau', email: 'tinjau@demo.local', role: 'admin', avatar: '', aktif: true, preferensi: {} }; renderMenu(); sembunyikanAuth(); kunci(false); if (window.TVHomeDashboard) window.TVHomeDashboard.connectFirebase(profilSaya, null, null); if (typeof pindahHalaman === 'function') pindahHalaman('beranda'); return; }
@@ -12692,10 +11675,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  /* ---------- 11. HOOK RIWAYAT OTOMATIS ----------
-     Membungkus fungsi perhitungan global agar setiap hasil tercatat ke riwayat
-     pengguna. Dijalankan di tingkat atas (sebelum DOMContentLoaded) sehingga
-     pengikat tombol aplikasi memakai versi yang sudah dibungkus. */
   function bungkus(nama, buat) {
     var asli = window[nama];
     if (typeof asli !== 'function') return;
@@ -12727,14 +11706,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
-
 <script>
-/* ============================================================
-   RACIK PUYER MULTI-OBAT
-============================================================ */
 (function () {
   const state = { rows: [], lastText: '' };
-  // Tidak ada obat contoh otomatis. User menambahkan obat sendiri lewat tombol "Tambah Obat".
   const contoh = [];
   const OBAT_PRESET = [
     { nama: 'Paracetamol', alias: ['parasetamol', 'pct', 'pamol'], mode: 'mgkg', dosis: 10, sediaan: 500, catatan: 'Contoh umum: 10 mg/kg/kali; sesuaikan pedoman.' },
@@ -12966,14 +11940,6 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 <script type="module">
-/* ============================================================
-   FIREBASE AI LOGIC — ASISTEN AI
-   Cara pakai:
-   1) Firebase Console > AI Logic > Get started.
-   2) Pilih Gemini Developer API atau Vertex AI.
-   3) Aktifkan App Check jika sudah production.
-   4) Bila model error, ganti AI_MODEL di bawah sesuai model yang tersedia di console.
-============================================================ */
 import { initializeApp, getApps, getApp } from
 "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
@@ -13049,7 +12015,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
-
 <script>
 (function () {
   function el(id) { return document.getElementById(id); }
@@ -13077,12 +12042,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-
-
-
-
 <script>
-/* Tinyverse sidebar safety fix: memastikan tombol bilah selalu ada dan bisa dibuka. */
 (function () {
   function ready(fn) {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fn);
@@ -13137,9 +12097,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-
 <script>
-/* Tinyverse HARD sidebar fix: membuat tombol menu mandiri dan drawer pasti terbuka. */
 (function () {
   var HARD_STYLE_ID = 'tvHardSidebarFixStyle';
   var HARD_BTN_ID = 'tvMenuAlways';
@@ -13167,19 +12125,13 @@ document.addEventListener('DOMContentLoaded', function () {
         pointer-events: auto !important;
       }
       #${HARD_BTN_ID}:active { transform: scale(.96) !important; }
-      /* HAPUS KOTAK PUTIH DI BELAKANG: #tvSideToggle (tombol lama, lebih besar)
-         disembunyikan total dengan selector ber-specificity tinggi agar mengalahkan
-         aturan 'html body #tvSideToggle { display:flex !important }'. Sisakan hanya tombol ☰. */
       html body #tvSideToggle,
       html body #tvSideToggle.tampil,
       html body button#tvSideToggle { display: none !important; }
-      /* FIX TOMBOL BILAH DI LAYAR TERKUNCI: saat login/memuat (body.tv-terkunci),
-         tombol menu, drawer, dan overlay tidak boleh tampil menutupi layar login. */
       body.tv-terkunci #${HARD_BTN_ID},
       body.tv-terkunci #tvSideToggle { display: none !important; }
       body.tv-terkunci #tvSideOverlay { display: none !important; }
       body.tv-terkunci #sidebar { transform: translate3d(-112%,0,0) !important; }
-      /* FIX IKON BILAH KECIL: tombol menu diperkecil agar tidak menutupi emot/maskot boneka. */
       #tvSideOverlay {
         position: fixed !important;
         inset: 0 !important;
@@ -13351,10 +12303,6 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <script>
-/* FINAL SIDEBAR PROFILE TIGHT FIX
-   Style sidebar sebelumnya disuntik ulang lewat JavaScript setelah halaman load.
-   Script ini menyuntik override paling akhir dan mengulang beberapa kali supaya
-   posisi profil benar-benar naik, bukan tertimpa hard sidebar style. */
 (function () {
   var STYLE_ID = 'tvSidebarProfileTightFinalStyle';
   function injectTightStyle() {
@@ -13412,12 +12360,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-
 <script>
-/* FINAL DEPLOY FONT LOCK
-   Menjaga font tetap sama setelah deploy: Fredoka untuk judul/icon cards,
-   Quicksand untuk teks pendukung. Style ini disuntik paling akhir agar
-   menang dari CSS lama, cache, atau style yang dibuat lewat JavaScript. */
 (function () {
   var FONT_LINK_ID = 'tvGoogleFontFredokaQuicksandFinal';
   var STYLE_ID = 'tvFinalDeployFontLock';
@@ -13477,7 +12420,6 @@ document.addEventListener('DOMContentLoaded', function () {
         line-height: 1.12 !important;
       }
 
-      /* Guideline cards: dibuat seperti preview lokal — lebih rounded, padat, dan fun */
       html body .guideline-card h3 {
         color: var(--etail-navy, #0A0B5F) !important;
         font-size: clamp(1.02rem, 1.7vw, 1.32rem) !important;
@@ -13549,12 +12491,7 @@ document.addEventListener('DOMContentLoaded', function () {
 })();
 </script>
 
-
-
 <script>
-/* SAFE AI SCROLL FIX
-   Perbaikan khusus scroll Asisten AI tanpa mengubah logic Firebase AI.
-   Modal dibuat sebagai overlay yang bisa discroll; kartu AI tidak memotong konten. */
 (function () {
   var STYLE_ID = 'tvAiScrollSafeFixStyle';
   function injectAiScrollFix() {
@@ -13626,7 +12563,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!panel || panel.dataset.tvAiScrollSafeBound) return;
     panel.dataset.tvAiScrollSafeBound = '1';
     panel.addEventListener('wheel', function (e) {
-      // Pastikan scroll terjadi di overlay AI, bukan tertahan oleh body yang terkunci.
       if (panel.classList.contains('tampil')) panel.scrollTop += e.deltaY;
     }, { passive: true });
   }
@@ -13643,7 +12579,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 <style>
-/* ===== HOME FONT SIZE ALIGNMENT: samakan teks kecil beranda dengan nama obat-card (contoh Ambroxol) ===== */
+
 html body #page-beranda .tv-home-tool h4,
 html body #page-beranda .tv-home-tool p,
 html body #page-beranda .tv-home-section-head p,
@@ -13678,15 +12614,13 @@ html body #page-beranda section[aria-labelledby="tvUpdateTitle"] .tv-home-update
   font-size: 0.82rem !important;
 }
 
-/* Sub-judul section beranda diperbesar ke 0.90rem (Quick Access, Terakhir Digunakan, Favorit Saya, Pediatric Insight, Aktivitas Anda, Update Tinyverse) — hanya ukuran, jenis font tetap */
 html body #page-beranda .tv-home-section-head h3 {
   font-size: 0.90rem !important;
 }
 </style>
 
-
 <style>
-/* ===== FINAL HOME QUICK ACCESS FONT MATCH — samakan dengan item Favorit Saya ===== */
+
 html body #page-beranda .tv-home-grid .tv-home-tool h4,
 html body #page-beranda .tv-home-list .tv-home-row-item strong {
   font-size: 0.92rem !important;
@@ -13705,7 +12639,7 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
 </style>
 
 <style>
-/* ===== TINYVERSE: PROFIL PASIEN TERPUSAT + SAFETY GUARD ===== */
+
 #tvPasienFab{position:fixed;left:18px;bottom:18px;z-index:8500;width:52px;height:52px;border:0;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.35rem;background:linear-gradient(160deg,#7C5CFC,#2BA9D6);color:#fff;box-shadow:0 0 0 5px rgba(124,92,252,.20),0 8px 22px rgba(0,0,0,.20);transition:transform .15s}
 #tvPasienFab:hover{transform:translateY(-2px) scale(1.03)}
 #tvPasienFab:active{transform:translateY(1px) scale(.98)}
@@ -13738,7 +12672,7 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
 .tv-safety li{margin:2px 0}
 </style>
 <style>
-/* ===== TINYVERSE: SIMETRIKAN FAB PROFIL & ASISTEN AI (tinggi sama, posisi mirror) ===== */
+
 #tvPasienFab, .tv-ai-fab {
   width: 64px !important;
   height: 64px !important;
@@ -13769,7 +12703,6 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
   function setVal(id,val){var el=$(id);if(!el||val==null||val==='')return;el.value=val;}
   function usiaTeks(b){if(b==null)return '';if(b<24)return b+' bulan';var th=Math.floor(b/12),s=b%12;return s?(th+' th '+s+' bln'):(th+' tahun');}
 
-  // Sebar profil ke semua kalkulator (semua page selalu ada di DOM)
   function terapkan(){
     var bb=pasien.bb,ub=pasien.usiaBulan,tb=pasien.tb,nm=pasien.nama;
     setVal('beratBadan',bb);setVal('usiaBulan',ub);
@@ -13852,7 +12785,6 @@ html body #page-beranda .tv-home-list .tv-home-row-item span {
     tandaiFab();terapkan();
   }
 
-  /* ===== SAFETY GUARD: PUYER (duplikasi & interaksi) ===== */
   var INX=[
     {a:/ibuprofen|mefenamat|ketorolac|aspirin|asetosal|diklofenak|piroksikam|ketoprofen/,b:/ibuprofen|mefenamat|ketorolac|aspirin|asetosal|diklofenak|piroksikam|ketoprofen/,dup:true,msg:'Dua obat antiinflamasi/antinyeri (NSAID) sekaligus — risiko perdarahan & gangguan ginjal meningkat.'},
     {a:/domperidon|metoclopramide|metoklopramid/,b:/domperidon|metoclopramide|metoklopramid/,dup:true,msg:'Dua obat prokinetik bersamaan — risiko efek ekstrapiramidal.'},
