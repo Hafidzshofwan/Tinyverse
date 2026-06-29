@@ -8060,7 +8060,8 @@ let daftarKategoriObat = [];
 ============================================================ */
 function siapkanDataObat() {
   daftarObat.sort((a, b) => String(a.nama || "").localeCompare(String(b.nama || ""), "id", { sensitivity: "base" }));
-  daftarObat.forEach(function (o) { o.jenis = PETA_JENIS_OBAT[o.nama] || "Lainnya"; });
+  // Utamakan kategori dari Firestore (field "jenis"); bila belum ada, pakai peta lama sebagai cadangan.
+  daftarObat.forEach(function (o) { o.jenis = o.jenis || PETA_JENIS_OBAT[o.nama] || "Lainnya"; });
   daftarKategoriObat = Array.from(new Set(daftarObat.map(function (o) { return o.jenis; })))
     .sort(function (a, b) { return a.localeCompare(b, "id", { sensitivity: "base" }); });
 }
@@ -11807,7 +11808,7 @@ document.addEventListener("DOMContentLoaded", function () {
   'use strict';
 
   /* MODE TINJAU: true = login dinonaktifkan sementara untuk review cepat. Ubah ke false untuk mengaktifkan login Firebase lagi. */
-  var MODE_TINJAU = false;
+  var MODE_TINJAU = true;
 
   /* ---------- 1. KONFIGURASI FIREBASE ----------
      Isi objek FIREBASE_CONFIG di bawah dengan konfigurasi proyek Firebase Anda
