@@ -10808,7 +10808,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   'use strict';
 
-  var MODE_TINJAU = false;
+  var MODE_TINJAU = true;
 
   var FIREBASE_CONFIG = {
     apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
@@ -11574,7 +11574,7 @@ document.addEventListener("DOMContentLoaded", function () {
         var aktif = (d.aktif !== false);
         rows += "<tr><td><b>" + esc(d.nama || '-') + "</b><br><span style='font-size:0.72rem;color:#999'>" + esc(d.email || '') + "</span></td>"
           + "<td><select data-peran='" + esc(id) + "' " + (saya ? 'disabled' : '') + "><option value='user'" + (d.role !== 'admin' ? ' selected' : '') + ">Pengguna</option><option value='admin'" + (d.role === 'admin' ? ' selected' : '') + ">Admin</option></select></td>"
-          + "<td>" + (saya ? "<span style='font-size:0.72rem;color:#999'>akun Anda</span>" : ("<button class='tv-mini " + (aktif ? 'on' : 'off') + "' data-aktif='" + esc(id) + "' data-ke='" + (aktif ? '0' : '1') + "'>" + (aktif ? 'Nonaktifkan' : 'Aktifkan') + "</button>")) + "</td></tr>";
+          + "<td>" + (saya ? "<span style='font-size:0.72rem;color:#999'>akun Anda</span>" : ("<button class='tv-mini " + (aktif ? 'on' : 'off') + "' data-aktif='" + esc(id) + "' data-ke='" + (aktif ? '0' : '1') + "' title='" + (aktif ? 'Klik untuk menonaktifkan akun ini' : 'Klik untuk mengaktifkan akun ini') + "'>" + (aktif ? 'Aktif' : 'Nonaktif') + "</button>")) + "</td></tr>";
       });
       box.innerHTML = "<table class='tv-tabel'><thead><tr><th>Pengguna</th><th>Peran</th><th>Status</th></tr></thead><tbody>" + rows + "</tbody></table>";
       box.querySelectorAll('[data-peran]').forEach(function (s) { s.addEventListener('change', function () { ubahPeran(s.getAttribute('data-peran'), s.value); }); });
