@@ -10627,10 +10627,10 @@ function pindahHalaman(halaman) {
   ];
 
   const TOOL_META = {
-    'dosis-obat': { id: 'dosis-obat', title: 'Kalkulator Dosis Obat', label: 'Dosis Paracetamol', icon: '💊', page: 'dosis', subtitle: 'Kalkulator dosis' },
+    'dosis-obat': { id: 'dosis-obat', title: 'Kalkulator Dosis Obat', label: 'Dosis Paracetamol', icon: '💊', page: 'dosis', subtitle: 'Hitung dosis' },
     'tumbuh-kembang': { id: 'tumbuh-kembang', title: 'Tumbuh Kembang', label: 'Growth Chart WHO', icon: '📈', page: 'tumbuh-kembang', subtitle: 'Growth chart' },
     'jadwal-imunisasi': { id: 'jadwal-imunisasi', title: 'Jadwal Imunisasi', label: 'Jadwal Imunisasi IDAI 2024', icon: '📅', page: 'imunisasi', subtitle: 'Jadwal imunisasi' },
-    'kalkulator-pediatri': { id: 'kalkulator-pediatri', title: 'Terapi Cairan', label: 'Terapi Cairan', icon: '💧', page: 'cairan', subtitle: 'Terapi cairan & rehidrasi' },
+    'kalkulator-pediatri': { id: 'kalkulator-pediatri', title: 'Terapi Cairan', label: 'Terapi Cairan', icon: '💧', page: 'cairan', subtitle: 'Maintenance, rehidrasi, luka bakar & faktor tetes' },
     'racik-puyer': { id: 'racik-puyer', title: 'Racik Puyer', label: 'Racik Puyer', icon: '⚗️', page: 'puyer', subtitle: 'Puyer multi-obat' },
     'referensi-klinis': { id: 'referensi-klinis', title: 'Guideline', label: 'Guideline', icon: '📚', page: 'protokol', subtitle: 'Guideline klinis' },
     'dosis-amoksisilin': { id: 'dosis-amoksisilin', title: 'Dosis Amoksisilin', label: 'Dosis Amoksisilin', icon: '💊', page: 'dosis', subtitle: 'Favorit contoh' },
@@ -10640,7 +10640,7 @@ function pindahHalaman(halaman) {
   const STORAGE_KEY = 'tv_home_favorites_demo';
   const USAGE_KEY = 'tv_home_usage_counts_demo';
 
-  const state = { profile: null, db: null, uid: null, favorites: [], lastRows: [], toastTimer: null, lastTrackedAt: 0, lastTrackedTitle: '' };
+  const state = { profile: null, dsb: null, uid: null, favorites: [], lastRows: [], toastTimer: null, lastTrackedAt: 0, lastTrackedTitle: '' };
 
   function el(id) { return document.getElementById(id); }
   function esc(s) {
