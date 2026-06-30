@@ -10808,7 +10808,7 @@ document.addEventListener("DOMContentLoaded", function () {
 (function () {
   'use strict';
 
-  var MODE_TINJAU = fallse;
+  var MODE_TINJAU = true;
 
   var FIREBASE_CONFIG = {
     apiKey: 'AIzaSyDI5f69PBuHR-HX50ddVGqOYYBEDlJaZsA',
@@ -10926,7 +10926,7 @@ document.addEventListener("DOMContentLoaded", function () {
       width: min(960px, 100%);
       max-height: min(92vh, 760px);
       display: grid;
-      grid-template-columns: minmax(250px, .9fr) minmax(330px, 1.08fr);
+      grid-template-columns: minmax(250px, 1.1fr) minmax(300px, 1fr);
       overflow: hidden;
       border-radius: 34px;
       border: 1px solid rgba(255,255,255,.92);
@@ -11012,7 +11012,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .tv-auth-brand-copy p {
       margin: 0;
-      max-width: 330px;
+      max-width: 400px;
       color: rgba(255,255,255,.80);
       font-weight: 700;
       line-height: 1.48;
@@ -11022,14 +11022,15 @@ document.addEventListener("DOMContentLoaded", function () {
       position: relative;
       z-index: 1;
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      flex-wrap: nowrap;
+      gap: 8px;
     }
     .tv-auth-chip {
       display: inline-flex;
       align-items: center;
       gap: 7px;
-      padding: 9px 12px;
+      white-space: nowrap;
+      padding: 9px 11px;
       border-radius: 999px;
       background: rgba(255,255,255,.13);
       border: 1px solid rgba(255,255,255,.16);
@@ -11667,8 +11668,6 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       if (!firebase.apps.length) firebase.initializeApp(cfg);
       auth = firebase.auth(); db = firebase.firestore();
-      try { db.settings({ experimentalForceLongPolling: true, merge: true }); } catch (e) {}
-      try { db.enablePersistence({ synchronizeTabs: true }).catch(function(){}); } catch (e) {}
     } catch (e) { tampilGalat('Konfigurasi Firebase tidak valid: ' + ((e && e.message) || e)); return; }
     tampilView('memuat'); kunci(true);
     auth.onAuthStateChanged(function (user) {
