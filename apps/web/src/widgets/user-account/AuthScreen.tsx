@@ -11,7 +11,7 @@ type Mode = "masuk" | "daftar";
  * brand + form).
  */
 export function AuthScreen() {
-  const { status, errorMsg, masuk, daftar, masukTinjau } = useAuth();
+  const { status, errorMsg, masuk, daftar } = useAuth();
   const [mode, setMode] = useState<Mode>("masuk");
   const [sibuk, setSibuk] = useState(false);
   const [pesan, setPesan] = useState<{ txt: string; jenis: "galat" | "info" }>(
@@ -109,19 +109,6 @@ export function AuthScreen() {
               >
                 Muat ulang
               </button>
-              <div className="tv-tinjau-box">
-                <button
-                  type="button"
-                  className="tv-btn tv-btn-blok"
-                  onClick={masukTinjau}
-                >
-                  {"\uD83D\uDC41\uFE0F"} Masuk Mode Tinjau (tanpa login)
-                </button>
-                <p className="tv-tinjau-ket">
-                  Login dibatasi ke domain tertentu. Gunakan Mode Tinjau untuk
-                  pratinjau lokal.
-                </p>
-              </div>
             </div>
           ) : mode === "masuk" ? (
             <div>
@@ -165,20 +152,6 @@ export function AuthScreen() {
                 Belum punya akun?{" "}
                 <a onClick={() => gantiMode("daftar")}>Daftar di sini</a>
               </p>
-              <div className="tv-tinjau-box">
-                <div className="tv-tinjau-atau">atau</div>
-                <button
-                  type="button"
-                  className="tv-btn sekunder tv-btn-blok"
-                  onClick={masukTinjau}
-                >
-                  {"\uD83D\uDC41\uFE0F"} Masuk Mode Tinjau (tanpa login)
-                </button>
-                <p className="tv-tinjau-ket">
-                  Untuk pratinjau lokal (mis. localhost) saat login dibatasi ke
-                  domain tertentu. Data tidak tersimpan ke akun.
-                </p>
-              </div>
             </div>
           ) : (
             <div>

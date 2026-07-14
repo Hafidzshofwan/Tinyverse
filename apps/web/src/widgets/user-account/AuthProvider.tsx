@@ -49,22 +49,6 @@ export interface PenggunaRow {
 
 type Status = "loading" | "signedOut" | "signedIn" | "error";
 
-// Kunci penyimpanan agar Mode Tinjau diingat antar-reload.
-const KUNCI_TINJAU = "tv-mode-tinjau";
-
-// Profil dummy Mode Tinjau (tanpa login/Firebase) — untuk pratinjau lokal saat
-// API key dibatasi ke domain tertentu sehingga localhost tak bisa login.
-const PROFIL_TINJAU: Profil = {
-  uid: "tinjau",
-  email: "tinjau@demo.local",
-  nama: "Mode Tinjau",
-  institusi: "Pratinjau lokal",
-  role: "admin",
-  avatar: "",
-  preferensi: { sembunyikanDekorasi: false },
-  aktif: true,
-};
-
 interface AuthContextValue {
   status: Status;
   profil: Profil | null;
@@ -78,7 +62,6 @@ interface AuthContextValue {
     pass: string,
   ) => Promise<void>;
   keluar: () => void;
-  masukTinjau: () => void;
   simpanProfil: (data: {
     nama: string;
     institusi: string;
@@ -116,7 +99,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const dbRef = useRef<Any>(null);
   const uidRef = useRef<string | null>(null);
   const sedangDaftar = useRef(false);
-  const tinjauRef = useRef(false);
 
   // Tentukan peran akun baru: admin jika email terdaftar admin, atau jika ini
   // pengguna pertama di koleksi users. Selain itu 'user'. (sama seperti v17)
@@ -213,21 +195,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let unsub: (() => void) | null = null;
     let cancelled = false;
-    // Jika Mode Tinjau tersimpan, lewati Firebase sepenuhnya (tanpa internet).
-    let tinjauTersimpan = false;
-    try {
-      tinjauTersimpan = window.localStorage.getItem(KUNCI_TINJAU) === "1";
-    } catch {
-      tinjauTersimpan = false;
-    }
-    if (tinjauTersimpan) {
-      tinjauRef.current = true;
-      const p: Profil = { ...PROFIL_TINJAU };
-      terapkanPref(p);
-      setProfil(p);
-      setStatus("signedIn");
-      return;
-    }
     initFirebase()
       .then(({ auth, db }) => {
         if (cancelled) return;
@@ -304,52 +271,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const keluar = useCallback(() => {
-    if (tinjauRef.current) {
-      tinjauRef.current = false;
-      try {
-        window.localStorage.removeItem(KUNCI_TINJAU);
-      } catch {
-        // abaikan
-      }
-      setProfil(null);
-      terapkanPref(null);
-      setStatus("signedOut");
-      return;
-    }
     if (authRef.current) authRef.current.signOut();
-  }, []);
-
-  // Masuk Mode Tinjau: pakai profil dummy tanpa login (untuk localhost).
-  const masukTinjau = useCallback(() => {
-    try {
-      window.localStorage.setItem(KUNCI_TINJAU, "1");
-    } catch {
-      // abaikan
-    }
-    tinjauRef.current = true;
-    const p: Profil = { ...PROFIL_TINJAU };
-    terapkanPref(p);
-    setProfil(p);
-    setErrorMsg("");
-    setInfoMsg("");
-    setStatus("signedIn");
   }, []);
 
   const simpanProfil = useCallback(
     async (data: { nama: string; institusi: string; avatar?: string }) => {
-      if (tinjauRef.current) {
-        setProfil((prev) =>
-          prev
-            ? {
-                ...prev,
-                nama: data.nama.trim() || prev.nama,
-                institusi: data.institusi.trim(),
-                avatar: data.avatar || prev.avatar,
-              }
-            : prev,
-        );
-        return;
-      }
       const db = dbRef.current;
       const uid = uidRef.current;
       if (!db || !uid) throw new Error("Belum masuk.");
@@ -370,14 +296,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const simpanPref = useCallback(
     async (pref: { sembunyikanDekorasi: boolean }) => {
-      if (tinjauRef.current) {
-        setProfil((prev) => {
-          const next = prev ? { ...prev, preferensi: pref } : prev;
-          terapkanPref(next);
-          return next;
-        });
-        return;
-      }
       const db = dbRef.current;
       const uid = uidRef.current;
       if (!db || !uid) throw new Error("Belum masuk.");
@@ -486,7 +404,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     masuk,
     daftar,
     keluar,
-    masukTinjau,
     simpanProfil,
     simpanPref,
     muatRiwayat,
