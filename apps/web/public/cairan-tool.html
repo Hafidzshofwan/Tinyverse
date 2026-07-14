@@ -5678,6 +5678,27 @@ html body #page-dosis .obat-card .varian-label {
 html,body{margin:0;padding:0;background:transparent!important;}
 .page{display:block!important;}
 #isl{max-width:960px;margin:0 auto;padding:6px 10px 40px;}
+
+/* ============================================================
+   REVISI RESPONSIF TABLET (dead-space) - BUNDEL-22
+   Alasan: di dalam <iframe>, @media membaca lebar iframe (~800px di
+   tablet) sehingga V17 memakai layout desktop 1-kolom -> sisi kanan
+   kosong & scroll panjang. Aturan di bawah membuat panel metode
+   sederhana (Holliday, Faktor Tetes, WHO Rencana B) tampil 2 kolom
+   pada lebar >=720px: input/kalkulator di kiri, info di kanan.
+   Panel Luka Bakar (peta tubuh SVG) & WHO Rencana A (tabel) TIDAK
+   disentuh agar alat interaktif/klinis tetap aman.
+   ============================================================ */
+@media (min-width: 720px) {
+  #page-cairan #panel-holliday.tampil,
+  #page-cairan #panel-tetes.tampil,
+  #page-cairan #rencana-b.tampil {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+  }
+}
 </style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-cairan">
 <div class="judul-section">
 <div class="ikon-bulat" style="background:#DCF3FB;">💧</div>
