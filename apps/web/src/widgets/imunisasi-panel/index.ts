@@ -1,0 +1,1 @@
+export { ImunisasiPanel } from "./ImunisasiPanel";
