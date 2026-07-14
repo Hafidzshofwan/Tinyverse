@@ -148,7 +148,7 @@ function AppShellInner({ children }: AppShellProps) {
           </div>
           <div className="tv-footer-maker">
             <span>
-              Dibuat oleh <strong>dr. Hafidzuddin</strong>
+              Dibuat oleh <strong>M. Hafidzuddin Shofwan</strong>
             </span>
             <span className="tv-footer-year">{"\u00A9"} 2026 Tinyverse</span>
           </div>
