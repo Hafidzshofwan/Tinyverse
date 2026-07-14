@@ -5906,7 +5906,169 @@ var daftarObat=[{"id": "albendazole", "nama": "Albendazole (Flat)", "jenis": "An
     if (A && B) return Math.abs(a - b) < 0.01 ? fmt(a, 2) : (fmt(a, 2) + '–' + fmt(b, 2));
     return fmt(A ? a : b, 2);
   }
-  function hitungRentangPuyer(nama) {
+  /* ==== PORT dari island Dosis: mesin hitung rentang dosis ====
+   WHY: Racik Puyer memanggil hitungDosisInti untuk rentang dosis otomatis, tetapi fungsi ini
+   sebelumnya hanya ada di island Dosis, sehingga rentang selalu "tidak tersedia".
+   Diport apa adanya dari dosis-tool.html (hitungDosisInti + pilihSediaanAktif;
+   helper batas dosis sudah nested di dalam hitungDosisInti). */
+function pilihSediaanAktif(obat, sediaanIndexInput) {
+  if (!obat || !Array.isArray(obat.sediaanOptions) || !obat.sediaanOptions.length) return null;
+  const idx = Math.max(0, Math.min(obat.sediaanOptions.length - 1, parseInt(sediaanIndexInput || 0, 10) || 0));
+  return obat.sediaanOptions[idx] || obat.sediaanOptions[0];
+}
+function hitungDosisInti(obat, beratBadanInput, usiaBulanInput, sediaanIndexInput) {
+  const peringatan = [];
+  let dosisMinMg = null, dosisMaxMg = null;
+  let dosisMinMl = null, dosisMaxMl = null;
+  let dosisHarianMinMg = null, dosisHarianMaxMg = null;
+  let beratBadan = null;
+  let usiaBulan = null;
+  let band = null;
+  const sediaanAktif = pilihSediaanAktif(obat, sediaanIndexInput);
+  let sedMgFinal = sediaanAktif ? sediaanAktif.sediaanMg : obat.sediaanMg;
+  let sedMlFinal = sediaanAktif ? sediaanAktif.sediaanMl : obat.sediaanMl;
+  let sediaanLabelFinal = sediaanAktif ? sediaanAktif.label : null;
+  let doseBasisFinal = obat.doseBasis || (String(obat.unitLabel || '').toLowerCase().includes('/hari') ? 'perDay' : 'perDose');
+  let dosesPerDayFinal = obat.dosesPerDay || obat.maxDosesPerDay || null;
+
+  function batasHarianMg() {
+    const batas = [];
+    if (obat.dosisMaksimalHarianMg) batas.push(obat.dosisMaksimalHarianMg);
+    if (obat.dosisMaksimalHarianPerKg && isFinite(beratBadan)) batas.push(obat.dosisMaksimalHarianPerKg * beratBadan);
+    if (band && band.dosisMaksimalHarianMg) batas.push(band.dosisMaksimalHarianMg);
+    return batas.length ? Math.min.apply(null, batas) : null;
+  }
+  function batasiDosisTunggal() {
+    const maxSingle = (band && band.dosisMaksimalTunggalMg) || obat.dosisMaksimalTunggalMg;
+    if (maxSingle && dosisMaxMg !== null && dosisMaxMg > maxSingle) {
+      peringatan.push(`Hasil perhitungan (${dosisMaxMg.toFixed(1)} ${obat.satuanDosis || 'mg'}) melebihi dosis maksimal per kali (${maxSingle} ${obat.satuanDosis || 'mg'}), sehingga nilai atas dibatasi.`);
+      dosisMaxMg = maxSingle;
+      if (dosisMinMg > dosisMaxMg) dosisMinMg = dosisMaxMg;
+    }
+  }
+  function batasiDosisHarian() {
+    const maxDaily = batasHarianMg();
+    if (maxDaily && dosisHarianMaxMg !== null && dosisHarianMaxMg > maxDaily) {
+      peringatan.push(`Total dosis harian hasil perhitungan (${dosisHarianMaxMg.toFixed(1)} ${obat.satuanDosis || 'mg'}/hari) melebihi batas harian (${maxDaily.toFixed(1)} ${obat.satuanDosis || 'mg'}/hari), sehingga nilai atas dibatasi.`);
+      dosisHarianMaxMg = maxDaily;
+      if (dosisHarianMinMg > dosisHarianMaxMg) dosisHarianMinMg = dosisHarianMaxMg;
+    }
+  }
+  function hitungMlDariSediaan() {
+    if (sedMgFinal && sedMlFinal && dosisMinMg !== null && dosisMaxMg !== null) {
+      const mgPerMl = sedMgFinal / sedMlFinal;
+      dosisMinMl = dosisMinMg / mgPerMl;
+      dosisMaxMl = dosisMaxMg / mgPerMl;
+    }
+  }
+  function cekBatasHarianDariDosisPerKali() {
+    const maxDaily = batasHarianMg();
+    const maxDoses = obat.maxDosesPerDay || (band && band.maxDosesPerDay) || null;
+    if (maxDaily && maxDoses && dosisMaxMg !== null && dosisMaxMg * maxDoses > maxDaily) {
+      peringatan.push(`Jika dosis atas diberikan ${maxDoses} kali/hari, totalnya dapat melebihi batas harian (${maxDaily.toFixed(1)} ${obat.satuanDosis || 'mg'}/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter.`);
+    }
+  }
+
+  if (obat.doseType === "byAge") {
+    usiaBulan = parseFloat(usiaBulanInput);
+    if (isNaN(usiaBulan) || usiaBulan < 0) return { error: "Mohon masukkan usia anak yang valid (dalam bulan)." };
+    if (usiaBulan > 216) return { error: "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda." };
+    if (obat.usiaMinValidBulan !== undefined && usiaBulan < obat.usiaMinValidBulan) peringatan.push(`Usia di bawah rentang indikasi umum obat ini (mulai usia ${obat.usiaMinValidBulan} bulan). Mohon konsultasikan ke dokter.`);
+    if (obat.usiaMaxValidBulan !== undefined && usiaBulan > obat.usiaMaxValidBulan) peringatan.push(`Usia di atas rentang indikasi umum obat ini (hingga usia ${obat.usiaMaxValidBulan} bulan). Mohon konsultasikan ke dokter.`);
+
+    const dosisTetapMg = usiaBulan < obat.ambangUsiaBulan ? obat.dosisDibawahAmbangMg : obat.dosisDiatasAmbangMg;
+    if (doseBasisFinal === 'perDay') {
+      dosisHarianMinMg = dosisTetapMg; dosisHarianMaxMg = dosisTetapMg;
+      batasiDosisHarian(); dosisMinMg = dosisHarianMinMg; dosisMaxMg = dosisHarianMaxMg;
+    } else {
+      dosisMinMg = dosisTetapMg; dosisMaxMg = dosisTetapMg;
+      batasiDosisTunggal(); cekBatasHarianDariDosisPerKali();
+    }
+    hitungMlDariSediaan();
+  } else if (obat.doseType === "ageBands") {
+    usiaBulan = parseFloat(usiaBulanInput);
+    if (isNaN(usiaBulan) || usiaBulan < 0) return { error: "Mohon masukkan usia anak yang valid (dalam bulan)." };
+    if (usiaBulan > 216) return { error: "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda." };
+    band = obat.bands.find(b => usiaBulan >= b.usiaMinBulan && usiaBulan <= b.usiaMaxBulan);
+    if (!band) return { error: "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter." };
+    doseBasisFinal = band.doseBasis || doseBasisFinal;
+    dosesPerDayFinal = band.dosesPerDay || band.maxDosesPerDay || dosesPerDayFinal;
+    if (band.sediaanMg || band.sediaanMl) { sedMgFinal = band.sediaanMg || sedMgFinal; sedMlFinal = band.sediaanMl || sedMlFinal; sediaanLabelFinal = band.sediaanLabel || null; }
+
+    if (band.tipe === "perKg") {
+      beratBadan = parseFloat(beratBadanInput);
+      if (isNaN(beratBadan) || beratBadan <= 0) return { error: "Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini." };
+      if (beratBadan > 150) return { error: "Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda." };
+      if (doseBasisFinal === 'perDay') {
+        dosisHarianMinMg = band.dosisMinPerKg * beratBadan; dosisHarianMaxMg = band.dosisMaxPerKg * beratBadan;
+        batasiDosisHarian(); const pembagi = dosesPerDayFinal || 1; dosisMinMg = dosisHarianMinMg / pembagi; dosisMaxMg = dosisHarianMaxMg / pembagi;
+      } else {
+        dosisMinMg = band.dosisMinPerKg * beratBadan; dosisMaxMg = band.dosisMaxPerKg * beratBadan;
+        batasiDosisTunggal(); cekBatasHarianDariDosisPerKali();
+      }
+    } else {
+      if (doseBasisFinal === 'perDay') {
+        dosisHarianMinMg = band.dosisFlatMin; dosisHarianMaxMg = band.dosisFlatMax;
+        batasiDosisHarian(); const pembagi = dosesPerDayFinal || 1; dosisMinMg = dosisHarianMinMg / pembagi; dosisMaxMg = dosisHarianMaxMg / pembagi;
+      } else {
+        dosisMinMg = band.dosisFlatMin; dosisMaxMg = band.dosisFlatMax;
+        batasiDosisTunggal(); cekBatasHarianDariDosisPerKali();
+      }
+    }
+    hitungMlDariSediaan();
+  } else {
+    beratBadan = parseFloat(beratBadanInput);
+    if (isNaN(beratBadan) || beratBadan <= 0) return { error: "Mohon masukkan berat badan yang valid (lebih dari 0 kg)." };
+    if (beratBadan > 150) return { error: "Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda." };
+
+    if (obat.doseType === "flat") {
+      if (doseBasisFinal === 'perDay') {
+        dosisHarianMinMg = obat.dosisFlatMin; dosisHarianMaxMg = obat.dosisFlatMax;
+        batasiDosisHarian(); const pembagi = dosesPerDayFinal || 1; dosisMinMg = dosisHarianMinMg / pembagi; dosisMaxMg = dosisHarianMaxMg / pembagi;
+      } else {
+        dosisMinMg = obat.dosisFlatMin; dosisMaxMg = obat.dosisFlatMax;
+        batasiDosisTunggal(); cekBatasHarianDariDosisPerKali();
+      }
+      hitungMlDariSediaan();
+    } else if (obat.doseType === "perKgVolume") {
+      dosisMinMl = obat.volumeMinPerKg * beratBadan; dosisMaxMl = obat.volumeMaxPerKg * beratBadan;
+      doseBasisFinal = obat.doseBasis || 'perEpisode';
+    } else {
+      if (doseBasisFinal === 'perDay') {
+        dosisHarianMinMg = obat.dosisMinPerKg * beratBadan; dosisHarianMaxMg = obat.dosisMaxPerKg * beratBadan;
+        batasiDosisHarian(); const pembagi = dosesPerDayFinal || 1; dosisMinMg = dosisHarianMinMg / pembagi; dosisMaxMg = dosisHarianMaxMg / pembagi;
+      } else {
+        dosisMinMg = obat.dosisMinPerKg * beratBadan; dosisMaxMg = obat.dosisMaxPerKg * beratBadan;
+        batasiDosisTunggal(); cekBatasHarianDariDosisPerKali();
+      }
+      hitungMlDariSediaan();
+    }
+  }
+
+  // --- Pengecekan plausibilitas input (BB/usia ekstrem atau kemungkinan salah ketik) ---
+  var bbCek = parseFloat(beratBadanInput);
+  var usiaCek = parseFloat(usiaBulanInput);
+  if (isFinite(bbCek) && bbCek > 0) {
+    if (bbCek < 2) peringatan.push(`Berat badan ${bbCek} kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.`);
+    else if (bbCek > 60) peringatan.push(`Berat badan ${bbCek} kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis.`);
+    if (isFinite(usiaCek) && usiaCek >= 0) {
+      var perkiraanBB = usiaCek <= 12 ? (usiaCek + 9) / 2 : (usiaCek <= 60 ? 2 * (usiaCek / 12) + 8 : 3 * (usiaCek / 12) + 7);
+      if (perkiraanBB > 0 && (bbCek > perkiraanBB * 2.2 || bbCek < perkiraanBB * 0.45)) {
+        peringatan.push(`Berat ${bbCek} kg tampak tidak sesuai untuk usia ${usiaCek} bulan (perkiraan ±${perkiraanBB.toFixed(1)} kg). Periksa kembali input sebelum memakai hasil.`);
+      }
+    }
+  }
+  // --- Peringatan bila tidak ada batas dosis maksimum, padahal dosis dihitung per kg ---
+  var _punyaCap = !!(obat.dosisMaksimalTunggalMg || obat.dosisMaksimalHarianMg || obat.dosisMaksimalHarianPerKg || (band && (band.dosisMaksimalTunggalMg || band.dosisMaksimalHarianMg)));
+  var _scalesPerKg = (obat.doseType === 'ageBands') ? (band && band.tipe === 'perKg') : (obat.doseType !== 'flat' && obat.doseType !== 'byAge' && obat.doseType !== 'perKgVolume');
+  if (!_punyaCap && _scalesPerKg && isFinite(beratBadan)) {
+    peringatan.push('Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa.');
+  }
+
+  return { error: null, peringatan, dosisMinMg, dosisMaxMg, dosisMinMl, dosisMaxMl, dosisHarianMinMg, dosisHarianMaxMg, beratBadan, usiaBulan, band, sedMgFinal, sedMlFinal, sediaanLabelFinal, doseBasisFinal, dosesPerDayFinal };
+}
+
+function hitungRentangPuyer(nama) {
     const obat = puyerCariObatDb(nama);
     if (!obat) return { state: 'nodb' };
     const bbRaw = el('puyerBb') ? el('puyerBb').value : '';
