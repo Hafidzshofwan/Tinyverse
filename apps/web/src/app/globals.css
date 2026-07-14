@@ -1104,7 +1104,10 @@ body {
 /* ===== Rail kiri menempel: penyesuaian mobile & FAB profil ===== */
 @media (max-width: 900px) {
   .tv-main { padding: 0; }
-  .tv-sidebar { height: auto; }
+  .tv-sidebar {
+    height: calc(100vh - 60px);
+    height: calc(100dvh - 60px);
+  }
 }
 #tvPasienFab { left: auto; right: 20px; }
 #tvPasienOverlay { justify-content: flex-end; }
