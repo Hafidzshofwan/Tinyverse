@@ -1343,6 +1343,7 @@ body {
   color: #ffffff;
   font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
   font-size: clamp(1.78rem, 3.8vw, 2.72rem);
+  font-weight: 500;
   line-height: 0.98;
   letter-spacing: -0.045em;
 }
@@ -1853,5 +1854,15 @@ body.tv-tanpa-dekorasi .bg-decor {
   }
   .tv-auth-kartu {
     border-radius: 24px;
+  }
+}
+
+/* ===== BUNDEL-20: Perbaikan dead space (tablet & HP) ===== */
+/* Di desktop, panel konten tool/kalkulator sengaja dibatasi 520px agar nyaman
+   dibaca. Namun di tablet/HP batas ini menyisakan ruang kosong (dead space) di
+   kiri-kanan. Pada layar <= 1024px, biarkan panel mengisi lebar area konten. */
+@media (max-width: 1024px) {
+  .tv-panel-narrow {
+    max-width: none;
   }
 }
