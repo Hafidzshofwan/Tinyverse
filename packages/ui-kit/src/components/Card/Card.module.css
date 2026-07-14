@@ -1,0 +1,8 @@
+.card {
+  background: var(--putih);
+  color: var(--teks);
+  border: 1px solid var(--etail-line);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--etail-soft-shadow);
+}

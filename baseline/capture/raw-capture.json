@@ -1,0 +1,247 @@
+{
+  "pageErrors": [],
+  "results": [
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 5 kg",
+      "inputs": {
+        "cairanBerat": "5"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "500 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    500 ml/hari\n    ≈ 20.8 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      5 kg × 100 ml/kg = 500 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 8 kg",
+      "inputs": {
+        "cairanBerat": "8"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "800 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    800 ml/hari\n    ≈ 33.3 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      8 kg × 100 ml/kg = 800 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 10 kg",
+      "inputs": {
+        "cairanBerat": "10"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1000 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1000 ml/hari\n    ≈ 41.7 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg × 100 ml/kg = 1000 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 12.5 kg",
+      "inputs": {
+        "cairanBerat": "12.5"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1125 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1125 ml/hari\n    ≈ 46.9 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg pertama × 100 ml/kg = 1000 ml2.5 kg berikutnya × 50 ml/kg = 125 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 15 kg",
+      "inputs": {
+        "cairanBerat": "15"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1250 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1250 ml/hari\n    ≈ 52.1 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg pertama × 100 ml/kg = 1000 ml5.0 kg berikutnya × 50 ml/kg = 250 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 20 kg",
+      "inputs": {
+        "cairanBerat": "20"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1500 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1500 ml/hari\n    ≈ 62.5 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg pertama × 100 ml/kg = 1000 ml10.0 kg berikutnya × 50 ml/kg = 500 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 25 kg",
+      "inputs": {
+        "cairanBerat": "25"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1600 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1600 ml/hari\n    ≈ 66.7 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg pertama × 100 ml/kg = 1000 ml10 kg kedua × 50 ml/kg = 500 ml5.0 kg sisanya × 20 ml/kg = 100 ml"
+      }
+    },
+    {
+      "calc": "maintenance",
+      "fn": "hitungKebutuhanCairan",
+      "label": "BB 30 kg",
+      "inputs": {
+        "cairanBerat": "30"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1700 ml/hari",
+        "text": "HASIL PERHITUNGAN\n    1700 ml/hari\n    ≈ 70.8 ml/jam\n    \n      📐 Rincian (Holliday–Segar):\n      10 kg pertama × 100 ml/kg = 1000 ml10 kg kedua × 50 ml/kg = 500 ml10.0 kg sisanya × 20 ml/kg = 200 ml"
+      }
+    },
+    {
+      "calc": "drip",
+      "fn": "hitungFaktorTetes",
+      "label": "500mL/8j makro",
+      "inputs": {
+        "tetesVolume": "500",
+        "tetesLamaJam": "8"
+      },
+      "drip": "makro",
+      "usiaC": null,
+      "output": {
+        "dosis": "21 tetes/menit",
+        "text": "HASIL PERHITUNGAN — FAKTOR TETES\n    21 tetes/menit\n    ≈ 62.5 mL/jam\n    \n      📐 Rincian:\n      Volume cairan: 500 mL\n      Lama pemberian: 8.0 jam (480 menit)\n      Drip set: Makro drip (20 tetes/mL)\n      Rumus: 500 × 20 ÷ 480 = 20.8 tetes/menit"
+      }
+    },
+    {
+      "calc": "drip",
+      "fn": "hitungFaktorTetes",
+      "label": "1000mL/24j makro",
+      "inputs": {
+        "tetesVolume": "1000",
+        "tetesLamaJam": "24"
+      },
+      "drip": "makro",
+      "usiaC": null,
+      "output": {
+        "dosis": "14 tetes/menit",
+        "text": "HASIL PERHITUNGAN — FAKTOR TETES\n    14 tetes/menit\n    ≈ 41.7 mL/jam\n    \n      📐 Rincian:\n      Volume cairan: 1000 mL\n      Lama pemberian: 24.0 jam (1440 menit)\n      Drip set: Makro drip (20 tetes/mL)\n      Rumus: 1000 × 20 ÷ 1440 = 13.9 tetes/menit"
+      }
+    },
+    {
+      "calc": "drip",
+      "fn": "hitungFaktorTetes",
+      "label": "100mL/1j mikro",
+      "inputs": {
+        "tetesVolume": "100",
+        "tetesLamaJam": "1"
+      },
+      "drip": "mikro",
+      "usiaC": null,
+      "output": {
+        "dosis": "100 tetes/menit",
+        "text": "HASIL PERHITUNGAN — FAKTOR TETES\n    100 tetes/menit\n    ≈ 100.0 mL/jam\n    \n      📐 Rincian:\n      Volume cairan: 100 mL\n      Lama pemberian: 1.0 jam (60 menit)\n      Drip set: Mikro drip (60 tetes/mL)\n      Rumus: 100 × 60 ÷ 60 = 100.0 tetes/menit"
+      }
+    },
+    {
+      "calc": "drip",
+      "fn": "hitungFaktorTetes",
+      "label": "500mL/8j mikro",
+      "inputs": {
+        "tetesVolume": "500",
+        "tetesLamaJam": "8"
+      },
+      "drip": "mikro",
+      "usiaC": null,
+      "output": {
+        "dosis": "63 tetes/menit",
+        "text": "HASIL PERHITUNGAN — FAKTOR TETES\n    63 tetes/menit\n    ≈ 62.5 mL/jam\n    \n      📐 Rincian:\n      Volume cairan: 500 mL\n      Lama pemberian: 8.0 jam (480 menit)\n      Drip set: Mikro drip (60 tetes/mL)\n      Rumus: 500 × 60 ÷ 480 = 62.5 tetes/menit"
+      }
+    },
+    {
+      "calc": "planB",
+      "fn": "hitungRencanaB",
+      "label": "BB 8 kg",
+      "inputs": {
+        "cairanBeratB": "8"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "600 mL",
+        "text": "HASIL PERHITUNGAN — RENCANA B\n    600 mL\n    diberikan dalam 3 jam ≈ 200.0 mL/jam\n    \n      📐 Rincian: 8 kg × 75 mL/kg = 600 mL, dibagi rata dalam 3 jam."
+      }
+    },
+    {
+      "calc": "planB",
+      "fn": "hitungRencanaB",
+      "label": "BB 12.5 kg",
+      "inputs": {
+        "cairanBeratB": "12.5"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "938 mL",
+        "text": "HASIL PERHITUNGAN — RENCANA B\n    938 mL\n    diberikan dalam 3 jam ≈ 312.5 mL/jam\n    \n      📐 Rincian: 12.5 kg × 75 mL/kg = 938 mL, dibagi rata dalam 3 jam."
+      }
+    },
+    {
+      "calc": "planB",
+      "fn": "hitungRencanaB",
+      "label": "BB 15 kg",
+      "inputs": {
+        "cairanBeratB": "15"
+      },
+      "drip": null,
+      "usiaC": null,
+      "output": {
+        "dosis": "1125 mL",
+        "text": "HASIL PERHITUNGAN — RENCANA B\n    1125 mL\n    diberikan dalam 3 jam ≈ 375.0 mL/jam\n    \n      📐 Rincian: 15 kg × 75 mL/kg = 1125 mL, dibagi rata dalam 3 jam."
+      }
+    },
+    {
+      "calc": "planC",
+      "fn": "hitungRencanaC",
+      "label": "BB 8 kg bayi",
+      "inputs": {
+        "cairanBeratC": "8"
+      },
+      "drip": null,
+      "usiaC": "bayi",
+      "output": {
+        "dosis": "800 mL",
+        "text": "HASIL PERHITUNGAN — RENCANA C (Bayi (< 1 tahun))\n    800 mL\n    total dalam 6 jam\n    \n      🔹 Tahap 1 — 1 jam\n      Volume (30 mL/kg)240 mL\n      Laju tetesan≈ 240.0 mL/jam\n    \n    \n      🔹 Tahap 2 — 5 jam\n      Volume (70 mL/kg)560 mL\n      Laju tetesan≈ 112.0 mL/jam\n    \n    \n      💧 Cairan: Ringer Laktat (RL); bila tidak tersedia gunakan NaCl 0,9%.\n      📐 Total: 8 kg × 100 mL/kg = 800 mL, diberikan dalam 6 jam (1 jam + 5 jam)."
+      }
+    },
+    {
+      "calc": "planC",
+      "fn": "hitungRencanaC",
+      "label": "BB 15 kg anak",
+      "inputs": {
+        "cairanBeratC": "15"
+      },
+      "drip": null,
+      "usiaC": "anak",
+      "output": {
+        "dosis": "1500 mL",
+        "text": "HASIL PERHITUNGAN — RENCANA C (Anak (≥ 1 tahun))\n    1500 mL\n    total dalam 3 jam\n    \n      🔹 Tahap 1 — 30 menit\n      Volume (30 mL/kg)450 mL\n      Laju tetesan≈ 900.0 mL/jam\n    \n    \n      🔹 Tahap 2 — 2,5 jam\n      Volume (70 mL/kg)1050 mL\n      Laju tetesan≈ 420.0 mL/jam\n    \n    \n      💧 Cairan: Ringer Laktat (RL); bila tidak tersedia gunakan NaCl 0,9%.\n      📐 Total: 15 kg × 100 mL/kg = 1500 mL, diberikan dalam 3 jam (30 menit + 2,5 jam)."
+      }
+    }
+  ]
+}

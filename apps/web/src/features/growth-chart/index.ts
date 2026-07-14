@@ -1,0 +1,1 @@
+export { GrowthTool } from "./GrowthTool";

@@ -1,0 +1,60 @@
+/*
+ * TinyVerse Design Tokens (Phase 2)
+ * Sumber kebenaran nilai warna. Diekstrak PERSIS dari 2 blok :root v17.
+ *
+ * v17 punya 2 blok :root; blok ke-2 menimpa blok ke-1 (cascade CSS),
+ * jadi tampilan v17 SAAT INI = palet navy/e-tail. Di sini KEDUA palet
+ * dipertahankan tanpa kehilangan data:
+ *   :root                -> navy/e-tail (default = tampilan v17 sekarang)
+ *   [data-theme="warm"]  -> palet warm/kids (bisa dihidupkan lagi)
+ * Ganti tema dengan set <html data-theme="warm"> atau "navy".
+ */
+
+:root,
+:root[data-theme="navy"] {
+  /* Palet brand: navy / e-tail */
+  --kuning: #F9D85C;
+  --kuning-tua: #E7B900;
+  --biru: #0B0C63;
+  --biru-tua: #090A4E;
+  --hijau: #22C7A7;
+  --hijau-tua: #12957E;
+  --oranye: #FF9F45;
+  --oranye-tua: #E67818;
+  --pink: #E23CA7;
+  --pink-tua: #C5228D;
+  --krem: #F1F3F8;
+  --putih: #FFFFFF;
+  --teks: #0A0B4F;
+  --teks-lembut: #667085;
+  --merah-lembut: #FDA4AF;
+
+  /* Token tambahan e-tail (hanya ada di palet navy) */
+  --etail-navy: #0A0B5F;
+  --etail-navy-2: #17186F;
+  --etail-magenta: #D936A6;
+  --etail-soft: #F4F5FA;
+  --etail-line: rgba(10, 11, 95, 0.09);
+  --etail-shadow: 0 28px 80px rgba(10, 11, 95, 0.14);
+  --etail-soft-shadow: 0 18px 44px rgba(10, 11, 95, 0.10);
+}
+
+:root[data-theme="warm"] {
+  /* Palet warm/kids asli (blok :root pertama v17, kemudian tertimpa) */
+  --kuning: #FFD23F;
+  --kuning-tua: #F5B700;
+  --biru: #54C6EB;
+  --biru-tua: #2BA9D6;
+  --hijau: #7ED957;
+  --hijau-tua: #4EAE2E;
+  --oranye: #FF9F45;
+  --oranye-tua: #F0791C;
+  --pink: #FF8FAE;
+  --pink-tua: #F06387;
+  --krem: #FFFBF0;
+  --putih: #FFFFFF;
+  --teks: #4A3728;
+  --teks-lembut: #8A7868;
+  --merah-lembut: #F8A5A5;
+  /* Catatan: palet warm tidak punya token --etail-*; token itu ikut nilai navy bila dipakai. */
+}

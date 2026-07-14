@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TinyVerse — Offline</title>
+    <style>
+      :root { color-scheme: light; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        background: #f5f7fa;
+        color: #1f3a5f;
+        padding: 24px;
+      }
+      .card {
+        max-width: 420px;
+        text-align: center;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 32px 28px;
+        box-shadow: 0 8px 30px rgba(31, 58, 95, 0.08);
+      }
+      .emoji { font-size: 48px; line-height: 1; }
+      h1 { font-size: 20px; margin: 14px 0 8px; }
+      p { margin: 0 0 20px; color: #4a5568; line-height: 1.5; font-size: 15px; }
+      button {
+        border: 0;
+        border-radius: 10px;
+        background: #1f3a5f;
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 10px 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="emoji">📡</div>
+      <h1>Kamu sedang offline</h1>
+      <p>Halaman ini belum tersimpan untuk dipakai offline. Halaman kalkulator yang sudah pernah kamu buka tetap bisa diakses tanpa internet.</p>
+      <button onclick="location.reload()">Coba lagi</button>
+    </div>
+  </body>
+</html>

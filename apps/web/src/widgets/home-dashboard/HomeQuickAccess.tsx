@@ -1,0 +1,71 @@
+"use client";
+
+import Link from "next/link";
+import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
+import { usePemakaian, useFavorit, toggleFavorit } from "@/shared/lib/personalisasi";
+
+const JUMLAH_TAMPIL = 6;
+
+/**
+ * Quick Access beranda. Urutan kartu ditentukan SISTEM: fitur yang paling
+ * sering dibuka user berada paling depan (data dari shared/lib/personalisasi).
+ * Sumber daftarnya adalah fitur asli di menu (FITUR_TERSEDIA), sehingga tidak
+ * ada lagi halaman review lepasan seperti GCS/AGD di sini.
+ */
+export function HomeQuickAccess() {
+  const pemakaian = usePemakaian();
+  const favorit = useFavorit();
+
+  const daftar = FITUR_TERSEDIA.map((f, i) => ({
+    f,
+    i,
+    hitung: pemakaian[f.href] ?? 0,
+  }))
+    .sort((a, b) => b.hitung - a.hitung || a.i - b.i)
+    .slice(0, JUMLAH_TAMPIL)
+    .map((x) => x.f);
+
+  const adaData = Object.keys(pemakaian).length > 0;
+
+  return (
+    <section className="tv-home-section">
+      <div className="tv-home-section-head">
+        <h2>
+          <span aria-hidden>{"\u26A1"}</span> Quick Access
+        </h2>
+        <p>
+          {adaData
+            ? "Urutan otomatis mengikuti fitur yang paling sering kamu buka."
+            : "Fitur inti; urutannya akan menyesuaikan otomatis dengan yang paling sering kamu buka."}
+        </p>
+      </div>
+      <div className="tv-grid">
+        {daftar.map((item) => {
+          const fav = favorit.includes(item.href);
+          return (
+            <div key={item.href} className="tv-tool-card">
+              <button
+                type="button"
+                className={"tv-tool-star" + (fav ? " aktif" : "")}
+                aria-pressed={fav}
+                aria-label={fav ? "Hapus dari favorit" : "Tambahkan ke favorit"}
+                title={fav ? "Hapus dari favorit" : "Tambahkan ke favorit"}
+                onClick={() => toggleFavorit(item.href)}
+              >
+                {fav ? "\u2605" : "\u2606"}
+              </button>
+              <Link href={item.href} className="tv-tool-main">
+                <span className="tv-tool-ico" aria-hidden>
+                  {item.icon}
+                </span>
+                <span className="tv-tool-name">{item.label}</span>
+                <span className="tv-tool-desc">{item.desc}</span>
+                <span className="tv-tool-go">{"Buka \u2192"}</span>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}

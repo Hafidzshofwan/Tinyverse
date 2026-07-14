@@ -1,0 +1,5 @@
+file: tinyverse-v17.html
+sha256: 2188dae3bb2e4671efcae9518d2ad1dbd4193f2bbc6159e6e764d64e5887e3af
+lines: 14252
+bytes: 640610
+frozenAt: 2026-07-12

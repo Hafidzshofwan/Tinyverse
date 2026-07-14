@@ -1,0 +1,282 @@
+// AUTO-GENERATED dari snapshot v17 yang dibekukan. JANGAN diedit manual.
+// Source: tinyverse-revisi-v17-interaksi-template.html
+// sha256: 2188dae3bb2e4671efcae9518d2ad1dbd4193f2bbc6159e6e764d64e5887e3af
+// frozenAt: 2026-07-12
+// method: Node headless execution of v17 burn functions (burnLundBrowderByAge/burnAreaPercent/burnHollidaySegar/hitungLukaBakar)
+//
+// "Kunci jawaban" untuk bounded context Burns (Luka Bakar).
+// Port clinical-core WAJIB mereproduksi nilai-nilai ini.
+
+import type { BurnArea } from "../types"
+
+export const burnGoldenMeta = {
+  "source": "tinyverse-revisi-v17-interaksi-template.html",
+  "sha256": "2188dae3bb2e4671efcae9518d2ad1dbd4193f2bbc6159e6e764d64e5887e3af",
+  "frozenAt": "2026-07-12",
+  "method": "Node headless execution of v17 burn functions (burnLundBrowderByAge/burnAreaPercent/burnHollidaySegar/hitungLukaBakar)"
+} as const
+
+export interface ChartGolden { ageYears: number; A: number; B: number; C: number; label: string }
+export const chartGolden: ChartGolden[] = [
+	{ ageYears: 0.5, A: 9.5, B: 2.75, C: 2.5, label: "0 tahun" },
+	{ ageYears: 3, A: 8.5, B: 3.25, C: 2.5, label: "1 tahun" },
+	{ ageYears: 7, A: 6.5, B: 4, C: 2.75, label: "5 tahun" },
+	{ ageYears: 12, A: 5.5, B: 4.25, C: 3, label: "10 tahun" },
+	{ ageYears: 16, A: 4.5, B: 4.5, C: 3.25, label: "15 tahun" },
+	{ ageYears: 25, A: 3.5, B: 4.75, C: 3.5, label: "Dewasa" },
+]
+
+export const chartNaNGolden = { A: 8.5, B: 3.25, C: 2.5, label: "1 tahun" } as const
+
+export interface AreaPercentGolden { ageYears: number; area: BurnArea; percent: number }
+export const areaPercentGolden: AreaPercentGolden[] = [
+	{ ageYears: 7, area: "headFront", percent: 6.5 },
+	{ ageYears: 7, area: "headBack", percent: 6.5 },
+	{ ageYears: 7, area: "neckFront", percent: 1 },
+	{ ageYears: 7, area: "neckBack", percent: 1 },
+	{ ageYears: 7, area: "head", percent: 13 },
+	{ ageYears: 7, area: "neck", percent: 2 },
+	{ ageYears: 7, area: "chest", percent: 6.5 },
+	{ ageYears: 7, area: "abdomen", percent: 6.5 },
+	{ ageYears: 7, area: "upperBack", percent: 6.5 },
+	{ ageYears: 7, area: "lowerBack", percent: 6.5 },
+	{ ageYears: 7, area: "buttockRight", percent: 2.5 },
+	{ ageYears: 7, area: "buttockLeft", percent: 2.5 },
+	{ ageYears: 7, area: "perineum", percent: 1 },
+	{ ageYears: 7, area: "armRightUpperFront", percent: 2 },
+	{ ageYears: 7, area: "armRightLowerFront", percent: 1.5 },
+	{ ageYears: 7, area: "handRightFront", percent: 1.25 },
+	{ ageYears: 7, area: "armRightUpperBack", percent: 2 },
+	{ ageYears: 7, area: "armRightLowerBack", percent: 1.5 },
+	{ ageYears: 7, area: "handRightBack", percent: 1.25 },
+	{ ageYears: 7, area: "armLeftUpperFront", percent: 2 },
+	{ ageYears: 7, area: "armLeftLowerFront", percent: 1.5 },
+	{ ageYears: 7, area: "handLeftFront", percent: 1.25 },
+	{ ageYears: 7, area: "armLeftUpperBack", percent: 2 },
+	{ ageYears: 7, area: "armLeftLowerBack", percent: 1.5 },
+	{ ageYears: 7, area: "handLeftBack", percent: 1.25 },
+	{ ageYears: 7, area: "armRightFull", percent: 9.5 },
+	{ ageYears: 7, area: "armLeftFull", percent: 9.5 },
+	{ ageYears: 7, area: "legRightThighFront", percent: 4 },
+	{ ageYears: 7, area: "legRightLowerFront", percent: 2.75 },
+	{ ageYears: 7, area: "footRightFront", percent: 1.75 },
+	{ ageYears: 7, area: "legRightThighBack", percent: 4 },
+	{ ageYears: 7, area: "legRightLowerBack", percent: 2.75 },
+	{ ageYears: 7, area: "footRightBack", percent: 1.75 },
+	{ ageYears: 7, area: "legLeftThighFront", percent: 4 },
+	{ ageYears: 7, area: "legLeftLowerFront", percent: 2.75 },
+	{ ageYears: 7, area: "footLeftFront", percent: 1.75 },
+	{ ageYears: 7, area: "legLeftThighBack", percent: 4 },
+	{ ageYears: 7, area: "legLeftLowerBack", percent: 2.75 },
+	{ ageYears: 7, area: "footLeftBack", percent: 1.75 },
+	{ ageYears: 7, area: "legRightFull", percent: 17 },
+	{ ageYears: 7, area: "legLeftFull", percent: 17 },
+	{ ageYears: 7, area: "armRightFront", percent: 4.75 },
+	{ ageYears: 7, area: "armRightBack", percent: 4.75 },
+	{ ageYears: 7, area: "armLeftFront", percent: 4.75 },
+	{ ageYears: 7, area: "armLeftBack", percent: 4.75 },
+	{ ageYears: 7, area: "legRightFront", percent: 8.5 },
+	{ ageYears: 7, area: "legRightBack", percent: 8.5 },
+	{ ageYears: 7, area: "legLeftFront", percent: 8.5 },
+	{ ageYears: 7, area: "legLeftBack", percent: 8.5 },
+	{ ageYears: 25, area: "headFront", percent: 3.5 },
+	{ ageYears: 25, area: "headBack", percent: 3.5 },
+	{ ageYears: 25, area: "neckFront", percent: 1 },
+	{ ageYears: 25, area: "neckBack", percent: 1 },
+	{ ageYears: 25, area: "head", percent: 7 },
+	{ ageYears: 25, area: "neck", percent: 2 },
+	{ ageYears: 25, area: "chest", percent: 6.5 },
+	{ ageYears: 25, area: "abdomen", percent: 6.5 },
+	{ ageYears: 25, area: "upperBack", percent: 6.5 },
+	{ ageYears: 25, area: "lowerBack", percent: 6.5 },
+	{ ageYears: 25, area: "buttockRight", percent: 2.5 },
+	{ ageYears: 25, area: "buttockLeft", percent: 2.5 },
+	{ ageYears: 25, area: "perineum", percent: 1 },
+	{ ageYears: 25, area: "armRightUpperFront", percent: 2 },
+	{ ageYears: 25, area: "armRightLowerFront", percent: 1.5 },
+	{ ageYears: 25, area: "handRightFront", percent: 1.25 },
+	{ ageYears: 25, area: "armRightUpperBack", percent: 2 },
+	{ ageYears: 25, area: "armRightLowerBack", percent: 1.5 },
+	{ ageYears: 25, area: "handRightBack", percent: 1.25 },
+	{ ageYears: 25, area: "armLeftUpperFront", percent: 2 },
+	{ ageYears: 25, area: "armLeftLowerFront", percent: 1.5 },
+	{ ageYears: 25, area: "handLeftFront", percent: 1.25 },
+	{ ageYears: 25, area: "armLeftUpperBack", percent: 2 },
+	{ ageYears: 25, area: "armLeftLowerBack", percent: 1.5 },
+	{ ageYears: 25, area: "handLeftBack", percent: 1.25 },
+	{ ageYears: 25, area: "armRightFull", percent: 9.5 },
+	{ ageYears: 25, area: "armLeftFull", percent: 9.5 },
+	{ ageYears: 25, area: "legRightThighFront", percent: 4.75 },
+	{ ageYears: 25, area: "legRightLowerFront", percent: 3.5 },
+	{ ageYears: 25, area: "footRightFront", percent: 1.75 },
+	{ ageYears: 25, area: "legRightThighBack", percent: 4.75 },
+	{ ageYears: 25, area: "legRightLowerBack", percent: 3.5 },
+	{ ageYears: 25, area: "footRightBack", percent: 1.75 },
+	{ ageYears: 25, area: "legLeftThighFront", percent: 4.75 },
+	{ ageYears: 25, area: "legLeftLowerFront", percent: 3.5 },
+	{ ageYears: 25, area: "footLeftFront", percent: 1.75 },
+	{ ageYears: 25, area: "legLeftThighBack", percent: 4.75 },
+	{ ageYears: 25, area: "legLeftLowerBack", percent: 3.5 },
+	{ ageYears: 25, area: "footLeftBack", percent: 1.75 },
+	{ ageYears: 25, area: "legRightFull", percent: 20 },
+	{ ageYears: 25, area: "legLeftFull", percent: 20 },
+	{ ageYears: 25, area: "armRightFront", percent: 4.75 },
+	{ ageYears: 25, area: "armRightBack", percent: 4.75 },
+	{ ageYears: 25, area: "armLeftFront", percent: 4.75 },
+	{ ageYears: 25, area: "armLeftBack", percent: 4.75 },
+	{ ageYears: 25, area: "legRightFront", percent: 10 },
+	{ ageYears: 25, area: "legRightBack", percent: 10 },
+	{ ageYears: 25, area: "legLeftFront", percent: 10 },
+	{ ageYears: 25, area: "legLeftBack", percent: 10 },
+	{ ageYears: 0.5, area: "headFront", percent: 9.5 },
+	{ ageYears: 0.5, area: "headBack", percent: 9.5 },
+	{ ageYears: 0.5, area: "neckFront", percent: 1 },
+	{ ageYears: 0.5, area: "neckBack", percent: 1 },
+	{ ageYears: 0.5, area: "head", percent: 19 },
+	{ ageYears: 0.5, area: "neck", percent: 2 },
+	{ ageYears: 0.5, area: "chest", percent: 6.5 },
+	{ ageYears: 0.5, area: "abdomen", percent: 6.5 },
+	{ ageYears: 0.5, area: "upperBack", percent: 6.5 },
+	{ ageYears: 0.5, area: "lowerBack", percent: 6.5 },
+	{ ageYears: 0.5, area: "buttockRight", percent: 2.5 },
+	{ ageYears: 0.5, area: "buttockLeft", percent: 2.5 },
+	{ ageYears: 0.5, area: "perineum", percent: 1 },
+	{ ageYears: 0.5, area: "armRightUpperFront", percent: 2 },
+	{ ageYears: 0.5, area: "armRightLowerFront", percent: 1.5 },
+	{ ageYears: 0.5, area: "handRightFront", percent: 1.25 },
+	{ ageYears: 0.5, area: "armRightUpperBack", percent: 2 },
+	{ ageYears: 0.5, area: "armRightLowerBack", percent: 1.5 },
+	{ ageYears: 0.5, area: "handRightBack", percent: 1.25 },
+	{ ageYears: 0.5, area: "armLeftUpperFront", percent: 2 },
+	{ ageYears: 0.5, area: "armLeftLowerFront", percent: 1.5 },
+	{ ageYears: 0.5, area: "handLeftFront", percent: 1.25 },
+	{ ageYears: 0.5, area: "armLeftUpperBack", percent: 2 },
+	{ ageYears: 0.5, area: "armLeftLowerBack", percent: 1.5 },
+	{ ageYears: 0.5, area: "handLeftBack", percent: 1.25 },
+	{ ageYears: 0.5, area: "armRightFull", percent: 9.5 },
+	{ ageYears: 0.5, area: "armLeftFull", percent: 9.5 },
+	{ ageYears: 0.5, area: "legRightThighFront", percent: 2.75 },
+	{ ageYears: 0.5, area: "legRightLowerFront", percent: 2.5 },
+	{ ageYears: 0.5, area: "footRightFront", percent: 1.75 },
+	{ ageYears: 0.5, area: "legRightThighBack", percent: 2.75 },
+	{ ageYears: 0.5, area: "legRightLowerBack", percent: 2.5 },
+	{ ageYears: 0.5, area: "footRightBack", percent: 1.75 },
+	{ ageYears: 0.5, area: "legLeftThighFront", percent: 2.75 },
+	{ ageYears: 0.5, area: "legLeftLowerFront", percent: 2.5 },
+	{ ageYears: 0.5, area: "footLeftFront", percent: 1.75 },
+	{ ageYears: 0.5, area: "legLeftThighBack", percent: 2.75 },
+	{ ageYears: 0.5, area: "legLeftLowerBack", percent: 2.5 },
+	{ ageYears: 0.5, area: "footLeftBack", percent: 1.75 },
+	{ ageYears: 0.5, area: "legRightFull", percent: 14 },
+	{ ageYears: 0.5, area: "legLeftFull", percent: 14 },
+	{ ageYears: 0.5, area: "armRightFront", percent: 4.75 },
+	{ ageYears: 0.5, area: "armRightBack", percent: 4.75 },
+	{ ageYears: 0.5, area: "armLeftFront", percent: 4.75 },
+	{ ageYears: 0.5, area: "armLeftBack", percent: 4.75 },
+	{ ageYears: 0.5, area: "legRightFront", percent: 7 },
+	{ ageYears: 0.5, area: "legRightBack", percent: 7 },
+	{ ageYears: 0.5, area: "legLeftFront", percent: 7 },
+	{ ageYears: 0.5, area: "legLeftBack", percent: 7 },
+]
+
+export interface HollidayGolden { weightKg: number; totalMlPerDay: number }
+export const hollidayGolden: HollidayGolden[] = [
+	{ weightKg: 3, totalMlPerDay: 300 },
+	{ weightKg: 8, totalMlPerDay: 800 },
+	{ weightKg: 10, totalMlPerDay: 1000 },
+	{ weightKg: 15, totalMlPerDay: 1250 },
+	{ weightKg: 20, totalMlPerDay: 1500 },
+	{ weightKg: 25, totalMlPerDay: 1600 },
+	{ weightKg: 30, totalMlPerDay: 1700 },
+	{ weightKg: 50, totalMlPerDay: 2100 },
+]
+
+export interface ScenarioGolden {
+	name: string
+	areas: BurnArea[]
+	ageYears: number
+	weightKg: number
+	tbsaPercent: number
+	parklandMlPer24h: number
+	first8hMl: number
+	next16hMl: number
+	maintenanceMlPerDay: number
+	total24hMl: number
+	urineTargetMinMlPerHour: number
+	urineTargetMaxMlPerHour: number
+	urineTargetLabel: string
+}
+export const scenarioGolden: ScenarioGolden[] = [
+	{
+		name: "bayi 6bln 8kg dada+abdomen",
+		areas: ["chest", "abdomen"],
+		ageYears: 0.5, weightKg: 8,
+		tbsaPercent: 13, parklandMlPer24h: 416, first8hMl: 208, next16hMl: 208,
+		maintenanceMlPerDay: 800, total24hMl: 1216,
+		urineTargetMinMlPerHour: 8, urineTargetMaxMlPerHour: 16, urineTargetLabel: "1–2 mL/kg/jam",
+	},
+	{
+		name: "anak 3th 14kg kepala full+lengan kanan full",
+		areas: ["head", "armRightFull"],
+		ageYears: 3, weightKg: 14,
+		tbsaPercent: 26.5, parklandMlPer24h: 1484, first8hMl: 742, next16hMl: 742,
+		maintenanceMlPerDay: 1200, total24hMl: 2684,
+		urineTargetMinMlPerHour: 14, urineTargetMaxMlPerHour: 28, urineTargetLabel: "1–2 mL/kg/jam",
+	},
+	{
+		name: "anak 5th 18kg tungkai kanan full",
+		areas: ["legRightFull"],
+		ageYears: 5, weightKg: 18,
+		tbsaPercent: 17, parklandMlPer24h: 1224, first8hMl: 612, next16hMl: 612,
+		maintenanceMlPerDay: 1400, total24hMl: 2624,
+		urineTargetMinMlPerHour: 18, urineTargetMaxMlPerHour: 36, urineTargetLabel: "1–2 mL/kg/jam",
+	},
+	{
+		name: "anak 10th 30kg dada+punggung atas+lengan kiri full",
+		areas: ["chest", "upperBack", "armLeftFull"],
+		ageYears: 10, weightKg: 30,
+		tbsaPercent: 22.5, parklandMlPer24h: 2700, first8hMl: 1350, next16hMl: 1350,
+		maintenanceMlPerDay: 1700, total24hMl: 4400,
+		urineTargetMinMlPerHour: 15, urineTargetMaxMlPerHour: 30, urineTargetLabel: "0,5–1 mL/kg/jam",
+	},
+	{
+		name: "remaja 15th 50kg kedua tungkai depan",
+		areas: ["legRightFront", "legLeftFront"],
+		ageYears: 15, weightKg: 50,
+		tbsaPercent: 19, parklandMlPer24h: 3800, first8hMl: 1900, next16hMl: 1900,
+		maintenanceMlPerDay: 2100, total24hMl: 5900,
+		urineTargetMinMlPerHour: 25, urineTargetMaxMlPerHour: 50, urineTargetLabel: "0,5–1 mL/kg/jam",
+	},
+	{
+		name: "dewasa 18th 60kg kepala full",
+		areas: ["head"],
+		ageYears: 18, weightKg: 60,
+		tbsaPercent: 7, parklandMlPer24h: 1680, first8hMl: 840, next16hMl: 840,
+		maintenanceMlPerDay: 2300, total24hMl: 3980,
+		urineTargetMinMlPerHour: 30, urineTargetMaxMlPerHour: 60, urineTargetLabel: "0,5–1 mL/kg/jam",
+	},
+	{
+		name: "tanpa area 4th 20kg",
+		areas: [],
+		ageYears: 4, weightKg: 20,
+		tbsaPercent: 0, parklandMlPer24h: 0, first8hMl: 0, next16hMl: 0,
+		maintenanceMlPerDay: 1500, total24hMl: 1500,
+		urineTargetMinMlPerHour: 20, urineTargetMaxMlPerHour: 40, urineTargetLabel: "1–2 mL/kg/jam",
+	},
+	{
+		name: "batas berat 30",
+		areas: ["perineum"],
+		ageYears: 9, weightKg: 30,
+		tbsaPercent: 1, parklandMlPer24h: 120, first8hMl: 60, next16hMl: 60,
+		maintenanceMlPerDay: 1700, total24hMl: 1820,
+		urineTargetMinMlPerHour: 15, urineTargetMaxMlPerHour: 30, urineTargetLabel: "0,5–1 mL/kg/jam",
+	},
+	{
+		name: "berat 29.9",
+		areas: ["perineum"],
+		ageYears: 9, weightKg: 29.9,
+		tbsaPercent: 1, parklandMlPer24h: 119.6, first8hMl: 59.8, next16hMl: 59.8,
+		maintenanceMlPerDay: 1698, total24hMl: 1817.6,
+		urineTargetMinMlPerHour: 29.9, urineTargetMaxMlPerHour: 59.8, urineTargetLabel: "1–2 mL/kg/jam",
+	},
+]

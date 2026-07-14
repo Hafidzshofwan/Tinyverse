@@ -1,0 +1,16 @@
+{
+  "name": "TinyVerse — Kalkulator Klinis Anak",
+  "short_name": "TinyVerse",
+  "description": "Alat bantu keputusan klinis pediatri: cairan, obat, luka bakar, GCS, nutrisi, dan analisis gas darah.",
+  "lang": "id",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1f3a5f",
+  "icons": [
+    { "src": "/icon.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "any" },
+    { "src": "/icon-maskable.svg", "type": "image/svg+xml", "sizes": "any", "purpose": "maskable" }
+  ]
+}
