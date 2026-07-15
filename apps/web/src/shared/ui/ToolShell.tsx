@@ -39,7 +39,7 @@ const titleStyle: CSSProperties = {
 // Subjudul: diselaraskan 1:1 dengan island Terapi Cairan
 // (computed: 10.24px, Quicksand, warna #0A0B5F9E = navy 62%).
 const leadStyle: CSSProperties = {
-  margin: "3px 0 0",
+  margin: 0,
   fontWeight: 500,
   fontSize: "0.64rem",
   lineHeight: 1.45,
