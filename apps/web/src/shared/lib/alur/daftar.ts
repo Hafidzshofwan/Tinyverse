@@ -1,5 +1,6 @@
 import type { Alur, Setting } from "./tipe";
 import { ASMA } from "./asma";
+import { KEJANG } from "./kejang";
 
 export type Kondisi = {
   id: string;
@@ -22,6 +23,18 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     bagan: {
       fktp: "/assets/alur/asma-fktp.png",
       rs: "/assets/alur/asma-rs.png",
+    },
+    tersedia: true,
+  },
+  {
+    id: "kejang-demam",
+    nama: "Kejang Demam",
+    ikon: "\uD83C\uDF21\uFE0F",
+    ringkas: "Tata laksana kejang akut & status epileptikus anak \u2014 algoritma bertahap sesuai waktu.",
+    alur: KEJANG,
+    bagan: {
+      fktp: "/assets/alur/kejang-demam.png",
+      rs: "/assets/alur/kejang-demam.png",
     },
     tersedia: true,
   },

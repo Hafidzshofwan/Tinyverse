@@ -134,7 +134,7 @@ function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null 
 
 function komposisiRingkasan(kondisi: Kondisi, layar: Layar, setting: Setting, pasien: Pasien | null): string {
   const baris: string[] = [];
-  baris.push(`Setting: ${LABEL_SETTING[setting]}`);
+  if (!kondisi.alur.tanpaSetting) baris.push(`Setting: ${LABEL_SETTING[setting]}`);
   if (pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)) {
     baris.push(`Pasien: ${pasien.nama ?? "-"} \u00b7 BB ${pasien.bb ?? "-"} kg \u00b7 Usia ${usiaTeks(pasien.usiaBulan)}`);
   }
@@ -187,9 +187,14 @@ export function AlurTatalaksanaPanel() {
 
   const pilihKondisi = useCallback((k: Kondisi) => {
     setKondisi(k);
-    setSetting(null);
-    setStack([]);
     setBagan(false);
+    if (k.alur.tanpaSetting) {
+      setSetting("rs");
+      setStack([k.alur.mulai.rs]);
+    } else {
+      setSetting(null);
+      setStack([]);
+    }
   }, []);
 
   const pilihSetting = useCallback((k: Kondisi, s: Setting) => {
@@ -396,16 +401,19 @@ export function AlurTatalaksanaPanel() {
             color: "var(--tv-navy)",
           }}
         >
-          {kondisi.nama} · {LABEL_SETTING[setting]}
+          {kondisi.nama}
+          {!kondisi.alur.tanpaSetting && ` \u00b7 ${LABEL_SETTING[setting]}`}
         </span>
         {stack.length > 1 && (
           <button type="button" className="tv-btn" onClick={kembali}>
             Kembali
           </button>
         )}
-        <button type="button" className="tv-btn" onClick={gantiSetting}>
-          Ganti setting
-        </button>
+        {!kondisi.alur.tanpaSetting && (
+          <button type="button" className="tv-btn" onClick={gantiSetting}>
+            Ganti setting
+          </button>
+        )}
       </div>
 
       <div className="tv-card">
@@ -460,7 +468,7 @@ export function AlurTatalaksanaPanel() {
               fontSize: ".9rem",
             }}
           >
-            ✅ Akhir alur untuk kondisi ini. Gunakan “Ganti setting” atau “Kembali” untuk menelusuri cabang lain.
+            ✅ Akhir alur untuk kondisi ini. Gunakan “Kembali” atau “← Daftar” untuk menelusuri cabang lain.
           </div>
         )}
 

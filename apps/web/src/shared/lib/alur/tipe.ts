@@ -37,5 +37,6 @@ export type Alur = {
   nama: string;
   sumber: string;
   mulai: Record<Setting, string>;
+  tanpaSetting?: boolean;
   layar: Record<string, Layar>;
 };

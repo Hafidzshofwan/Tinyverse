@@ -161,6 +161,194 @@ export const OBAT: Record<string, ObatDef> = {
       };
     },
   },
+
+  // ===== Kejang / Status Epileptikus =====
+  diazepamRektal: {
+    id: "diazepamRektal",
+    nama: "Diazepam per rektal",
+    rute: "rektal",
+    hitung: (p) => {
+      const bb = p.bb;
+      const detail = "Maksimal 2\u00d7 pemberian, jarak 5 menit.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: "5 mg (BB <12 kg) atau 10 mg (BB \u226512 kg) supositoria.",
+          detail,
+          peringatan: "Isi BB pasien di Profil untuk saran otomatis.",
+        };
+      }
+      const dosis = bb < 12 ? "5 mg" : "10 mg";
+      const ket = bb < 12 ? "BB <12 kg" : "BB \u226512 kg";
+      return { ringkas: `${dosis} supositoria (${ket}, BB ${fmt(bb)} kg).`, detail };
+    },
+  },
+  diazepamIV: {
+    id: "diazepamIV",
+    nama: "Diazepam IV",
+    rute: "IV",
+    hitung: (p) => {
+      const r = perKg(p, { low: 0.2, high: 0.5, maks: 10, suffix: " per dosis" });
+      const dasar = r.detail ?? "0,2\u20130,5 mg/kgBB per dosis (maks 10 mg)";
+      return { ...r, detail: `${dasar} \u00b7 Kecepatan 2 mg/menit.` };
+    },
+  },
+  midazolamIMBuccal: {
+    id: "midazolamIMBuccal",
+    nama: "Midazolam (IM / buccal)",
+    rute: "IM / buccal",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "0,2 mg/kgBB per dosis (maks 10 mg).";
+      if (!bb || bb <= 0) return { ringkas: aturan, peringatan: "Isi BB pasien untuk hitung otomatis." };
+      let d = 0.2 * bb;
+      let dibatasi = false;
+      if (d > 10) {
+        d = 10;
+        dibatasi = true;
+      }
+      return {
+        ringkas: `${fmt(d)} mg per dosis (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: dibatasi ? "Dosis dibatasi maksimal 10 mg." : undefined,
+      };
+    },
+  },
+  fenitoin: {
+    id: "fenitoin",
+    nama: "Fenitoin IV",
+    rute: "IV",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan =
+        "20 mg/kgBB per dosis (maks 1000 mg). Diencerkan dalam 50 ml NaCl 0,9%, diberikan selama 20 menit (\u22482 mg/menit).";
+      if (!bb || bb <= 0)
+        return {
+          ringkas: "20 mg/kgBB per dosis (maks 1000 mg).",
+          detail: aturan,
+          peringatan: "Isi BB pasien untuk hitung otomatis.",
+        };
+      let d = 20 * bb;
+      let dibatasi = false;
+      if (d > 1000) {
+        d = 1000;
+        dibatasi = true;
+      }
+      return {
+        ringkas: `${fmt(d)} mg per dosis (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: dibatasi ? "Dosis dibatasi maksimal 1000 mg." : undefined,
+      };
+    },
+  },
+  fenitoinTambahan: {
+    id: "fenitoinTambahan",
+    nama: "Fenitoin tambahan (bila perlu)",
+    rute: "IV",
+    hitung: (p) => perKg(p, { low: 5, high: 10, suffix: " per dosis" }),
+  },
+  fenobarbital: {
+    id: "fenobarbital",
+    nama: "Fenobarbital IV",
+    rute: "IV",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "20 mg/kgBB per dosis (maks 1000 mg). Kecepatan 10\u201320 mg/menit.";
+      if (!bb || bb <= 0)
+        return {
+          ringkas: "20 mg/kgBB per dosis (maks 1000 mg).",
+          detail: aturan,
+          peringatan: "Isi BB pasien untuk hitung otomatis.",
+        };
+      let d = 20 * bb;
+      let dibatasi = false;
+      if (d > 1000) {
+        d = 1000;
+        dibatasi = true;
+      }
+      return {
+        ringkas: `${fmt(d)} mg per dosis (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: dibatasi ? "Dosis dibatasi maksimal 1000 mg." : undefined,
+      };
+    },
+  },
+  fenobarbitalTambahan: {
+    id: "fenobarbitalTambahan",
+    nama: "Fenobarbital tambahan (bila perlu)",
+    rute: "IV",
+    hitung: (p) => perKg(p, { low: 5, high: 10, suffix: " per dosis" }),
+  },
+  rumatanFenitoin: {
+    id: "rumatanFenitoin",
+    nama: "Rumatan Fenitoin",
+    rute: "oral / IV",
+    hitung: (p) => {
+      const r = perKg(p, { low: 5, high: 10 });
+      const dasar = r.detail ?? "5\u201310 mg/kgBB/hari";
+      return { ...r, detail: `${dasar} \u00b7 Dibagi 2 dosis; mulai 12 jam setelah dosis awal.` };
+    },
+  },
+  rumatanFenobarbital: {
+    id: "rumatanFenobarbital",
+    nama: "Rumatan Fenobarbital",
+    rute: "oral / IV",
+    hitung: (p) => {
+      const r = perKg(p, { low: 3, high: 5 });
+      const dasar = r.detail ?? "3\u20135 mg/kgBB/hari";
+      return { ...r, detail: `${dasar} \u00b7 Dibagi 2 dosis; mulai 12 jam setelah dosis awal.` };
+    },
+  },
+  midazolamDrip: {
+    id: "midazolamDrip",
+    nama: "Midazolam (drip ICU)",
+    rute: "IV kontinyu",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan =
+        "Bolus 100\u2013200 mcg/kgBB (maks 10 mg) \u2192 infus kontinyu 100 mcg/kgBB/jam; dapat dinaikkan 50 mcg/kg tiap 15 menit (maks 2 mg/kgBB/jam).";
+      if (!bb || bb <= 0) return { ringkas: aturan, peringatan: "Isi BB untuk hitung otomatis." };
+      let bLow = (100 * bb) / 1000;
+      let bHigh = (200 * bb) / 1000;
+      if (bLow > 10) bLow = 10;
+      if (bHigh > 10) bHigh = 10;
+      const infus = (100 * bb) / 1000;
+      return {
+        ringkas: `Bolus ${fmt(bLow)}\u2013${fmt(bHigh)} mg IV (maks 10 mg) \u2192 infus ${fmt(infus)} mg/jam (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: "Rawat ICU; siapkan intubasi & ventilasi mekanik.",
+      };
+    },
+  },
+  propofolDrip: {
+    id: "propofolDrip",
+    nama: "Propofol (drip ICU)",
+    rute: "IV kontinyu",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "Bolus 1\u20133 mg/kgBB \u2192 infus kontinyu 2\u201310 mg/kgBB/jam.";
+      if (!bb || bb <= 0) return { ringkas: aturan, peringatan: "Isi BB untuk hitung otomatis." };
+      return {
+        ringkas: `Bolus ${fmt(1 * bb)}\u2013${fmt(3 * bb)} mg \u2192 infus ${fmt(2 * bb)}\u2013${fmt(10 * bb)} mg/jam (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: "Rawat ICU; siapkan intubasi & ventilasi mekanik.",
+      };
+    },
+  },
+  pentobarbitalDrip: {
+    id: "pentobarbitalDrip",
+    nama: "Pentobarbital (drip ICU)",
+    rute: "IV kontinyu",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "Bolus 5\u201315 mg/kgBB \u2192 infus kontinyu 0,5\u20135 mg/kgBB/jam.";
+      if (!bb || bb <= 0) return { ringkas: aturan, peringatan: "Isi BB untuk hitung otomatis." };
+      return {
+        ringkas: `Bolus ${fmt(5 * bb)}\u2013${fmt(15 * bb)} mg \u2192 infus ${fmt(0.5 * bb)}\u2013${fmt(5 * bb)} mg/jam (BB ${fmt(bb)} kg).`,
+        detail: aturan,
+        peringatan: "Rawat ICU; siapkan intubasi & ventilasi mekanik.",
+      };
+    },
+  },
 };
 
 export function hitungObat(id: string, p: Pasien): { def: ObatDef; hasil: HasilDosis } | null {
