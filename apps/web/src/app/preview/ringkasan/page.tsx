@@ -1,4 +1,5 @@
-import { ComingSoon } from "@/shared/ui/ComingSoon";
+import { ToolShell } from "@/shared/ui/ToolShell";
+import { RingkasanPanel } from "@/widgets/ringkasan-panel";
 
 export const metadata = {
   title: "Ringkasan Klinis | Tinyverse",
@@ -6,17 +7,12 @@ export const metadata = {
 
 export default function RingkasanPage() {
   return (
-    <ComingSoon
+    <ToolShell
       title="Ringkasan Klinis"
-      desc="Rangkum hasil dari berbagai alat menjadi satu catatan yang siap disalin ke rekam medis."
-      ringkasan="Menggabungkan hasil perhitungan (dosis, cairan, skor) menjadi ringkasan teks yang rapi dan siap salin."
-      fitur={[
-        "Kumpulkan hasil dari beberapa alat",
-        "Format teks rapi siap salin dan tempel",
-        "Sunting sebelum menyalin",
-        "Ekspor sebagai teks atau PDF",
-      ]}
-      catatan="Tidak menyimpan data pasien di server; semua diproses di perangkat."
-    />
+      desc="Kumpulkan poin klinis dari berbagai alat menjadi satu catatan rapi — siap disalin, di-export, atau dicetak."
+      icon="📄"
+    >
+      <RingkasanPanel />
+    </ToolShell>
   );
 }

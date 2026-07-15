@@ -67,13 +67,13 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     title: "Referensi",
     items: [
       { slug: "protokol", label: "Guideline", icon: "\uD83E\uDE7A", href: "/preview/guideline", built: true },
-      { slug: "imunisasi", label: "Jadwal Imunisasi", icon: "\uD83D\uDCC5", href: "/preview/imunisasi", built: true },
+      { slug: "imunisasi", label: "Jadwal Imunisasi", icon: "\uD83D\uDCC5", href: "/preview/imunisasi", built: false },
     ],
   },
   {
     title: "Dokumentasi",
     items: [
-      { slug: "ringkasan", label: "Ringkasan Klinis", icon: "\uD83D\uDCC4", href: "/preview/ringkasan", built: false },
+      { slug: "ringkasan", label: "Ringkasan Klinis", icon: "\uD83D\uDCC4", href: "/preview/ringkasan", built: true },
     ],
   },
 ];
@@ -89,7 +89,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
   "/preview/nutrisi": "Kebutuhan kalori, protein, dan takaran susu.",
   "/preview/guideline": "Panduan tata laksana penyakit anak tersering.",
-  "/preview/imunisasi": "Jadwal imunisasi anak IDAI 2024 dan materi tiap vaksin.",
+  "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
 };
 
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
