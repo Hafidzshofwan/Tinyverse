@@ -408,34 +408,6 @@ export function AlurTatalaksanaPanel() {
         </button>
       </div>
 
-      {baganSrc && (
-        <div style={{ marginBottom: 12 }}>
-          <button type="button" className="tv-btn" onClick={() => setBagan((b) => !b)}>
-            🖼️ {bagan ? "Sembunyikan bagan asli" : "Lihat bagan asli"}
-          </button>
-          {bagan && (
-            <div
-              style={{
-                marginTop: 10,
-                border: "1px solid var(--tv-line)",
-                borderRadius: 12,
-                padding: 8,
-                background: "var(--tv-putih)",
-              }}
-            >
-              <img
-                src={baganSrc}
-                alt={`Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
-                style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
-              />
-              <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
-                Bagan asli — sumber: {kondisi.alur.sumber}
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
       <div className="tv-card">
         {layar.derajat && (
           <div style={{ fontSize: ".78rem", fontWeight: 800, color: warnaDerajat(layar.derajat), marginBottom: 4 }}>
@@ -496,6 +468,34 @@ export function AlurTatalaksanaPanel() {
           Sumber: {kondisi.alur.sumber}
         </div>
       </div>
+
+      {baganSrc && (
+        <div style={{ marginTop: 12 }}>
+          <button type="button" className="tv-btn" onClick={() => setBagan((b) => !b)}>
+            🖼️ {bagan ? "Sembunyikan gambar alur" : "Gambar alur"}
+          </button>
+          {bagan && (
+            <div
+              style={{
+                marginTop: 10,
+                border: "1px solid var(--tv-line)",
+                borderRadius: 12,
+                padding: 8,
+                background: "var(--tv-putih)",
+              }}
+            >
+              <img
+                src={baganSrc}
+                alt={`Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
+                style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
+              />
+              <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
+                Bagan asli — sumber: {kondisi.alur.sumber}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {disclaimer}
       {toastEl}
