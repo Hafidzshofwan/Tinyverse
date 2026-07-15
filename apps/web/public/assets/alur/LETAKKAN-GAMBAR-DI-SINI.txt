@@ -1,0 +1,18 @@
+LETAKKAN GAMBAR BAGAN ASLI DI FOLDER INI
+=========================================
+
+Folder: apps/web/public/assets/alur/
+
+Nama file HARUS persis (huruf kecil semua, Vercel/Linux case-sensitive):
+  asma-fktp.png   -> bagan Gambar 6.1 (FKTP / fasilitas primer)
+  asma-rs.png     -> bagan Gambar 6.2 (Rumah Sakit)
+
+Format: PNG atau JPG (boleh, tapi tetap beri nama .png sesuai di atas,
+atau ubah path di shared/lib/alur/daftar.ts bila pakai ekstensi lain).
+
+Setelah file ada, tombol "Lihat bagan asli" di dalam alur akan menampilkannya.
+Jika file belum ada, tombolnya tetap muncul tetapi gambar tidak tampil
+(tidak error) — cukup tambahkan file lalu refresh.
+
+Untuk menambah bagan kondisi lain nanti, tinggal tambahkan path di
+daftar.ts pada properti "bagan": { fktp: "...", rs: "..." }.

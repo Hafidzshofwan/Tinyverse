@@ -2,7 +2,8 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { ASMA } from "@/shared/lib/alur/asma";
+import { DAFTAR_KONDISI } from "@/shared/lib/alur/daftar";
+import type { Kondisi } from "@/shared/lib/alur/daftar";
 import { hitungObat } from "@/shared/lib/alur/dosis";
 import { bacaPasienAktif, PASIEN_AKTIF_KEY, tambahKeRingkasan } from "@/shared/lib/alur/ringkasan-bridge";
 import type { BlokKonten, Layar, Nada, Pasien, Setting } from "@/shared/lib/alur/tipe";
@@ -131,7 +132,7 @@ function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null 
   );
 }
 
-function komposisiRingkasan(layar: Layar, setting: Setting, pasien: Pasien | null): string {
+function komposisiRingkasan(kondisi: Kondisi, layar: Layar, setting: Setting, pasien: Pasien | null): string {
   const baris: string[] = [];
   baris.push(`Setting: ${LABEL_SETTING[setting]}`);
   if (pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)) {
@@ -147,14 +148,18 @@ function komposisiRingkasan(layar: Layar, setting: Setting, pasien: Pasien | nul
       if (d) baris.push(`\u2022 ${d.def.nama} (${d.def.rute}): ${d.hasil.ringkas}`);
     }
   }
+  baris.push("");
+  baris.push(`Sumber: ${kondisi.alur.sumber}`);
   return baris.join("\n");
 }
 
 export function AlurTatalaksanaPanel() {
+  const [pasien, setPasien] = useState<Pasien | null>(null);
+  const [kondisi, setKondisi] = useState<Kondisi | null>(null);
   const [setting, setSetting] = useState<Setting | null>(null);
   const [stack, setStack] = useState<string[]>([]);
-  const [pasien, setPasien] = useState<Pasien | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [bagan, setBagan] = useState(false);
 
   useEffect(() => {
     setPasien(bacaPasienAktif());
@@ -180,18 +185,40 @@ export function AlurTatalaksanaPanel() {
     return () => clearTimeout(t);
   }, [toast]);
 
-  const mulai = useCallback((s: Setting) => {
+  const pilihKondisi = useCallback((k: Kondisi) => {
+    setKondisi(k);
+    setSetting(null);
+    setStack([]);
+    setBagan(false);
+  }, []);
+
+  const pilihSetting = useCallback((k: Kondisi, s: Setting) => {
     setSetting(s);
-    setStack([ASMA.mulai[s]]);
+    setStack([k.alur.mulai[s]]);
+    setBagan(false);
   }, []);
 
   const pergi = useCallback((tujuan: string) => setStack((st) => [...st, tujuan]), []);
-  const kembali = useCallback(() => setStack((st) => (st.length > 1 ? st.slice(0, -1) : st)), []);
-  const resetSetting = useCallback(() => {
+  const kembali = useCallback(() => {
+    setStack((st) => {
+      if (st.length > 1) return st.slice(0, -1);
+      setSetting(null);
+      return [];
+    });
+  }, []);
+  const gantiSetting = useCallback(() => {
     setSetting(null);
     setStack([]);
+    setBagan(false);
+  }, []);
+  const keDaftar = useCallback(() => {
+    setKondisi(null);
+    setSetting(null);
+    setStack([]);
+    setBagan(false);
   }, []);
 
+  const punyaPasien = !!(pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null));
   const kartuPasien = (
     <div
       style={{
@@ -199,11 +226,11 @@ export function AlurTatalaksanaPanel() {
         borderRadius: 12,
         padding: "10px 12px",
         background: "var(--tv-glass)",
-        marginBottom: 12,
+        marginBottom: 14,
       }}
     >
       <div style={{ fontWeight: 700, marginBottom: 2 }}>👶 Profil pasien aktif</div>
-      {pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null) ? (
+      {punyaPasien && pasien ? (
         <div style={{ fontSize: ".92rem" }}>
           {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · Usia {usiaTeks(pasien.usiaBulan)}
         </div>
@@ -215,82 +242,199 @@ export function AlurTatalaksanaPanel() {
     </div>
   );
 
-  if (!setting) {
+  const disclaimer = (
+    <div className="tv-warn" style={{ marginTop: 12 }}>
+      ⚠️ Alat bantu keputusan — bukan pengganti penilaian klinis. Verifikasi dosis sebelum pemberian.
+    </div>
+  );
+
+  const toastEl = toast ? (
+    <div
+      style={{
+        position: "fixed",
+        left: "50%",
+        bottom: 24,
+        transform: "translateX(-50%)",
+        background: "var(--tv-navy)",
+        color: "#fff",
+        padding: "10px 16px",
+        borderRadius: 999,
+        zIndex: 50,
+        boxShadow: "0 6px 20px rgba(0,0,0,.18)",
+      }}
+    >
+      {toast}
+    </div>
+  ) : null;
+
+  // ===== 1) HALAMAN UTAMA: daftar penyakit =====
+  if (!kondisi) {
     return (
-      <div className="tv-container">
+      <div>
         {kartuPasien}
-        <div className="tv-card">
-          <div className="tv-card-title">Serangan Asma</div>
-          <div className="tv-card-desc">
-            Alur interaktif tata laksana serangan asma anak. Pilih lokasi penanganan untuk memulai.
-          </div>
-          <div className="tv-stack" style={{ marginTop: 12 }}>
-            <button type="button" className="tv-btn tv-btn-blok" onClick={() => mulai("fktp")}>
-              🏥 FKTP / Fasilitas Primer
+        <p style={{ margin: "0 0 14px", color: "var(--tv-soft-teks)" }}>
+          Pilih kondisi untuk membuka alur tata laksana interaktif.
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {DAFTAR_KONDISI.map((k) => (
+            <button
+              key={k.id}
+              type="button"
+              className="tv-card"
+              disabled={!k.tersedia}
+              onClick={() => k.tersedia && pilihKondisi(k)}
+              style={{
+                width: "100%",
+                textAlign: "left",
+                cursor: k.tersedia ? "pointer" : "not-allowed",
+                font: "inherit",
+                color: "inherit",
+                opacity: k.tersedia ? 1 : 0.6,
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+                <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>{k.ikon}</span>
+                <div style={{ flex: 1 }}>
+                  <div className="tv-card-title">
+                    {k.nama}
+                    {!k.tersedia && (
+                      <span style={{ fontSize: ".72rem", fontWeight: 700, color: "var(--tv-soft-teks)", marginLeft: 8 }}>
+                        Segera
+                      </span>
+                    )}
+                  </div>
+                  <div className="tv-card-desc" style={{ marginTop: 3 }}>
+                    {k.ringkas}
+                  </div>
+                </div>
+                {k.tersedia && <span style={{ fontSize: "1.5rem", color: "var(--tv-soft-teks)" }}>›</span>}
+              </div>
             </button>
-            <button type="button" className="tv-btn tv-btn-blok" onClick={() => mulai("rs")}>
-              🏨 Rumah Sakit
-            </button>
-          </div>
-          <div style={{ fontSize: ".8rem", color: "var(--tv-soft-teks)", marginTop: 12 }}>
-            Sumber: {ASMA.sumber}
-          </div>
+          ))}
         </div>
+        {disclaimer}
+        {toastEl}
       </div>
     );
   }
 
+  // ===== 2) PILIH SETTING =====
+  if (!setting) {
+    return (
+      <div>
+        {kartuPasien}
+        <button type="button" className="tv-btn" onClick={keDaftar} style={{ marginBottom: 12 }}>
+          ← Daftar penyakit
+        </button>
+        <div className="tv-card">
+          <div className="tv-card-title">
+            {kondisi.ikon} {kondisi.nama}
+          </div>
+          <div className="tv-card-desc" style={{ marginTop: 3 }}>
+            Pilih lokasi penanganan untuk memulai alur.
+          </div>
+          <div className="tv-stack" style={{ marginTop: 14 }}>
+            <button type="button" className="tv-btn tv-btn-blok" onClick={() => pilihSetting(kondisi, "fktp")}>
+              🏥 FKTP / Fasilitas Primer
+            </button>
+            <button type="button" className="tv-btn tv-btn-blok" onClick={() => pilihSetting(kondisi, "rs")}>
+              🏨 Rumah Sakit
+            </button>
+          </div>
+          <div style={{ fontSize: ".8rem", color: "var(--tv-soft-teks)", marginTop: 14 }}>
+            Sumber: {kondisi.alur.sumber}
+          </div>
+        </div>
+        {toastEl}
+      </div>
+    );
+  }
+
+  // ===== 3) ALUR =====
   const kiniId = stack[stack.length - 1];
-  const layar: Layar | undefined = kiniId ? ASMA.layar[kiniId] : undefined;
+  const layar: Layar | undefined = kiniId ? kondisi.alur.layar[kiniId] : undefined;
+  const baganSrc = kondisi.bagan ? kondisi.bagan[setting] : undefined;
 
   if (!layar) {
     return (
-      <div className="tv-container">
+      <div>
         <div className="tv-card">
           <div className="tv-card-title">Alur tidak ditemukan</div>
-          <button type="button" className="tv-btn" style={{ marginTop: 10 }} onClick={resetSetting}>
-            Ulangi dari awal
+          <button type="button" className="tv-btn" style={{ marginTop: 12 }} onClick={keDaftar}>
+            Kembali ke daftar
           </button>
         </div>
+        {toastEl}
       </div>
     );
   }
 
   const tambah = () => {
     tambahKeRingkasan({
-      title: `Asma \u2014 ${layar.judul}`,
-      body: komposisiRingkasan(layar, setting, pasien),
-      source: "Alur Tata Laksana Asma",
+      title: `${kondisi.nama} \u2014 ${layar.judul}`,
+      body: komposisiRingkasan(kondisi, layar, setting, pasien),
+      source: `Alur ${kondisi.nama}`,
     });
     setToast("Ditambahkan ke Ringkasan Klinis \u2705");
   };
 
   return (
-    <div className="tv-container">
+    <div>
       {kartuPasien}
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 10 }}>
+      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+        <button type="button" className="tv-btn" onClick={keDaftar}>
+          ← Daftar
+        </button>
         <span
           style={{
             fontSize: ".78rem",
             fontWeight: 700,
-            padding: "3px 10px",
+            padding: "4px 12px",
             borderRadius: 999,
             background: "var(--tv-accent-soft)",
             color: "var(--tv-navy)",
           }}
         >
-          {LABEL_SETTING[setting]}
+          {kondisi.nama} · {LABEL_SETTING[setting]}
         </span>
         {stack.length > 1 && (
-          <button type="button" className="tv-btn" onClick={kembali} style={{ padding: "4px 12px" }}>
-            ← Kembali
+          <button type="button" className="tv-btn" onClick={kembali}>
+            Kembali
           </button>
         )}
-        <button type="button" className="tv-btn" onClick={resetSetting} style={{ padding: "4px 12px" }}>
+        <button type="button" className="tv-btn" onClick={gantiSetting}>
           Ganti setting
         </button>
       </div>
+
+      {baganSrc && (
+        <div style={{ marginBottom: 12 }}>
+          <button type="button" className="tv-btn" onClick={() => setBagan((b) => !b)}>
+            🖼️ {bagan ? "Sembunyikan bagan asli" : "Lihat bagan asli"}
+          </button>
+          {bagan && (
+            <div
+              style={{
+                marginTop: 10,
+                border: "1px solid var(--tv-line)",
+                borderRadius: 12,
+                padding: 8,
+                background: "var(--tv-putih)",
+              }}
+            >
+              <img
+                src={baganSrc}
+                alt={`Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
+                style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
+              />
+              <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
+                Bagan asli — sumber: {kondisi.alur.sumber}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="tv-card">
         {layar.derajat && (
@@ -319,7 +463,7 @@ export function AlurTatalaksanaPanel() {
         )}
 
         {layar.tombol.length > 0 && (
-          <div className="tv-stack" style={{ marginTop: 14 }}>
+          <div className="tv-stack" style={{ marginTop: 16 }}>
             {layar.tombol.map((tb, i) => (
               <button
                 key={i}
@@ -337,8 +481,8 @@ export function AlurTatalaksanaPanel() {
         {layar.tombol.length === 0 && (
           <div
             style={{
-              marginTop: 14,
-              padding: "8px 12px",
+              marginTop: 16,
+              padding: "10px 12px",
               borderRadius: 10,
               background: "var(--tv-accent-soft)",
               fontSize: ".9rem",
@@ -348,31 +492,13 @@ export function AlurTatalaksanaPanel() {
           </div>
         )}
 
-        <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 14 }}>Sumber: {ASMA.sumber}</div>
-      </div>
-
-      <div className="tv-warn" style={{ marginTop: 12 }}>
-        ⚠️ Alat bantu keputusan — bukan pengganti penilaian klinis. Verifikasi dosis sebelum pemberian.
-      </div>
-
-      {toast && (
-        <div
-          style={{
-            position: "fixed",
-            left: "50%",
-            bottom: 24,
-            transform: "translateX(-50%)",
-            background: "var(--tv-navy)",
-            color: "#fff",
-            padding: "10px 16px",
-            borderRadius: 999,
-            zIndex: 50,
-            boxShadow: "0 6px 20px rgba(0,0,0,.18)",
-          }}
-        >
-          {toast}
+        <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 16 }}>
+          Sumber: {kondisi.alur.sumber}
         </div>
-      )}
+      </div>
+
+      {disclaimer}
+      {toastEl}
     </div>
   );
 }
