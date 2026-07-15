@@ -5,7 +5,7 @@ export default function AlurPage() {
   return (
     <ToolShell
       title="Alur Tata Laksana"
-      desc="Panduan interaktif tata laksana kegawatan anak berbasis pedoman IDAI."
+      desc="Panduan interaktif tata laksana kegawatdaruratan anak"
       icon="🧭"
     >
       <AlurTatalaksanaPanel />
