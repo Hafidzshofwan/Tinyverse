@@ -990,8 +990,8 @@ body {
     left: 0;
     bottom: 0;
     z-index: 45;
-    width: 264px !important;
-    flex-basis: 264px !important;
+    width: 236px !important;
+    flex-basis: 236px !important;
     max-height: none;
     overflow-y: auto;
     padding: 16px;
@@ -1013,8 +1013,8 @@ body {
   }
   .tv-shell-collapsed .tv-sidebar {
     transform: translateX(-112%);
-    width: 264px !important;
-    flex-basis: 264px !important;
+    width: 236px !important;
+    flex-basis: 236px !important;
     opacity: 1;
     padding: 16px;
     pointer-events: none;
