@@ -39,6 +39,13 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
         built: true,
         emergency: true,
       },
+      {
+        slug: "alur",
+        label: "Alur Tata Laksana",
+        icon: "\uD83E\uDDED",
+        href: "/preview/alur",
+        built: true,
+      },
     ],
   },
   {
@@ -81,6 +88,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
 // Deskripsi singkat tiap fitur (dipakai kartu Quick Access & Favorit).
 const DESKRIPSI: Record<string, string> = {
   "/preview/darurat": "Rujukan cepat dosis dan langkah resusitasi anak.",
+  "/preview/alur": "Alur interaktif tata laksana kegawatan anak (Fase A: serangan asma).",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",
   "/preview/fluids": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
   "/preview/puyer": "Hitung tablet yang digerus dan pembagian bungkus.",

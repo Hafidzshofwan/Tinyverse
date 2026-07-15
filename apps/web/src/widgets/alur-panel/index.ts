@@ -1,0 +1,1 @@
+export { AlurTatalaksanaPanel } from "./AlurTatalaksanaPanel";
