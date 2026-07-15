@@ -12,8 +12,8 @@ const headRow: CSSProperties = {
   alignItems: "center",
   gap: 15,
 };
-// Kotak ikon disamakan dengan alat island v17 (Terapi Cairan / Racik Puyer):
-// gradien magenta -> navy yang menghasilkan nuansa pink-lavender.
+// Kotak ikon: gradien magenta -> navy (pink-lavender), sama seperti island v17
+// (Terapi Cairan / Racik Puyer).
 const icoStyle: CSSProperties = {
   flex: "0 0 auto",
   width: 54,
@@ -26,30 +26,31 @@ const icoStyle: CSSProperties = {
   background:
     "linear-gradient(135deg, rgba(217, 54, 166, 0.14), rgba(10, 11, 95, 0.08))",
 };
-// Judul: Fredoka 700, warna navy tema (sama seperti island).
+// Judul: nilai diselaraskan 1:1 dengan header island Terapi Cairan
+// (computed: 18.32px, Fredoka, warna #0A0B5F).
 const titleStyle: CSSProperties = {
   margin: 0,
-  fontFamily: '"Fredoka", sans-serif',
+  fontFamily:
+    '"Fredoka", "Quicksand", system-ui, -apple-system, "Segoe UI", sans-serif',
   fontWeight: 700,
-  fontSize: "1.45rem",
-  letterSpacing: "0.2px",
+  fontSize: "1.145rem",
   color: "var(--tv-navy, #0a0b5f)",
 };
-// Subjudul: navy lembut (bukan abu-abu), agar selaras dengan island.
+// Subjudul: diselaraskan 1:1 dengan island Terapi Cairan
+// (computed: 10.24px, Quicksand, warna #0A0B5F9E = navy 62%).
 const leadStyle: CSSProperties = {
   margin: "3px 0 0",
   fontWeight: 500,
-  fontSize: "0.92rem",
+  fontSize: "0.64rem",
   lineHeight: 1.45,
   color: "rgba(10, 11, 95, 0.62)",
 };
 
 /**
- * Kerangka halaman alat: kontainer + header (ikon opsional, judul, deskripsi)
- * yang konsisten untuk semua kalkulator. Hanya presentasi.
- * Header disamakan dengan gaya alat island v17 (Terapi Cairan / Racik Puyer):
- * kotak ikon gradien pink-lavender, judul Fredoka navy, subjudul navy lembut,
- * tanpa badge "Preview".
+ * Kerangka halaman alat: kontainer + header (ikon opsional, judul, deskripsi).
+ * Header disamakan 1:1 dengan alat island v17 (Terapi Cairan / Racik Puyer):
+ * kotak ikon gradien pink-lavender, judul Fredoka 18.32px navy, subjudul
+ * Quicksand 10.24px navy-62%, tanpa badge "Preview".
  */
 export function ToolShell({ title, desc, icon, children }: ToolShellProps) {
   return (
