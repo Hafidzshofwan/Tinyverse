@@ -11,8 +11,7 @@ export type BlokKonten =
   | { jenis: "teks"; teks: string }
   | { jenis: "poin"; poin: string[] }
   | { jenis: "dosis"; obatId: string }
-  | { jenis: "peringatan"; teks: string }
-  | { jenis: "gambar"; src: string; keterangan?: string };
+  | { jenis: "peringatan"; teks: string };
 
 export type Nada = "utama" | "bahaya" | "biasa";
 
@@ -30,6 +29,7 @@ export type Layar = {
   timerMenit?: number;
   konten: BlokKonten[];
   tombol: Tombol[];
+  gambarAlur?: { src: string; keterangan?: string };
   ringkasan?: boolean;
 };
 
