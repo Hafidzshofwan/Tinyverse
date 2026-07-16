@@ -5684,6 +5684,8 @@ html body #page-dosis .obat-card .varian-label {
 <style>/* TV: samakan ukuran header Tumbuh Kembang dengan Racik Puyer (judul 18.32px, subjudul 10.24px). Warna & font sudah sama. */
 html body #tk-island-wrap > .judul-section h2{font-size:1.145rem !important}
 html body #tk-island-wrap > .judul-section p{font-size:0.64rem !important}
+/* TV: perkecil font hasil Prediksi Tinggi (MPH) agar minimalis & rapi */
+html body #tk-island-wrap .dx-res{font-size:13.12px !important}
 </style>
 <script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="tk-island-wrap"><div class="judul-section"><div class="ikon-bulat" style="background:#FFE3EC;">📈</div><div><h2>Tumbuh Kembang</h2><p>Kurva pertumbuhan WHO &amp; CDC</p></div></div>
 <div class="kartu">
@@ -6014,7 +6016,12 @@ function tkRenderPanelPlot() {
       </div>`;
   }).join("");
 
-  form.innerHTML = inputXHtml + inputYHtml;
+  const adaImtOtomatis = ind.charts.some(c => (c.series || []).some(s => s.computed && s.key === "imt"));
+  const catatanImtHtml = adaImtOtomatis
+    ? `<p class="tk-form-catatan" style="margin:6px 2px 0; font-size:0.8rem; color:#0a0b5f;">\u{1F9EE} IMT/U dihitung otomatis dari Berat & Tinggi Badan (IMT = BB \u00f7 (TB\u00f7100)\u00b2).</p>`
+    : "";
+
+  form.innerHTML = inputXHtml + inputYHtml + catatanImtHtml;
   tkSiapkanKalibrasiSeri(ind);
 
   document.getElementById("tkHasilBox").classList.remove("tampil");
@@ -6679,6 +6686,46 @@ function tkHtmlMateriCdcWaterlow() {
     </div>`;
 }
 
+function tkHtmlMateriWhoZscore() {
+  return `
+    <div class="tk-cdc-materi">
+      <div class="tk-cdc-materi-title">\u{1F4DA} Materi interpretasi WHO \u2014 Z-score</div>
+      <p><strong>Z-score</strong> menyatakan posisi nilai anak terhadap median populasi rujukan WHO dalam satuan simpang baku (SD). Rentang \u22122 SD s/d +1 SD umumnya tergolong normal. Interpretasikan bersama tren pertumbuhan dan kondisi klinis, bukan dari satu kali pengukuran saja.</p>
+      <div class="tk-cdc-grid-kriteria">
+        <div class="tk-cdc-kriteria-box">
+          <strong>BB/U \u2014 Berat Badan menurut Umur</strong>
+          <ul>
+            <li>&lt; \u22123 SD: Berat badan sangat kurang</li>
+            <li>\u22123 s/d &lt; \u22122 SD: Berat badan kurang</li>
+            <li>\u22122 s/d +2 SD: Berat badan normal</li>
+            <li>&gt; +2 SD: Berat badan lebih*</li>
+          </ul>
+        </div>
+        <div class="tk-cdc-kriteria-box">
+          <strong>TB/U \u2014 Tinggi/Panjang Badan menurut Umur</strong>
+          <ul>
+            <li>&lt; \u22123 SD: Sangat pendek (severely stunted)</li>
+            <li>\u22123 s/d &lt; \u22122 SD: Pendek (stunted)</li>
+            <li>\u22122 s/d +3 SD: Normal</li>
+            <li>&gt; +3 SD: Tinggi</li>
+          </ul>
+        </div>
+        <div class="tk-cdc-kriteria-box">
+          <strong>IMT/U \u2014 Indeks Massa Tubuh menurut Umur</strong>
+          <ul>
+            <li>&lt; \u22123 SD: Gizi buruk (severely wasted)</li>
+            <li>\u22123 s/d &lt; \u22122 SD: Gizi kurang (wasted)</li>
+            <li>\u22122 s/d +1 SD: Gizi baik (normal)</li>
+            <li>&gt; +1 s/d +2 SD: Berisiko gizi lebih</li>
+            <li>&gt; +2 s/d +3 SD: Gizi lebih (overweight)</li>
+            <li>&gt; +3 SD: Obesitas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tk-cdc-materi-note">*Pada BB/U, anak dengan z &gt; +1 SD sebaiknya dikonfirmasi memakai IMT/U atau BB/TB, karena BB/U saja tidak membedakan proporsi tubuh. Referensi: WHO Child Growth Standards (2006) &amp; Peraturan Menteri Kesehatan RI No. 2 Tahun 2020 tentang Standar Antropometri Anak.</div>
+    </div>`;
+}
+
 function tkHtmlCdcInterpretasi(item) {
   if (!item) return "";
   if (item.judul === "BB/TB CDC — % median") {
@@ -6776,6 +6823,9 @@ function plotTumbuhKembang() {
     interpretasiHtml += tkHtmlCdcInterpretasi(tkInterpretasiCdcBbtb(tkState.kelamin, seriVal.berat, seriVal.tinggi));
     interpretasiHtml += tkHtmlMateriCdcWaterlow();
   }
+  if (tkState.standar === "who" && interpretasiHtml) {
+    interpretasiHtml += tkHtmlMateriWhoZscore();
+  }
 
   const stdLabel = GROWTH_CHART_CONFIG[tkState.standar].label;
   hasilBox.classList.add("tampil");
@@ -6783,7 +6833,7 @@ function plotTumbuhKembang() {
     <div class="tk-hasil-judul">\u{1F4CD} Hasil Plotting</div>
     <div class="tk-hasil-baris"><span class="tk-hasil-label">${escapeHtml(ind.xLabel)}</span><span class="tk-hasil-nilai">${nilaiX} ${escapeHtml(ind.xUnit)}</span></div>
     ${barisHtml}
-    <div class="tk-hasil-baris"><span class="tk-hasil-label">Chart</span><span class="tk-hasil-nilai">${escapeHtml(stdLabel)} \u00B7 ${tkState.standar === "who" ? "BB/U, TB/U & IMT/U" : escapeHtml(ind.label)}</span></div>
+    <div class="tk-hasil-baris"><span class="tk-hasil-label">Chart</span><span class="tk-hasil-nilai">${escapeHtml(stdLabel)} \u00B7 ${escapeHtml(ind.label)}</span></div>
     ${adaChartHilang ? `<div class="tk-hasil-peringatan">\u{1F6A7} Sebagian gambar chart belum tersedia, sehingga titik tidak dapat ditampilkan di chart tersebut.</div>` : ""}
     ${adaLuarBatas ? `<div class="tk-hasil-peringatan">\u26A0\ufe0f Sebagian nilai berada di luar rentang chart \u2014 titik ditampilkan pada batas terdekat.</div>` : ""}
     ${belumKalibrasi.length ? `<div class="tk-hasil-peringatan">\u{1F3AF} Area chart untuk ${escapeHtml(belumKalibrasi.join(" & "))} belum dikalibrasi.</div>` : ""}
