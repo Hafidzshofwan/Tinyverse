@@ -1,6 +1,7 @@
 import type { Alur, Setting } from "./tipe";
 import { ASMA } from "./asma";
 import { KEJANG } from "./kejang";
+import { DBD } from "./dbd";
 
 // Metadata kategori untuk mengelompokkan kondisi pada tampilan daftar (grid).
 export type KategoriMeta = {
@@ -33,6 +34,13 @@ export const KATEGORI_ALUR: KategoriMeta[] = [
     ikon: "\uD83E\uDE78",
     warna: "#c9761a",
     warnaLembut: "rgba(201, 118, 26, 0.12)",
+  },
+  {
+    id: "infeksi",
+    nama: "Penyakit Infeksi & Tropis",
+    ikon: "\uD83E\uDD9F",
+    warna: "#0f766e",
+    warnaLembut: "rgba(15, 118, 110, 0.12)",
   },
 ];
 
@@ -73,6 +81,19 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     bagan: {
       fktp: "/assets/alur/kejang-demam.png",
       rs: "/assets/alur/kejang-demam.png",
+    },
+    tersedia: true,
+  },
+  {
+    id: "dbd",
+    nama: "Demam Berdarah Dengue",
+    ikon: "\uD83E\uDE78",
+    ringkas: "Klasifikasi & tata laksana infeksi dengue anak \u2014 Grup A, B, C.",
+    kategori: "infeksi",
+    alur: DBD,
+    bagan: {
+      fktp: "/assets/alur/dbd.png",
+      rs: "/assets/alur/dbd.png",
     },
     tersedia: true,
   },

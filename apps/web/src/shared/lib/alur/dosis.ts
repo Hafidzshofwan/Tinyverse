@@ -51,6 +51,20 @@ function perKg(
   };
 }
 
+function cairanPerJam(p: Pasien, opt: { low: number; high: number; lama: string }): HasilDosis {
+  const aturan = `${fmt(opt.low)}\u2013${fmt(opt.high)} ml/kgBB/jam selama ${opt.lama}`;
+  const bb = p.bb;
+  if (!bb || bb <= 0) {
+    return { ringkas: aturan, peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis." };
+  }
+  const low = opt.low * bb;
+  const high = opt.high * bb;
+  return {
+    ringkas: `${fmt(low)}\u2013${fmt(high)} ml/jam selama ${opt.lama} (BB ${fmt(bb)} kg)`,
+    detail: aturan,
+  };
+}
+
 export const OBAT: Record<string, ObatDef> = {
   oksigen: {
     id: "oksigen",
@@ -348,6 +362,42 @@ export const OBAT: Record<string, ObatDef> = {
         peringatan: "Rawat ICU; siapkan intubasi & ventilasi mekanik.",
       };
     },
+  },
+
+  // ===== Demam Berdarah Dengue (cairan & suportif) =====
+  parasetamol: {
+    id: "parasetamol",
+    nama: "Parasetamol (antipiretik)",
+    rute: "oral",
+    hitung: (p) => {
+      const r = perKg(p, { low: 10, high: 15, maks: 500, suffix: " per dosis" });
+      const dasar = r.detail ?? "10\u201315 mg/kgBB per dosis (maks 500 mg)";
+      return { ...r, detail: `${dasar} \u00b7 tiap 4\u20136 jam, maksimal 4\u00d7/hari.` };
+    },
+  },
+  kristaloid5_7: {
+    id: "kristaloid5_7",
+    nama: "Kristaloid isotonis (NaCl 0,9% / Ringer laktat)",
+    rute: "IV",
+    hitung: (p) => cairanPerJam(p, { low: 5, high: 7, lama: "1\u20132 jam" }),
+  },
+  kristaloid3_5: {
+    id: "kristaloid3_5",
+    nama: "Kristaloid isotonis (NaCl 0,9% / Ringer laktat)",
+    rute: "IV",
+    hitung: (p) => cairanPerJam(p, { low: 3, high: 5, lama: "2\u20134 jam" }),
+  },
+  kristaloid2_3: {
+    id: "kristaloid2_3",
+    nama: "Kristaloid isotonis (NaCl 0,9% / Ringer laktat)",
+    rute: "IV",
+    hitung: (p) => cairanPerJam(p, { low: 2, high: 3, lama: "2\u20134 jam" }),
+  },
+  kristaloid5_10: {
+    id: "kristaloid5_10",
+    nama: "Kristaloid isotonis (NaCl 0,9% / Ringer laktat)",
+    rute: "IV",
+    hitung: (p) => cairanPerJam(p, { low: 5, high: 10, lama: "1\u20132 jam" }),
   },
 };
 
