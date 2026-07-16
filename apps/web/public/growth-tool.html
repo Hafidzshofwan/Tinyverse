@@ -6014,12 +6014,7 @@ function tkRenderPanelPlot() {
       </div>`;
   }).join("");
 
-  const adaImtOtomatis = ind.charts.some(c => (c.series || []).some(s => s.computed && s.key === "imt"));
-  const catatanImtHtml = adaImtOtomatis
-    ? `<p class="tk-form-catatan" style="margin:6px 2px 0; font-size:0.8rem; color:#0a0b5f;">\u{1F9EE} IMT/U dihitung otomatis dari Berat & Tinggi Badan (IMT = BB \u00f7 (TB\u00f7100)\u00b2).</p>`
-    : "";
-
-  form.innerHTML = inputXHtml + inputYHtml + catatanImtHtml;
+  form.innerHTML = inputXHtml + inputYHtml;
   tkSiapkanKalibrasiSeri(ind);
 
   document.getElementById("tkHasilBox").classList.remove("tampil");
@@ -6788,7 +6783,7 @@ function plotTumbuhKembang() {
     <div class="tk-hasil-judul">\u{1F4CD} Hasil Plotting</div>
     <div class="tk-hasil-baris"><span class="tk-hasil-label">${escapeHtml(ind.xLabel)}</span><span class="tk-hasil-nilai">${nilaiX} ${escapeHtml(ind.xUnit)}</span></div>
     ${barisHtml}
-    <div class="tk-hasil-baris"><span class="tk-hasil-label">Chart</span><span class="tk-hasil-nilai">${escapeHtml(stdLabel)} \u00B7 ${escapeHtml(ind.label)}</span></div>
+    <div class="tk-hasil-baris"><span class="tk-hasil-label">Chart</span><span class="tk-hasil-nilai">${escapeHtml(stdLabel)} \u00B7 ${tkState.standar === "who" ? "BB/U, TB/U & IMT/U" : escapeHtml(ind.label)}</span></div>
     ${adaChartHilang ? `<div class="tk-hasil-peringatan">\u{1F6A7} Sebagian gambar chart belum tersedia, sehingga titik tidak dapat ditampilkan di chart tersebut.</div>` : ""}
     ${adaLuarBatas ? `<div class="tk-hasil-peringatan">\u26A0\ufe0f Sebagian nilai berada di luar rentang chart \u2014 titik ditampilkan pada batas terdekat.</div>` : ""}
     ${belumKalibrasi.length ? `<div class="tk-hasil-peringatan">\u{1F3AF} Area chart untuk ${escapeHtml(belumKalibrasi.join(" & "))} belum dikalibrasi.</div>` : ""}
