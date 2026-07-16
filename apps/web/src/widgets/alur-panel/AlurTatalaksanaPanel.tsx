@@ -237,13 +237,15 @@ export function AlurTatalaksanaPanel() {
         border: "1px solid var(--tv-line)",
         borderRadius: 12,
         padding: "10px 12px",
-        background: "var(--tv-glass)",
+        background: "var(--tv-putih)",
         marginBottom: 14,
       }}
     >
-      <div style={{ fontWeight: 700, marginBottom: 2 }}>👶 Profil pasien aktif</div>
+      <div style={{ fontWeight: 700, fontSize: "1rem", color: "var(--tv-navy)", marginBottom: 2 }}>
+        👶 Profil pasien aktif
+      </div>
       {punyaPasien && pasien ? (
-        <div style={{ fontSize: ".92rem" }}>
+        <div style={{ fontSize: ".85rem" }}>
           {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · Usia {usiaTeks(pasien.usiaBulan)}
         </div>
       ) : (
