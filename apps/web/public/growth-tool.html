@@ -6026,6 +6026,7 @@ function tkRenderPanelPlot() {
 
   form.innerHTML = inputXHtml + inputYHtml;
   tkSiapkanKalibrasiSeri(ind);
+  tkIsiOtomatisPasien();
 
   document.getElementById("tkHasilBox").classList.remove("tampil");
 }
@@ -7069,8 +7070,10 @@ function tkToggleKalibrasi() {
 function $(id){return document.getElementById(id);}
 function num(v){var n=parseFloat(String(v==null?'':v).replace(',','.'));return isFinite(n)?n:null;}
 function f(n,d){if(n==null||!isFinite(n))return '\u2013';var p=Math.pow(10,d);return (Math.round(n*p)/p).toFixed(d).replace('.',',');}
-function pasien(){return (window.__pasien||{jk:null});}
+function pasien(){try{var raw=localStorage.getItem('tv_pasien_aktif');if(raw){var j=JSON.parse(raw);if(j&&typeof j==='object')return j;}}catch(e){}return (window.__pasien||{jk:null});}
 function isiKelamin(){var sel=$('mphKelamin');if(!sel)return;var jk=pasien().jk;if(jk==='male'||jk==='female')sel.value=jk;}
+function tkIsiSatuOtomatis(el,val){if(!el)return;if(val==null||!isFinite(val))return;if(el.value===''||el.dataset.tvAuto==='1'){el.value=val;el.dataset.tvAuto='1';if(!el.dataset.tvBound){el.dataset.tvBound='1';el.addEventListener('input',function(){delete el.dataset.tvAuto;});}}}
+function tkIsiOtomatisPasien(){var p=pasien()||{};tkIsiSatuOtomatis($('tkInputX'),p.usiaBulan);tkIsiSatuOtomatis($('tkInput_berat'),p.bb);tkIsiSatuOtomatis($('tkInput_tinggi'),p.tb);}
 function hitungMPH(){
   var a=num($('mphAyah').value),i=num($('mphIbu').value),jk=$('mphKelamin').value,box=$('mphHasil');
   if(a==null||i==null){box.innerHTML='<div class="dx-res dx-neutral">Isi tinggi ayah &amp; ibu.</div>';return;}
@@ -7092,6 +7095,8 @@ function tkIslandInit(){
   $('tkRingkasan').addEventListener('click',function(e){var t=e.target.closest('[data-ganti-step]');if(!t)return;tkPindahLangkah(Number(t.dataset.gantiStep));});
   $('tkStepper').addEventListener('click',function(e){var d=e.target.closest('.tk-step-dot');if(!d||d.classList.contains('tk-terkunci'))return;tkPindahLangkah(Number(d.dataset.step));});
   if($('mphBtn')){isiKelamin();$('mphBtn').addEventListener('click',hitungMPH);}
+  window.addEventListener('message',function(e){if(e&&e.data&&e.data.__tvPasien){tkIsiOtomatisPasien();isiKelamin();}});
+  window.addEventListener('storage',function(e){if(!e.key||e.key==='tv_pasien_aktif'){tkIsiOtomatisPasien();isiKelamin();}});
   function postH(){try{parent.postMessage({__tkHeight:window.__TKCH()},'*');}catch(e){}}
   try{new ResizeObserver(postH).observe(document.body);}catch(e){}
   window.addEventListener('load',postH);postH();setInterval(postH,700);
