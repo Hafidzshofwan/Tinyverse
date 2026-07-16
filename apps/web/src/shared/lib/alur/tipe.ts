@@ -11,7 +11,8 @@ export type BlokKonten =
   | { jenis: "teks"; teks: string }
   | { jenis: "poin"; poin: string[] }
   | { jenis: "dosis"; obatId: string }
-  | { jenis: "peringatan"; teks: string };
+  | { jenis: "peringatan"; teks: string }
+  | { jenis: "gambar"; src: string; keterangan?: string };
 
 export type Nada = "utama" | "bahaya" | "biasa";
 

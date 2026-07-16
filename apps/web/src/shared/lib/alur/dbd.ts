@@ -33,6 +33,11 @@ export const DBD: Alur = {
       nada: "waspada",
       konten: [
         {
+          jenis: "gambar",
+          src: "/assets/alur/dbd-utama.png",
+          keterangan: "Gambar 6 — Alur penilaian & klasifikasi dengue (Grup A/B/C).",
+        },
+        {
           jenis: "teks",
           teks: "Diagnosis — tinggal di / bepergian ke area endemik disertai demam dan dua kriteria berikut:",
         },
@@ -72,6 +77,11 @@ export const DBD: Alur = {
       nada: "baik",
       ringkasan: true,
       konten: [
+        {
+          jenis: "gambar",
+          src: "/assets/alur/dbd-grup-a.png",
+          keterangan: "Gambar 7 — Alur Grup A: rawat jalan.",
+        },
         {
           jenis: "teks",
           teks: "Boleh rawat jalan bila pasien masih dapat \u201cminum cukup untuk berkemih cukup\u201d dan memenuhi SELURUH kriteria:",
@@ -141,6 +151,11 @@ export const DBD: Alur = {
       nada: "waspada",
       ringkasan: true,
       konten: [
+        {
+          jenis: "gambar",
+          src: "/assets/alur/dbd-grup-b-penyerta.png",
+          keterangan: "Gambar 8 — Alur Grup B: kondisi penyerta tanpa warning sign.",
+        },
         { jenis: "teks", teks: "Kondisi pasien yang memerlukan perawatan dini:" },
         {
           jenis: "poin",
@@ -187,6 +202,11 @@ export const DBD: Alur = {
       judul: "Grup B — Warning Signs (tidak syok)",
       nada: "waspada",
       konten: [
+        {
+          jenis: "gambar",
+          src: "/assets/alur/dbd-grup-b-warning-1.png",
+          keterangan: "Gambar 9 — Alur Grup B: warning signs, tidak syok (tata laksana cairan).",
+        },
         {
           jenis: "poin",
           poin: [
@@ -291,6 +311,11 @@ export const DBD: Alur = {
       nada: "bahaya",
       timerMenit: 120,
       konten: [
+        {
+          jenis: "gambar",
+          src: "/assets/alur/dbd-grup-b-warning-2.png",
+          keterangan: "Gambar 10 — Alur Grup B: warning signs, tidak membaik setelah cairan pertama.",
+        },
         {
           jenis: "teks",
           teks: "Perbarui tanda vital & perhatikan peningkatan Ht secara cepat. Bila Ht meningkat, naikkan kristaloid isotonis:",

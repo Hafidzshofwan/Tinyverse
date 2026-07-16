@@ -110,6 +110,30 @@ function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null 
       </div>
     );
 
+  if (blok.jenis === "gambar")
+    return (
+      <figure
+        style={{
+          margin: "10px 0",
+          border: "1px solid var(--tv-line)",
+          borderRadius: 12,
+          padding: 8,
+          background: "var(--tv-putih)",
+        }}
+      >
+        <img
+          src={blok.src}
+          alt={blok.keterangan ?? "Bagan alur asli"}
+          style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
+        />
+        {blok.keterangan && (
+          <figcaption style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
+            🖼️ {blok.keterangan}
+          </figcaption>
+        )}
+      </figure>
+    );
+
   const d = hitungObat(blok.obatId, pasien ?? {});
   if (!d) return null;
 
@@ -150,6 +174,7 @@ function komposisiRingkasan(kondisi: Kondisi, layar: Layar, setting: Setting, pa
     if (blok.jenis === "teks") baris.push(blok.teks);
     else if (blok.jenis === "poin") for (const p of blok.poin) baris.push(`\u2022 ${p}`);
     else if (blok.jenis === "peringatan") baris.push(`\u26a0 ${blok.teks}`);
+    else if (blok.jenis === "gambar") baris.push(blok.keterangan ? `[Bagan] ${blok.keterangan}` : "[Bagan alur asli]");
     else {
       const d = hitungObat(blok.obatId, pasien ?? {});
       if (d) baris.push(`\u2022 ${d.def.nama} (${d.def.rute}): ${d.hasil.ringkas}`);

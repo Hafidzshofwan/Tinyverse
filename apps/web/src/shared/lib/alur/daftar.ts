@@ -91,10 +91,6 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ringkas: "Klasifikasi & tata laksana infeksi dengue anak \u2014 Grup A, B, C.",
     kategori: "infeksi",
     alur: DBD,
-    bagan: {
-      fktp: "/assets/alur/dbd.png",
-      rs: "/assets/alur/dbd.png",
-    },
     tersedia: true,
   },
 ];
