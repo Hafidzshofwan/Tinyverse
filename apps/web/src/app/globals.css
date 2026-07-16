@@ -975,8 +975,12 @@ body {
 
 /* ============ MOBILE: SIDEBAR JADI DRAWER ============ */
 @media (max-width: 900px) {
+  /* FIX: pencarian tetap tampil di mobile; biarkan menyusut mengikuti sisa ruang topbar. */
   .tv-search {
-    display: none;
+    display: flex;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: none;
   }
   .tv-profile-nm {
     display: none;
@@ -1868,5 +1872,14 @@ body.tv-tanpa-dekorasi .bg-decor {
 @media (max-width: 1024px) {
   .tv-panel-narrow {
     max-width: none;
+  }
+}
+
+/* ===== FIX MOBILE SEARCH: beri ruang kotak pencarian di layar sangat kecil ===== */
+/* Sembunyikan teks "Tinyverse" di brand (logo tetap tampil) agar kotak pencarian
+   punya lebar cukup di HP kecil. */
+@media (max-width: 560px) {
+  .tv-brand-txt {
+    display: none;
   }
 }

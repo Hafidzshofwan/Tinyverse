@@ -117,7 +117,7 @@ function AppShellInner({ children }: AppShellProps) {
         </button>
         <Link href="/" className="tv-brand">
           <Logo />
-          Tinyverse
+          <span className="tv-brand-txt">Tinyverse</span>
         </Link>
         <GlobalSearch />
         <UserMenu />
