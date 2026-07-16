@@ -5780,6 +5780,8 @@ const TKIMG = {
   who_m_tbu: "assets/images/who-male-tbu.jpg",
   who_f_bbu: "assets/images/who-female-bbu.jpg",
   who_f_tbu: "assets/images/who-female-tbu.jpg",
+  who_m_imtu: "assets/images/who-male-imtu.jpg",
+  who_f_imtu: "assets/images/who-female-imtu.jpg",
   cdc_m: "assets/images/cdc-male.jpg",
   cdc_f: "assets/images/cdc-female.jpg"
 };
@@ -5803,7 +5805,11 @@ const GROWTH_CHART_CONFIG = {
               { id: "tbu", title: "TB/U \u2014 Tinggi/Panjang Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_tbu,
                 series: [ { key: "tinggi", yField: "tinggi", yLabel: "Tinggi/Panjang Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" } ],
-                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:230,x1:1491,y0:246,y1:1055},xRange:[0,60],yRange:[40,125]} } }
+                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:230,x1:1491,y0:246,y1:1055},xRange:[0,60],yRange:[40,125]} } },
+              { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
+                image: TKIMG.who_m_imtu,
+                series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22]} } }
             ]
           }
         }
@@ -5822,7 +5828,11 @@ const GROWTH_CHART_CONFIG = {
               { id: "tbu", title: "TB/U \u2014 Tinggi/Panjang Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_tbu,
                 series: [ { key: "tinggi", yField: "tinggi", yLabel: "Tinggi/Panjang Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" } ],
-                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:229,x1:1490,y0:248,y1:1055},xRange:[0,60],yRange:[40,125]} } }
+                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:229,x1:1490,y0:248,y1:1055},xRange:[0,60],yRange:[40,125]} } },
+              { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
+                image: TKIMG.who_f_imtu,
+                series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22]} } }
             ]
           }
         }
@@ -5970,8 +5980,8 @@ function tkRenderPanelPlot() {
   const header = document.getElementById("tkPlotHeader");
   if (header) {
     header.innerHTML = `
-      <div class="tk-plot-judul">${ind.emoji || "\u{1F4CA}"} Gabungan ${escapeHtml(stdLabel)} BB/U & TB/U \u2014 ${escapeHtml(gLabel)}</div>
-      <div class="tk-plot-sub">Isi data anak satu kali, lalu tekan PLOT untuk menampilkan titik pada ${ind.charts.length > 1 ? "kedua chart" : "chart"} di bawah.</div>`;
+      <div class="tk-plot-judul">${ind.emoji || "\u{1F4CA}"} Gabungan ${escapeHtml(stdLabel)} ${tkState.standar === "who" ? "BB/U, TB/U & IMT/U" : "BB/U & TB/U"} \u2014 ${escapeHtml(gLabel)}</div>
+      <div class="tk-plot-sub">Isi data anak satu kali, lalu tekan PLOT untuk menampilkan titik pada ${ind.charts.length > 1 ? "semua chart" : "chart"} di bawah.</div>`;
   }
 
   const wrap = document.getElementById("tkChartsWrap");
@@ -5994,7 +6004,7 @@ function tkRenderPanelPlot() {
     </div>`;
 
   const seriMap = {};
-  ind.charts.forEach(c => (c.series || []).forEach(s => { if (!seriMap[s.key]) seriMap[s.key] = s; }));
+  ind.charts.forEach(c => (c.series || []).forEach(s => { if (!seriMap[s.key] && !s.computed) seriMap[s.key] = s; }));
   const inputYHtml = Object.keys(seriMap).map(key => {
     const s = seriMap[key];
     return `
@@ -6004,7 +6014,12 @@ function tkRenderPanelPlot() {
       </div>`;
   }).join("");
 
-  form.innerHTML = inputXHtml + inputYHtml;
+  const adaImtOtomatis = ind.charts.some(c => (c.series || []).some(s => s.computed && s.key === "imt"));
+  const catatanImtHtml = adaImtOtomatis
+    ? `<p class="tk-form-catatan" style="margin:6px 2px 0; font-size:0.8rem; color:#0a0b5f;">\u{1F9EE} IMT/U dihitung otomatis dari Berat & Tinggi Badan (IMT = BB \u00f7 (TB\u00f7100)\u00b2).</p>`
+    : "";
+
+  form.innerHTML = inputXHtml + inputYHtml + catatanImtHtml;
   tkSiapkanKalibrasiSeri(ind);
 
   document.getElementById("tkHasilBox").classList.remove("tampil");
@@ -6278,11 +6293,144 @@ const WHO_TBU_FEMALE_0_60 = {
   60: [95.2, 99.9, 104.7, 109.4, 114.2, 119.0, 123.7],
 };
 
+// IMT/U (BMI-for-age) 0\u201360 bln \u2014 WHO 2006. Nilai 7 garis SD [-3,-2,-1,median,+1,+2,+3]
+// dihitung dari parameter resmi L,M,S WHO via rumus LMS: X = M*(1+L*S*z)^(1/L).
+// Bulan 0\u201323 berbasis panjang badan (length), 24\u201360 berbasis tinggi badan (height).
+const WHO_IMTU_MALE_0_60 = {
+  0: [10.2, 11.1, 12.2, 13.4, 14.8, 16.3, 18.1],
+  1: [11.3, 12.4, 13.6, 14.9, 16.3, 17.8, 19.4],
+  2: [12.5, 13.7, 15.0, 16.3, 17.8, 19.4, 21.1],
+  3: [13.1, 14.3, 15.5, 16.9, 18.4, 20.0, 21.8],
+  4: [13.4, 14.5, 15.8, 17.2, 18.7, 20.3, 22.1],
+  5: [13.5, 14.7, 15.9, 17.3, 18.8, 20.5, 22.3],
+  6: [13.6, 14.7, 16.0, 17.3, 18.8, 20.5, 22.3],
+  7: [13.7, 14.8, 16.0, 17.3, 18.8, 20.5, 22.3],
+  8: [13.6, 14.7, 15.9, 17.3, 18.7, 20.4, 22.2],
+  9: [13.6, 14.7, 15.8, 17.2, 18.6, 20.3, 22.1],
+  10: [13.5, 14.6, 15.7, 17.0, 18.5, 20.1, 22.0],
+  11: [13.4, 14.5, 15.6, 16.9, 18.4, 20.0, 21.8],
+  12: [13.4, 14.4, 15.5, 16.8, 18.2, 19.8, 21.6],
+  13: [13.3, 14.3, 15.4, 16.7, 18.1, 19.7, 21.5],
+  14: [13.2, 14.2, 15.3, 16.6, 18.0, 19.5, 21.3],
+  15: [13.1, 14.1, 15.2, 16.4, 17.8, 19.4, 21.2],
+  16: [13.1, 14.0, 15.1, 16.3, 17.7, 19.3, 21.0],
+  17: [13.0, 13.9, 15.0, 16.2, 17.6, 19.1, 20.9],
+  18: [12.9, 13.9, 14.9, 16.1, 17.5, 19.0, 20.8],
+  19: [12.9, 13.8, 14.9, 16.1, 17.4, 18.9, 20.7],
+  20: [12.8, 13.7, 14.8, 16.0, 17.3, 18.8, 20.6],
+  21: [12.8, 13.7, 14.7, 15.9, 17.2, 18.7, 20.5],
+  22: [12.7, 13.6, 14.7, 15.8, 17.2, 18.7, 20.4],
+  23: [12.7, 13.6, 14.6, 15.8, 17.1, 18.6, 20.3],
+  24: [12.9, 13.8, 14.8, 16.0, 17.3, 18.9, 20.6],
+  25: [12.8, 13.8, 14.8, 16.0, 17.3, 18.8, 20.5],
+  26: [12.8, 13.7, 14.8, 15.9, 17.3, 18.8, 20.5],
+  27: [12.7, 13.7, 14.7, 15.9, 17.2, 18.7, 20.4],
+  28: [12.7, 13.6, 14.7, 15.9, 17.2, 18.7, 20.4],
+  29: [12.7, 13.6, 14.7, 15.8, 17.1, 18.6, 20.3],
+  30: [12.6, 13.6, 14.6, 15.8, 17.1, 18.6, 20.2],
+  31: [12.6, 13.5, 14.6, 15.8, 17.1, 18.5, 20.2],
+  32: [12.5, 13.5, 14.6, 15.7, 17.0, 18.5, 20.1],
+  33: [12.5, 13.5, 14.5, 15.7, 17.0, 18.5, 20.1],
+  34: [12.5, 13.4, 14.5, 15.7, 17.0, 18.4, 20.0],
+  35: [12.4, 13.4, 14.5, 15.6, 16.9, 18.4, 20.0],
+  36: [12.4, 13.4, 14.4, 15.6, 16.9, 18.4, 20.0],
+  37: [12.4, 13.3, 14.4, 15.6, 16.9, 18.3, 19.9],
+  38: [12.3, 13.3, 14.4, 15.5, 16.8, 18.3, 19.9],
+  39: [12.3, 13.3, 14.3, 15.5, 16.8, 18.3, 19.9],
+  40: [12.3, 13.2, 14.3, 15.5, 16.8, 18.2, 19.9],
+  41: [12.2, 13.2, 14.3, 15.5, 16.8, 18.2, 19.9],
+  42: [12.2, 13.2, 14.3, 15.4, 16.8, 18.2, 19.8],
+  43: [12.2, 13.2, 14.2, 15.4, 16.7, 18.2, 19.8],
+  44: [12.2, 13.1, 14.2, 15.4, 16.7, 18.2, 19.8],
+  45: [12.2, 13.1, 14.2, 15.4, 16.7, 18.2, 19.8],
+  46: [12.1, 13.1, 14.2, 15.4, 16.7, 18.2, 19.8],
+  47: [12.1, 13.1, 14.2, 15.3, 16.7, 18.2, 19.9],
+  48: [12.1, 13.1, 14.1, 15.3, 16.7, 18.2, 19.9],
+  49: [12.1, 13.0, 14.1, 15.3, 16.7, 18.2, 19.9],
+  50: [12.1, 13.0, 14.1, 15.3, 16.7, 18.2, 19.9],
+  51: [12.1, 13.0, 14.1, 15.3, 16.6, 18.2, 19.9],
+  52: [12.0, 13.0, 14.1, 15.3, 16.6, 18.2, 19.9],
+  53: [12.0, 13.0, 14.1, 15.3, 16.6, 18.2, 20.0],
+  54: [12.0, 13.0, 14.0, 15.3, 16.6, 18.2, 20.0],
+  55: [12.0, 13.0, 14.0, 15.2, 16.6, 18.2, 20.0],
+  56: [12.0, 12.9, 14.0, 15.2, 16.6, 18.2, 20.1],
+  57: [12.0, 12.9, 14.0, 15.2, 16.6, 18.2, 20.1],
+  58: [12.0, 12.9, 14.0, 15.2, 16.6, 18.3, 20.2],
+  59: [12.0, 12.9, 14.0, 15.2, 16.6, 18.3, 20.2],
+  60: [12.0, 12.9, 14.0, 15.2, 16.6, 18.3, 20.3],
+};
+
+const WHO_IMTU_FEMALE_0_60 = {
+  0: [10.1, 11.1, 12.2, 13.3, 14.6, 16.1, 17.7],
+  1: [10.8, 12.0, 13.2, 14.6, 16.0, 17.5, 19.1],
+  2: [11.8, 13.0, 14.3, 15.8, 17.3, 19.0, 20.7],
+  3: [12.4, 13.6, 14.9, 16.4, 17.9, 19.7, 21.5],
+  4: [12.7, 13.9, 15.2, 16.7, 18.3, 20.0, 22.0],
+  5: [12.9, 14.1, 15.4, 16.8, 18.4, 20.2, 22.2],
+  6: [13.0, 14.1, 15.5, 16.9, 18.5, 20.3, 22.3],
+  7: [13.0, 14.2, 15.5, 16.9, 18.5, 20.3, 22.3],
+  8: [13.0, 14.1, 15.4, 16.8, 18.4, 20.2, 22.2],
+  9: [12.9, 14.1, 15.3, 16.7, 18.3, 20.1, 22.1],
+  10: [12.9, 14.0, 15.2, 16.6, 18.2, 19.9, 21.9],
+  11: [12.8, 13.9, 15.1, 16.5, 18.0, 19.8, 21.8],
+  12: [12.7, 13.8, 15.0, 16.4, 17.9, 19.6, 21.6],
+  13: [12.6, 13.7, 14.9, 16.2, 17.7, 19.5, 21.4],
+  14: [12.6, 13.6, 14.8, 16.1, 17.6, 19.3, 21.3],
+  15: [12.5, 13.5, 14.7, 16.0, 17.5, 19.2, 21.1],
+  16: [12.4, 13.5, 14.6, 15.9, 17.4, 19.1, 21.0],
+  17: [12.4, 13.4, 14.5, 15.8, 17.3, 18.9, 20.9],
+  18: [12.3, 13.3, 14.4, 15.7, 17.2, 18.8, 20.8],
+  19: [12.3, 13.3, 14.4, 15.7, 17.1, 18.8, 20.7],
+  20: [12.2, 13.2, 14.3, 15.6, 17.0, 18.7, 20.6],
+  21: [12.2, 13.2, 14.3, 15.5, 17.0, 18.6, 20.5],
+  22: [12.2, 13.1, 14.2, 15.5, 16.9, 18.5, 20.4],
+  23: [12.2, 13.1, 14.2, 15.4, 16.9, 18.5, 20.4],
+  24: [12.4, 13.3, 14.4, 15.7, 17.1, 18.7, 20.6],
+  25: [12.4, 13.3, 14.4, 15.7, 17.1, 18.7, 20.6],
+  26: [12.3, 13.3, 14.4, 15.6, 17.0, 18.7, 20.6],
+  27: [12.3, 13.3, 14.4, 15.6, 17.0, 18.6, 20.5],
+  28: [12.3, 13.3, 14.3, 15.6, 17.0, 18.6, 20.5],
+  29: [12.3, 13.2, 14.3, 15.6, 17.0, 18.6, 20.4],
+  30: [12.3, 13.2, 14.3, 15.5, 16.9, 18.5, 20.4],
+  31: [12.2, 13.2, 14.3, 15.5, 16.9, 18.5, 20.4],
+  32: [12.2, 13.2, 14.3, 15.5, 16.9, 18.5, 20.4],
+  33: [12.2, 13.1, 14.2, 15.5, 16.9, 18.5, 20.3],
+  34: [12.2, 13.1, 14.2, 15.4, 16.8, 18.5, 20.3],
+  35: [12.1, 13.1, 14.2, 15.4, 16.8, 18.4, 20.3],
+  36: [12.1, 13.1, 14.2, 15.4, 16.8, 18.4, 20.3],
+  37: [12.1, 13.1, 14.1, 15.4, 16.8, 18.4, 20.3],
+  38: [12.1, 13.0, 14.1, 15.4, 16.8, 18.4, 20.3],
+  39: [12.0, 13.0, 14.1, 15.3, 16.8, 18.4, 20.3],
+  40: [12.0, 13.0, 14.1, 15.3, 16.8, 18.4, 20.3],
+  41: [12.0, 13.0, 14.1, 15.3, 16.8, 18.4, 20.4],
+  42: [12.0, 12.9, 14.0, 15.3, 16.8, 18.4, 20.4],
+  43: [11.9, 12.9, 14.0, 15.3, 16.8, 18.4, 20.4],
+  44: [11.9, 12.9, 14.0, 15.3, 16.8, 18.5, 20.4],
+  45: [11.9, 12.9, 14.0, 15.3, 16.8, 18.5, 20.5],
+  46: [11.9, 12.9, 14.0, 15.3, 16.8, 18.5, 20.5],
+  47: [11.8, 12.8, 14.0, 15.3, 16.8, 18.5, 20.5],
+  48: [11.8, 12.8, 14.0, 15.3, 16.8, 18.5, 20.6],
+  49: [11.8, 12.8, 13.9, 15.3, 16.8, 18.5, 20.6],
+  50: [11.8, 12.8, 13.9, 15.3, 16.8, 18.6, 20.7],
+  51: [11.8, 12.8, 13.9, 15.3, 16.8, 18.6, 20.7],
+  52: [11.7, 12.8, 13.9, 15.2, 16.8, 18.6, 20.7],
+  53: [11.7, 12.7, 13.9, 15.3, 16.8, 18.6, 20.8],
+  54: [11.7, 12.7, 13.9, 15.3, 16.8, 18.7, 20.8],
+  55: [11.7, 12.7, 13.9, 15.3, 16.8, 18.7, 20.9],
+  56: [11.7, 12.7, 13.9, 15.3, 16.8, 18.7, 20.9],
+  57: [11.7, 12.7, 13.9, 15.3, 16.9, 18.7, 21.0],
+  58: [11.7, 12.7, 13.9, 15.3, 16.9, 18.8, 21.0],
+  59: [11.6, 12.7, 13.9, 15.3, 16.9, 18.8, 21.0],
+  60: [11.6, 12.7, 13.9, 15.3, 16.9, 18.8, 21.1],
+};
+
 const TK_ZSCORE_TABLES = {
   "who_male_bbu_0-60": WHO_BBU_MALE_0_60,
   "who_female_bbu_0-60": WHO_BBU_FEMALE_0_60,
   "who_male_tbu_0-60": WHO_TBU_MALE_0_60,
   "who_female_tbu_0-60": WHO_TBU_FEMALE_0_60,
+  "who_male_imtu_0-60": WHO_IMTU_MALE_0_60,
+  "who_female_imtu_0-60": WHO_IMTU_FEMALE_0_60,
 };
 
 function tkInterpolasiZscoreRow(table, nilaiX) {
@@ -6348,6 +6496,15 @@ function tkInterpretasiZscore(standar, kelamin, indikator, usiaGroupId, nilaiX, 
     else if (z < -2)  { statusGizi = "Pendek (Stunted)";                 statusColor = "#E06000"; }
     else if (z <= 3)  { statusGizi = "Normal";                           statusColor = "#1A7A1A"; }
     else              { statusGizi = "Tinggi";                           statusColor = "#1565C0"; }
+  }
+  else if (indikator === "imtu") {
+    // Permenkes RI No. 2 Tahun 2020 (WHO BMI-for-age)
+    if (z < -3)       { statusGizi = "Gizi Buruk (Severely Wasted)";                     statusColor = "#B22222"; }
+    else if (z < -2)  { statusGizi = "Gizi Kurang (Wasted)";                             statusColor = "#E06000"; }
+    else if (z <= 1)  { statusGizi = "Gizi Baik (Normal)";                               statusColor = "#1A7A1A"; }
+    else if (z <= 2)  { statusGizi = "Berisiko Gizi Lebih (Possible Risk of Overweight)"; statusColor = "#D98B00"; }
+    else if (z <= 3)  { statusGizi = "Gizi Lebih (Overweight)";                          statusColor = "#E06000"; }
+    else              { statusGizi = "Obesitas (Obese)";                                 statusColor = "#B22222"; }
   }
 
   return { z: zRounded, zonaLabel, statusGizi, statusColor };
@@ -6563,6 +6720,11 @@ function plotTumbuhKembang() {
   ind.charts.forEach(c => (c.series || []).forEach(s => {
     if (!(s.key in seriVal)) seriVal[s.key] = parseFloat(document.getElementById(`tkInput_${s.key}`)?.value);
   }));
+  // IMT/U dihitung otomatis dari BB & TB (tanpa input manual): IMT = BB / (TB/100)^2
+  if (isFinite(seriVal.berat) && isFinite(seriVal.tinggi) && seriVal.tinggi > 0) {
+    const tinggiMeter = seriVal.tinggi / 100;
+    seriVal.imt = Math.round((seriVal.berat / (tinggiMeter * tinggiMeter)) * 10) / 10;
+  }
   if (!Object.values(seriVal).some(v => isFinite(v))) {
     hasilBox.classList.add("tampil");
     hasilBox.innerHTML = `<p>\u26A0\ufe0f Mohon isi minimal salah satu data (berat atau tinggi badan).</p>`;

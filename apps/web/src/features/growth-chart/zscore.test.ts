@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { tkInterpolasiZscoreRow, tkHitungZscoreNumerik, type ZscoreTable } from "./zscore";
+import {
+  tkInterpolasiZscoreRow,
+  tkHitungZscoreNumerik,
+  hitungIMT,
+  type ZscoreTable,
+} from "./zscore";
 
 // Golden vectors dari WHO BB/U laki-laki 0-60 bln (potongan awal, sama persis v17).
 const WHO_BBU_MALE: ZscoreTable = {
@@ -43,5 +48,44 @@ describe("tkInterpolasiZscoreRow (usia pecahan)", () => {
   });
   it("usia di luar tabel -> null", () => {
     expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 5)).toBeNull();
+  });
+});
+
+// Golden vectors WHO IMT/U (BMI-for-age) laki-laki, baris tervalidasi via LMS.
+const WHO_IMTU_MALE: ZscoreTable = {
+  0: [10.2, 11.1, 12.2, 13.4, 14.8, 16.3, 18.1],
+  24: [12.9, 13.8, 14.8, 16.0, 17.3, 18.9, 20.6],
+  60: [12.0, 12.9, 14.0, 15.2, 16.6, 18.3, 20.3],
+};
+
+describe("IMT/U z-score (garis SD WHO)", () => {
+  it("lahir: tepat di median -> z = 0", () => {
+    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 13.4)).toBeCloseTo(0, 6);
+  });
+  it("lahir: tepat di -3 SD -> z = -3 (gizi buruk)", () => {
+    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 10.2)).toBeCloseTo(-3, 6);
+  });
+  it("lahir: tepat di +3 SD -> z = 3 (obesitas)", () => {
+    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 18.1)).toBeCloseTo(3, 6);
+  });
+  it("24 bln: pertengahan median..+1 SD -> z = 0,5", () => {
+    // median 16.0, +1 SD 17.3 ; nilai 16.65 -> z = 0,5
+    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[24], 16.65)).toBeCloseTo(0.5, 6);
+  });
+  it("60 bln: tepat di -2 SD -> z = -2 (gizi kurang)", () => {
+    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[60], 12.9)).toBeCloseTo(-2, 6);
+  });
+});
+
+describe("hitungIMT (BB & TB -> IMT)", () => {
+  it("BB 16 kg, TB 100 cm -> 16,0", () => {
+    expect(hitungIMT(16, 100)).toBe(16.0);
+  });
+  it("BB 12,5 kg, TB 90 cm -> 15,4 (1 desimal)", () => {
+    expect(hitungIMT(12.5, 90)).toBe(15.4);
+  });
+  it("TB 0 atau tak valid -> null", () => {
+    expect(hitungIMT(16, 0)).toBeNull();
+    expect(hitungIMT(NaN, 100)).toBeNull();
   });
 });

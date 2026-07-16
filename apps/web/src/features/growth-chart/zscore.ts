@@ -58,3 +58,18 @@ export function tkHitungZscoreNumerik(row: ZscoreRow, nilaiY: number): number {
   }
   return 0;
 }
+
+/**
+ * Hitung Indeks Massa Tubuh (IMT/BMI) dari berat & tinggi badan.
+ *
+ * WHY: IMT/U tidak diinput manual — dihitung otomatis dari BB (kg) & TB (cm)
+ * agar konsisten dengan alat growth-tool. Rumus: IMT = BB / (TB/100)^2,
+ * dibulatkan 1 desimal (sama seperti tampilan alat).
+ *
+ * @returns nilai IMT (kg/m²) 1 desimal, atau null bila input tidak valid.
+ */
+export function hitungIMT(beratKg: number, tinggiCm: number): number | null {
+  if (!isFinite(beratKg) || !isFinite(tinggiCm) || tinggiCm <= 0) return null;
+  const tinggiMeter = tinggiCm / 100;
+  return Math.round((beratKg / (tinggiMeter * tinggiMeter)) * 10) / 10;
+}
