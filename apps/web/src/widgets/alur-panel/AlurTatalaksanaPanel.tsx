@@ -384,6 +384,12 @@ export function AlurTatalaksanaPanel() {
     );
   }
 
+  const gambarToggle: { src: string; keterangan?: string } | null = layar.gambarAlur?.toggle
+    ? layar.gambarAlur
+    : baganSrc
+      ? { src: baganSrc, keterangan: undefined }
+      : null;
+
   const tambah = () => {
     tambahKeRingkasan({
       title: `${kondisi.nama} \u2014 ${layar.judul}`,
@@ -474,7 +480,7 @@ export function AlurTatalaksanaPanel() {
           </div>
         )}
 
-        {layar.gambarAlur && (
+        {layar.gambarAlur && !layar.gambarAlur.toggle && (
           <figure
             style={{
               margin: "16px 0 4px",
@@ -536,7 +542,7 @@ export function AlurTatalaksanaPanel() {
         </div>
       </div>
 
-      {baganSrc && (
+      {gambarToggle && (
         <div style={{ marginTop: 12 }}>
           <button type="button" className="tv-btn" onClick={() => setBagan((b) => !b)}>
             🖼️ {bagan ? "Sembunyikan gambar alur" : "Gambar alur"}
@@ -552,12 +558,12 @@ export function AlurTatalaksanaPanel() {
               }}
             >
               <img
-                src={baganSrc}
-                alt={`Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
+                src={gambarToggle.src}
+                alt={gambarToggle.keterangan ?? `Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
                 style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
               />
               <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
-                Bagan asli — sumber: {kondisi.alur.sumber}
+                {gambarToggle.keterangan ?? "Bagan asli"} — sumber: {kondisi.alur.sumber}
               </div>
             </div>
           )}

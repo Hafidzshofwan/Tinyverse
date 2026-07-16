@@ -34,6 +34,7 @@ export const DBD: Alur = {
       gambarAlur: {
         src: "/assets/alur/dbd-utama.png",
         keterangan: "Gambar 6 — Alur penilaian & klasifikasi dengue (Grup A/B/C).",
+        toggle: true,
       },
       konten: [
         {

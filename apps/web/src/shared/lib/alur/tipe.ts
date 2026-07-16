@@ -29,7 +29,7 @@ export type Layar = {
   timerMenit?: number;
   konten: BlokKonten[];
   tombol: Tombol[];
-  gambarAlur?: { src: string; keterangan?: string };
+  gambarAlur?: { src: string; keterangan?: string; toggle?: boolean };
   ringkasan?: boolean;
 };
 
