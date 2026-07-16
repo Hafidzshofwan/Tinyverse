@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { CSSProperties } from "react";
-import { DAFTAR_KONDISI } from "@/shared/lib/alur/daftar";
+import { DAFTAR_KONDISI, KATEGORI_ALUR } from "@/shared/lib/alur/daftar";
 import type { Kondisi } from "@/shared/lib/alur/daftar";
 import { hitungObat } from "@/shared/lib/alur/dosis";
 import { bacaPasienAktif, PASIEN_AKTIF_KEY, tambahKeRingkasan } from "@/shared/lib/alur/ringkasan-bridge";
@@ -39,6 +39,13 @@ function warnaDerajat(derajat?: string): string {
   if (derajat === "berat") return "#c9761a";
   if (derajat === "ancaman") return "#c01643";
   return "var(--tv-soft-teks)";
+}
+
+function warnaNada(nada?: Layar["nada"]): string {
+  if (nada === "bahaya") return "#c01643";
+  if (nada === "waspada") return "#c9761a";
+  if (nada === "baik") return "#1c7c54";
+  return "var(--tv-navy)";
 }
 
 function Timer({ menit }: { menit: number }) {
@@ -274,49 +281,50 @@ export function AlurTatalaksanaPanel() {
 
   // ===== 1) HALAMAN UTAMA: daftar penyakit =====
   if (!kondisi) {
+    const grup = KATEGORI_ALUR.map((kat) => ({
+      kat,
+      items: DAFTAR_KONDISI.filter((k) => k.kategori === kat.id),
+    })).filter((g) => g.items.length > 0);
     return (
       <div>
         {kartuPasien}
-        <p style={{ margin: "0 0 14px", color: "var(--tv-soft-teks)" }}>
+        <p style={{ margin: "0 0 16px", color: "var(--tv-soft-teks)" }}>
           Pilih kondisi untuk membuka alur tata laksana interaktif.
         </p>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {DAFTAR_KONDISI.map((k) => (
-            <button
-              key={k.id}
-              type="button"
-              className="tv-card"
-              disabled={!k.tersedia}
-              onClick={() => k.tersedia && pilihKondisi(k)}
-              style={{
-                width: "100%",
-                textAlign: "left",
-                cursor: k.tersedia ? "pointer" : "not-allowed",
-                font: "inherit",
-                color: "inherit",
-                opacity: k.tersedia ? 1 : 0.6,
-              }}
+        {grup.map(({ kat, items }) => (
+          <section key={kat.id} className="tv-alur-kat-sec">
+            <div
+              className="tv-alur-kat"
+              style={{ "--kat": kat.warna, "--kat-lembut": kat.warnaLembut } as CSSProperties}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-                <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>{k.ikon}</span>
-                <div style={{ flex: 1 }}>
-                  <div className="tv-card-title">
-                    {k.nama}
-                    {!k.tersedia && (
-                      <span style={{ fontSize: ".72rem", fontWeight: 700, color: "var(--tv-soft-teks)", marginLeft: 8 }}>
-                        Segera
-                      </span>
-                    )}
-                  </div>
-                  <div className="tv-card-desc" style={{ marginTop: 3 }}>
-                    {k.ringkas}
-                  </div>
-                </div>
-                {k.tersedia && <span style={{ fontSize: "1.5rem", color: "var(--tv-soft-teks)" }}>›</span>}
-              </div>
-            </button>
-          ))}
-        </div>
+              <span className="tv-alur-kat-ikon">{kat.ikon}</span>
+              <span className="tv-alur-kat-nama">{kat.nama}</span>
+              <span className="tv-alur-kat-garis" />
+              <span className="tv-alur-kat-jml">{items.length}</span>
+            </div>
+            <div className="tv-alur-grid">
+              {items.map((k) => (
+                <button
+                  key={k.id}
+                  type="button"
+                  className="tv-alur-kartu"
+                  disabled={!k.tersedia}
+                  onClick={() => k.tersedia && pilihKondisi(k)}
+                  style={{ "--kat": kat.warna, "--kat-lembut": kat.warnaLembut } as CSSProperties}
+                >
+                  <span className="tv-alur-kartu-ikon">{k.ikon}</span>
+                  <span className="tv-alur-kartu-teks">
+                    <span className="tv-alur-kartu-judul">{k.nama}</span>
+                    <span className="tv-alur-kartu-ringkas">{k.ringkas}</span>
+                  </span>
+                  <span className={"tv-alur-chip" + (k.tersedia ? " ada" : "")}>
+                    {k.tersedia ? "Tersedia" : "Segera"}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </section>
+        ))}
         {disclaimer}
         {toastEl}
       </div>
@@ -416,7 +424,35 @@ export function AlurTatalaksanaPanel() {
         )}
       </div>
 
-      <div className="tv-card">
+      {stack.length > 0 && (
+        <ol className="tv-alur-stepper">
+          {stack.map((id, i) => {
+            const L = kondisi.alur.layar[id];
+            const aktif = i === stack.length - 1;
+            const bisaKlik = i < stack.length - 1;
+            return (
+              <li
+                key={`${id}-${i}`}
+                className={"tv-alur-step" + (aktif ? " aktif" : "")}
+                style={{ "--nada": warnaNada(L?.nada) } as CSSProperties}
+              >
+                <button
+                  type="button"
+                  className="tv-alur-step-btn"
+                  disabled={!bisaKlik}
+                  onClick={() => bisaKlik && setStack(stack.slice(0, i + 1))}
+                  title={L?.judul}
+                >
+                  <span className="tv-alur-step-node">{i + 1}</span>
+                  <span className="tv-alur-step-lbl">{L?.judul ?? "Langkah"}</span>
+                </button>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+
+      <div className="tv-card" style={{ borderTop: `4px solid ${warnaNada(layar.nada)}` }}>
         {layar.derajat && (
           <div style={{ fontSize: ".78rem", fontWeight: 800, color: warnaDerajat(layar.derajat), marginBottom: 4 }}>
             {LABEL_DERAJAT[layar.derajat] ?? layar.derajat}
