@@ -242,7 +242,7 @@ export function AlurTatalaksanaPanel() {
       }}
     >
       <div style={{ fontWeight: 700, fontSize: "1rem", color: "var(--tv-navy)", marginBottom: 2 }}>
-        👶 Profil pasien aktif
+        👶 Profil Pasien
       </div>
       {punyaPasien && pasien ? (
         <div style={{ fontSize: ".85rem" }}>
