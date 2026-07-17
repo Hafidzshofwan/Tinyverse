@@ -1826,7 +1826,7 @@ body.tv-tanpa-dekorasi .bg-decor {
     font-size: 0.9rem;
   }
   .tv-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
   .tv-card {
