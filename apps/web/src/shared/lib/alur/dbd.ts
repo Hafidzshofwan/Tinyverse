@@ -1,9 +1,9 @@
 import type { Alur } from "./tipe";
 
 // Sumber: PNPK Diagnosis & Tata Laksana Infeksi Dengue pada Anak, Kemenkes RI 2021
-// (mengadopsi algoritma WHO Dengue Guidelines 2009, Gambar 6–10).
+// (mengadopsi algoritma WHO Dengue Guidelines 2009, Gambar 6–12).
 // Model alur: tanpaSetting — satu triase langsung membagi ke Grup A / B / C.
-// Grup C (dengue berat / syok) menyusul pada tahap berikutnya.
+// Grup C (dengue berat/syok): Gambar 11 (syok terkompensasi) & Gambar 12 (syok hipotensi).
 
 const WARNING_SIGNS: string[] = [
   "Nyeri abdomen berat atau nyeri tekan.",
@@ -17,6 +17,9 @@ const WARNING_SIGNS: string[] = [
 
 const MAGIC_TOUCH =
   "Nilai ulang status hemodinamik — \u201c5-in-1 magic touch\u201d (CCTV-R): warna (colour), capillary refill time, suhu akral (temperature), volume nadi, laju nadi (rate), dan volume urin.";
+
+const MAKS_RESUS =
+  "Total resusitasi cairan kristaloid/koloid maksimal 20–40 ml/kgBB, atau 40–60 ml/kgBB pada fasilitas dengan alat pemantauan hemodinamik.";
 
 export const DBD: Alur = {
   id: "dbd",
@@ -33,7 +36,8 @@ export const DBD: Alur = {
       nada: "waspada",
       gambarAlur: {
         src: "/assets/alur/dbd-utama.png",
-        keterangan: "Gambar 6 — Alur penilaian & klasifikasi dengue (Grup A/B/C).",
+        keterangan:
+          "Gambar 6 — Alur penilaian & klasifikasi dengue (Grup A/B/C).",
         toggle: true,
       },
       konten: [
@@ -60,10 +64,19 @@ export const DBD: Alur = {
         },
       ],
       tombol: [
-        { label: "Grup A — tidak ada warning sign", tujuan: "grup-a", nada: "utama" },
-        { label: "Grup B — warning sign / kondisi penyerta", tujuan: "grup-b", nada: "utama" },
         {
-          label: "Grup C — dengue berat (syok / perdarahan berat / gagal organ)",
+          label: "Grup A — tidak ada warning sign",
+          tujuan: "grup-a",
+          nada: "utama",
+        },
+        {
+          label: "Grup B — warning sign / kondisi penyerta",
+          tujuan: "grup-b",
+          nada: "utama",
+        },
+        {
+          label:
+            "Grup C — dengue berat (syok / perdarahan berat / gagal organ)",
           tujuan: "grup-c",
           nada: "bahaya",
         },
@@ -139,7 +152,11 @@ export const DBD: Alur = {
           tujuan: "grup-b-penyerta",
           nada: "utama",
         },
-        { label: "Dengan warning sign (tidak syok)", tujuan: "grup-b-warning", nada: "utama" },
+        {
+          label: "Dengan warning sign (tidak syok)",
+          tujuan: "grup-b-warning",
+          nada: "utama",
+        },
       ],
     },
 
@@ -151,10 +168,14 @@ export const DBD: Alur = {
       ringkasan: true,
       gambarAlur: {
         src: "/assets/alur/dbd-grup-b-penyerta.png",
-        keterangan: "Gambar 8 — Alur Grup B: kondisi penyerta tanpa warning sign.",
+        keterangan:
+          "Gambar 8 — Alur Grup B: kondisi penyerta tanpa warning sign.",
       },
       konten: [
-        { jenis: "teks", teks: "Kondisi pasien yang memerlukan perawatan dini:" },
+        {
+          jenis: "teks",
+          teks: "Kondisi pasien yang memerlukan perawatan dini:",
+        },
         {
           jenis: "poin",
           poin: [
@@ -201,7 +222,8 @@ export const DBD: Alur = {
       nada: "waspada",
       gambarAlur: {
         src: "/assets/alur/dbd-grup-b-warning-1.png",
-        keterangan: "Gambar 9 — Alur Grup B: warning signs, tidak syok (tata laksana cairan).",
+        keterangan:
+          "Gambar 9 — Alur Grup B: warning signs, tidak syok (tata laksana cairan).",
       },
       konten: [
         {
@@ -216,7 +238,11 @@ export const DBD: Alur = {
         { jenis: "teks", teks: "Apakah asupan cairan oral pada pasien cukup?" },
       ],
       tombol: [
-        { label: "Ya — asupan cairan oral adekuat", tujuan: "grup-b-warning-oral", nada: "utama" },
+        {
+          label: "Ya — asupan cairan oral adekuat",
+          tujuan: "grup-b-warning-oral",
+          nada: "utama",
+        },
         {
           label: "Tidak — asupan oral tidak adekuat",
           tujuan: "grup-b-warning-iv",
@@ -259,10 +285,19 @@ export const DBD: Alur = {
             "Beri cairan kristaloid intravena (Normal saline / Ringer laktat).",
           ],
         },
-        { jenis: "teks", teks: "Berikan cairan kristaloid isotonis dengan cara:" },
+        {
+          jenis: "teks",
+          teks: "Berikan cairan kristaloid isotonis dengan cara:",
+        },
         { jenis: "dosis", obatId: "kristaloid5_7" },
         { jenis: "dosis", obatId: "kristaloid3_5" },
-        { jenis: "poin", poin: ["Cek kembali Ht dan periksa ulang status klinis pasien.", MAGIC_TOUCH] },
+        {
+          jenis: "poin",
+          poin: [
+            "Cek kembali Ht dan periksa ulang status klinis pasien.",
+            MAGIC_TOUCH,
+          ],
+        },
       ],
       tombol: [
         {
@@ -284,9 +319,19 @@ export const DBD: Alur = {
       ringkasan: true,
       timerMenit: 240,
       konten: [
-        { jenis: "teks", teks: "Klinis stabil dan tidak ada perubahan atau perubahan Ht minimal:" },
+        {
+          jenis: "teks",
+          teks: "Klinis stabil dan tidak ada perubahan atau perubahan Ht minimal:",
+        },
         { jenis: "dosis", obatId: "kristaloid2_3" },
-        { jenis: "poin", poin: ["Cek kembali Ht.", "Periksa ulang status klinis pasien.", MAGIC_TOUCH] },
+        {
+          jenis: "poin",
+          poin: [
+            "Cek kembali Ht.",
+            "Periksa ulang status klinis pasien.",
+            MAGIC_TOUCH,
+          ],
+        },
         {
           jenis: "teks",
           teks: "Jika cairan masuk & output urin adekuat, hematokrit turun mendekati normal (atau sedikit di bawah normal) tetapi klinis stabil, maka:",
@@ -309,7 +354,8 @@ export const DBD: Alur = {
       timerMenit: 120,
       gambarAlur: {
         src: "/assets/alur/dbd-grup-b-warning-2.png",
-        keterangan: "Gambar 10 — Alur Grup B: warning signs, tidak membaik setelah cairan pertama.",
+        keterangan:
+          "Gambar 10 — Alur Grup B: warning signs, tidak membaik setelah cairan pertama.",
       },
       konten: [
         {
@@ -317,7 +363,13 @@ export const DBD: Alur = {
           teks: "Perbarui tanda vital & perhatikan peningkatan Ht secara cepat. Bila Ht meningkat, naikkan kristaloid isotonis:",
         },
         { jenis: "dosis", obatId: "kristaloid5_10" },
-        { jenis: "poin", poin: ["Cek kembali Ht dan periksa ulang status klinis pasien.", MAGIC_TOUCH] },
+        {
+          jenis: "poin",
+          poin: [
+            "Cek kembali Ht dan periksa ulang status klinis pasien.",
+            MAGIC_TOUCH,
+          ],
+        },
         { jenis: "teks", teks: "Apakah pasien membaik?" },
       ],
       tombol: [
@@ -357,22 +409,351 @@ export const DBD: Alur = {
       tombol: [],
     },
 
-    // ===== GRUP C — PLACEHOLDER (menyusul) =====
+    // ===== GRUP C — DENGUE BERAT / SYOK (Gambar 11 & 12) =====
     "grup-c": {
       id: "grup-c",
-      judul: "Grup C — Dengue Berat",
+      judul: "Grup C — Manajemen Darurat (Dengue Berat)",
       nada: "bahaya",
       konten: [
         {
           jenis: "peringatan",
-          teks: "Grup C (dengue berat: syok/DSS, perdarahan berat, atau gagal organ) memerlukan manajemen darurat & resusitasi cairan.",
+          teks: "Dengue berat: syok (DSS), perdarahan berat, atau gangguan organ berat. Butuh resusitasi cairan segera & perawatan di fasilitas yang memadai.",
+        },
+        { jenis: "teks", teks: "Langkah awal saat pasien masuk rumah sakit:" },
+        {
+          jenis: "poin",
+          poin: [
+            "Lakukan penilaian A-B-C (airway, breathing, circulation) dan berikan oksigenasi.",
+            "Tentukan hematokrit (Ht) dasar dan periksa fungsi organ.",
+            "Pantau ketat balans cairan masuk & keluar.",
+            "Periksa status hemodinamik secara berkala.",
+          ],
+        },
+        { jenis: "poin", poin: [MAGIC_TOUCH] },
+        { jenis: "peringatan", teks: MAKS_RESUS },
+        {
+          jenis: "teks",
+          teks: "Pilih derajat syok pasien untuk melihat algoritme resusitasi cairan:",
+        },
+      ],
+      tombol: [
+        {
+          label: "Syok terkompensasi (tekanan darah masih terukur)",
+          tujuan: "grup-c-terkompensasi",
+          nada: "bahaya",
+        },
+        {
+          label: "Syok hipotensi (tekanan darah tidak terukur)",
+          tujuan: "grup-c-hipotensif",
+          nada: "bahaya",
+        },
+      ],
+    },
+
+    // ----- Gambar 11: Syok terkompensasi -----
+    "grup-c-terkompensasi": {
+      id: "grup-c-terkompensasi",
+      judul: "Syok Terkompensasi — Resusitasi (Kotak A)",
+      nada: "bahaya",
+      timerMenit: 60,
+      gambarAlur: {
+        src: "/assets/alur/dbd-grup-c-terkompensasi.png",
+        keterangan:
+          "Gambar 11 — Grup C: tata laksana emergensi syok terkompensasi.",
+        toggle: true,
+      },
+      konten: [
+        {
+          jenis: "poin",
+          poin: [
+            "Tentukan Ht dasar & fungsi organ.",
+            "Pantau balans cairan masuk & keluar.",
+            "Periksa status hemodinamik tiap 1 jam.",
+          ],
         },
         {
           jenis: "teks",
-          teks: "Alur tata laksana Grup C sedang disiapkan dan akan ditambahkan pada tahap berikutnya.",
+          teks: "Pasien dalam syok terkompensasi. Mulai resusitasi cairan:",
+        },
+        { jenis: "dosis", obatId: "bolusKristaloid10" },
+        {
+          jenis: "poin",
+          poin: ["Periksa ulang status klinis pasien.", MAGIC_TOUCH],
+        },
+        { jenis: "peringatan", teks: MAKS_RESUS },
+        { jenis: "teks", teks: "Apakah status hemodinamik membaik?" },
+      ],
+      tombol: [
+        {
+          label: "Ya — hemodinamik membaik (Kotak B)",
+          tujuan: "grup-c-terkompensasi-membaik",
+          nada: "utama",
+        },
+        {
+          label: "Tidak — hemodinamik tidak membaik (Kotak C)",
+          tujuan: "grup-c-terkompensasi-tidak-membaik",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-terkompensasi-membaik": {
+      id: "grup-c-terkompensasi-membaik",
+      judul: "Kotak B — Hemodinamik membaik, sapih cairan",
+      nada: "baik",
+      ringkasan: true,
+      konten: [
+        {
+          jenis: "teks",
+          teks: "Kurangi cairan kristaloid isotonis secara bertahap. Periksa ulang status klinis sebelum tiap penurunan:",
+        },
+        { jenis: "dosis", obatId: "kristaloid5_7" },
+        { jenis: "dosis", obatId: "kristaloid3_5" },
+        { jenis: "dosis", obatId: "kristaloid2_3" },
+        {
+          jenis: "teks",
+          teks: "Jika cairan masuk & output urin adekuat serta Ht mendekati normal tetapi klinis stabil, hentikan cairan kristaloid isotonis. Lanjutkan pemantauan sampai fase kritis terlewati.",
         },
       ],
       tombol: [],
+    },
+    "grup-c-terkompensasi-tidak-membaik": {
+      id: "grup-c-terkompensasi-tidak-membaik",
+      judul: "Kotak C — Tidak membaik, periksa ulang Ht",
+      nada: "bahaya",
+      konten: [
+        {
+          jenis: "teks",
+          teks: "Periksa ulang hematokrit (Ht), lalu tentukan langkah sesuai hasilnya:",
+        },
+      ],
+      tombol: [
+        {
+          label: "Ht meningkat",
+          tujuan: "grup-c-terkompensasi-ht-naik",
+          nada: "bahaya",
+        },
+        {
+          label: "Ht menurun",
+          tujuan: "grup-c-terkompensasi-ht-turun",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-terkompensasi-ht-naik": {
+      id: "grup-c-terkompensasi-ht-naik",
+      judul: "Ht meningkat — bolus kedua / koloid",
+      nada: "bahaya",
+      timerMenit: 60,
+      konten: [
+        {
+          jenis: "teks",
+          teks: "Ht meningkat menandakan kebocoran plasma berlanjut. Berikan bolus cairan berikutnya:",
+        },
+        { jenis: "dosis", obatId: "bolusKristaloidKoloid10_20" },
+        {
+          jenis: "poin",
+          poin: ["Periksa ulang status klinis pasien.", MAGIC_TOUCH],
+        },
+        { jenis: "peringatan", teks: MAKS_RESUS },
+        { jenis: "teks", teks: "Apakah status klinis membaik?" },
+      ],
+      tombol: [
+        {
+          label: "Membaik → sapih cairan (Kotak B)",
+          tujuan: "grup-c-terkompensasi-membaik",
+          nada: "utama",
+        },
+        {
+          label: "Tidak membaik → ulangi Kotak C",
+          tujuan: "grup-c-terkompensasi-tidak-membaik",
+          nada: "bahaya",
+        },
+        {
+          label: "Berkembang jadi syok hipotensi (Gambar 12)",
+          tujuan: "grup-c-hipotensif",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-terkompensasi-ht-turun": {
+      id: "grup-c-terkompensasi-ht-turun",
+      judul: "Ht menurun — pertimbangkan transfusi",
+      nada: "bahaya",
+      konten: [
+        {
+          jenis: "peringatan",
+          teks: "Ht menurun pada syok yang belum teratasi menandakan perdarahan. Berikan transfusi segera:",
+        },
+        { jenis: "dosis", obatId: "transfusiPRC5_10" },
+        { jenis: "dosis", obatId: "transfusiWRC10_20" },
+        {
+          jenis: "teks",
+          teks: "Setelah transfusi, nilai ulang dan lanjutkan resusitasi (kembali ke Kotak A).",
+        },
+      ],
+      tombol: [
+        {
+          label: "Kembali ke resusitasi (Kotak A)",
+          tujuan: "grup-c-terkompensasi",
+          nada: "utama",
+        },
+      ],
+    },
+
+    // ----- Gambar 12: Syok hipotensi -----
+    "grup-c-hipotensif": {
+      id: "grup-c-hipotensif",
+      judul: "Syok Hipotensi — Resusitasi cepat",
+      nada: "bahaya",
+      timerMenit: 15,
+      gambarAlur: {
+        src: "/assets/alur/dbd-grup-c-hipotensif.png",
+        keterangan:
+          "Gambar 12 — Grup C: algoritme manajemen cairan pada syok hipotensi.",
+        toggle: true,
+      },
+      konten: [
+        {
+          jenis: "poin",
+          poin: [
+            "Tentukan Ht dasar & fungsi organ.",
+            "Pantau balans cairan masuk & keluar.",
+            "Periksa status hemodinamik tiap 15 menit.",
+          ],
+        },
+        {
+          jenis: "teks",
+          teks: "Pasien dalam syok hipotensi. Berikan bolus cairan cepat:",
+        },
+        { jenis: "dosis", obatId: "bolusKristaloidKoloid20" },
+        {
+          jenis: "poin",
+          poin: ["Periksa ulang status klinis pasien.", MAGIC_TOUCH],
+        },
+        { jenis: "peringatan", teks: MAKS_RESUS },
+        { jenis: "teks", teks: "Apakah status hemodinamik membaik?" },
+      ],
+      tombol: [
+        {
+          label: "Ya — hemodinamik membaik (Kotak A)",
+          tujuan: "grup-c-hipotensif-membaik",
+          nada: "utama",
+        },
+        {
+          label: "Tidak — hemodinamik tidak membaik (Kotak C)",
+          tujuan: "grup-c-hipotensif-tidak-membaik",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-hipotensif-membaik": {
+      id: "grup-c-hipotensif-membaik",
+      judul: "Kotak A → B — Lanjutkan & sapih cairan",
+      nada: "baik",
+      ringkasan: true,
+      timerMenit: 60,
+      konten: [
+        {
+          jenis: "teks",
+          teks: "Lanjutkan dengan kristaloid isotonis atau koloid:",
+        },
+        { jenis: "dosis", obatId: "bolusKristaloid10" },
+        {
+          jenis: "teks",
+          teks: "Jika status klinis membaik, masuk Kotak B — kurangi cairan kristaloid isotonis secara bertahap:",
+        },
+        { jenis: "dosis", obatId: "kristaloid5_7" },
+        { jenis: "dosis", obatId: "kristaloid3_5" },
+        { jenis: "dosis", obatId: "kristaloid2_3" },
+        {
+          jenis: "teks",
+          teks: "Jika cairan masuk & output urin adekuat serta Ht mendekati normal, hentikan cairan. Lanjutkan pemantauan sampai fase kritis terlewati.",
+        },
+      ],
+      tombol: [],
+    },
+    "grup-c-hipotensif-tidak-membaik": {
+      id: "grup-c-hipotensif-tidak-membaik",
+      judul: "Kotak C — Tidak membaik, periksa ulang Ht",
+      nada: "bahaya",
+      konten: [
+        {
+          jenis: "teks",
+          teks: "Periksa ulang hematokrit (Ht), lalu tentukan langkah sesuai hasilnya:",
+        },
+      ],
+      tombol: [
+        {
+          label: "Ht meningkat",
+          tujuan: "grup-c-hipotensif-ht-naik",
+          nada: "bahaya",
+        },
+        {
+          label: "Ht menurun",
+          tujuan: "grup-c-hipotensif-ht-turun",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-hipotensif-ht-naik": {
+      id: "grup-c-hipotensif-ht-naik",
+      judul: "Ht meningkat — berikan koloid",
+      nada: "bahaya",
+      konten: [
+        { jenis: "teks", teks: "Ht meningkat: berikan koloid." },
+        { jenis: "dosis", obatId: "koloid10_20" },
+        {
+          jenis: "poin",
+          poin: ["Periksa ulang status klinis pasien.", MAGIC_TOUCH],
+        },
+        {
+          jenis: "teks",
+          teks: "Bila membaik, kurangi koloid secara bertahap:",
+        },
+        { jenis: "dosis", obatId: "koloid7_10" },
+        { jenis: "peringatan", teks: MAKS_RESUS },
+        { jenis: "teks", teks: "Apakah status klinis membaik?" },
+      ],
+      tombol: [
+        {
+          label: "Membaik → lanjutkan (Kotak A)",
+          tujuan: "grup-c-hipotensif-membaik",
+          nada: "utama",
+        },
+        {
+          label: "Tidak membaik → ulangi Kotak C",
+          tujuan: "grup-c-hipotensif-tidak-membaik",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-hipotensif-ht-turun": {
+      id: "grup-c-hipotensif-ht-turun",
+      judul: "Ht menurun — transfusi",
+      nada: "bahaya",
+      konten: [
+        {
+          jenis: "peringatan",
+          teks: "Ht menurun pada syok yang belum teratasi menandakan perdarahan. Berikan transfusi segera:",
+        },
+        { jenis: "dosis", obatId: "transfusiPRC5_10" },
+        { jenis: "dosis", obatId: "transfusiWholeBlood10_30" },
+        {
+          jenis: "peringatan",
+          teks: "Jika perdarahan berat berlanjut, lanjutkan ke manajemen perdarahan (Gambar 13) — belum tersedia di aplikasi; kirimkan gambarnya bila ingin ditambahkan.",
+        },
+        {
+          jenis: "teks",
+          teks: "Setelah transfusi, nilai ulang dan lanjutkan resusitasi (kembali ke Kotak A).",
+        },
+      ],
+      tombol: [
+        {
+          label: "Kembali ke resusitasi (Kotak A)",
+          tujuan: "grup-c-hipotensif-membaik",
+          nada: "utama",
+        },
+      ],
     },
   },
 };
