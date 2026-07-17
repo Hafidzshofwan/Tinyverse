@@ -5805,7 +5805,7 @@ const GROWTH_CHART_CONFIG = {
         label: "Laki-laki", emoji: "\u{1F466}",
         indicators: {
           bbtbu: {
-            label: "Gabungan BB/U, TB/U, & IMT/U", emoji: "\u{1F4CA}", combined: true,
+            label: "BB/U, TB/U, & IMT/U", emoji: "\u{1F4CA}", combined: true,
             xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
             charts: [
               { id: "bbu", title: "BB/U \u2014 Berat Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
@@ -5828,7 +5828,7 @@ const GROWTH_CHART_CONFIG = {
         label: "Perempuan", emoji: "\u{1F467}",
         indicators: {
           bbtbu: {
-            label: "Gabungan BB/U, TB/U, & IMT/U", emoji: "\u{1F4CA}", combined: true,
+            label: "BB/U, TB/U, & IMT/U", emoji: "\u{1F4CA}", combined: true,
             xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
             charts: [
               { id: "bbu", title: "BB/U \u2014 Berat Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
@@ -5858,10 +5858,10 @@ const GROWTH_CHART_CONFIG = {
         label: "Laki-laki", emoji: "\u{1F466}",
         indicators: {
           bbtbu: {
-            label: "Gabungan BB/U, TB/U, & BB/TB", emoji: "\u{1F4CA}", combined: true,
+            label: "BB/U, TB/U, & BB/TB", emoji: "\u{1F4CA}", combined: true,
             xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
             charts: [
-              { id: "cdc", title: "Gabungan BB/U, TB/U, & BB/TB", ageLabel: "2\u201320 tahun", zAge: "24-240",
+              { id: "cdc", title: "BB/U, TB/U, & BB/TB", ageLabel: "2\u201320 tahun", zAge: "24-240",
                 image: TKIMG.cdc_m,
                 series: [
                   { key: "berat",  yField: "berat",  yLabel: "Berat Badan (kg)",  yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbu", warna: "#E63946" },
@@ -5879,10 +5879,10 @@ const GROWTH_CHART_CONFIG = {
         label: "Perempuan", emoji: "\u{1F467}",
         indicators: {
           bbtbu: {
-            label: "Gabungan BB/U, TB/U, & BB/TB", emoji: "\u{1F4CA}", combined: true,
+            label: "BB/U, TB/U, & BB/TB", emoji: "\u{1F4CA}", combined: true,
             xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
             charts: [
-              { id: "cdc", title: "Gabungan BB/U, TB/U, & BB/TB", ageLabel: "2\u201320 tahun", zAge: "24-240",
+              { id: "cdc", title: "BB/U, TB/U, & BB/TB", ageLabel: "2\u201320 tahun", zAge: "24-240",
                 image: TKIMG.cdc_f,
                 series: [
                   { key: "berat",  yField: "berat",  yLabel: "Berat Badan (kg)",  yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbu", warna: "#E63946" },
@@ -5990,7 +5990,7 @@ function tkRenderPanelPlot() {
   const header = document.getElementById("tkPlotHeader");
   if (header) {
     header.innerHTML = `
-      <div class="tk-plot-judul">${ind.emoji || "\u{1F4CA}"} Gabungan ${escapeHtml(stdLabel)} ${tkState.standar === "who" ? "BB/U, TB/U & IMT/U" : "BB/U, TB/U, & BB/TB"} \u2014 ${escapeHtml(gLabel)}</div>
+      <div class="tk-plot-judul">${ind.emoji || "\u{1F4CA}"} ${escapeHtml(stdLabel)} ${tkState.standar === "who" ? "BB/U, TB/U, & IMT/U" : "BB/U, TB/U, & BB/TB"} \u2014 ${escapeHtml(gLabel)}</div>
       <div class="tk-plot-sub">Isi data anak satu kali, lalu tekan PLOT untuk menampilkan titik pada ${ind.charts.length > 1 ? "semua chart" : "chart"} di bawah.</div>`;
   }
 
