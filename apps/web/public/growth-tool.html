@@ -5819,7 +5819,7 @@ const GROWTH_CHART_CONFIG = {
               { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_imtu,
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
-                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22]} } }
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22],usiaLineY:2070} } }
             ]
           }
         }
@@ -5842,7 +5842,7 @@ const GROWTH_CHART_CONFIG = {
               { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_imtu,
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
-                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22]} } }
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2016},xRange:[0,60],yRange:[10,22],usiaLineY:2070} } }
             ]
           }
         }
@@ -6513,7 +6513,27 @@ function tkInterpretasiZscore(standar, kelamin, indikator, usiaGroupId, nilaiX, 
     else              { statusGizi = "Obesitas (Obese)";                                 statusColor = "#B22222"; }
   }
 
-  return { z: zRounded, zonaLabel, statusGizi, statusColor };
+  let rentang = "";
+  if (indikator === "bbu") {
+    if (z < -3) rentang = "< \u22123 SD";
+    else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
+    else if (z <= 2) rentang = "\u22122 SD s/d +2 SD";
+    else rentang = "> +2 SD";
+  } else if (indikator === "tbu") {
+    if (z < -3) rentang = "< \u22123 SD";
+    else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
+    else if (z <= 3) rentang = "\u22122 SD s/d +3 SD";
+    else rentang = "> +3 SD";
+  } else if (indikator === "imtu") {
+    if (z < -3) rentang = "< \u22123 SD";
+    else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
+    else if (z <= 1) rentang = "\u22122 SD s/d +1 SD";
+    else if (z <= 2) rentang = "> +1 SD s/d +2 SD";
+    else if (z <= 3) rentang = "> +2 SD s/d +3 SD";
+    else rentang = "> +3 SD";
+  }
+
+  return { z: zRounded, zonaLabel, rentang, statusGizi, statusColor };
 }
 
 function tkHitungKoordinatTitik(calibration, nilaiX, nilaiY) {
@@ -6534,6 +6554,7 @@ function tkHitungKoordinatTitik(calibration, nilaiX, nilaiY) {
     sumbuKananPersen: (plot.x1 / imgWidth) * 100, // tepi kanan area kurva
     sumbuKiriPersen: (plot.x0 / imgWidth) * 100,  // tepi kiri  (sumbu Y)
     sumbuBawahPersen: (plot.y1 / imgHeight) * 100, // tepi bawah (sumbu X)
+    sumbuUsiaPersen: ((isFinite(calibration.usiaLineY) ? calibration.usiaLineY : plot.y1) / imgHeight) * 100, // garis usia: turun sampai baris tick bulan (opsional per-chart)
     sumbuAtasPersen: (plot.y0 / imgHeight) * 100,
     diLuarBatasX: nilaiX < xRange[0] || nilaiX > xRange[1],
     diLuarBatasY: nilaiY < yRange[0] || nilaiY > yRange[1]
@@ -6815,7 +6836,7 @@ function plotTumbuhKembang() {
           interpretasiHtml += `
             <div class="tk-zscore-block">
               <div class="tk-zscore-row"><span class="tk-zscore-label">${escapeHtml(s.yLabel)} \u2014 Z-score</span><span class="tk-zscore-nilai">${zSign}${zInterp.z}</span></div>
-              <div class="tk-zscore-row"><span class="tk-zscore-label">Posisi</span><span class="tk-zscore-nilai">${escapeHtml(zInterp.zonaLabel)}</span></div>
+              <div class="tk-zscore-row"><span class="tk-zscore-label">Posisi</span><span class="tk-zscore-nilai">${escapeHtml(zInterp.rentang || zInterp.zonaLabel)}</span></div>
               ${zInterp.statusGizi ? `<div class="tk-zscore-status" style="border-left: 4px solid ${zInterp.statusColor}; background: ${zInterp.statusColor}18;"><span style="color:${zInterp.statusColor}; font-weight:700;">\u2B24 ${escapeHtml(zInterp.statusGizi)}</span></div>` : ""}
             </div>`;
         }
@@ -6859,9 +6880,10 @@ function tkGambarTitikSeri(stage, titik, seri) {
   const garisV = document.createElement("div");
   garisV.className = "tk-garis-bantu vertikal";
   garisV.style.left = titik.leftPercent + "%";
-  const vTop = Math.min(titik.topPercent, titik.sumbuBawahPersen);
+  const baseBawah = isFinite(titik.sumbuUsiaPersen) ? titik.sumbuUsiaPersen : titik.sumbuBawahPersen;
+  const vTop = Math.min(titik.topPercent, baseBawah);
   garisV.style.top = vTop + "%";
-  garisV.style.height = Math.abs(titik.sumbuBawahPersen - titik.topPercent) + "%";
+  garisV.style.height = Math.abs(baseBawah - titik.topPercent) + "%";
   garisV.style.background = warna;
   stage.appendChild(garisV);
 
