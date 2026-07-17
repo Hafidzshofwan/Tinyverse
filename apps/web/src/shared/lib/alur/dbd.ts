@@ -700,28 +700,74 @@ export const DBD: Alur = {
       judul: "Ht meningkat — berikan koloid",
       nada: "bahaya",
       konten: [
-        { jenis: "teks", teks: "Ht meningkat: berikan koloid." },
+        {
+          jenis: "teks",
+          teks: "Ht meningkat: berikan koloid sebagai bolus kedua.",
+        },
         { jenis: "dosis", obatId: "koloid10_20" },
+        { jenis: "peringatan", teks: MAKS_RESUS },
         {
           jenis: "poin",
           poin: ["Periksa ulang status klinis pasien.", MAGIC_TOUCH],
         },
-        {
-          jenis: "teks",
-          teks: "Bila membaik, kurangi koloid secara bertahap:",
-        },
-        { jenis: "dosis", obatId: "koloid7_10" },
-        { jenis: "peringatan", teks: MAKS_RESUS },
         { jenis: "teks", teks: "Apakah status klinis membaik?" },
       ],
       tombol: [
         {
-          label: "Membaik → lanjutkan (Kotak A)",
-          tujuan: "grup-c-hipotensif-membaik",
+          label: "Klinis membaik",
+          tujuan: "grup-c-hipotensif-ht-naik-membaik",
           nada: "utama",
         },
         {
-          label: "Tidak membaik → ulangi Kotak C",
+          label: "Klinis tidak membaik",
+          tujuan: "grup-c-hipotensif-refrakter",
+          nada: "bahaya",
+        },
+      ],
+    },
+    "grup-c-hipotensif-ht-naik-membaik": {
+      id: "grup-c-hipotensif-ht-naik-membaik",
+      judul: "Klinis membaik — sapih koloid",
+      nada: "baik",
+      ringkasan: true,
+      konten: [
+        { jenis: "teks", teks: "Kurangi koloid secara bertahap:" },
+        { jenis: "dosis", obatId: "koloid7_10" },
+        {
+          jenis: "teks",
+          teks: "Jika perbaikan berlanjut, lanjutkan penyapihan cairan seperti Kotak B.",
+        },
+      ],
+      tombol: [
+        {
+          label: "Lanjut ke penyapihan (Kotak B)",
+          tujuan: "grup-c-hipotensif-membaik",
+          nada: "utama",
+        },
+      ],
+    },
+    "grup-c-hipotensif-refrakter": {
+      id: "grup-c-hipotensif-refrakter",
+      judul: "Syok belum teratasi — Rangkuman (Gambar 13)",
+      nada: "bahaya",
+      konten: [
+        {
+          jenis: "peringatan",
+          teks: "Status klinis belum membaik setelah koloid. Periksa ulang Ht dan status klinis, lalu kembali ke Kotak C. Ikuti rangkuman tatalaksana severe dengue (Gambar 13).",
+        },
+        {
+          jenis: "poin",
+          poin: [
+            "Evaluasi perdarahan tersembunyi (mis. rectal toucher, lingkar perut bertambah); bila ada tanda perdarahan lakukan cross-match dan transfusi darah.",
+            "Nilai tanda kelebihan cairan (edema, distres napas, JVP meningkat, ronki/B-lines).",
+            "Bila syok/hipotensi menetap setelah cairan optimal, mulai vasoaktif/inotropik (Gambar 14): dobutamin 5–10 mcg/kgBB/menit atau epinefrin 0,05–0,3 mcg/kgBB/menit; tambahkan norepinefrin 0,05–0,3 mcg/kgBB/menit bila hipotensi.",
+            "Pertimbangkan rawat intensif dan pemantauan hemodinamik.",
+          ],
+        },
+      ],
+      tombol: [
+        {
+          label: "Kembali ke Kotak C",
           tujuan: "grup-c-hipotensif-tidak-membaik",
           nada: "bahaya",
         },
@@ -737,11 +783,7 @@ export const DBD: Alur = {
           teks: "Ht menurun pada syok yang belum teratasi menandakan perdarahan. Berikan transfusi segera:",
         },
         { jenis: "dosis", obatId: "transfusiPRC5_10" },
-        { jenis: "dosis", obatId: "transfusiWholeBlood10_30" },
-        {
-          jenis: "peringatan",
-          teks: "Jika perdarahan berat berlanjut, lanjutkan ke manajemen perdarahan (Gambar 13) — belum tersedia di aplikasi; kirimkan gambarnya bila ingin ditambahkan.",
-        },
+        { jenis: "dosis", obatId: "transfusiWholeBlood10_20" },
         {
           jenis: "teks",
           teks: "Setelah transfusi, nilai ulang dan lanjutkan resusitasi (kembali ke Kotak A).",

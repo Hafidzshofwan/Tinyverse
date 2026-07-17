@@ -559,12 +559,12 @@ export const OBAT: Record<string, ObatDef> = {
     rute: "IV",
     hitung: (p) => transfusi(p, { low: 10, high: 20, komponen: "WRC" }),
   },
-  transfusiWholeBlood10_30: {
-    id: "transfusiWholeBlood10_30",
+  transfusiWholeBlood10_20: {
+    id: "transfusiWholeBlood10_20",
     nama: "Transfusi darah lengkap (whole blood)",
     rute: "IV",
     hitung: (p) =>
-      transfusi(p, { low: 10, high: 30, komponen: "darah lengkap" }),
+      transfusi(p, { low: 10, high: 20, komponen: "darah lengkap" }),
   },
 };
 
