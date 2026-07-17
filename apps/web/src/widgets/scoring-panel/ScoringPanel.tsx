@@ -12,19 +12,22 @@ const headRow: CSSProperties = {
   gap: 15,
   marginBottom: 18,
 };
-// Kotak ikon: gradien magenta -> navy (pink-lavender), membulat (radius 18) -
-// bukan lingkaran biru solid seperti sebelumnya.
+// Kotak ikon: DISAMAKAN dengan Racik Puyer (.ikon-bulat) -> 52x52,
+// border-radius 17px, background magenta 10% (rgba(217,54,166,0.10)),
+// font 1.24rem (=19.84px). Sebelumnya 54x54 radius 18 gradien.
 const icoStyle: CSSProperties = {
   flex: "0 0 auto",
-  width: 54,
-  height: 54,
-  borderRadius: 18,
-  display: "grid",
-  placeItems: "center",
-  fontSize: 26,
+  width: 52,
+  height: 52,
+  minWidth: 52,
+  borderRadius: 17,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "1.24rem",
   lineHeight: 1,
-  background:
-    "linear-gradient(135deg, rgba(217, 54, 166, 0.14), rgba(10, 11, 95, 0.08))",
+  background: "rgba(217, 54, 166, 0.1)",
+  color: "#d936a6",
 };
 // Judul: computed sama dengan island -> 18.32px, Fredoka, warna #0A0B5F.
 const titleStyle: CSSProperties = {
