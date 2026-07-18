@@ -2087,3 +2087,39 @@ body.tv-tanpa-dekorasi .bg-decor {
     width: 12px;
   }
 }
+
+/* ================================================================
+   FIX: samakan kotak ikon header "Alur Tata Laksana" dengan Racik
+   Puyer (.ikon-bulat). Header Alur dirender ToolShell dengan style
+   INLINE (54x54, radius 18, gradien, 26px), jadi harus ditimpa
+   dengan !important. Scope hanya ke halaman Alur (kontainer yang
+   memuat elemen .tv-alur-*), sehingga panel/alat lain yang juga
+   memakai ToolShell TIDAK ikut berubah.
+   Nilai target = computed .ikon-bulat #page-puyer di puyer-tool.html:
+   52x52, radius 17px, background magenta 10%, warna #D936A6, 1.24rem.
+   ================================================================ */
+.tv-container:has([class*="tv-alur-"]) .tv-tool-head span[aria-hidden="true"] {
+  flex: 0 0 52px !important;
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  border-radius: 17px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  background: rgba(217, 54, 166, 0.1) !important;
+  color: #d936a6 !important;
+  box-shadow: none !important;
+}
+@media (max-width: 768px) {
+  .tv-container:has([class*="tv-alur-"]) .tv-tool-head span[aria-hidden="true"] {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+}
