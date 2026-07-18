@@ -204,7 +204,7 @@ function komposisiRingkasan(
     (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)
   ) {
     baris.push(
-      `Pasien: ${pasien.nama ?? "-"} \u00b7 BB ${pasien.bb ?? "-"} kg \u00b7 Usia ${usiaTeks(pasien.usiaBulan)}`,
+      `Pasien: ${pasien.nama ?? "-"} \u00b7 BB ${pasien.bb ?? "-"} kg \u00b7 TB ${pasien.tb ?? "-"} cm \u00b7 Usia ${usiaTeks(pasien.usiaBulan)}`,
     );
   }
   baris.push("");
@@ -341,8 +341,8 @@ export function AlurTatalaksanaPanel() {
       </div>
       {punyaPasien && pasien ? (
         <div style={{ fontSize: ".85rem" }}>
-          {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · Usia{" "}
-          {usiaTeks(pasien.usiaBulan)}
+          {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · TB{" "}
+          {pasien.tb ?? "\u2013"} cm · Usia {usiaTeks(pasien.usiaBulan)}
         </div>
       ) : (
         <div className="tv-warn" style={{ marginTop: 2 }}>

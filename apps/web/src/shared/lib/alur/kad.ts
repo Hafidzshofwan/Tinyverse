@@ -130,8 +130,58 @@ export const KAD: Alur = {
             "Bila GD 250\u2013300 mg/dL \u2192 tambahkan dekstrosa 5% (1:1 dengan NaCl 0,9%); bila perlu D10/D12,5% \u2192 \u201ctwo-bag system\u201d untuk cegah hipoglikemia.",
           ],
         },
+        {
+          jenis: "teks",
+          teks: "Pilih derajat dehidrasi untuk menghitung kebutuhan cairan otomatis (kelompok Bayi/Anak ditentukan dari usia pasien):",
+        },
       ],
-      tombol: [{ label: "Lanjut: Insulin", tujuan: "insulin", nada: "utama" }],
+      tombol: [
+        { label: "Dehidrasi ringan", tujuan: "r-cairan-ringan", nada: "utama" },
+        { label: "Dehidrasi sedang", tujuan: "r-cairan-sedang", nada: "utama" },
+        { label: "Dehidrasi berat", tujuan: "r-cairan-berat", nada: "bahaya" },
+      ],
+    },
+    "r-cairan-ringan": {
+      id: "r-cairan-ringan",
+      judul: "Kebutuhan cairan 48 jam \u00b7 Dehidrasi ringan",
+      ringkasan: true,
+      konten: [{ jenis: "dosis", obatId: "cairanKadRingan" }],
+      tombol: [
+        { label: "Lanjut: Insulin", tujuan: "insulin", nada: "utama" },
+        {
+          label: "Ganti derajat dehidrasi",
+          tujuan: "r-rehidrasi",
+          nada: "biasa",
+        },
+      ],
+    },
+    "r-cairan-sedang": {
+      id: "r-cairan-sedang",
+      judul: "Kebutuhan cairan 48 jam \u00b7 Dehidrasi sedang",
+      ringkasan: true,
+      konten: [{ jenis: "dosis", obatId: "cairanKadSedang" }],
+      tombol: [
+        { label: "Lanjut: Insulin", tujuan: "insulin", nada: "utama" },
+        {
+          label: "Ganti derajat dehidrasi",
+          tujuan: "r-rehidrasi",
+          nada: "biasa",
+        },
+      ],
+    },
+    "r-cairan-berat": {
+      id: "r-cairan-berat",
+      judul: "Kebutuhan cairan 48 jam \u00b7 Dehidrasi berat",
+      ringkasan: true,
+      konten: [{ jenis: "dosis", obatId: "cairanKadBerat" }],
+      tombol: [
+        { label: "Lanjut: Insulin", tujuan: "insulin", nada: "utama" },
+        {
+          label: "Ganti derajat dehidrasi",
+          tujuan: "r-rehidrasi",
+          nada: "biasa",
+        },
+      ],
     },
 
     insulin: {

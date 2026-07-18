@@ -133,6 +133,70 @@ function transfusi(
   };
 }
 
+// Rumatan cairan harian (Holliday-Segar).
+function holliday(bb: number): number {
+  if (bb <= 10) return 100 * bb;
+  if (bb <= 20) return 1000 + 50 * (bb - 10);
+  return 1500 + 20 * (bb - 20);
+}
+
+// Hitung kebutuhan cairan KAD untuk 48 jam (defisit + rumatan).
+// Kelompok Bayi (<12 bln) / Anak ditentukan otomatis dari usia pasien.
+function hitungCairanKad(
+  p: Pasien,
+  derajat: "ringan" | "sedang" | "berat",
+): HasilDosis {
+  const bb = p.bb;
+  const bln = p.usiaBulan;
+  const persenBayi = { ringan: 5, sedang: 10, berat: 15 };
+  const persenAnak = { ringan: 3, sedang: 6, berat: 9 };
+  if (bln == null) {
+    return {
+      ringkas: "Isi USIA pasien di Profil untuk menentukan kelompok Bayi/Anak.",
+      peringatan: "Butuh usia (Bayi <12 bln) & BB untuk hitung otomatis.",
+    };
+  }
+  const bayi = bln < 12;
+  const kelompok = bayi ? "Bayi" : "Anak";
+  const persen = (bayi ? persenBayi : persenAnak)[derajat];
+  if (!bb || bb <= 0) {
+    return {
+      ringkas: `${kelompok} \u00b7 dehidrasi ${persen}% (defisit ${persen * 10} mL/kgBB).`,
+      peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis.",
+    };
+  }
+  const defisit = (persen / 100) * bb * 1000;
+  const rumatanHari = holliday(bb);
+  const rumatan48 = rumatanHari * 2;
+  const totalHitung = defisit + rumatan48;
+
+  // Batas otomatis 4 L/m\u00b2/hari untuk 48 jam.
+  // BSA (Mosteller) = akar((TB[cm] \u00d7 BB[kg]) / 3600). Butuh TB dari profil.
+  const tb = p.tb;
+  let total = totalHitung;
+  let catatanCap = "";
+  const punyaTb = tb != null && tb > 0;
+  if (punyaTb) {
+    const bsa = Math.sqrt((tb! * bb) / 3600);
+    const batas48 = 4000 * bsa * 2;
+    if (totalHitung > batas48) {
+      total = batas48;
+      catatanCap = ` Dibatasi otomatis ke maks 4 L/m\u00b2/hari (BSA ${fmt(bsa)} m\u00b2 \u2192 maks ${fmt(batas48)} mL/48 jam) dari hitungan ${fmt(totalHitung)} mL.`;
+    } else {
+      catatanCap = ` Masih di bawah batas 4 L/m\u00b2/hari (BSA ${fmt(bsa)} m\u00b2 \u2192 maks ${fmt(batas48)} mL/48 jam).`;
+    }
+  }
+  const tetesan = total / 48;
+
+  return {
+    ringkas: `\u2248 ${fmt(tetesan)} mL/jam \u00b7 total 48 jam ${fmt(total)} mL (BB ${fmt(bb)} kg)`,
+    detail: `${kelompok} \u00b7 dehidrasi ${persen}%. Defisit ${fmt(defisit)} mL + rumatan 48 jam ${fmt(rumatan48)} mL (rumatan/hari ${fmt(rumatanHari)} mL) = total ${fmt(totalHitung)} mL, dibagi 48 jam.${catatanCap}`,
+    peringatan: punyaTb
+      ? "Batas 4 L/m\u00b2/hari diterapkan otomatis dari TB & BB profil; kurangi volume yang sudah dipakai untuk atasi syok."
+      : "Isi TINGGI BADAN di Profil agar batas 4 L/m\u00b2/hari diterapkan otomatis. Kurangi volume yang sudah dipakai untuk atasi syok.",
+  };
+}
+
 export const OBAT: Record<string, ObatDef> = {
   // ===== Ketoasidosis Diabetik / KAD (Pedoman Pelayanan Medis, IDAI 2022) =====
   naclBolusKad: {
@@ -217,6 +281,24 @@ export const OBAT: Record<string, ObatDef> = {
         peringatan: "Mulai sejak awal resusitasi, kecuali anuria.",
       };
     },
+  },
+  cairanKadRingan: {
+    id: "cairanKadRingan",
+    nama: "Kebutuhan cairan KAD \u2014 dehidrasi ringan",
+    rute: "IV \u00b7 48 jam",
+    hitung: (p) => hitungCairanKad(p, "ringan"),
+  },
+  cairanKadSedang: {
+    id: "cairanKadSedang",
+    nama: "Kebutuhan cairan KAD \u2014 dehidrasi sedang",
+    rute: "IV \u00b7 48 jam",
+    hitung: (p) => hitungCairanKad(p, "sedang"),
+  },
+  cairanKadBerat: {
+    id: "cairanKadBerat",
+    nama: "Kebutuhan cairan KAD \u2014 dehidrasi berat",
+    rute: "IV \u00b7 48 jam",
+    hitung: (p) => hitungCairanKad(p, "berat"),
   },
   // ===== Hipoglikemia (PNPK Tata Laksana DM pada Anak, Kemenkes 2024) =====
   glukosaOral: {

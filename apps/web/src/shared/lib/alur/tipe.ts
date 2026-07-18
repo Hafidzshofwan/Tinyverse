@@ -4,6 +4,7 @@ export type Derajat = "ringan-sedang" | "berat" | "ancaman";
 export type Pasien = {
   nama?: string;
   bb?: number | null;
+  tb?: number | null;
   usiaBulan?: number | null;
 };
 
