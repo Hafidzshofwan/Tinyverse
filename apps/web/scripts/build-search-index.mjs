@@ -69,6 +69,7 @@ const ALUR_ALIAS = {
   "kejang-demam": "kejang step konvulsi status epileptikus bangkitan diazepam demam",
   dbd: "demam berdarah dengue dhf syok dengue trombosit hematokrit grup a b c ns1",
   hipoglikemia: "gula darah rendah hipo hipoglikemi dekstrosa d10 glukagon glukosa oral diabetes melitus dm insulin",
+  kad: "ketoasidosis diabetik diabetikum dka asidosis keton ketonemia hiperglikemia insulin bikarbonat kalium resusitasi cairan diabetes melitus dm",
 };
 
 function extractPhrases(html) {

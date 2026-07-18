@@ -3,6 +3,7 @@ import { ASMA } from "./asma";
 import { KEJANG } from "./kejang";
 import { DBD } from "./dbd";
 import { HIPOGLIKEMIA } from "./hipoglikemia";
+import { KAD } from "./kad";
 
 // Metadata kategori untuk mengelompokkan kondisi pada tampilan daftar (grid).
 export type KategoriMeta = {
@@ -103,6 +104,16 @@ export const DAFTAR_KONDISI: Kondisi[] = [
       "Tata laksana kegawatan hipoglikemia anak \u2014 jalur anak sadar & tidak sadar.",
     kategori: "metabolik",
     alur: HIPOGLIKEMIA,
+    tersedia: true,
+  },
+  {
+    id: "kad",
+    nama: "Ketoasidosis Diabetik (KAD)",
+    ikon: "\u2697\uFE0F",
+    ringkas:
+      "Tata laksana KAD anak \u2014 resusitasi cairan, insulin, koreksi elektrolit & pemantauan.",
+    kategori: "metabolik",
+    alur: KAD,
     tersedia: true,
   },
 ];

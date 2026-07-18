@@ -134,6 +134,90 @@ function transfusi(
 }
 
 export const OBAT: Record<string, ObatDef> = {
+  // ===== Ketoasidosis Diabetik / KAD (Pedoman Pelayanan Medis, IDAI 2022) =====
+  naclBolusKad: {
+    id: "naclBolusKad",
+    nama: "NaCl 0,9% / RL \u2014 bolus syok",
+    rute: "IV",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "20 mL/kgBB/jam, ulang sampai renjatan teratasi.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis.",
+        };
+      }
+      return {
+        ringkas: `${fmt(20 * bb)} mL/jam (BB ${fmt(bb)} kg)`,
+        detail: aturan,
+      };
+    },
+  },
+  insulinReguler: {
+    id: "insulinReguler",
+    nama: "Insulin reguler \u2014 drip IV",
+    rute: "IV (jalur terpisah)",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "0,1 U/kgBB/jam IV, jalur terpisah dari cairan.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan:
+            "Masukkan BB pasien di Profil untuk hitung otomatis. GD turun maks 100 mg/dL/jam.",
+        };
+      }
+      return {
+        ringkas: `${fmt(0.1 * bb)} U/jam (BB ${fmt(bb)} kg)`,
+        detail: aturan,
+        peringatan:
+          "Penurunan GD \u2264100 mg/dL/jam; jangan hentikan mendadak.",
+      };
+    },
+  },
+  bikarbonatKad: {
+    id: "bikarbonatKad",
+    nama: "Natrium bikarbonat (hanya bila pH <6,9)",
+    rute: "IV",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "1\u20132 mEq/kgBB, berikan perlahan.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan:
+            "HANYA bila pH <6,9 + gangguan perfusi / hiperkalemia mengancam nyawa.",
+        };
+      }
+      return {
+        ringkas: `${fmt(1 * bb)}\u2013${fmt(2 * bb)} mEq (BB ${fmt(bb)} kg)`,
+        detail: aturan,
+        peringatan:
+          "HANYA bila pH <6,9 + gangguan perfusi / hiperkalemia mengancam nyawa.",
+      };
+    },
+  },
+  kaliumKad: {
+    id: "kaliumKad",
+    nama: "Kalium (mulai sejak awal, kecuali anuria)",
+    rute: "IV",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "Konsentrasi 40 mEq/L; maks 0,5 mEq/kgBB/jam.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Mulai sejak awal resusitasi, kecuali anuria.",
+        };
+      }
+      return {
+        ringkas: `Maks ${fmt(0.5 * bb)} mEq/jam (BB ${fmt(bb)} kg) \u00b7 konsentrasi 40 mEq/L`,
+        detail: aturan,
+        peringatan: "Mulai sejak awal resusitasi, kecuali anuria.",
+      };
+    },
+  },
   // ===== Hipoglikemia (PNPK Tata Laksana DM pada Anak, Kemenkes 2024) =====
   glukosaOral: {
     id: "glukosaOral",
