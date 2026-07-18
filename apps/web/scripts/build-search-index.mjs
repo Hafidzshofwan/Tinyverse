@@ -68,6 +68,7 @@ const ALUR_ALIAS = {
   asma: "sesak napas wheezing mengi bronkospasme serangan asma nebulisasi salbutamol",
   "kejang-demam": "kejang step konvulsi status epileptikus bangkitan diazepam demam",
   dbd: "demam berdarah dengue dhf syok dengue trombosit hematokrit grup a b c ns1",
+  hipoglikemia: "gula darah rendah hipo hipoglikemi dekstrosa d10 glukagon glukosa oral diabetes melitus dm insulin",
 };
 
 function extractPhrases(html) {

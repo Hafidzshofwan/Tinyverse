@@ -134,6 +134,87 @@ function transfusi(
 }
 
 export const OBAT: Record<string, ObatDef> = {
+  // ===== Hipoglikemia (PNPK Tata Laksana DM pada Anak, Kemenkes 2024) =====
+  glukosaOral: {
+    id: "glukosaOral",
+    nama: "Glukosa oral (anak sadar)",
+    rute: "oral",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "0,3 g/kgBB per pemberian (setara \u00b110\u201320 g).";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis.",
+        };
+      }
+      return {
+        ringkas: `${fmt(0.3 * bb)} g glukosa (BB ${fmt(bb)} kg)`,
+        detail: aturan,
+      };
+    },
+  },
+  dekstrosaBolus: {
+    id: "dekstrosaBolus",
+    nama: "Dekstrosa 10% (D10) \u2014 bolus IV",
+    rute: "IV bolus",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "2\u20135 mL/kgBB (0,2\u20130,5 g/kgBB) IV bolus.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis.",
+        };
+      }
+      return {
+        ringkas: `${fmt(2 * bb)}\u2013${fmt(5 * bb)} mL D10 IV bolus (BB ${fmt(bb)} kg)`,
+        detail: aturan,
+      };
+    },
+  },
+  glukagon: {
+    id: "glukagon",
+    nama: "Glukagon (bila akses IV belum tersedia)",
+    rute: "IM/SC",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan = "<25 kg: 0,5 mg \u00b7 \u226525 kg: 1 mg (IM/SC).";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Isi BB pasien untuk saran otomatis.",
+        };
+      }
+      const dosis = bb < 25 ? "0,5 mg" : "1 mg";
+      return { ringkas: `${dosis} IM/SC (BB ${fmt(bb)} kg)`, detail: aturan };
+    },
+  },
+  dekstrosaInfus: {
+    id: "dekstrosaInfus",
+    nama: "Infus rumatan Dekstrosa 10%",
+    rute: "IV drip",
+    hitung: (p) => {
+      const bb = p.bb;
+      const aturan =
+        "6\u201310 mg/kgBB/menit \u2014 sesuaikan dengan hasil glukosa darah.";
+      if (!bb || bb <= 0) {
+        return {
+          ringkas: aturan,
+          peringatan: "Masukkan BB pasien di Profil untuk hitung otomatis.",
+        };
+      }
+      const mgMinLow = 6 * bb;
+      const mgMinHigh = 10 * bb;
+      // D10 = 100 mg/mL -> mL/jam = mg/menit x 60 / 100 = mg/menit x 0,6
+      const mlJamLow = mgMinLow * 0.6;
+      const mlJamHigh = mgMinHigh * 0.6;
+      return {
+        ringkas: `${fmt(mgMinLow)}\u2013${fmt(mgMinHigh)} mg/menit (BB ${fmt(bb)} kg)`,
+        detail: `6\u201310 mg/kgBB/menit. Dengan D10 \u2248 ${fmt(mlJamLow)}\u2013${fmt(mlJamHigh)} mL/jam.`,
+      };
+    },
+  },
   oksigen: {
     id: "oksigen",
     nama: "Oksigen",

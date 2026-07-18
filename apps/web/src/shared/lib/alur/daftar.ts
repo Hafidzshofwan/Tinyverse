@@ -2,6 +2,7 @@ import type { Alur, Setting } from "./tipe";
 import { ASMA } from "./asma";
 import { KEJANG } from "./kejang";
 import { DBD } from "./dbd";
+import { HIPOGLIKEMIA } from "./hipoglikemia";
 
 // Metadata kategori untuk mengelompokkan kondisi pada tampilan daftar (grid).
 export type KategoriMeta = {
@@ -88,9 +89,20 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     id: "dbd",
     nama: "Demam Berdarah Dengue",
     ikon: "\uD83E\uDE78",
-    ringkas: "Klasifikasi & tata laksana infeksi dengue anak \u2014 Grup A, B, C.",
+    ringkas:
+      "Klasifikasi & tata laksana infeksi dengue anak \u2014 Grup A, B, C.",
     kategori: "infeksi",
     alur: DBD,
+    tersedia: true,
+  },
+  {
+    id: "hipoglikemia",
+    nama: "Hipoglikemia",
+    ikon: "\uD83C\uDF6C",
+    ringkas:
+      "Tata laksana kegawatan hipoglikemia anak \u2014 jalur anak sadar & tidak sadar.",
+    kategori: "metabolik",
+    alur: HIPOGLIKEMIA,
     tersedia: true,
   },
 ];
