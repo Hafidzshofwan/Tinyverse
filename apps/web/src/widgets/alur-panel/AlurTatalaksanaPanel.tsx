@@ -5,8 +5,18 @@ import type { CSSProperties } from "react";
 import { DAFTAR_KONDISI, KATEGORI_ALUR } from "@/shared/lib/alur/daftar";
 import type { Kondisi } from "@/shared/lib/alur/daftar";
 import { hitungObat } from "@/shared/lib/alur/dosis";
-import { bacaPasienAktif, PASIEN_AKTIF_KEY, tambahKeRingkasan } from "@/shared/lib/alur/ringkasan-bridge";
-import type { BlokKonten, Layar, Nada, Pasien, Setting } from "@/shared/lib/alur/tipe";
+import {
+  bacaPasienAktif,
+  PASIEN_AKTIF_KEY,
+  tambahKeRingkasan,
+} from "@/shared/lib/alur/ringkasan-bridge";
+import type {
+  BlokKonten,
+  Layar,
+  Nada,
+  Pasien,
+  Setting,
+} from "@/shared/lib/alur/tipe";
 
 const LABEL_SETTING: Record<Setting, string> = {
   fktp: "FKTP / Fasilitas Primer",
@@ -28,9 +38,18 @@ function usiaTeks(bln: number | null | undefined): string {
 }
 
 function gayaTombol(nada?: Nada): CSSProperties {
-  if (nada === "bahaya") return { background: "linear-gradient(160deg,#e23a5e,#c01643)", color: "#fff", border: "none" };
+  if (nada === "bahaya")
+    return {
+      background: "linear-gradient(160deg,#e23a5e,#c01643)",
+      color: "#fff",
+      border: "none",
+    };
   if (nada === "biasa")
-    return { background: "var(--tv-putih)", color: "var(--tv-teks)", border: "1px solid var(--tv-line)" };
+    return {
+      background: "var(--tv-putih)",
+      color: "var(--tv-teks)",
+      border: "1px solid var(--tv-line)",
+    };
   return {};
 }
 
@@ -53,13 +72,20 @@ function Timer({ menit }: { menit: number }) {
 
   useEffect(() => {
     if (sisa == null || sisa <= 0) return;
-    const t = setInterval(() => setSisa((s) => (s == null ? s : Math.max(0, s - 1))), 1000);
+    const t = setInterval(
+      () => setSisa((s) => (s == null ? s : Math.max(0, s - 1))),
+      1000,
+    );
     return () => clearInterval(t);
   }, [sisa]);
 
   if (sisa == null) {
     return (
-      <button type="button" className="tv-btn" onClick={() => setSisa(menit * 60)}>
+      <button
+        type="button"
+        className="tv-btn"
+        onClick={() => setSisa(menit * 60)}
+      >
         ⏱️ Mulai timer nilai ulang ({menit} menit)
       </button>
     );
@@ -70,7 +96,14 @@ function Timer({ menit }: { menit: number }) {
   const selesai = sisa <= 0;
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 10,
+        flexWrap: "wrap",
+      }}
+    >
       <span
         style={{
           fontWeight: 800,
@@ -89,8 +122,15 @@ function Timer({ menit }: { menit: number }) {
   );
 }
 
-function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null }) {
-  if (blok.jenis === "teks") return <p style={{ margin: "6px 0" }}>{blok.teks}</p>;
+function RenderBlok({
+  blok,
+  pasien,
+}: {
+  blok: BlokKonten;
+  pasien: Pasien | null;
+}) {
+  if (blok.jenis === "teks")
+    return <p style={{ margin: "6px 0" }}>{blok.teks}</p>;
 
   if (blok.jenis === "poin")
     return (
@@ -124,11 +164,22 @@ function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null 
       }}
     >
       <div style={{ fontWeight: 700 }}>
-        💊 {d.def.nama} <span style={{ fontWeight: 400, color: "var(--tv-soft-teks)" }}>· {d.def.rute}</span>
+        💊 {d.def.nama}{" "}
+        <span style={{ fontWeight: 400, color: "var(--tv-soft-teks)" }}>
+          · {d.def.rute}
+        </span>
       </div>
       <div style={{ marginTop: 2 }}>{d.hasil.ringkas}</div>
       {d.hasil.detail && (
-        <div style={{ fontSize: ".86rem", color: "var(--tv-soft-teks)", marginTop: 2 }}>{d.hasil.detail}</div>
+        <div
+          style={{
+            fontSize: ".86rem",
+            color: "var(--tv-soft-teks)",
+            marginTop: 2,
+          }}
+        >
+          {d.hasil.detail}
+        </div>
       )}
       {d.hasil.peringatan && (
         <div className="tv-warn" style={{ marginTop: 4 }}>
@@ -139,20 +190,33 @@ function RenderBlok({ blok, pasien }: { blok: BlokKonten; pasien: Pasien | null 
   );
 }
 
-function komposisiRingkasan(kondisi: Kondisi, layar: Layar, setting: Setting, pasien: Pasien | null): string {
+function komposisiRingkasan(
+  kondisi: Kondisi,
+  layar: Layar,
+  setting: Setting,
+  pasien: Pasien | null,
+): string {
   const baris: string[] = [];
-  if (!kondisi.alur.tanpaSetting) baris.push(`Setting: ${LABEL_SETTING[setting]}`);
-  if (pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)) {
-    baris.push(`Pasien: ${pasien.nama ?? "-"} \u00b7 BB ${pasien.bb ?? "-"} kg \u00b7 Usia ${usiaTeks(pasien.usiaBulan)}`);
+  if (!kondisi.alur.tanpaSetting)
+    baris.push(`Setting: ${LABEL_SETTING[setting]}`);
+  if (
+    pasien &&
+    (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)
+  ) {
+    baris.push(
+      `Pasien: ${pasien.nama ?? "-"} \u00b7 BB ${pasien.bb ?? "-"} kg \u00b7 Usia ${usiaTeks(pasien.usiaBulan)}`,
+    );
   }
   baris.push("");
   for (const blok of layar.konten) {
     if (blok.jenis === "teks") baris.push(blok.teks);
-    else if (blok.jenis === "poin") for (const p of blok.poin) baris.push(`\u2022 ${p}`);
+    else if (blok.jenis === "poin")
+      for (const p of blok.poin) baris.push(`\u2022 ${p}`);
     else if (blok.jenis === "peringatan") baris.push(`\u26a0 ${blok.teks}`);
     else {
       const d = hitungObat(blok.obatId, pasien ?? {});
-      if (d) baris.push(`\u2022 ${d.def.nama} (${d.def.rute}): ${d.hasil.ringkas}`);
+      if (d)
+        baris.push(`\u2022 ${d.def.nama} (${d.def.rute}): ${d.hasil.ringkas}`);
     }
   }
   baris.push("");
@@ -210,7 +274,10 @@ export function AlurTatalaksanaPanel() {
     setBagan(false);
   }, []);
 
-  const pergi = useCallback((tujuan: string) => setStack((st) => [...st, tujuan]), []);
+  const pergi = useCallback(
+    (tujuan: string) => setStack((st) => [...st, tujuan]),
+    [],
+  );
   const kembali = useCallback(() => {
     setStack((st) => {
       if (st.length > 1) return st.slice(0, -1);
@@ -230,7 +297,28 @@ export function AlurTatalaksanaPanel() {
     setBagan(false);
   }, []);
 
-  const punyaPasien = !!(pasien && (pasien.nama || pasien.bb != null || pasien.usiaBulan != null));
+  // Deep-link dari pencarian global: buka penyakit langsung dari #tk=alur:<id>.
+  // Contoh: /preview/alur#tk=alur:dbd akan langsung membuka alur DBD.
+  useEffect(() => {
+    function bukaDariHash() {
+      const h = window.location.hash || "";
+      const m = h.match(/[#&]tk=([^&]+)/);
+      if (!m) return;
+      const tk = decodeURIComponent(m[1] ?? "");
+      if (tk.indexOf("alur:") !== 0) return;
+      const id = tk.slice(5);
+      const k = DAFTAR_KONDISI.find((x) => x.id === id && x.tersedia);
+      if (k) pilihKondisi(k);
+    }
+    bukaDariHash();
+    window.addEventListener("hashchange", bukaDariHash);
+    return () => window.removeEventListener("hashchange", bukaDariHash);
+  }, [pilihKondisi]);
+
+  const punyaPasien = !!(
+    pasien &&
+    (pasien.nama || pasien.bb != null || pasien.usiaBulan != null)
+  );
   const kartuPasien = (
     <div
       style={{
@@ -241,12 +329,20 @@ export function AlurTatalaksanaPanel() {
         marginBottom: 14,
       }}
     >
-      <div style={{ fontWeight: 700, fontSize: "1rem", color: "var(--tv-navy)", marginBottom: 2 }}>
+      <div
+        style={{
+          fontWeight: 700,
+          fontSize: "1rem",
+          color: "var(--tv-navy)",
+          marginBottom: 2,
+        }}
+      >
         👶 Profil Pasien
       </div>
       {punyaPasien && pasien ? (
         <div style={{ fontSize: ".85rem" }}>
-          {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · Usia {usiaTeks(pasien.usiaBulan)}
+          {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · Usia{" "}
+          {usiaTeks(pasien.usiaBulan)}
         </div>
       ) : (
         <div className="tv-warn" style={{ marginTop: 2 }}>
@@ -258,7 +354,8 @@ export function AlurTatalaksanaPanel() {
 
   const disclaimer = (
     <div className="tv-warn" style={{ marginTop: 12 }}>
-      ⚠️ Alat bantu keputusan — bukan pengganti penilaian klinis. Verifikasi dosis sebelum pemberian.
+      ⚠️ Alat bantu keputusan — bukan pengganti penilaian klinis. Verifikasi
+      dosis sebelum pemberian.
     </div>
   );
 
@@ -297,7 +394,12 @@ export function AlurTatalaksanaPanel() {
           <section key={kat.id} className="tv-alur-kat-sec">
             <div
               className="tv-alur-kat"
-              style={{ "--kat": kat.warna, "--kat-lembut": kat.warnaLembut } as CSSProperties}
+              style={
+                {
+                  "--kat": kat.warna,
+                  "--kat-lembut": kat.warnaLembut,
+                } as CSSProperties
+              }
             >
               <span className="tv-alur-kat-ikon">{kat.ikon}</span>
               <span className="tv-alur-kat-nama">{kat.nama}</span>
@@ -312,7 +414,12 @@ export function AlurTatalaksanaPanel() {
                   className="tv-alur-kartu"
                   disabled={!k.tersedia}
                   onClick={() => k.tersedia && pilihKondisi(k)}
-                  style={{ "--kat": kat.warna, "--kat-lembut": kat.warnaLembut } as CSSProperties}
+                  style={
+                    {
+                      "--kat": kat.warna,
+                      "--kat-lembut": kat.warnaLembut,
+                    } as CSSProperties
+                  }
                 >
                   <span className="tv-alur-kartu-ikon">{k.ikon}</span>
                   <span className="tv-alur-kartu-teks">
@@ -338,7 +445,12 @@ export function AlurTatalaksanaPanel() {
     return (
       <div>
         {kartuPasien}
-        <button type="button" className="tv-btn" onClick={keDaftar} style={{ marginBottom: 12 }}>
+        <button
+          type="button"
+          className="tv-btn"
+          onClick={keDaftar}
+          style={{ marginBottom: 12 }}
+        >
           ← Daftar penyakit
         </button>
         <div className="tv-card">
@@ -349,14 +461,28 @@ export function AlurTatalaksanaPanel() {
             Pilih lokasi penanganan untuk memulai alur.
           </div>
           <div className="tv-stack" style={{ marginTop: 14 }}>
-            <button type="button" className="tv-btn tv-btn-blok" onClick={() => pilihSetting(kondisi, "fktp")}>
+            <button
+              type="button"
+              className="tv-btn tv-btn-blok"
+              onClick={() => pilihSetting(kondisi, "fktp")}
+            >
               🏥 FKTP / Fasilitas Primer
             </button>
-            <button type="button" className="tv-btn tv-btn-blok" onClick={() => pilihSetting(kondisi, "rs")}>
+            <button
+              type="button"
+              className="tv-btn tv-btn-blok"
+              onClick={() => pilihSetting(kondisi, "rs")}
+            >
               🏨 Rumah Sakit
             </button>
           </div>
-          <div style={{ fontSize: ".8rem", color: "var(--tv-soft-teks)", marginTop: 14 }}>
+          <div
+            style={{
+              fontSize: ".8rem",
+              color: "var(--tv-soft-teks)",
+              marginTop: 14,
+            }}
+          >
             Sumber: {kondisi.alur.sumber}
           </div>
         </div>
@@ -367,7 +493,9 @@ export function AlurTatalaksanaPanel() {
 
   // ===== 3) ALUR =====
   const kiniId = stack[stack.length - 1];
-  const layar: Layar | undefined = kiniId ? kondisi.alur.layar[kiniId] : undefined;
+  const layar: Layar | undefined = kiniId
+    ? kondisi.alur.layar[kiniId]
+    : undefined;
   const baganSrc = kondisi.bagan ? kondisi.bagan[setting] : undefined;
 
   if (!layar) {
@@ -375,7 +503,12 @@ export function AlurTatalaksanaPanel() {
       <div>
         <div className="tv-card">
           <div className="tv-card-title">Alur tidak ditemukan</div>
-          <button type="button" className="tv-btn" style={{ marginTop: 12 }} onClick={keDaftar}>
+          <button
+            type="button"
+            className="tv-btn"
+            style={{ marginTop: 12 }}
+            onClick={keDaftar}
+          >
             Kembali ke daftar
           </button>
         </div>
@@ -384,7 +517,8 @@ export function AlurTatalaksanaPanel() {
     );
   }
 
-  const gambarToggle: { src: string; keterangan?: string } | null = layar.gambarAlur?.toggle
+  const gambarToggle: { src: string; keterangan?: string } | null = layar
+    .gambarAlur?.toggle
     ? layar.gambarAlur
     : baganSrc
       ? { src: baganSrc, keterangan: undefined }
@@ -403,7 +537,15 @@ export function AlurTatalaksanaPanel() {
     <div>
       {kartuPasien}
 
-      <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap", marginBottom: 12 }}>
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          alignItems: "center",
+          flexWrap: "wrap",
+          marginBottom: 12,
+        }}
+      >
         <button type="button" className="tv-btn" onClick={keDaftar}>
           ← Daftar
         </button>
@@ -452,7 +594,9 @@ export function AlurTatalaksanaPanel() {
                   title={L?.judul}
                 >
                   <span className="tv-alur-step-node">{i + 1}</span>
-                  <span className="tv-alur-step-lbl">{L?.judul ?? "Langkah"}</span>
+                  <span className="tv-alur-step-lbl">
+                    {L?.judul ?? "Langkah"}
+                  </span>
                 </button>
               </li>
             );
@@ -460,9 +604,19 @@ export function AlurTatalaksanaPanel() {
         </ol>
       )}
 
-      <div className="tv-card" style={{ borderTop: `4px solid ${warnaNada(layar.nada)}` }}>
+      <div
+        className="tv-card"
+        style={{ borderTop: `4px solid ${warnaNada(layar.nada)}` }}
+      >
         {layar.derajat && (
-          <div style={{ fontSize: ".78rem", fontWeight: 800, color: warnaDerajat(layar.derajat), marginBottom: 4 }}>
+          <div
+            style={{
+              fontSize: ".78rem",
+              fontWeight: 800,
+              color: warnaDerajat(layar.derajat),
+              marginBottom: 4,
+            }}
+          >
             {LABEL_DERAJAT[layar.derajat] ?? layar.derajat}
           </div>
         )}
@@ -493,16 +647,33 @@ export function AlurTatalaksanaPanel() {
             <img
               src={layar.gambarAlur.src}
               alt={layar.gambarAlur.keterangan ?? `Bagan alur ${kondisi.nama}`}
-              style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
+              style={{
+                width: "100%",
+                height: "auto",
+                borderRadius: 8,
+                display: "block",
+              }}
             />
-            <figcaption style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
-              🖼️ {layar.gambarAlur.keterangan ?? "Bagan alur asli"} · Sumber: {kondisi.alur.sumber}
+            <figcaption
+              style={{
+                fontSize: ".78rem",
+                color: "var(--tv-soft-teks)",
+                marginTop: 6,
+              }}
+            >
+              🖼️ {layar.gambarAlur.keterangan ?? "Bagan alur asli"} · Sumber:{" "}
+              {kondisi.alur.sumber}
             </figcaption>
           </figure>
         )}
 
         {layar.ringkasan && (
-          <button type="button" className="tv-btn" style={{ marginTop: 8 }} onClick={tambah}>
+          <button
+            type="button"
+            className="tv-btn"
+            style={{ marginTop: 8 }}
+            onClick={tambah}
+          >
             📄 Tambahkan ke Ringkasan
           </button>
         )}
@@ -533,18 +704,29 @@ export function AlurTatalaksanaPanel() {
               fontSize: ".9rem",
             }}
           >
-            ✅ Akhir alur untuk kondisi ini. Gunakan “Kembali” atau “← Daftar” untuk menelusuri cabang lain.
+            ✅ Akhir alur untuk kondisi ini. Gunakan “Kembali” atau “← Daftar”
+            untuk menelusuri cabang lain.
           </div>
         )}
 
-        <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 16 }}>
+        <div
+          style={{
+            fontSize: ".78rem",
+            color: "var(--tv-soft-teks)",
+            marginTop: 16,
+          }}
+        >
           Sumber: {kondisi.alur.sumber}
         </div>
       </div>
 
       {gambarToggle && (
         <div style={{ marginTop: 12 }}>
-          <button type="button" className="tv-btn" onClick={() => setBagan((b) => !b)}>
+          <button
+            type="button"
+            className="tv-btn"
+            onClick={() => setBagan((b) => !b)}
+          >
             🖼️ {bagan ? "Sembunyikan gambar alur" : "Gambar alur"}
           </button>
           {bagan && (
@@ -559,11 +741,26 @@ export function AlurTatalaksanaPanel() {
             >
               <img
                 src={gambarToggle.src}
-                alt={gambarToggle.keterangan ?? `Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`}
-                style={{ width: "100%", height: "auto", borderRadius: 8, display: "block" }}
+                alt={
+                  gambarToggle.keterangan ??
+                  `Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`
+                }
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  borderRadius: 8,
+                  display: "block",
+                }}
               />
-              <div style={{ fontSize: ".78rem", color: "var(--tv-soft-teks)", marginTop: 6 }}>
-                {gambarToggle.keterangan ?? "Bagan asli"} — sumber: {kondisi.alur.sumber}
+              <div
+                style={{
+                  fontSize: ".78rem",
+                  color: "var(--tv-soft-teks)",
+                  marginTop: 6,
+                }}
+              >
+                {gambarToggle.keterangan ?? "Bagan asli"} — sumber:{" "}
+                {kondisi.alur.sumber}
               </div>
             </div>
           )}

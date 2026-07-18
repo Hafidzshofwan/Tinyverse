@@ -38,6 +38,7 @@ const EXTRA_MENUS = [
   { slug: "beranda", label: "Beranda", icon: "\uD83C\uDFE0", href: "/", keywords: ["home","utama","dashboard"] },
   { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", keywords: ["skor","skoring","scoring","kriteria","penilaian klinis"] },
   { slug: "imunisasi", label: "Jadwal Imunisasi", icon: "\uD83D\uDCC5", href: "/preview/imunisasi", keywords: ["imunisasi","vaksin","vaksinasi","jadwal","idai"] },
+  { slug: "alur", label: "Alur Tata Laksana", icon: "\uD83E\uDDED", href: "/preview/alur", keywords: ["alur","tata laksana","tatalaksana","algoritma","protokol","kegawatan","penanganan","asma","kejang","dbd","dengue"] },
   { slug: "ringkasan", label: "Ringkasan Klinis", icon: "\uD83D\uDCC4", href: "/preview/ringkasan", keywords: ["ringkasan","resume","catatan","dokumentasi"] },
 ];
 
@@ -49,6 +50,25 @@ function decode(s) {
     .replace(/&#(\d+);/g, (_, d) => { try { return String.fromCodePoint(parseInt(d, 10)); } catch { return " "; } })
     .replace(/&([a-zA-Z]+);/g, (m, n) => (n in ENTITIES ? ENTITIES[n] : " "));
 }
+
+// Ubah escape \uXXXX (mis. pada ikon/ringkas di daftar.ts) menjadi karakter asli.
+function decodeUnicodeEscapes(s) {
+  return String(s).replace(/\\u([0-9a-fA-F]{4})/g, (_, h) =>
+    String.fromCharCode(parseInt(h, 16))
+  );
+}
+
+// Kunci pencocokan longgar (samakan dengan tv-deeplink.js): huruf/angka saja.
+function kunciCocok(s) {
+  return String(s || "").toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+// Alias kata kunci per penyakit alur agar mudah ditemukan (opsional per id).
+const ALUR_ALIAS = {
+  asma: "sesak napas wheezing mengi bronkospasme serangan asma nebulisasi salbutamol",
+  "kejang-demam": "kejang step konvulsi status epileptikus bangkitan diazepam demam",
+  dbd: "demam berdarah dengue dhf syok dengue trombosit hematokrit grup a b c ns1",
+};
 
 function extractPhrases(html) {
   let s = html
@@ -182,6 +202,90 @@ try {
   }
 } catch (e) {
   console.warn("guideline-tool.html tidak terbaca:", e.message);
+}
+
+// 3c) Alur Tata Laksana (React) dari daftar.ts -> deep-link buka penyakit.
+// Tiap kondisi "tersedia" jadi entri konten dengan anchor "alur:<id>", dibaca
+// AlurTatalaksanaPanel.tsx untuk langsung membuka penyakit yang dicari.
+try {
+  const dsrc = readFileSync(join(SRC, "shared", "lib", "alur", "daftar.ts"), "utf8");
+  const blok = dsrc.match(/DAFTAR_KONDISI[^=]*=\s*\[([\s\S]*?)\n\];/);
+  if (blok) {
+    const parts = blok[1].split(/\bid:\s*"/).slice(1);
+    let n = 0;
+    for (const part of parts) {
+      const id = (part.match(/^([^"]+)"/) || [])[1];
+      if (!id) continue;
+      const nama = (part.match(/nama:\s*"([^"]+)"/) || [])[1] || "";
+      const ikon = decodeUnicodeEscapes((part.match(/ikon:\s*"([^"]+)"/) || [])[1] || "");
+      const ringkas = decodeUnicodeEscapes((part.match(/ringkas:\s*"([^"]+)"/) || [])[1] || "");
+      const kategori = (part.match(/kategori:\s*"([^"]+)"/) || [])[1] || "";
+      const tersedia = /tersedia:\s*true/.test(part);
+      if (!nama || !tersedia) continue;
+      const kw = [nama, kategori, ringkas, ALUR_ALIAS[id] || "", "alur", "tata laksana", "tatalaksana", "algoritma", "protokol", "penanganan"]
+        .filter(Boolean)
+        .join(" ")
+        .slice(0, 300);
+      entries.push({
+        type: "content",
+        slug: "alur",
+        label: "Alur Tata Laksana",
+        icon: ikon || "\uD83E\uDDED",
+        href: "/preview/alur",
+        text: nama,
+        keywords: kw,
+        anchor: "alur:" + id,
+      });
+      n += 1;
+    }
+    console.log("alur diindeks:", n);
+  } else {
+    console.warn("DAFTAR_KONDISI tidak ditemukan di daftar.ts");
+  }
+} catch (e) {
+  console.warn("daftar.ts alur tidak terbaca:", e.message);
+}
+
+// 3d) Materi vaksin (Jadwal Imunisasi) dari array VAKSIN di imunisasi-tool.html.
+// Data ada di dalam <script> (dibuang extractPhrases), jadi diparse khusus.
+// Anchor "vaksin:<slug>" ditangani skrip di imunisasi-tool.html: memilih +
+// menampilkan vaksin lalu menggulir ke materinya (tv-deeplink.js mengabaikannya).
+try {
+  const im = readFileSync(join(PUBLIC, "imunisasi-tool.html"), "utf8");
+  const blok = im.match(/var\s+VAKSIN\s*=\s*\[([\s\S]*?)\n\s*\];/);
+  if (blok) {
+    const parts = blok[1].split(/\{\s*n:\s*'/).slice(1);
+    let n = 0;
+    for (const part of parts) {
+      const nameRaw = (part.match(/^([^']+)'/) || [])[1];
+      if (!nameRaw) continue;
+      const prevRaw = (part.match(/p:\s*'([^']+)'/) || [])[1] || "";
+      const nama = decode(nameRaw).replace(/\s+/g, " ").trim();
+      const cegah = decode(prevRaw).replace(/\s+/g, " ").trim();
+      const slug = kunciCocok(nama);
+      if (!slug) continue;
+      const kw = [nama, cegah, "imunisasi", "vaksin", "vaksinasi", "jadwal", "idai"]
+        .filter(Boolean)
+        .join(" ")
+        .slice(0, 300);
+      entries.push({
+        type: "content",
+        slug: "imunisasi",
+        label: "Jadwal Imunisasi",
+        icon: "\uD83D\uDCC5",
+        href: "/preview/imunisasi",
+        text: nama + (cegah ? " \u00B7 mencegah " + cegah : ""),
+        keywords: kw,
+        anchor: "vaksin:" + slug,
+      });
+      n += 1;
+    }
+    console.log("vaksin diindeks:", n);
+  } else {
+    console.warn("VAKSIN tidak ditemukan di imunisasi-tool.html");
+  }
+} catch (e) {
+  console.warn("imunisasi-tool.html tidak terbaca:", e.message);
 }
 
 // 4) Menu tambahan.

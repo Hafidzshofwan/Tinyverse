@@ -5856,7 +5856,7 @@ html body #page-dosis .obat-card .varian-label {
     var v=VAKSIN[i]; if(!v){ detail.innerHTML=''; return; }
     var badges='';
     for(var j=0;j<v.b.length;j++){ badges += '<span class="imn-badge '+v.b[j][1]+'">'+v.b[j][0]+'</span>'; }
-    var html='<div class="imn-detail-head"><h3>'+v.n+'</h3><div class="imn-badges">'+badges+'</div></div>';
+    var html='<div class="imn-detail-head" id="vaksinAktif"><h3>'+v.n+'</h3><div class="imn-badges">'+badges+'</div></div>';
     html+='<div class="imn-rows">';
     html+=row('Mencegah', v.p);
     html+=row('Jenis vaksin', v.jk);
@@ -5874,6 +5874,38 @@ html body #page-dosis .obat-card .varian-label {
     sel.innerHTML=opts;
     sel.addEventListener('change', function(){ render(parseInt(sel.value,10)||0); });
     render(0);
+
+    // Deep-link dari pencarian global: ?tk=vaksin:<slug> -> pilih + tampilkan
+    // vaksin yang dicari, lalu sorot & minta halaman induk menggulir ke materinya.
+    // (tv-deeplink.js mengabaikan prefix "vaksin:" karena bukan id:/text:).
+    (function(){
+      function kunci(s){ return String(s||'').toLowerCase().replace(/[^a-z0-9]+/g,''); }
+      var tk=''; try{ tk=new URLSearchParams(location.search).get('tk')||''; }catch(e){}
+      if(tk.indexOf('vaksin:')!==0) return;
+      var needle=kunci(tk.slice(7));
+      if(needle.length<2) return;
+      var idx=-1;
+      for(var q=0;q<VAKSIN.length;q++){
+        var vk=kunci(VAKSIN[q].n.replace(/&[a-zA-Z]+;/g,' '));
+        if(vk && (vk.indexOf(needle)!==-1 || needle.indexOf(vk)!==-1)){ idx=q; break; }
+      }
+      if(idx<0) return;
+      sel.value=String(idx); render(idx);
+      function sorotScroll(){
+        var head=document.getElementById('vaksinAktif');
+        if(!head) return;
+        try{
+          head.style.transition='box-shadow .25s ease';
+          head.style.boxShadow='0 0 0 3px #E5006D, 0 0 0 8px rgba(229,0,109,.22)';
+          setTimeout(function(){ head.style.boxShadow=''; }, 2200);
+          var rect=head.getBoundingClientRect();
+          var top=rect.top+(window.pageYOffset||document.documentElement.scrollTop||0);
+          if(window.parent) window.parent.postMessage({__tkScrollTo:top},'*');
+        }catch(e){}
+      }
+      setTimeout(sorotScroll,450);
+      setTimeout(sorotScroll,1000);
+    })();
   }
 })();
 </script>
