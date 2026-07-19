@@ -1,0 +1,6 @@
+Taruh 3 file PDF berikut di folder ini (nama file HARUS persis):
+- isk-anak-2011.pdf
+- sepsis-anak-2021.pdf
+- neonatal-esensial-2018.pdf
+
+Lihat CARA-PASANG untuk link unduhnya.
