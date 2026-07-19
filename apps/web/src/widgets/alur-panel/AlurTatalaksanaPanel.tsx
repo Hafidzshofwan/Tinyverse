@@ -353,7 +353,7 @@ export function AlurTatalaksanaPanel() {
   );
 
   const disclaimer = (
-    <div className="tv-warn" style={{ marginTop: 12 }}>
+    <div className="tv-disclaimer" style={{ marginTop: 12 }}>
       ⚠️ Alat bantu keputusan — bukan pengganti penilaian klinis. Verifikasi
       dosis sebelum pemberian.
     </div>

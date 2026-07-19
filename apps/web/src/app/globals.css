@@ -968,6 +968,17 @@ body {
   color: #92600a;
 }
 
+/* ============ DISCLAIMER SERAGAM (kotak kuning 13,44px, samakan Mode Darurat) ============ */
+.tv-disclaimer {
+  background: #fff8e5;
+  border: 2px solid #ffe2a8;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 13.44px;
+  color: #8a6d1a;
+  line-height: 1.5;
+}
+
 /* ============ BACKDROP (mobile drawer) ============ */
 .tv-backdrop {
   display: none;
