@@ -1,1 +1,0 @@
-export { NutritionTool } from "./NutritionTool";

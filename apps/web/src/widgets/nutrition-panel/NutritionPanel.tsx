@@ -1,16 +1,18 @@
 import type { CSSProperties } from "react";
-import { NutritionTool } from "@/features/nutrition-tool";
+import { NutritionForm } from "@/features/nutrition-calculator";
 
 const wrapStyle: CSSProperties = { maxWidth: 760, margin: "0 auto" };
 
 /**
- * Widget: memuat island Kalkulator Nutrisi (port v17). Header "judul-section"
- * sudah dibawa dari dalam island, jadi TIDAK ada ToolShell/ToolHeader di sini.
+ * Panel Kalkulator Nutrisi (React native) - pengganti island iframe v17.
+ * Render NutritionForm (tab Kalori & Protein + Susu Formula). Header dibawa ToolShell di page.tsx.
  */
 export function NutritionPanel() {
   return (
     <div style={wrapStyle}>
-      <NutritionTool />
+      <section className="tv-card tv-stack">
+        <NutritionForm />
+      </section>
     </div>
   );
 }
