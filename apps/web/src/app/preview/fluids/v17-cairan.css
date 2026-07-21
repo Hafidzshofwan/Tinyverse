@@ -385,12 +385,17 @@
 }
 
 .burn-map-card {
-  background: linear-gradient(150deg, #e6f7fb 0%, #eef1ff 46%, #ffe9f3 100%);
-  border-radius: 22px;
-  padding: 18px 14px;
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 8px 24px rgba(84, 198, 235, 0.14);
+  background: linear-gradient(
+    125deg,
+    #ffdbe8 0%,
+    #cdf3e6 30%,
+    #dbe7ff 58%,
+    #ffdcec 85%,
+    #ffe6d2 100%
+  );
+  border-radius: 26px;
+  padding: 20px 16px;
+  box-shadow: var(--card-shadow);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -438,12 +443,11 @@
 }
 
 .burn-area {
-  fill: rgba(255, 255, 255, 0.72);
-  stroke: #6d4cbb;
-  stroke-width: 1.5;
+  fill: #ffffff;
+  stroke: #7a4fd0;
+  stroke-width: 1.6;
   cursor: pointer;
   transition: all 0.2s ease;
-  filter: url(#burn-glow);
 }
 
 .burn-area:hover {
@@ -456,10 +460,10 @@
 }
 
 .burn-area.aktif {
-  fill: url(#grad-aktif);
-  stroke: var(--magenta);
+  fill: url(#burnSelectedFill);
+  stroke: #e6322e;
   stroke-width: 2.5;
-  filter: drop-shadow(0 0 10px rgba(233, 54, 166, 0.55));
+  filter: drop-shadow(0 0 12px rgba(255, 90, 80, 0.55));
   animation: burnSelectedPulse 1.6s ease-in-out infinite;
 }
 
@@ -490,8 +494,8 @@
 }
 
 .burn-perineum.aktif {
-  fill: url(#grad-aktif);
-  stroke: var(--magenta);
+  fill: url(#burnSelectedFill);
+  stroke: #e6322e;
   animation: burnSelectedPulse 1.6s ease-in-out infinite;
 }
 
@@ -751,12 +755,10 @@
 /* Quick-select limb buttons — v17 */
 .burn-quick-panel {
   background: var(--putih);
-  border-radius: 20px;
-  padding: 14px;
-  box-shadow:
-    0 6px 0 rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(84, 198, 235, 0.12);
-  margin-top: 4px;
+  border-radius: 26px;
+  padding: 18px 16px;
+  box-shadow: var(--card-shadow);
+  margin-top: 6px;
 }
 .burn-quick-grid {
   display: grid;
@@ -780,10 +782,10 @@
   transform: translateY(-1px);
 }
 .burn-quick-btn.aktif {
-  background: var(--navy);
+  background: linear-gradient(90deg, #ef3d9e 0%, #ff8a3d 100%);
   color: #fff;
-  border-color: var(--navy);
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+  border-color: transparent;
+  box-shadow: 0 6px 16px rgba(239, 61, 158, 0.32);
 }
 @media (max-width: 480px) {
   .burn-quick-grid {
