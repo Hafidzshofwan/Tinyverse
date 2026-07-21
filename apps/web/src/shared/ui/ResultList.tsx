@@ -6,7 +6,7 @@ export interface ResultRow {
 }
 
 export interface ResultListProps {
-  rows: ResultRow[];
+  rows: ReadonlyArray<ResultRow>;
   error: string | null;
 }
 
