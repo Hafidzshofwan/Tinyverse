@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { viewDrip } from "@/entities/fluid";
+import type { DripType } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
 
 const cardStyle: CSSProperties = {
@@ -94,7 +95,7 @@ function dripTabBtn(active: boolean): CSSProperties {
 export function DripForm() {
   const [volume, setVolume] = useState("");
   const [hours, setHours] = useState("");
-  const [factor, setFactor] = useState<"macro" | "micro">("macro");
+  const [factor, setFactor] = useState<DripType>("makro");
   const [rows, setRows] = useState<ResultRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [calculated, setCalculated] = useState(false);
@@ -116,8 +117,8 @@ export function DripForm() {
         <div style={tabWrap}>
           <button
             type="button"
-            style={dripTabBtn(factor === "macro")}
-            onClick={() => setFactor("macro")}
+            style={dripTabBtn(factor === "makro")}
+            onClick={() => setFactor("makro")}
           >
             Makro drip
             <br />
@@ -125,8 +126,8 @@ export function DripForm() {
           </button>
           <button
             type="button"
-            style={dripTabBtn(factor === "micro")}
-            onClick={() => setFactor("micro")}
+            style={dripTabBtn(factor === "mikro")}
+            onClick={() => setFactor("mikro")}
           >
             Mikro drip
             <br />

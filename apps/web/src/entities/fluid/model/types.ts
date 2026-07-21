@@ -5,4 +5,7 @@ export interface DisplayRow {
 
 export interface FluidView {
 	rows: DisplayRow[]
+	error: string | null
+	total?: number
+	duration?: number
 }

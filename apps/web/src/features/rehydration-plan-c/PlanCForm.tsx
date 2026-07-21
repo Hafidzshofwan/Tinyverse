@@ -3,9 +3,8 @@
 import { useState } from "react";
 import type { CSSProperties } from "react";
 import { viewPlanC } from "@/entities/fluid";
+import type { PlanCAgeCategory } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
-
-type AgeCategory = "infant" | "child";
 
 const cardStyle: CSSProperties = {
   background: "rgba(255,255,255,0.92)",
@@ -114,7 +113,7 @@ function ageTabBtn(active: boolean): CSSProperties {
 /** Feature: Rencana C (dehidrasi berat) — gaya v17. */
 export function PlanCForm() {
   const [weight, setWeight] = useState("");
-  const [age, setAge] = useState<AgeCategory>("child");
+  const [age, setAge] = useState<PlanCAgeCategory>("anak");
   const [rows, setRows] = useState<ResultRow[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [total, setTotal] = useState<string>("");
@@ -124,7 +123,7 @@ export function PlanCForm() {
     const result = viewPlanC(weight === "" ? NaN : Number(weight), age);
     setRows(result.rows);
     setError(result.error);
-    setTotal(result.total ? `${result.total} mL` : "");
+    setTotal(result.total != null ? `${result.total} mL` : "");
     setCalculated(true);
   }
 
@@ -141,8 +140,8 @@ export function PlanCForm() {
         <div style={tabWrap}>
           <button
             type="button"
-            style={ageTabBtn(age === "infant")}
-            onClick={() => setAge("infant")}
+            style={ageTabBtn(age === "bayi")}
+            onClick={() => setAge("bayi")}
           >
             Bayi
             <br />
@@ -150,8 +149,8 @@ export function PlanCForm() {
           </button>
           <button
             type="button"
-            style={ageTabBtn(age === "child")}
-            onClick={() => setAge("child")}
+            style={ageTabBtn(age === "anak")}
+            onClick={() => setAge("anak")}
           >
             Anak
             <br />
