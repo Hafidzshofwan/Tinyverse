@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { BurnArea } from "@tinyverse/clinical-core";
 import { NumberField } from "@/shared/ui";
+import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { viewBurn } from "@/entities/burn";
 import { BurnSvgMap } from "./BurnSvgMap";
 
@@ -11,8 +12,13 @@ function formatTbsa(n: number): string {
 }
 
 export function BurnForm() {
-  const [usia, setUsia] = useState("");
-  const [berat, setBerat] = useState("");
+  const profile = usePatientProfile();
+  const usiaTahun =
+    profile.usiaBulan != null
+      ? Math.round((profile.usiaBulan / 12) * 10) / 10
+      : null;
+  const [usia, setUsia] = useSyncedField(usiaTahun);
+  const [berat, setBerat] = useSyncedField(profile.bb);
   const [selected, setSelected] = useState<ReadonlyArray<BurnArea>>([]);
 
   function toggle(area: BurnArea) {

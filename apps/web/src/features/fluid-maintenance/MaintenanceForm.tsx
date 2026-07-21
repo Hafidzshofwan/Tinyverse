@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { viewMaintenance } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
+import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 
 /** Feature: kalkulator cairan rumatan (Holliday–Segar) — gaya v17. */
 export function MaintenanceForm() {
-  const [weight, setWeight] = useState("");
+  const profile = usePatientProfile();
+  const [weight, setWeight] = useSyncedField(profile.bb);
   const [rows, setRows] = useState<ReadonlyArray<ResultRow>>([]);
   const [rincian, setRincian] = useState<ReadonlyArray<ResultRow>>([]);
   const [error, setError] = useState<string | null>(null);

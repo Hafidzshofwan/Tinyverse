@@ -2,6 +2,7 @@
 
 import { useMemo, useState, type CSSProperties } from "react";
 import { NumberField } from "@/shared/ui";
+import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import {
   deriveAgeGroups,
   gcsOptionsFor,
@@ -155,7 +156,8 @@ function OptionButton(props: {
 }
 
 export function GcsForm() {
-  const [usiaBulan, setUsiaBulan] = useState("");
+  const profile = usePatientProfile();
+  const [usiaBulan, setUsiaBulan] = useSyncedField(profile.usiaBulan);
   const [manualEM, setManualEM] = useState<EyeMotorAgeGroup | null>(null);
   const [manualV, setManualV] = useState<VerbalAgeGroup | null>(null);
   const [eye, setEye] = useState<number | null>(null);
