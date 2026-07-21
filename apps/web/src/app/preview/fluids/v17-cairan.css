@@ -795,7 +795,7 @@
 
 /* Interactive body-map percentage labels — enlarged & centered */
 .burn-body-svg text {
-  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-family: "Quicksand", system-ui, sans-serif;
   font-size: 30px;
   font-weight: 700;
   fill: #25245c;

@@ -30,6 +30,23 @@ export function DripForm() {
   return (
     <div>
       <div className="kartu">
+        <div className="form-row-group">
+          <NumberField
+            label="💧 Kebutuhan Cairan (mL)"
+            value={volume}
+            onValueChange={setVolume}
+            placeholder="cth: 500"
+          />
+          <NumberField
+            label="⏱️ Lama Pemberian (jam)"
+            value={hours}
+            onValueChange={setHours}
+            placeholder="cth: 8"
+          />
+        </div>
+        <div className="form-group" style={{ marginTop: 4, marginBottom: 8 }}>
+          <label>💉 Ukuran Drip Set</label>
+        </div>
         <div className="segmented-toggle" style={{ marginBottom: 18 }}>
           <button
             type="button"
@@ -49,20 +66,6 @@ export function DripForm() {
             <br />
             <small style={{ fontSize: "0.72rem" }}>60 tpm/mL</small>
           </button>
-        </div>
-        <div className="form-row-group">
-          <NumberField
-            label="Kebutuhan Cairan (mL)"
-            value={volume}
-            onValueChange={setVolume}
-            placeholder="cth: 500"
-          />
-          <NumberField
-            label="Lama Pemberian (jam)"
-            value={hours}
-            onValueChange={setHours}
-            placeholder="cth: 8"
-          />
         </div>
         <button type="button" className="btn-hitung" onClick={hitung}>
           💉 Hitung Faktor Tetes
