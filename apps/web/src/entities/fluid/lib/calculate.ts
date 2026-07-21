@@ -1,26 +1,22 @@
 import {
-	dripRate,
-	maintenanceFluids,
-	rehydrationPlanB,
-	rehydrationPlanC,
-	type DripType,
-	type PlanCAgeCategory,
-} from "@tinyverse/clinical-core"
-import type { FluidView } from "../model/types"
+  dripRate,
+  maintenanceFluids,
+  rehydrationPlanB,
+  rehydrationPlanC,
+  type DripType,
+  type PlanCAgeCategory,
+} from "@tinyverse/clinical-core";
+import type { DisplayRow, FluidView } from "../model/types";
 
 // Re-export tipe domain agar layer di atas (features) tidak mengimpor langsung dari package.
-export type { DripType, PlanCAgeCategory }
+export type { DripType, PlanCAgeCategory };
 
-function tryCatch<T>(fn: () => T): FluidView {
-	try {
-		const result = fn()
-		return { ...result, error: null }
-	} catch (e) {
-		return {
-			rows: [],
-			error: e instanceof Error ? e.message : "Perhitungan gagal",
-		}
-	}
+function displayRows(rows: DisplayRow[]): FluidView {
+  return { rows, error: null };
+}
+
+function failure(error: string): FluidView {
+  return { rows: [], error };
 }
 
 /**
@@ -29,63 +25,82 @@ function tryCatch<T>(fn: () => T): FluidView {
  * (lapisan UI), sesuai keputusan arsitektur P5 — domain tetap mengembalikan angka eksak.
  */
 export function viewMaintenance(weightKg: number): FluidView {
-	return tryCatch(() => {
-		const r = maintenanceFluids(weightKg)
-		return {
-			rows: [
-				{ label: "Kebutuhan per hari", value: `${r.totalMlPerDay.toFixed(0)} mL/hari` },
-				{ label: "Setara per jam", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
-			],
-		}
-	})
+  try {
+    const r = maintenanceFluids(weightKg);
+    return displayRows([
+      {
+        label: "Kebutuhan per hari",
+        value: `${r.totalMlPerDay.toFixed(0)} mL/hari`,
+      },
+      { label: "Setara per jam", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
+    ]);
+  } catch (e) {
+    return failure(e instanceof Error ? e.message : "Perhitungan gagal");
+  }
 }
 
-export function viewDrip(volumeMl: number, hours: number, dripType: DripType): FluidView {
-	return tryCatch(() => {
-		const r = dripRate(volumeMl, hours, dripType)
-		return {
-			rows: [
-				{ label: "Laju tetesan", value: `${r.gttPerMin} tetes/menit` },
-				{ label: "Nilai presisi", value: `${r.gttPerMinRaw.toFixed(1)} tetes/menit` },
-				{ label: "Setara laju", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
-				{ label: "Faktor tetes", value: `${r.dropFactor} gtt/mL` },
-			],
-		}
-	})
+export function viewDrip(
+  volumeMl: number,
+  hours: number,
+  dripType: DripType,
+): FluidView {
+  try {
+    const r = dripRate(volumeMl, hours, dripType);
+    return displayRows([
+      { label: "Laju tetesan", value: `${r.gttPerMin} tetes/menit` },
+      {
+        label: "Nilai presisi",
+        value: `${r.gttPerMinRaw.toFixed(1)} tetes/menit`,
+      },
+      { label: "Setara laju", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
+      { label: "Faktor tetes", value: `${r.dropFactor} gtt/mL` },
+    ]);
+  } catch (e) {
+    return failure(e instanceof Error ? e.message : "Perhitungan gagal");
+  }
 }
 
 export function viewPlanB(weightKg: number): FluidView {
-	return tryCatch(() => {
-		const r = rehydrationPlanB(weightKg)
-		return {
-			rows: [
-				{ label: "Total cairan", value: `${r.totalMl.toFixed(0)} mL` },
-				{ label: "Laju", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
-				{ label: "Durasi", value: `${r.overHours} jam` },
-			],
-			total: r.totalMl,
-			duration: r.overHours,
-		}
-	})
+  try {
+    const r = rehydrationPlanB(weightKg);
+    return {
+      rows: [
+        { label: "Total cairan", value: `${r.totalMl.toFixed(0)} mL` },
+        { label: "Laju", value: `≈ ${r.mlPerHour.toFixed(1)} mL/jam` },
+        { label: "Durasi", value: `${r.overHours} jam` },
+      ],
+      error: null,
+      total: r.totalMl,
+      duration: r.overHours,
+    };
+  } catch (e) {
+    return failure(e instanceof Error ? e.message : "Perhitungan gagal");
+  }
 }
 
-export function viewPlanC(weightKg: number, ageCategory: PlanCAgeCategory): FluidView {
-	return tryCatch(() => {
-		const r = rehydrationPlanC(weightKg, ageCategory)
-		return {
-			rows: [
-				{ label: "Total cairan", value: `${r.totalMl.toFixed(0)} mL` },
-				{
-					label: `Tahap 1 (${r.stage1.mlPerKg} mL/kg)`,
-					value: `${r.stage1.volumeMl.toFixed(0)} mL / ${r.stage1.hours} jam (≈ ${r.stage1.mlPerHour.toFixed(1)} mL/jam)`,
-				},
-				{
-					label: `Tahap 2 (${r.stage2.mlPerKg} mL/kg)`,
-					value: `${r.stage2.volumeMl.toFixed(0)} mL / ${r.stage2.hours} jam (≈ ${r.stage2.mlPerHour.toFixed(1)} mL/jam)`,
-				},
-				{ label: "Total waktu", value: `${r.totalHours} jam` },
-			],
-			total: r.totalMl,
-		}
-	})
+export function viewPlanC(
+  weightKg: number,
+  ageCategory: PlanCAgeCategory,
+): FluidView {
+  try {
+    const r = rehydrationPlanC(weightKg, ageCategory);
+    return {
+      rows: [
+        { label: "Total cairan", value: `${r.totalMl.toFixed(0)} mL` },
+        {
+          label: `Tahap 1 (${r.stage1.mlPerKg} mL/kg)`,
+          value: `${r.stage1.volumeMl.toFixed(0)} mL / ${r.stage1.hours} jam (≈ ${r.stage1.mlPerHour.toFixed(1)} mL/jam)`,
+        },
+        {
+          label: `Tahap 2 (${r.stage2.mlPerKg} mL/kg)`,
+          value: `${r.stage2.volumeMl.toFixed(0)} mL / ${r.stage2.hours} jam (≈ ${r.stage2.mlPerHour.toFixed(1)} mL/jam)`,
+        },
+        { label: "Total waktu", value: `${r.totalHours} jam` },
+      ],
+      error: null,
+      total: r.totalMl,
+    };
+  } catch (e) {
+    return failure(e instanceof Error ? e.message : "Perhitungan gagal");
+  }
 }
