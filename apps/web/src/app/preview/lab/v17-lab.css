@@ -1,4 +1,4 @@
-/* === TinyVerse \u2014 Interpretasi Lab (port v17 lab-tool, palet navy/etail) === */
+/* === TinyVerse — Interpretasi Lab (port v17 lab-tool, tema etail/navy) === */
 
 .tv-page-lab-wrapper {
   background: #f8fafc;
@@ -7,40 +7,31 @@
 }
 
 .tv-page-lab {
-  --kuning: #f9d85c;
-  --kuning-tua: #e7b900;
   --biru: #0b0c63;
   --biru-tua: #090a4e;
   --hijau: #22c7a7;
   --hijau-tua: #12957e;
-  --oranye: #ff9f45;
-  --oranye-tua: #e67818;
-  --pink: #e23ca7;
-  --pink-tua: #c5228d;
   --krem: #f1f3f8;
   --putih: #ffffff;
   --teks: #0a0b4f;
   --teks-lembut: #667085;
-  --merah-lembut: #fda4af;
   --etail-navy: #0a0b5f;
-  --etail-navy-2: #17186f;
   --etail-magenta: #d936a6;
   --etail-soft: #f4f5fa;
   --etail-line: rgba(10, 11, 95, 0.09);
-  --etail-shadow: 0 28px 80px rgba(10, 11, 95, 0.14);
   --etail-soft-shadow: 0 18px 44px rgba(10, 11, 95, 0.1);
 
   max-width: 980px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
   font-family: "Quicksand", system-ui, sans-serif;
   font-weight: 700;
   color: var(--teks);
 }
 
-/* Header standar (mengikuti Racik Puyer) */
+/* Header (standar Racik Puyer) */
 .tv-page-lab .judul-section {
   display: flex;
   align-items: center;
@@ -62,7 +53,8 @@
   font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 1.24rem;
   font-weight: 700;
-  color: var(--teks);
+  letter-spacing: -0.035em;
+  color: var(--etail-navy);
 }
 .tv-page-lab .judul-section p {
   margin: 2px 0 0;
@@ -71,14 +63,16 @@
   color: rgba(10, 11, 95, 0.62);
 }
 
+/* Kartu putih (etail) */
 .tv-page-lab .kartu {
-  background: var(--putih);
-  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 26px;
   padding: 22px;
-  border: 1px solid var(--etail-line);
   box-shadow: var(--etail-soft-shadow);
 }
 
+/* Form */
 .tv-page-lab .form-group {
   margin-bottom: 16px;
 }
@@ -96,7 +90,7 @@
 .tv-page-lab select {
   width: 100%;
   padding: 13px 16px;
-  border: 2px solid #eaf0fb;
+  border: 3px solid #eaf6fb;
   border-radius: 14px;
   font-family: "Quicksand", system-ui, sans-serif;
   font-size: 15px;
@@ -108,72 +102,88 @@
 }
 .tv-page-lab input[type="number"]:focus,
 .tv-page-lab select:focus {
-  border-color: var(--etail-magenta);
+  border-color: rgba(217, 54, 166, 0.62);
+  box-shadow: 0 0 0 5px rgba(217, 54, 166, 0.1);
   background: var(--putih);
 }
 
+/* Tombol aksi — pill magenta (etail) */
 .tv-page-lab .btn-hitung {
   width: 100%;
   padding: 15px;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(160deg, var(--hijau), var(--hijau-tua));
+  border: 0;
+  border-radius: 999px;
+  background: var(--etail-magenta);
   color: #fff;
-  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
   font-size: 1.05rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: -0.012em;
   cursor: pointer;
   margin-top: 4px;
-  box-shadow:
-    0 5px 0 var(--hijau-tua),
-    0 8px 18px rgba(34, 199, 167, 0.3);
+  box-shadow: 0 14px 28px rgba(217, 54, 166, 0.26);
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    filter 0.16s ease;
+}
+.tv-page-lab .btn-hitung:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 36px rgba(217, 54, 166, 0.32);
 }
 .tv-page-lab .btn-hitung:active {
-  transform: translateY(2px);
-  box-shadow:
-    0 3px 0 var(--hijau-tua),
-    0 5px 12px rgba(34, 199, 167, 0.3);
+  transform: translateY(0);
 }
 
-/* Tab tersegmentasi */
+/* Tab tersegmentasi — pill, aktif navy */
 .tv-page-lab .segmented-toggle {
   display: flex;
   gap: 6px;
-  background: #eaf0fb;
-  border-radius: 16px;
-  padding: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 11, 95, 0.08);
+  border-radius: 999px;
+  padding: 7px;
   flex-wrap: wrap;
   margin-top: 12px;
 }
 .tv-page-lab .segmented-btn {
   flex: 1 1 140px;
-  border: none;
+  border: 0;
   background: transparent;
-  font-family: "Fredoka", "Quicksand", sans-serif;
-  font-weight: 600;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
   font-size: 0.88rem;
-  color: var(--teks-lembut);
+  letter-spacing: -0.012em;
+  color: rgba(10, 11, 95, 0.62);
   padding: 11px 10px;
-  border-radius: 10px;
+  border-radius: 999px;
   cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
 }
-.tv-page-lab .segmented-btn.aktif {
-  background: var(--biru);
+.tv-page-lab .segmented-btn.aktif,
+.tv-page-lab .segmented-btn:hover {
+  background: var(--etail-navy);
   color: #fff;
-  box-shadow: 0 3px 0 var(--biru-tua);
+  box-shadow: 0 10px 22px rgba(10, 11, 95, 0.18);
 }
 
-/* Info pasien + hasil interpretasi */
+/* Info pasien */
 .tv-page-lab .dx-pasien {
   font-size: 0.85rem;
   font-weight: 700;
   color: #475569;
   background: #f4f7ff;
   border: 1px solid #e2e9f7;
-  border-radius: 12px;
+  border-radius: 14px;
   padding: 9px 13px;
   margin-bottom: 12px;
 }
+
+/* Tabel rujukan */
 .tv-page-lab .dx-table {
   width: 100%;
   border-collapse: collapse;
@@ -190,12 +200,17 @@
   color: #556;
   background: #f7f9fc;
 }
+
+/* Sub-judul kartu */
 .tv-page-lab .dx-sub-h {
   font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 1rem;
+  font-weight: 700;
   color: #3a4a5a;
   margin-bottom: 10px;
 }
+
+/* Kotak hasil interpretasi */
 .tv-page-lab .dx-res {
   border-radius: 14px;
   padding: 13px 15px;
