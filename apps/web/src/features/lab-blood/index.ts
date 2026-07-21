@@ -1,0 +1,1 @@
+export { BloodTab } from "./BloodTab";

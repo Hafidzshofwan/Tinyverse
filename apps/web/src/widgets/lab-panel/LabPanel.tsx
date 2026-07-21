@@ -1,12 +1,77 @@
-import type { CSSProperties } from "react";
-import { LabTool } from "@/features/lab-interpretation";
+"use client";
 
-const wrap: CSSProperties = { maxWidth: 980, margin: "0 auto" };
+import { useState } from "react";
+import { usePatientProfile } from "@/shared/lib/patient";
+import { ReferenceTab } from "@/features/lab-reference";
+import { BloodTab } from "@/features/lab-blood";
+import { ElectrolyteTab } from "@/features/lab-electrolyte";
+import { AbgForm } from "@/features/abg-analyzer";
+
+type TabId = "rujukan" | "darah" | "elektrolit" | "agd";
+
+const TABS: { id: TabId; label: string }[] = [
+  { id: "rujukan", label: "📋 Nilai Rujukan" },
+  { id: "darah", label: "🩸 Hitung Darah" },
+  { id: "elektrolit", label: "🧪 Koreksi Elektrolit" },
+  { id: "agd", label: "🫁 Gas Darah" },
+];
 
 export function LabPanel() {
+  const profile = usePatientProfile();
+  const [tab, setTab] = useState<TabId>("rujukan");
+
+  const hasProfile = profile.usiaBulan != null || profile.bb != null;
+  const info = hasProfile
+    ? "Pasien aktif \u00b7 Usia: " +
+      (profile.usiaBulan != null ? profile.usiaBulan + " bln" : "\u2014") +
+      " \u00b7 BB: " +
+      (profile.bb != null ? profile.bb + " kg" : "\u2014")
+    : "Pasien belum diisi \u2014 buka \ud83d\udc64 Profil Pasien untuk mengisi otomatis.";
+
   return (
-    <div style={wrap}>
-      <LabTool />
+    <div className="tv-page-lab-wrapper">
+      <div className="tv-page-lab">
+        <div className="judul-section">
+          <div className="ikon-bulat" style={{ background: "#E3F0FF" }} aria-hidden>
+            🔬
+          </div>
+          <div>
+            <h2>Interpretasi Lab Anak</h2>
+            <p>
+              Nilai rujukan per usia, interpretasi hitung darah & koreksi
+              elektrolit.
+            </p>
+          </div>
+        </div>
+
+        <div className="kartu">
+          <div className="dx-pasien">{info}</div>
+          <div className="segmented-toggle" role="tablist">
+            {TABS.map((t) => (
+              <button
+                key={t.id}
+                type="button"
+                role="tab"
+                aria-selected={tab === t.id}
+                className={"segmented-btn" + (tab === t.id ? " aktif" : "")}
+                onClick={() => setTab(t.id)}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {tab === "rujukan" ? <ReferenceTab /> : null}
+        {tab === "darah" ? <BloodTab /> : null}
+        {tab === "elektrolit" ? <ElectrolyteTab /> : null}
+        {tab === "agd" ? (
+          <div className="kartu">
+            <div className="dx-sub-h">🫁 Analisis Gas Darah (AGD)</div>
+            <AbgForm />
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,246 @@
+/* === TinyVerse \u2014 Interpretasi Lab (port v17 lab-tool, palet navy/etail) === */
+
+.tv-page-lab-wrapper {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.tv-page-lab {
+  --kuning: #f9d85c;
+  --kuning-tua: #e7b900;
+  --biru: #0b0c63;
+  --biru-tua: #090a4e;
+  --hijau: #22c7a7;
+  --hijau-tua: #12957e;
+  --oranye: #ff9f45;
+  --oranye-tua: #e67818;
+  --pink: #e23ca7;
+  --pink-tua: #c5228d;
+  --krem: #f1f3f8;
+  --putih: #ffffff;
+  --teks: #0a0b4f;
+  --teks-lembut: #667085;
+  --merah-lembut: #fda4af;
+  --etail-navy: #0a0b5f;
+  --etail-navy-2: #17186f;
+  --etail-magenta: #d936a6;
+  --etail-soft: #f4f5fa;
+  --etail-line: rgba(10, 11, 95, 0.09);
+  --etail-shadow: 0 28px 80px rgba(10, 11, 95, 0.14);
+  --etail-soft-shadow: 0 18px 44px rgba(10, 11, 95, 0.1);
+
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--teks);
+}
+
+/* Header standar (mengikuti Racik Puyer) */
+.tv-page-lab .judul-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.tv-page-lab .judul-section .ikon-bulat {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.tv-page-lab .judul-section h2 {
+  margin: 0;
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.24rem;
+  font-weight: 700;
+  color: var(--teks);
+}
+.tv-page-lab .judul-section p {
+  margin: 2px 0 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: rgba(10, 11, 95, 0.62);
+}
+
+.tv-page-lab .kartu {
+  background: var(--putih);
+  border-radius: 20px;
+  padding: 22px;
+  border: 1px solid var(--etail-line);
+  box-shadow: var(--etail-soft-shadow);
+}
+
+.tv-page-lab .form-group {
+  margin-bottom: 16px;
+}
+.tv-page-lab .form-group:last-child {
+  margin-bottom: 0;
+}
+.tv-page-lab label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--teks);
+  margin-bottom: 6px;
+}
+.tv-page-lab input[type="number"],
+.tv-page-lab select {
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid #eaf0fb;
+  border-radius: 14px;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--teks);
+  background: var(--krem);
+  outline: none;
+  box-sizing: border-box;
+}
+.tv-page-lab input[type="number"]:focus,
+.tv-page-lab select:focus {
+  border-color: var(--etail-magenta);
+  background: var(--putih);
+}
+
+.tv-page-lab .btn-hitung {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(160deg, var(--hijau), var(--hijau-tua));
+  color: #fff;
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 4px;
+  box-shadow:
+    0 5px 0 var(--hijau-tua),
+    0 8px 18px rgba(34, 199, 167, 0.3);
+}
+.tv-page-lab .btn-hitung:active {
+  transform: translateY(2px);
+  box-shadow:
+    0 3px 0 var(--hijau-tua),
+    0 5px 12px rgba(34, 199, 167, 0.3);
+}
+
+/* Tab tersegmentasi */
+.tv-page-lab .segmented-toggle {
+  display: flex;
+  gap: 6px;
+  background: #eaf0fb;
+  border-radius: 16px;
+  padding: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.tv-page-lab .segmented-btn {
+  flex: 1 1 140px;
+  border: none;
+  background: transparent;
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--teks-lembut);
+  padding: 11px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.tv-page-lab .segmented-btn.aktif {
+  background: var(--biru);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--biru-tua);
+}
+
+/* Info pasien + hasil interpretasi */
+.tv-page-lab .dx-pasien {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #475569;
+  background: #f4f7ff;
+  border: 1px solid #e2e9f7;
+  border-radius: 12px;
+  padding: 9px 13px;
+  margin-bottom: 12px;
+}
+.tv-page-lab .dx-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.tv-page-lab .dx-table th,
+.tv-page-lab .dx-table td {
+  padding: 9px 11px;
+  border-bottom: 1px solid #eef0f3;
+  text-align: left;
+}
+.tv-page-lab .dx-table th {
+  font-weight: 700;
+  color: #556;
+  background: #f7f9fc;
+}
+.tv-page-lab .dx-sub-h {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1rem;
+  color: #3a4a5a;
+  margin-bottom: 10px;
+}
+.tv-page-lab .dx-res {
+  border-radius: 14px;
+  padding: 13px 15px;
+  margin-top: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+.tv-page-lab .dx-ok {
+  background: #e8f1ec;
+  border: 1px solid #bfe0cd;
+  color: #245c3d;
+}
+.tv-page-lab .dx-low {
+  background: #e5f2fc;
+  border: 1px solid #b9dbf5;
+  color: #1c4e79;
+}
+.tv-page-lab .dx-high {
+  background: #fce9e7;
+  border: 1px solid #f3c1bb;
+  color: #8a2f26;
+}
+.tv-page-lab .dx-warn {
+  background: #fbebde;
+  border: 1px solid #f0cfa9;
+  color: #8a5320;
+}
+.tv-page-lab .dx-neutral {
+  background: #f7f9fc;
+  border: 1px solid #e6e9ee;
+  color: #3a4250;
+}
+.tv-page-lab .dx-badge {
+  display: inline-block;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  margin-left: 6px;
+}
+.tv-page-lab .dx-note {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8a7a68;
+  margin-top: 10px;
+  line-height: 1.5;
+}
