@@ -6,18 +6,19 @@ const wrapStyle: CSSProperties = {
   gap: 14,
 };
 const cardStyle: CSSProperties = {
-  padding: "14px 16px",
-  borderRadius: 14,
-  background: "#E7F8DA",
-  border: "1px solid #BFE6A3",
-  color: "#2f6b1f",
+  padding: "20px 22px",
+  borderRadius: 18,
+  background: "linear-gradient(135deg, #F0FFE8, #FFFFFF)",
+  border: "3px solid rgba(126, 217, 87, 0.45)",
+  color: "#4A3728",
   lineHeight: 1.55,
+  boxShadow: "0 10px 0 rgba(0,0,0,0.04), 0 12px 30px rgba(84, 198, 235, 0.15)",
 };
 const titleStyle: CSSProperties = {
-  margin: "0 0 10px",
+  margin: "0 0 12px",
   fontFamily: "'Fredoka', sans-serif",
-  fontSize: "1rem",
-  color: "var(--hijau-tua, #2f6b1f)",
+  fontSize: "1.05rem",
+  color: "#4A3728",
 };
 const tableStyle: CSSProperties = {
   width: "100%",
@@ -25,14 +26,25 @@ const tableStyle: CSSProperties = {
   fontSize: 14,
 };
 const cellStyle: CSSProperties = {
-  border: "1px solid #BFE6A3",
-  padding: "8px 10px",
+  border: "1px solid rgba(126, 217, 87, 0.45)",
+  padding: "10px 12px",
   textAlign: "left",
+  color: "#4A3728",
+  fontWeight: 600,
+};
+const thStyle: CSSProperties = {
+  ...cellStyle,
+  background: "rgba(126, 217, 87, 0.15)",
+  fontFamily: "'Fredoka', sans-serif",
 };
 const noteStyle: CSSProperties = {
   margin: 0,
+  padding: "14px 16px",
+  borderRadius: 14,
+  background: "#FFFBF0",
+  border: "1px solid #EAF6FB",
   fontSize: 13,
-  color: "var(--teks-lembut)",
+  color: "#8A7868",
   lineHeight: 1.55,
 };
 
@@ -49,8 +61,8 @@ export function PlanAInfo() {
         <table style={tableStyle}>
           <thead>
             <tr>
-              <th style={cellStyle}>Kelompok Usia</th>
-              <th style={cellStyle}>Volume per Episode BAB Cair</th>
+              <th style={thStyle}>Kelompok Usia</th>
+              <th style={thStyle}>Volume per Episode BAB Cair</th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +81,8 @@ export function PlanAInfo() {
         Rencana Terapi A dipakai pada diare <b>tanpa dehidrasi</b>: lanjutkan
         ASI/pemberian makan, beri oralit setiap BAB cair sesuai tabel, tambahkan
         zinc sesuai program (10–14 hari), dan segera ke fasilitas kesehatan bila
-        muncul tanda bahaya. (Sumber: WHO/IDAI — Lima Lintas Tatalaksana Diare.)
+        muncul tanda bahaya. <br />
+        <i>Sumber: WHO/IDAI — Lima Lintas Tatalaksana Diare.</i>
       </p>
     </div>
   );

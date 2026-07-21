@@ -17,8 +17,9 @@ const groupStyle: CSSProperties = {
 };
 const groupTitleStyle: CSSProperties = {
   fontSize: 13,
-  fontWeight: 600,
-  color: "var(--teks)",
+  fontWeight: 700,
+  color: "#4A3728",
+  fontFamily: "'Quicksand', sans-serif",
 };
 const chipWrapStyle: CSSProperties = {
   display: "flex",
@@ -29,31 +30,37 @@ const chipBase: CSSProperties = {
   padding: "6px 10px",
   fontSize: 12,
   borderRadius: 999,
-  border: "1px solid var(--etail-line)",
-  background: "var(--putih)",
-  color: "var(--teks)",
+  border: "1px solid #EAF6FB",
+  background: "white",
+  color: "#4A3728",
   cursor: "pointer",
+  fontFamily: "'Quicksand', sans-serif",
+  fontWeight: 600,
 };
 const chipActive: CSSProperties = {
   ...chipBase,
-  background: "var(--etail-magenta)",
-  borderColor: "var(--etail-magenta)",
+  background: "#FF9F45",
+  borderColor: "#F0791C",
   color: "#FFFFFF",
 };
 const summaryStyle: CSSProperties = {
   margin: 0,
   fontSize: 13,
-  color: "var(--teks-lembut)",
+  color: "#8A7868",
+  fontWeight: 700,
+  fontFamily: "'Quicksand', sans-serif",
 };
 const resetStyle: CSSProperties = {
   alignSelf: "flex-start",
-  padding: "6px 12px",
+  padding: "8px 14px",
   fontSize: 13,
-  borderRadius: 10,
-  border: "1px solid var(--etail-line)",
-  background: "var(--putih)",
-  color: "var(--teks)",
+  borderRadius: 12,
+  border: "1px solid #EAF6FB",
+  background: "#FFFBF0",
+  color: "#4A3728",
   cursor: "pointer",
+  fontFamily: "'Fredoka', sans-serif",
+  fontWeight: 600,
 };
 
 export function BurnForm() {
@@ -122,7 +129,7 @@ export function BurnForm() {
           style={resetStyle}
           onClick={() => setSelected([])}
         >
-          Reset area
+          ↺ Reset pilihan area
         </button>
       ) : null}
 

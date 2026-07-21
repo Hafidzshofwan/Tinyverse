@@ -11,24 +11,35 @@ export interface NumberFieldProps {
 }
 
 const labelStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 6,
-};
-const captionStyle: CSSProperties = {
-  fontSize: 13,
-  fontWeight: 600,
-  color: "var(--teks)",
+  display: "block",
+  fontSize: 14,
+  fontWeight: 700,
+  color: "#4A3728",
+  marginBottom: 6,
+  fontFamily: "'Quicksand', sans-serif",
 };
 const rowStyle: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 8,
 };
+const inputStyle: CSSProperties = {
+  width: "100%",
+  padding: "13px 16px",
+  border: "3px solid #EAF6FB",
+  borderRadius: 14,
+  fontFamily: "'Quicksand', sans-serif",
+  fontSize: "0.78rem",
+  fontWeight: 600,
+  color: "#4A3728",
+  backgroundColor: "#FFFBF0",
+  boxSizing: "border-box",
+};
 const suffixStyle: CSSProperties = {
   fontSize: 14,
-  color: "var(--teks-lembut)",
+  color: "#8A7868",
   fontWeight: 600,
+  fontFamily: "'Quicksand', sans-serif",
 };
 
 export function NumberField({
@@ -41,13 +52,13 @@ export function NumberField({
   suffix,
 }: NumberFieldProps) {
   return (
-    <label style={labelStyle}>
-      <span style={captionStyle}>{label}</span>
+    <label style={{ display: "block", marginBottom: 18 }}>
+      <span style={labelStyle}>{label}</span>
       <span style={rowStyle}>
         <input
           type="number"
           inputMode="decimal"
-          className="tv-input"
+          style={inputStyle}
           value={value}
           min={min}
           step={step}
