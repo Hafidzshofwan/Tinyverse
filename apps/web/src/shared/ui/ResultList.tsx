@@ -34,7 +34,10 @@ export function ResultList({ rows, rincian, error, title }: ResultListProps) {
   }
   if (rows.length === 0) return null;
 
-  const [primary, ...rest] = rows;
+  const primary = rows[0];
+  if (!primary) return null;
+
+  const rest = rows.slice(1);
   const sub = rest[0];
   const extra = rest.slice(1);
   const detailRows = rincian && rincian.length > 0 ? rincian : extra;
