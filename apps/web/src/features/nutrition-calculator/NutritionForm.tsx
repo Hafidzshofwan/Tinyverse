@@ -13,6 +13,40 @@ import {
 
 type Tab = "kalori" | "formula";
 
+const card: CSSProperties = {
+  background: "rgba(255,255,255,0.92)",
+  borderRadius: 26,
+  padding: "clamp(16px,2.5vw,24px)",
+  border: "1px solid rgba(10,11,95,0.07)",
+  boxShadow: "0 18px 44px rgba(10,11,95,0.10)",
+  marginBottom: 14,
+};
+const info: CSSProperties = {
+  ...card,
+  color: "rgba(10,11,95,0.62)",
+  fontSize: 14,
+  lineHeight: 1.68,
+};
+const infoTitle: CSSProperties = {
+  margin: "0 0 8px",
+  fontFamily: "'Fredoka',sans-serif",
+  fontSize: "0.78rem",
+  color: "#0B0C63",
+  fontWeight: 700,
+};
+const infoList: CSSProperties = {
+  margin: "0 0 12px",
+  paddingLeft: 20,
+  color: "rgba(10,11,95,0.62)",
+  fontSize: 14,
+  lineHeight: 1.5,
+};
+const catatan: CSSProperties = {
+  margin: "10px 0 0",
+  color: "rgba(10,11,95,0.62)",
+  fontSize: 13,
+  fontStyle: "italic",
+};
 const tabWrap: CSSProperties = {
   display: "flex",
   gap: 6,
@@ -21,106 +55,73 @@ const tabWrap: CSSProperties = {
   padding: 6,
   marginBottom: 18,
 };
-
-function tabBtn(active: boolean): CSSProperties {
-  return {
-    flex: 1,
-    border: "none",
-    background: active ? "#54C6EB" : "transparent",
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: 600,
-    fontSize: "0.88rem",
-    color: active ? "white" : "#8A7868",
-    padding: "11px 10px",
-    borderRadius: 10,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    textAlign: "center",
-    lineHeight: 1.3,
-    boxShadow: active ? "0 3px 0 #2BA9D6" : "none",
-  };
-}
-
-const gridStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-  gap: 14,
-};
-
+const tabBtn = (active: boolean): CSSProperties => ({
+  flex: 1,
+  border: "none",
+  borderRadius: 10,
+  background: active ? "#0A0B5F" : "transparent",
+  fontFamily: "'Fredoka',sans-serif",
+  fontWeight: 700,
+  fontSize: "0.88rem",
+  color: active ? "#FFFFFF" : "rgba(10,11,95,0.62)",
+  padding: "11px 10px",
+  cursor: "pointer",
+  transition: "all 0.2s ease",
+  textAlign: "center",
+  lineHeight: 1.3,
+  boxShadow: active ? "0 3px 0 #090A4E" : "none",
+});
 const hitungBtn: CSSProperties = {
   width: "100%",
   padding: 15,
   border: "none",
   borderRadius: 16,
-  background: "linear-gradient(135deg, #FFD23F, #FFE97A)",
-  color: "#4A3728",
-  fontFamily: "'Fredoka', sans-serif",
+  background: "linear-gradient(135deg,#E23CA7,#D936A6)",
+  color: "white",
+  fontFamily: "'Fredoka',sans-serif",
   fontSize: "1.05rem",
-  fontWeight: 600,
+  fontWeight: 700,
   cursor: "pointer",
-  boxShadow: "0 4px 0 #F5B700",
-  transition: "transform 0.15s ease, box-shadow 0.15s ease",
+  boxShadow: "0 5px 0 #C5228D, 0 8px 18px rgba(217,54,166,0.3)",
+  transition: "transform 0.15s ease,box-shadow 0.15s ease",
   marginTop: 4,
 };
-
 const autoBtn: CSSProperties = {
   width: "100%",
   padding: "12px 15px",
   borderRadius: 16,
-  border: "1px dashed #EAF6FB",
-  background: "#FFFBF0",
-  color: "#4A3728",
-  fontFamily: "'Fredoka', sans-serif",
+  border: "1px dashed rgba(10,11,95,0.09)",
+  background: "white",
+  color: "#0A0B5F",
+  fontFamily: "'Fredoka',sans-serif",
   fontSize: "0.95rem",
-  fontWeight: 600,
+  fontWeight: 700,
   cursor: "pointer",
   marginTop: 4,
+  marginBottom: 14,
   textAlign: "left",
 };
-
 const resultBox: CSSProperties = {
   marginTop: 16,
   padding: 20,
   borderRadius: 18,
-  background: "linear-gradient(135deg, #FFF6CC, #FFFDF1)",
-  border: "3px dashed #F5B700",
-  color: "#4A3728",
+  background: "linear-gradient(135deg,#FFF6CC,#FFFDF1)",
+  border: "3px dashed #E7B900",
+  color: "#0A0B4F",
   lineHeight: 1.55,
   animation: "muncul 0.4s ease",
 };
-
 const resultTitle: CSSProperties = {
   fontSize: "0.85rem",
-  color: "#8A7868",
+  color: "#667085",
   fontWeight: 700,
   margin: "0 0 8px",
-  fontFamily: "'Fredoka', sans-serif",
+  fontFamily: "'Fredoka',sans-serif",
 };
-
-const infoBox: CSSProperties = {
-  marginTop: 18,
-  padding: "14px 16px",
-  borderRadius: 14,
-  background: "#FFFBF0",
-  border: "1px solid #EAF6FB",
-  color: "#4A3728",
-  fontSize: 14,
-  lineHeight: 1.55,
-};
-
-const infoTitle: CSSProperties = {
-  margin: "0 0 8px",
-  fontFamily: "'Fredoka', sans-serif",
-  fontSize: "0.95rem",
-  color: "#4A3728",
-};
-
-const infoList: CSSProperties = {
-  margin: 0,
-  paddingLeft: 18,
-  color: "#8A7868",
-  fontSize: 14,
-  lineHeight: 1.55,
+const grid: CSSProperties = {
+  display: "grid",
+  gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))",
+  gap: 14,
 };
 
 export function NutritionForm() {
@@ -130,235 +131,304 @@ export function NutritionForm() {
   const [vol, setVol] = useState("");
   const [feeds, setFeeds] = useState("");
   const [conc, setConc] = useState("0.67");
-
-  const [kaloriResult, setKaloriResult] = useState<{
+  const [kResult, setKResult] = useState<{
     error: string | null;
     result: ReturnType<typeof computeCalorieProtein>["result"];
   }>({ error: null, result: null });
-  const [formulaResult, setFormulaResult] = useState<{
+  const [fResult, setFResult] = useState<{
     error: string | null;
     result: ReturnType<typeof computeFormula>["result"];
   }>({ error: null, result: null });
-
   const bbNum = parseNum(bb);
-
-  function hitungKalori() {
-    const outcome = computeCalorieProtein(bbNum, parseNum(usia));
-    setKaloriResult(outcome);
-  }
-
-  function isiOtomatis() {
-    const v = autoFormulaVolume(bbNum);
-    if (v != null) setVol(String(v));
-  }
-
-  function hitungFormula() {
-    const outcome = computeFormula(
-      parseNum(vol),
-      parseNum(feeds),
-      parseNum(conc),
-    );
-    setFormulaResult(outcome);
-  }
 
   return (
     <div>
-      <div style={tabWrap}>
-        <button
-          type="button"
-          style={tabBtn(tab === "kalori")}
-          onClick={() => setTab("kalori")}
-        >
-          🔥 Kalori & Protein
-        </button>
-        <button
-          type="button"
-          style={tabBtn(tab === "formula")}
-          onClick={() => setTab("formula")}
-        >
-          🍼 Susu Formula
-        </button>
+      <div style={card}>
+        <div style={tabWrap}>
+          <button
+            type="button"
+            style={tabBtn(tab === "kalori")}
+            onClick={() => setTab("kalori")}
+          >
+            🔥 Kalori & Protein
+          </button>
+          <button
+            type="button"
+            style={tabBtn(tab === "formula")}
+            onClick={() => setTab("formula")}
+          >
+            🍼 Susu Formula
+          </button>
+        </div>
+
+        {tab === "kalori" ? (
+          <div>
+            <div style={grid}>
+              <NumberField
+                label="Berat Badan (kg)"
+                value={bb}
+                onValueChange={setBb}
+                placeholder="cth: 12"
+                suffix=""
+              />
+              <NumberField
+                label="Usia (bulan)"
+                value={usia}
+                onValueChange={setUsia}
+                placeholder="cth: 24"
+                suffix=""
+                step={1}
+              />
+            </div>
+            <button
+              type="button"
+              style={hitungBtn}
+              onClick={() =>
+                setKResult(computeCalorieProtein(bbNum, parseNum(usia)))
+              }
+            >
+              🔥 Hitung Kebutuhan
+            </button>
+            {kResult.error ? (
+              <div
+                style={{
+                  ...resultBox,
+                  borderColor: "#E63946",
+                  background: "linear-gradient(135deg,#FFE0E0,#FFF7F7)",
+                }}
+              >
+                <p style={{ margin: 0, color: "#E63946", fontWeight: 700 }}>
+                  {kResult.error}
+                </p>
+              </div>
+            ) : null}
+            {kResult.result ? (
+              <div style={resultBox}>
+                <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
+                <p
+                  style={{
+                    margin: "0 0 6px",
+                    color: "#0A0B4F",
+                    fontSize: 15,
+                    fontWeight: 700,
+                  }}
+                >
+                  Estimasi energi (Holliday–Segar):{" "}
+                  {fmt(kResult.result.maintenanceEnergyKcalPerDay, 0)}{" "}
+                  kkal/hari.
+                </p>
+                {kResult.result.ageBased ? (
+                  <>
+                    <p
+                      style={{
+                        margin: "0 0 6px",
+                        color: "#0A0B4F",
+                        fontSize: 15,
+                        fontWeight: 700,
+                      }}
+                    >
+                      RDA per usia: {fmt(kResult.result.rdaKcalPerDay, 0)}{" "}
+                      kkal/hari ({fmt(kResult.result.rdaKcalPerKg, 0)} kkal/kg ×{" "}
+                      {fmt(kResult.result.weightKg, 1)} kg).
+                    </p>
+                    <p
+                      style={{
+                        margin: 0,
+                        color: "#0A0B4F",
+                        fontSize: 15,
+                        fontWeight: 700,
+                      }}
+                    >
+                      Protein: {fmt(kResult.result.proteinGPerDay, 1)} g/hari (
+                      {fmt(kResult.result.proteinGPerKg, 2)} g/kg).
+                    </p>
+                  </>
+                ) : (
+                  <p
+                    style={{
+                      margin: 0,
+                      color: "#667085",
+                      fontSize: 14,
+                      fontWeight: 700,
+                    }}
+                  >
+                    Isi usia untuk estimasi RDA per usia & protein.
+                  </p>
+                )}
+              </div>
+            ) : null}
+          </div>
+        ) : (
+          <div>
+            <div style={grid}>
+              <NumberField
+                label="Total volume susu / hari (mL)"
+                value={vol}
+                onValueChange={setVol}
+                placeholder="cth: 800"
+                suffix=""
+              />
+              <NumberField
+                label="Jumlah pemberian / hari"
+                value={feeds}
+                onValueChange={setFeeds}
+                placeholder="cth: 8"
+                suffix=""
+                step={1}
+              />
+              <NumberField
+                label="Konsentrasi energi (kkal/mL)"
+                value={conc}
+                onValueChange={setConc}
+                placeholder="0.67"
+                suffix=""
+              />
+            </div>
+            <button
+              type="button"
+              style={autoBtn}
+              onClick={() => {
+                const v = autoFormulaVolume(bbNum);
+                if (v != null) setVol(String(v));
+              }}
+            >
+              ↧ Isi otomatis 150 mL/kg dari berat pasien
+            </button>
+            {bbNum == null ? (
+              <p
+                style={{
+                  margin: "0 0 14px",
+                  color: "#667085",
+                  fontSize: 13,
+                  fontWeight: 700,
+                }}
+              >
+                Isi &quot;Berat Badan&quot; di tab Kalori & Protein untuk
+                memakai isi otomatis.
+              </p>
+            ) : null}
+            <button
+              type="button"
+              style={hitungBtn}
+              onClick={() =>
+                setFResult(
+                  computeFormula(
+                    parseNum(vol),
+                    parseNum(feeds),
+                    parseNum(conc),
+                  ),
+                )
+              }
+            >
+              🍼 Hitung Takaran
+            </button>
+            {fResult.error ? (
+              <div
+                style={{
+                  ...resultBox,
+                  borderColor: "#E63946",
+                  background: "linear-gradient(135deg,#FFE0E0,#FFF7F7)",
+                }}
+              >
+                <p style={{ margin: 0, color: "#E63946", fontWeight: 700 }}>
+                  {fResult.error}
+                </p>
+              </div>
+            ) : null}
+            {fResult.result ? (
+              <div style={resultBox}>
+                <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
+                <p
+                  style={{
+                    margin: "0 0 6px",
+                    color: "#0A0B4F",
+                    fontSize: 15,
+                    fontWeight: 700,
+                  }}
+                >
+                  Total: {fmt(fResult.result.totalVolumeMl, 0)} mL/hari ≈{" "}
+                  {fmt(fResult.result.totalKcalPerDay, 0)} kkal/hari.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 6px",
+                    color: "#0A0B4F",
+                    fontSize: 15,
+                    fontWeight: 700,
+                  }}
+                >
+                  Perlu <b>{fResult.result.scoops} sendok takar</b> +{" "}
+                  <b>{fmt(fResult.result.waterMl, 0)} mL air matang</b> (1
+                  sendok / 60 mL = 2 oz).
+                </p>
+                {fResult.result.perFeed ? (
+                  <p
+                    style={{
+                      margin: 0,
+                      color: "#0A0B4F",
+                      fontSize: 15,
+                      fontWeight: 700,
+                    }}
+                  >
+                    Per pemberian: {fmt(fResult.result.perFeed.volumeMl, 0)} mL
+                    ≈ {fResult.result.perFeed.scoops} sendok takar +{" "}
+                    {fmt(fResult.result.perFeed.waterMl, 0)} mL air.
+                  </p>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+        )}
       </div>
 
       {tab === "kalori" ? (
-        <div>
-          <div style={gridStyle}>
-            <NumberField
-              label="⚖️ Berat Badan"
-              value={bb}
-              onValueChange={setBb}
-              placeholder="cth: 12"
-              suffix="kg"
-            />
-            <NumberField
-              label="👶 Usia"
-              value={usia}
-              onValueChange={setUsia}
-              placeholder="cth: 24"
-              suffix="bulan"
-              step={1}
-            />
-          </div>
-          <button type="button" style={hitungBtn} onClick={hitungKalori}>
-            🔥 Hitung Kebutuhan
-          </button>
-          {kaloriResult.error ? (
-            <div
-              style={{
-                ...resultBox,
-                borderColor: "#F8A5A5",
-                background: "linear-gradient(135deg, #FFE0E0, #FFF7F7)",
-              }}
-            >
-              <p style={{ margin: 0, color: "#E63946", fontWeight: 700 }}>
-                {kaloriResult.error}
-              </p>
-            </div>
-          ) : kaloriResult.result ? (
-            <div style={resultBox}>
-              <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
-              <p style={{ margin: "0 0 6px", color: "#4A3728", fontSize: 15 }}>
-                <b>Estimasi energi (Holliday–Segar):</b>{" "}
-                {fmt(kaloriResult.result.maintenanceEnergyKcalPerDay, 0)}{" "}
-                kkal/hari.
-              </p>
-              {kaloriResult.result.ageBased ? (
-                <>
-                  <p
-                    style={{
-                      margin: "0 0 6px",
-                      color: "#4A3728",
-                      fontSize: 15,
-                    }}
-                  >
-                    <b>RDA per usia:</b>{" "}
-                    {fmt(kaloriResult.result.rdaKcalPerDay, 0)} kkal/hari (
-                    {fmt(kaloriResult.result.rdaKcalPerKg, 0)} kkal/kg ×{" "}
-                    {fmt(kaloriResult.result.weightKg, 1)} kg).
-                  </p>
-                  <p style={{ margin: 0, color: "#4A3728", fontSize: 15 }}>
-                    <b>Protein:</b> {fmt(kaloriResult.result.proteinGPerDay, 1)}{" "}
-                    g/hari ({fmt(kaloriResult.result.proteinGPerKg, 2)} g/kg).
-                  </p>
-                </>
-              ) : (
-                <p style={{ margin: 0, color: "#8A7868", fontSize: 14 }}>
-                  Isi usia untuk estimasi RDA per usia & protein.
-                </p>
-              )}
-            </div>
-          ) : null}
-          <div style={infoBox}>
-            <h3 style={infoTitle}>📐 Metode</h3>
-            <ul style={infoList}>
-              <li>
-                Holliday–Segar: estimasi kebutuhan energi harian berdasarkan
-                berat badan.
-              </li>
-              <li>
-                RDA per usia: acuan intake energi & protein dari NBK/Kemenkes.
-              </li>
-              <li>Protein: 1,0–1,5 g/kgBB/hari (sesuaikan kondisi klinis).</li>
-            </ul>
-            <p style={{ margin: "10px 0 0", color: "#8A7868", fontSize: 13 }}>
-              Estimasi edukatif; penyesuaian nutrisi harus disesuaikan dengan
-              diagnosis dan kondisi pasien.
-            </p>
-          </div>
+        <div style={info}>
+          <h3 style={infoTitle}>📐 Metode</h3>
+          <ul style={infoList}>
+            <li>
+              Estimasi energi (Holliday–Segar): 100 kkal/kg (≤10 kg) + 50
+              kkal/kg (11–20 kg) + 20 kkal/kg (&gt;20 kg).
+            </li>
+            <li>
+              RDA per usia: acuan intake energi & protein dari NBK/Kemenkes.
+            </li>
+            <li>Protein: 1,0–1,5 g/kgBB/hari (sesuaikan kondisi klinis).</li>
+          </ul>
+          <p style={catatan}>
+            Estimasi edukatif; penyesuaian nutrisi harus disesuaikan dengan
+            diagnosis dan kondisi pasien.
+          </p>
         </div>
       ) : (
-        <div>
-          <div style={gridStyle}>
-            <NumberField
-              label="🥛 Total volume susu / hari"
-              value={vol}
-              onValueChange={setVol}
-              placeholder="cth: 800"
-              suffix="mL"
-            />
-            <NumberField
-              label="🍚 Jumlah pemberian / hari"
-              value={feeds}
-              onValueChange={setFeeds}
-              placeholder="cth: 8"
-              step={1}
-            />
-            <NumberField
-              label="⚡ Konsentrasi energi"
-              value={conc}
-              onValueChange={setConc}
-              placeholder="0.67"
-              suffix="kkal/mL"
-            />
-          </div>
-          <button type="button" style={autoBtn} onClick={isiOtomatis}>
-            ↧ Isi otomatis 150 mL/kg dari berat pasien
-          </button>
-          {bbNum == null ? (
-            <p style={{ margin: "8px 0 0", color: "#8A7868", fontSize: 13 }}>
-              Isi &quot;Berat Badan&quot; di tab Kalori & Protein untuk memakai
-              isi otomatis.
-            </p>
-          ) : null}
-          <button type="button" style={hitungBtn} onClick={hitungFormula}>
-            🍼 Hitung Takaran
-          </button>
-          {formulaResult.error ? (
-            <div
-              style={{
-                ...resultBox,
-                borderColor: "#F8A5A5",
-                background: "linear-gradient(135deg, #FFE0E0, #FFF7F7)",
-              }}
-            >
-              <p style={{ margin: 0, color: "#E63946", fontWeight: 700 }}>
-                {formulaResult.error}
-              </p>
-            </div>
-          ) : formulaResult.result ? (
-            <div style={resultBox}>
-              <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
-              <p style={{ margin: "0 0 6px", color: "#4A3728", fontSize: 15 }}>
-                <b>
-                  Total: {fmt(formulaResult.result.totalVolumeMl, 0)} mL/hari
-                </b>{" "}
-                ≈ {fmt(formulaResult.result.totalKcalPerDay, 0)} kkal/hari.
-              </p>
-              <p style={{ margin: "0 0 6px", color: "#4A3728", fontSize: 15 }}>
-                Perlu <b>{formulaResult.result.scoops} sendok takar</b> +{" "}
-                <b>{fmt(formulaResult.result.waterMl, 0)} mL air matang</b>{" "}
-                (patokan 1 sendok / 60 mL = 2 oz).
-              </p>
-              {formulaResult.result.perFeed ? (
-                <p style={{ margin: 0, color: "#4A3728", fontSize: 15 }}>
-                  <b>Per pemberian:</b>{" "}
-                  {fmt(formulaResult.result.perFeed.volumeMl, 0)} mL ≈{" "}
-                  {formulaResult.result.perFeed.scoops} sendok takar +{" "}
-                  {fmt(formulaResult.result.perFeed.waterMl, 0)} mL air.
-                </p>
-              ) : null}
-            </div>
-          ) : null}
-          <div style={infoBox}>
-            <h3 style={infoTitle}>📐 Patokan</h3>
-            <ul style={infoList}>
-              <li>1 sendok takar susu formula bubar ≈ 60 mL air = 2 oz.</li>
-              <li>
-                Konsentrasi standar: 0,67 kkal/mL (ikuti petunjuk kemasan).
-              </li>
-              <li>
-                Kebutuhan volume harian anak: ~150 mL/kgBB/hari (variasi per
-                usia).
-              </li>
-            </ul>
-            <h3 style={{ ...infoTitle, marginTop: 12 }}>📚 Sumber Rujukan</h3>
-            <p style={{ margin: 0, color: "#8A7868", fontSize: 13 }}>
-              Holliday-Segar; Kemenkes RI &quot;Pedoman Gizi Anak&quot;;
-              petunjuk penyajian produk formula.
-            </p>
-          </div>
+        <div style={info}>
+          <h3 style={infoTitle}>📐 Patokan</h3>
+          <ul style={infoList}>
+            <li>1 sendok takar susu formula bubur ≈ 60 mL air = 2 oz.</li>
+            <li>Konsentrasi standar: 0,67 kkal/mL (ikuti petunjuk kemasan).</li>
+            <li>
+              Kebutuhan volume harian anak: ~150 mL/kgBB/hari (variasi per
+              usia).
+            </li>
+          </ul>
+          <p style={catatan}>
+            SELALU ikuti petunjuk penyajian pada kemasan; takaran dapat berbeda
+            antar merek.
+          </p>
         </div>
       )}
+
+      <div style={info}>
+        <h3 style={infoTitle}>📚 Sumber Rujukan</h3>
+        <ul style={infoList}>
+          <li>Estimasi energi rumatan: Holliday & Segar, Pediatrics 1957.</li>
+          <li>Kebutuhan protein & kalori per usia: Kemenkes RI / NBK.</li>
+          <li>Takaran rekonstitusi formula: petunjuk penyajian produk.</li>
+        </ul>
+        <p style={catatan}>
+          Disclaimer: estimasi kebutuhan nutrisi & takaran formula, bukan
+          pengganti penilaian klinis.
+        </p>
+      </div>
     </div>
   );
 }

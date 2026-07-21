@@ -14,7 +14,7 @@ const labelStyle: CSSProperties = {
   display: "block",
   fontSize: 14,
   fontWeight: 700,
-  color: "#4A3728",
+  color: "#0A0B5F",
   marginBottom: 6,
   fontFamily: "'Quicksand', sans-serif",
 };
@@ -26,19 +26,20 @@ const rowStyle: CSSProperties = {
 const inputStyle: CSSProperties = {
   width: "100%",
   padding: "13px 16px",
-  border: "3px solid #EAF6FB",
+  border: "2px solid rgba(10, 11, 95, 0.09)",
   borderRadius: 14,
   fontFamily: "'Quicksand', sans-serif",
-  fontSize: "0.78rem",
-  fontWeight: 600,
-  color: "#4A3728",
-  backgroundColor: "#FFFBF0",
+  fontSize: "0.82rem",
+  fontWeight: 700,
+  color: "#0A0B4F",
+  backgroundColor: "#FFFFFF",
   boxSizing: "border-box",
+  transition: "border-color 0.2s ease",
 };
 const suffixStyle: CSSProperties = {
   fontSize: 14,
-  color: "#8A7868",
-  fontWeight: 600,
+  color: "#667085",
+  fontWeight: 700,
   fontFamily: "'Quicksand', sans-serif",
 };
 

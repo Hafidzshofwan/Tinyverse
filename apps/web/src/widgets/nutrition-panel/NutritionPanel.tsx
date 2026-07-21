@@ -6,67 +6,51 @@ const container: CSSProperties = {
   margin: "0 auto",
   display: "flex",
   flexDirection: "column",
-  gap: 16,
+  gap: 14,
 };
-
 const headRow: CSSProperties = {
   display: "flex",
   alignItems: "center",
   gap: 14,
   marginBottom: 4,
 };
-
-const circleIcon: CSSProperties = {
-  width: 54,
-  height: 54,
-  borderRadius: "50%",
+const squareIcon: CSSProperties = {
+  width: 52,
+  height: 52,
+  borderRadius: 17,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "1.6rem",
+  fontSize: "1.24rem",
   flexShrink: 0,
-  background: "linear-gradient(135deg, #FFD23F, #F5B700)",
+  background: "linear-gradient(135deg,#E23CA7,#D936A6)",
   boxShadow: "0 3px 0 rgba(0,0,0,0.08)",
 };
-
 const titleStyle: CSSProperties = {
   margin: 0,
-  fontFamily: "'Fredoka', sans-serif",
-  fontSize: "clamp(1.12rem, 2vw, 1.42rem)",
+  fontFamily: "'Fredoka',sans-serif",
+  fontSize: "clamp(1.12rem,2vw,1.42rem)",
   fontWeight: 850,
   lineHeight: 1.04,
   letterSpacing: "-0.055em",
-  color: "#4A3728",
+  color: "#0A0B5F",
 };
-
 const subtitleStyle: CSSProperties = {
   margin: 0,
-  fontFamily: "'Quicksand', sans-serif",
-  fontSize: "clamp(0.64rem, 1vw, 0.74rem)",
+  fontFamily: "'Quicksand',sans-serif",
+  fontSize: "clamp(0.64rem,1vw,0.74rem)",
   lineHeight: 1.22,
-  fontWeight: 700,
+  fontWeight: 650,
   letterSpacing: "-0.012em",
-  color: "#8A7868",
+  color: "rgba(10,11,95,0.62)",
 };
 
-const cardStyle: CSSProperties = {
-  background: "white",
-  borderRadius: 26,
-  padding: "26px 22px",
-  boxShadow: "0 10px 0 rgba(0,0,0,0.04), 0 12px 30px rgba(84, 198, 235, 0.15)",
-  position: "relative",
-};
-
-/**
- * Panel Kalkulator Nutrisi (React native) — gaya v17.
- * Render NutritionForm (tab Kalori & Protein + Susu Formula) di dalam kartu v17.
- */
 export function NutritionPanel() {
   return (
     <div style={container}>
       <div style={headRow}>
-        <div style={circleIcon} aria-hidden="true">
-          🍼
+        <div style={squareIcon} aria-hidden="true">
+          🍎
         </div>
         <div>
           <h1 style={titleStyle}>Kalkulator Nutrisi</h1>
@@ -75,9 +59,7 @@ export function NutritionPanel() {
           </p>
         </div>
       </div>
-      <section style={cardStyle}>
-        <NutritionForm />
-      </section>
+      <NutritionForm />
     </div>
   );
 }

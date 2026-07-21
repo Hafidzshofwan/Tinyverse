@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import type { CSSProperties } from "react";
-import { viewPlanC, type PlanCAgeCategory } from "../../entities/fluid";
-import { NumberField, ResultList, type ResultRow } from "../../shared/ui";
+import { viewPlanC } from "@/entities/fluid";
+import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
 
-const wrapStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 14,
+type AgeCategory = "infant" | "child";
+
+const cardStyle: CSSProperties = {
+  background: "rgba(255,255,255,0.92)",
+  borderRadius: 26,
+  padding: "clamp(16px, 2.5vw, 24px)",
+  border: "1px solid rgba(10, 11, 95, 0.07)",
+  boxShadow: "0 18px 44px rgba(10, 11, 95, 0.10)",
+  marginBottom: 14,
 };
 
 const hitungBtn: CSSProperties = {
@@ -20,146 +25,174 @@ const hitungBtn: CSSProperties = {
   color: "white",
   fontFamily: "'Fredoka', sans-serif",
   fontSize: "1.05rem",
-  fontWeight: 600,
+  fontWeight: 700,
   cursor: "pointer",
-  boxShadow: "0 4px 0 #B71C1C",
+  boxShadow: "0 4px 0 #B71C1C, 0 8px 18px rgba(230, 57, 70, 0.3)",
   transition: "transform 0.15s ease, box-shadow 0.15s ease",
 };
 
-const toggleWrap: CSSProperties = {
-  display: "flex",
-  gap: 6,
-  background: "#EAF6FB",
-  borderRadius: 16,
-  padding: 6,
-  marginBottom: 4,
-};
-
-function toggleBtn(active: boolean): CSSProperties {
-  return {
-    flex: 1,
-    border: "none",
-    background: active ? "#54C6EB" : "transparent",
-    fontFamily: "'Fredoka', sans-serif",
-    fontWeight: 600,
-    fontSize: "0.88rem",
-    color: active ? "white" : "#8A7868",
-    padding: "11px 10px",
-    borderRadius: 10,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    textAlign: "center",
-    lineHeight: 1.3,
-    boxShadow: active ? "0 3px 0 #2BA9D6" : "none",
-  };
-}
-
 const infoBox: CSSProperties = {
-  marginTop: 18,
-  padding: "14px 16px",
-  borderRadius: 14,
-  background: "#FFFBF0",
-  border: "1px solid #EAF6FB",
-  color: "#4A3728",
+  background: "rgba(255,255,255,0.92)",
+  borderRadius: 26,
+  padding: "clamp(16px, 2.5vw, 24px)",
+  border: "1px solid rgba(10, 11, 95, 0.07)",
+  boxShadow: "0 18px 44px rgba(10, 11, 95, 0.10)",
+  color: "rgba(10, 11, 95, 0.62)",
   fontSize: 14,
-  lineHeight: 1.55,
+  lineHeight: 1.68,
 };
 
 const infoTitle: CSSProperties = {
   margin: "0 0 8px",
   fontFamily: "'Fredoka', sans-serif",
-  fontSize: "0.95rem",
-  color: "#4A3728",
+  fontSize: "0.78rem",
+  color: "#B71C1C",
+  fontWeight: 700,
 };
 
 const infoList: CSSProperties = {
-  margin: 0,
-  paddingLeft: 18,
-  color: "#8A7868",
+  margin: "0 0 12px",
+  paddingLeft: 20,
+  color: "rgba(10, 11, 95, 0.62)",
   fontSize: 14,
-  lineHeight: 1.55,
+  lineHeight: 1.5,
 };
 
-const AGE_OPTIONS: ReadonlyArray<{
-  id: PlanCAgeCategory;
-  label: string;
-  detail: string;
-}> = [
-  { id: "bayi", label: "Bayi", detail: "di bawah 1 th" },
-  { id: "anak", label: "Anak", detail: "1 th ke atas" },
-];
+const catatan: CSSProperties = {
+  margin: "10px 0 0",
+  color: "rgba(10, 11, 95, 0.62)",
+  fontSize: 13,
+  fontStyle: "italic",
+};
 
-/** Feature: rehidrasi Rencana C (tahap 30 lalu 70 mL/kg) — gaya v17. */
+const resultCard: CSSProperties = {
+  marginTop: 16,
+  padding: 20,
+  borderRadius: 18,
+  background: "linear-gradient(135deg, #FFE0E0, #FFF7F7)",
+  border: "3px dashed #E63946",
+  color: "#0A0B4F",
+  lineHeight: 1.55,
+  animation: "muncul 0.4s ease",
+};
+
+const resultTitle: CSSProperties = {
+  fontSize: "0.85rem",
+  color: "#667085",
+  fontWeight: 700,
+  margin: "0 0 10px",
+  fontFamily: "'Fredoka', sans-serif",
+};
+
+const tabWrap: CSSProperties = {
+  display: "flex",
+  gap: 6,
+  background: "#EAF6FB",
+  borderRadius: 16,
+  padding: 6,
+  marginBottom: 18,
+};
+
+function ageTabBtn(active: boolean): CSSProperties {
+  return {
+    flex: 1,
+    border: "none",
+    borderRadius: 10,
+    background: active ? "#E63946" : "transparent",
+    fontFamily: "'Fredoka', sans-serif",
+    fontWeight: 700,
+    fontSize: "0.88rem",
+    color: active ? "#FFFFFF" : "rgba(10, 11, 95, 0.62)",
+    padding: "11px 10px",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    textAlign: "center",
+    boxShadow: active ? "0 3px 0 #B71C1C" : "none",
+  };
+}
+
+/** Feature: Rencana C (dehidrasi berat) — gaya v17. */
 export function PlanCForm() {
   const [weight, setWeight] = useState("");
-  const [age, setAge] = useState<PlanCAgeCategory>("bayi");
+  const [age, setAge] = useState<AgeCategory>("child");
   const [rows, setRows] = useState<ResultRow[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [total, setTotal] = useState<string>("");
   const [calculated, setCalculated] = useState(false);
 
   function hitung() {
-    if (weight.trim() === "") {
-      setError("Isi berat badan terlebih dahulu.");
-      setRows([]);
-      setCalculated(true);
-      return;
-    }
-    try {
-      const result = viewPlanC(Number(weight), age);
-      setRows(result.rows);
-      setError(null);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Input tidak valid");
-      setRows([]);
-    }
+    const result = viewPlanC(weight === "" ? NaN : Number(weight), age);
+    setRows(result.rows);
+    setError(result.error);
+    setTotal(result.total ? `${result.total} mL` : "");
     setCalculated(true);
   }
 
   return (
-    <div style={wrapStyle}>
-      <NumberField
-        label="⚖️ Berat Badan"
-        value={weight}
-        onValueChange={setWeight}
-        placeholder="cth: 8"
-        suffix="kg"
-      />
-      <div role="group" aria-label="Kategori usia" style={toggleWrap}>
-        {AGE_OPTIONS.map((opt) => (
+    <div>
+      <div style={cardStyle}>
+        <NumberField
+          label="⚖️ Berat Badan (kg)"
+          value={weight}
+          onValueChange={setWeight}
+          placeholder="cth: 12"
+          suffix=""
+        />
+        <div style={tabWrap}>
           <button
-            key={opt.id}
             type="button"
-            onClick={() => setAge(opt.id)}
-            style={toggleBtn(age === opt.id)}
+            style={ageTabBtn(age === "infant")}
+            onClick={() => setAge("infant")}
           >
-            {opt.label}
+            Bayi
             <br />
-            <small style={{ fontSize: "0.72rem", opacity: 0.9 }}>
-              {opt.detail}
-            </small>
+            <small style={{ fontSize: "0.72rem" }}>&lt; 1 tahun</small>
           </button>
-        ))}
+          <button
+            type="button"
+            style={ageTabBtn(age === "child")}
+            onClick={() => setAge("child")}
+          >
+            Anak
+            <br />
+            <small style={{ fontSize: "0.72rem" }}>≥ 1 tahun</small>
+          </button>
+        </div>
+        <button type="button" style={hitungBtn} onClick={hitung}>
+          🩹 Hitung Rencana C
+        </button>
+        {calculated ? (
+          error ? (
+            <ResultList rows={[]} error={error} />
+          ) : (
+            <div style={resultCard}>
+              <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
+              <p
+                style={{
+                  margin: 0,
+                  color: "#B71C1C",
+                  fontSize: "1.5rem",
+                  fontFamily: "'Fredoka', sans-serif",
+                  fontWeight: 700,
+                }}
+              >
+                Dosis total: {total}
+              </p>
+              <ResultList rows={rows} error={null} />
+            </div>
+          )
+        ) : null}
       </div>
-      <button type="button" style={hitungBtn} onClick={hitung}>
-        🩹 Hitung Rencana C
-      </button>
-      {calculated ? <ResultList rows={rows} error={error} /> : null}
       <div style={infoBox}>
         <h3 style={infoTitle}>📐 Tentang Rencana Terapi C</h3>
         <ul style={infoList}>
-          <li>Dipakai untuk diare dengan dehidrasi berat.</li>
-          <li>
-            Tahap 1: 30 mL/kgBB diberikan dalam 1 jam (bayi) atau 30 menit
-            (anak).
-          </li>
-          <li>
-            Tahap 2: 70 mL/kgBB diberikan dalam 5 jam (bayi) atau 2,5 jam
-            (anak).
-          </li>
+          <li>Dosis total: 100 mL/kgBB, diberikan dalam 2 tahap</li>
+          <li>Bayi (&lt; 1 tahun): Tahap 1 → 30 mL/kg, Tahap 2 → 70 mL/kg</li>
+          <li>Anak (≥ 1 tahun): Tahap 1 → 30 mL/kg, Tahap 2 → 70 mL/kg</li>
         </ul>
-        <p style={{ margin: "10px 0 0", color: "#8A7868", fontSize: 13 }}>
-          Sumber: WHO/IDAI — Lima Lintas Tatalaksana Diare. Lakukan di fasilitas
-          kesehatan dengan monitoring ketat.
+        <p style={catatan}>
+          Untuk dehidrasi berat, jalur IV. Nilai ulang anak setiap 1–2 jam; jika
+          hidrasi belum membaik, ulangi tahap 1.
         </p>
       </div>
     </div>

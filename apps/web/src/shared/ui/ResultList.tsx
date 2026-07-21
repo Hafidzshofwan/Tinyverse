@@ -6,98 +6,79 @@ export interface ResultRow {
 }
 
 export interface ResultListProps {
-  rows: ReadonlyArray<ResultRow>;
-  error?: string | null;
+  rows: ResultRow[];
+  error: string | null;
 }
 
-const boxStyle: CSSProperties = {
-  display: "none",
-  background: "linear-gradient(135deg, #DCF3FB, #EAFBF1)",
-  borderRadius: 18,
-  padding: 20,
+const cardStyle: CSSProperties = {
   marginTop: 16,
+  padding: "20px",
+  borderRadius: 18,
+  background: "linear-gradient(135deg, #DCF3FB, #EAFBF1)",
   border: "3px dashed #54C6EB",
+  color: "#0A0B4F",
+  lineHeight: 1.55,
   animation: "muncul 0.4s ease",
 };
 
-const errorStyle: CSSProperties = {
-  margin: 0,
-  padding: "10px 12px",
-  color: "#F06387",
-  background: "#FFF1F1",
-  borderRadius: 12,
-  fontSize: 14,
-  fontWeight: 600,
-  border: "1px solid #F8A5A5",
+const titleStyle: CSSProperties = {
+  fontSize: "0.85rem",
+  color: "#667085",
+  fontWeight: 700,
+  margin: "0 0 10px",
+  fontFamily: "'Fredoka', sans-serif",
 };
-const placeholderStyle: CSSProperties = {
-  margin: 0,
-  color: "#8A7868",
-  fontSize: 14,
-  fontWeight: 600,
-};
-const listStyle: CSSProperties = {
-  margin: 0,
-  display: "flex",
-  flexDirection: "column",
-  gap: 8,
-};
+
 const rowStyle: CSSProperties = {
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "baseline",
-  gap: 16,
-  padding: "6px 0",
-  borderTop: "1px dashed rgba(117, 100, 83, 0.18)",
-};
-const dtStyle: CSSProperties = {
-  color: "#8A7868",
-  fontSize: 14,
-  fontWeight: 700,
-};
-const ddStyle: CSSProperties = {
-  margin: 0,
-  color: "#4A3728",
+  alignItems: "center",
+  padding: "8px 0",
+  borderBottom: "1px dashed rgba(10, 11, 95, 0.09)",
   fontSize: 15,
   fontWeight: 700,
+};
+
+const labelStyle: CSSProperties = {
+  color: "#667085",
+  fontWeight: 700,
+};
+
+const valueStyle: CSSProperties = {
+  color: "#0A0B5F",
+  fontWeight: 800,
+  fontFamily: "'Fredoka', sans-serif",
   textAlign: "right",
+};
+
+const errorStyle: CSSProperties = {
+  marginTop: 16,
+  padding: 16,
+  borderRadius: 18,
+  background: "linear-gradient(135deg, #FFE0E0, #FFF7F7)",
+  border: "3px dashed #E63946",
+  color: "#E63946",
+  fontWeight: 700,
 };
 
 export function ResultList({ rows, error }: ResultListProps) {
   if (error) {
-    return <p style={errorStyle}>{error}</p>;
+    return (
+      <div style={errorStyle}>
+        <p style={{ margin: 0 }}>{error}</p>
+      </div>
+    );
   }
-  if (rows.length === 0) {
-    return <p style={placeholderStyle}>Masukkan nilai untuk melihat hasil.</p>;
-  }
+  if (rows.length === 0) return null;
   return (
-    <div style={boxStyle}>
-      <h3
-        style={{
-          fontSize: "0.85rem",
-          color: "#8A7868",
-          fontWeight: 700,
-          margin: "0 0 8px",
-          fontFamily: "'Fredoka', sans-serif",
-        }}
-      >
-        HASIL PERHITUNGAN
-      </h3>
-      <dl style={listStyle}>
-        {rows.map((row, i) => (
-          <div
-            key={row.label}
-            style={{
-              ...rowStyle,
-              borderTop: i === 0 ? "none" : rowStyle.borderTop,
-              paddingTop: i === 0 ? 0 : undefined,
-            }}
-          >
-            <dt style={dtStyle}>{row.label}</dt>
-            <dd style={ddStyle}>{row.value}</dd>
-          </div>
-        ))}
-      </dl>
+    <div style={cardStyle}>
+      <h3 style={titleStyle}>HASIL PERHITUNGAN</h3>
+      {rows.map((row, i) => (
+        <div key={i} style={rowStyle}>
+          <span style={labelStyle}>{row.label}</span>
+          <span style={valueStyle}>{row.value}</span>
+        </div>
+      ))}
     </div>
   );
 }

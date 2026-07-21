@@ -4,34 +4,31 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import { MaintenanceForm } from "@/features/fluid-maintenance";
 import { DripForm } from "@/features/fluid-drip";
-import { PlanAInfo } from "@/features/rehydration-plan-a";
-import { PlanBForm } from "@/features/rehydration-plan-b";
-import { PlanCForm } from "@/features/rehydration-plan-c";
 import { BurnForm } from "@/features/burn-calculator";
+import { WhoPanel } from "@/features/rehydration-who";
 
-type TabId =
-  "rumatan" | "tetes" | "rencanaA" | "rencanaB" | "rencanaC" | "lukabakar";
+type MainTab = "holliday" | "who" | "burn" | "drip";
 
-const TABS: ReadonlyArray<{
-  id: TabId;
-  label: string;
-  detail: string;
-  icon: string;
-}> = [
-  { id: "rumatan", label: "Holliday–Segar", detail: "Rumatan", icon: "🧃" },
-  { id: "tetes", label: "Faktor Tetes", detail: "Makro/Mikro", icon: "💉" },
-  { id: "rencanaA", label: "Rencana A", detail: "Tanpa Dehidrasi", icon: "🥤" },
-  { id: "rencanaB", label: "Rencana B", detail: "Ringan–Sedang", icon: "🩹" },
-  { id: "rencanaC", label: "Rencana C", detail: "Dehidrasi Berat", icon: "🩹" },
-  { id: "lukabakar", label: "Luka Bakar", detail: "Parkland", icon: "🔥" },
+const MAINTABS: ReadonlyArray<{ id: MainTab; icon: string; label: string }> = [
+  { id: "holliday", icon: "🧃", label: "Holliday–Segar" },
+  { id: "who", icon: "🩹", label: "Rehidrasi WHO" },
+  { id: "burn", icon: "🔥", label: "Rehidrasi Luka Bakar" },
+  { id: "drip", icon: "💉", label: "Faktor Tetes" },
 ];
+
+const SUBTITLE: Record<MainTab, string> = {
+  holliday: "Holliday–Segar (estimasi cairan rumatan)",
+  who: "Rencana A, B, dan C untuk diare",
+  burn: "Parkland + Lund-Browder untuk luka bakar",
+  drip: "Hitung tetesan cairan infus",
+};
 
 const container: CSSProperties = {
   maxWidth: 980,
   margin: "0 auto",
   display: "flex",
   flexDirection: "column",
-  gap: 16,
+  gap: 14,
 };
 
 const headRow: CSSProperties = {
@@ -41,16 +38,16 @@ const headRow: CSSProperties = {
   marginBottom: 4,
 };
 
-const circleIcon: CSSProperties = {
-  width: 54,
-  height: 54,
-  borderRadius: "50%",
+const squareIcon: CSSProperties = {
+  width: 52,
+  height: 52,
+  borderRadius: 17,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "1.6rem",
+  fontSize: "1.24rem",
   flexShrink: 0,
-  background: "linear-gradient(135deg, #54C6EB, #2BA9D6)",
+  background: "linear-gradient(135deg, #E23CA7, #D936A6)",
   boxShadow: "0 3px 0 rgba(0,0,0,0.08)",
 };
 
@@ -61,7 +58,7 @@ const titleStyle: CSSProperties = {
   fontWeight: 850,
   lineHeight: 1.04,
   letterSpacing: "-0.055em",
-  color: "#4A3728",
+  color: "#0A0B5F",
 };
 
 const subtitleStyle: CSSProperties = {
@@ -69,18 +66,28 @@ const subtitleStyle: CSSProperties = {
   fontFamily: "'Quicksand', sans-serif",
   fontSize: "clamp(0.64rem, 1vw, 0.74rem)",
   lineHeight: 1.22,
-  fontWeight: 700,
+  fontWeight: 650,
   letterSpacing: "-0.012em",
-  color: "#8A7868",
+  color: "rgba(10, 11, 95, 0.62)",
+};
+
+const cardStyle: CSSProperties = {
+  background: "rgba(255,255,255,0.92)",
+  borderRadius: 26,
+  padding: "clamp(16px, 2.5vw, 24px)",
+  border: "1px solid rgba(10, 11, 95, 0.07)",
+  boxShadow: "0 18px 44px rgba(10, 11, 95, 0.10)",
+  position: "relative",
 };
 
 const tabWrap: CSSProperties = {
   display: "flex",
   gap: 6,
-  background: "#EAF6FB",
-  borderRadius: 16,
-  padding: 6,
   flexWrap: "wrap",
+  overflow: "visible",
+  borderRadius: 28,
+  padding: 6,
+  background: "transparent",
 };
 
 function tabBtn(active: boolean): CSSProperties {
@@ -88,75 +95,59 @@ function tabBtn(active: boolean): CSSProperties {
     flex: 1,
     minWidth: 120,
     border: "none",
-    background: active ? "#54C6EB" : "transparent",
+    borderRadius: 999,
+    background: active ? "#0A0B5F" : "transparent",
     fontFamily: "'Fredoka', sans-serif",
-    fontWeight: 600,
+    fontWeight: 700,
     fontSize: "0.88rem",
-    color: active ? "white" : "#8A7868",
+    color: active ? "#FFFFFF" : "rgba(10, 11, 95, 0.62)",
     padding: "11px 10px",
-    borderRadius: 10,
     cursor: "pointer",
     transition: "all 0.2s ease",
     textAlign: "center",
     lineHeight: 1.3,
-    boxShadow: active ? "0 3px 0 #2BA9D6" : "none",
+    boxShadow: active ? "0 10px 22px rgba(10, 11, 95, 0.18)" : "none",
   };
 }
 
-const cardStyle: CSSProperties = {
-  background: "white",
-  borderRadius: 26,
-  padding: "26px 22px",
-  boxShadow: "0 10px 0 rgba(0,0,0,0.04), 0 12px 30px rgba(84, 198, 235, 0.15)",
-  position: "relative",
-};
-
 /**
  * Panel Terapi Cairan (React native) — gaya v17.
- * Merakit sub-fitur: Rumatan (Holliday-Segar), Faktor Tetes, Rencana A (kartu statis),
- * Rencana B & C (WHO), Rehidrasi Luka Bakar (pakai ulang BurnForm).
  */
 export function FluidsPanel() {
-  const [tab, setTab] = useState<TabId>("rumatan");
+  const [tab, setTab] = useState<MainTab>("holliday");
   return (
     <div style={container}>
       <div style={headRow}>
-        <div style={circleIcon} aria-hidden="true">
+        <div style={squareIcon} aria-hidden="true">
           💧
         </div>
         <div>
           <h1 style={titleStyle}>Terapi Cairan</h1>
-          <p style={subtitleStyle}>
-            Rumatan, rehidrasi WHO, faktor tetes, & luka bakar.
-          </p>
+          <p style={subtitleStyle}>{SUBTITLE[tab]}</p>
         </div>
       </div>
-      <div role="tablist" aria-label="Modul terapi cairan" style={tabWrap}>
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            role="tab"
-            aria-selected={tab === t.id}
-            style={tabBtn(tab === t.id)}
-            onClick={() => setTab(t.id)}
-          >
-            {t.label}
-            <br />
-            <small style={{ fontSize: "0.72rem", opacity: 0.9 }}>
-              {t.detail}
-            </small>
-          </button>
-        ))}
+
+      <div style={cardStyle}>
+        <div role="tablist" aria-label="Modul terapi cairan" style={tabWrap}>
+          {MAINTABS.map((t) => (
+            <button
+              key={t.id}
+              type="button"
+              role="tab"
+              aria-selected={tab === t.id}
+              style={tabBtn(tab === t.id)}
+              onClick={() => setTab(t.id)}
+            >
+              {t.icon} {t.label}
+            </button>
+          ))}
+        </div>
       </div>
-      <section style={cardStyle}>
-        {tab === "rumatan" ? <MaintenanceForm /> : null}
-        {tab === "tetes" ? <DripForm /> : null}
-        {tab === "rencanaA" ? <PlanAInfo /> : null}
-        {tab === "rencanaB" ? <PlanBForm /> : null}
-        {tab === "rencanaC" ? <PlanCForm /> : null}
-        {tab === "lukabakar" ? <BurnForm /> : null}
-      </section>
+
+      {tab === "holliday" ? <MaintenanceForm /> : null}
+      {tab === "drip" ? <DripForm /> : null}
+      {tab === "who" ? <WhoPanel /> : null}
+      {tab === "burn" ? <BurnForm /> : null}
     </div>
   );
 }
