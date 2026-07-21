@@ -130,10 +130,10 @@
 
 .tv-page-cairan .segmented-toggle {
   display: flex;
-  gap: 8px;
-  padding: 4px;
+  gap: 6px;
+  padding: 6px;
   border-radius: 16px;
-  background: #f5f7fa;
+  background: #eaf6fb;
   overflow: hidden;
 }
 
@@ -144,9 +144,9 @@
   color: var(--teks);
   font-family: "Quicksand", sans-serif;
   font-weight: 700;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   padding: 11px 10px;
-  border-radius: 12px;
+  border-radius: 10px;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
@@ -355,8 +355,8 @@
 /* Burn calculator — v17 exact */
 .burn-card {
   background: var(--putih);
-  border-radius: 20px;
-  padding: 22px;
+  border-radius: 26px;
+  padding: 26px 22px;
   box-shadow: var(--card-shadow);
   margin-bottom: 14px;
 }
@@ -624,7 +624,7 @@
 }
 
 .burn-tbsa-chart-img {
-  max-width: 100%;
+  max-width: 50%;
   border-radius: 12px;
 }
 
@@ -791,4 +791,22 @@
   .burn-quick-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Interactive body-map percentage labels — enlarged & centered */
+.burn-body-svg text {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 30px;
+  font-weight: 700;
+  fill: #25245c;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, 0.85);
+  stroke-width: 3px;
+}
+.burn-area.aktif text {
+  fill: #ffffff;
+  stroke: rgba(198, 34, 46, 0.35);
 }
