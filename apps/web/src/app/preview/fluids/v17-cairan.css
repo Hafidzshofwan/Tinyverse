@@ -1,0 +1,744 @@
+/* === TinyVerse — Terapi Cairan (matching user reference screenshots) === */
+
+.tv-page-cairan-wrapper {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.tv-page-cairan {
+  --navy: #0a0b5f;
+  --navy-soft: #25245c;
+  --magenta: #e23ca7;
+  --magenta-dark: #d936a6;
+  --magenta-shadow: #c5228d;
+  --biru: #54c6eb;
+  --biru-soft: #eaf6fb;
+  --biru-icon: #dcf3fb;
+  --hijau: #7ed957;
+  --hijau-tua: #4eae2e;
+  --kuning: #ffd23f;
+  --kuning-tua: #f5b700;
+  --oranye: #ff9f45;
+  --oranye-tua: #f0791c;
+  --merah: #e63946;
+  --merah-tua: #b71c1c;
+  --teks: #4a3728;
+  --teks-lembut: #8a7868;
+  --teks-navy: #667085;
+  --putih: #ffffff;
+  --card-shadow:
+    0 10px 0 rgba(0, 0, 0, 0.04), 0 12px 30px rgba(84, 198, 235, 0.15);
+
+  max-width: 980px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--teks);
+}
+
+.tv-page-cairan .judul-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.tv-page-cairan .judul-section .ikon-bulat {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  background: var(--biru-icon);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.tv-page-cairan .judul-section h2 {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tv-page-cairan .judul-section p {
+  font-size: 0.85rem;
+  color: var(--teks-lembut);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tv-page-cairan .kartu {
+  background: var(--putih);
+  border-radius: 26px;
+  padding: 26px 22px;
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+
+.tv-page-cairan .form-group {
+  margin-bottom: 18px;
+}
+
+.tv-page-cairan .form-row-group {
+  display: flex;
+  gap: 10px;
+}
+
+.tv-page-cairan .form-row-group .form-group {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.tv-page-cairan .form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teks);
+  margin-bottom: 6px;
+  font-family: "Quicksand", sans-serif;
+}
+
+.tv-page-cairan .form-group input[type="number"] {
+  width: 100%;
+  padding: 13px 16px;
+  border: 2px solid rgba(10, 11, 95, 0.09);
+  border-radius: 14px;
+  font-family: "Quicksand", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--teks);
+  background-color: var(--putih);
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+  outline: none;
+}
+
+.tv-page-cairan .form-group input[type="number"]:focus {
+  border-color: var(--biru);
+}
+
+.tv-page-cairan .segmented-toggle {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 16px;
+  background: #f5f7fa;
+  overflow: hidden;
+}
+
+.tv-page-cairan .segmented-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--teks);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  padding: 11px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.tv-page-cairan .segmented-btn.aktif {
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.tv-page-cairan .btn-hitung {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 16px;
+  color: #fff;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px 0 14px;
+  background: linear-gradient(135deg, var(--magenta), var(--magenta-dark));
+  box-shadow:
+    0 6px 0 var(--magenta-shadow),
+    0 12px 20px rgba(233, 54, 166, 0.3);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tv-page-cairan .btn-hitung:active {
+  transform: translateY(4px);
+  box-shadow:
+    0 2px 0 var(--magenta-shadow),
+    0 6px 12px rgba(233, 54, 166, 0.3);
+}
+
+/* Hasil perhitungan — card v17 */
+.hasil-box-cairan {
+  background: var(--putih);
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+  margin-bottom: 14px;
+  font-family: "Quicksand", sans-serif;
+  color: var(--teks);
+}
+
+.hasil-box-cairan .hasil-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--teks-navy);
+  margin-bottom: 8px;
+}
+
+.hasil-box-cairan .hasil-dosis {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 2px;
+  line-height: 1.15;
+}
+
+.hasil-box-cairan .hasil-unit {
+  font-size: 1.1rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.hasil-box-cairan .hasil-sub {
+  font-size: 0.85rem;
+  color: var(--teks-lembut);
+  font-weight: 600;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.hasil-box-cairan .hasil-divider {
+  border: none;
+  border-top: 1px dashed rgba(10, 11, 95, 0.12);
+  margin: 12px 0;
+}
+
+.hasil-box-cairan .hasil-rincian-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--teks);
+  margin-bottom: 8px;
+  display: block;
+}
+
+.hasil-box-cairan .hasil-rincian {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  line-height: 1.6;
+}
+
+.hasil-box-cairan .hasil-rincian li {
+  padding-left: 12px;
+  position: relative;
+  margin-bottom: 4px;
+}
+
+.hasil-box-cairan .hasil-rincian li::before {
+  content: "•";
+  color: var(--biru);
+  position: absolute;
+  left: 0;
+  font-weight: 800;
+}
+
+.hasil-box-cairan .hasil-rincian strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.hasil-box-cairan .hasil-kesimpulan {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  line-height: 1.5;
+}
+
+.hasil-box-cairan .hasil-kesimpulan strong {
+  color: var(--navy);
+}
+
+.hasil-box-cairan .hasil-warning {
+  margin-top: 12px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fff2f5;
+  border-left: 3px solid var(--magenta);
+  color: var(--magenta-dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Info / catatan metode */
+.info-metode {
+  background: var(--putih);
+  border-radius: 20px;
+  padding: 20px 22px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+}
+
+.info-metode h3,
+.info-metode .info-judul {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.info-metode ul {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  line-height: 1.6;
+}
+
+.info-metode li {
+  margin-bottom: 4px;
+}
+
+.info-metode li::marker {
+  color: var(--biru);
+}
+
+.catatan-metode {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(10, 11, 95, 0.12);
+  font-size: 0.7rem;
+  color: var(--teks-navy);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Burn calculator — v17 exact */
+.burn-card {
+  background: var(--putih);
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 14px;
+}
+
+.burn-card > .segmented-toggle {
+  margin-bottom: 18px;
+}
+
+.burn-card .form-group label {
+  margin-bottom: 8px;
+}
+
+.burn-card .form-row-group {
+  gap: 12px;
+}
+
+.burn-card .form-group + .form-row-group {
+  margin-top: 18px;
+}
+
+.burn-map-wrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.burn-map-card {
+  background: var(--putih);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.burn-map-title {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--navy);
+  margin: 0;
+}
+
+.burn-chart-stage {
+  font-size: 0.7rem;
+  color: var(--teks-lembut);
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.burn-chart-hint {
+  font-size: 0.7rem;
+  color: var(--teks-navy);
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.burn-body-svg {
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  overflow: visible;
+  animation: burnFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 8px 16px rgba(109, 76, 187, 0.18));
+}
+
+.burn-body-svg.burn-body-back {
+  animation-delay: 1s;
+}
+
+.burn-area {
+  fill: rgba(255, 255, 255, 0.72);
+  stroke: #6d4cbb;
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  filter: url(#burn-glow);
+}
+
+.burn-area:hover {
+  fill: #ffe8f0;
+  stroke: var(--magenta);
+  stroke-width: 2.5;
+  transform-origin: center;
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 8px rgba(233, 54, 166, 0.4));
+}
+
+.burn-area.aktif {
+  fill: url(#grad-aktif);
+  stroke: var(--magenta);
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 10px rgba(233, 54, 166, 0.55));
+  animation: burnSelectedPulse 1.6s ease-in-out infinite;
+}
+
+.burn-digit {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-weight: 700;
+  fill: var(--navy);
+  pointer-events: none;
+  user-select: none;
+}
+
+.burn-area.aktif + .burn-digit,
+.burn-area.aktif ~ .burn-digit {
+  fill: var(--navy);
+}
+
+.burn-perineum {
+  fill: rgba(255, 255, 255, 0.72);
+  stroke: #6d4cbb;
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.burn-perineum:hover {
+  fill: #ffe8f0;
+  stroke: var(--magenta);
+}
+
+.burn-perineum.aktif {
+  fill: url(#grad-aktif);
+  stroke: var(--magenta);
+  animation: burnSelectedPulse 1.6s ease-in-out infinite;
+}
+
+.burn-map-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.burn-reset-btn {
+  padding: 9px 14px;
+  border: 2px solid var(--magenta);
+  border-radius: 12px;
+  background: var(--putih);
+  color: var(--magenta);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.burn-reset-btn:hover {
+  background: var(--magenta);
+  color: #fff;
+}
+
+.burn-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.burn-result-card {
+  background: var(--putih);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.burn-result-card .ikon-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+
+.burn-result-card .ikon-title .ikon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.burn-result-card .ikon-title .ikon.fire {
+  background: #fff0e3;
+  color: var(--oranye-tua);
+}
+
+.burn-result-card .ikon-title .ikon.water {
+  background: #eaf6fb;
+  color: var(--biru);
+}
+
+.burn-result-card .ikon-title .ikon.clock {
+  background: #fff7d9;
+  color: var(--kuning-tua);
+}
+
+.burn-result-card .ikon-title .ikon.urine {
+  background: #e7f6e0;
+  color: var(--hijau-tua);
+}
+
+.burn-result-card .burn-result-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.1;
+}
+
+.burn-result-card .burn-result-detail {
+  font-size: 0.75rem;
+  color: var(--teks-lembut);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.burn-result-card .burn-result-detail strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.burn-tbsa-chart-block {
+  background: var(--putih);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+  margin-top: 14px;
+  text-align: center;
+}
+
+.burn-tbsa-chart-block h4 {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.burn-tbsa-chart-img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+@keyframes burnFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes burnSelectedPulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 6px rgba(233, 54, 166, 0.45));
+  }
+  50% {
+    filter: drop-shadow(0 0 14px rgba(233, 54, 166, 0.7));
+  }
+}
+
+@media (max-width: 768px) {
+  .tv-page-cairan-wrapper {
+    padding: 16px 12px;
+  }
+
+  .tv-page-cairan .kartu {
+    padding: 20px 16px;
+    border-radius: 22px;
+  }
+
+  .tv-page-cairan .segmented-btn {
+    font-size: 0.65rem;
+    padding: 10px 6px;
+  }
+
+  .tv-page-cairan .form-row-group {
+    flex-direction: column;
+  }
+
+  .burn-map-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .burn-result-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hasil-box-cairan .hasil-dosis {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-page-cairan .judul-section h2 {
+    font-size: 0.95rem;
+  }
+
+  .tv-page-cairan .btn-hitung {
+    font-size: 0.85rem;
+  }
+}
+
+/* Small chips inside results */
+.hasil-box-cairan .stage-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.hasil-box-cairan .stage-row .stage-name {
+  color: var(--biru);
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+
+.hasil-box-cairan .stage-row .stage-value {
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-align: right;
+}
+
+.hasil-box-cairan .stage-note {
+  font-size: 0.7rem;
+  color: var(--teks-navy);
+  font-weight: 600;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.hasil-box-cairan .stage-note strong {
+  color: var(--navy);
+}
+
+/* Icon in form labels */
+.form-label-icon {
+  margin-right: 4px;
+}
+EOF_CSS .burn-rincian-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 0;
+  font-size: 0.7rem;
+  color: var(--teks-lembut);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.burn-rincian-list li {
+  padding-left: 12px;
+  position: relative;
+  margin-bottom: 3px;
+}
+
+.burn-rincian-list li::before {
+  content: "•";
+  color: var(--biru);
+  position: absolute;
+  left: 0;
+  font-weight: 800;
+}
