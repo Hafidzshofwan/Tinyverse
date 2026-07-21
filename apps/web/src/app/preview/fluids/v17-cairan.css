@@ -48,16 +48,16 @@
 }
 
 .tv-page-cairan .judul-section .ikon-bulat {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   flex-shrink: 0;
-  background: var(--biru-icon);
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, #ffe3f1 0%, #e9f0ff 52%, #e2f7ec 100%);
+  box-shadow: 0 6px 16px rgba(84, 198, 235, 0.22);
 }
 
 .tv-page-cairan .judul-section h2 {
@@ -385,23 +385,23 @@
 }
 
 .burn-map-card {
-  background: var(--putih);
-  border-radius: 18px;
-  padding: 14px;
+  background: linear-gradient(150deg, #e6f7fb 0%, #eef1ff 46%, #ffe9f3 100%);
+  border-radius: 22px;
+  padding: 18px 14px;
   box-shadow:
-    0 6px 0 rgba(0, 0, 0, 0.04),
-    0 8px 24px rgba(84, 198, 235, 0.12);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 8px 24px rgba(84, 198, 235, 0.14);
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .burn-map-title {
   font-family: "Fredoka", "Quicksand", sans-serif;
-  font-weight: 600;
-  font-size: 0.85rem;
-  color: var(--navy);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--oranye-tua);
   margin: 0;
 }
 
@@ -413,10 +413,15 @@
 }
 
 .burn-chart-hint {
-  font-size: 0.7rem;
+  display: inline-block;
+  background: #ffffff;
   color: var(--teks-navy);
-  font-weight: 600;
-  margin-top: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 999px;
+  box-shadow: 0 3px 8px rgba(36, 38, 94, 0.1);
+  margin: 0 auto 8px;
 }
 
 .burn-body-svg {
@@ -492,9 +497,9 @@
 
 .burn-map-actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 8px;
-  margin-top: 8px;
+  margin-top: 12px;
 }
 
 .burn-reset-btn {
@@ -719,7 +724,7 @@
 .form-label-icon {
   margin-right: 4px;
 }
-EOF_CSS .burn-rincian-list {
+.burn-rincian-list {
   list-style: none;
   padding: 0;
   margin: 8px 0 0;
@@ -741,4 +746,47 @@ EOF_CSS .burn-rincian-list {
   position: absolute;
   left: 0;
   font-weight: 800;
+}
+
+/* Quick-select limb buttons — v17 */
+.burn-quick-panel {
+  background: var(--putih);
+  border-radius: 20px;
+  padding: 14px;
+  box-shadow:
+    0 6px 0 rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(84, 198, 235, 0.12);
+  margin-top: 4px;
+}
+.burn-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.burn-quick-btn {
+  padding: 13px 14px;
+  border: 2px solid rgba(10, 11, 95, 0.08);
+  border-radius: 14px;
+  background: #ffffff;
+  color: var(--navy);
+  font-family: "Quicksand", sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.burn-quick-btn:hover {
+  border-color: var(--biru);
+  transform: translateY(-1px);
+}
+.burn-quick-btn.aktif {
+  background: var(--navy);
+  color: #fff;
+  border-color: var(--navy);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+@media (max-width: 480px) {
+  .burn-quick-grid {
+    grid-template-columns: 1fr;
+  }
 }

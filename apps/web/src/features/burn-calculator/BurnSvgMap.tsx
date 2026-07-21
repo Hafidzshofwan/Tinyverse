@@ -17,6 +17,13 @@ interface SvgViewProps {
   extraClass: string;
 }
 
+const QUICK_AREAS: ReadonlyArray<{ area: BurnArea; label: string }> = [
+  { area: "armRightFull", label: "Seluruh lengan kanan" },
+  { area: "armLeftFull", label: "Seluruh lengan kiri" },
+  { area: "legRightFull", label: "Seluruh tungkai kanan" },
+  { area: "legLeftFull", label: "Seluruh tungkai kiri" },
+];
+
 function SvgView({
   url,
   selected,
@@ -89,23 +96,43 @@ function SvgView({
 export function BurnSvgMap({ selected, onToggle }: BurnSvgMapProps) {
   const selectedSet = new Set(selected);
   return (
-    <div className="burn-map-wrap">
-      <SvgView
-        url="/burn-front.svg"
-        selected={selectedSet}
-        onToggle={onToggle}
-        title="Bagian Depan (Anterior)"
-        hint="Klik area tubuh secara detail"
-        extraClass="burn-body-front"
-      />
-      <SvgView
-        url="/burn-back.svg"
-        selected={selectedSet}
-        onToggle={onToggle}
-        title="Bagian Belakang (Posterior)"
-        hint="Detail sampai tangan & kaki"
-        extraClass="burn-body-back"
-      />
-    </div>
+    <>
+      <div className="burn-map-wrap">
+        <SvgView
+          url="/burn-front.svg"
+          selected={selectedSet}
+          onToggle={onToggle}
+          title="Bagian Depan (Anterior)"
+          hint="Klik area tubuh secara detail"
+          extraClass="burn-body-front"
+        />
+        <SvgView
+          url="/burn-back.svg"
+          selected={selectedSet}
+          onToggle={onToggle}
+          title="Bagian Belakang (Posterior)"
+          hint="Detail sampai tangan & kaki"
+          extraClass="burn-body-back"
+        />
+      </div>
+
+      <div className="burn-quick-panel">
+        <div className="burn-quick-grid">
+          {QUICK_AREAS.map((q) => (
+            <button
+              key={q.area}
+              type="button"
+              className={`burn-quick-btn ${
+                selectedSet.has(q.area) ? "aktif" : ""
+              }`}
+              aria-pressed={selectedSet.has(q.area)}
+              onClick={() => onToggle(q.area)}
+            >
+              {q.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
