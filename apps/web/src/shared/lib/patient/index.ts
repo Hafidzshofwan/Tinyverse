@@ -46,9 +46,11 @@ export function usePatientProfile(): PatientProfile {
     };
     window.addEventListener("storage", onStorage);
     window.addEventListener("message", onMsg);
+    window.addEventListener("tv-pasien-change", muat);
     return () => {
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("message", onMsg);
+      window.removeEventListener("tv-pasien-change", muat);
     };
   }, []);
 

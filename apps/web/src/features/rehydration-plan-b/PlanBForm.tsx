@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { viewPlanB } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
+import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 
 /** Feature: Rencana B (rehidrasi ringan–sedang) — gaya v17. */
 export function PlanBForm() {
-  const [weight, setWeight] = useState("");
+  const profile = usePatientProfile();
+  const [weight, setWeight] = useSyncedField(profile.bb);
   const [rows, setRows] = useState<ReadonlyArray<ResultRow>>([]);
   const [rincian, setRincian] = useState<ReadonlyArray<ResultRow>>([]);
   const [error, setError] = useState<string | null>(null);

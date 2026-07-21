@@ -4,10 +4,12 @@ import { useState } from "react";
 import { viewPlanC } from "@/entities/fluid";
 import type { PlanCAgeCategory } from "@/entities/fluid";
 import { NumberField } from "@/shared/ui";
+import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 
 /** Feature: Rencana C (dehidrasi berat) — gaya v17. */
 export function PlanCForm() {
-  const [weight, setWeight] = useState("");
+  const profile = usePatientProfile();
+  const [weight, setWeight] = useSyncedField(profile.bb);
   const [age, setAge] = useState<PlanCAgeCategory>("anak");
   const [result, setResult] = useState<ReturnType<typeof viewPlanC> | null>(
     null,

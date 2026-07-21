@@ -37,6 +37,13 @@ function sebarKeIsland() {
   } catch {
     /* abaikan */
   }
+  // Beri tahu komponen React di window yang SAMA (bukan iframe) agar field
+  // tersinkron langsung mengikuti begitu profil disimpan/direset.
+  try {
+    window.dispatchEvent(new CustomEvent("tv-pasien-change"));
+  } catch {
+    /* abaikan */
+  }
 }
 
 export function PatientProfile() {

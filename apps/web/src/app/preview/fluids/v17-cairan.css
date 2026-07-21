@@ -48,30 +48,30 @@
 }
 
 .tv-page-cairan .judul-section .ikon-bulat {
-  width: 48px;
-  height: 48px;
+  width: 46px;
+  height: 46px;
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   flex-shrink: 0;
-  background: linear-gradient(135deg, #ffe3f1 0%, #e9f0ff 52%, #e2f7ec 100%);
-  box-shadow: 0 6px 16px rgba(84, 198, 235, 0.22);
+  color: #d936a6;
+  background: rgba(217, 54, 166, 0.1);
 }
 
 .tv-page-cairan .judul-section h2 {
   font-family: "Fredoka", "Quicksand", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
+  font-size: 1.24rem;
+  font-weight: 700;
   color: var(--navy);
   margin: 0;
   line-height: 1.2;
 }
 
 .tv-page-cairan .judul-section p {
-  font-size: 0.85rem;
-  color: var(--teks-lembut);
+  font-size: 0.62rem;
+  color: rgba(10, 11, 95, 0.62);
   font-weight: 600;
   margin: 0;
   line-height: 1.2;
