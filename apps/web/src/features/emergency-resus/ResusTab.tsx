@@ -11,6 +11,12 @@ function fmt(d: number): string {
   return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
 }
 
+function jamDevice(ts: number): string {
+  const d = new Date(ts);
+  const p = (n: number) => (n < 10 ? "0" : "") + n;
+  return p(d.getHours()) + ":" + p(d.getMinutes()) + ":" + p(d.getSeconds());
+}
+
 function escapeHtml(s: string): string {
   return s.replace(/[&<>"']/g, (c) =>
     c === "&"
@@ -141,7 +147,8 @@ export function ResusTab({
 
   const catat = (teks: string) => {
     if (!runningRef.current || !teks) return;
-    setLog((prev) => [...prev, { jam: fmt(elapsed()), teks, t: Date.now() }]);
+    const now = Date.now();
+    setLog((prev) => [...prev, { jam: jamDevice(now), teks, t: now }]);
   };
 
   const tick = () => {
@@ -289,7 +296,7 @@ export function ResusTab({
       tipe: "Resusitasi",
       pasien: nama || "-",
       noRm: noRm || "",
-      durasi: log.length ? (log[log.length - 1]?.jam ?? "00:00") : "00:00",
+      durasi: jam,
       kronologi: teksKronologi(),
       t: Date.now(),
     });
@@ -302,7 +309,7 @@ export function ResusTab({
     if (!win) return;
     const nEpi = log.filter((e) => e.teks === "Epinefrin diberikan").length;
     const nSyok = log.filter((e) => e.teks === "Syok / Defibrilasi").length;
-    const totalDurasi = log.length ? (log[log.length - 1]?.jam ?? "00:00") : jam;
+    const totalDurasi = jam;
     const baris = log.length
       ? log
           .map(
