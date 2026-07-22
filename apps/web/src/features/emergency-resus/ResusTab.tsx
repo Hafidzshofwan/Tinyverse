@@ -121,6 +121,7 @@ export function ResusTab({
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [voiceHeard, setVoiceHeard] = useState("");
   const [voiceErr, setVoiceErr] = useState("");
+  const [voiceDiag, setVoiceDiag] = useState("");
 
   const mulaiRef = useRef(0);
   const siklusRef = useRef(120);
@@ -387,22 +388,79 @@ export function ResusTab({
     }
   };
 
-  const mulaiSuara = () => {
+  const mulaiSuara = async () => {
     setVoiceErr("");
+    setVoiceDiag("");
     const w = window as unknown as {
       SpeechRecognition?: new () => SpeechRec;
       webkitSpeechRecognition?: new () => SpeechRec;
     };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
+    const inFrame = window.top !== window.self;
+    const secure = window.isSecureContext;
     if (!Ctor) {
       setVoiceErr(
         "Browser ini tidak mendukung pengenalan suara. Gunakan Chrome/Edge (Android/desktop) atau Safari (iOS).",
       );
       return;
     }
-    // PENTING: jangan memanggil getUserMedia lebih dulu. Di sebagian Chrome hal
-    // itu langsung ditolak TANPA memunculkan prompt. Biarkan SpeechRecognition
-    // yang meminta izin mikrofon secara native saat .start() dipanggil.
+    if (!secure) {
+      setVoiceErr("Halaman harus diakses lewat HTTPS agar mikrofon bisa dipakai.");
+      return;
+    }
+    if (inFrame) {
+      setVoiceErr(
+        "Aplikasi sedang berjalan di dalam bingkai (iframe); Chrome memblokir mikrofon di sana. Buka situs langsung di tab tersendiri.",
+      );
+      return;
+    }
+    // Panggil getUserMedia PALING AWAL (sebelum await apa pun) agar aktivasi
+    // gesture pengguna masih aktif -> prompt izin Chrome muncul, seperti Safari.
+    const md = navigator.mediaDevices;
+    if (md && md.getUserMedia) {
+      try {
+        const stream = await md.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      } catch (err) {
+        const nm = (err as { name?: string } | undefined)?.name ?? "";
+        let permState = "?";
+        try {
+          const perms = (
+            navigator as unknown as {
+              permissions?: {
+                query: (d: { name: string }) => Promise<{ state: string }>;
+              };
+            }
+          ).permissions;
+          if (perms?.query) {
+            const st = await perms.query({ name: "microphone" });
+            permState = st.state;
+          }
+        } catch {
+          permState = "n/a";
+        }
+        setVoiceDiag(
+          "Diagnostik \u2192 HTTPS: ya \u00b7 dalam frame: tidak \u00b7 status izin mic: " +
+            permState +
+            " \u00b7 error: " +
+            (nm || "tak dikenal"),
+        );
+        if (
+          nm === "NotAllowedError" ||
+          nm === "SecurityError" ||
+          permState === "denied"
+        ) {
+          setVoiceErr(
+            "Izin mikrofon untuk situs ini SEDANG DIBLOKIR di Chrome (Chrome mengingat pilihan Blokir dan tidak menampilkan prompt lagi). Klik ikon gembok/pengaturan di kiri bilah alamat \u2192 Mikrofon \u2192 Izinkan (atau Reset izin) \u2192 muat ulang halaman.",
+          );
+        } else if (nm === "NotFoundError" || nm === "DevicesNotFoundError") {
+          setVoiceErr("Tidak ada perangkat mikrofon yang terdeteksi.");
+        } else {
+          setVoiceErr("Mikrofon gagal diakses (" + (nm || "tak dikenal") + ").");
+        }
+        return;
+      }
+    }
     try {
       try {
         recognitionRef.current?.stop();
@@ -470,7 +528,7 @@ export function ResusTab({
 
   const toggleSuara = () => {
     if (voiceOnRef.current) hentiSuara();
-    else mulaiSuara();
+    else void mulaiSuara();
   };
 
   const toggleHt = (i: number) => {
@@ -858,6 +916,19 @@ export function ResusTab({
         </div>
       ) : null}
       {voiceErr ? <div style={voiceWarn}>{voiceErr}</div> : null}
+      {voiceDiag ? (
+        <div
+          style={{
+            marginBottom: 10,
+            fontSize: 11,
+            color: "#8a7f80",
+            fontFamily: "monospace",
+            wordBreak: "break-word",
+          }}
+        >
+          {voiceDiag}
+        </div>
+      ) : null}
       {voiceOn ? (
         <div
           style={{
