@@ -150,7 +150,7 @@ export function BurnForm() {
 
               <div className="burn-result-card">
                 <div className="ikon-title">
-                  <span className="ikon">🧃</span>
+                  <span className="ikon">🍼</span>
                   Maintenance
                 </div>
                 <div className="burn-result-value">
@@ -194,11 +194,21 @@ export function BurnForm() {
 
       <div className="kartu info-metode">
         <h3>Rumus yang digunakan</h3>
-        <div className="burn-tbsa-chart-block">
+        <div
+          className="burn-tbsa-chart-block"
+          style={{
+            width: "fit-content",
+            maxWidth: "100%",
+            marginLeft: 0,
+            marginRight: "auto",
+            textAlign: "left",
+          }}
+        >
           <h4>TBSA: Lund-Browder sesuai chart</h4>
           <svg
             className="burn-tbsa-chart-img"
             viewBox="0 0 600 340"
+            style={{ width: "100%", maxWidth: 560, display: "block", margin: 0 }}
             aria-label="Tabel nilai A kepala, B paha, dan C tungkai pada chart Lund-Browder berdasarkan usia"
           >
             <defs>
