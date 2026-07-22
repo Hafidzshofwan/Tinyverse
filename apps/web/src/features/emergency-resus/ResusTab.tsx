@@ -5,12 +5,13 @@ import type { CSSProperties } from "react";
 import { tambahLog } from "@/entities/emergency";
 import type { ResusLogItem } from "@/entities/emergency";
 
+type SpeechRecError = { error?: string };
 type SpeechRec = {
   lang: string;
   continuous: boolean;
   interimResults: boolean;
   onresult: ((e: SpeechResultEvent) => void) | null;
-  onerror: (() => void) | null;
+  onerror: ((e: SpeechRecError) => void) | null;
   onend: (() => void) | null;
   start: () => void;
   stop: () => void;
@@ -19,6 +20,9 @@ type SpeechRec = {
 type SpeechResultEvent = {
   results: ArrayLike<ArrayLike<{ transcript: string }>>;
 };
+
+// Item log lokal: ResusLogItem + waktu tindakan (durasi sejak mulai).
+type LogItem = ResusLogItem & { lewat: string };
 
 function fmt(d: number): string {
   const m = Math.floor(d / 60);
@@ -47,10 +51,10 @@ function escapeHtml(s: string): string {
 }
 
 const QUICK = [
-  { aksi: "Epinefrin diberikan", label: "💉 Epinefrin" },
-  { aksi: "Syok / Defibrilasi", label: "⚡ Syok / Defibrilasi" },
-  { aksi: "Cek nadi / ritme", label: "🩺 Cek Nadi / Ritme" },
-  { aksi: "Intubasi", label: "💨 Intubasi" },
+  { aksi: "Epinefrin diberikan", label: "\uD83D\uDC89 Epinefrin" },
+  { aksi: "Syok / Defibrilasi", label: "\u26A1 Syok / Defibrilasi" },
+  { aksi: "Cek nadi / ritme", label: "\uD83E\uDE7A Cek Nadi / Ritme" },
+  { aksi: "Intubasi", label: "\uD83D\uDCA8 Intubasi" },
 ];
 
 const VOICE_MAP: Array<{ kata: string[]; aksi: string }> = [
@@ -92,10 +96,10 @@ export function ResusTab({
     alarm: false,
   });
   const [running, setRunning] = useState(false);
-  const [log, setLog] = useState<ResusLogItem[]>([]);
+  const [log, setLog] = useState<LogItem[]>([]);
   const [catatan, setCatatan] = useState("");
-  const [salinLabel, setSalinLabel] = useState("📋 Salin Kronologi");
-  const [simpanLabel, setSimpanLabel] = useState("💾 Simpan ke Pasien");
+  const [salinLabel, setSalinLabel] = useState("\uD83D\uDCCB Salin Kronologi");
+  const [simpanLabel, setSimpanLabel] = useState("\uD83D\uDCBE Simpan ke Pasien");
 
   const [metroOn, setMetroOn] = useState(false);
   const [bpm, setBpm] = useState(110);
@@ -116,6 +120,7 @@ export function ResusTab({
   const [voiceOn, setVoiceOn] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
   const [voiceHeard, setVoiceHeard] = useState("");
+  const [voiceErr, setVoiceErr] = useState("");
 
   const mulaiRef = useRef(0);
   const siklusRef = useRef(120);
@@ -243,7 +248,11 @@ export function ResusTab({
   const catat = (teks: string) => {
     if (!runningRef.current || !teks) return;
     const now = Date.now();
-    setLog((prev) => [...prev, { jam: jamDevice(now), teks, t: now }]);
+    const lewatDetik = Math.max(0, Math.floor((now - mulaiRef.current) / 1000));
+    setLog((prev) => [
+      ...prev,
+      { jam: jamDevice(now), teks, t: now, lewat: fmt(lewatDetik) },
+    ]);
   };
 
   const tick = () => {
@@ -288,10 +297,10 @@ export function ResusTab({
             /* abaikan */
           }
         }
-        setEpiInfo({ text: "⏰ Saatnya dosis epinefrin berikutnya", alarm: true });
+        setEpiInfo({ text: "\u23f0 Saatnya dosis epinefrin berikutnya", alarm: true });
       } else {
         setEpiInfo({
-          text: "💉 Epinefrin berikutnya dalam " + fmt(sisa),
+          text: "\uD83D\uDC89 Epinefrin berikutnya dalam " + fmt(sisa),
           alarm: false,
         });
       }
@@ -340,7 +349,7 @@ export function ResusTab({
       epiRef.current = Date.now();
       epiAlarmRef.current = false;
       setEpiInfo({
-        text: "💉 Epinefrin berikutnya dalam " + fmt(epiIntervalRef.current),
+        text: "\uD83D\uDC89 Epinefrin berikutnya dalam " + fmt(epiIntervalRef.current),
         alarm: false,
       });
     }
@@ -374,46 +383,81 @@ export function ResusTab({
     if (found) {
       aksiCepat(found.aksi);
     } else if (runningRef.current) {
-      catat("🎙️ " + txt);
+      catat("\uD83C\uDF99\uFE0F " + txt);
     }
   };
 
-  const mulaiSuara = () => {
+  const mulaiSuara = async () => {
+    setVoiceErr("");
     const w = window as unknown as {
       SpeechRecognition?: new () => SpeechRec;
       webkitSpeechRecognition?: new () => SpeechRec;
     };
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
-    if (!Ctor) return;
+    if (!Ctor) {
+      setVoiceErr(
+        "Browser ini tidak mendukung pengenalan suara. Gunakan Chrome atau Edge terbaru.",
+      );
+      return;
+    }
+    // Minta izin mikrofon lebih dulu agar prompt muncul & penolakan terdeteksi.
+    try {
+      const md = navigator.mediaDevices;
+      if (md && md.getUserMedia) {
+        const stream = await md.getUserMedia({ audio: true });
+        stream.getTracks().forEach((t) => t.stop());
+      }
+    } catch {
+      setVoiceErr(
+        "Izin mikrofon ditolak. Aktifkan izin mikrofon untuk situs ini lalu coba lagi.",
+      );
+      return;
+    }
     try {
       const rec = new Ctor();
       rec.lang = "id-ID";
       rec.continuous = true;
       rec.interimResults = false;
       rec.onresult = (e: SpeechResultEvent) => {
-        const r = e.results;
-        const last = r[r.length - 1];
+        const res = e.results;
+        const last = res[res.length - 1];
         const txt = last?.[0]?.transcript;
         if (txt) prosesSuara(txt);
       };
-      rec.onerror = () => {
-        /* abaikan */
+      rec.onerror = (ev: SpeechRecError) => {
+        const err = ev?.error ?? "";
+        if (err === "not-allowed" || err === "service-not-allowed") {
+          setVoiceErr("Izin mikrofon ditolak.");
+          voiceOnRef.current = false;
+          setVoiceOn(false);
+        } else if (err === "audio-capture") {
+          setVoiceErr("Mikrofon tidak terdeteksi.");
+          voiceOnRef.current = false;
+          setVoiceOn(false);
+        } else if (err === "network") {
+          setVoiceErr("Pengenalan suara membutuhkan koneksi internet.");
+        }
+        // "no-speech" / "aborted" dibiarkan: akan dimulai ulang lewat onend.
       };
       rec.onend = () => {
-        if (voiceOnRef.current) {
+        if (!voiceOnRef.current) return;
+        window.setTimeout(() => {
+          if (!voiceOnRef.current) return;
           try {
             rec.start();
           } catch {
             /* abaikan */
           }
-        }
+        }, 350);
       };
       recognitionRef.current = rec;
       voiceOnRef.current = true;
       setVoiceOn(true);
       rec.start();
     } catch {
-      /* abaikan */
+      setVoiceErr("Gagal memulai pengenalan suara. Coba lagi.");
+      voiceOnRef.current = false;
+      setVoiceOn(false);
     }
   };
 
@@ -429,7 +473,7 @@ export function ResusTab({
 
   const toggleSuara = () => {
     if (voiceOnRef.current) hentiSuara();
-    else mulaiSuara();
+    else void mulaiSuara();
   };
 
   const toggleHt = (i: number) => {
@@ -453,8 +497,11 @@ export function ResusTab({
       (noRm || "-") +
       "\nTanggal: " +
       new Date().toLocaleString("id-ID") +
-      "\n----------------------------------\n";
-    const body = log.map((e) => e.jam + " " + e.teks).join("\n");
+      "\n----------------------------------\n" +
+      "Jam      Waktu    Tindakan\n";
+    const body = log
+      .map((e) => e.jam + "  +" + e.lewat + "  " + e.teks)
+      .join("\n");
     return head + (body || "(tidak ada tindakan tercatat)");
   };
 
@@ -465,7 +512,7 @@ export function ResusTab({
       /* abaikan */
     }
     setSalinLabel("\u2713 Tersalin");
-    window.setTimeout(() => setSalinLabel("📋 Salin Kronologi"), 1400);
+    window.setTimeout(() => setSalinLabel("\uD83D\uDCCB Salin Kronologi"), 1400);
   };
 
   const simpan = () => {
@@ -478,7 +525,7 @@ export function ResusTab({
       t: Date.now(),
     });
     setSimpanLabel("\u2713 Tersimpan ke pasien");
-    window.setTimeout(() => setSimpanLabel("💾 Simpan ke Pasien"), 1600);
+    window.setTimeout(() => setSimpanLabel("\uD83D\uDCBE Simpan ke Pasien"), 1600);
   };
 
   const cetakLembarKode = () => {
@@ -493,7 +540,9 @@ export function ResusTab({
             (e) =>
               "<tr><td class=\"j\">" +
               escapeHtml(e.jam) +
-              "</td><td>" +
+              " <span style=\"color:#8a7f80;font-weight:600\">+" +
+              escapeHtml(e.lewat) +
+              "</span></td><td>" +
               escapeHtml(e.teks) +
               "</td></tr>",
           )
@@ -519,7 +568,7 @@ export function ResusTab({
       "table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}" +
       "th{text-align:left;background:#FDECEC;color:#B00C1A;padding:8px;font-size:12px;}" +
       "td{padding:7px 8px;border-bottom:1px solid #eee;}" +
-      "td.j{font-variant-numeric:tabular-nums;font-weight:700;width:90px;color:#B00C1A;}" +
+      "td.j{font-variant-numeric:tabular-nums;font-weight:700;width:140px;color:#B00C1A;}" +
       "td.kosong{text-align:center;color:#999;font-style:italic;}" +
       ".ttd{margin-top:36px;display:flex;justify-content:flex-end;}" +
       ".ttd .box{text-align:center;font-size:12px;}" +
@@ -527,7 +576,8 @@ export function ResusTab({
       ".disc{margin-top:24px;font-size:10px;color:#999;border-top:1px solid #eee;padding-top:8px;}" +
       "@media print{body{margin:12mm;}}" +
       "</style></head><body>" +
-      '<div class="kop"><div class="logo">🚨</div><div><h1>Lembar Kode Resusitasi</h1><p>TinyVerse · Mode Darurat</p></div></div>' +
+      '<div class="kop"><div class="logo">\uD83D\uDEA8</div><div>' +
+      "<h1>Lembar Kode Resusitasi</h1><p>TinyVerse \u00b7 Mode Darurat</p></div></div>" +
       '<div class="info">' +
       "<div><b>Nama/Inisial:</b> " +
       escapeHtml(nama || "-") +
@@ -553,13 +603,13 @@ export function ResusTab({
       '</div><div class="ket">Syok/defibrilasi</div></div>' +
       '<div class="kartu"><div class="angka">' +
       log.length +
-      '</div><div class="ket">Total kejadian</div></div>' +
-      "</div>" +
-      "<table><thead><tr><th>Jam</th><th>Tindakan / Kejadian</th></tr></thead><tbody>" +
+      '</div><div class="ket">Total kejadian</div></div></div>' +
+      "<table><tr><th>Jam \u00b7 +durasi</th><th>Tindakan / Kejadian</th></tr>" +
       baris +
-      "</tbody></table>" +
-      '<div class="ttd"><div class="box"><div>Dokumentasi oleh,</div><div class="garis">Nama &amp; Tanda tangan</div></div></div>' +
-      '<div class="disc">⚠️ Lembar ini alat bantu dokumentasi &amp; penilaian cepat, bukan pengganti penilaian klinis. Verifikasi setiap tindakan, dosis, dan waktu sesuai protokol resusitasi yang berlaku.</div>' +
+      "</table>" +
+      '<div class="ttd"><div class="box"><div>Dokumentasi oleh,</div>' +
+      '<div class="garis">Nama &amp; Tanda tangan</div></div></div>' +
+      '<div class="disc">\u26A0\uFE0F Lembar ini alat bantu dokumentasi & penilaian cepat, bukan pengganti penilaian klinis. Verifikasi setiap tindakan, dosis, dan waktu sesuai protokol resusitasi yang berlaku.</div>' +
       "</body></html>";
     win.document.open();
     win.document.write(html);
@@ -579,6 +629,7 @@ export function ResusTab({
     background: "#fff",
     borderRadius: 14,
     padding: "10px 12px",
+    marginBottom: 10,
   };
   const judulKotak: CSSProperties = {
     fontSize: 12,
@@ -617,209 +668,244 @@ export function ResusTab({
     background: "rgba(255,255,255,0.12)",
     color: "#fff",
   };
+  const caption: CSSProperties = { marginTop: 8, fontSize: 12, color: "#8a7f80" };
+  const voiceWarn: CSSProperties = {
+    marginBottom: 10,
+    fontSize: 12,
+    fontWeight: 600,
+    color: "#B00C1A",
+    background: "#FDECEC",
+    border: "1px solid #f5cfd2",
+    borderRadius: 10,
+    padding: "8px 10px",
+  };
 
   return (
     <div className="drt-panel">
-      <h3>⏱️ Timer &amp; Pencatat Resusitasi</h3>
+      <h3>{"\u23F1\uFE0F Timer & Pencatat Resusitasi"}</h3>
       <p className="drt-sub">
         Stopwatch + metronom CPR, CPR Coach layar penuh, catat tindakan lewat
         suara, pengingat siklus &amp; epinefrin, dan cetak Lembar Kode.
       </p>
 
-      <div className="resus-timer">
-        <div className="resus-jam">{jam}</div>
-        <div className={"resus-siklus" + (siklus.alarm ? " alarm" : "")}>
+      <div style={{ textAlign: "center", margin: "6px 0 14px" }}>
+        <div
+          style={{
+            fontSize: 48,
+            fontWeight: 800,
+            color: "#B00C1A",
+            fontVariantNumeric: "tabular-nums",
+            lineHeight: 1,
+          }}
+        >
+          {jam}
+        </div>
+        <div
+          style={
+            siklus.alarm
+              ? {
+                  marginTop: 8,
+                  fontSize: 13,
+                  fontWeight: 800,
+                  color: "#fff",
+                  background: "#E11D2A",
+                  borderRadius: 8,
+                  padding: "4px 10px",
+                  display: "inline-block",
+                }
+              : { marginTop: 8, fontSize: 13, fontWeight: 600, color: "#8a7f80" }
+          }
+        >
           {siklus.text}
         </div>
       </div>
 
-      <div className="resus-ctrl">
+      <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
         <button
-          className="mulai"
-          type="button"
           onClick={mulaiResus}
           disabled={running}
+          style={{
+            flex: 1,
+            padding: "12px 0",
+            borderRadius: 12,
+            fontWeight: 800,
+            cursor: running ? "default" : "pointer",
+            border: "none",
+            color: "#fff",
+            background: "linear-gradient(135deg,#1F9D55,#178048)",
+            opacity: running ? 0.5 : 1,
+          }}
         >
-          ▶️ Mulai Resusitasi
+          {"\u25B6\uFE0F Mulai Resusitasi"}
         </button>
         <button
-          className="selesai"
-          type="button"
           onClick={selesaiResus}
           disabled={!running}
+          style={{
+            flex: 1,
+            padding: "12px 0",
+            borderRadius: 12,
+            fontWeight: 800,
+            cursor: running ? "pointer" : "default",
+            border: "1px solid #E11D2A",
+            color: "#B00C1A",
+            background: "#fff",
+            opacity: running ? 1 : 0.5,
+          }}
         >
-          ⏹️ Selesai
+          {"\u23F9\uFE0F Selesai"}
         </button>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gap: 10,
-          gridTemplateColumns: "1fr 1fr",
-          margin: "12px 0",
-        }}
-      >
-        <div style={kotak}>
-          <div style={judulKotak}>🥁 Metronom CPR</div>
-          <button
-            type="button"
-            onClick={toggleMetro}
-            style={{
-              width: "100%",
-              padding: "8px 10px",
-              borderRadius: 10,
-              fontWeight: 800,
-              cursor: "pointer",
-              border: metroOn ? "none" : "1px solid #E11D2A",
-              background: metroOn ? "#1F9D55" : "#fff",
-              color: metroOn ? "#fff" : "#E11D2A",
-            }}
-          >
-            {metroOn ? "⏸️ Metronom aktif" : "▶️ Nyalakan metronom"}
-          </button>
-          <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
-            {[100, 110, 120].map((b) => (
-              <button
-                key={b}
-                type="button"
-                onClick={() => setBpm(b)}
-                style={{
-                  flex: 1,
-                  padding: "6px 0",
-                  borderRadius: 8,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  border: bpm === b ? "none" : "1px solid #f0c9cc",
-                  background: bpm === b ? "#E11D2A" : "#fff",
-                  color: bpm === b ? "#fff" : "#B00C1A",
-                }}
-              >
-                {b}
-              </button>
-            ))}
-          </div>
-          <div
-            style={{
-              fontSize: 11,
-              color: "#8a7f80",
-              marginTop: 6,
-              textAlign: "center",
-            }}
-          >
-            {bpm}/menit · target 100–120
-          </div>
+      <div style={kotak}>
+        <div style={judulKotak}>{"\uD83E\uDD41 Metronom CPR"}</div>
+        <button
+          onClick={toggleMetro}
+          style={{
+            width: "100%",
+            padding: "10px 0",
+            borderRadius: 10,
+            fontWeight: 800,
+            cursor: "pointer",
+            border: "none",
+            color: "#fff",
+            background: metroOn ? "#B00C1A" : "#E11D2A",
+          }}
+        >
+          {metroOn ? "\u23F8\uFE0F Metronom aktif" : "\u25B6\uFE0F Nyalakan metronom"}
+        </button>
+        <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+          {[100, 110, 120].map((b) => (
+            <button
+              key={b}
+              onClick={() => setBpm(b)}
+              style={{
+                flex: 1,
+                padding: "6px 0",
+                borderRadius: 8,
+                fontWeight: 700,
+                cursor: "pointer",
+                border: bpm === b ? "none" : "1px solid #f0c9cc",
+                background: bpm === b ? "#E11D2A" : "#fff",
+                color: bpm === b ? "#fff" : "#B00C1A",
+              }}
+            >
+              {b}
+            </button>
+          ))}
         </div>
+        <div style={caption}>{bpm + "/menit \u00b7 target 100\u2013120"}</div>
+      </div>
 
-        <div style={kotak}>
-          <div style={judulKotak}>💉 Interval epinefrin</div>
-          <div style={{ display: "flex", gap: 6 }}>
-            {[180, 240, 300].map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => setEpi(s)}
-                style={{
-                  flex: 1,
-                  padding: "8px 0",
-                  borderRadius: 10,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  border: epiInterval === s ? "none" : "1px solid #f0c9cc",
-                  background: epiInterval === s ? "#E11D2A" : "#fff",
-                  color: epiInterval === s ? "#fff" : "#B00C1A",
-                }}
-              >
-                {s / 60} mnt
-              </button>
-            ))}
-          </div>
-          <div
-            style={{
-              marginTop: 8,
-              textAlign: "center",
-              fontWeight: 800,
-              fontSize: 13,
-              borderRadius: 10,
-              padding: "8px 6px",
-              background: epiInfo?.alarm ? "#E11D2A" : "#FDECEC",
-              color: epiInfo?.alarm ? "#fff" : "#B00C1A",
-            }}
-          >
-            {epiInfo ? epiInfo.text : "Tekan 💉 Epinefrin saat memberi dosis"}
-          </div>
+      <div style={kotak}>
+        <div style={judulKotak}>{"\uD83D\uDC89 Interval epinefrin"}</div>
+        <div style={{ display: "flex", gap: 6 }}>
+          {[180, 240, 300].map((s) => (
+            <button
+              key={s}
+              onClick={() => setEpi(s)}
+              style={{
+                flex: 1,
+                padding: "8px 0",
+                borderRadius: 10,
+                fontWeight: 700,
+                cursor: "pointer",
+                border: epiInterval === s ? "none" : "1px solid #f0c9cc",
+                background: epiInterval === s ? "#E11D2A" : "#fff",
+                color: epiInterval === s ? "#fff" : "#B00C1A",
+              }}
+            >
+              {s / 60} mnt
+            </button>
+          ))}
+        </div>
+        <div
+          style={
+            epiInfo?.alarm
+              ? { ...caption, color: "#E11D2A", fontWeight: 800 }
+              : caption
+          }
+        >
+          {epiInfo ? epiInfo.text : "Tekan \uD83D\uDC89 Epinefrin saat memberi dosis"}
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gap: 10,
-          gridTemplateColumns: "1fr 1fr",
-          margin: "0 0 12px",
-        }}
-      >
-        <button type="button" onClick={bukaCoach} style={coachBtn}>
-          🫀 Mode CPR Layar Penuh
+      <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
+        <button onClick={bukaCoach} style={{ ...coachBtn, flex: 1 }}>
+          {"\uD83E\uDEC0 Mode CPR Layar Penuh"}
         </button>
         <button
-          type="button"
           onClick={toggleSuara}
-          disabled={!voiceSupported}
-          title={
-            voiceSupported
-              ? "Catat tindakan lewat suara"
-              : "Browser tidak mendukung input suara"
-          }
+          aria-pressed={voiceOn}
           style={{
+            flex: 1,
             padding: "10px 12px",
             borderRadius: 12,
             fontWeight: 800,
-            cursor: voiceSupported ? "pointer" : "not-allowed",
+            cursor: "pointer",
             border: "1px solid #E11D2A",
+            color: voiceOn ? "#fff" : "#B00C1A",
             background: voiceOn ? "#E11D2A" : "#fff",
-            color: voiceOn ? "#fff" : "#E11D2A",
-            opacity: voiceSupported ? 1 : 0.5,
           }}
         >
-          {voiceOn ? "🎙️ Mendengarkan…" : "🎙️ Catat via Suara"}
+          {voiceOn ? "\uD83C\uDF99\uFE0F Mendengarkan\u2026" : "\uD83C\uDF99\uFE0F Catat via Suara"}
         </button>
       </div>
 
-      {voiceOn && (
+      {!voiceSupported ? (
+        <div style={voiceWarn}>
+          Browser ini tidak mendukung pengenalan suara. Gunakan Chrome atau Edge
+          terbaru (di laptop/Android).
+        </div>
+      ) : null}
+      {voiceErr ? <div style={voiceWarn}>{voiceErr}</div> : null}
+      {voiceOn ? (
         <div
           style={{
-            marginBottom: 12,
+            marginBottom: 10,
             fontSize: 12,
             color: "#8a7f80",
-            textAlign: "center",
+            lineHeight: 1.5,
           }}
         >
-          Ucapkan: “epinefrin”, “syok”, “cek nadi”, “intubasi”, atau kalimat
-          bebas.
-          {voiceHeard ? " · Terdengar: \u201c" + voiceHeard + "\u201d" : ""}
+          {"Ucapkan: \u201cepinefrin\u201d, \u201csyok\u201d, \u201ccek nadi\u201d, \u201cintubasi\u201d, atau kalimat bebas."}
+          {voiceHeard ? " \u00b7 Terdengar: \u201c" + voiceHeard + "\u201d" : ""}
+          {!running ? " \u00b7 Mulai resusitasi agar tindakan tercatat." : ""}
         </div>
-      )}
+      ) : null}
 
-      <div className="resus-quick">
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: 8,
+        }}
+      >
         {QUICK.map((q) => (
           <button
             key={q.aksi}
-            type="button"
             onClick={() => aksiCepat(q.aksi)}
             disabled={!running}
+            style={{
+              padding: "12px 8px",
+              borderRadius: 12,
+              fontWeight: 800,
+              fontSize: 13,
+              cursor: running ? "pointer" : "default",
+              border: "1px solid #f0c9cc",
+              background: "#fff",
+              color: "#B00C1A",
+              opacity: running ? 1 : 0.5,
+            }}
           >
             {q.label}
           </button>
         ))}
       </div>
 
-      <div className="resus-catatan-row">
+      <div style={{ display: "flex", gap: 8, margin: "10px 0" }}>
         <input
-          type="text"
-          placeholder="Catatan tindakan lain…"
           value={catatan}
-          disabled={!running}
           onChange={(e) => setCatatan(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -827,46 +913,122 @@ export function ResusTab({
               catatKustom();
             }
           }}
+          placeholder="Catatan tindakan lain\u2026"
+          style={{
+            flex: 1,
+            padding: "10px 12px",
+            borderRadius: 10,
+            border: "1px solid #f0c9cc",
+            fontSize: 14,
+            color: "#2A0A0C",
+          }}
         />
-        <button type="button" onClick={catatKustom} disabled={!running}>
+        <button
+          onClick={catatKustom}
+          style={{
+            padding: "10px 14px",
+            borderRadius: 10,
+            fontWeight: 800,
+            cursor: "pointer",
+            border: "none",
+            color: "#fff",
+            background: "#E11D2A",
+          }}
+        >
           + Catat
         </button>
       </div>
 
-      <div className="resus-log">
+      <div
+        style={{
+          border: "1px solid #FDECEC",
+          borderRadius: 12,
+          padding: "6px 10px",
+          maxHeight: 220,
+          overflowY: "auto",
+          background: "#fff",
+        }}
+      >
         {log.length === 0 ? (
-          <div className="log-kosong">Belum ada tindakan tercatat.</div>
+          <div style={{ fontSize: 13, color: "#8a7f80", padding: "8px 0" }}>
+            Belum ada tindakan tercatat.
+          </div>
         ) : (
           log.map((e, i) => (
-            <div className="log-item" key={i}>
-              <span className="log-jam">{e.jam}</span>
-              <span className="log-teks">{e.teks}</span>
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                gap: 10,
+                padding: "5px 0",
+                borderBottom: "1px solid #f6eaea",
+                fontSize: 13,
+              }}
+            >
+              <span
+                style={{
+                  fontVariantNumeric: "tabular-nums",
+                  fontWeight: 700,
+                  color: "#B00C1A",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {e.jam + " \u00b7 +" + e.lewat}
+              </span>
+              <span style={{ color: "#2A0A0C" }}>{e.teks}</span>
             </div>
           ))
         )}
       </div>
 
-      <div className="resus-out-actions">
-        <button className="salin" type="button" onClick={salin}>
+      <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
+        <button
+          onClick={salin}
+          style={{
+            flex: 1,
+            minWidth: 130,
+            padding: "10px 8px",
+            borderRadius: 10,
+            fontWeight: 700,
+            cursor: "pointer",
+            border: "1px solid #f0c9cc",
+            background: "#fff",
+            color: "#B00C1A",
+          }}
+        >
           {salinLabel}
         </button>
-        <button className="simpan" type="button" onClick={simpan}>
+        <button
+          onClick={simpan}
+          style={{
+            flex: 1,
+            minWidth: 130,
+            padding: "10px 8px",
+            borderRadius: 10,
+            fontWeight: 700,
+            cursor: "pointer",
+            border: "1px solid #f0c9cc",
+            background: "#fff",
+            color: "#B00C1A",
+          }}
+        >
           {simpanLabel}
         </button>
         <button
-          type="button"
           onClick={cetakLembarKode}
           style={{
-            padding: "10px 14px",
-            borderRadius: 12,
-            fontWeight: 800,
+            flex: 1,
+            minWidth: 130,
+            padding: "10px 8px",
+            borderRadius: 10,
+            fontWeight: 700,
             cursor: "pointer",
-            border: "1px solid #E11D2A",
-            background: "#fff",
-            color: "#E11D2A",
+            border: "none",
+            background: "#E11D2A",
+            color: "#fff",
           }}
         >
-          🖨️ Cetak Lembar Kode
+          {"\uD83D\uDDA8\uFE0F Cetak Lembar Kode"}
         </button>
       </div>
 
@@ -874,21 +1036,26 @@ export function ResusTab({
         <div style={overlay}>
           <div
             style={{
-              width: "100%",
-              maxWidth: 480,
               display: "flex",
-              justifyContent: "space-between",
               alignItems: "center",
+              gap: 12,
+              width: "100%",
+              maxWidth: 520,
             }}
           >
-            <div>
-              <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1 }}>
-                {jam}
-              </div>
-              <div style={{ fontSize: 12, opacity: 0.9 }}>{siklus.text}</div>
+            <div
+              style={{
+                fontSize: 34,
+                fontWeight: 800,
+                fontVariantNumeric: "tabular-nums",
+              }}
+            >
+              {jam}
+            </div>
+            <div style={{ flex: 1, fontSize: 13, fontWeight: 700, opacity: 0.95 }}>
+              {siklus.text}
             </div>
             <button
-              type="button"
               onClick={() => setCoachOpen(false)}
               style={{
                 border: "1px solid rgba(255,255,255,0.7)",
@@ -900,94 +1067,91 @@ export function ResusTab({
                 cursor: "pointer",
               }}
             >
-              ✕ Tutup
+              {"\u2715 Tutup"}
             </button>
           </div>
 
           <div
             style={{
-              position: "relative",
-              margin: "22px 0 10px",
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              margin: "18px 0",
             }}
           >
             <div
               style={{
-                width: 230,
-                height: 230,
+                width: 200,
+                height: 200,
                 borderRadius: "50%",
-                background: "rgba(255,255,255,0.12)",
-                border: "6px solid rgba(255,255,255,0.9)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                transform: beat ? "scale(1)" : "scale(0.86)",
-                transition: "transform 0.12s ease-out, box-shadow 0.12s ease-out",
-                boxShadow: beat
-                  ? "0 0 0 14px rgba(255,255,255,0.12)"
-                  : "0 0 0 0 rgba(255,255,255,0)",
+                border: "6px solid rgba(255,255,255,0.9)",
+                background: beat
+                  ? "rgba(255,255,255,0.28)"
+                  : "rgba(255,255,255,0.08)",
+                transform: beat ? "scale(1.06)" : "scale(1)",
+                transition: "transform .08s ease, background .08s ease",
               }}
             >
-              <div style={{ fontSize: 13, letterSpacing: 1, opacity: 0.9 }}>
+              <div style={{ fontSize: 16, fontWeight: 800, letterSpacing: 2 }}>
                 TEKAN
               </div>
-              <div style={{ fontSize: 58, fontWeight: 900, lineHeight: 1 }}>
+              <div style={{ fontSize: 52, fontWeight: 800, lineHeight: 1 }}>
                 {compCount}
               </div>
-              <div style={{ fontSize: 13, opacity: 0.9 }}>{bpm}/menit</div>
+              <div style={{ fontSize: 12, opacity: 0.9 }}>{bpm + "/menit"}</div>
             </div>
             {ventFlash && (
               <div
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: 26,
-                  fontWeight: 900,
-                  color: "#2A0A0C",
-                  background: "rgba(255,177,0,0.95)",
-                  borderRadius: "50%",
-                  width: 230,
-                  height: 230,
-                  margin: "auto",
-                  textAlign: "center",
+                  marginTop: 12,
+                  fontSize: 18,
+                  fontWeight: 800,
+                  background: "#fff",
+                  color: "#B00C1A",
+                  borderRadius: 10,
+                  padding: "6px 14px",
                 }}
               >
-                💨 BERI 2 NAPAS
+                {"\uD83D\uDCA8 BERI 2 NAPAS"}
               </div>
             )}
           </div>
 
-          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+          <div
+            style={{
+              display: "flex",
+              gap: 8,
+              alignItems: "center",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
             {[
               { v: 30, t: "30:2" },
               { v: 15, t: "15:2" },
-            ].map((r) => (
+            ].map((rr) => (
               <button
-                key={r.v}
-                type="button"
-                onClick={() => setRatio(r.v)}
+                key={rr.v}
+                onClick={() => setRatio(rr.v)}
                 style={{
                   padding: "8px 16px",
                   borderRadius: 10,
                   fontWeight: 800,
                   cursor: "pointer",
                   border: "1px solid rgba(255,255,255,0.7)",
-                  background:
-                    ratio === r.v ? "#fff" : "rgba(255,255,255,0.12)",
-                  color: ratio === r.v ? "#B00C1A" : "#fff",
+                  background: ratio === rr.v ? "#fff" : "rgba(255,255,255,0.12)",
+                  color: ratio === rr.v ? "#B00C1A" : "#fff",
                 }}
               >
-                {r.t}
+                {rr.t}
               </button>
             ))}
             <button
-              type="button"
               onClick={toggleMetro}
               style={{
                 padding: "8px 16px",
@@ -995,47 +1159,39 @@ export function ResusTab({
                 fontWeight: 800,
                 cursor: "pointer",
                 border: "1px solid rgba(255,255,255,0.7)",
-                background: metroOn ? "#1F9D55" : "rgba(255,255,255,0.12)",
+                background: "rgba(255,255,255,0.12)",
                 color: "#fff",
               }}
             >
-              {metroOn ? "🔊 Bunyi" : "🔇 Bunyi"}
+              {metroOn ? "\uD83D\uDD0A Bunyi" : "\uD83D\uDD07 Bunyi"}
             </button>
           </div>
 
           <div
             style={{
-              width: "100%",
-              maxWidth: 480,
-              textAlign: "center",
-              fontWeight: 800,
+              marginTop: 12,
               fontSize: 14,
-              borderRadius: 12,
-              padding: "10px",
-              marginBottom: 12,
-              background: epiInfo?.alarm
-                ? "#FFB100"
-                : "rgba(255,255,255,0.12)",
-              color: epiInfo?.alarm ? "#2A0A0C" : "#fff",
+              fontWeight: 700,
+              textAlign: "center",
+              minHeight: 20,
             }}
           >
-            {epiInfo ? epiInfo.text : "💉 Tekan Epinefrin saat memberi dosis"}
+            {epiInfo ? epiInfo.text : "\uD83D\uDC89 Tekan Epinefrin saat memberi dosis"}
           </div>
 
           <div
             style={{
-              width: "100%",
-              maxWidth: 480,
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
               gap: 8,
-              marginBottom: 10,
+              width: "100%",
+              maxWidth: 520,
+              marginTop: 12,
             }}
           >
             {QUICK.map((q) => (
               <button
                 key={q.aksi}
-                type="button"
                 onClick={() => aksiCepat(q.aksi)}
                 disabled={!running}
                 style={{ ...coachQuick, opacity: running ? 1 : 0.5 }}
@@ -1047,50 +1203,38 @@ export function ResusTab({
 
           <div
             style={{
-              width: "100%",
-              maxWidth: 480,
-              display: "grid",
-              gridTemplateColumns: running ? "1fr 1fr" : "1fr",
+              display: "flex",
               gap: 8,
-              marginBottom: 12,
+              width: "100%",
+              maxWidth: 520,
+              marginTop: 12,
             }}
           >
             {!running && (
               <button
-                type="button"
                 onClick={mulaiResus}
-                style={{
-                  ...coachQuick,
-                  background: "#fff",
-                  color: "#B00C1A",
-                }}
+                style={{ ...coachQuick, flex: 1, background: "#fff", color: "#B00C1A" }}
               >
-                ▶️ Mulai Resusitasi
+                {"\u25B6\uFE0F Mulai Resusitasi"}
+              </button>
+            )}
+            {running && (
+              <button onClick={selesaiResus} style={{ ...coachQuick, flex: 1 }}>
+                {"\u23F9\uFE0F Selesai"}
               </button>
             )}
             {running && (
               <button
-                type="button"
-                onClick={selesaiResus}
-                style={{ ...coachQuick, background: "#2A0A0C" }}
-              >
-                ⏹️ Selesai
-              </button>
-            )}
-            {running && (
-              <button
-                type="button"
                 onClick={toggleSuara}
-                disabled={!voiceSupported}
                 style={{
                   ...coachQuick,
+                  flex: 1,
                   background: voiceOn
-                    ? "#1F9D55"
+                    ? "rgba(255,255,255,0.28)"
                     : "rgba(255,255,255,0.12)",
-                  opacity: voiceSupported ? 1 : 0.5,
                 }}
               >
-                {voiceOn ? "🎙️ Suara aktif" : "🎙️ Suara"}
+                {voiceOn ? "\uD83C\uDF99\uFE0F Suara aktif" : "\uD83C\uDF99\uFE0F Suara"}
               </button>
             )}
           </div>
@@ -1099,39 +1243,37 @@ export function ResusTab({
             <div
               style={{
                 width: "100%",
-                maxWidth: 480,
-                background: "rgba(0,0,0,0.18)",
-                borderRadius: 14,
-                padding: "12px 14px",
-                marginBottom: 12,
+                maxWidth: 520,
+                marginTop: 14,
+                background: "rgba(255,255,255,0.1)",
+                borderRadius: 12,
+                padding: 12,
               }}
             >
               <div style={{ fontWeight: 800, marginBottom: 8 }}>
-                🧩 Cek penyebab reversibel (Hs &amp; Ts)
+                {"\uD83E\uDDE9 Cek penyebab reversibel (Hs & Ts)"}
               </div>
               <div
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 1fr",
-                  gap: "4px 12px",
+                  gap: "6px 12px",
                 }}
               >
                 {HT_LIST.map((h, i) => (
                   <label
-                    key={h}
+                    key={i}
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: 6,
                       fontSize: 13,
                       cursor: "pointer",
-                      opacity: htChecked[i] ? 0.6 : 1,
-                      textDecoration: htChecked[i] ? "line-through" : "none",
                     }}
                   >
                     <input
                       type="checkbox"
-                      checked={htChecked[i] ?? false}
+                      checked={Boolean(htChecked[i])}
                       onChange={() => toggleHt(i)}
                     />
                     {h}
@@ -1144,7 +1286,8 @@ export function ResusTab({
           <div
             style={{
               width: "100%",
-              maxWidth: 480,
+              maxWidth: 520,
+              marginTop: 14,
               fontSize: 12,
               opacity: 0.92,
             }}
@@ -1154,12 +1297,16 @@ export function ResusTab({
                 key={i}
                 style={{
                   display: "flex",
-                  gap: 10,
+                  gap: 8,
                   padding: "3px 0",
-                  borderBottom: "1px solid rgba(255,255,255,0.18)",
+                  borderTop: "1px solid rgba(255,255,255,0.15)",
                 }}
               >
-                <span style={{ fontWeight: 800 }}>{e.jam}</span>
+                <span
+                  style={{ fontVariantNumeric: "tabular-nums", fontWeight: 700 }}
+                >
+                  {e.jam + " \u00b7 +" + e.lewat}
+                </span>
                 <span>{e.teks}</span>
               </div>
             ))}
