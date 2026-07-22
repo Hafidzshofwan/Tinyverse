@@ -1,0 +1,1 @@
+export { PalsTab } from "./PalsTab";

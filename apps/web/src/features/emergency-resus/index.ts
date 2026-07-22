@@ -1,0 +1,1 @@
+export { ResusTab } from "./ResusTab";

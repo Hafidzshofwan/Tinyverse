@@ -1,0 +1,815 @@
+/* === TinyVerse — Mode Darurat (port v17 darurat-tool, tema merah emergency) === */
+
+.tv-page-darurat-wrapper {
+  background: #f8fafc;
+  min-height: 100vh;
+  padding: 24px 16px;
+}
+
+.tv-page-darurat {
+  --darurat: #e11d2a;
+  --darurat-tua: #b00c1a;
+  --darurat-lembut: #fdecec;
+  --darurat-amber: #ffb100;
+  --darurat-hijau: #1f9d55;
+  --darurat-teks: #2a0a0c;
+  --teks: #0a0b4f;
+  --teks-lembut: #667085;
+
+  max-width: 980px;
+  margin: 0 auto;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  color: var(--teks);
+}
+.tv-page-darurat * {
+  box-sizing: border-box;
+}
+
+/* Header (standar ikon-bulat) */
+.tv-page-darurat .judul-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 2px;
+}
+.tv-page-darurat .judul-section .ikon-bulat {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+.tv-page-darurat .judul-section h2 {
+  margin: 0;
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.24rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--darurat-tua);
+}
+.tv-page-darurat .judul-section p {
+  margin: 2px 0 0;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: rgba(176, 12, 26, 0.62);
+}
+
+/* Profil pasien */
+.tv-page-darurat .drt-pasien-bar {
+  margin-top: 16px;
+  background: #fff;
+  border: 2px solid var(--darurat-lembut);
+  border-radius: 16px;
+  padding: 14px 16px;
+}
+.tv-page-darurat .drt-pasien-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.tv-page-darurat .drt-pasien-head strong {
+  font-family: "Fredoka", sans-serif;
+  color: var(--darurat-tua);
+  font-size: 1rem;
+}
+.tv-page-darurat .drt-pasien-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--darurat-lembut);
+  color: var(--darurat-tua);
+}
+.tv-page-darurat .drt-pasien-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.tv-page-darurat .drt-pasien-grid .form-group {
+  margin: 0;
+}
+.tv-page-darurat .drt-pasien-grid label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--teks-lembut);
+  display: block;
+  margin-bottom: 4px;
+}
+.tv-page-darurat .drt-pasien-grid input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--teks);
+  outline: none;
+}
+.tv-page-darurat .drt-pasien-grid input#drtBB {
+  border-color: var(--darurat);
+}
+.tv-page-darurat .drt-pasien-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .drt-mini-btn {
+  border: none;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+}
+.tv-page-darurat .drt-mini-btn.simpan {
+  background: var(--darurat);
+  color: #fff;
+}
+.tv-page-darurat .drt-mini-btn.hapus {
+  background: #f3f3f3;
+  color: #777;
+}
+
+/* Sub-tab */
+.tv-page-darurat .drt-tabs {
+  display: flex;
+  gap: 8px;
+  margin: 18px 0 0;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .drt-tab {
+  border: 2px solid #f1dada;
+  background: #fff;
+  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 14px 14px 0 0;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  font-size: 0.95rem;
+  color: var(--darurat-tua);
+}
+.tv-page-darurat .drt-tab:hover {
+  background: var(--darurat-lembut);
+}
+.tv-page-darurat .drt-tab.aktif {
+  background: var(--darurat);
+  color: #fff;
+  border-color: var(--darurat);
+}
+.tv-page-darurat .drt-tabpane .drt-panel {
+  border-top-left-radius: 0;
+}
+
+/* Panel */
+.tv-page-darurat .drt-panel {
+  background: #fff;
+  border-radius: 18px;
+  border: 2px solid #f1dada;
+  padding: 18px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+.tv-page-darurat .drt-panel h3 {
+  font-family: "Fredoka", sans-serif;
+  color: var(--darurat-tua);
+  font-size: 1.12rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+}
+.tv-page-darurat .drt-panel .drt-sub {
+  color: var(--teks-lembut);
+  font-size: 0.85rem;
+  margin: 0 0 14px;
+}
+
+/* PAT */
+.tv-page-darurat .pat-sisi {
+  border: 2px solid #eee;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.tv-page-darurat .pat-sisi .pat-sisi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+.tv-page-darurat .pat-sisi .pat-sisi-nama {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--teks);
+}
+.tv-page-darurat .pat-sisi .pat-sisi-hint {
+  font-size: 0.8rem;
+  color: var(--teks-lembut);
+  line-height: 1.4;
+}
+.tv-page-darurat .pat-toggle {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.tv-page-darurat .pat-toggle button {
+  border: 2px solid #ddd;
+  background: #fafafa;
+  border-radius: 999px;
+  padding: 7px 16px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #777;
+}
+.tv-page-darurat .pat-toggle button.normal.aktif {
+  background: var(--darurat-hijau);
+  border-color: var(--darurat-hijau);
+  color: #fff;
+}
+.tv-page-darurat .pat-toggle button.abnormal.aktif {
+  background: var(--darurat);
+  border-color: var(--darurat);
+  color: #fff;
+}
+.tv-page-darurat .pat-hasil {
+  margin-top: 6px;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  background: #f7f7f7;
+  border: 2px dashed #ddd;
+}
+.tv-page-darurat .pat-hasil .pat-kategori {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.tv-page-darurat .pat-hasil .pat-saran {
+  font-size: 0.9rem;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+.tv-page-darurat .pat-hasil.lvl-stabil {
+  background: #e8f8ee;
+  border-color: var(--darurat-hijau);
+}
+.tv-page-darurat .pat-hasil.lvl-stabil .pat-kategori {
+  color: var(--darurat-hijau);
+}
+.tv-page-darurat .pat-hasil.lvl-waspada {
+  background: #fff6e5;
+  border-color: var(--darurat-amber);
+}
+.tv-page-darurat .pat-hasil.lvl-waspada .pat-kategori {
+  color: #b57400;
+}
+.tv-page-darurat .pat-hasil.lvl-kritis {
+  background: var(--darurat-lembut);
+  border-color: var(--darurat);
+}
+.tv-page-darurat .pat-hasil.lvl-kritis .pat-kategori {
+  color: var(--darurat-tua);
+}
+
+/* Resusitasi */
+.tv-page-darurat .resus-timer {
+  text-align: center;
+  background: var(--darurat-teks);
+  color: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.tv-page-darurat .resus-jam {
+  font-family: "Fredoka", sans-serif;
+  font-size: 3.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.tv-page-darurat .resus-siklus {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.tv-page-darurat .resus-siklus.alarm {
+  color: var(--darurat-amber);
+  font-weight: 700;
+  animation: resusBlink 0.6s steps(2, start) infinite;
+}
+@keyframes resusBlink {
+  50% {
+    opacity: 0.35;
+  }
+}
+.tv-page-darurat .resus-ctrl {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+.tv-page-darurat .resus-ctrl button {
+  border: none;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+}
+.tv-page-darurat .resus-ctrl .mulai {
+  background: var(--darurat);
+  color: #fff;
+}
+.tv-page-darurat .resus-ctrl .selesai {
+  background: #444;
+  color: #fff;
+}
+.tv-page-darurat .resus-ctrl button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tv-page-darurat .resus-quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tv-page-darurat .resus-quick button {
+  border: 2px solid var(--darurat-lembut);
+  background: #fff;
+  cursor: pointer;
+  padding: 12px 10px;
+  border-radius: 12px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--darurat-tua);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+.tv-page-darurat .resus-quick button:hover {
+  background: var(--darurat-lembut);
+}
+.tv-page-darurat .resus-quick button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.tv-page-darurat .resus-catatan-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tv-page-darurat .resus-catatan-row input {
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  font-family: "Quicksand", system-ui, sans-serif;
+  font-weight: 600;
+  outline: none;
+}
+.tv-page-darurat .resus-catatan-row button {
+  border: none;
+  background: #555;
+  color: #fff;
+  border-radius: 10px;
+  padding: 0 16px;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+}
+.tv-page-darurat .resus-catatan-row button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.tv-page-darurat .resus-log {
+  background: #faf7f7;
+  border: 2px solid #f0e6e6;
+  border-radius: 12px;
+  max-height: 230px;
+  overflow: auto;
+  padding: 6px;
+}
+.tv-page-darurat .resus-log .log-kosong {
+  color: #aaa;
+  text-align: center;
+  padding: 18px;
+  font-size: 0.88rem;
+}
+.tv-page-darurat .resus-log .log-item {
+  display: flex;
+  gap: 10px;
+  padding: 8px 10px;
+  border-bottom: 1px dashed #eadede;
+  font-size: 0.9rem;
+}
+.tv-page-darurat .resus-log .log-item:last-child {
+  border-bottom: none;
+}
+.tv-page-darurat .resus-log .log-jam {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  color: var(--darurat-tua);
+  min-width: 64px;
+}
+.tv-page-darurat .resus-log .log-teks {
+  flex: 1;
+  color: var(--teks);
+}
+.tv-page-darurat .resus-out-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .resus-out-actions button {
+  border: none;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+}
+.tv-page-darurat .resus-out-actions .salin {
+  background: #eef;
+  color: #33c;
+}
+.tv-page-darurat .resus-out-actions .simpan {
+  background: var(--darurat-hijau);
+  color: #fff;
+}
+
+/* pGCS */
+.tv-page-darurat .gcs-usia-bar {
+  margin-bottom: 14px;
+}
+.tv-page-darurat .gcs-usia-info {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--darurat-lembut);
+  color: var(--darurat-tua);
+  line-height: 1.4;
+}
+.tv-page-darurat .gcs-komp {
+  border: 2px solid #eee;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+.tv-page-darurat .gcs-komp-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .gcs-komp-nama {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--teks);
+}
+.tv-page-darurat .gcs-age-toggle {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .gcs-age-toggle button {
+  border: 2px solid #ddd;
+  background: #fafafa;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  cursor: pointer;
+  color: #777;
+}
+.tv-page-darurat .gcs-age-toggle button.aktif {
+  background: var(--darurat-tua);
+  border-color: var(--darurat-tua);
+  color: #fff;
+}
+.tv-page-darurat .gcs-opsi {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.tv-page-darurat .gcs-opsi button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+  width: 100%;
+  border: 2px solid #eee;
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 9px 12px;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--teks);
+  cursor: pointer;
+  line-height: 1.3;
+}
+.tv-page-darurat .gcs-opsi button:hover {
+  border-color: var(--darurat-lembut);
+  background: var(--darurat-lembut);
+}
+.tv-page-darurat .gcs-opsi button.aktif {
+  border-color: var(--darurat);
+  background: var(--darurat-lembut);
+}
+.tv-page-darurat .gcs-opsi .gcs-poin {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fff;
+  border: 2px solid #ddd;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  color: var(--teks-lembut);
+}
+.tv-page-darurat .gcs-opsi button.aktif .gcs-poin {
+  background: var(--darurat);
+  border-color: var(--darurat);
+  color: #fff;
+}
+.tv-page-darurat .gcs-komp.terbatas .gcs-opsi {
+  opacity: 0.4;
+  pointer-events: none;
+}
+.tv-page-darurat .gcs-tube {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 9px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  cursor: pointer;
+}
+.tv-page-darurat .gcs-hasil {
+  margin-top: 6px;
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+  background: #f7f7f7;
+  border: 2px dashed #ddd;
+}
+.tv-page-darurat .gcs-hasil .gcs-skor {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.tv-page-darurat .gcs-hasil .gcs-total {
+  font-size: 0.9rem;
+  margin-top: 6px;
+  line-height: 1.45;
+}
+.tv-page-darurat .gcs-hasil.lvl-stabil {
+  background: #e8f8ee;
+  border-color: var(--darurat-hijau);
+  border-style: solid;
+}
+.tv-page-darurat .gcs-hasil.lvl-stabil .gcs-skor {
+  color: var(--darurat-hijau);
+}
+.tv-page-darurat .gcs-hasil.lvl-waspada {
+  background: #fff6e5;
+  border-color: var(--darurat-amber);
+  border-style: solid;
+}
+.tv-page-darurat .gcs-hasil.lvl-waspada .gcs-skor {
+  color: #b57400;
+}
+.tv-page-darurat .gcs-hasil.lvl-kritis {
+  background: var(--darurat-lembut);
+  border-color: var(--darurat);
+  border-style: solid;
+}
+.tv-page-darurat .gcs-hasil.lvl-kritis .gcs-skor {
+  color: var(--darurat-tua);
+}
+.tv-page-darurat .gcs-out-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.tv-page-darurat .gcs-out-actions button {
+  border: none;
+  cursor: pointer;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+}
+.tv-page-darurat .gcs-out-actions .salin {
+  background: #eef;
+  color: #33c;
+}
+.tv-page-darurat .gcs-out-actions .simpan {
+  background: var(--darurat-hijau);
+  color: #fff;
+}
+.tv-page-darurat .gcs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+.tv-page-darurat .gcs-grid .gcs-komp {
+  padding: 9px 9px;
+  margin-bottom: 0;
+  border-radius: 12px;
+}
+.tv-page-darurat .gcs-grid .gcs-komp-head {
+  display: block;
+  margin-bottom: 7px;
+}
+.tv-page-darurat .gcs-grid .gcs-komp-nama {
+  font-size: 0.82rem;
+  display: block;
+  margin-bottom: 6px;
+}
+.tv-page-darurat .gcs-grid .gcs-age-toggle {
+  gap: 4px;
+}
+.tv-page-darurat .gcs-grid .gcs-age-toggle button {
+  padding: 3px 8px;
+  font-size: 0.66rem;
+  border-width: 1.5px;
+}
+.tv-page-darurat .gcs-grid .gcs-opsi {
+  gap: 5px;
+}
+.tv-page-darurat .gcs-grid .gcs-opsi button {
+  gap: 6px;
+  padding: 6px 7px;
+  font-size: 0.74rem;
+  border-radius: 9px;
+  line-height: 1.2;
+}
+.tv-page-darurat .gcs-grid .gcs-opsi .gcs-poin {
+  width: 21px;
+  height: 21px;
+  font-size: 0.78rem;
+  border-radius: 6px;
+}
+.tv-page-darurat .gcs-grid .gcs-tube {
+  margin-top: 7px;
+  font-size: 0.7rem;
+  gap: 6px;
+}
+
+/* PALS */
+.tv-page-darurat .pals-warn {
+  background: #fff8e5;
+  border: 2px solid #ffe2a8;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 0.88rem;
+  color: #8a6d1a;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.tv-page-darurat .pals-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tv-page-darurat .pals-cat {
+  border: 2px solid #eee;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+}
+.tv-page-darurat .pals-cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  color: #fff;
+  font-size: 1rem;
+}
+.tv-page-darurat .pals-cat-chevron {
+  transition: transform 0.2s;
+  font-size: 0.9rem;
+}
+.tv-page-darurat .pals-cat.tutup .pals-cat-chevron {
+  transform: rotate(-90deg);
+}
+.tv-page-darurat .pals-cat.tutup .pals-cat-body {
+  display: none;
+}
+.tv-page-darurat .pals-cat-body {
+  padding: 6px 16px 10px;
+}
+.tv-page-darurat .pals-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+  border-bottom: 1px dashed #eee;
+}
+.tv-page-darurat .pals-row:last-child {
+  border-bottom: none;
+}
+.tv-page-darurat .pals-label {
+  font-weight: 700;
+  color: var(--teks);
+  font-size: 0.92rem;
+  flex: 1;
+}
+.tv-page-darurat .pals-note {
+  display: block;
+  font-weight: 600;
+  font-size: 0.76rem;
+  color: var(--teks-lembut);
+  margin-top: 3px;
+}
+.tv-page-darurat .pals-val {
+  font-weight: 800;
+  font-size: 1.12rem;
+  color: var(--darurat-tua);
+  text-align: right;
+  white-space: nowrap;
+}
+.tv-page-darurat .pals-cat.cat-obat .pals-cat-head {
+  background: var(--darurat);
+}
+.tv-page-darurat .pals-cat.cat-listrik .pals-cat-head {
+  background: #e8a400;
+}
+.tv-page-darurat .pals-cat.cat-metabolik .pals-cat-head {
+  background: #2ba9d6;
+}
+.tv-page-darurat .pals-cat.cat-napas .pals-cat-head {
+  background: #1f9d55;
+}
+
+/* Disclaimer */
+.tv-page-darurat .drt-disclaimer {
+  margin-top: 18px;
+  background: #fff8e5;
+  border: 2px solid #ffe2a8;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.84rem;
+  color: #8a6d1a;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .tv-page-darurat .drt-pasien-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .tv-page-darurat .resus-jam {
+    font-size: 2.8rem;
+  }
+  .tv-page-darurat .gcs-grid {
+    grid-template-columns: 1fr;
+  }
+  .tv-page-darurat .pals-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+  .tv-page-darurat .pals-val {
+    text-align: left;
+  }
+}
