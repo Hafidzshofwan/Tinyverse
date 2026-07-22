@@ -11,7 +11,6 @@ interface PalsRow {
   value: string;
 }
 interface PalsCat {
-  cls: string;
   head: string;
   rows: PalsRow[];
 }
@@ -61,13 +60,12 @@ export function PalsTab({
     return num(vlo, dec) + "\u2013" + num(vhi, dec) + " " + unit;
   };
 
-  // Semua kategori awalnya tertutup (seperti v17: kelas "tutup").
+  // Semua kategori awalnya tertutup; ketuk judul untuk membuka.
   const [open, setOpen] = useState<Record<number, boolean>>({});
   const toggle = (i: number) => setOpen((o) => ({ ...o, [i]: !o[i] }));
 
   const cats: PalsCat[] = [
     {
-      cls: "cat-obat",
       head: "\uD83D\uDC8A Obat Emergensi",
       rows: [
         {
@@ -77,7 +75,7 @@ export function PalsTab({
           value: r.epi,
         },
         {
-          label: "Epinefrin (ET/via ETT)",
+          label: "Epinefrin (ET / via ETT)",
           note: "0,1 mg/kg \u00B7 sediaan 1:1.000 (0,1 mL/kg) \u00B7 HANYA bila akses IV/IO belum ada \u00B7 bilas NaCl 0,9% lalu ventilasi",
           ref: "AHA PALS 2020",
           value: r.epiET,
@@ -85,8 +83,7 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-obat",
-      head: "\uD83D\uDC8A Obat Henti Jantung & Aritmia",
+      head: "\uD83E\uDEC0 Obat Henti Jantung & Aritmia",
       rows: [
         {
           label: "Amiodaron",
@@ -147,7 +144,6 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-listrik",
       head: "\u26A1 Energi Listrik",
       rows: [
         {
@@ -165,7 +161,6 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-napas",
       head: "\uD83E\uDEC1 Jalan Napas & Alat",
       rows: [
         {
@@ -200,7 +195,6 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-napas",
       head: "\uD83D\uDCA7 Cairan Resusitasi",
       rows: [
         {
@@ -218,7 +212,6 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-obat",
       head: "\uD83D\uDC89 Obat RSI / Intubasi",
       rows: [
         {
@@ -255,6 +248,31 @@ export function PalsTab({
     },
   ];
 
+  // Skema "seragam lembut": kartu putih dengan aksen garis kiri + emoji.
+  const ACCENT = "#E11D2A";
+  const catBox: CSSProperties = {
+    background: "#fff",
+    border: "1px solid #F1DADB",
+    borderLeft: "4px solid " + ACCENT,
+    borderRadius: 12,
+    marginBottom: 8,
+    overflow: "hidden",
+    boxShadow: "0 1px 2px rgba(42,10,12,0.04)",
+  };
+  const catHead: CSSProperties = {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 10,
+    padding: "12px 14px",
+    cursor: "pointer",
+    background: "#fff",
+    color: "#2A0A0C",
+    fontWeight: 800,
+    fontSize: 14,
+    userSelect: "none",
+  };
+  const catBody: CSSProperties = { padding: "2px 14px 12px" };
   const refStyle: CSSProperties = {
     display: "block",
     fontSize: 10,
@@ -290,12 +308,9 @@ export function PalsTab({
       ) : null}
       <div className="pals-grid">
         {cats.map((cat, i) => (
-          <div
-            className={"pals-cat " + cat.cls + (open[i] ? "" : " tutup")}
-            key={i}
-          >
+          <div style={catBox} key={i}>
             <div
-              className="pals-cat-head"
+              style={catHead}
               onClick={() => toggle(i)}
               role="button"
               tabIndex={0}
@@ -304,24 +319,36 @@ export function PalsTab({
               }}
             >
               <span>{cat.head}</span>
-              <span className="pals-cat-chevron">{"\u25BE"}</span>
+              <span
+                style={{
+                  color: "#B00C1A",
+                  opacity: 0.6,
+                  fontSize: 12,
+                  transition: "transform .18s ease",
+                  transform: open[i] ? "rotate(180deg)" : "rotate(0deg)",
+                }}
+              >
+                {"\u25BE"}
+              </span>
             </div>
-            <div className="pals-cat-body">
-              {cat.rows.map((row, j) => (
-                <div className="pals-row" key={j}>
-                  <div className="pals-label">
-                    {row.label}
-                    {row.note ? (
-                      <span className="pals-note">{row.note}</span>
-                    ) : null}
-                    {row.ref ? (
-                      <span style={refStyle}>{"\uD83D\uDCD6 " + row.ref}</span>
-                    ) : null}
+            {open[i] ? (
+              <div style={catBody}>
+                {cat.rows.map((row, j) => (
+                  <div className="pals-row" key={j}>
+                    <div className="pals-label">
+                      {row.label}
+                      {row.note ? (
+                        <span className="pals-note">{row.note}</span>
+                      ) : null}
+                      {row.ref ? (
+                        <span style={refStyle}>{"\uD83D\uDCD6 " + row.ref}</span>
+                      ) : null}
+                    </div>
+                    <div className="pals-val">{row.value}</div>
                   </div>
-                  <div className="pals-val">{row.value}</div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : null}
           </div>
         ))}
       </div>
