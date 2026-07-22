@@ -387,7 +387,7 @@ export function ResusTab({
     }
   };
 
-  const mulaiSuara = async () => {
+  const mulaiSuara = () => {
     setVoiceErr("");
     const w = window as unknown as {
       SpeechRecognition?: new () => SpeechRec;
@@ -396,24 +396,19 @@ export function ResusTab({
     const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
     if (!Ctor) {
       setVoiceErr(
-        "Browser ini tidak mendukung pengenalan suara. Gunakan Chrome atau Edge terbaru.",
+        "Browser ini tidak mendukung pengenalan suara. Gunakan Chrome/Edge (Android/desktop) atau Safari (iOS).",
       );
       return;
     }
-    // Minta izin mikrofon lebih dulu agar prompt muncul & penolakan terdeteksi.
+    // PENTING: jangan memanggil getUserMedia lebih dulu. Di sebagian Chrome hal
+    // itu langsung ditolak TANPA memunculkan prompt. Biarkan SpeechRecognition
+    // yang meminta izin mikrofon secara native saat .start() dipanggil.
     try {
-      const md = navigator.mediaDevices;
-      if (md && md.getUserMedia) {
-        const stream = await md.getUserMedia({ audio: true });
-        stream.getTracks().forEach((t) => t.stop());
+      try {
+        recognitionRef.current?.stop();
+      } catch {
+        /* abaikan */
       }
-    } catch {
-      setVoiceErr(
-        "Izin mikrofon ditolak. Aktifkan izin mikrofon untuk situs ini lalu coba lagi.",
-      );
-      return;
-    }
-    try {
       const rec = new Ctor();
       rec.lang = "id-ID";
       rec.continuous = true;
@@ -427,15 +422,17 @@ export function ResusTab({
       rec.onerror = (ev: SpeechRecError) => {
         const err = ev?.error ?? "";
         if (err === "not-allowed" || err === "service-not-allowed") {
-          setVoiceErr("Izin mikrofon ditolak.");
+          setVoiceErr(
+            "Izin mikrofon belum aktif. Ketuk ikon gembok/kamera di bilah alamat, pilih Izinkan untuk Mikrofon, lalu coba lagi.",
+          );
           voiceOnRef.current = false;
           setVoiceOn(false);
         } else if (err === "audio-capture") {
-          setVoiceErr("Mikrofon tidak terdeteksi.");
+          setVoiceErr("Mikrofon tidak terdeteksi pada perangkat ini.");
           voiceOnRef.current = false;
           setVoiceOn(false);
         } else if (err === "network") {
-          setVoiceErr("Pengenalan suara membutuhkan koneksi internet.");
+          setVoiceErr("Pengenalan suara membutuhkan koneksi internet aktif.");
         }
         // "no-speech" / "aborted" dibiarkan: akan dimulai ulang lewat onend.
       };
@@ -473,7 +470,7 @@ export function ResusTab({
 
   const toggleSuara = () => {
     if (voiceOnRef.current) hentiSuara();
-    else void mulaiSuara();
+    else mulaiSuara();
   };
 
   const toggleHt = (i: number) => {
@@ -757,7 +754,8 @@ export function ResusTab({
         </button>
       </div>
 
-      <div style={kotak}>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
+      <div style={{ ...kotak, marginBottom: 0 }}>
         <div style={judulKotak}>{"\uD83E\uDD41 Metronom CPR"}</div>
         <button
           onClick={toggleMetro}
@@ -797,7 +795,7 @@ export function ResusTab({
         <div style={caption}>{bpm + "/menit \u00b7 target 100\u2013120"}</div>
       </div>
 
-      <div style={kotak}>
+      <div style={{ ...kotak, marginBottom: 0 }}>
         <div style={judulKotak}>{"\uD83D\uDC89 Interval epinefrin"}</div>
         <div style={{ display: "flex", gap: 6 }}>
           {[180, 240, 300].map((s) => (
@@ -828,6 +826,7 @@ export function ResusTab({
         >
           {epiInfo ? epiInfo.text : "Tekan \uD83D\uDC89 Epinefrin saat memberi dosis"}
         </div>
+      </div>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
