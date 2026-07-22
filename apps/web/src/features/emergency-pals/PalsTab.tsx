@@ -56,22 +56,6 @@ export function PalsTab({
       ],
     },
     {
-      cls: "cat-metabolik",
-      head: "🍬 Koreksi Metabolik",
-      rows: [
-        {
-          label: "Dextrose D10",
-          note: "bayi/neonatus · 0,5 g/kg",
-          value: r.d10,
-        },
-        {
-          label: "Dextrose D25",
-          note: "anak lebih besar · 0,5 g/kg",
-          value: r.d25,
-        },
-      ],
-    },
-    {
       cls: "cat-napas",
       head: "🫁 Jalan Napas & Alat",
       rows: [
@@ -90,9 +74,9 @@ export function PalsTab({
 
   return (
     <div className="drt-panel">
-      <h3>💊 Dosis &amp; Alat (PALS)</h3>
+      <h3>💊 Dosis & Alat (PALS)</h3>
       <p className="drt-sub">
-        Otomatis dihitung dari Berat Badan &amp; usia pada Profil Pasien. Ketuk
+        Otomatis dihitung dari Berat Badan & usia pada Profil Pasien. Ketuk
         judul kategori untuk buka/tutup.
       </p>
       {!r.hasBb ? (
@@ -104,8 +88,8 @@ export function PalsTab({
       <div className="pals-grid">
         {cats.map((cat, i) => (
           <div
-            key={cat.cls}
             className={"pals-cat " + cat.cls + (open[i] ? "" : " tutup")}
+            key={i}
           >
             <div
               className="pals-cat-head"
@@ -122,13 +106,13 @@ export function PalsTab({
             <div className="pals-cat-body">
               {cat.rows.map((row, j) => (
                 <div className="pals-row" key={j}>
-                  <span className="pals-label">
+                  <div className="pals-label">
                     {row.label}
                     {row.note ? (
                       <span className="pals-note">{row.note}</span>
                     ) : null}
-                  </span>
-                  <span className="pals-val">{row.value}</span>
+                  </div>
+                  <div className="pals-val">{row.value}</div>
                 </div>
               ))}
             </div>
