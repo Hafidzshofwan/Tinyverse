@@ -1,9 +1,24 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { tambahLog } from "@/entities/emergency";
 import type { CSSProperties } from "react";
+import { tambahLog } from "@/entities/emergency";
 import type { ResusLogItem } from "@/entities/emergency";
+
+type SpeechRec = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  onresult: ((e: SpeechResultEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start: () => void;
+  stop: () => void;
+};
+
+type SpeechResultEvent = {
+  results: ArrayLike<ArrayLike<{ transcript: string }>>;
+};
 
 function fmt(d: number): string {
   const m = Math.floor(d / 60);
@@ -38,6 +53,29 @@ const QUICK = [
   { aksi: "Intubasi", label: "💨 Intubasi" },
 ];
 
+const VOICE_MAP: Array<{ kata: string[]; aksi: string }> = [
+  { kata: ["epinefrin", "epi", "adrenalin"], aksi: "Epinefrin diberikan" },
+  {
+    kata: ["syok", "defib", "defibrilasi", "kejut"],
+    aksi: "Syok / Defibrilasi",
+  },
+  { kata: ["nadi", "ritme", "cek nadi"], aksi: "Cek nadi / ritme" },
+  { kata: ["intubasi", "tube", "napas buatan"], aksi: "Intubasi" },
+];
+
+const HT_LIST = [
+  "Hipoksia",
+  "Hipovolemia",
+  "Ion Hidrogen (asidosis)",
+  "Hipo-/Hiperkalemia",
+  "Hipoglikemia",
+  "Hipotermia",
+  "Tension pneumothorax",
+  "Tamponade jantung",
+  "Toksin",
+  "Trombosis (paru/koroner)",
+];
+
 export function ResusTab({
   nama,
   noRm,
@@ -48,6 +86,7 @@ export function ResusTab({
   bb: number | null;
 }) {
   const [jam, setJam] = useState("00:00");
+  const [detik, setDetik] = useState(0);
   const [siklus, setSiklus] = useState({
     text: "Tekan \u201cMulai\u201d untuk memulai pencatatan",
     alarm: false,
@@ -65,16 +104,31 @@ export function ResusTab({
     null,
   );
 
+  const [coachOpen, setCoachOpen] = useState(false);
+  const [beat, setBeat] = useState(false);
+  const [ratio, setRatio] = useState(30);
+  const [compCount, setCompCount] = useState(0);
+  const [ventFlash, setVentFlash] = useState(false);
+  const [htChecked, setHtChecked] = useState<boolean[]>(() =>
+    HT_LIST.map(() => false),
+  );
+
+  const [voiceOn, setVoiceOn] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const [voiceHeard, setVoiceHeard] = useState("");
+
   const mulaiRef = useRef(0);
   const siklusRef = useRef(120);
   const tickRef = useRef<number | null>(null);
   const alarmRef = useRef<number | null>(null);
   const runningRef = useRef(false);
-  const metroRef = useRef<number | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
   const epiRef = useRef(0);
   const epiAlarmRef = useRef(false);
   const epiIntervalRef = useRef(240);
+  const compRef = useRef(0);
+  const recognitionRef = useRef<SpeechRec | null>(null);
+  const voiceOnRef = useRef(false);
 
   const elapsed = () => Math.floor((Date.now() - mulaiRef.current) / 1000);
 
@@ -122,7 +176,12 @@ export function ResusTab({
     return () => {
       if (tickRef.current) clearInterval(tickRef.current);
       if (alarmRef.current) clearTimeout(alarmRef.current);
-      if (metroRef.current) clearInterval(metroRef.current);
+      voiceOnRef.current = false;
+      try {
+        recognitionRef.current?.stop();
+      } catch {
+        /* abaikan */
+      }
       const ctx = audioCtxRef.current;
       if (ctx) {
         try {
@@ -135,15 +194,51 @@ export function ResusTab({
   }, []);
 
   useEffect(() => {
-    if (!metroOn) return;
-    beep();
-    const id = window.setInterval(beep, Math.max(300, Math.round(60000 / bpm)));
-    metroRef.current = id;
+    const active = metroOn || coachOpen;
+    if (!active) return;
+    const interval = Math.max(300, Math.round(60000 / bpm));
+    let flashT: number | undefined;
+    const doBeat = () => {
+      if (metroOn) beep();
+      setBeat(true);
+      if (flashT) clearTimeout(flashT);
+      flashT = window.setTimeout(
+        () => setBeat(false),
+        Math.min(160, Math.round(interval * 0.45)),
+      );
+      if (coachOpen && runningRef.current) {
+        compRef.current += 1;
+        setCompCount(compRef.current);
+        if (compRef.current % ratio === 0) {
+          setVentFlash(true);
+          window.setTimeout(() => setVentFlash(false), 1200);
+        }
+      }
+    };
+    doBeat();
+    const id = window.setInterval(doBeat, interval);
     return () => {
       clearInterval(id);
-      metroRef.current = null;
+      if (flashT) clearTimeout(flashT);
     };
-  }, [metroOn, bpm, beep]);
+  }, [metroOn, coachOpen, bpm, ratio, beep]);
+
+  useEffect(() => {
+    const w = window as unknown as {
+      SpeechRecognition?: unknown;
+      webkitSpeechRecognition?: unknown;
+    };
+    setVoiceSupported(Boolean(w.SpeechRecognition || w.webkitSpeechRecognition));
+  }, []);
+
+  useEffect(() => {
+    if (!coachOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setCoachOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [coachOpen]);
 
   const catat = (teks: string) => {
     if (!runningRef.current || !teks) return;
@@ -154,6 +249,7 @@ export function ResusTab({
   const tick = () => {
     const d = elapsed();
     setJam(fmt(d));
+    setDetik(d);
     if (d >= siklusRef.current) {
       siklusRef.current += 120;
       setSiklus({
@@ -209,10 +305,15 @@ export function ResusTab({
     setLog([]);
     siklusRef.current = 120;
     setJam("00:00");
+    setDetik(0);
     setSiklus({ text: "Siklus berikutnya dalam 02:00", alarm: false });
     epiRef.current = 0;
     epiAlarmRef.current = false;
     setEpiInfo(null);
+    compRef.current = 0;
+    setCompCount(0);
+    setVentFlash(false);
+    setHtChecked(HT_LIST.map(() => false));
     catat("Resusitasi dimulai");
     tickRef.current = window.setInterval(tick, 1000);
   };
@@ -257,6 +358,82 @@ export function ResusTab({
       if (next) ensureAudio();
       return next;
     });
+  };
+
+  const bukaCoach = () => {
+    compRef.current = 0;
+    setCompCount(0);
+    setVentFlash(false);
+    setCoachOpen(true);
+  };
+
+  const prosesSuara = (txt: string) => {
+    const low = txt.toLowerCase();
+    setVoiceHeard(txt);
+    const found = VOICE_MAP.find((v) => v.kata.some((k) => low.includes(k)));
+    if (found) {
+      aksiCepat(found.aksi);
+    } else if (runningRef.current) {
+      catat("🎙️ " + txt);
+    }
+  };
+
+  const mulaiSuara = () => {
+    const w = window as unknown as {
+      SpeechRecognition?: new () => SpeechRec;
+      webkitSpeechRecognition?: new () => SpeechRec;
+    };
+    const Ctor = w.SpeechRecognition ?? w.webkitSpeechRecognition;
+    if (!Ctor) return;
+    try {
+      const rec = new Ctor();
+      rec.lang = "id-ID";
+      rec.continuous = true;
+      rec.interimResults = false;
+      rec.onresult = (e: SpeechResultEvent) => {
+        const r = e.results;
+        const last = r[r.length - 1];
+        const txt = last?.[0]?.transcript;
+        if (txt) prosesSuara(txt);
+      };
+      rec.onerror = () => {
+        /* abaikan */
+      };
+      rec.onend = () => {
+        if (voiceOnRef.current) {
+          try {
+            rec.start();
+          } catch {
+            /* abaikan */
+          }
+        }
+      };
+      recognitionRef.current = rec;
+      voiceOnRef.current = true;
+      setVoiceOn(true);
+      rec.start();
+    } catch {
+      /* abaikan */
+    }
+  };
+
+  const hentiSuara = () => {
+    voiceOnRef.current = false;
+    setVoiceOn(false);
+    try {
+      recognitionRef.current?.stop();
+    } catch {
+      /* abaikan */
+    }
+  };
+
+  const toggleSuara = () => {
+    if (voiceOnRef.current) hentiSuara();
+    else mulaiSuara();
+  };
+
+  const toggleHt = (i: number) => {
+    setHtChecked((prev) => prev.map((v, idx) => (idx === i ? !v : v)));
   };
 
   const catatKustom = () => {
@@ -342,7 +519,7 @@ export function ResusTab({
       "table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px;}" +
       "th{text-align:left;background:#FDECEC;color:#B00C1A;padding:8px;font-size:12px;}" +
       "td{padding:7px 8px;border-bottom:1px solid #eee;}" +
-      "td.j{font-variant-numeric:tabular-nums;font-weight:700;width:70px;color:#B00C1A;}" +
+      "td.j{font-variant-numeric:tabular-nums;font-weight:700;width:90px;color:#B00C1A;}" +
       "td.kosong{text-align:center;color:#999;font-style:italic;}" +
       ".ttd{margin-top:36px;display:flex;justify-content:flex-end;}" +
       ".ttd .box{text-align:center;font-size:12px;}" +
@@ -378,7 +555,7 @@ export function ResusTab({
       log.length +
       '</div><div class="ket">Total kejadian</div></div>' +
       "</div>" +
-      "<table><thead><tr><th>Waktu</th><th>Tindakan / Kejadian</th></tr></thead><tbody>" +
+      "<table><thead><tr><th>Jam</th><th>Tindakan / Kejadian</th></tr></thead><tbody>" +
       baris +
       "</tbody></table>" +
       '<div class="ttd"><div class="box"><div>Dokumentasi oleh,</div><div class="garis">Nama &amp; Tanda tangan</div></div></div>' +
@@ -409,13 +586,44 @@ export function ResusTab({
     color: "#2A0A0C",
     marginBottom: 6,
   };
+  const coachBtn: CSSProperties = {
+    padding: "10px 12px",
+    borderRadius: 12,
+    fontWeight: 800,
+    cursor: "pointer",
+    border: "none",
+    color: "#fff",
+    background: "linear-gradient(135deg,#E11D2A,#B00C1A)",
+  };
+  const overlay: CSSProperties = {
+    position: "fixed",
+    inset: 0,
+    zIndex: 9999,
+    background: "linear-gradient(160deg,#B00C1A,#E11D2A 70%)",
+    color: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: "18px 16px",
+    overflowY: "auto",
+  };
+  const coachQuick: CSSProperties = {
+    padding: "10px 8px",
+    borderRadius: 12,
+    fontWeight: 800,
+    fontSize: 13,
+    cursor: "pointer",
+    border: "1px solid rgba(255,255,255,0.6)",
+    background: "rgba(255,255,255,0.12)",
+    color: "#fff",
+  };
 
   return (
     <div className="drt-panel">
       <h3>⏱️ Timer &amp; Pencatat Resusitasi</h3>
       <p className="drt-sub">
-        Stopwatch + metronom CPR (100–120/menit), pengingat siklus 2 menit &amp;
-        dosis epinefrin, pencatat tindakan ber-timestamp, dan cetak Lembar Kode.
+        Stopwatch + metronom CPR, CPR Coach layar penuh, catat tindakan lewat
+        suara, pengingat siklus &amp; epinefrin, dan cetak Lembar Kode.
       </p>
 
       <div className="resus-timer">
@@ -543,6 +751,56 @@ export function ResusTab({
         </div>
       </div>
 
+      <div
+        style={{
+          display: "grid",
+          gap: 10,
+          gridTemplateColumns: "1fr 1fr",
+          margin: "0 0 12px",
+        }}
+      >
+        <button type="button" onClick={bukaCoach} style={coachBtn}>
+          🫀 Mode CPR Layar Penuh
+        </button>
+        <button
+          type="button"
+          onClick={toggleSuara}
+          disabled={!voiceSupported}
+          title={
+            voiceSupported
+              ? "Catat tindakan lewat suara"
+              : "Browser tidak mendukung input suara"
+          }
+          style={{
+            padding: "10px 12px",
+            borderRadius: 12,
+            fontWeight: 800,
+            cursor: voiceSupported ? "pointer" : "not-allowed",
+            border: "1px solid #E11D2A",
+            background: voiceOn ? "#E11D2A" : "#fff",
+            color: voiceOn ? "#fff" : "#E11D2A",
+            opacity: voiceSupported ? 1 : 0.5,
+          }}
+        >
+          {voiceOn ? "🎙️ Mendengarkan…" : "🎙️ Catat via Suara"}
+        </button>
+      </div>
+
+      {voiceOn && (
+        <div
+          style={{
+            marginBottom: 12,
+            fontSize: 12,
+            color: "#8a7f80",
+            textAlign: "center",
+          }}
+        >
+          Ucapkan: “epinefrin”, “syok”, “cek nadi”, “intubasi”, atau kalimat
+          bebas.
+          {voiceHeard ? " · Terdengar: \u201c" + voiceHeard + "\u201d" : ""}
+        </div>
+      )}
+
       <div className="resus-quick">
         {QUICK.map((q) => (
           <button
@@ -611,6 +869,303 @@ export function ResusTab({
           🖨️ Cetak Lembar Kode
         </button>
       </div>
+
+      {coachOpen && (
+        <div style={overlay}>
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 480,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <div>
+              <div style={{ fontSize: 40, fontWeight: 900, lineHeight: 1 }}>
+                {jam}
+              </div>
+              <div style={{ fontSize: 12, opacity: 0.9 }}>{siklus.text}</div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setCoachOpen(false)}
+              style={{
+                border: "1px solid rgba(255,255,255,0.7)",
+                background: "rgba(255,255,255,0.12)",
+                color: "#fff",
+                borderRadius: 10,
+                padding: "8px 12px",
+                fontWeight: 800,
+                cursor: "pointer",
+              }}
+            >
+              ✕ Tutup
+            </button>
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              margin: "22px 0 10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: 230,
+                height: 230,
+                borderRadius: "50%",
+                background: "rgba(255,255,255,0.12)",
+                border: "6px solid rgba(255,255,255,0.9)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                transform: beat ? "scale(1)" : "scale(0.86)",
+                transition: "transform 0.12s ease-out, box-shadow 0.12s ease-out",
+                boxShadow: beat
+                  ? "0 0 0 14px rgba(255,255,255,0.12)"
+                  : "0 0 0 0 rgba(255,255,255,0)",
+              }}
+            >
+              <div style={{ fontSize: 13, letterSpacing: 1, opacity: 0.9 }}>
+                TEKAN
+              </div>
+              <div style={{ fontSize: 58, fontWeight: 900, lineHeight: 1 }}>
+                {compCount}
+              </div>
+              <div style={{ fontSize: 13, opacity: 0.9 }}>{bpm}/menit</div>
+            </div>
+            {ventFlash && (
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 26,
+                  fontWeight: 900,
+                  color: "#2A0A0C",
+                  background: "rgba(255,177,0,0.95)",
+                  borderRadius: "50%",
+                  width: 230,
+                  height: 230,
+                  margin: "auto",
+                  textAlign: "center",
+                }}
+              >
+                💨 BERI 2 NAPAS
+              </div>
+            )}
+          </div>
+
+          <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
+            {[
+              { v: 30, t: "30:2" },
+              { v: 15, t: "15:2" },
+            ].map((r) => (
+              <button
+                key={r.v}
+                type="button"
+                onClick={() => setRatio(r.v)}
+                style={{
+                  padding: "8px 16px",
+                  borderRadius: 10,
+                  fontWeight: 800,
+                  cursor: "pointer",
+                  border: "1px solid rgba(255,255,255,0.7)",
+                  background:
+                    ratio === r.v ? "#fff" : "rgba(255,255,255,0.12)",
+                  color: ratio === r.v ? "#B00C1A" : "#fff",
+                }}
+              >
+                {r.t}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={toggleMetro}
+              style={{
+                padding: "8px 16px",
+                borderRadius: 10,
+                fontWeight: 800,
+                cursor: "pointer",
+                border: "1px solid rgba(255,255,255,0.7)",
+                background: metroOn ? "#1F9D55" : "rgba(255,255,255,0.12)",
+                color: "#fff",
+              }}
+            >
+              {metroOn ? "🔊 Bunyi" : "🔇 Bunyi"}
+            </button>
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 480,
+              textAlign: "center",
+              fontWeight: 800,
+              fontSize: 14,
+              borderRadius: 12,
+              padding: "10px",
+              marginBottom: 12,
+              background: epiInfo?.alarm
+                ? "#FFB100"
+                : "rgba(255,255,255,0.12)",
+              color: epiInfo?.alarm ? "#2A0A0C" : "#fff",
+            }}
+          >
+            {epiInfo ? epiInfo.text : "💉 Tekan Epinefrin saat memberi dosis"}
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 480,
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 8,
+              marginBottom: 10,
+            }}
+          >
+            {QUICK.map((q) => (
+              <button
+                key={q.aksi}
+                type="button"
+                onClick={() => aksiCepat(q.aksi)}
+                disabled={!running}
+                style={{ ...coachQuick, opacity: running ? 1 : 0.5 }}
+              >
+                {q.label}
+              </button>
+            ))}
+          </div>
+
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 480,
+              display: "grid",
+              gridTemplateColumns: running ? "1fr 1fr" : "1fr",
+              gap: 8,
+              marginBottom: 12,
+            }}
+          >
+            {!running && (
+              <button
+                type="button"
+                onClick={mulaiResus}
+                style={{
+                  ...coachQuick,
+                  background: "#fff",
+                  color: "#B00C1A",
+                }}
+              >
+                ▶️ Mulai Resusitasi
+              </button>
+            )}
+            {running && (
+              <button
+                type="button"
+                onClick={selesaiResus}
+                style={{ ...coachQuick, background: "#2A0A0C" }}
+              >
+                ⏹️ Selesai
+              </button>
+            )}
+            {running && (
+              <button
+                type="button"
+                onClick={toggleSuara}
+                disabled={!voiceSupported}
+                style={{
+                  ...coachQuick,
+                  background: voiceOn
+                    ? "#1F9D55"
+                    : "rgba(255,255,255,0.12)",
+                  opacity: voiceSupported ? 1 : 0.5,
+                }}
+              >
+                {voiceOn ? "🎙️ Suara aktif" : "🎙️ Suara"}
+              </button>
+            )}
+          </div>
+
+          {detik >= 240 && (
+            <div
+              style={{
+                width: "100%",
+                maxWidth: 480,
+                background: "rgba(0,0,0,0.18)",
+                borderRadius: 14,
+                padding: "12px 14px",
+                marginBottom: 12,
+              }}
+            >
+              <div style={{ fontWeight: 800, marginBottom: 8 }}>
+                🧩 Cek penyebab reversibel (Hs &amp; Ts)
+              </div>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "4px 12px",
+                }}
+              >
+                {HT_LIST.map((h, i) => (
+                  <label
+                    key={h}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontSize: 13,
+                      cursor: "pointer",
+                      opacity: htChecked[i] ? 0.6 : 1,
+                      textDecoration: htChecked[i] ? "line-through" : "none",
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={htChecked[i] ?? false}
+                      onChange={() => toggleHt(i)}
+                    />
+                    {h}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 480,
+              fontSize: 12,
+              opacity: 0.92,
+            }}
+          >
+            {log.slice(-4).map((e, i) => (
+              <div
+                key={i}
+                style={{
+                  display: "flex",
+                  gap: 10,
+                  padding: "3px 0",
+                  borderBottom: "1px solid rgba(255,255,255,0.18)",
+                }}
+              >
+                <span style={{ fontWeight: 800 }}>{e.jam}</span>
+                <span>{e.teks}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
