@@ -439,24 +439,41 @@ export function ResusTab({
         } catch {
           permState = "n/a";
         }
+        let micCount = -1;
+        try {
+          const devs = await navigator.mediaDevices.enumerateDevices();
+          micCount = devs.filter((d) => d.kind === "audioinput").length;
+        } catch {
+          /* abaikan */
+        }
         setVoiceDiag(
-          "Diagnostik \u2192 HTTPS: ya \u00b7 dalam frame: tidak \u00b7 status izin mic: " +
+          "Diagnostik \u2192 HTTPS: ya \u00b7 frame: tidak \u00b7 izin situs: " +
             permState +
+            " \u00b7 mic terdeteksi: " +
+            (micCount < 0 ? "?" : String(micCount)) +
             " \u00b7 error: " +
             (nm || "tak dikenal"),
         );
         if (
-          nm === "NotAllowedError" ||
-          nm === "SecurityError" ||
-          permState === "denied"
+          nm === "NotFoundError" ||
+          nm === "DevicesNotFoundError" ||
+          micCount === 0
         ) {
           setVoiceErr(
-            "Izin mikrofon untuk situs ini SEDANG DIBLOKIR di Chrome (Chrome mengingat pilihan Blokir dan tidak menampilkan prompt lagi). Klik ikon gembok/pengaturan di kiri bilah alamat \u2192 Mikrofon \u2192 Izinkan (atau Reset izin) \u2192 muat ulang halaman.",
+            "Tidak ada mikrofon aktif yang terdeteksi. Pastikan mikrofon terpasang & aktif di Windows (Settings \u2192 System \u2192 Sound \u2192 Input).",
           );
-        } else if (nm === "NotFoundError" || nm === "DevicesNotFoundError") {
-          setVoiceErr("Tidak ada perangkat mikrofon yang terdeteksi.");
+        } else if (permState === "denied") {
+          setVoiceErr(
+            "Izin mikrofon untuk situs ini diblokir di Chrome. Klik ikon gembok \u2192 Site settings \u2192 Microphone \u2192 Allow, lalu muat ulang halaman.",
+          );
+        } else if (nm === "NotAllowedError" || nm === "SecurityError") {
+          setVoiceErr(
+            "Mikrofon diblokir di level sistem operasi (bukan di situs ini). Windows: Settings \u2192 Privacy & security \u2192 Microphone \u2192 aktifkan \u201cMicrophone access\u201d dan \u201cLet desktop apps access your microphone\u201d, pastikan Chrome diizinkan, lalu tutup & buka lagi Chrome.",
+          );
         } else {
-          setVoiceErr("Mikrofon gagal diakses (" + (nm || "tak dikenal") + ").");
+          setVoiceErr(
+            "Mikrofon gagal diakses (" + (nm || "tak dikenal") + "). Lihat baris diagnostik.",
+          );
         }
         return;
       }
