@@ -132,7 +132,7 @@ export function ResusTab({
       "\nTanggal: " +
       new Date().toLocaleString("id-ID") +
       "\n----------------------------------\n";
-    const body = log.map((e) => e.jam + "  " + e.teks).join("\n");
+    const body = log.map((e) => e.jam + " " + e.teks).join("\n");
     return head + (body || "(tidak ada tindakan tercatat)");
   };
 
@@ -151,7 +151,7 @@ export function ResusTab({
       tipe: "Resusitasi",
       pasien: nama || "-",
       noRm: noRm || "",
-      durasi: log.length ? log[log.length - 1].jam : "00:00",
+      durasi: log.length ? (log[log.length - 1]?.jam ?? "00:00") : "00:00",
       kronologi: teksKronologi(),
       t: Date.now(),
     });
@@ -160,54 +160,58 @@ export function ResusTab({
   };
 
   return (
-    <div className="drt-panel" id="resusPanel">
-      <h3>⏱️ Timer &amp; Pencatat Resusitasi</h3>
+    <div className="drt-panel">
+      <h3>⏱️ Timer & Pencatat Resusitasi</h3>
       <p className="drt-sub">
         Stopwatch dengan pengingat siklus 2 menit dan pencatat tindakan
         ber-timestamp otomatis.
       </p>
+
       <div className="resus-timer">
         <div className="resus-jam">{jam}</div>
         <div className={"resus-siklus" + (siklus.alarm ? " alarm" : "")}>
           {siklus.text}
         </div>
       </div>
+
       <div className="resus-ctrl">
         <button
           className="mulai"
           type="button"
-          disabled={running}
           onClick={mulaiResus}
+          disabled={running}
         >
           ▶️ Mulai Resusitasi
         </button>
         <button
           className="selesai"
           type="button"
-          disabled={!running}
           onClick={selesaiResus}
+          disabled={!running}
         >
           ⏹️ Selesai
         </button>
       </div>
+
       <div className="resus-quick">
         {QUICK.map((q) => (
           <button
             key={q.aksi}
             type="button"
-            disabled={!running}
             onClick={() => catat(q.aksi)}
+            disabled={!running}
           >
             {q.label}
           </button>
         ))}
       </div>
+
       <div className="resus-catatan-row">
         <input
           type="text"
-          placeholder="Catatan bebas (mis. ROSC, akses IV)"
-          disabled={!running}
+          placeholder="Catatan tindakan lain…"
           value={catatan}
+          disabled={!running}
           onChange={(e) => setCatatan(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
@@ -216,10 +220,11 @@ export function ResusTab({
             }
           }}
         />
-        <button type="button" disabled={!running} onClick={catatKustom}>
+        <button type="button" onClick={catatKustom} disabled={!running}>
           + Catat
         </button>
       </div>
+
       <div className="resus-log">
         {log.length === 0 ? (
           <div className="log-kosong">Belum ada tindakan tercatat.</div>
@@ -232,6 +237,7 @@ export function ResusTab({
           ))
         )}
       </div>
+
       <div className="resus-out-actions">
         <button className="salin" type="button" onClick={salin}>
           {salinLabel}

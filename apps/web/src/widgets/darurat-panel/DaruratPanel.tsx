@@ -49,9 +49,9 @@ function parseUsia(t: string): number | null {
   const thn = t.match(/(\d+)\s*(th|thn|tahun|y)/);
   const bln = t.match(/(\d+)\s*(bl|bln|bulan|mo)/);
   if (thn || bln)
-    return (thn ? parseInt(thn[1], 10) : 0) * 12 + (bln ? parseInt(bln[1], 10) : 0);
+    return (thn ? parseInt(thn[1] ?? "0", 10) : 0) * 12 + (bln ? parseInt(bln[1] ?? "0", 10) : 0);
   const n = t.match(/(\d+)/);
-  if (n) return parseInt(n[1], 10) * 12;
+  if (n) return parseInt(n[1] ?? "0", 10) * 12;
   return null;
 }
 function bacaNoRm(): string {
@@ -179,7 +179,7 @@ export function DaruratPanel() {
           <div>
             <h2>Mode Darurat</h2>
             <p>
-              Alat bantu cepat: Penilaian PAT, Timer resusitasi &amp; Kalkulator
+              Alat bantu cepat: Penilaian PAT, Timer resusitasi & Kalkulator
               dosis PALS.
             </p>
           </div>
@@ -283,7 +283,7 @@ export function DaruratPanel() {
 
         <div className="drt-disclaimer">
           ⚠️ <strong>Disclaimer:</strong> Mode Darurat adalah alat bantu
-          dokumentasi, penilaian cepat &amp; perhitungan dosis (PALS), bukan
+          dokumentasi, penilaian cepat & perhitungan dosis (PALS), bukan
           pengganti penilaian klinis. PAT menilai kesan awal, bukan diagnosis.
           Verifikasi setiap tindakan, dosis, dan ukuran alat sesuai protokol
           resusitasi yang berlaku.
