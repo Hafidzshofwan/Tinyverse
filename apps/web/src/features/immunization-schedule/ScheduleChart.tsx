@@ -18,10 +18,11 @@ function bulatkan(n: number): number {
 }
 
 /**
- * Bagan Jadwal Imunisasi (port 1:1 dari island v17): dua tab gambar
- * (Jadwal/Keterangan) dengan kontrol zoom (−/+/Fit) dan klik gambar untuk
- * zoom cepat 2x. Zoom diterapkan lewat lebar gambar (persentase), identik
- * dengan logika applyZoom() di imunisasi-tool.html.
+ * Bagan Jadwal Imunisasi (port 1:1 dari island v17, gaya direstyle mengikuti
+ * tema navy-magenta terpadu — sama seperti Lab/Darurat/Cairan): dua tab
+ * gambar (Jadwal/Keterangan) dengan kontrol zoom (−/+/Fit) dan klik gambar
+ * untuk zoom cepat 2x. Zoom diterapkan lewat lebar gambar (persentase),
+ * identik dengan logika applyZoom() di imunisasi-tool.html.
  */
 export function ScheduleChart() {
   const [chartKey, setChartKey] = useState<ChartKey>("jadwal");
@@ -58,15 +59,15 @@ export function ScheduleChart() {
   }
 
   return (
-    <div className="imunisasi-card imunisasi-chart-card kartu">
-      <div className="imn-tabs" role="tablist" aria-label="Pilih halaman bagan">
+    <>
+      <div className="segmented-toggle" role="tablist" aria-label="Pilih halaman bagan">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
             role="tab"
             aria-selected={chartKey === t.id}
-            className={"imn-tab" + (chartKey === t.id ? " aktif" : "")}
+            className={"segmented-btn" + (chartKey === t.id ? " aktif" : "")}
             onClick={() => ubahChart(t.id)}
           >
             {t.label}
@@ -116,6 +117,6 @@ export function ScheduleChart() {
         <strong>Keterangan</strong>. Gunakan tombol zoom (− / + / Fit) atau
         klik gambar untuk memperbesar; geser untuk menelusuri.
       </p>
-    </div>
+    </>
   );
 }

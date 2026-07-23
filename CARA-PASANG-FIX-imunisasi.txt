@@ -1,0 +1,80 @@
+CARA PASANG — FIX-imunisasi-tema-navy
+=======================================
+
+Ini PERBAIKAN dari BUNDEL-imunisasi sebelumnya. Menimpa 3 file saja.
+
+1) CMD, masuk ke folder repo:
+
+   cd /d "D:\Collage\Co-Assitant Era\Programmer\Project New\Asset Github\Next.js\tinyverse project\tinyverse"
+
+2) Salin & timpa:
+
+   xcopy "%USERPROFILE%\Downloads\FIX-imunisasi-tema-navy\apps" "apps" /E /H /Y
+
+3) Jalankan & cek:
+
+   cd apps\web
+   npm run dev
+
+   Buka: http://localhost:3000/preview/imunisasi
+
+4) Kalau sudah cocok, commit & push dari folder ROOT:
+
+   cd /d "D:\Collage\Co-Assitant Era\Programmer\Project New\Asset Github\Next.js\tinyverse project\tinyverse"
+   git add -A
+   git commit -m "fix(imunisasi): ganti tema pastel v17 ke tema navy-magenta terpadu (samakan Lab/Darurat/Cairan)"
+   git push origin main
+
+
+APA YANG BERUBAH & KENAPA
+==========================
+Kamu minta background kuning dihilangkan dan ikut tema warna yang SAMA
+dengan modul yang sudah dimigrasi (Lab/Darurat/Cairan) — bukan lagi replika
+pastel v17. Jadi:
+
+1. src/app/preview/imunisasi/v17-imunisasi.css (DITIMPA total)
+   - Background halaman (.tv-page-imunisasi-wrapper) diganti dari krem
+     kuning (#FFFBF0) -> abu-putih (#F8FAFC), sama seperti Lab/Cairan/Darurat.
+   - Semua variabel warna diganti ke tema etail: --etail-navy (#0A0B5F),
+     --etail-magenta (#D936A6), kartu putih dengan --etail-soft-shadow,
+     dsb — identik dengan yang dipakai v17-lab.css.
+   - Badge "Hidup"/"Inaktif" tetap ada tapi warnanya sekarang hijau-tosca /
+     navy (bukan hijau-tua/biru-tua pastel lama).
+   - Tombol zoom (−/+/Fit) sekarang bernuansa magenta lembut, kotak info
+     "disclaimer" tetap kuning muda (dipertahankan sebagai warna peringatan/
+     catatan, konsisten dengan kotak dx-warn di Lab — bukan tema latar
+     halaman).
+
+2. src/widgets/imunisasi-panel/ImunisasiPanel.tsx (DITIMPA)
+   - Struktur header diubah dari kartu "hero" terpisah menjadi pola
+     .judul-section standar (ikon bulat magenta + judul + subjudul),
+     PERSIS pola yang dipakai LabPanel/DaruratPanel/FluidsPanel.
+   - Sub-kartu "Materi Vaksin" sekarang pakai heading .dx-sub-h (sama
+     seperti heading "Analisis Gas Darah (AGD)" di Lab), bukan lagi
+     .judul-section kedua.
+
+3. src/features/immunization-schedule/ScheduleChart.tsx (DITIMPA)
+   - Tab "Bagan Jadwal"/"Keterangan" yang tadinya pakai class custom
+     .imn-tabs/.imn-tab, sekarang pakai .segmented-toggle/.segmented-btn —
+     komponen tab yang SAMA dipakai Lab (Nilai Rujukan/Hitung Darah/dst)
+     dan Cairan, supaya benar-benar konsisten look & feel-nya di seluruh
+     aplikasi.
+   - Logika zoom, klik-gambar, dan konten TIDAK berubah sama sekali —
+     hanya className yang diganti agar ikut styling baru.
+
+TIDAK BERUBAH: entities/immunization (data 15 vaksin, config gambar bagan),
+features/vaccine-catalog/VaccineCatalog.tsx (dropdown + detail + deep-link),
+app/preview/imunisasi/page.tsx. File-file ini isinya sudah benar dari bundel
+sebelumnya, cuma "mewarisi" warna baru otomatis lewat CSS yang ditimpa.
+
+
+YANG PERLU DICEK
+==================
+1. Background sekitar konten sudah putih/abu (#F8FAFC), tidak ada lagi
+   krem/kuning.
+2. Tab "Bagan Jadwal"/"Keterangan" sekarang berbentuk pill navy saat aktif
+   (mirip tab "Nilai Rujukan" dkk di halaman Interpretasi Lab).
+3. Warna & gaya kartu terasa senada dengan halaman Lab/Darurat/Cairan saat
+   dibuka bergantian.
+4. Fungsi zoom, ganti tab, dropdown vaksin, dan deep-link pencarian tetap
+   berjalan seperti sebelumnya (tidak ada perubahan logika).

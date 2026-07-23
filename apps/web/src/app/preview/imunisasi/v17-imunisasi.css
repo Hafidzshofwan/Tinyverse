@@ -1,127 +1,121 @@
-/* === TinyVerse — Jadwal Imunisasi (port 1:1 v17 imunisasi-tool.html, palet pastel asli) === */
+/* === TinyVerse — Jadwal Imunisasi (tema etail/navy-magenta, sama seperti Lab/Darurat/Cairan) === */
 
 .tv-page-imunisasi-wrapper {
-  background: #fffbf0;
+  background: #f8fafc;
   min-height: 100vh;
   padding: 24px 16px;
 }
 
 .tv-page-imunisasi {
-  /* Variabel warna identik dengan :root imunisasi-tool.html (BUKAN tema navy-magenta). */
-  --kuning: #ffd23f;
-  --kuning-tua: #f5b700;
+  --navy: #0a0b5f;
   --biru: #54c6eb;
   --biru-tua: #2ba9d6;
-  --hijau: #7ed957;
-  --hijau-tua: #4eae2e;
-  --oranye: #ff9f45;
-  --oranye-tua: #f0791c;
-  --pink: #ff8fae;
-  --pink-tua: #f06387;
-  --krem: #fffbf0;
+  --hijau: #22c7a7;
+  --hijau-tua: #12957e;
+  --krem: #f1f3f8;
   --putih: #ffffff;
-  --teks: #4a3728;
-  --teks-lembut: #8a7868;
-  --merah-lembut: #f8a5a5;
+  --teks: #0a0b4f;
+  --teks-lembut: #667085;
+  --etail-navy: #0a0b5f;
+  --etail-magenta: #d936a6;
+  --etail-soft-shadow: 0 18px 44px rgba(10, 11, 95, 0.1);
 
-  max-width: 900px;
+  max-width: 980px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 16px;
   font-family: "Quicksand", system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--teks);
 }
 
-/* Judul kartu (dipakai kartu Materi Vaksin) — sama persis .judul-section v17 */
+/* Header halaman (standar seperti Interpretasi Lab / Racik Puyer) */
 .tv-page-imunisasi .judul-section {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 16px;
+  margin-bottom: 2px;
 }
 .tv-page-imunisasi .judul-section .ikon-bulat {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   flex-shrink: 0;
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.08);
 }
 .tv-page-imunisasi .judul-section h2 {
   margin: 0;
-  font-family: "Fredoka", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--teks);
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.24rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--etail-navy);
 }
 .tv-page-imunisasi .judul-section p {
   margin: 2px 0 0;
-  font-size: 0.85rem;
-  color: var(--teks-lembut);
+  font-size: 0.62rem;
   font-weight: 600;
+  color: rgba(10, 11, 95, 0.62);
 }
 
-/* Kartu putih dasar (Materi Vaksin) — sama persis .kartu v17 */
+/* Kartu putih (etail) */
 .tv-page-imunisasi .kartu {
-  background: var(--putih);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.95);
   border-radius: 26px;
-  padding: 26px 22px;
-  box-shadow:
-    0 10px 0 rgba(0, 0, 0, 0.04),
-    0 12px 30px rgba(84, 198, 235, 0.15);
-  position: relative;
+  padding: 22px;
+  box-shadow: var(--etail-soft-shadow);
 }
 
-/* Hero judul halaman — sama persis #page-imunisasi .imunisasi-hero v17 */
-.tv-page-imunisasi .imunisasi-hero {
-  border-radius: 20px;
-  padding: 18px 20px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.97),
-    rgba(237, 250, 239, 0.95)
-  );
-  border: 1px solid rgba(85, 174, 97, 0.18);
-  box-shadow: 0 8px 22px rgba(74, 55, 40, 0.07);
-}
-.tv-page-imunisasi .imunisasi-hero h2 {
-  margin: 0 0 6px;
-  font-family: "Fredoka", sans-serif;
-  font-size: clamp(1.25rem, 3vw, 1.7rem);
-  color: var(--teks);
-}
-.tv-page-imunisasi .imunisasi-hero p {
-  margin: 0;
-  color: var(--teks-lembut);
-  font-size: 0.84rem;
-  font-weight: 600;
-}
-@media (max-width: 768px) {
-  .tv-page-imunisasi .imunisasi-hero {
-    padding: 14px 18px;
-  }
+/* Sub-judul kartu (mis. "Materi Vaksin") */
+.tv-page-imunisasi .dx-sub-h {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
 }
 
-/* Kartu bagan (chart-card) — spesifisitas lebih tinggi dari .kartu, jadi
-   padding/radius/shadow-nya menang (sama seperti #page-imunisasi .imunisasi-card v17). */
-.tv-page-imunisasi .imunisasi-card {
-  background: #fff;
-  border: 1px solid rgba(230, 226, 212, 0.95);
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: 0 5px 14px rgba(74, 55, 40, 0.055);
+/* Tab tersegmentasi — pill, aktif navy (sama seperti tab Lab/Darurat) */
+.tv-page-imunisasi .segmented-toggle {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 11, 95, 0.08);
+  border-radius: 999px;
+  padding: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
 }
-@media (max-width: 768px) {
-  .tv-page-imunisasi .imunisasi-card.imunisasi-chart-card {
-    padding: 12px;
-  }
+.tv-page-imunisasi .segmented-btn {
+  flex: 1 1 140px;
+  border: 0;
+  background: transparent;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: -0.012em;
+  color: rgba(10, 11, 95, 0.62);
+  padding: 11px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+.tv-page-imunisasi .segmented-btn.aktif,
+.tv-page-imunisasi .segmented-btn:hover {
+  background: var(--etail-navy);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba(10, 11, 95, 0.18);
 }
 
+/* Toolbar bagan (judul halaman bagan + kontrol zoom) */
 .tv-page-imunisasi .imunisasi-toolbar {
   display: flex;
   justify-content: space-between;
@@ -131,10 +125,10 @@
 }
 .tv-page-imunisasi .imunisasi-toolbar h3 {
   margin: 0;
-  font-family: "Fredoka", sans-serif;
+  font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 0.98rem;
-  font-weight: 600;
-  color: var(--teks);
+  font-weight: 700;
+  color: var(--navy);
 }
 .tv-page-imunisasi .imunisasi-toolbar-actions {
   display: flex;
@@ -146,15 +140,15 @@
   border: none;
   border-radius: 10px;
   padding: 8px 10px;
-  background: #eaf8fd;
-  color: #247ca0;
+  background: rgba(217, 54, 166, 0.1);
+  color: var(--etail-magenta);
   font-family: inherit;
   font-weight: 800;
   font-size: 0.74rem;
   cursor: pointer;
 }
 .tv-page-imunisasi .imunisasi-zoom-btn:hover {
-  background: #d7f1fa;
+  background: rgba(217, 54, 166, 0.18);
 }
 .tv-page-imunisasi .imunisasi-zoom-label {
   min-width: 44px;
@@ -164,13 +158,12 @@
   font-weight: 800;
 }
 
-/* Area gambar bagan: tinggi mengikuti gambar (bukan dipaksa 68vh tetap), sesuai
-   perbaikan dead-space terakhir di v17. */
+/* Area gambar bagan — tinggi mengikuti gambar, tanpa dead-space kuning */
 .tv-page-imunisasi .imunisasi-image-wrap {
   overflow: auto;
   border-radius: 14px;
-  background: #f8f8f2;
-  border: 1px solid #ece6d6;
+  background: var(--krem);
+  border: 1px solid rgba(10, 11, 95, 0.09);
   height: auto;
   min-height: 0;
   max-height: 76vh;
@@ -195,35 +188,6 @@
   line-height: 1.45;
 }
 
-/* Tab Bagan Jadwal / Keterangan */
-.tv-page-imunisasi .imn-tabs {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-.tv-page-imunisasi .imn-tab {
-  font-family: "Fredoka", sans-serif;
-  cursor: pointer;
-  border: 0;
-  border-radius: 14px;
-  padding: 9px 16px;
-  font-size: 0.86rem;
-  font-weight: 600;
-  color: var(--teks);
-  background: #f1ecdd;
-  box-shadow: 0 3px 0 #e3dac4;
-  transition: transform 0.12s ease;
-}
-.tv-page-imunisasi .imn-tab:hover {
-  transform: translateY(-1px);
-}
-.tv-page-imunisasi .imn-tab.aktif {
-  background: linear-gradient(160deg, var(--biru), var(--biru-tua));
-  color: #fff;
-  box-shadow: 0 3px 0 var(--biru-tua);
-}
-
 /* Dropdown pilih vaksin */
 .tv-page-imunisasi .imn-select-wrap {
   position: relative;
@@ -233,20 +197,22 @@
   width: 100%;
   font-family: "Quicksand", sans-serif;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--teks);
-  padding: 12px 40px 12px 14px;
+  padding: 13px 40px 13px 16px;
   border-radius: 14px;
-  border: 2px solid #ece6d6;
-  background: var(--putih);
+  border: 3px solid #eaf6fb;
+  background: var(--krem);
   cursor: pointer;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  outline: none;
 }
 .tv-page-imunisasi select.imn-select:focus {
-  outline: none;
-  border-color: var(--biru);
+  border-color: rgba(217, 54, 166, 0.62);
+  box-shadow: 0 0 0 5px rgba(217, 54, 166, 0.1);
+  background: var(--putih);
 }
 .tv-page-imunisasi .imn-select-wrap::after {
   content: "\25BE";
@@ -269,9 +235,10 @@
 }
 .tv-page-imunisasi .imn-detail-head h3 {
   margin: 0;
-  font-family: "Fredoka", sans-serif;
+  font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 1.15rem;
-  color: var(--teks);
+  font-weight: 700;
+  color: var(--navy);
 }
 .tv-page-imunisasi .imn-badges {
   display: flex;
@@ -279,9 +246,9 @@
   flex-wrap: wrap;
 }
 .tv-page-imunisasi .imn-badge {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 0.7rem;
-  font-weight: 600;
+  font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
   color: #fff;
@@ -290,7 +257,7 @@
   background: var(--hijau-tua);
 }
 .tv-page-imunisasi .imn-badge.inaktif {
-  background: var(--biru-tua);
+  background: var(--etail-navy);
 }
 .tv-page-imunisasi .imn-rows {
   display: flex;
@@ -301,15 +268,15 @@
   grid-template-columns: 150px 1fr;
   gap: 12px;
   padding: 10px 0;
-  border-top: 1px solid #f0eada;
+  border-top: 1px solid rgba(10, 11, 95, 0.08);
 }
 .tv-page-imunisasi .imn-row:first-child {
   border-top: 0;
 }
 .tv-page-imunisasi .imn-row .imn-k {
-  font-family: "Fredoka", sans-serif;
+  font-family: "Fredoka", "Quicksand", sans-serif;
   font-size: 0.8rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--teks-lembut);
 }
 .tv-page-imunisasi .imn-row .imn-v {
@@ -327,11 +294,31 @@
 
 .tv-page-imunisasi .imn-disclaimer {
   margin-top: 14px;
-  font-size: 0.84rem;
-  color: #8a6d1a;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #8a5320;
   line-height: 1.5;
-  background: #fff8e5;
-  border: 2px solid #ffe2a8;
+  background: #fbebde;
+  border: 1px solid #f0cfa9;
   border-radius: 14px;
   padding: 12px 16px;
+}
+
+@media (max-width: 768px) {
+  .tv-page-imunisasi-wrapper {
+    padding: 16px 12px;
+  }
+  .tv-page-imunisasi .kartu {
+    padding: 20px 16px;
+    border-radius: 22px;
+  }
+  .tv-page-imunisasi .segmented-btn {
+    font-size: 0.65rem;
+    padding: 10px 6px;
+  }
+}
+@media (max-width: 480px) {
+  .tv-page-imunisasi .judul-section h2 {
+    font-size: 0.95rem;
+  }
 }
