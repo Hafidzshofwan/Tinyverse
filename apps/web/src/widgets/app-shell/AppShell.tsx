@@ -8,6 +8,7 @@ import { NAV_GROUPS } from "./nav-config";
 import { NavLinks } from "./NavLinks";
 import { GlobalSearch } from "./GlobalSearch";
 import { PatientProfile } from "@/widgets/patient-profile";
+import { AiAssistantWidget } from "@/widgets/ai-assistant";
 import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
@@ -155,6 +156,7 @@ function AppShellInner({ children }: AppShellProps) {
         </div>
       </footer>
       <PatientProfile />
+      <AiAssistantWidget />
     </div>
   );
 }

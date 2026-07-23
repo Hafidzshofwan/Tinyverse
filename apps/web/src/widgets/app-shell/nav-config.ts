@@ -26,6 +26,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     title: "Utama",
     items: [
       { slug: "beranda", label: "Beranda", icon: "\uD83C\uDFE0", href: "/", built: true },
+      { slug: "ai-assistant", label: "Asisten AI", icon: "🤖", href: "/preview/ai-assistant", built: true },
     ],
   },
   {
@@ -87,6 +88,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
 
 // Deskripsi singkat tiap fitur (dipakai kartu Quick Access & Favorit).
 const DESKRIPSI: Record<string, string> = {
+  "/preview/ai-assistant": "Asisten AI terpusat yang memahami seluruh fitur, panduan, dan kalkulator TinyVerse.",
   "/preview/darurat": "Rujukan cepat dosis dan langkah resusitasi anak.",
   "/preview/alur": "Alur interaktif tata laksana kegawatan anak (Fase A: serangan asma).",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",
