@@ -1011,14 +1011,16 @@ export function ResusTab({
               catatKustom();
             }
           }}
-          placeholder="Catatan tindakan lain\u2026"
+          placeholder="Ketik catatan tindakan atau obat di sini (cth: Pasang IV, Bolus NS)..."
           style={{
             flex: 1,
-            padding: "10px 12px",
+            padding: "10px 14px",
             borderRadius: 10,
-            border: "1px solid #f0c9cc",
+            border: "1px solid #d1d5db",
             fontSize: 14,
-            color: "#2A0A0C",
+            color: "#1e293b",
+            backgroundColor: "#ffffff",
+            boxShadow: "inset 0 1px 2px rgba(0,0,0,0.03)",
           }}
         />
         <button
