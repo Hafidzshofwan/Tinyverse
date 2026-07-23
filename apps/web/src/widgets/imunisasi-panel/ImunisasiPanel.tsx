@@ -1,16 +1,46 @@
-import type { CSSProperties } from "react";
-import { ImunisasiTool } from "@/features/imunisasi-tool";
-
-const wrapStyle: CSSProperties = { maxWidth: 1080, margin: "0 auto", width: "100%" };
+import { ScheduleChart } from "@/features/immunization-schedule";
+import { VaccineCatalog } from "@/features/vaccine-catalog";
 
 /**
- * Widget: memuat island Jadwal Imunisasi (IDAI 2024). Header hero dibawa dari dalam
- * island, jadi TIDAK memakai ToolShell/ComingSoon.
+ * Panel Jadwal Imunisasi (React native) — pengganti island iframe v17.
+ * Struktur & gaya pastel (biru/kuning/hijau) dipertahankan 1:1 sesuai
+ * imunisasi-tool.html: hero judul, kartu Bagan Jadwal (tab + zoom), kartu
+ * Materi Vaksin (dropdown + detail). Warna diatur lewat v17-imunisasi.css
+ * (diimpor dari page.tsx), bukan tema navy-magenta terpadu.
  */
 export function ImunisasiPanel() {
   return (
-    <div style={wrapStyle}>
-      <ImunisasiTool />
+    <div className="tv-page-imunisasi-wrapper">
+      <div className="tv-page-imunisasi" id="page-imunisasi">
+        <div className="imunisasi-shell">
+          <section className="imunisasi-hero">
+            <h2>Jadwal Imunisasi Anak</h2>
+            <p>
+              Rekomendasi Ikatan Dokter Anak Indonesia (IDAI) 2024 — usia
+              0–18 tahun, lengkap dengan materi tiap vaksin.
+            </p>
+          </section>
+
+          <ScheduleChart />
+
+          <div className="kartu">
+            <div className="judul-section">
+              <div className="ikon-bulat" style={{ background: "#E6F7EC" }}>
+                💉
+              </div>
+              <div>
+                <h2>Materi Vaksin</h2>
+                <p>
+                  Pilih satu vaksin untuk melihat penyakit yang dicegah,
+                  jenis (hidup/mati), cara pemberian, jadwal &amp; dosis,
+                  KIPI, dan kontraindikasi.
+                </p>
+              </div>
+            </div>
+            <VaccineCatalog />
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
