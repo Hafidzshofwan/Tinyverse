@@ -88,7 +88,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
 
 // Deskripsi singkat tiap fitur (dipakai kartu Quick Access & Favorit).
 const DESKRIPSI: Record<string, string> = {
-  "/preview/ai-assistant": "Asisten AI terpusat yang memahami seluruh fitur, panduan, dan kalkulator TinyVerse.",
+  "/preview/ai-assistant": "Asisten AI terpusat yang memahami seluruh fitur, panduan, dan kalkulator Tinyverse.",
   "/preview/darurat": "Rujukan cepat dosis dan langkah resusitasi anak.",
   "/preview/alur": "Alur interaktif tata laksana kegawatan anak (Fase A: serangan asma).",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",

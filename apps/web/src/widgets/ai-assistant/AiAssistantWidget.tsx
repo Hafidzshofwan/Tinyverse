@@ -26,7 +26,7 @@ export function AiAssistantWidget() {
     {
       id: "welcome",
       sender: "ai",
-      text: "Halo! Saya **Asisten AI Klinis TinyVerse**. Saya telah mempelajari seluruh modul, kalkulator, pedoman IDAI, dan konten medis di web TinyVerse ini.\n\nAda yang bisa saya bantu terkait dosis obat, terapi cairan, resusitasi PALS, alur tatalaksana, atau panduan alat klinis?",
+      text: "Halo! Saya **Asisten AI Klinis Tinyverse**. Saya telah mempelajari seluruh modul, kalkulator, pedoman IDAI, dan konten medis di web Tinyverse ini.\n\nAda yang bisa saya bantu terkait dosis obat, terapi cairan, resusitasi PALS, alur tatalaksana, atau panduan alat klinis?",
       timestamp: new Date().toLocaleTimeString("id-ID", {
         hour: "2-digit",
         minute: "2-digit",
@@ -145,8 +145,8 @@ export function AiAssistantWidget() {
       <button
         type="button"
         id="tvAiFab"
-        aria-label="Asisten AI TinyVerse"
-        title="Asisten AI TinyVerse"
+        aria-label="Asisten AI Tinyverse"
+        title="Asisten AI Tinyverse"
         onClick={() => setIsOpen(true)}
         style={{
           position: "fixed",
@@ -158,10 +158,11 @@ export function AiAssistantWidget() {
           gap: 6,
           padding: "10px 16px",
           borderRadius: 30,
-          background: "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
+          background: "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
           color: "#ffffff",
           border: "none",
-          boxShadow: "0 4px 14px rgba(2, 132, 199, 0.35)",
+          boxShadow: "0 4px 16px rgba(10, 11, 95, 0.35)",
+          fontFamily: "'Fredoka', 'Quicksand', sans-serif",
           fontWeight: 700,
           fontSize: 14,
           cursor: "pointer",
@@ -181,12 +182,13 @@ export function AiAssistantWidget() {
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: "rgba(15, 23, 42, 0.4)",
+            backgroundColor: "rgba(10, 11, 79, 0.35)",
             backdropFilter: "blur(4px)",
             zIndex: 1000,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "stretch",
+            fontFamily: "'Quicksand', sans-serif",
           }}
           onClick={(e) => {
             if (e.target === e.currentTarget) setIsOpen(false);
@@ -199,57 +201,97 @@ export function AiAssistantWidget() {
               backgroundColor: "#ffffff",
               display: "flex",
               flexDirection: "column",
-              boxShadow: "-4px 0 24px rgba(0,0,0,0.15)",
+              boxShadow: "-4px 0 24px rgba(10,11,95,0.18)",
               animation: "slideInRight 0.25s ease-out",
             }}
           >
-            {/* Header Drawer */}
+            {/* Header Drawer Glassmorphism Magenta Blur */}
             <div
               style={{
+                position: "relative",
+                overflow: "hidden",
                 padding: "16px 20px",
-                background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
-                color: "#ffffff",
+                background: "linear-gradient(135deg, rgba(255, 245, 252, 0.92) 0%, rgba(248, 238, 250, 0.85) 60%, rgba(242, 226, 245, 0.9) 100%)",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                color: "var(--tv-navy, #0a0b5f)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                borderBottom: "1px solid rgba(255,255,255,0.1)",
+                borderBottom: "1px solid rgba(217, 54, 166, 0.15)",
+                boxShadow: "0 4px 16px rgba(10, 11, 95, 0.04)",
+                fontFamily: "'Quicksand', sans-serif",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              {/* Soft Radial Glow */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: -20,
+                  right: -20,
+                  width: 140,
+                  height: 140,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(217, 54, 166, 0.25) 0%, rgba(217, 54, 166, 0) 70%)",
+                  filter: "blur(15px)",
+                  pointerEvents: "none",
+                }}
+              />
+
+              <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative", zIndex: 1 }}>
                 <div
                   style={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: 10,
-                    background: "#0284c7",
+                    width: 38,
+                    height: 38,
+                    borderRadius: 12,
+                    background: "#ffffff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 20,
+                    boxShadow: "0 2px 6px rgba(10, 11, 95, 0.08)",
+                    border: "1px solid rgba(10, 11, 95, 0.06)",
                   }}
                 >
                   🤖
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 16 }}>
-                    Asisten AI TinyVerse
+                  <div
+                    style={{
+                      fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                      fontWeight: 700,
+                      fontSize: 16,
+                      color: "var(--tv-navy, #0a0b5f)",
+                    }}
+                  >
+                    Asisten AI Tinyverse
                   </div>
-                  <div style={{ fontSize: 11, color: "#94a3b8" }}>
+                  <div
+                    style={{
+                      fontFamily: "'Quicksand', sans-serif",
+                      fontSize: 11,
+                      color: "#6e709a",
+                      fontWeight: 500,
+                    }}
+                  >
                     Informasi Terpusat Seluruh Web
                   </div>
                 </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 1 }}>
                 <Link
                   href="/preview/ai-assistant"
                   onClick={() => setIsOpen(false)}
                   style={{
+                    fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
-                    color: "#38bdf8",
-                    padding: "4px 8px",
-                    borderRadius: 6,
-                    backgroundColor: "rgba(56, 189, 248, 0.1)",
+                    color: "var(--tv-navy, #0a0b5f)",
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(10, 11, 95, 0.1)",
+                    boxShadow: "0 1px 4px rgba(10, 11, 95, 0.05)",
                     textDecoration: "none",
                     fontWeight: 600,
                   }}
@@ -262,7 +304,7 @@ export function AiAssistantWidget() {
                   style={{
                     background: "none",
                     border: "none",
-                    color: "#94a3b8",
+                    color: "var(--tv-navy, #0a0b5f)",
                     fontSize: 22,
                     cursor: "pointer",
                     padding: "0 4px",
@@ -280,10 +322,11 @@ export function AiAssistantWidget() {
                 flex: 1,
                 overflowY: "auto",
                 padding: "16px",
-                backgroundColor: "#f8fafc",
+                backgroundColor: "#f4f5fa",
                 display: "flex",
                 flexDirection: "column",
                 gap: 14,
+                fontFamily: "'Quicksand', sans-serif",
               }}
             >
               {messages.map((m) => (
@@ -305,16 +348,20 @@ export function AiAssistantWidget() {
                           ? "16px 16px 4px 16px"
                           : "16px 16px 16px 4px",
                       backgroundColor:
-                        m.sender === "user" ? "#0284c7" : "#ffffff",
-                      color: m.sender === "user" ? "#ffffff" : "#1e293b",
+                        m.sender === "user" ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
+                      background:
+                        m.sender === "user"
+                          ? "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-navy-2, #17186f) 100%)"
+                          : "#ffffff",
+                      color: m.sender === "user" ? "#ffffff" : "var(--tv-teks, #0a0b4f)",
                       border:
                         m.sender === "user"
                           ? "none"
-                          : "1px solid #e2e8f0",
+                          : "1px solid rgba(10, 11, 95, 0.09)",
                       boxShadow:
                         m.sender === "user"
-                          ? "0 2px 6px rgba(2, 132, 199, 0.2)"
-                          : "0 1px 3px rgba(0,0,0,0.04)",
+                          ? "0 3px 8px rgba(10, 11, 95, 0.25)"
+                          : "0 1px 4px rgba(10, 11, 95, 0.05)",
                       fontSize: 14,
                       lineHeight: 1.5,
                       whiteSpace: "pre-wrap",
@@ -455,9 +502,10 @@ export function AiAssistantWidget() {
                   background:
                     isLoading || !input.trim()
                       ? "#cbd5e1"
-                      : "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
+                      : "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
                   color: "#ffffff",
                   border: "none",
+                  fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                   fontWeight: 700,
                   fontSize: 14,
                   cursor:

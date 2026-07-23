@@ -56,9 +56,9 @@ export default function AiAssistantPage() {
     {
       id: "welcome",
       sender: "ai",
-      text: `Selamat datang di **Asisten AI Klinis Terpusat TinyVerse**! 🤖
+      text: `Selamat datang di **Asisten AI Klinis Terpusat Tinyverse**! 🤖
 
-Saya telah diprogram untuk memahami seluruh modul, fitur, dan referensi medis di platform TinyVerse:
+Saya telah diprogram untuk memahami seluruh modul, fitur, dan referensi medis di platform Tinyverse:
 - **Mode Darurat & Resusitasi PALS** (/preview/darurat)
 - **Alur Tatalaksana Interaktif** (/preview/alur)
 - **Kalkulator Dosis Obat & Racik Puyer** (/preview/dosing & /preview/puyer)
@@ -68,7 +68,7 @@ Saya telah diprogram untuk memahami seluruh modul, fitur, dan referensi medis di
 - **Kurva Z-score Pertumbuhan WHO/CDC** (/preview/pertumbuhan)
 - **Guideline IDAI & Jadwal Imunisasi** (/preview/guideline & /preview/imunisasi)
 
-Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web TinyVerse ini!`,
+Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Tinyverse ini!`,
       timestamp: new Date().toLocaleTimeString("id-ID", {
         hour: "2-digit",
         minute: "2-digit",
@@ -185,20 +185,41 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
   };
 
   return (
-    <div style={{ maxWidth: 1080, margin: "0 auto", padding: "16px" }}>
-      {/* Header Halaman */}
+    <div style={{ maxWidth: 1080, margin: "0 auto", padding: "16px", fontFamily: "'Quicksand', sans-serif" }}>
+      {/* Header Halaman Magenta Blur Glassmorphism */}
       <div
         style={{
-          padding: "24px",
-          borderRadius: 16,
-          background: "linear-gradient(135deg, #0f172a 0%, #0284c7 100%)",
-          color: "#ffffff",
+          position: "relative",
+          overflow: "hidden",
+          padding: "24px 28px",
+          borderRadius: "var(--tv-radius-lg, 24px)",
+          background: "linear-gradient(135deg, rgba(255, 245, 252, 0.88) 0%, rgba(248, 238, 250, 0.78) 50%, rgba(242, 226, 245, 0.85) 100%)",
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          border: "1px solid rgba(217, 54, 166, 0.2)",
+          boxShadow: "0 8px 32px rgba(10, 11, 95, 0.06)",
           marginBottom: 20,
-          boxShadow: "0 4px 20px rgba(2, 132, 199, 0.15)",
         }}
       >
+        {/* Soft Radial Magenta Glow on Right */}
         <div
           style={{
+            position: "absolute",
+            top: -40,
+            right: -40,
+            width: 240,
+            height: 240,
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(217, 54, 166, 0.3) 0%, rgba(217, 54, 166, 0) 70%)",
+            filter: "blur(25px)",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div
+          style={{
+            position: "relative",
+            zIndex: 1,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -206,47 +227,64 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
             gap: 16,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div>
             <div
               style={{
-                width: 52,
-                height: 52,
-                borderRadius: 14,
-                backgroundColor: "rgba(255,255,255,0.15)",
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontSize: 28,
+                gap: 6,
+                padding: "5px 12px",
+                borderRadius: 20,
+                backgroundColor: "#ffffff",
+                border: "1px solid rgba(10, 11, 95, 0.08)",
+                boxShadow: "0 2px 6px rgba(10, 11, 95, 0.04)",
+                fontSize: 11,
+                fontWeight: 700,
+                textTransform: "uppercase",
+                color: "var(--tv-navy, #0a0b5f)",
+                letterSpacing: "0.5px",
+                marginBottom: 10,
               }}
             >
-              🤖
+              🤖 TINYVERSE AI CO-PILOT
             </div>
-            <div>
-              <h1 style={{ margin: 0, fontSize: 24, fontWeight: 800 }}>
-                Asisten AI TinyVerse
-              </h1>
-              <p
-                style={{
-                  margin: "4px 0 0",
-                  fontSize: 14,
-                  color: "#e2e8f0",
-                  opacity: 0.9,
-                }}
-              >
-                Pusat Informasi & Co-Pilot Klinis Pediatrik Terintegrasi
-              </p>
-            </div>
+            <h1
+              style={{
+                margin: 0,
+                fontSize: 26,
+                fontWeight: 700,
+                fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                color: "var(--tv-navy, #0a0b5f)",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+              }}
+            >
+              Asisten AI Tinyverse 🤖
+            </h1>
+            <p
+              style={{
+                margin: "6px 0 0",
+                fontSize: 14,
+                color: "#000000",
+                fontWeight: 500,
+              }}
+            >
+              Pusat Informasi & Co-Pilot Klinis Pediatrik Terintegrasi
+            </p>
           </div>
 
           {patientData?.bb ? (
             <div
               style={{
-                padding: "8px 14px",
+                padding: "8px 16px",
                 borderRadius: 20,
-                backgroundColor: "rgba(255,255,255,0.2)",
+                backgroundColor: "#ffffff",
+                border: "1px solid rgba(217, 54, 166, 0.2)",
                 fontSize: 13,
                 fontWeight: 600,
-                backdropFilter: "blur(4px)",
+                color: "var(--tv-navy, #0a0b5f)",
+                boxShadow: "0 2px 8px rgba(10, 11, 95, 0.05)",
               }}
             >
               👤 Pasien Aktif: {patientData.nama || "Anak"} (BB: {patientData.bb} kg)
@@ -362,15 +400,19 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
                         ? "18px 18px 4px 18px"
                         : "18px 18px 18px 4px",
                     backgroundColor:
-                      m.sender === "user" ? "#0284c7" : "#ffffff",
-                    color: m.sender === "user" ? "#ffffff" : "#0f172a",
+                      m.sender === "user" ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
+                    background:
+                      m.sender === "user"
+                        ? "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-navy-2, #17186f) 100%)"
+                        : "#ffffff",
+                    color: m.sender === "user" ? "#ffffff" : "var(--tv-teks, #0a0b4f)",
                     border:
                       m.sender === "user"
                         ? "none"
-                        : "1px solid #e2e8f0",
+                        : "1px solid rgba(10, 11, 95, 0.09)",
                     boxShadow:
                       m.sender === "user"
-                        ? "0 2px 8px rgba(2, 132, 199, 0.25)"
+                        ? "0 3px 8px rgba(10, 11, 95, 0.25)"
                         : "0 2px 6px rgba(0,0,0,0.03)",
                     fontSize: 14,
                     lineHeight: 1.6,
@@ -477,16 +519,17 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
                 background:
                   isLoading || !input.trim()
                     ? "#cbd5e1"
-                    : "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)",
+                    : "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
                 color: "#ffffff",
                 border: "none",
+                fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                 fontWeight: 700,
                 fontSize: 14,
                 cursor: isLoading || !input.trim() ? "not-allowed" : "pointer",
                 boxShadow:
                   isLoading || !input.trim()
                     ? "none"
-                    : "0 2px 8px rgba(2, 132, 199, 0.3)",
+                    : "0 2px 8px rgba(10, 11, 95, 0.25)",
               }}
             >
               Kirim
