@@ -760,14 +760,25 @@ export function ResusTab({
         suara, pengingat siklus &amp; epinefrin, dan cetak Lembar Kode.
       </p>
 
-      <div style={{ textAlign: "center", margin: "6px 0 14px" }}>
+      <div
+        style={{
+          textAlign: "center",
+          margin: "8px 0 14px",
+          padding: "16px 12px",
+          borderRadius: 14,
+          background: "#FFF5F5",
+          border: "1px solid #ebdfe0",
+          boxShadow: "0 2px 8px rgba(176, 12, 26, 0.05)",
+        }}
+      >
         <div
           style={{
-            fontSize: 48,
+            fontSize: 52,
             fontWeight: 800,
             color: "#B00C1A",
             fontVariantNumeric: "tabular-nums",
             lineHeight: 1,
+            letterSpacing: "1px",
           }}
         >
           {jam}
@@ -776,7 +787,7 @@ export function ResusTab({
           style={
             siklus.alarm
               ? {
-                  marginTop: 8,
+                  marginTop: 10,
                   fontSize: 13,
                   fontWeight: 800,
                   color: "#fff",
