@@ -34,7 +34,6 @@ export function BurnForm() {
 
   const inputsReady = usia.trim() !== "" && berat.trim() !== "";
   const showResults = inputsReady && (selected.length > 0 || view.error);
-  const showChart = inputsReady;
 
   return (
     <div>

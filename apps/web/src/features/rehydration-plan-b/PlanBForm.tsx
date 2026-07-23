@@ -9,7 +9,7 @@ import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 export function PlanBForm() {
   const profile = usePatientProfile();
   const [weight, setWeight] = useSyncedField(profile.bb);
-  const [rows, setRows] = useState<ReadonlyArray<ResultRow>>([]);
+  const [, setRows] = useState<ReadonlyArray<ResultRow>>([]);
   const [rincian, setRincian] = useState<ReadonlyArray<ResultRow>>([]);
   const [error, setError] = useState<string | null>(null);
   const [total, setTotal] = useState<string>("");

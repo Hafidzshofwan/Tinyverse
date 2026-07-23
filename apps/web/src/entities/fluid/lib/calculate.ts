@@ -142,7 +142,6 @@ export function viewPlanC(
 ): FluidView {
   try {
     const r = rehydrationPlanC(weightKg, ageCategory);
-    const ageLabel = ageCategory === "bayi" ? "Bayi" : "Anak";
     const rincian: DisplayRow[] = [
       {
         label: "Tahap 1",
