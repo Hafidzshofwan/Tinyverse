@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { FormattedMessage } from "./FormattedMessage";
 
 interface Message {
   id: string;
@@ -405,11 +406,10 @@ export function AiAssistantWidget() {
                           : "0 1px 4px rgba(10, 11, 95, 0.05)",
                       fontSize: 14,
                       lineHeight: 1.5,
-                      whiteSpace: "pre-wrap",
                       wordBreak: "break-word",
                     }}
                   >
-                    {m.text}
+                    <FormattedMessage text={m.text} isUser={m.sender === "user"} />
                   </div>
 
                   <div

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
 
 interface Message {
   id: string;
@@ -293,10 +294,12 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
             <div
               style={{
                 fontSize: 12,
-                color: "#93c5fd",
-                backgroundColor: "rgba(255,255,255,0.1)",
-                padding: "6px 12px",
-                borderRadius: 12,
+                color: "var(--tv-navy, #0a0b5f)",
+                backgroundColor: "rgba(217, 54, 166, 0.08)",
+                border: "1px solid rgba(217, 54, 166, 0.18)",
+                padding: "6px 14px",
+                borderRadius: 14,
+                fontWeight: 600,
               }}
             >
               💡 Tips: Isi Profil Pasien untuk rekomendasi otomatis berdasarkan berat badan.
@@ -416,11 +419,10 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
                         : "0 2px 6px rgba(0,0,0,0.03)",
                     fontSize: 14,
                     lineHeight: 1.6,
-                    whiteSpace: "pre-wrap",
                     wordBreak: "break-word",
                   }}
                 >
-                  {m.text}
+                  <FormattedMessage text={m.text} isUser={m.sender === "user"} />
                 </div>
 
                 <div
