@@ -73,7 +73,7 @@ export function PlanBForm() {
                 <button
                   type="button"
                   className="tv-btn"
-                  style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
                   onClick={handleTambahRingkasan}
                 >
                   {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}

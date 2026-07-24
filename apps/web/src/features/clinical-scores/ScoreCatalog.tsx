@@ -199,7 +199,7 @@ export function ScoreCatalog() {
           <button
             type="button"
             className="tv-btn"
-            style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+            style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
             onClick={() => {
               const bodyText = [
                 def.hideTotal ? "" : `Total Skor: ${hasil.total} / ${def.maxTotal}`,

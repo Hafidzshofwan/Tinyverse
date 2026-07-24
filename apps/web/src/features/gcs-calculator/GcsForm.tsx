@@ -325,7 +325,7 @@ export function GcsForm() {
             <button
               type="button"
               className="tv-btn"
-              style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+              style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
               onClick={() => {
                 addRingkasanItem({
                   title: `Glasgow Coma Scale (GCS Pediatrik) — Total: ${result.totalText}`,
