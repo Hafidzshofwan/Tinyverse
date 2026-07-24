@@ -1,6 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const SYSTEM_INSTRUCTION = `
 Anda adalah Asisten AI Klinis Tinyverse (Tinyverse Clinical AI Co-pilot), asisten medis pediatri terintegrasi di platform Tinyverse.
 
