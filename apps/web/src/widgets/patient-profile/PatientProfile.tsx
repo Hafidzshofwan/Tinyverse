@@ -244,13 +244,13 @@ export function PatientProfile() {
               {activeProfile.nama || activeProfile.bb || activeProfile.usiaBulan ? (
                 <div className="tv-pas-active-banner">
                   <div className="tv-pas-active-info">
-                    <span className="tv-pas-active-tag">🟢 Pasien Aktif Sekarang</span>
-                    <strong style={{ fontSize: "1.02rem", color: "#0A0B4F", marginTop: "2px" }}>
+                    <span className="tv-pas-active-tag">● Pasien Aktif</span>
+                    <strong style={{ fontSize: "0.98rem", color: "#0F172A", marginTop: "2px" }}>
                       {activeProfile.nama || "An. Tanpa Nama"}{" "}
                       {activeProfile.noRm ? `(${activeProfile.noRm})` : ""}
                     </strong>
-                    <div style={{ fontSize: "0.8rem", color: "#475467", marginTop: "2px" }}>
-                      {activeProfile.jk === "male" ? "👦 Laki-laki" : activeProfile.jk === "female" ? "👧 Perempuan" : "👶"}{" "}
+                    <div style={{ fontSize: "0.78rem", color: "#64748B", marginTop: "2px" }}>
+                      {activeProfile.jk === "male" ? "Laki-laki" : activeProfile.jk === "female" ? "Perempuan" : "-"}{" "}
                       • BB: <b>{activeProfile.bb != null ? `${activeProfile.bb} kg` : "-"}</b> • Usia:{" "}
                       <b>{formatUsiaPasien(activeProfile.usiaBulan)}</b>
                       {activeProfile.tb != null && ` • TB: ${activeProfile.tb} cm`}
@@ -258,7 +258,17 @@ export function PatientProfile() {
                   </div>
                   <button
                     type="button"
-                    className="tv-pas-btn-sm tv-pas-btn-del"
+                    className="tv-pas-btn-sm"
+                    style={{
+                      background: "#F1F5F9",
+                      border: "1px solid #CBD5E1",
+                      color: "#475467",
+                      fontWeight: 600,
+                      fontSize: "0.75rem",
+                      padding: "4px 10px",
+                      borderRadius: "6px",
+                      cursor: "pointer",
+                    }}
                     title="Kosongkan Pasien Aktif"
                     onClick={resetActive}
                   >
@@ -268,16 +278,16 @@ export function PatientProfile() {
               ) : (
                 <div
                   style={{
-                    background: "#FFFAEB",
-                    border: "1px solid #FEDF89",
-                    color: "#B54708",
+                    background: "#F8FAFC",
+                    border: "1px solid #E2E8F0",
+                    color: "#475467",
                     padding: "10px 12px",
-                    borderRadius: "12px",
+                    borderRadius: "10px",
                     fontSize: "0.8rem",
                     marginBottom: "12px",
                   }}
                 >
-                  ℹ️ Belum ada pasien aktif terpilih. Klik <b>&quot;Pilih &amp; Aktifkan&quot;</b> di daftar bawah untuk mengisi otomatis seluruh kalkulator.
+                  Pilih pasien dari daftar untuk mengisi seluruh kalkulator secara otomatis.
                 </div>
               )}
 
@@ -285,7 +295,7 @@ export function PatientProfile() {
                 <input
                   type="text"
                   className="tv-pas-search"
-                  placeholder="🔍 Cari nama, No. RM, atau kamar/catatan..."
+                  placeholder="Cari nama, No. RM, atau lokasi/catatan..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
@@ -296,10 +306,10 @@ export function PatientProfile() {
                   <div className="tv-kosong">
                     {patientList.length === 0 ? (
                       <>
-                        <div style={{ fontSize: "2rem", marginBottom: "6px" }}>🏥</div>
+                        <div style={{ fontSize: "1.8rem", marginBottom: "6px" }}>🏥</div>
                         <b>Daftar Pasien Kosong</b>
-                        <p style={{ margin: "4px 0 12px", fontSize: "0.82rem" }}>
-                          Simpan 10-15 pasien bangsal untuk berpindah dosis &amp; cairan secara instan.
+                        <p style={{ margin: "4px 0 12px", fontSize: "0.82rem", color: "#64748B" }}>
+                          Simpan pasien bangsal/poliklinik Anda untuk switch kalkulator dosis &amp; cairan 1-klik.
                         </p>
                         <button
                           type="button"
@@ -309,7 +319,7 @@ export function PatientProfile() {
                             setTab("form");
                           }}
                         >
-                          ➕ Tambah Pasien Pertama
+                          + Tambah Pasien Baru
                         </button>
                       </>
                     ) : (
@@ -319,41 +329,81 @@ export function PatientProfile() {
                 ) : (
                   filteredList.map((p) => {
                     const isAktif = activeProfile.id === p.id || (activeProfile.nama && activeProfile.nama === p.nama && activeProfile.bb === p.bb);
+                    const isMale = p.jk === "male";
+                    const isFemale = p.jk === "female";
+
+                    let itemBg = "#FFFFFF";
+                    let itemBorder = "#E2E8F0";
+
+                    if (isMale) {
+                      itemBg = isAktif ? "#EBF5FF" : "#F0F7FF";
+                      itemBorder = isAktif ? "#10B981" : "#DBEAFE";
+                    } else if (isFemale) {
+                      itemBg = isAktif ? "#FDF2F8" : "#FFF5F7";
+                      itemBorder = isAktif ? "#10B981" : "#FCE7F3";
+                    } else if (isAktif) {
+                      itemBg = "#F0FDF4";
+                      itemBorder = "#10B981";
+                    }
+
                     return (
                       <div
                         key={p.id || p.nama}
                         className={`tv-pas-item ${isAktif ? "is-active" : ""}`}
+                        style={{
+                          backgroundColor: itemBg,
+                          borderColor: itemBorder,
+                        }}
                       >
                         <div className="tv-pas-item-top">
-                          <div>
-                            <span className="tv-pas-item-nama">
-                              {p.jk === "male" ? "👦 " : p.jk === "female" ? "👧 " : "👶 "}
-                              {p.nama || "An. Tanpa Nama"}
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <span style={{ fontSize: "1.1rem" }}>
+                              {p.jk === "male" ? "👦" : p.jk === "female" ? "👧" : "👶"}
                             </span>
-                            {p.noRm && <span className="tv-pas-item-rm" style={{ marginLeft: "8px" }}>{p.noRm}</span>}
+                            <div>
+                              <div className="tv-pas-item-nama">
+                                {p.nama || "An. Tanpa Nama"}
+                              </div>
+                              <div style={{ fontSize: "0.75rem", color: "#64748B", marginTop: "1px" }}>
+                                {p.jk === "male" ? "Laki-laki" : p.jk === "female" ? "Perempuan" : "Anak"}
+                                {p.noRm && ` • ${p.noRm}`}
+                              </div>
+                            </div>
                           </div>
                           {isAktif && (
                             <span
                               style={{
-                                fontSize: "0.72rem",
+                                fontSize: "0.7rem",
                                 fontWeight: 700,
-                                background: "#D1E9FF",
-                                color: "#1570EF",
+                                background: "#ECFDF5",
+                                color: "#047857",
+                                border: "1px solid #A7F3D0",
                                 padding: "2px 8px",
                                 borderRadius: "999px",
                               }}
                             >
-                              ✓ Aktif
+                              ● Aktif
                             </span>
                           )}
                         </div>
 
                         <div className="tv-pas-vitals">
-                          <span className="tv-pas-vital-pill">⚖️ {p.bb != null ? `${p.bb} kg` : "BB -"}</span>
-                          <span className="tv-pas-vital-pill">🎂 {formatUsiaPasien(p.usiaBulan)}</span>
-                          {p.tb != null && <span className="tv-pas-vital-pill">📏 {p.tb} cm</span>}
-                          {p.catatan && <span className="tv-pas-vital-pill">📝 {p.catatan}</span>}
+                          <span><b>{p.bb != null ? `${p.bb} kg` : "BB -"}</b></span>
+                          <span style={{ color: "#94A3B8" }}>•</span>
+                          <span><b>{formatUsiaPasien(p.usiaBulan)}</b></span>
+                          {p.tb != null && (
+                            <>
+                              <span style={{ color: "#94A3B8" }}>•</span>
+                              <span>TB <b>{p.tb} cm</b></span>
+                            </>
+                          )}
                         </div>
+
+                        {p.catatan && (
+                          <div style={{ fontSize: "0.76rem", color: "#475467", background: "#F8FAFC", border: "1px solid #F1F5F9", padding: "4px 8px", borderRadius: "6px" }}>
+                            Catatan: {p.catatan}
+                          </div>
+                        )}
 
                         <div className="tv-pas-item-actions">
                           {!isAktif ? (
@@ -362,11 +412,11 @@ export function PatientProfile() {
                               className="tv-pas-btn-sm tv-pas-btn-switch"
                               onClick={() => handleSwitchItem(p)}
                             >
-                              ⚡ Pilih &amp; Aktifkan
+                              Gunakan Pasien
                             </button>
                           ) : (
-                            <span style={{ fontSize: "0.76rem", color: "#175CD3", fontWeight: 600, marginRight: "auto" }}>
-                              Tersinkron di semua alat
+                            <span style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 600, marginRight: "auto" }}>
+                              ✓ Terhubung di kalkulator
                             </span>
                           )}
 
@@ -375,7 +425,7 @@ export function PatientProfile() {
                             className="tv-pas-btn-sm tv-pas-btn-edit"
                             onClick={() => handleEditItem(p)}
                           >
-                            ✏️ Edit
+                            Edit
                           </button>
 
                           {confirmDeleteId === p.id ? (
@@ -397,7 +447,7 @@ export function PatientProfile() {
                                   if (p.id) handleHapusItem(p.id, p.nama);
                                 }}
                               >
-                                ✓ Ya, Hapus
+                                Ya, Hapus
                               </button>
                               <button
                                 type="button"
@@ -422,7 +472,7 @@ export function PatientProfile() {
                               className="tv-pas-btn-sm tv-pas-btn-del"
                               title="Hapus pasien dari daftar"
                               style={{
-                                background: "#FEF2F2",
+                                background: "#FFFFFF",
                                 color: "#B42318",
                                 border: "1px solid #FECDCA",
                                 fontWeight: 600,
@@ -433,7 +483,7 @@ export function PatientProfile() {
                               }}
                               onClick={() => setConfirmDeleteId(p.id || null)}
                             >
-                              🗑️ Hapus
+                              Hapus
                             </button>
                           )}
                         </div>
@@ -746,6 +796,23 @@ export function PatientTopBarChip() {
                 const isAktif =
                   activeProfile.id === p.id ||
                   (activeProfile.nama && activeProfile.nama === p.nama && activeProfile.bb === p.bb);
+                const isMale = p.jk === "male";
+                const isFemale = p.jk === "female";
+
+                let dropBg = "#FFFFFF";
+                let dropBorder = "#F1F5F9";
+
+                if (isMale) {
+                  dropBg = isAktif ? "#EBF5FF" : "#F0F7FF";
+                  dropBorder = isAktif ? "#10B981" : "#DBEAFE";
+                } else if (isFemale) {
+                  dropBg = isAktif ? "#FDF2F8" : "#FFF5F7";
+                  dropBorder = isAktif ? "#10B981" : "#FCE7F3";
+                } else if (isAktif) {
+                  dropBg = "#F0FDF4";
+                  dropBorder = "#10B981";
+                }
+
                 return (
                   <div
                     key={p.id || p.nama}
@@ -754,11 +821,12 @@ export function PatientTopBarChip() {
                       alignItems: "center",
                       justifyContent: "space-between",
                       width: "100%",
-                      padding: "6px 8px",
+                      padding: "8px 10px",
                       borderRadius: "10px",
-                      border: isAktif ? "1.5px solid #93C5FD" : "1px solid #F1F5F9",
-                      background: isAktif ? "#EFF6FF" : "#FFFFFF",
+                      border: `1.5px solid ${dropBorder}`,
+                      background: dropBg,
                       gap: "6px",
+                      boxShadow: "0 1px 2px rgba(0,0,0,0.02)",
                     }}
                   >
                     <button
@@ -780,10 +848,14 @@ export function PatientTopBarChip() {
                         {p.jk === "female" ? "👧" : p.jk === "male" ? "👦" : "👶"}
                       </span>
                       <div>
-                        <div style={{ fontSize: "0.85rem", fontWeight: 700, color: "#1E293B" }}>
-                          {p.nama || "An. Tanpa Nama"} {p.noRm ? `(${p.noRm})` : ""}
+                        <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
+                          {p.nama || "An. Tanpa Nama"}
                         </div>
-                        <div style={{ fontSize: "0.74rem", color: "#64748B" }}>
+                        <div style={{ fontSize: "0.73rem", color: "#64748B", marginTop: "1px" }}>
+                          {p.jk === "male" ? "Laki-laki" : p.jk === "female" ? "Perempuan" : "Anak"}
+                          {p.noRm && ` • ${p.noRm}`}
+                        </div>
+                        <div style={{ fontSize: "0.75rem", color: "#334155", marginTop: "2px" }}>
                           BB: <b>{p.bb != null ? `${p.bb} kg` : "-"}</b> • Usia: <b>{formatUsiaPasien(p.usiaBulan)}</b>
                         </div>
                       </div>
@@ -791,17 +863,17 @@ export function PatientTopBarChip() {
 
                     <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                       {isAktif && (
-                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#1D4ED8", background: "#DBEAFE", padding: "2px 6px", borderRadius: "999px", whiteSpace: "nowrap" }}>
-                          ✓ Aktif
+                        <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#047857", background: "#ECFDF5", border: "1px solid #A7F3D0", padding: "2px 6px", borderRadius: "999px", whiteSpace: "nowrap" }}>
+                          ● Aktif
                         </span>
                       )}
                       <button
                         type="button"
                         title="Hapus pasien dari daftar"
                         style={{
-                          background: "#FEF2F2",
-                          border: "1px solid #FCA5A5",
-                          color: "#991B1B",
+                          background: "#FFFFFF",
+                          border: "1px solid #FECDCA",
+                          color: "#B42318",
                           fontSize: "0.75rem",
                           padding: "3px 6px",
                           borderRadius: "6px",
