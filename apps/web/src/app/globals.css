@@ -1051,7 +1051,9 @@ body {
 
 /* ===== Skoring TB Anak (feature: tb-score) ===== */
 .tv-skor-param { display: flex; flex-direction: column; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid var(--tv-line); }
-.tv-skor-label { font-weight: 600; font-size: 14px; color: var(--tv-teks); }
+.tv-skor-pasien-aktif { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; font-size: 12.5px; font-weight: 600; color: var(--tv-navy, #0a0b5f); background: rgba(217, 54, 166, 0.08); border: 1px solid rgba(217, 54, 166, 0.18); border-radius: 12px; padding: 8px 14px; }
+.tv-skor-label { font-weight: 600; font-size: 14px; color: var(--tv-teks); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tv-skor-auto-tag { font-size: 10.5px; font-weight: 700; color: #d936a6; background: rgba(217, 54, 166, 0.1); border-radius: 999px; padding: 2px 8px; }
 .tv-skor-opsi { display: flex; flex-wrap: wrap; gap: 8px; }
 .tv-skor-opt { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--tv-line); background: #fff; border-radius: 12px; padding: 8px 12px; font: inherit; font-size: 13px; color: var(--tv-teks); text-align: left; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
 .tv-skor-opt:hover { transform: translateY(-1px); box-shadow: var(--tv-chunky-sm); }
@@ -1126,13 +1128,7 @@ body {
 }
 #tvPasienFab { left: auto; right: 20px; }
 #tvPasienOverlay { justify-content: flex-end; }
-#tvAiFab:hover { transform: translateY(-2px) scale(1.03); }
-#tvAiFab:active { transform: translateY(1px) scale(0.98); }
-@media (max-width: 768px){
-  #tvPasienFab { left: auto; right: 14px; }
-  .tv-ai-fab-container { bottom: 14px !important; right: 70px !important; gap: 6px !important; }
-  #tvAiFab { width: 48px !important; height: 48px !important; font-size: 1.22rem !important; }
-}
+@media (max-width: 768px){ #tvPasienFab { left: auto; right: 14px; } }
 
 /* ============================================================
    Fitur Akun & Profil (port dari v17) — login, profil, riwayat, admin

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { usePatientProfile } from "@/shared/lib/patient";
 import { DAFTAR_SKOR } from "./data";
 import { hitungSkor } from "./hitungSkor";
 
@@ -8,9 +9,33 @@ function tandaPoin(n: number): string {
   return (n >= 0 ? "+" : "") + n;
 }
 
+function usiaTeks(bulan: number): string {
+  if (bulan < 24) return bulan + " bulan";
+  const th = Math.floor(bulan / 12);
+  const sisa = bulan % 12;
+  return sisa ? th + " th " + sisa + " bln" : th + " tahun";
+}
+
+/**
+ * Untuk parameter "Usia" pada Skor Centor (index opsi: 0="3–14 tahun",
+ * 1="15–44 tahun", 2="≥ 45 tahun"), tentukan indeks opsi yang sesuai dengan
+ * usia profil pasien aktif. Mengembalikan null bila usia di luar cakupan
+ * ketiga opsi (mis. balita <3 tahun) atau usia belum diisi di profil.
+ */
+function opsiUsiaCentorDariProfil(usiaBulan: number | null | undefined): number | null {
+  if (usiaBulan == null) return null;
+  const tahun = usiaBulan / 12;
+  if (tahun >= 3 && tahun < 15) return 0;
+  if (tahun >= 15 && tahun < 45) return 1;
+  if (tahun >= 45) return 2;
+  return null;
+}
+
 export function ScoreCatalog() {
+  const profil = usePatientProfile();
   const [aktifId, setAktifId] = useState<string | null>(null);
   const [pilihan, setPilihan] = useState<number[]>([]);
+  const [usiaAutoDariProfil, setUsiaAutoDariProfil] = useState(false);
 
   const def = useMemo(
     () => DAFTAR_SKOR.find((s) => s.id === aktifId) ?? null,
@@ -24,14 +49,32 @@ export function ScoreCatalog() {
     [def, pilihan]
   );
 
+  const adaInfoPasien = Boolean(
+    profil.nama || profil.usiaBulan != null || profil.bb != null
+  );
+
   const buka = (id: string) => {
     const d = DAFTAR_SKOR.find((s) => s.id === id);
     if (!d) return;
     setAktifId(id);
-    setPilihan(d.items.map(() => 0));
+    const nilaiAwal = d.items.map(() => 0);
+    // Skor Centor: prasi otomatis kategori usia dari profil pasien aktif
+    // (parameter pertama), tetap dapat diubah manual oleh pengguna.
+    let autoUsia = false;
+    if (id === "centor") {
+      const idx = opsiUsiaCentorDariProfil(profil.usiaBulan);
+      if (idx != null) {
+        nilaiAwal[0] = idx;
+        autoUsia = true;
+      }
+    }
+    setUsiaAutoDariProfil(autoUsia);
+    setPilihan(nilaiAwal);
   };
-  const pilih = (i: number, opt: number) =>
+  const pilih = (i: number, opt: number) => {
     setPilihan((prev) => prev.map((v, idx) => (idx === i ? opt : v)));
+    if (i === 0) setUsiaAutoDariProfil(false);
+  };
 
   // Deep-link dari pencarian global: gulir & sorot kartu skor yang dituju.
   useEffect(() => {
@@ -64,32 +107,44 @@ export function ScoreCatalog() {
     }, 220);
   }, []);
 
+  const bannerPasien = adaInfoPasien ? (
+    <div className="tv-skor-pasien-aktif">
+      👤 Pasien aktif: <strong>{profil.nama || "(tanpa nama)"}</strong>
+      {profil.usiaBulan != null ? " · " + usiaTeks(profil.usiaBulan) : ""}
+      {profil.bb != null ? " · " + profil.bb + " kg" : ""}
+    </div>
+  ) : null;
+
   if (!def || !hasil) {
     return (
-      <div className="tv-skor-galeri">
-        {DAFTAR_SKOR.map((s) => (
-          <button
-            key={s.id}
-            id={"skor-" + s.id}
-            type="button"
-            className="tv-skor-card"
-            onClick={() => buka(s.id)}
-          >
-            <span className="tv-skor-card-ic" aria-hidden>
-              {s.emoji}
-            </span>
-            <span className="tv-skor-card-tx">
-              <span className="tv-skor-card-nama">{s.nama}</span>
-              <span className="tv-skor-card-ket">{s.ringkas}</span>
-            </span>
-          </button>
-        ))}
+      <div className="tv-stack">
+        {bannerPasien}
+        <div className="tv-skor-galeri">
+          {DAFTAR_SKOR.map((s) => (
+            <button
+              key={s.id}
+              id={"skor-" + s.id}
+              type="button"
+              className="tv-skor-card"
+              onClick={() => buka(s.id)}
+            >
+              <span className="tv-skor-card-ic" aria-hidden>
+                {s.emoji}
+              </span>
+              <span className="tv-skor-card-tx">
+                <span className="tv-skor-card-nama">{s.nama}</span>
+                <span className="tv-skor-card-ket">{s.ringkas}</span>
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
 
   return (
     <div className="tv-stack">
+      {bannerPasien}
       <button
         type="button"
         className="tv-skor-back"
@@ -105,7 +160,14 @@ export function ScoreCatalog() {
       </div>
       {def.items.map((p, i) => (
         <div key={p.label} className="tv-skor-param">
-          <div className="tv-skor-label">{p.label}</div>
+          <div className="tv-skor-label">
+            {p.label}
+            {def.id === "centor" && i === 0 && usiaAutoDariProfil && (
+              <span className="tv-skor-auto-tag">
+                otomatis dari profil pasien
+              </span>
+            )}
+          </div>
           <div className="tv-skor-opsi">
             {p.opsi.map((o, oi) => (
               <button
