@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { CSSProperties } from "react";
 import { NumberField } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   computeCalorieProtein,
   computeFormula,
@@ -64,6 +65,7 @@ export function NutritionForm() {
     error: string | null;
     result: ReturnType<typeof computeFormula>["result"];
   }>({ error: null, result: null });
+  const [ditambahkan, setDitambahkan] = useState(false);
   const bbNum = parseNum(bb);
 
   return (
@@ -150,6 +152,33 @@ export function NutritionForm() {
                     Isi usia untuk estimasi RDA per usia &amp; protein.
                   </p>
                 )}
+                <div style={{ marginTop: 12 }}>
+                  <button
+                    type="button"
+                    className="tv-btn"
+                    style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                    onClick={() => {
+                      if (!kResult.result) return;
+                      const res = kResult.result;
+                      const bodyText = [
+                        `BB: ${res.weightKg} kg | Usia: ${usia || "-"} bln`,
+                        `Estimasi Energi (Holliday-Segar): ${fmt(res.maintenanceEnergyKcalPerDay, 0)} kkal/hari`,
+                        res.ageBased ? `RDA Per Usia: ${fmt(res.rdaKcalPerDay, 0)} kkal/hari (${fmt(res.rdaKcalPerKg, 0)} kkal/kg)` : "",
+                        res.ageBased ? `Protein: ${fmt(res.proteinGPerDay, 1)} g/hari (${fmt(res.proteinGPerKg, 2)} g/kg)` : "",
+                      ].filter(Boolean).join("\n");
+
+                      addRingkasanItem({
+                        title: `Kebutuhan Nutrisi & Kalori (BB ${res.weightKg} kg)`,
+                        source: "Kebutuhan Nutrisi",
+                        body: bodyText,
+                      });
+                      setDitambahkan(true);
+                      setTimeout(() => setDitambahkan(false), 2200);
+                    }}
+                  >
+                    {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  </button>
+                </div>
               </div>
             ) : null}
           </div>
@@ -233,6 +262,32 @@ export function NutritionForm() {
                     {fmt(fResult.result.perFeed.waterMl, 0)} mL air.
                   </p>
                 ) : null}
+                <div style={{ marginTop: 12 }}>
+                  <button
+                    type="button"
+                    className="tv-btn"
+                    style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                    onClick={() => {
+                      if (!fResult.result) return;
+                      const res = fResult.result;
+                      const bodyText = [
+                        `Total Volume: ${fmt(res.totalVolumeMl, 0)} mL/hari (${fmt(res.totalKcalPerDay, 0)} kkal/hari)`,
+                        `Takaran Harian: ${res.scoops} sendok takar + ${fmt(res.waterMl, 0)} mL air`,
+                        res.perFeed ? `Per Pemberian (${feeds}x/hari): ${fmt(res.perFeed.volumeMl, 0)} mL (${res.perFeed.scoops} sendok + ${fmt(res.perFeed.waterMl, 0)} mL air)` : "",
+                      ].filter(Boolean).join("\n");
+
+                      addRingkasanItem({
+                        title: `Takaran Susu Formula (${fmt(res.totalVolumeMl, 0)} mL/hari)`,
+                        source: "Kebutuhan Nutrisi",
+                        body: bodyText,
+                      });
+                      setDitambahkan(true);
+                      setTimeout(() => setDitambahkan(false), 2200);
+                    }}
+                  >
+                    {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  </button>
+                </div>
               </div>
             ) : null}
           </div>

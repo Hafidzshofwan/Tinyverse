@@ -2,9 +2,10 @@
 
 import { useMemo, useState } from "react";
 import type { BurnArea } from "@tinyverse/clinical-core";
-import { NumberField } from "@/shared/ui";
+import { NumberField, RedFlagCrossLink } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { viewBurn } from "@/entities/burn";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { BurnSvgMap } from "./BurnSvgMap";
 
 function formatTbsa(n: number): string {
@@ -20,6 +21,7 @@ export function BurnForm() {
   const [usia, setUsia] = useSyncedField(usiaTahun);
   const [berat, setBerat] = useSyncedField(profile.bb);
   const [selected, setSelected] = useState<ReadonlyArray<BurnArea>>([]);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   function toggle(area: BurnArea) {
     setSelected((prev) =>
@@ -34,6 +36,26 @@ export function BurnForm() {
 
   const inputsReady = usia.trim() !== "" && berat.trim() !== "";
   const showResults = inputsReady && (selected.length > 0 || view.error);
+
+  const handleTambahRingkasan = () => {
+    if (view.error || view.tbsaPercent === 0) return;
+    const bodyText = [
+      `Usia: ${usia} thn | BB: ${berat} kg`,
+      `Luas Luka Bakar (TBSA): ${formatTbsa(view.tbsaPercent)}%`,
+      `Parkland (24j): ${Math.round(view.parkland)} mL (8j pertama: ${Math.round(view.first8h)} mL, 16j berikut: ${Math.round(view.next16h)} mL)`,
+      `Maintenance: ${Math.round(view.maintenance)} mL/hari`,
+      `Total 24j: ${Math.round(view.total24h)} mL`,
+      `Target Urin: ${view.urineMin.toFixed(1)}–${view.urineMax.toFixed(1)} mL/jam`,
+    ].join("\n");
+
+    addRingkasanItem({
+      title: `Rehidrasi Luka Bakar - TBSA ${formatTbsa(view.tbsaPercent)}%`,
+      source: "Terapi Cairan",
+      body: bodyText,
+    });
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
+  };
 
   return (
     <div>
@@ -187,6 +209,40 @@ export function BurnForm() {
                 <div className="hasil-rincian">Target: {view.urineLabel}</div>
               </div>
             </div>
+          )}
+
+          {!view.error && view.tbsaPercent > 0 && (
+            <div style={{ marginTop: 14 }}>
+              <button
+                type="button"
+                className="tv-btn"
+                style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                onClick={handleTambahRingkasan}
+              >
+                {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+              </button>
+            </div>
+          )}
+
+          {view.tbsaPercent >= 10 && (
+            <RedFlagCrossLink
+              badge="RED-FLAG KLINIS (TBSA ≥ 10%)"
+              title="Indikasi Resusitasi Cairan Agresif & Pemantauan Urin"
+              description="Luka bakar ≥10% TBSA berisiko tinggi syok hipovolemik cepat. Berikan resusitasi Parkland (RL hangat), pantau kateter urin ketat (target 1–2 mL/kg/jam), & siapkan rujukan Unit Luka Bakar."
+              actions={[
+                {
+                  label: "Hitung Cairan Rumatan",
+                  href: "/preview/fluids",
+                  primary: true,
+                  icon: "💧",
+                },
+                {
+                  label: "Mode Darurat Resusitasi",
+                  href: "/preview/darurat",
+                  icon: "⚡",
+                },
+              ]}
+            />
           )}
         </div>
       </div>

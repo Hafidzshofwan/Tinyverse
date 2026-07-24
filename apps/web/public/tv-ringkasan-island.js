@@ -232,6 +232,32 @@
       return { title: "Rehidrasi Luka Bakar", source: "Terapi Cairan", body: lines.join("\n") };
     }
 
+    if (boxId === "tkHasilBox") {
+      var rows = Array.prototype.slice.call(box.querySelectorAll(".tk-hasil-baris"));
+      var chartInfo = "";
+      rows.forEach(function (r) {
+        var lbl = tvText(r.querySelector(".tk-hasil-label"));
+        var val = tvText(r.querySelector(".tk-hasil-nilai"));
+        if (lbl && val) {
+          if (lbl.toLowerCase() === "chart") chartInfo = val;
+          lines.push(lbl + ": " + val);
+        }
+      });
+      var zBlocks = Array.prototype.slice.call(box.querySelectorAll(".tk-zscore-block, .tk-cdc-block"));
+      zBlocks.forEach(function (zb) {
+        var subRows = Array.prototype.slice.call(zb.querySelectorAll(".tk-zscore-row, .tk-cdc-row"));
+        subRows.forEach(function (sr) {
+          var sl = tvText(sr.querySelector(".tk-zscore-label, .tk-cdc-label"));
+          var sv = tvText(sr.querySelector(".tk-zscore-nilai, .tk-cdc-value"));
+          if (sl && sv) lines.push("- " + sl + ": " + sv);
+        });
+        var st = tvText(zb.querySelector(".tk-zscore-status, .tk-cdc-status"));
+        if (st) lines.push("  Status: " + st.replace(/^[\u2B24\u25CF]\s*/, ""));
+      });
+      var titleText = "Plot Tumbuh Kembang" + (chartInfo ? " (" + chartInfo + ")" : "");
+      return { title: titleText, source: "Tumbuh Kembang", body: lines.join("\n") };
+    }
+
     return { title: title, source: undefined, body: cleanHtml(box.innerHTML) };
   }
 
@@ -249,7 +275,7 @@
     if (it) toast("Ditambahkan ke Ringkasan: " + it.title);
   }
 
-  // ---------- pasang tombol untuk Dosis + Cairan ----------
+  // ---------- pasang tombol untuk Dosis + Cairan + Tumbuh Kembang ----------
   var TARGETS = [
     { id: "hasil-box", title: "Dosis Obat" },
     { id: "hasilCairanBox", title: "Cairan Rumatan" },
@@ -257,6 +283,7 @@
     { id: "hasilRencanaC", title: "Rehidrasi WHO \u2014 Rencana C" },
     { id: "hasilFaktorTetes", title: "Faktor Tetes" },
     { id: "hasilLukaBakar", title: "Rehidrasi Luka Bakar" },
+    { id: "tkHasilBox", title: "Hasil Plot Tumbuh Kembang" },
   ];
   function pasangTombol() {
     TARGETS.forEach(function (t) {

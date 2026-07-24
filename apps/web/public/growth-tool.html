@@ -6852,6 +6852,7 @@ function plotTumbuhKembang() {
     ${belumKalibrasi.length ? `<div class="tk-hasil-peringatan">\u{1F3AF} Area chart untuk ${escapeHtml(belumKalibrasi.join(" & "))} belum dikalibrasi.</div>` : ""}
     ${interpretasiHtml}
   `;
+  setTimeout(function() { if (window.pasangTombol) window.pasangTombol(); }, 50);
 }
 
 function tkKalibrasiValid(cal) {
@@ -7114,5 +7115,5 @@ function tkIslandInit(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',tkIslandInit);else tkIslandInit();
 
 </script>
-<script src="/tv-profile-bridge.js"></script><script src="/tv-deeplink.js"></script>
+<script src="/tv-ringkasan-island.js"></script><script src="/tv-profile-bridge.js"></script><script src="/tv-deeplink.js"></script>
 </body></html>

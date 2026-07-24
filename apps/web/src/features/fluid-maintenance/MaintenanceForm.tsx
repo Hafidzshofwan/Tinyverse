@@ -4,6 +4,7 @@ import { useState } from "react";
 import { viewMaintenance } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 /** Feature: kalkulator cairan rumatan (Holliday–Segar) — gaya v17. */
 export function MaintenanceForm() {
@@ -13,6 +14,7 @@ export function MaintenanceForm() {
   const [rincian, setRincian] = useState<ReadonlyArray<ResultRow>>([]);
   const [error, setError] = useState<string | null>(null);
   const [calculated, setCalculated] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   function hitung() {
     if (weight.trim() === "") {
@@ -35,6 +37,18 @@ export function MaintenanceForm() {
     setCalculated(true);
   }
 
+  const handleTambahRingkasan = () => {
+    if (!rows.length || error) return;
+    const summary = rows.map((r) => `${r.label}: ${r.value}`).join("\n");
+    addRingkasanItem({
+      title: `Cairan Rumatan (Holliday-Segar) - BB ${weight} kg`,
+      source: "Terapi Cairan",
+      body: summary,
+    });
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
+  };
+
   return (
     <div>
       <div className="kartu">
@@ -48,7 +62,21 @@ export function MaintenanceForm() {
           💧 Hitung Kebutuhan Cairan
         </button>
         {calculated ? (
-          <ResultList rows={rows} rincian={rincian} error={error} />
+          <>
+            <ResultList rows={rows} rincian={rincian} error={error} />
+            {!error && rows.length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <button
+                  type="button"
+                  className="tv-btn"
+                  style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                  onClick={handleTambahRingkasan}
+                >
+                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                </button>
+              </div>
+            )}
+          </>
         ) : null}
       </div>
       <div className="kartu info-metode">

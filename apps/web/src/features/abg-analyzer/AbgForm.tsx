@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import type { ChangeEvent, CSSProperties } from "react";
-import { NumberField } from "@/shared/ui";
+import { NumberField, RedFlagCrossLink } from "@/shared/ui";
 import { computeAbg, parseNum, AGD_CONTOH } from "@/entities/abg";
 import type { AbgSample, StepTone } from "@/entities/abg";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 const gridStyle: CSSProperties = {
   display: "grid",
@@ -134,6 +135,7 @@ export function AbgForm() {
   const [fio2, setFio2] = useState("");
   const [exampleLabel, setExampleLabel] = useState<string | null>(null);
   const [idx, setIdx] = useState(0);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   const clearLabel = () => setExampleLabel(null);
   const bind = (setter: (s: string) => void) => (val: string) => {
@@ -279,8 +281,55 @@ export function AbgForm() {
             <div style={warnBlock}>⚠️ {outcome.view.warnings.join(" ")}</div>
           ) : null}
           <div style={footNote}>Korelasikan dengan klinis.</div>
+          <div style={{ marginTop: 14 }}>
+            <button
+              type="button"
+              className="tv-btn"
+              style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+              onClick={() => {
+                if (!outcome.view) return;
+                const v = outcome.view;
+                const bodyText = [
+                  `Sampel: ${sample.toUpperCase()} | pH: ${ph}, pCO₂: ${pco2} mmHg, HCO₃⁻: ${hco3} mmol/L`,
+                  `Kesimpulan: ${v.conclusion}`,
+                  ...v.steps.map((s) => `• ${s.label}: ${s.text}`),
+                ].join("\n");
+
+                addRingkasanItem({
+                  title: `Analisis Gas Darah (AGD) — ${v.conclusion}`,
+                  source: "Analisis Gas Darah",
+                  body: bodyText,
+                });
+                setDitambahkan(true);
+                setTimeout(() => setDitambahkan(false), 2200);
+              }}
+            >
+              {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+            </button>
+          </div>
         </div>
       ) : null}
+
+      {outcome.view && parseNum(ph) !== null && parseNum(ph)! < 7.25 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG KLINIS (pH < 7.25)"
+          title="Asidosis Berat — Evaluasi KAD / Syok / Sepsis"
+          description="Asidosis metabolik/respiratorik berat memerlukan evaluasi klinis cepat. Bila ditemukan GDS > 200 mg/dL & ketonuria (+), curigai Ketoasidosis Diabetikum (KAD)."
+          actions={[
+            {
+              label: "Buka Alur Tatalaksana KAD",
+              href: "/preview/alur",
+              primary: true,
+              icon: "📘",
+            },
+            {
+              label: "Mode Darurat Resusitasi",
+              href: "/preview/darurat",
+              icon: "⚡",
+            },
+          ]}
+        />
+      )}
     </div>
   );
 }

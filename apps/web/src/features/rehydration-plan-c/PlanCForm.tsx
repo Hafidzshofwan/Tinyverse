@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { viewPlanC } from "@/entities/fluid";
 import type { PlanCAgeCategory } from "@/entities/fluid";
-import { NumberField } from "@/shared/ui";
+import { NumberField, RedFlagCrossLink } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 /** Feature: Rencana C (dehidrasi berat) — gaya v17. */
 export function PlanCForm() {
@@ -15,12 +16,32 @@ export function PlanCForm() {
     null,
   );
   const [calculated, setCalculated] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   function hitung() {
     const r = viewPlanC(weight === "" ? NaN : Number(weight), age);
     setResult(r);
     setCalculated(true);
   }
+
+  const handleTambahRingkasan = () => {
+    if (!result || result.error || !result.total) return;
+    const bodyText = [
+      `Kategori: ${ageLabel} (${ageDetail}) | BB: ${weight} kg`,
+      `Total Cairan IV: ${result.total.toFixed(0)} mL dalam ${result.totalHours} jam`,
+      `Tahap 1 (${result.stage1?.hours} jam): ${result.stage1?.volumeMl.toFixed(0)} mL (${result.stage1?.mlPerHour.toFixed(1)} mL/jam)`,
+      `Tahap 2 (${result.stage2?.hours} jam): ${result.stage2?.volumeMl.toFixed(0)} mL (${result.stage2?.mlPerHour.toFixed(1)} mL/jam)`,
+      `Cairan: Ringer Laktat (RL) / NaCl 0,9%`,
+    ].join("\n");
+
+    addRingkasanItem({
+      title: `Rehidrasi WHO - Rencana C (${ageLabel} BB ${weight} kg)`,
+      source: "Terapi Cairan",
+      body: bodyText,
+    });
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
+  };
 
   const ageLabel = age === "bayi" ? "Bayi" : "Anak";
   const ageDetail = age === "bayi" ? "< 1 tahun" : "≥ 1 tahun";
@@ -107,9 +128,40 @@ export function PlanCForm() {
                 {result?.totalHours} jam ({result?.stage1?.hours} jam +{" "}
                 {result?.stage2?.hours} jam).
               </div>
+              <div style={{ marginTop: 14 }}>
+                <button
+                  type="button"
+                  className="tv-btn"
+                  style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                  onClick={handleTambahRingkasan}
+                >
+                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                </button>
+              </div>
             </div>
           )
         ) : null}
+
+        {calculated && result && !result.error && (
+          <RedFlagCrossLink
+            badge="PENANGANAN KRITIS DEHIDRASI BERAT"
+            title="Evaluasi Tanda Syok Hipovolemik & Akses Vaskuler"
+            description="Jika ditemukan akral dingin, CRT > 3 detik, atau nadi teraba lemah: Berikan Bolus RL 20 mL/kg dalam 15-30 menit & pertimbangkan pendorongan jalur intraoseus (IO) bila IV sulit."
+            actions={[
+              {
+                label: "Buka Mode Darurat Resusitasi",
+                href: "/preview/darurat",
+                primary: true,
+                icon: "⚡",
+              },
+              {
+                label: "Cek Elektrolit / Lab",
+                href: "/preview/lab",
+                icon: "🧪",
+              },
+            ]}
+          />
+        )}
       </div>
       <div className="kartu info-metode">
         <h3>Tentang Rencana Terapi C</h3>

@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState, type CSSProperties } from "react";
-import { NumberField } from "@/shared/ui";
+import { NumberField, RedFlagCrossLink } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   deriveAgeGroups,
   gcsOptionsFor,
@@ -164,6 +165,7 @@ export function GcsForm() {
   const [motor, setMotor] = useState<number | null>(null);
   const [verbal, setVerbal] = useState<number | null>(null);
   const [intubated, setIntubated] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   const ageMonths = usiaBulan.trim() === "" ? null : Number(usiaBulan);
   const derived = useMemo(() => deriveAgeGroups(ageMonths), [ageMonths]);
@@ -318,7 +320,48 @@ export function GcsForm() {
             </>
           )}
         </div>
+        {result.complete && (
+          <div style={{ marginTop: 12 }}>
+            <button
+              type="button"
+              className="tv-btn"
+              style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+              onClick={() => {
+                addRingkasanItem({
+                  title: `Glasgow Coma Scale (GCS Pediatrik) — Total: ${result.totalText}`,
+                  source: "GCS Pediatrik",
+                  body: `Hasil: ${result.scoreText} (${result.totalText})\nKategori: ${result.category}\nRekomendasi: ${result.advice}`,
+                });
+                setDitambahkan(true);
+                setTimeout(() => setDitambahkan(false), 2200);
+              }}
+            >
+              {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+            </button>
+          </div>
+        )}
       </div>
+
+      {result.complete && result.total != null && result.total <= 8 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG KLINIS (GCS ≤ 8)"
+          title="Penurunan Kesadaran Berat (Koma) — Ancaman Airway"
+          description="GCS ≤ 8 berisiko tinggi hilangnya refleks proteksi jalan napas. Pertimbangkan intubasi endotrakeal & siapkan resusitasi airway lanjut."
+          actions={[
+            {
+              label: "Buka Mode Darurat (PALS)",
+              href: "/preview/darurat",
+              primary: true,
+              icon: "⚡",
+            },
+            {
+              label: "Cek Analisa Gas Darah",
+              href: "/preview/agd",
+              icon: "🩺",
+            },
+          ]}
+        />
+      )}
     </div>
   );
 }

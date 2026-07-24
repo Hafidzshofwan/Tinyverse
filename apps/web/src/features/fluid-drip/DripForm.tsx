@@ -4,6 +4,7 @@ import { useState } from "react";
 import { viewDrip } from "@/entities/fluid";
 import type { DripType } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 /** Feature: kalkulator faktor tetes — gaya v17. */
 export function DripForm() {
@@ -14,6 +15,7 @@ export function DripForm() {
   const [rincian, setRincian] = useState<ReadonlyArray<ResultRow>>([]);
   const [error, setError] = useState<string | null>(null);
   const [calculated, setCalculated] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   function hitung() {
     const result = viewDrip(
@@ -26,6 +28,23 @@ export function DripForm() {
     setError(result.error);
     setCalculated(true);
   }
+
+  const handleTambahRingkasan = () => {
+    if (error || !rows.length) return;
+    const bodyText = [
+      `Volume Cairan: ${volume} mL | Durasi: ${hours} jam`,
+      `Set Drip: ${factor === "makro" ? "Makro (20 tpm/mL)" : "Mikro (60 tpm/mL)"}`,
+      ...rows.map((r) => `${r.label}: ${r.value}`),
+    ].join("\n");
+
+    addRingkasanItem({
+      title: `Faktor Tetes Cairan (${volume} mL / ${hours} jam)`,
+      source: "Terapi Cairan",
+      body: bodyText,
+    });
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
+  };
 
   return (
     <div>
@@ -71,12 +90,26 @@ export function DripForm() {
           💉 Hitung Faktor Tetes
         </button>
         {calculated ? (
-          <ResultList
-            rows={rows}
-            rincian={rincian}
-            error={error}
-            title="HASIL PERHITUNGAN — FAKTOR TETES"
-          />
+          <>
+            <ResultList
+              rows={rows}
+              rincian={rincian}
+              error={error}
+              title="HASIL PERHITUNGAN — FAKTOR TETES"
+            />
+            {!error && rows.length > 0 && (
+              <div style={{ marginTop: 12 }}>
+                <button
+                  type="button"
+                  className="tv-btn"
+                  style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                  onClick={handleTambahRingkasan}
+                >
+                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                </button>
+              </div>
+            )}
+          </>
         ) : null}
       </div>
       <div className="kartu info-metode">

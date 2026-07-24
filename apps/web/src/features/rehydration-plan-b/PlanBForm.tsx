@@ -4,6 +4,7 @@ import { useState } from "react";
 import { viewPlanB } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 /** Feature: Rencana B (rehidrasi ringan–sedang) — gaya v17. */
 export function PlanBForm() {
@@ -15,6 +16,7 @@ export function PlanBForm() {
   const [total, setTotal] = useState<string>("");
   const [duration, setDuration] = useState<string>("");
   const [calculated, setCalculated] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   function hitung() {
     const result = viewPlanB(weight === "" ? NaN : Number(weight));
@@ -25,6 +27,18 @@ export function PlanBForm() {
     setDuration(result.duration ? `${result.duration} jam` : "");
     setCalculated(true);
   }
+
+  const handleTambahRingkasan = () => {
+    if (error || !total) return;
+    const details = rincian.map((r) => `${r.label}: ${r.value}`).join("\n");
+    addRingkasanItem({
+      title: `Rehidrasi WHO - Rencana B (BB ${weight} kg)`,
+      source: "Terapi Cairan",
+      body: `Total Cairan Oralit: ${total} (Diberikan dalam ${duration})\n${details}`,
+    });
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
+  };
 
   return (
     <div>
@@ -55,6 +69,16 @@ export function PlanBForm() {
                   </li>
                 ))}
               </ul>
+              <div style={{ marginTop: 14 }}>
+                <button
+                  type="button"
+                  className="tv-btn"
+                  style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+                  onClick={handleTambahRingkasan}
+                >
+                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                </button>
+              </div>
             </div>
           )
         ) : null}

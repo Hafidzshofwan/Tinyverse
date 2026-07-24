@@ -5,19 +5,45 @@ import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { NumberField } from "@/shared/ui";
 import { correctCalcium, correctPotassium, correctSodium } from "@/entities/lab";
 import type { DxLine } from "@/entities/lab";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
 function num(s: string): number | null {
   const n = parseFloat(s.replace(",", "."));
   return isFinite(n) ? n : null;
 }
 
-function Hasil({ r }: { r: DxLine | null }) {
+function stripTags(html: string): string {
+  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function Hasil({ r, title }: { r: DxLine | null; title: string }) {
+  const [ditambahkan, setDitambahkan] = useState(false);
   if (!r) return null;
   return (
-    <div
-      className={"dx-res " + r.cls}
-      dangerouslySetInnerHTML={{ __html: r.html }}
-    />
+    <>
+      <div
+        className={"dx-res " + r.cls}
+        dangerouslySetInnerHTML={{ __html: r.html }}
+      />
+      <div style={{ marginTop: 10 }}>
+        <button
+          type="button"
+          className="tv-btn"
+          style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+          onClick={() => {
+            addRingkasanItem({
+              title,
+              source: "Koreksi Elektrolit",
+              body: stripTags(r.html),
+            });
+            setDitambahkan(true);
+            setTimeout(() => setDitambahkan(false), 2200);
+          }}
+        >
+          {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+        </button>
+      </div>
+    </>
   );
 }
 
@@ -68,7 +94,7 @@ export function ElectrolyteTab() {
         >
           Hitung Koreksi Na
         </button>
-        <Hasil r={rNa} />
+        <Hasil r={rNa} title={`Koreksi Natrium (Na ${na} mmol/L)`} />
       </div>
 
       <div className="kartu">
@@ -92,7 +118,7 @@ export function ElectrolyteTab() {
         >
           Hitung Koreksi K
         </button>
-        <Hasil r={rK} />
+        <Hasil r={rK} title={`Koreksi Kalium (K ${k} mmol/L)`} />
       </div>
 
       <div className="kartu">
@@ -122,7 +148,7 @@ export function ElectrolyteTab() {
         >
           Hitung Koreksi Ca
         </button>
-        <Hasil r={rCa} />
+        <Hasil r={rCa} title={`Koreksi Kalsium (Ca ${ca} mg/dL)`} />
       </div>
     </>
   );

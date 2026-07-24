@@ -2,6 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { usePatientProfile } from "@/shared/lib/patient";
+import { RedFlagCrossLink } from "@/shared/ui";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { DAFTAR_SKOR } from "./data";
 import { hitungSkor } from "./hitungSkor";
 
@@ -36,6 +38,7 @@ export function ScoreCatalog() {
   const [aktifId, setAktifId] = useState<string | null>(null);
   const [pilihan, setPilihan] = useState<number[]>([]);
   const [usiaAutoDariProfil, setUsiaAutoDariProfil] = useState(false);
+  const [ditambahkan, setDitambahkan] = useState(false);
 
   const def = useMemo(
     () => DAFTAR_SKOR.find((s) => s.id === aktifId) ?? null,
@@ -192,7 +195,175 @@ export function ScoreCatalog() {
         )}
         <div className="tv-skor-kat">{hasil.kategori}</div>
         <p className="tv-skor-saran">{hasil.saran}</p>
+        <div style={{ marginTop: 14 }}>
+          <button
+            type="button"
+            className="tv-btn"
+            style={{ background: "#059669", color: "#FFFFFF", fontWeight: 700 }}
+            onClick={() => {
+              const bodyText = [
+                def.hideTotal ? "" : `Total Skor: ${hasil.total} / ${def.maxTotal}`,
+                `Kategori: ${hasil.kategori}`,
+                `Rekomendasi / Saran: ${hasil.saran}`,
+              ].filter(Boolean).join("\n");
+
+              addRingkasanItem({
+                title: `Skor Klinis — ${def.nama}`,
+                source: "Skor Klinis",
+                body: bodyText,
+              });
+              setDitambahkan(true);
+              setTimeout(() => setDitambahkan(false), 2200);
+            }}
+          >
+            {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+          </button>
+        </div>
       </div>
+
+      {/* Auto-suggest Red Flag Cross-Links berdasarkan temuan klinis */}
+      {def.id === "cds" && hasil.total >= 5 && (
+        <RedFlagCrossLink
+          badge="CROSS-LINK REHIDRASI PARENTERAL"
+          title="Rekomendasi Lanjutan: Terapi Cairan Rencana C (IV)"
+          description="Skor dehidrasi sedang-berat mengindikasikan perlunya resusitasi cairan parenteral cepat dan pemantauan ketat hemodinamik."
+          actions={[
+            {
+              label: "Buka Terapi Cairan Rencana C",
+              href: "/preview/fluids",
+              primary: true,
+              icon: "💧",
+            },
+            {
+              label: "Mode Darurat Resusitasi",
+              href: "/preview/darurat",
+              icon: "⚡",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "downes" && hasil.total >= 6 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG DISTRES NAPAS NEONATUS"
+          title="Ancaman Gagal Napas — Bantuan Napas Lanjut & AGD"
+          description="Downes score ≥6 berisiko tinggi gagal napas. Pertimbangkan pendorongan CPAP/Ventilator & evaluasi Analisa Gas Darah."
+          actions={[
+            {
+              label: "Cek Analisa Gas Darah (AGD)",
+              href: "/preview/agd",
+              primary: true,
+              icon: "🩺",
+            },
+            {
+              label: "Mode Darurat Resusitasi PALS",
+              href: "/preview/darurat",
+              icon: "⚡",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "croup" && hasil.total >= 6 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG CROUP BERAT"
+          title="Nebulisasi Epinefrin & Deksametason Sistemik"
+          description="Croup berat (skor ≥6) berisiko obstruksi jalan napas atas. Berikan Nebul Epinefrin 1:1000 & Deksametason 0.6 mg/kg IV/IM."
+          actions={[
+            {
+              label: "Hitung Dosis Obat",
+              href: "/preview/dosing",
+              primary: true,
+              icon: "💊",
+            },
+            {
+              label: "Mode Darurat PALS",
+              href: "/preview/darurat",
+              icon: "⚡",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "pass" && hasil.total >= 5 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG ASMA AKUT BERAT"
+          title="Buka Alur Tatalaksana Asma Akut & Nebulisasi Kontinyu"
+          description="Skor PASS tinggi memerlukan nebulisasi Salbutamol + Ipratropium berulang/kontinyu, Steroid IV, & Oksigenasi."
+          actions={[
+            {
+              label: "Buka Alur Tatalaksana Asma",
+              href: "/preview/alur",
+              primary: true,
+              icon: "📘",
+            },
+            {
+              label: "Hitung Dosis Salbutamol & Steroid",
+              href: "/preview/dosing",
+              icon: "💊",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "pas" && hasil.total >= 7 && (
+        <RedFlagCrossLink
+          badge="INDIKASI KONSULTASI BEDAH"
+          title="Kecurigaan Apendisitis Tinggi — Persiapan Pre-Op"
+          description="Skor PAS ≥7 mengindikasikan kecurigaan tinggi apendisitis. Puasakan pasien, pasang IV line, & siapkan profilaksis antibiotik."
+          actions={[
+            {
+              label: "Hitung Dosis Antibiotik Pre-Op",
+              href: "/preview/dosing",
+              primary: true,
+              icon: "💊",
+            },
+            {
+              label: "Lihat Guideline Klinis",
+              href: "/preview/guideline",
+              icon: "📘",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "tbanak" && hasil.total >= 6 && (
+        <RedFlagCrossLink
+          badge="DIAGNOSIS KLINIS TB ANAK TEGAK"
+          title="Registrasi & Dosis Obat Anti-Tuberkulosis (OAT)"
+          description="Skor TB ≥6 menegakkan diagnosis TB anak. Mulai terapi OAT kategori anak (2HRZE / 4HR) sesuai berat badan."
+          actions={[
+            {
+              label: "Hitung Dosis OAT Anak",
+              href: "/preview/dosing",
+              primary: true,
+              icon: "💊",
+            },
+            {
+              label: "Buka Alur Tatalaksana TB",
+              href: "/preview/alur",
+              icon: "📘",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "kawasaki" && hasil.level === "crit" && (
+        <RedFlagCrossLink
+          badge="DIAGNOSIS KAWASAKI KLASIK"
+          title="Pemberian IVIG & Aspirin Dosis Tinggi"
+          description="Memenuhi kriteria Kawasaki klasik. Berikan IVIG 2 g/kg tunggal + Aspirin dosis anti-inflamasi (80–100 mg/kg/hari) & Rujuk Ekokardiografi."
+          actions={[
+            {
+              label: "Hitung Dosis IVIG & Aspirin",
+              href: "/preview/dosing",
+              primary: true,
+              icon: "💊",
+            },
+          ]}
+        />
+      )}
+
       <p className="tv-skor-sumber">
         Sumber: {def.sumber} Alat bantu, bukan pengganti penilaian klinis.
       </p>
