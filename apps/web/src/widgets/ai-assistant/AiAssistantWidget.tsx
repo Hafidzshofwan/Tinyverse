@@ -141,37 +141,78 @@ export function AiAssistantWidget() {
 
   return (
     <>
-      {/* Tombol Melayang AI FAB */}
-      <button
-        type="button"
-        id="tvAiFab"
-        aria-label="Asisten AI Tinyverse"
-        title="Asisten AI Tinyverse"
-        onClick={() => setIsOpen(true)}
+      {/* Tombol Melayang AI FAB (Ukuran & Posisi Presisi Sama dengan Profil Pasien) */}
+      <div
+        className="tv-ai-fab-container"
         style={{
           position: "fixed",
-          bottom: 20,
-          right: 76, // Di sebelah kiri Profil Pasien FAB
-          zIndex: 990,
+          bottom: 18,
+          right: 84,
+          zIndex: 8500,
           display: "flex",
           alignItems: "center",
-          gap: 6,
-          padding: "10px 16px",
-          borderRadius: 30,
-          background: "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
-          color: "#ffffff",
-          border: "none",
-          boxShadow: "0 4px 16px rgba(10, 11, 95, 0.35)",
-          fontFamily: "'Fredoka', 'Quicksand', sans-serif",
-          fontWeight: 700,
-          fontSize: 14,
-          cursor: "pointer",
-          transition: "transform 0.2s, boxShadow 0.2s",
+          gap: 10,
         }}
       >
-        <span style={{ fontSize: 18 }}>🤖</span>
-        <span className="tv-ai-fab-text">Asisten AI</span>
-      </button>
+        {/* Floating Label Badge */}
+        <div
+          style={{
+            padding: "6px 13px",
+            borderRadius: 18,
+            backgroundColor: "var(--tv-navy, #0a0b5f)",
+            color: "#ffffff",
+            fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+            fontSize: 12,
+            fontWeight: 700,
+            boxShadow: "0 4px 14px rgba(10, 11, 95, 0.25)",
+            border: "1px solid rgba(217, 54, 166, 0.35)",
+            display: "flex",
+            alignItems: "center",
+            gap: 7,
+            cursor: "pointer",
+            whiteSpace: "nowrap",
+          }}
+          onClick={() => setIsOpen(true)}
+        >
+          <span>Asisten AI</span>
+          <span
+            style={{
+              width: 7,
+              height: 7,
+              borderRadius: "50%",
+              backgroundColor: "#4ade80",
+              boxShadow: "0 0 8px #4ade80",
+            }}
+          />
+        </div>
+
+        {/* Circle Button - Ukuran (52px x 52px), border 0, ring shadow, & bottom (18px) persis seperti Profil Pasien */}
+        <button
+          type="button"
+          id="tvAiFab"
+          aria-label="Asisten AI Tinyverse"
+          title="Asisten AI Tinyverse"
+          onClick={() => setIsOpen(true)}
+          style={{
+            width: 52,
+            height: 52,
+            border: 0,
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #0a0b5f 0%, #d936a6 100%)",
+            color: "#ffffff",
+            boxShadow: "0 0 0 5px rgba(217, 54, 166, 0.20), 0 8px 22px rgba(10, 11, 95, 0.20)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "1.35rem",
+            cursor: "pointer",
+            transition: "transform 0.15s",
+            flexShrink: 0,
+          }}
+        >
+          🤖
+        </button>
+      </div>
 
       {/* Drawer / Floating Chat Window */}
       {isOpen && (

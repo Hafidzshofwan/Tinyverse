@@ -1126,7 +1126,13 @@ body {
 }
 #tvPasienFab { left: auto; right: 20px; }
 #tvPasienOverlay { justify-content: flex-end; }
-@media (max-width: 768px){ #tvPasienFab { left: auto; right: 14px; } }
+#tvAiFab:hover { transform: translateY(-2px) scale(1.03); }
+#tvAiFab:active { transform: translateY(1px) scale(0.98); }
+@media (max-width: 768px){
+  #tvPasienFab { left: auto; right: 14px; }
+  .tv-ai-fab-container { bottom: 14px !important; right: 70px !important; gap: 6px !important; }
+  #tvAiFab { width: 48px !important; height: 48px !important; font-size: 1.22rem !important; }
+}
 
 /* ============================================================
    Fitur Akun & Profil (port dari v17) — login, profil, riwayat, admin
