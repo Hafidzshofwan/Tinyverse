@@ -277,7 +277,7 @@ export function PatientProfile() {
                     marginBottom: "12px",
                   }}
                 >
-                  ℹ️ Belum ada pasien aktif terpilih. Klik <b>"Pilih &amp; Aktifkan"</b> di daftar bawah untuk mengisi otomatis seluruh kalkulator.
+                  ℹ️ Belum ada pasien aktif terpilih. Klik <b&quot;Pilih &amp; Aktifkan&quot;</b> di daftar bawah untuk mengisi otomatis seluruh kalkulator.
                 </div>
               )}
 
