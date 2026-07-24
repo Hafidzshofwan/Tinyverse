@@ -2172,3 +2172,36 @@ body.tv-tanpa-dekorasi .bg-decor {
   color: #d936a6 !important;
   box-shadow: none !important;
 }
+
+/* ================================================================
+   Responsive Layout & Fix Himpit Chat untuk Asisten AI
+   ================================================================ */
+.tv-ai-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+}
+
+.tv-ai-chat-box {
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .tv-ai-page-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+  }
+  .tv-ai-chat-box {
+    height: 520px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .tv-ai-chat-box {
+    height: 480px !important;
+  }
+}
+

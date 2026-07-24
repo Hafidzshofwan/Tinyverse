@@ -308,17 +308,10 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 320px",
-          gap: 20,
-          alignItems: "start",
-        }}
-        className="tv-ai-page-grid"
-      >
+      <div className="tv-ai-page-grid">
         {/* Kolom Percakapan Utama */}
         <div
+          className="tv-ai-chat-box"
           style={{
             backgroundColor: "#ffffff",
             borderRadius: 16,
@@ -328,6 +321,8 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
             flexDirection: "column",
             height: 680,
             overflow: "hidden",
+            width: "100%",
+            minWidth: 0,
           }}
         >
           {/* Header Panel Chat */}
@@ -503,6 +498,7 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
               disabled={isLoading}
               style={{
                 flex: 1,
+                minWidth: 0,
                 padding: "12px 18px",
                 borderRadius: 24,
                 border: "1px solid #cbd5e1",
@@ -516,6 +512,7 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
               type="submit"
               disabled={isLoading || !input.trim()}
               style={{
+                flexShrink: 0,
                 padding: "12px 24px",
                 borderRadius: 24,
                 background:
