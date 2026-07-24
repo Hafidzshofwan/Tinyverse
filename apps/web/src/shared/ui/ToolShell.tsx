@@ -12,38 +12,40 @@ const headRow: CSSProperties = {
   alignItems: "center",
   gap: 15,
 };
-// Kotak ikon: gradien magenta -> navy (pink-lavender), sama seperti island v17
-// (Terapi Cairan / Racik Puyer).
+// Kotak ikon: disamakan presisi 46x46, warna #D936A6, bg #D936A61A, font 17.6px Quicksand
 const icoStyle: CSSProperties = {
-  flex: "0 0 auto",
-  width: 54,
-  height: 54,
-  borderRadius: 18,
-  display: "grid",
-  placeItems: "center",
-  fontSize: 26,
+  flex: "0 0 46px",
+  width: 46,
+  height: 46,
+  minWidth: 46,
+  borderRadius: 15,
+  display: "inline-flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "17.6px",
+  fontFamily: "'Quicksand', system-ui, sans-serif",
   lineHeight: 1,
-  background:
-    "linear-gradient(135deg, rgba(217, 54, 166, 0.14), rgba(10, 11, 95, 0.08))",
+  background: "#D936A61A",
+  color: "#D936A6",
+  boxShadow: "none",
 };
-// Judul: nilai diselaraskan 1:1 dengan header island Terapi Cairan
-// (computed: 18.32px, Fredoka, warna #0A0B5F).
+// Judul: diselaraskan presisi dengan contoh v17 (19.84px Fredoka, #0A0B5F).
 const titleStyle: CSSProperties = {
   margin: 0,
   fontFamily:
     '"Fredoka", "Quicksand", system-ui, -apple-system, "Segoe UI", sans-serif',
   fontWeight: 700,
-  fontSize: "1.145rem",
-  color: "var(--tv-navy, #0a0b5f)",
+  fontSize: "19.84px",
+  color: "#0A0B5F",
 };
-// Subjudul: diselaraskan 1:1 dengan island Terapi Cairan
-// (computed: 10.24px, Quicksand, warna #0A0B5F9E = navy 62%).
+// Subjudul: diselaraskan presisi dengan contoh v17 (9.92px Quicksand, #0A0B5F9E, margin 2px 0 0).
 const leadStyle: CSSProperties = {
-  margin: 0,
+  margin: "2px 0 0 0",
+  fontFamily: '"Quicksand", system-ui, sans-serif',
   fontWeight: 500,
-  fontSize: "0.64rem",
-  lineHeight: 1.45,
-  color: "rgba(10, 11, 95, 0.62)",
+  fontSize: "9.92px",
+  lineHeight: 1.3,
+  color: "#0A0B5F9E",
 };
 
 /**

@@ -24,32 +24,35 @@ const row: CSSProperties = {
   marginBottom: 16,
 };
 const circleBase: CSSProperties = {
-  width: 42,
-  height: 42,
-  borderRadius: "50%",
+  width: 46,
+  height: 46,
+  borderRadius: 15,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "1.3rem",
+  fontSize: "17.6px",
+  fontFamily: "'Quicksand', system-ui, sans-serif",
+  color: "#D936A6",
   flexShrink: 0,
-  boxShadow: "0 3px 0 rgba(0,0,0,0.08)",
+  boxShadow: "none",
 };
 const h2Style: CSSProperties = {
   margin: 0,
-  fontFamily: "'Fredoka', sans-serif",
-  fontSize: "1.05rem",
-  fontWeight: 600,
-  color: "var(--tv-teks, #0a0b4f)",
+  fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+  fontSize: "19.84px",
+  fontWeight: 700,
+  color: "#0A0B5F",
 };
 const pStyle: CSSProperties = {
-  margin: 0,
-  fontSize: "0.85rem",
-  fontWeight: 600,
-  color: "var(--tv-soft-teks, #667085)",
+  margin: "2px 0 0 0",
+  fontFamily: "'Quicksand', system-ui, sans-serif",
+  fontSize: "9.92px",
+  fontWeight: 500,
+  color: "#0A0B5F9E",
 };
 
 export function ToolHeader({ icon, title, subtitle, iconBg }: ToolHeaderProps) {
-  const circle: CSSProperties = { ...circleBase, background: iconBg ?? "#E7F0FF" };
+  const circle: CSSProperties = { ...circleBase, background: iconBg ?? "#D936A61A" };
   return (
     <div style={row}>
       <div style={circle} aria-hidden="true">
