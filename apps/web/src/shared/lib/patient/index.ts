@@ -160,7 +160,7 @@ export function hapusPasienFromList(id: string) {
 
   if (isAktifDeleted) {
     if (listBaru.length > 0) {
-      pilihPasienAktif(listBaru[0]);
+      pilihPasienAktif(listBaru[0]!);
     } else {
       pilihPasienAktif({});
     }
