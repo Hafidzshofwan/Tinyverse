@@ -5,6 +5,7 @@ import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
 import { ProfileModal } from "./ProfileModal";
 import { AdminModal } from "./AdminModal";
+import { KopSuratModal } from "@/shared/ui/KopSuratModal";
 
 /**
  * Tombol profil di header + dropdown. Menggantikan placeholder "Profil (segera)".
@@ -16,6 +17,7 @@ export function UserMenu() {
   const [buka, setBuka] = useState(false);
   const [profilTampil, setProfilTampil] = useState(false);
   const [adminTampil, setAdminTampil] = useState(false);
+  const [kopTampil, setKopTampil] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,6 +72,15 @@ export function UserMenu() {
           >
             {"\uD83D\uDC64"} Profil saya
           </button>
+          <button
+            className="tv-drop-item"
+            onClick={() => {
+              setBuka(false);
+              setKopTampil(true);
+            }}
+          >
+            🏥 Kop Surat (PDF)
+          </button>
           {admin && (
             <button
               className="tv-drop-item"
@@ -98,6 +109,7 @@ export function UserMenu() {
       {adminTampil && admin && (
         <AdminModal onTutup={() => setAdminTampil(false)} />
       )}
+      <KopSuratModal isOpen={kopTampil} onClose={() => setKopTampil(false)} />
     </div>
   );
 }

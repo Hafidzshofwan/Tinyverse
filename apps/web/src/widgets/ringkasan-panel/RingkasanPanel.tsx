@@ -14,6 +14,8 @@ import {
   buildRingkasanText,
   onRingkasanChange,
 } from "@/shared/lib/ringkasan";
+import { printSoapSummary } from "@/shared/lib/pdfExport";
+import { KopSuratModal } from "@/shared/ui/KopSuratModal";
 
 const wrapStyle: CSSProperties = { maxWidth: 860 };
 const gridStyle: CSSProperties = {
@@ -157,24 +159,17 @@ export function RingkasanPanel() {
     setStatus("File TXT ringkasan diunduh.");
   };
 
+  const [kopModalOpen, setKopModalOpen] = useState(false);
+
   const cetak = () => {
-    const text = buildRingkasanText(pasien, items);
-    const w = window.open("", "_blank", "width=720,height=900");
-    if (!w) {
-      setStatus("Popup diblokir. Izinkan popup untuk Print / PDF.");
-      return;
-    }
-    const esc = text
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-    w.document.write(
-      `<!doctype html><html lang="id"><head><meta charset="utf-8"><title>Ringkasan Klinis Tinyverse</title><style>body{font-family:system-ui,Segoe UI,sans-serif;padding:28px;color:#111}h1{font-size:18px;margin:0 0 12px}pre{white-space:pre-wrap;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace}</style></head><body><h1>Ringkasan Klinis Tinyverse</h1><pre>${esc}</pre></body></html>`,
-    );
-    w.document.close();
-    w.focus();
-    setTimeout(() => w.print(), 250);
-    setStatus("Menyiapkan Print / PDF...");
+    const rawText = buildRingkasanText(pasien, items);
+    printSoapSummary({
+      namaPasien: pasien.nama || "Anak",
+      noRm: pasien.noRm || "-",
+      umurBb: `${pasien.usia || "-"} / ${pasien.bbTb || "-"}`,
+      rawText: rawText,
+    });
+    setStatus("Menyiapkan Cetak PDF ber-Kop Surat...");
   };
 
   return (
@@ -215,10 +210,12 @@ export function RingkasanPanel() {
           <button type="button" className="tv-btn" style={btnAuto} onClick={ambilProfil}>🔄 Ambil dari Profil</button>
           <button type="button" className="tv-btn" style={btnAuto} onClick={salin}>📋 Salin</button>
           <button type="button" className="tv-btn" style={btnAuto} onClick={exportTxt}>⬇️ Export TXT</button>
-          <button type="button" className="tv-btn" style={btnAuto} onClick={cetak}>🖨️ Print / PDF</button>
+          <button type="button" className="tv-btn" style={{ ...btnAuto, background: "#1E40AF", color: "#FFFFFF" }} onClick={cetak}>📄 Cetak PDF (Kop Surat)</button>
+          <button type="button" className="tv-btn" style={btnAuto} onClick={() => setKopModalOpen(true)}>⚙️ Atur Kop Surat</button>
           <button type="button" className="tv-btn" style={btnAuto} onClick={bersihkan}>🗑️ Bersihkan</button>
         </div>
         <p className="tv-card-desc" role="status" style={{ margin: 0 }}>{status}</p>
+        <KopSuratModal isOpen={kopModalOpen} onClose={() => setKopModalOpen(false)} />
       </section>
 
       <section className="tv-card tv-stack" style={{ marginTop: 16 }}>
