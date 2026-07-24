@@ -1,1 +1,2 @@
-export { PatientProfile } from "./PatientProfile";
+export { PatientProfile, PatientTopBarChip } from "./PatientProfile";
+

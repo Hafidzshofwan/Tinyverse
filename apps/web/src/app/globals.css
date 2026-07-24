@@ -1093,9 +1093,46 @@ body {
 @media (max-width: 768px){#tvPasienFab{left:14px;bottom:14px;width:48px;height:48px;font-size:1.22rem}}
 #tvPasienOverlay{position:fixed;inset:0;z-index:8600;display:none;align-items:flex-end;justify-content:flex-start;padding:18px;background:rgba(10,11,40,.28)}
 #tvPasienOverlay.tampil{display:flex}
-.tv-pas-card{width:min(380px,calc(100vw - 36px));max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:'Quicksand',sans-serif}
+.tv-pas-card{width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:'Quicksand',sans-serif}
+.tv-pas-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
 .tv-pas-card h3{margin:0 0 2px;font-family:'Fredoka',sans-serif;color:#1B2A6B;font-size:1.08rem}
 .tv-pas-sub{margin:0 0 12px;font-size:.78rem;color:#6B7280;line-height:1.4}
+
+/* Tabs & Multi-Pasien */
+.tv-pas-tabs{display:flex;background:#F3F4F6;padding:4px;border-radius:12px;margin-bottom:12px;gap:4px}
+.tv-pas-tab-btn{flex:1;padding:8px 10px;border:none;background:transparent;border-radius:9px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.8rem;color:#6B7280;cursor:pointer;transition:all .15s ease}
+.tv-pas-tab-btn.aktif{background:#ffffff;color:#0A0B5F;box-shadow:0 2px 6px rgba(10,11,95,.08)}
+
+.tv-pas-active-banner{background:linear-gradient(135deg,#F0F4FF 0%,#E8EEFF 100%);border:1.5px solid #C7D7FE;border-radius:14px;padding:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.tv-pas-active-info{display:flex;flex-direction:column;gap:2px}
+.tv-pas-active-tag{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#175CD3;background:#EFF8FF;padding:2px 8px;border-radius:999px;width:fit-content}
+
+.tv-pas-search{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid #E5E7EB;border-radius:10px;font-size:.86rem;margin-bottom:10px;font-family:inherit}
+.tv-pas-search:focus{outline:0;border-color:#7C5CFC}
+
+.tv-pas-list{display:flex;flex-direction:column;gap:10px;max-height:320px;overflow-y:auto;padding-right:2px}
+.tv-pas-item{border:1.5px solid rgba(10,11,95,.09);border-radius:14px;padding:12px;background:#ffffff;transition:all .15s ease;display:flex;flex-direction:column;gap:8px}
+.tv-pas-item:hover{border-color:#7C5CFC;box-shadow:0 4px 12px rgba(124,92,252,.08)}
+.tv-pas-item.is-active{border-color:#2E90FA;background:#F4F8FF}
+.tv-pas-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.tv-pas-item-nama{font-family:'Fredoka',sans-serif;font-weight:700;font-size:.96rem;color:#0A0B4F}
+.tv-pas-item-rm{font-size:.72rem;font-weight:600;color:#475467;background:#F2F4F7;padding:2px 7px;border-radius:6px}
+.tv-pas-vitals{display:flex;flex-wrap:wrap;gap:6px;font-size:.76rem}
+.tv-pas-vital-pill{background:#F8F9FC;border:1px solid #EAECF0;padding:3px 8px;border-radius:8px;color:#344054;font-weight:600}
+.tv-pas-item-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-top:2px}
+
+.tv-pas-btn-sm{padding:6px 11px;border-radius:8px;font-family:'Fredoka',sans-serif;font-weight:600;font-size:.78rem;border:none;cursor:pointer;transition:transform .12s ease}
+.tv-pas-btn-sm:hover{transform:translateY(-1px)}
+.tv-pas-btn-switch{background:linear-gradient(160deg,#7C5CFC,#2BA9D6);color:#ffffff}
+.tv-pas-btn-edit{background:#F2F4F7;color:#344054}
+.tv-pas-btn-del{background:#FEF3F2;color:#B42318}
+
+/* Topbar Patient Chip */
+.tv-pas-topchip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:999px;font-family:'Fredoka',sans-serif;font-size:.8rem;color:#344054;cursor:pointer;transition:all .15s ease}
+.tv-pas-topchip:hover{background:#EAECF0;border-color:#D0D5DD;transform:translateY(-1px)}
+.tv-pas-topchip-ic{font-size:.9rem}
+.tv-pas-topchip-txt{max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
 .tv-pas-row{display:flex;gap:8px}
 .tv-pas-f{flex:1;margin-bottom:10px}
 .tv-pas-f label{display:block;font-size:.74rem;font-weight:700;color:#374151;margin-bottom:4px}

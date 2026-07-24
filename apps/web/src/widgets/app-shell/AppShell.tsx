@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { NAV_GROUPS } from "./nav-config";
 import { NavLinks } from "./NavLinks";
 import { GlobalSearch } from "./GlobalSearch";
-import { PatientProfile } from "@/widgets/patient-profile";
+import { PatientProfile, PatientTopBarChip } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
 import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
@@ -121,6 +121,7 @@ function AppShellInner({ children }: AppShellProps) {
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
         <GlobalSearch />
+        <PatientTopBarChip />
         <UserMenu />
       </header>
       <div className="tv-body">
