@@ -137,7 +137,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
             Skrining Autisme M-CHAT-R/F
           </h2>
           <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
-            Modified Checklist for Autism in Toddlers, Revised • Deteksi Dini Autisme (16–30 Bulan)
+            Modified Checklist for Autism in Toddlers, Revised
           </p>
         </div>
       </div>

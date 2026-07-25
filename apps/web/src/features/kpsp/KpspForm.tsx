@@ -144,7 +144,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
             Skrining Perkembangan KPSP
           </h2>
           <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
-            Kuesioner Pra Skrining Perkembangan • Pedoman SDIDTK Kemenkes RI (0–72 Bulan)
+            Kuesioner Pra Skrining Perkembangan
           </p>
         </div>
       </div>

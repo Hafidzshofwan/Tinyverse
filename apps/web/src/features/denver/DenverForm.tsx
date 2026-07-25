@@ -158,7 +158,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
             Skrining Perkembangan Denver II
           </h2>
           <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
-            Denver Development Screening Test (DDST II) • 4 Sektor Perkembangan Anak (0–6 Tahun)
+            Denver Development Screening Test (DDST II)
           </p>
         </div>
       </div>
