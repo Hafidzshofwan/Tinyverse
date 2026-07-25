@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
+import dynamic from "next/dynamic";
+import { GrowthTool } from "@/features/growth-chart";
+
+const GrowthTrackingPanel = dynamic(
+  () => import("@/features/growth-chart").then((m) => m.GrowthTrackingPanel),
+  { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Pemantauan Longitudinal…</p> }
+);
 
 export function GrowthPanel() {
   const [tab, setTab] = useState<"longitudinal" | "single">("longitudinal");

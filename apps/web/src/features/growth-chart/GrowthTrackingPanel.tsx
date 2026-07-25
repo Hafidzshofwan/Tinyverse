@@ -16,7 +16,8 @@ import { hitungIMT } from "./zscore";
 
 export function GrowthTrackingPanel() {
   const patientProfile: PatientProfile = usePatientProfile();
-  const patientId = patientProfile.id || "default_patient";
+  const patientId = patientProfile.id || "";
+  const belumPilihPasien = !patientId;
 
   const [records, setRecords] = useState<GrowthRecord[]>([]);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
@@ -34,16 +35,12 @@ export function GrowthTrackingPanel() {
 
   // Muat data riwayat saat pasien aktif berubah
   useEffect(() => {
-    const loaded = loadGrowthRecords(patientId);
-    if (loaded.length > 0) {
-      setRecords(loaded);
-    } else {
-      // Default gunakan sampel normal agar pengguna langsung melihat grafik
-      const defaultSamples = getSampleGrowthRecords(patientId, false);
-      setRecords(defaultSamples);
-      saveGrowthRecords(patientId, defaultSamples);
+    if (belumPilihPasien) {
+      setRecords([]);
+      return;
     }
-  }, [patientId]);
+    setRecords(loadGrowthRecords(patientId));
+  }, [patientId, belumPilihPasien]);
 
   // Sinkronkan usia dari profil pasien jika ada
   useEffect(() => {
@@ -78,6 +75,10 @@ export function GrowthTrackingPanel() {
   // Simpan data pemeriksaan baru
   const handleAddRecord = (e: React.FormEvent) => {
     e.preventDefault();
+    if (belumPilihPasien) {
+      alert("Pilih atau tambahkan Profil Pasien dulu supaya riwayat pertumbuhan tersimpan pada pasien yang benar.");
+      return;
+    }
     const u = parseFloat(usiaBulan);
     const w = parseFloat(bb);
     const h = parseFloat(tb);
@@ -121,6 +122,10 @@ export function GrowthTrackingPanel() {
 
   // Muat sampel preset untuk pengujian cepat
   const handleLoadSample = (faltering: boolean) => {
+    if (belumPilihPasien) {
+      alert("Pilih atau tambahkan Profil Pasien dulu sebelum memuat data contoh.");
+      return;
+    }
     const samples = getSampleGrowthRecords(patientId, faltering);
     setRecords(samples);
     saveGrowthRecords(patientId, samples);
@@ -135,6 +140,42 @@ export function GrowthTrackingPanel() {
 
   return (
     <div style={{ fontFamily: "Quicksand, system-ui, -apple-system, sans-serif", maxWidth: 1080, margin: "0 auto" }}>
+      {belumPilihPasien && (
+        <div
+          style={{
+            background: "#FEF3C7",
+            border: "1px solid #FCD34D",
+            borderRadius: 12,
+            padding: "10px 14px",
+            marginBottom: 14,
+            fontSize: 12.5,
+            fontWeight: 600,
+            color: "#92400E",
+          }}
+        >
+          ⚠️ Belum ada Profil Pasien aktif. Riwayat pertumbuhan TIDAK akan
+          disimpan sampai kamu memilih/menambahkan pasien terlebih dahulu
+          (mencegah data tercampur antar pasien).
+        </div>
+      )}
+      {!belumPilihPasien && !patientProfile.jk && (
+        <div
+          style={{
+            background: "#DBEAFE",
+            border: "1px solid #93C5FD",
+            borderRadius: 12,
+            padding: "10px 14px",
+            marginBottom: 14,
+            fontSize: 12.5,
+            fontWeight: 600,
+            color: "#1E3A8A",
+          }}
+        >
+          ℹ️ Jenis kelamin pasien belum diisi di Profil Pasien — sementara
+          memakai standar Z-score <b>laki-laki</b>. Isi jenis kelamin di
+          profil supaya klasifikasi status gizi akurat.
+        </div>
+      )}
       {/* Top Header Section */}
       <div
         style={{
