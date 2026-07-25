@@ -10,7 +10,7 @@ const GrowthTrackingPanel = dynamic(
 );
 
 export function GrowthPanel() {
-  const [tab, setTab] = useState<"longitudinal" | "single">("longitudinal");
+  const [tab, setTab] = useState<"longitudinal" | "single">("single");
 
   useEffect(() => {
     function evaluateTab() {
@@ -37,9 +37,7 @@ export function GrowthPanel() {
             setTab("single");
           }
         }
-      } catch (error) {
-        console.error(error);
-      }
+      } catch {}
     }
 
     evaluateTab();
