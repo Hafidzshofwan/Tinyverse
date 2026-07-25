@@ -5,7 +5,6 @@ import { usePatientProfile } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   DENVER_SECTORS,
-  DENVER_ITEMS,
   getDenverItemsForAge,
   hitungUsiaDenver,
   hitungDenver,
