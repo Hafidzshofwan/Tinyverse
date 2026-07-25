@@ -111,18 +111,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
         </button>
       )}
 
-      <div className="judul-section">
-        <div className="ikon-bulat" style={{ background: "#D936A61A", color: "#D936A6" }} aria-hidden>
-          {"\uD83E\uDDE9"}
-        </div>
-        <div>
-          <h2>Skrining M-CHAT-R</h2>
-          <p>
-            20 pertanyaan ya/tidak untuk anak usia 16–30 bulan. Alat
-            skrining, bukan alat diagnostik.
-          </p>
-        </div>
-      </div>
+
 
       {(profil.nama || profil.usiaBulan != null) && (
         <div
@@ -216,7 +205,11 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                     height: 26,
                     borderRadius: 8,
                     border: aktifDot ? "2px solid #0a0b5f" : "1px solid #E2E8F0",
-                    background: terjawab ? "#0a0b5f" : "#fff",
+                    background: terjawab
+                      ? jawaban[it.no] === "ya"
+                        ? "#0a0b5f"
+                        : "#991B1B"
+                      : "#fff",
                     color: terjawab ? "#fff" : "#98A2B3",
                     fontSize: 10.5,
                     fontWeight: 700,
@@ -250,7 +243,11 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                       padding: "13px 10px",
                       borderRadius: 12,
                       border: aktif ? "none" : "1px solid #E2E8F0",
-                      background: aktif ? "#0a0b5f" : "#fff",
+                      background: aktif
+                        ? opt === "ya"
+                          ? "#0a0b5f"
+                          : "#991B1B"
+                        : "#fff",
                       color: aktif ? "#fff" : "#344054",
                       fontWeight: 700,
                       fontSize: 14,

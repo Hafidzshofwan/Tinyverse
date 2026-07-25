@@ -118,21 +118,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
         </button>
       )}
 
-      <div className="judul-section">
-        <div
-          className="ikon-bulat"
-          style={{ background: "#D936A61A", color: "#D936A6" }}
-          aria-hidden
-        >
-          {"\uD83C\uDF31"}
-        </div>
-        <div>
-          <h2>KPSP (Kuesioner Pra Skrining Perkembangan)</h2>
-          <p>
-            Skrining dini perkembangan anak berbasis Kemenkes RI / SDIDTK.
-          </p>
-        </div>
-      </div>
+
 
       {/* Pasien Aktif Info */}
       {(profil.nama || profil.usiaBulan != null) && (
@@ -282,8 +268,8 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                     border: aktifDot ? "2px solid #0a0b5f" : "1px solid #E2E8F0",
                     background: terjawab
                       ? jawaban[it.no] === "ya"
-                        ? "#15803D"
-                        : "#B42318"
+                        ? "#0a0b5f"
+                        : "#991B1B"
                       : "#fff",
                     color: terjawab ? "#fff" : "#98A2B3",
                     fontSize: 11,
@@ -355,8 +341,8 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                       border: aktif ? "none" : "1px solid #E2E8F0",
                       background: aktif
                         ? opt === "ya"
-                          ? "#15803D"
-                          : "#B42318"
+                          ? "#0a0b5f"
+                          : "#991B1B"
                         : "#fff",
                       color: aktif ? "#fff" : "#344054",
                       fontWeight: 700,

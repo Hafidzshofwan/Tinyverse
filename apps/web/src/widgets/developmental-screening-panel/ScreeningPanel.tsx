@@ -45,6 +45,65 @@ export function ScreeningPanel() {
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      {/* Top Header Section matching Growth Tracking Panel style */}
+      <div
+        style={{
+          padding: "8px 0 16px 0",
+          marginBottom: 16,
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
+        }}
+      >
+        <div
+          className="ikon-bulat"
+          style={{
+            width: 46,
+            height: 46,
+            minWidth: 46,
+            minHeight: 46,
+            borderRadius: 14,
+            background: "#D936A61A",
+            color: "#D936A6",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: "17.6px",
+            fontFamily: "Quicksand, system-ui, sans-serif",
+            flexShrink: 0,
+          }}
+          aria-hidden
+        >
+          🧩
+        </div>
+        <div>
+          <h2
+            style={{
+              margin: 0,
+              fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
+              fontSize: "18.32px",
+              fontWeight: 700,
+              color: "#0A0B5F",
+              lineHeight: 1.25,
+            }}
+          >
+            Skrining Perkembangan
+          </h2>
+          <p
+            style={{
+              margin: 0,
+              fontFamily: "Quicksand, system-ui, sans-serif",
+              fontSize: "10.24px",
+              fontWeight: 600,
+              color: "#0A0B5F9E",
+              lineHeight: 1.4,
+            }}
+          >
+            Deteksi Dini &amp; Skrining Tumbuh Kembang Anak
+          </p>
+        </div>
+      </div>
+
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {DAFTAR_ALAT.map((alat) => (
           <button
@@ -85,7 +144,7 @@ export function ScreeningPanel() {
             textAlign: "center",
           }}
         >
-          Alat skrining lain (mis. KPSP, Denver II) menyusul.
+          Alat skrining lain (mis. Denver II) akan ditambahkan secara bertahap.
         </div>
       </div>
     </div>
