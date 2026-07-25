@@ -37,7 +37,7 @@ export function LongitudinalGrowthChart({
   gender = "male",
 }: LongitudinalGrowthChartProps) {
   const [metric, setMetric] = useState<ChartMetric>("bbu");
-  const [scaleMode, setScaleMode] = useState<ScaleMode>("zscore");
+  const scaleMode: ScaleMode = "physical";
 
   // Urutkan catatan pasien
   const sortedRecords = useMemo(() => {
@@ -70,15 +70,7 @@ export function LongitudinalGrowthChart({
 
       const row = tkInterpolasiZscoreRow(currentTable, m);
 
-      if (scaleMode === "zscore") {
-        point["sdMinus3"] = -3;
-        point["sdMinus2"] = -2;
-        point["sdMinus1"] = -1;
-        point["sdMedian"] = 0;
-        point["sdPlus1"] = 1;
-        point["sdPlus2"] = 2;
-        point["sdPlus3"] = 3;
-      } else if (row) {
+      if (row) {
         point["sdMinus3"] = row[0] ?? null;
         point["sdMinus2"] = row[1] ?? null;
         point["sdMinus1"] = row[2] ?? null;
@@ -98,7 +90,7 @@ export function LongitudinalGrowthChart({
 
         if (nilFisik !== null && row) {
           const zscoreVal = Math.round(tkHitungZscoreNumerik(row, nilFisik) * 100) / 100;
-          point["pasienNilai"] = scaleMode === "zscore" ? zscoreVal : nilFisik;
+          point["pasienNilai"] = nilFisik;
           point["pasienFisik"] = nilFisik;
           point["pasienZscore"] = zscoreVal;
           point["medianFisik"] = row[3] ?? null;
@@ -132,15 +124,7 @@ export function LongitudinalGrowthChart({
           pasienCatatan: r.catatan || "",
         };
 
-        if (scaleMode === "zscore") {
-          pt["sdMinus3"] = -3;
-          pt["sdMinus2"] = -2;
-          pt["sdMinus1"] = -1;
-          pt["sdMedian"] = 0;
-          pt["sdPlus1"] = 1;
-          pt["sdPlus2"] = 2;
-          pt["sdPlus3"] = 3;
-        } else if (rowB) {
+        if (rowB) {
           pt["sdMinus3"] = rowB[0] ?? null;
           pt["sdMinus2"] = rowB[1] ?? null;
           pt["sdMinus1"] = rowB[2] ?? null;
@@ -152,7 +136,7 @@ export function LongitudinalGrowthChart({
 
         if (nilFisik !== null && rowB) {
           const zscoreVal = Math.round(tkHitungZscoreNumerik(rowB, nilFisik) * 100) / 100;
-          pt["pasienNilai"] = scaleMode === "zscore" ? zscoreVal : nilFisik;
+          pt["pasienNilai"] = nilFisik;
           pt["pasienFisik"] = nilFisik;
           pt["pasienZscore"] = zscoreVal;
           pt["medianFisik"] = rowB[3] ?? null;
@@ -165,7 +149,7 @@ export function LongitudinalGrowthChart({
     });
 
     return data.sort((a, b) => (a["usia"] as number) - (b["usia"] as number));
-  }, [sortedRecords, metric, gender, maxAgeRecorded, scaleMode]);
+  }, [sortedRecords, metric, gender, maxAgeRecorded]);
 
   // Rendering tooltip kustom
   interface TooltipPayloadItem {
@@ -237,48 +221,8 @@ export function LongitudinalGrowthChart({
           </p>
         </div>
 
-        {/* Tab Switchers (Metric & Scale) */}
+        {/* Indikator Metric Switcher */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-          {/* Skala Sumbu Y Switcher */}
-          <div style={{ display: "flex", alignItems: "center", gap: 4, background: "#F1F5F9", padding: 3, borderRadius: 10 }}>
-            <span style={{ fontSize: "0.72rem", color: "#64748B", fontWeight: 700, paddingLeft: 6, paddingRight: 2 }}>Skala Y:</span>
-            <button
-              type="button"
-              onClick={() => setScaleMode("zscore")}
-              style={{
-                padding: "5px 10px",
-                borderRadius: 8,
-                border: "none",
-                fontSize: "0.76rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                background: scaleMode === "zscore" ? "#0F766E" : "transparent",
-                color: scaleMode === "zscore" ? "#FFFFFF" : "#64748B",
-                transition: "all 0.15s ease",
-              }}
-            >
-              Z-Score (SD)
-            </button>
-            <button
-              type="button"
-              onClick={() => setScaleMode("physical")}
-              style={{
-                padding: "5px 10px",
-                borderRadius: 8,
-                border: "none",
-                fontSize: "0.76rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                background: scaleMode === "physical" ? "#0F766E" : "transparent",
-                color: scaleMode === "physical" ? "#FFFFFF" : "#64748B",
-                transition: "all 0.15s ease",
-              }}
-            >
-              Nilai Fisik
-            </button>
-          </div>
-
-          {/* Indikator Metric Switcher */}
           <div style={{ display: "flex", gap: 3, background: "#F1F5F9", padding: 3, borderRadius: 10 }}>
             <button
               type="button"
@@ -340,7 +284,7 @@ export function LongitudinalGrowthChart({
       {/* Axis Information Banner */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#F0FDFA", border: "1px solid #CCFBF1", padding: "6px 12px", borderRadius: 8, marginBottom: 12, fontSize: "0.75rem", color: "#0F766E", fontWeight: 600 }}>
         <span>
-          📌 <b>Garis Vertikal (Sumbu Y):</b> {scaleMode === "zscore" ? "Nilai Z-Score / Standar Deviasi (SD WHO)" : `Nilai Terukur (${metricLabel})`}
+          📌 <b>Garis Vertikal (Sumbu Y):</b> Nilai Terukur ({metricLabel})
         </span>
         <span>
           <b>Sumbu X:</b> Usia (Bulan)
@@ -353,25 +297,13 @@ export function LongitudinalGrowthChart({
           <ComposedChart data={chartData} margin={{ top: 10, right: 15, left: 10, bottom: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
             <XAxis dataKey="usiaLabel" stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={{ stroke: "#E2E8F0" }} />
-            {scaleMode === "zscore" ? (
-              <YAxis
-                stroke="#0F766E"
-                fontSize={11}
-                tickLine={false}
-                axisLine={{ stroke: "#E2E8F0" }}
-                domain={[-4, 4]}
-                ticks={[-3, -2, -1, 0, 1, 2, 3]}
-                tickFormatter={(v) => (v === 0 ? "0 SD" : `${v > 0 ? "+" : ""}${v} SD`)}
-              />
-            ) : (
-              <YAxis
-                stroke="#64748B"
-                fontSize={11}
-                tickLine={false}
-                axisLine={{ stroke: "#E2E8F0" }}
-                domain={["auto", "auto"]}
-              />
-            )}
+            <YAxis
+              stroke="#64748B"
+              fontSize={11}
+              tickLine={false}
+              axisLine={{ stroke: "#E2E8F0" }}
+              domain={["auto", "auto"]}
+            />
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: "0.75rem", paddingBottom: "8px" }} />
 
@@ -403,7 +335,7 @@ export function LongitudinalGrowthChart({
       <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, fontSize: "0.75rem", color: "#64748B", background: "#F8FAFC", padding: "8px 12px", borderRadius: 8, border: "1px solid #F1F5F9" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#4F46E5", display: "inline-block" }}></span>
-          <span><b>Pasien:</b> Riwayat {scaleMode === "zscore" ? "Z-Score" : metricLabel}</span>
+          <span><b>Pasien:</b> Riwayat {metricLabel}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 12, height: 2, background: "#059669", display: "inline-block" }}></span>
