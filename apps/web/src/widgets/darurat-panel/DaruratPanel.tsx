@@ -112,7 +112,9 @@ export function DaruratPanel() {
           else if (href.includes("tab=resus") || anchor.includes("resus") || anchor.includes("resusitasi")) setTab("resus");
           else if (href.includes("tab=gcs") || anchor.includes("gcs") || anchor.includes("glasgow")) setTab("gcs");
         }
-      } catch {}
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     evaluateTab();

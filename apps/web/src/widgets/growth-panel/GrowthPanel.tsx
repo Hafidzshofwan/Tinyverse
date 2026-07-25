@@ -37,7 +37,9 @@ export function GrowthPanel() {
             setTab("single");
           }
         }
-      } catch {}
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     evaluateTab();

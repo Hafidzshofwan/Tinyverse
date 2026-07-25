@@ -40,7 +40,9 @@ export function LabPanel() {
           else if (href.includes("tab=darah") || anchor.includes("darah") || anchor.includes("hematologi")) setTab("darah");
           else if (href.includes("tab=rujukan") || anchor.includes("rujukan")) setTab("rujukan");
         }
-      } catch {}
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     evaluateTab();

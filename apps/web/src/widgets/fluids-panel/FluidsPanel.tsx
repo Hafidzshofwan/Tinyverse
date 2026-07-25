@@ -45,7 +45,9 @@ export function FluidsPanel() {
           else if (href.includes("tab=drip") || anchor.includes("drip") || anchor.includes("faktor tetes")) setTab("drip");
           else if (href.includes("tab=holliday") || anchor.includes("holliday")) setTab("holliday");
         }
-      } catch {}
+      } catch (error) {
+        console.error(error);
+      }
     }
 
     evaluateTab();
