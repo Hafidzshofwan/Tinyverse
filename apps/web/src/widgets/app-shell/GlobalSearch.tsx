@@ -108,7 +108,9 @@ export function GlobalSearch() {
     if (e.anchor) {
       try {
         sessionStorage.setItem("tv_search_target", JSON.stringify({ anchor: e.anchor, href: e.href }));
-      } catch {}
+      } catch (error) {
+        console.warn(error);
+      }
     }
     const url = e.anchor
       ? (e.href.includes("#") ? e.href : e.href + "#tk=" + encodeURIComponent(e.anchor))

@@ -64,7 +64,9 @@ export function VaccineCatalog() {
               needle = bersih(anchor.slice(7));
             }
           }
-        } catch {}
+        } catch (error) {
+        console.warn(error);
+        }
       }
 
       if (!needle || needle.length < 2) return;

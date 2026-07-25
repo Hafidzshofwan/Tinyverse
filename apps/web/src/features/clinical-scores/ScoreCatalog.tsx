@@ -121,7 +121,9 @@ export function ScoreCatalog() {
             return;
           }
         }
-      } catch {}
+      } catch (error) {
+                   console.warn(error);
+              }
     }
 
     evaluateSkor();

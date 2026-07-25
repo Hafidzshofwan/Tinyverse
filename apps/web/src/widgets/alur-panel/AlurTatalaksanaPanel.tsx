@@ -343,7 +343,9 @@ export function AlurTatalaksanaPanel() {
             }
           }
         }
-      } catch {}
+      } catch (error) {
+        console.warn(error);
+      }
     }
 
     bukaDariHashAtauQuery();
