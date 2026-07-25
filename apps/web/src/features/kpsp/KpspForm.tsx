@@ -431,7 +431,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                   color: KATEGORI_TEKS[hasil.kategori],
                 }}
               >
-                Hasil KPSP {selectedAge} Bulan — Total 'YA': {hasil.totalYa} / {daftarSoal.length}
+                Hasil KPSP {selectedAge} Bulan — Total {"'YA'"}: {hasil.totalYa} / {daftarSoal.length}
               </div>
               <div
                 style={{
@@ -477,7 +477,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 borderTop: "1px dashed rgba(0,0,0,0.1)",
               }}
             >
-              <strong>Sektor yang belum tercapai ('TIDAK'):</strong>
+              <strong>Sektor yang belum tercapai {"('TIDAK')"}:</strong>
               <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
                 {daftarTidak.map((it) => (
                   <li key={it.no}>
