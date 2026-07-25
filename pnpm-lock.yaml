@@ -72,6 +72,9 @@ importers:
       '@tinyverse/ui-kit':
         specifier: workspace:*
         version: link:../../packages/ui-kit
+      firebase:
+        specifier: ^10.13.0
+        version: 10.14.1
       next:
         specifier: ^14.2.5
         version: 14.2.35(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
