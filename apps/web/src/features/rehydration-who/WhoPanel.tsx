@@ -13,7 +13,7 @@ const WHO_TABS: ReadonlyArray<{
   detail: string;
 }> = [
   { id: "a", label: "Rencana A", detail: "Tanpa Dehidrasi" },
-  { id: "b", label: "Rencana B", detail: "Ringan–Sedang" },
+  { id: "b", label: "Rencana B", detail: "Dehidrasi Ringan-Sedang" },
   { id: "c", label: "Rencana C", detail: "Dehidrasi Berat" },
 ];
 
@@ -37,13 +37,25 @@ export function WhoPanel() {
               role="tab"
               aria-selected={tab === t.id}
               className={`segmented-btn ${tab === t.id ? "aktif" : ""}`}
+              style={{
+                flexDirection: "column",
+                gap: "2px",
+                padding: "8px 6px",
+                lineHeight: 1.25,
+              }}
               onClick={() => setTab(t.id)}
             >
-              {t.label}
-              <br />
-              <small style={{ fontSize: "0.72rem", opacity: 0.9 }}>
+              <span>{t.label}</span>
+              <span
+                style={{
+                  fontSize: "0.72rem",
+                  fontWeight: 600,
+                  opacity: 0.9,
+                  whiteSpace: "nowrap",
+                }}
+              >
                 {t.detail}
-              </small>
+              </span>
             </button>
           ))}
         </div>

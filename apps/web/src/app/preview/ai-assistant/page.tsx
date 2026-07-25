@@ -277,8 +277,6 @@ export default function AiAssistantPage() {
 
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 320px",
           gap: 20,
           alignItems: "start",
         }}
@@ -330,10 +328,11 @@ export default function AiAssistantPage() {
                 border: "1px solid #cbd5e1",
                 padding: "4px 10px",
                 borderRadius: 6,
-                fontSize: 12,
-                color: "#475569",
+                fontSize: 13,
+                fontFamily: "Quicksand, system-ui, -apple-system, sans-serif",
+                color: "#1E293B",
                 cursor: "pointer",
-                fontWeight: 600,
+                fontWeight: 700,
               }}
             >
               🔄 Reset Percakapan

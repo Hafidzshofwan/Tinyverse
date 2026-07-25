@@ -20,6 +20,10 @@
   box-sizing: border-box;
 }
 
+button, input, select, textarea {
+  font-family: "Quicksand", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 html,
 body {
   margin: 0;
@@ -1262,6 +1266,18 @@ body {
   #tvPasienFab { left: auto; right: 14px; }
   .tv-ai-fab-container { bottom: 14px !important; right: 70px !important; gap: 6px !important; }
   #tvAiFab { width: 48px !important; height: 48px !important; font-size: 1.22rem !important; }
+}
+
+/* Responsive AI Assistant Page Grid */
+.tv-ai-page-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+}
+
+@media (max-width: 900px) {
+  .tv-ai-page-grid {
+    grid-template-columns: 1fr !important;
+  }
 }
 
 /* Sembunyikan tombol melayang (AI & Profil Pasien) saat drawer Chat AI terbuka */
