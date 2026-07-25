@@ -49,7 +49,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
   const usiaDiLuarRentang =
     profil.usiaBulan != null && (profil.usiaBulan < 16 || profil.usiaBulan > 30);
 
-  const itemAktif = MCHAT_ITEMS[langkah];
+  const itemAktif = MCHAT_ITEMS[langkah]!;
   const iniTerakhir = langkah === MCHAT_ITEMS.length - 1;
 
   function pilih(no: number, val: MchatJawaban) {
