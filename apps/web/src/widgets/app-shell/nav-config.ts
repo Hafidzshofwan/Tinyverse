@@ -60,7 +60,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
   {
     title: "Pemantauan Klinis",
     items: [
-      { slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "\uD83D\uDCC8", href: "/preview/pertumbuhan", built: true },
+      { slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", built: true },
       { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", built: true },
     ],
   },

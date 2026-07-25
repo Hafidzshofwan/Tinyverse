@@ -209,7 +209,7 @@ export function GrowthTrackingPanel() {
               flexShrink: 0,
             }}
           >
-            📈
+            📊
           </div>
           <div>
             <h2
