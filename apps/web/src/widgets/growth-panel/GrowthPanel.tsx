@@ -1,21 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
-import { GrowthTool } from "@/features/growth-chart";
-
-const GrowthTrackingPanel = dynamic(
-  () => import("@/features/growth-chart").then((m) => m.GrowthTrackingPanel),
-  { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Pemantauan Longitudinal…</p> }
-);
-
-const ScreeningPanel = dynamic(
-  () => import("@/widgets/developmental-screening-panel").then((m) => m.ScreeningPanel),
-  { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Skrining Perkembangan…</p> }
-);
+import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
+import { ScreeningPanel } from "@/widgets/developmental-screening-panel";
 
 export function GrowthPanel() {
-  const [tab, setTab] = useState<"longitudinal" | "single" | "skrining">("longitudinal");
+  const [tab, setTab] = useState<"longitudinal" | "single" | "skrining">("single");
 
   function tabBtnStyle(aktif: boolean) {
     return {
