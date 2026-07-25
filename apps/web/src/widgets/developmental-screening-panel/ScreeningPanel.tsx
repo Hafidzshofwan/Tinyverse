@@ -18,7 +18,7 @@ const DAFTAR_ALAT: AlatSkrining[] = [
     id: "kpsp",
     emoji: "🌱",
     nama: "KPSP (Kuesioner Pra Skrining Perkembangan)",
-    ringkas: "Skrining perkembangan umum anak (Kemenkes RI/SDIDTK) — 10 pertanyaan ya/tidak.",
+    ringkas: "Skrining perkembangan umum anak (Pedoman SDIDTK Kemenkes 2022) — 10 pertanyaan ya/tidak.",
     usiaSasaran: "3 Bulan (berkelanjutan hingga 72 bulan)",
   },
   {
