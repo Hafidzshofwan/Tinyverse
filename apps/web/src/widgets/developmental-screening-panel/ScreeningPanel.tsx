@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { MchatForm } from "@/features/mchat-r";
 import { KpspForm } from "@/features/kpsp";
+import { DenverForm } from "@/features/denver";
 
 interface AlatSkrining {
   id: string;
@@ -20,6 +21,13 @@ const DAFTAR_ALAT: AlatSkrining[] = [
     nama: "KPSP (Kuesioner Pra Skrining Perkembangan)",
     ringkas: "Skrining perkembangan umum anak (Pedoman SDIDTK Kemenkes 2022) — 10 pertanyaan ya/tidak.",
     usiaSasaran: "3 Bulan (berkelanjutan hingga 72 bulan)",
+  },
+  {
+    id: "denver",
+    emoji: "📊",
+    nama: "Denver II (Denver Development Screening Test)",
+    ringkas: "Skrining perkembangan komprehensif 4 sektor (Personal Sosial, Motorik Halus, Bahasa, Motorik Kasar).",
+    usiaSasaran: "0–6 tahun (0–72 bulan)",
   },
   {
     id: "mchat",
@@ -48,11 +56,17 @@ function ScreeningPanelInner() {
       setAktif("mchat");
     } else if (tool === "kpsp") {
       setAktif("kpsp");
+    } else if (tool === "denver" || tool === "denver2") {
+      setAktif("denver");
     }
   }, [searchParams]);
 
   if (aktif === "kpsp") {
     return <KpspForm onBack={() => setAktif(null)} />;
+  }
+
+  if (aktif === "denver") {
+    return <DenverForm onBack={() => setAktif(null)} />;
   }
 
   if (aktif === "mchat") {
