@@ -17,6 +17,17 @@
       },
       "required": ["id"]
     },
+    "growthRecords": {
+      "title": "Growth Records",
+      "description": "Riwayat catatan pemeriksaan pertumbuhan per pasien untuk sinkronisasi antar perangkat",
+      "type": "object",
+      "properties": {
+        "patientId": { "type": "string" },
+        "records": { "type": "array" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["patientId"]
+    },
     "appState": {
       "title": "App State",
       "description": "Status aplikasi terpusat seperti pasien aktif",

@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import { doc, setDoc, onSnapshot } from "firebase/firestore";
+import { db } from "../../shared/lib/firebase";
 import {
   tkInterpolasiZscoreRow,
   tkHitungZscoreNumerik,
@@ -605,7 +608,7 @@ export function loadGrowthRecords(patientId: string): GrowthRecord[] {
   }
 }
 
-export function saveGrowthRecords(patientId: string, records: GrowthRecord[]): void {
+export function saveGrowthRecords(patientId: string, records: GrowthRecord[], syncToFirebase = true): void {
   if (typeof window === "undefined") return;
   try {
     window.localStorage.setItem(getGrowthRecordsKey(patientId), JSON.stringify(records));
@@ -613,6 +616,107 @@ export function saveGrowthRecords(patientId: string, records: GrowthRecord[]): v
   } catch {
     /* abaikan */
   }
+
+  if (syncToFirebase && db && patientId) {
+    try {
+      const docRef = doc(db, "growthRecords", patientId);
+      setDoc(
+        docRef,
+        {
+          patientId,
+          records,
+          updatedAt: new Date().toISOString(),
+        },
+        { merge: true },
+      ).catch((err) => {
+        console.warn("Firebase growth records save error:", err);
+      });
+    } catch (e) {
+      console.warn("Firebase growth records save error:", e);
+    }
+  }
+}
+
+/** Map simpan listener unsubscribe per patientId agar tidak duplikat */
+const activeGrowthUnsubscribers: Record<string, () => void> = {};
+
+export function syncGrowthRecordsFromFirebase(
+  patientId: string,
+  onUpdate?: (records: GrowthRecord[]) => void,
+): () => void {
+  if (typeof window === "undefined" || !db || !patientId) return () => {};
+
+  if (activeGrowthUnsubscribers[patientId]) {
+    activeGrowthUnsubscribers[patientId]!();
+  }
+
+  try {
+    const docRef = doc(db, "growthRecords", patientId);
+    const unsub = onSnapshot(
+      docRef,
+      (snap) => {
+        if (snap.exists()) {
+          const data = snap.data() as { records?: GrowthRecord[] };
+          if (data && Array.isArray(data.records)) {
+            const currentLocal = loadGrowthRecords(patientId);
+            if (JSON.stringify(currentLocal) !== JSON.stringify(data.records)) {
+              saveGrowthRecords(patientId, data.records, false);
+              if (onUpdate) onUpdate(data.records);
+            }
+          }
+        } else {
+          // Jika dokumen belum ada di Firestore, upload data lokal jika ada
+          const localRecords = loadGrowthRecords(patientId);
+          if (localRecords.length > 0) {
+            saveGrowthRecords(patientId, localRecords, true);
+          }
+        }
+      },
+      (err) => {
+        console.warn(`Firestore growthRecords listener warning [${patientId}]:`, err);
+      },
+    );
+
+    activeGrowthUnsubscribers[patientId] = unsub;
+    return unsub;
+  } catch (e) {
+    console.warn("Firebase growth records sync init error:", e);
+    return () => {};
+  }
+}
+
+/** Hook reaktif untuk membaca dan mensinkronkan Riwayat Catatan Pemeriksaan real-time via Firebase */
+export function useGrowthRecords(patientId: string): GrowthRecord[] {
+  const [records, setRecords] = useState<GrowthRecord[]>([]);
+
+  useEffect(() => {
+    if (!patientId) {
+      setRecords([]);
+      return;
+    }
+
+    setRecords(loadGrowthRecords(patientId));
+
+    const unsubFirebase = syncGrowthRecordsFromFirebase(patientId, (updatedRecords) => {
+      setRecords(updatedRecords);
+    });
+
+    const handleLocalChange = (e: Event) => {
+      const customEv = e as CustomEvent<{ patientId?: string }>;
+      if (!customEv.detail || customEv.detail.patientId === patientId) {
+        setRecords(loadGrowthRecords(patientId));
+      }
+    };
+
+    window.addEventListener("tv-growth-records-change", handleLocalChange);
+
+    return () => {
+      unsubFirebase();
+      window.removeEventListener("tv-growth-records-change", handleLocalChange);
+    };
+  }, [patientId]);
+
+  return records;
 }
 
 /** Menyediakan preset sampel riwayat pertumbuhan untuk pengujian / demonstrasi cepat */

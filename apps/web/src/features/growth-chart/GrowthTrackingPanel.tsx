@@ -5,10 +5,10 @@ import {
   GrowthRecord,
   Gender,
   detectGrowthFaltering,
-  loadGrowthRecords,
   saveGrowthRecords,
   getSampleGrowthRecords,
   hitungAllZscores,
+  useGrowthRecords,
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile } from "@/shared/lib/patient";
@@ -19,7 +19,7 @@ export function GrowthTrackingPanel() {
   const patientId = patientProfile.id || "";
   const belumPilihPasien = !patientId;
 
-  const [records, setRecords] = useState<GrowthRecord[]>([]);
+  const records = useGrowthRecords(patientId);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [copiedNote, setCopiedNote] = useState<boolean>(false);
@@ -32,15 +32,6 @@ export function GrowthTrackingPanel() {
   const [catatan, setCatatan] = useState<string>("");
 
   const gender: Gender = patientProfile.jk === "female" ? "female" : "male";
-
-  // Muat data riwayat saat pasien aktif berubah
-  useEffect(() => {
-    if (belumPilihPasien) {
-      setRecords([]);
-      return;
-    }
-    setRecords(loadGrowthRecords(patientId));
-  }, [patientId, belumPilihPasien]);
 
   // Sinkronkan usia dari profil pasien jika ada
   useEffect(() => {
@@ -105,7 +96,6 @@ export function GrowthTrackingPanel() {
     };
 
     const updated = [...records, newRecord].sort((a, b) => a.usiaBulan - b.usiaBulan);
-    setRecords(updated);
     saveGrowthRecords(patientId, updated);
 
     // Reset form
@@ -116,7 +106,6 @@ export function GrowthTrackingPanel() {
   // Hapus entri riwayat
   const handleDeleteRecord = (id: string) => {
     const updated = records.filter((r) => r.id !== id);
-    setRecords(updated);
     saveGrowthRecords(patientId, updated);
   };
 
@@ -127,7 +116,6 @@ export function GrowthTrackingPanel() {
       return;
     }
     const samples = getSampleGrowthRecords(patientId, faltering);
-    setRecords(samples);
     saveGrowthRecords(patientId, samples);
   };
 
@@ -427,9 +415,30 @@ export function GrowthTrackingPanel() {
       <LongitudinalGrowthChart records={records} gender={gender} isFaltering={falteringResult.isFaltering} />      {/* RIWAYAT PEMERIKSAAN DATA TABLE */}
       <div style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "18px", marginBottom: 20 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-          <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.02rem", fontWeight: 600 }}>
-            Riwayat Catatan Pemeriksaan ({records.length})
-          </h4>
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+            <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.02rem", fontWeight: 600 }}>
+              Riwayat Catatan Pemeriksaan ({records.length})
+            </h4>
+            <span
+              style={{
+                fontSize: "0.72rem",
+                background: "#ECFDF5",
+                border: "1px solid #A7F3D0",
+                color: "#047857",
+                padding: "2px 8px",
+                borderRadius: "12px",
+                fontWeight: 600,
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px",
+                whiteSpace: "nowrap",
+              }}
+              title="Tersambung ke Firebase Firestore untuk sinkronisasi otomatis antar-perangkat"
+            >
+              <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", display: "inline-block" }} />
+              🔥 Firebase Cloud Synced
+            </span>
+          </div>
           <button
             type="button"
             onClick={() => setShowAddForm(true)}
