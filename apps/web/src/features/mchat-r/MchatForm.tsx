@@ -29,11 +29,16 @@ const KATEGORI_TEKS: Record<string, string> = {
  * 20 item ya/tidak, usia sasaran 16-30 bulan. Item 2, 5, 12 diberi skor
  * terbalik. Sumber: Robins, Fein, & Barton (2009); teks item merupakan
  * parafrase Bahasa Indonesia, bukan terjemahan literal.
+ *
+ * Ditampilkan sebagai wizard satu pertanyaan per layar (bukan 20 item
+ * ditumpuk) supaya scroll tidak panjang; ada dot-navigator untuk lompat
+ * ke pertanyaan tertentu / mengubah jawaban.
  */
-export function MchatForm() {
+export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
   const profil = usePatientProfile();
   const [jawaban, setJawaban] = useState<Record<number, MchatJawaban>>({});
   const [selesai, setSelesai] = useState(false);
+  const [langkah, setLangkah] = useState(0); // index 0..19
 
   const totalDijawab = Object.values(jawaban).filter((v) => v != null).length;
   const semuaTerjawab = totalDijawab === MCHAT_ITEMS.length;
@@ -44,14 +49,27 @@ export function MchatForm() {
   const usiaDiLuarRentang =
     profil.usiaBulan != null && (profil.usiaBulan < 16 || profil.usiaBulan > 30);
 
+  const itemAktif = MCHAT_ITEMS[langkah];
+  const iniTerakhir = langkah === MCHAT_ITEMS.length - 1;
+
   function pilih(no: number, val: MchatJawaban) {
     setJawaban((prev) => ({ ...prev, [no]: val }));
     setSelesai(false);
+    // Otomatis maju ke pertanyaan berikutnya supaya alur cepat.
+    if (langkah < MCHAT_ITEMS.length - 1) {
+      setLangkah((l) => l + 1);
+    }
   }
 
   function reset() {
     setJawaban({});
     setSelesai(false);
+    setLangkah(0);
+  }
+
+  function ubahJawaban() {
+    setSelesai(false);
+    setLangkah(0);
   }
 
   function simpanKeRingkasan() {
@@ -74,6 +92,25 @@ export function MchatForm() {
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
+      {onBack && (
+        <button
+          type="button"
+          onClick={onBack}
+          style={{
+            border: "none",
+            background: "transparent",
+            color: "#667085",
+            fontSize: 12.5,
+            fontWeight: 700,
+            cursor: "pointer",
+            marginBottom: 10,
+            padding: 0,
+          }}
+        >
+          {"\u2190"} Pilih alat skrining lain
+        </button>
+      )}
+
       <div className="judul-section">
         <div className="ikon-bulat" style={{ background: "#D936A61A", color: "#D936A6" }} aria-hidden>
           {"\uD83E\uDDE9"}
@@ -128,104 +165,207 @@ export function MchatForm() {
         </div>
       )}
 
-      <div className="kartu">
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: "#667085" }}>
-            Terjawab: {totalDijawab} / {MCHAT_ITEMS.length}
-          </span>
-          <button
-            type="button"
-            onClick={reset}
-            style={{
-              border: "none",
-              background: "transparent",
-              color: "#667085",
-              fontSize: 12,
-              fontWeight: 700,
-              cursor: "pointer",
-              textDecoration: "underline",
-            }}
-          >
-            Reset
-          </button>
-        </div>
-
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {MCHAT_ITEMS.map((item) => (
-            <div
-              key={item.no}
+      {!selesai && (
+        <div className="kartu">
+          {/* Progress bar + counter */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: "#667085" }}>
+              Pertanyaan {langkah + 1} dari {MCHAT_ITEMS.length} · Terjawab {totalDijawab}
+            </span>
+            <button
+              type="button"
+              onClick={reset}
               style={{
-                paddingBottom: 12,
-                borderBottom: "1px solid #F1F3F8",
+                border: "none",
+                background: "transparent",
+                color: "#667085",
+                fontSize: 12,
+                fontWeight: 700,
+                cursor: "pointer",
+                textDecoration: "underline",
               }}
             >
-              <div style={{ fontSize: 13.5, fontWeight: 700, color: "#0a0b4f", marginBottom: 2 }}>
-                {item.no}. {item.teks}
-              </div>
-              {item.contoh && (
-                <div style={{ fontSize: 12, color: "#667085", marginBottom: 8 }}>{item.contoh}</div>
-              )}
-              <div style={{ display: "flex", gap: 8, marginTop: 6 }}>
-                {(["ya", "tidak"] as const).map((opt) => {
-                  const aktif = jawaban[item.no] === opt;
-                  return (
-                    <button
-                      key={opt}
-                      type="button"
-                      onClick={() => pilih(item.no, opt)}
-                      style={{
-                        flex: 1,
-                        padding: "9px 10px",
-                        borderRadius: 10,
-                        border: aktif ? "none" : "1px solid #E2E8F0",
-                        background: aktif ? "#0a0b5f" : "#fff",
-                        color: aktif ? "#fff" : "#344054",
-                        fontWeight: 700,
-                        fontSize: 13,
-                        cursor: "pointer",
-                        textTransform: "capitalize",
-                      }}
-                    >
-                      {opt}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+              Reset
+            </button>
+          </div>
+          <div style={{ height: 6, background: "#F1F3F8", borderRadius: 999, marginBottom: 14, overflow: "hidden" }}>
+            <div
+              style={{
+                height: "100%",
+                width: ((langkah + 1) / MCHAT_ITEMS.length) * 100 + "%",
+                background: "#0a0b5f",
+                borderRadius: 999,
+                transition: "width .2s ease",
+              }}
+            />
+          </div>
 
-        <button
-          type="button"
-          disabled={!semuaTerjawab}
-          onClick={() => setSelesai(true)}
-          style={{
-            marginTop: 16,
-            width: "100%",
-            padding: "12px",
-            borderRadius: 999,
-            border: "none",
-            background: semuaTerjawab ? "var(--tv-navy, #0a0b5f)" : "#E2E8F0",
-            color: semuaTerjawab ? "#fff" : "#98A2B3",
-            fontWeight: 700,
-            fontSize: 14,
-            cursor: semuaTerjawab ? "pointer" : "not-allowed",
-          }}
-        >
-          Hitung Hasil Skrining
-        </button>
-      </div>
+          {/* Dot navigator: klik untuk lompat ke pertanyaan mana pun */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 18 }}>
+            {MCHAT_ITEMS.map((it, idx) => {
+              const terjawab = jawaban[it.no] != null;
+              const aktifDot = idx === langkah;
+              return (
+                <button
+                  key={it.no}
+                  type="button"
+                  onClick={() => setLangkah(idx)}
+                  title={"Soal #" + it.no + (terjawab ? " (sudah dijawab)" : " (belum dijawab)")}
+                  style={{
+                    width: 26,
+                    height: 26,
+                    borderRadius: 8,
+                    border: aktifDot ? "2px solid #0a0b5f" : "1px solid #E2E8F0",
+                    background: terjawab ? "#0a0b5f" : "#fff",
+                    color: terjawab ? "#fff" : "#98A2B3",
+                    fontSize: 10.5,
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  {it.no}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Pertanyaan aktif */}
+          <div style={{ minHeight: 120 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "#0a0b4f", marginBottom: 4, lineHeight: 1.5 }}>
+              {itemAktif.no}. {itemAktif.teks}
+            </div>
+            {itemAktif.contoh && (
+              <div style={{ fontSize: 12.5, color: "#667085", marginBottom: 10 }}>{itemAktif.contoh}</div>
+            )}
+            <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
+              {(["ya", "tidak"] as const).map((opt) => {
+                const aktif = jawaban[itemAktif.no] === opt;
+                return (
+                  <button
+                    key={opt}
+                    type="button"
+                    onClick={() => pilih(itemAktif.no, opt)}
+                    style={{
+                      flex: 1,
+                      padding: "13px 10px",
+                      borderRadius: 12,
+                      border: aktif ? "none" : "1px solid #E2E8F0",
+                      background: aktif ? "#0a0b5f" : "#fff",
+                      color: aktif ? "#fff" : "#344054",
+                      fontWeight: 700,
+                      fontSize: 14,
+                      cursor: "pointer",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Navigasi Sebelumnya / Selanjutnya */}
+          <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
+            <button
+              type="button"
+              disabled={langkah === 0}
+              onClick={() => setLangkah((l) => Math.max(0, l - 1))}
+              style={{
+                flex: 1,
+                padding: "11px",
+                borderRadius: 999,
+                border: "1px solid #E2E8F0",
+                background: "#fff",
+                color: langkah === 0 ? "#CBD5E1" : "#344054",
+                fontWeight: 700,
+                fontSize: 13,
+                cursor: langkah === 0 ? "not-allowed" : "pointer",
+              }}
+            >
+              {"\u2190"} Sebelumnya
+            </button>
+
+            {!iniTerakhir ? (
+              <button
+                type="button"
+                disabled={jawaban[itemAktif.no] == null}
+                onClick={() => setLangkah((l) => Math.min(MCHAT_ITEMS.length - 1, l + 1))}
+                style={{
+                  flex: 1,
+                  padding: "11px",
+                  borderRadius: 999,
+                  border: "none",
+                  background: jawaban[itemAktif.no] != null ? "#0a0b5f" : "#E2E8F0",
+                  color: jawaban[itemAktif.no] != null ? "#fff" : "#98A2B3",
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: jawaban[itemAktif.no] != null ? "pointer" : "not-allowed",
+                }}
+              >
+                Selanjutnya {"\u2192"}
+              </button>
+            ) : (
+              <button
+                type="button"
+                disabled={!semuaTerjawab}
+                onClick={() => setSelesai(true)}
+                style={{
+                  flex: 1,
+                  padding: "11px",
+                  borderRadius: 999,
+                  border: "none",
+                  background: semuaTerjawab ? "var(--tv-navy, #0a0b5f)" : "#E2E8F0",
+                  color: semuaTerjawab ? "#fff" : "#98A2B3",
+                  fontWeight: 700,
+                  fontSize: 13,
+                  cursor: semuaTerjawab ? "pointer" : "not-allowed",
+                }}
+              >
+                Hitung Hasil Skrining
+              </button>
+            )}
+          </div>
+          {!semuaTerjawab && iniTerakhir && (
+            <p style={{ fontSize: 11.5, color: "#98A2B3", marginTop: 8, textAlign: "center" }}>
+              Masih ada {MCHAT_ITEMS.length - totalDijawab} pertanyaan belum dijawab —
+              klik nomor di atas untuk melengkapinya.
+            </p>
+          )}
+        </div>
+      )}
 
       {selesai && hasil && (
         <div
           className="kartu"
           style={{ marginTop: 14, background: KATEGORI_WARNA[hasil.kategori] }}
         >
-          <div style={{ fontSize: 13, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori] }}>
-            Total item berisiko: {hasil.totalRisiko} / 20
-          </div>
-          <div style={{ fontSize: 17, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori], marginTop: 4 }}>
-            {hasil.label}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+            <div>
+              <div style={{ fontSize: 13, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori] }}>
+                Total item berisiko: {hasil.totalRisiko} / 20
+              </div>
+              <div style={{ fontSize: 17, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori], marginTop: 4 }}>
+                {hasil.label}
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={ubahJawaban}
+              style={{
+                border: "1px solid currentColor",
+                background: "#fff",
+                color: KATEGORI_TEKS[hasil.kategori],
+                borderRadius: 999,
+                padding: "6px 12px",
+                fontSize: 11.5,
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Ubah Jawaban
+            </button>
           </div>
           <p style={{ fontSize: 13, color: "#344054", marginTop: 8, lineHeight: 1.6 }}>{hasil.saran}</p>
 

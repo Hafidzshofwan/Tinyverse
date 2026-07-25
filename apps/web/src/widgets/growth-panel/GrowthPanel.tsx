@@ -9,13 +9,13 @@ const GrowthTrackingPanel = dynamic(
   { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Pemantauan Longitudinal…</p> }
 );
 
-const MchatForm = dynamic(
-  () => import("@/features/mchat-r").then((m) => m.MchatForm),
-  { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Skrining M-CHAT-R…</p> }
+const ScreeningPanel = dynamic(
+  () => import("@/widgets/developmental-screening-panel").then((m) => m.ScreeningPanel),
+  { ssr: false, loading: () => <p style={{ padding: 24, textAlign: "center", color: "#667085" }}>Memuat Skrining Perkembangan…</p> }
 );
 
 export function GrowthPanel() {
-  const [tab, setTab] = useState<"longitudinal" | "single" | "mchat">("longitudinal");
+  const [tab, setTab] = useState<"longitudinal" | "single" | "skrining">("longitudinal");
 
   function tabBtnStyle(aktif: boolean) {
     return {
@@ -61,13 +61,13 @@ export function GrowthPanel() {
           📈 Pemantauan Longitudinal
         </button>
 
-        <button type="button" onClick={() => setTab("mchat")} style={tabBtnStyle(tab === "mchat")}>
-          🧩 Skrining M-CHAT-R
+        <button type="button" onClick={() => setTab("skrining")} style={tabBtnStyle(tab === "skrining")}>
+          🧩 Skrining Perkembangan
         </button>
       </div>
 
       {/* Tab Content */}
-      {tab === "longitudinal" ? <GrowthTrackingPanel /> : tab === "mchat" ? <MchatForm /> : <GrowthTool />}
+      {tab === "longitudinal" ? <GrowthTrackingPanel /> : tab === "skrining" ? <ScreeningPanel /> : <GrowthTool />}
     </div>
   );
 }
