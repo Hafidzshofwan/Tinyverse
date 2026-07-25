@@ -98,25 +98,56 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
   }
 
   return (
-    <div style={{ maxWidth: 720, margin: "0 auto" }}>
-      {onBack && (
-        <button
-          type="button"
-          onClick={onBack}
-          style={{
-            border: "none",
-            background: "transparent",
-            color: "#667085",
-            fontSize: 12.5,
-            fontWeight: 700,
-            cursor: "pointer",
-            marginBottom: 10,
-            padding: 0,
-          }}
-        >
-          {"\u2190"} Pilih alat skrining lain
-        </button>
-      )}
+    <div style={{ maxWidth: 840, margin: "0 auto", paddingBottom: 48, fontFamily: "Quicksand, system-ui, sans-serif" }}>
+      {/* Header Bar */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 14,
+          marginBottom: 20,
+        }}
+      >
+        {onBack && (
+          <button
+            type="button"
+            onClick={onBack}
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid #EAECF0",
+              borderRadius: 12,
+              padding: "8px 14px",
+              cursor: "pointer",
+              fontWeight: 700,
+              color: "#0A0B5F",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: 13,
+              boxShadow: "0 1px 2px rgba(16, 24, 40, 0.04)",
+            }}
+          >
+            ← Kembali
+          </button>
+        )}
+        <div>
+          <h2
+            style={{
+              margin: 0,
+              fontSize: 20,
+              fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
+              color: "#0A0B5F",
+              fontWeight: 700,
+              lineHeight: 1.25,
+            }}
+          >
+            Skrining Perkembangan KPSP
+          </h2>
+          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
+            Kuesioner Pra Skrining Perkembangan • Pedoman SDIDTK Kemenkes RI (0–72 Bulan)
+          </p>
+        </div>
+      </div>
 
 
 
