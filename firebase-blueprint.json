@@ -1,0 +1,30 @@
+{
+  "entities": {
+    "patients": {
+      "title": "Patients",
+      "description": "Daftar pasien tersimpan untuk sinkronisasi antar perangkat",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "nama": { "type": "string" },
+        "noRm": { "type": "string" },
+        "usiaBulan": { "type": "number" },
+        "bb": { "type": "number" },
+        "tb": { "type": "number" },
+        "jk": { "type": "string" },
+        "catatan": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id"]
+    },
+    "appState": {
+      "title": "App State",
+      "description": "Status aplikasi terpusat seperti pasien aktif",
+      "type": "object",
+      "properties": {
+        "activePatientId": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      }
+    }
+  }
+}

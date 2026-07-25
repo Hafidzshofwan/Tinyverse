@@ -231,9 +231,31 @@ export function PatientProfile() {
               </div>
             </div>
 
-            <p className="tv-pas-sub" style={{ margin: 0 }}>
-              Kelola banyak pasien, switch pasien aktif 1-klik untuk semua alat klinis.
-            </p>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", margin: 0 }}>
+              <p className="tv-pas-sub" style={{ margin: 0 }}>
+                Kelola banyak pasien, switch pasien aktif 1-klik untuk semua alat klinis.
+              </p>
+              <span
+                style={{
+                  fontSize: "0.72rem",
+                  background: "#ECFDF5",
+                  border: "1px solid #A7F3D0",
+                  color: "#047857",
+                  padding: "2px 8px",
+                  borderRadius: "12px",
+                  fontWeight: 600,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  whiteSpace: "nowrap",
+                  flexShrink: 0,
+                }}
+                title="Tersambung ke Firebase Firestore untuk sinkronisasi otomatis antar-perangkat"
+              >
+                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", display: "inline-block" }} />
+                🔥 Firebase Cloud Sync
+              </span>
+            </div>
           </div>
 
           {toastMsg && (
