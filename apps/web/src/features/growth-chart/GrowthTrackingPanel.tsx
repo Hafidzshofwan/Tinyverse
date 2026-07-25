@@ -12,6 +12,7 @@ import {
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile } from "@/shared/lib/patient";
+import { hitungIMT } from "./zscore";
 
 export function GrowthTrackingPanel() {
   const patientProfile: PatientProfile = usePatientProfile();
@@ -133,89 +134,121 @@ export function GrowthTrackingPanel() {
   };
 
   return (
-    <div style={{ fontFamily: "Quicksand, sans-serif", maxWidth: 1080, margin: "0 auto" }}>
-      {/* Top Header Card */}
+    <div style={{ fontFamily: "Quicksand, system-ui, -apple-system, sans-serif", maxWidth: 1080, margin: "0 auto" }}>
+      {/* Top Header Section */}
       <div
         style={{
-          background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)",
-          color: "#fff",
-          borderRadius: 20,
-          padding: "20px 24px",
-          marginBottom: 20,
-          boxShadow: "0 10px 30px rgba(30,27,75,0.25)",
+          padding: "8px 0 16px 0",
+          marginBottom: 16,
+          display: "flex",
+          flexWrap: "wrap",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: 16,
         }}
       >
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+        {/* Title & Icon Header */}
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {/* div.ikon-bulat exact 46x46 #D936A61A background */}
+          <div
+            className="ikon-bulat"
+            style={{
+              width: 46,
+              height: 46,
+              minWidth: 46,
+              minHeight: 46,
+              borderRadius: 14,
+              background: "#D936A61A",
+              color: "#D936A6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "17.6px",
+              fontFamily: "Quicksand, system-ui, sans-serif",
+              flexShrink: 0,
+            }}
+          >
+            📈
+          </div>
           <div>
-            <div style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.15)", padding: "4px 12px", borderRadius: 20, fontSize: "0.76rem", fontWeight: 700, marginBottom: 8 }}>
-              📈 FEATURE TIER 1 — LONGITUDINAL MONITORING
-            </div>
-            <h2 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", fontSize: "1.45rem" }}>
-              Pemantauan Pertumbuhan Longitudinal &amp; Alert Growth Faltering
+            <h2
+              style={{
+                margin: 0,
+                fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
+                fontSize: "18.32px",
+                fontWeight: 700,
+                color: "#0A0B5F",
+                lineHeight: 1.25,
+              }}
+            >
+              Tumbuh Kembang
             </h2>
-            <p style={{ margin: "4px 0 0", fontSize: "0.86rem", color: "rgba(255,255,255,0.8)" }}>
-              Pasien: <b>{patientProfile.nama || "An. Tanpa Nama"}</b> {patientProfile.noRm ? `(${patientProfile.noRm})` : ""} &bull;{" "}
-              {gender === "female" ? "♀ Perempuan" : "♂ Laki-Laki"} &bull; {records.length} Catatan Pemeriksaan
+            <p
+              style={{
+                margin: 0,
+                fontFamily: "Quicksand, system-ui, sans-serif",
+                fontSize: "10.24px",
+                fontWeight: 600,
+                color: "#0A0B5F9E",
+                lineHeight: 1.4,
+              }}
+            >
+              Pemantauan Pertumbuhan Longitudinal
             </p>
           </div>
+        </div>
 
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <button
-              type="button"
-              onClick={() => handleLoadSample(true)}
-              style={{
-                background: "#EF4444",
-                color: "#fff",
-                border: "none",
-                borderRadius: 10,
-                padding: "8px 14px",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                cursor: "pointer",
-                boxShadow: "0 4px 12px rgba(239,68,68,0.3)",
-              }}
-              title="Simulasi Kasus Gagal Tumbuh"
-            >
-              ⚠️ Contoh Gagal Tumbuh
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleLoadSample(false)}
-              style={{
-                background: "rgba(255,255,255,0.2)",
-                color: "#fff",
-                border: "1px solid rgba(255,255,255,0.3)",
-                borderRadius: 10,
-                padding: "8px 14px",
-                fontSize: "0.8rem",
-                fontWeight: 700,
-                cursor: "pointer",
-              }}
-              title="Muat Tren Normal"
-            >
-              ✨ Contoh Normal
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setShowAddForm(true)}
-              style={{
-                background: "#7C5CFC",
-                color: "#fff",
-                border: "none",
-                borderRadius: 10,
-                padding: "8px 16px",
-                fontSize: "0.84rem",
-                fontWeight: 800,
-                fontFamily: "Fredoka, sans-serif",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(124,92,252,0.4)",
-              }}
-            >
-              + Tambah Data
-            </button>
+        {/* Patient Data Button & Actions */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          {/* Tombol Data Pasien */}
+          <div
+            style={{
+              background: "#FFFFFF",
+              border: "1px solid #CBD5E1",
+              borderRadius: 8,
+              padding: "7px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              fontSize: "13px",
+              color: "#1E293B",
+              fontWeight: 600,
+              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
+            }}
+          >
+            <span style={{ fontSize: "14px" }}>👶</span>
+            <div>
+              <span style={{ color: "#0A0B5F", fontWeight: 700 }}>
+                {patientProfile.nama || "An. Tanpa Nama"}
+              </span>{" "}
+              <span style={{ color: "#64748B", fontWeight: 500 }}>
+                ({gender === "female" ? "Perempuan" : "Laki-Laki"} &bull; {records.length} Catatan)
+              </span>
+            </div>
           </div>
+
+          {/* Tombol Tambah Data */}
+          <button
+            type="button"
+            onClick={() => setShowAddForm(true)}
+            style={{
+              background: "#0A0B5F",
+              color: "#FFFFFF",
+              border: "none",
+              borderRadius: 8,
+              padding: "8px 16px",
+              fontSize: "13px",
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              boxShadow: "0 2px 5px rgba(10,11,95,0.2)",
+              transition: "all 0.15s ease",
+            }}
+          >
+            <span>+</span> Tambah Data
+          </button>
         </div>
       </div>
 
@@ -224,91 +257,86 @@ export function GrowthTrackingPanel() {
         <div
           style={{
             background: "#FEF2F2",
-            border: "2px solid #FCA5A5",
-            borderRadius: 18,
-            padding: "20px",
+            border: "1px solid #FECACA",
+            borderRadius: 14,
+            padding: "16px 20px",
             marginBottom: 20,
-            boxShadow: "0 10px 25px rgba(239,68,68,0.12)",
           }}
         >
-          <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-            <div style={{ fontSize: "2rem", lineHeight: 1 }}>⚠️</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 8, marginBottom: 6 }}>
-                <span style={{ background: "#DC2626", color: "#fff", fontWeight: 800, fontSize: "0.8rem", padding: "3px 10px", borderRadius: 8, fontFamily: "Fredoka, sans-serif" }}>
-                  WARNING: Indikasi Growth Faltering (Gagal Tumbuh)
-                </span>
-                <span style={{ fontSize: "0.78rem", color: "#991B1B", fontWeight: 700 }}>
-                  Terdeteksi {falteringResult.alerts.length} Kriteria Klinis
-                </span>
-              </div>
-
-              {/* Detail Kriteria Terdeteksi */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 8, margin: "10px 0" }}>
-                {falteringResult.alerts.map((al, idx) => (
-                  <div key={idx} style={{ background: "#FFF5F5", borderLeft: "4px solid #DC2626", padding: "8px 12px", borderRadius: "0 8px 8px 0" }}>
-                    <div style={{ fontWeight: 700, color: "#991B1B", fontSize: "0.86rem" }}>
-                      📌 {al.title}
-                    </div>
-                    <div style={{ fontSize: "0.8rem", color: "#450A0A", marginTop: 2 }}>
-                      {al.details}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Ringkasan Narasi */}
-              <p style={{ margin: "12px 0 8px", fontSize: "0.86rem", lineHeight: 1.5, color: "#1F2937", background: "#FFFFFF", padding: "10px 14px", borderRadius: 10, border: "1px solid #FECACA" }}>
-                <b>Ringkasan Klinis:</b> {falteringResult.summaryText}
-              </p>
-
-              {/* Rekomendasi Klinis */}
-              <div style={{ marginTop: 10, fontSize: "0.82rem", color: "#7F1D1D" }}>
-                <b>Langkah Evaluasi Klinis Direkomendasikan:</b>
-                <ul style={{ margin: "4px 0 0", paddingLeft: 18 }}>
-                  {falteringResult.recommendations.map((rec, i) => (
-                    <li key={i} style={{ marginBottom: 2 }}>{rec}</li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Tombol Aksi */}
-              <div style={{ display: "flex", gap: 10, marginTop: 14, flexWrap: "wrap" }}>
-                <button
-                  type="button"
-                  onClick={handleCopySummary}
-                  style={{
-                    background: "#991B1B",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: 8,
-                    padding: "8px 14px",
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
-                >
-                  {copiedNote ? "✓ Ringkasan Tersalin!" : "📋 Salin Catatan Ringkasan (CPPT)"}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setShowReportModal(true)}
-                  style={{
-                    background: "#FFFFFF",
-                    color: "#991B1B",
-                    border: "1px solid #FCA5A5",
-                    borderRadius: 8,
-                    padding: "8px 14px",
-                    fontSize: "0.8rem",
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
-                >
-                  📄 Cetak Laporan Rujukan (PDF)
-                </button>
-              </div>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 12, borderBottom: "1px solid #FCA5A5", paddingBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <span style={{ background: "#DC2626", color: "#FFFFFF", fontWeight: 700, fontSize: "0.75rem", padding: "3px 10px", borderRadius: 6 }}>
+                PERINGATAN KLINIS
+              </span>
+              <h3 style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700, color: "#991B1B" }}>
+                Terdeteksi Indikasi Growth Faltering (Gagal Tumbuh)
+              </h3>
             </div>
+            <span style={{ fontSize: "0.78rem", color: "#991B1B", fontWeight: 600 }}>
+              {falteringResult.alerts.length} Kriteria Terpenuhi
+            </span>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 12 }}>
+            {falteringResult.alerts.map((al, idx) => (
+              <div key={idx} style={{ background: "#FFFFFF", border: "1px solid #FCA5A5", padding: "10px 12px", borderRadius: 8 }}>
+                <div style={{ fontWeight: 700, color: "#991B1B", fontSize: "0.84rem" }}>
+                  {al.title}
+                </div>
+                <div style={{ fontSize: "0.8rem", color: "#7F1D1D", marginTop: 2 }}>
+                  {al.details}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p style={{ margin: "0 0 12px", fontSize: "0.84rem", lineHeight: 1.5, color: "#1E293B", background: "#FFFFFF", padding: "10px 12px", borderRadius: 8, border: "1px solid #E2E8F0" }}>
+            <b>Ringkasan Evaluasi:</b> {falteringResult.summaryText}
+          </p>
+
+          <div style={{ marginBottom: 12, fontSize: "0.8rem", color: "#7F1D1D" }}>
+            <b>Rekomendasi Evaluasi:</b>
+            <ul style={{ margin: "4px 0 0", paddingLeft: 18 }}>
+              {falteringResult.recommendations.map((rec, i) => (
+                <li key={i} style={{ marginBottom: 2 }}>{rec}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <button
+              type="button"
+              onClick={handleCopySummary}
+              style={{
+                background: "#991B1B",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {copiedNote ? "✓ Tersalin!" : "Salin Catatan CPPT"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowReportModal(true)}
+              style={{
+                background: "#FFFFFF",
+                color: "#991B1B",
+                border: "1px solid #FCA5A5",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Cetak Laporan Rujukan
+            </button>
           </div>
         </div>
       ) : (
@@ -316,8 +344,8 @@ export function GrowthTrackingPanel() {
           style={{
             background: "#ECFDF5",
             border: "1px solid #A7F3D0",
-            borderRadius: 16,
-            padding: "14px 18px",
+            borderRadius: 12,
+            padding: "12px 16px",
             marginBottom: 20,
             display: "flex",
             alignItems: "center",
@@ -325,15 +353,12 @@ export function GrowthTrackingPanel() {
             gap: 12,
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span style={{ fontSize: "1.4rem" }}>✅</span>
-            <div>
-              <div style={{ fontWeight: 800, color: "#065F46", fontSize: "0.9rem", fontFamily: "Fredoka, sans-serif" }}>
-                Tren Pertumbuhan Sesuai Kurva WHO (Normal)
-              </div>
-              <div style={{ fontSize: "0.8rem", color: "#047857" }}>
-                Kenaikan berat dan tinggi badan berada pada jalur kurva normal tanpa indikasi defleksi / gagal tumbuh.
-              </div>
+          <div>
+            <div style={{ fontWeight: 700, color: "#065F46", fontSize: "0.88rem" }}>
+              Status Pertumbuhan Normal
+            </div>
+            <div style={{ fontSize: "0.78rem", color: "#047857", marginTop: 2 }}>
+              Kenaikan berat dan tinggi badan berada pada jalur kurva WHO tanpa indikasi gagal tumbuh.
             </div>
           </div>
 
@@ -341,34 +366,33 @@ export function GrowthTrackingPanel() {
             type="button"
             onClick={() => setShowReportModal(true)}
             style={{
-              background: "#10B981",
-              color: "#fff",
+              background: "#059669",
+              color: "#FFFFFF",
               border: "none",
-              borderRadius: 8,
-              padding: "7px 12px",
-              fontSize: "0.78rem",
+              borderRadius: 6,
+              padding: "6px 12px",
+              fontSize: "0.76rem",
               fontWeight: 700,
               cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
           >
-            📄 Lihat Laporan PDF
+            Lihat Laporan
           </button>
         </div>
       )}
 
       {/* PLOTTING TREN LONGITUDINAL (RECHARTS CHART) */}
-      <LongitudinalGrowthChart records={records} gender={gender} isFaltering={falteringResult.isFaltering} />
-
-      {/* RIWAYAT PEMERIKSAAN DATA TABLE */}
+      <LongitudinalGrowthChart records={records} gender={gender} isFaltering={falteringResult.isFaltering} />      {/* RIWAYAT PEMERIKSAAN DATA TABLE */}
       <div style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "18px", marginBottom: 20 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-          <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.02rem" }}>
-            📋 Riwayat Catatan Pemeriksaan ({records.length})
+          <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.02rem", fontWeight: 600 }}>
+            Riwayat Catatan Pemeriksaan ({records.length})
           </h4>
           <button
             type="button"
             onClick={() => setShowAddForm(true)}
-            style={{ background: "#EEF2FF", color: "#4F46E5", border: "1px solid #C7D2FE", borderRadius: 8, padding: "5px 12px", fontSize: "0.78rem", fontWeight: 700, cursor: "pointer" }}
+            style={{ background: "#F1F5F9", color: "#0A0B5F", border: "1px solid #CBD5E1", borderRadius: 8, padding: "5px 12px", fontSize: "0.78rem", fontWeight: 700, cursor: "pointer" }}
           >
             + Tambah Catatan
           </button>
@@ -376,21 +400,21 @@ export function GrowthTrackingPanel() {
 
         {records.length === 0 ? (
           <div style={{ textAlign: "center", padding: "24px 0", color: "#94A3B8", fontSize: "0.85rem" }}>
-            Belum ada riwayat pemeriksaan. Klik <b>+ Tambah Data</b> di atas.
+            Belum ada riwayat pemeriksaan. Klik <b>+ Tambah Data</b> untuk menambahkan.
           </div>
         ) : (
           <div style={{ overflowX: "auto" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.83rem", textAlign: "left" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.82rem", textAlign: "left" }}>
               <thead>
-                <tr style={{ background: "#F8FAFC", borderBottom: "2px solid #E2E8F0", color: "#475569" }}>
-                  <th style={{ padding: "10px 12px" }}>Tanggal</th>
-                  <th style={{ padding: "10px 12px" }}>Usia (Bulan)</th>
-                  <th style={{ padding: "10px 12px" }}>BB (kg)</th>
-                  <th style={{ padding: "10px 12px" }}>TB (cm)</th>
-                  <th style={{ padding: "10px 12px" }}>Z-Score BB/U</th>
-                  <th style={{ padding: "10px 12px" }}>Status WHO</th>
-                  <th style={{ padding: "10px 12px" }}>Catatan</th>
-                  <th style={{ padding: "10px 12px", textAlign: "center" }}>Aksi</th>
+                <tr style={{ background: "#F8FAFC", borderBottom: "1px solid #E2E8F0", color: "#475569" }}>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>Tanggal</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>Usia</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>BB (kg)</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>TB (cm)</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>IMT/U</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>Status WHO</th>
+                  <th style={{ padding: "10px 12px", fontWeight: 700 }}>Catatan</th>
+                  <th style={{ padding: "10px 12px", textAlign: "center", fontWeight: 700 }}>Aksi</th>
                 </tr>
               </thead>
               <tbody>
@@ -398,8 +422,9 @@ export function GrowthTrackingPanel() {
                   .sort((a, b) => b.usiaBulan - a.usiaBulan)
                   .map((r) => {
                     const z = r.bbuZ ?? 0;
-                    const statusColor = z < -3 ? "#DC2626" : z < -2 ? "#D97706" : z > 2 ? "#2563EB" : "#16A34A";
+                    const statusColor = z < -3 ? "#DC2626" : z < -2 ? "#D97706" : z > 2 ? "#2563EB" : "#059669";
                     const statusText = z < -3 ? "Sangat Kurang" : z < -2 ? "BB Kurang" : z > 2 ? "Risiko Lebih" : "BB Normal";
+                    const imtVal = hitungIMT(r.bb, r.tb);
 
                     return (
                       <tr key={r.id} style={{ borderBottom: "1px solid #F1F5F9" }}>
@@ -407,11 +432,11 @@ export function GrowthTrackingPanel() {
                         <td style={{ padding: "10px 12px" }}>{r.usiaBulan} bln</td>
                         <td style={{ padding: "10px 12px", fontWeight: 700, color: "#1E293B" }}>{r.bb} kg</td>
                         <td style={{ padding: "10px 12px" }}>{r.tb} cm</td>
-                        <td style={{ padding: "10px 12px", fontWeight: 700, color: statusColor }}>
-                          {z > 0 ? `+${z}` : z} SD
+                        <td style={{ padding: "10px 12px", fontWeight: 700, color: "#0A0B5F" }}>
+                          {imtVal !== null ? `${imtVal} kg/m²` : "-"}
                         </td>
                         <td style={{ padding: "10px 12px" }}>
-                          <span style={{ background: `${statusColor}18`, color: statusColor, padding: "2px 8px", borderRadius: 6, fontWeight: 700, fontSize: "0.75rem" }}>
+                          <span style={{ background: `${statusColor}14`, color: statusColor, padding: "3px 8px", borderRadius: 6, fontWeight: 700, fontSize: "0.74rem" }}>
                             {statusText}
                           </span>
                         </td>
@@ -424,22 +449,19 @@ export function GrowthTrackingPanel() {
                             aria-label={`Hapus catatan tanggal ${r.tanggal}`}
                             onClick={() => handleDeleteRecord(r.id)}
                             style={{
-                              background: "#FEF2F2",
+                              background: "transparent",
                               border: "1px solid #FCA5A5",
                               color: "#DC2626",
-                              borderRadius: "8px",
-                              padding: "4px 10px",
+                              borderRadius: "6px",
+                              padding: "3px 8px",
                               cursor: "pointer",
-                              fontSize: "0.78rem",
-                              fontWeight: 700,
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "4px",
+                              fontSize: "0.75rem",
+                              fontWeight: 600,
                               transition: "all 0.15s ease",
                             }}
                             title="Hapus entri pemeriksaan ini"
                           >
-                            🗑️ Hapus
+                            Hapus
                           </button>
                         </td>
                       </tr>
@@ -451,13 +473,78 @@ export function GrowthTrackingPanel() {
         )}
       </div>
 
+      {/* BOTTOM TOOLBAR: SIMULASI KASUS PERTUMBUHAN */}
+      <div
+        style={{
+          background: "#FFFFFF",
+          border: "1px solid #E2E8F0",
+          borderRadius: 14,
+          padding: "16px 20px",
+          marginBottom: 20,
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+        }}
+      >
+        <div>
+          <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "0.95rem", fontWeight: 600 }}>
+            Simulasi Kasus Pertumbuhan
+          </h4>
+          <p style={{ margin: "2px 0 0", fontSize: "0.78rem", color: "#64748B" }}>
+            Uji skenario pertumbuhan longitudinal dengan dataset standar rujukan WHO
+          </p>
+        </div>
+
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <button
+            type="button"
+            onClick={() => handleLoadSample(true)}
+            style={{
+              background: "#FEF2F2",
+              color: "#DC2626",
+              border: "1px solid #FCA5A5",
+              borderRadius: 8,
+              padding: "8px 14px",
+              fontSize: "0.8rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "all 0.15s ease",
+            }}
+            title="Simulasi Kasus Gagal Tumbuh"
+          >
+            Simulasi Gagal Tumbuh
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleLoadSample(false)}
+            style={{
+              background: "#F8FAFC",
+              color: "#475569",
+              border: "1px solid #CBD5E1",
+              borderRadius: 8,
+              padding: "8px 14px",
+              fontSize: "0.8rem",
+              fontWeight: 700,
+              cursor: "pointer",
+              transition: "all 0.15s ease",
+            }}
+            title="Muat Tren Normal"
+          >
+            Simulasi Normal
+          </button>
+        </div>
+      </div>
+
       {/* FORM MODAL: TAMBAH DATA PEMERIKSAAN */}
       {showAddForm && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 9000, background: "rgba(15,23,42,0.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div style={{ background: "#fff", borderRadius: 20, width: "100%", maxWidth: 480, padding: 24, boxShadow: "0 20px 50px rgba(0,0,0,0.3)", fontFamily: "Quicksand, sans-serif" }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 9000, background: "rgba(15,23,42,0.4)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: 460, padding: 24, boxShadow: "0 20px 40px rgba(0,0,0,0.15)", fontFamily: "Quicksand, system-ui, sans-serif" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h3 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.15rem" }}>
-                ➕ Tambah Catatan Pemeriksaan Baru
+              <h3 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.1rem", fontWeight: 600 }}>
+                Tambah Catatan Pemeriksaan
               </h3>
               <button type="button" onClick={() => setShowAddForm(false)} style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#64748B" }}>
                 ✕
@@ -537,10 +624,10 @@ export function GrowthTrackingPanel() {
               {previewZscores && (
                 <div style={{ background: "#F0FDFA", border: "1px solid #99F6E4", padding: "10px 12px", borderRadius: 10, marginBottom: 12, fontSize: "0.8rem", color: "#0F766E" }}>
                   <b>⚡ Otomatis Terhitung (Kalkulasi WHO):</b>
-                  <div style={{ display: "flex", gap: 12, marginTop: 4, fontWeight: 700 }}>
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 4, fontWeight: 700 }}>
                     <span>BB/U: {previewZscores.bbuZ > 0 ? `+${previewZscores.bbuZ}` : previewZscores.bbuZ} SD</span>
                     <span>TB/U: {previewZscores.tbuZ > 0 ? `+${previewZscores.tbuZ}` : previewZscores.tbuZ} SD</span>
-                    <span>BB/TB: {previewZscores.bbtbZ > 0 ? `+${previewZscores.bbtbZ}` : previewZscores.bbtbZ} SD</span>
+                    <span>IMT/U: {previewZscores.imtuZ > 0 ? `+${previewZscores.imtuZ}` : previewZscores.imtuZ} SD</span>
                   </div>
                 </div>
               )}
@@ -580,23 +667,23 @@ export function GrowthTrackingPanel() {
 
       {/* MODAL PRINT / LAPORAN PDF RUJUKAN */}
       {showReportModal && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 9500, background: "rgba(15,23,42,0.6)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div style={{ background: "#fff", borderRadius: 20, width: "100%", maxWidth: 680, maxHeight: "90vh", overflowY: "auto", padding: 28, boxShadow: "0 25px 60px rgba(0,0,0,0.35)", fontFamily: "Quicksand, sans-serif" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "2px solid #E2E8F0", paddingBottom: 12, marginBottom: 16 }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 9500, background: "rgba(15,23,42,0.5)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: 680, maxHeight: "90vh", overflowY: "auto", padding: 24, boxShadow: "0 20px 40px rgba(0,0,0,0.18)", fontFamily: "Quicksand, system-ui, sans-serif" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E2E8F0", paddingBottom: 12, marginBottom: 16 }}>
               <div>
-                <h3 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.2rem" }}>
-                  📄 Laporan Pemantauan Pertumbuhan &amp; Evaluasi Gagal Tumbuh
+                <h3 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.15rem", fontWeight: 600 }}>
+                  Laporan Pemantauan Pertumbuhan &amp; Evaluasi Gagal Tumbuh
                 </h3>
-                <span style={{ fontSize: "0.76rem", color: "#64748B" }}>TINYVERSE CLINICAL PEDIATRIC REPORT</span>
+                <span style={{ fontSize: "0.74rem", color: "#64748B" }}>TINYVERSE CLINICAL PEDIATRIC REPORT</span>
               </div>
-              <button type="button" onClick={() => setShowReportModal(false)} style={{ background: "transparent", border: "none", fontSize: "1.3rem", cursor: "pointer", color: "#64748B" }}>
+              <button type="button" onClick={() => setShowReportModal(false)} style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#64748B" }}>
                 ✕
               </button>
             </div>
 
             {/* Content Printable */}
             <div id="printableReport" style={{ color: "#1E293B", fontSize: "0.85rem", lineHeight: 1.5 }}>
-              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 12, padding: 14, marginBottom: 14, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: 12, marginBottom: 14, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 <div><b>Nama Pasien:</b> {patientProfile.nama || "An. Tanpa Nama"}</div>
                 <div><b>No. RM / Bed:</b> {patientProfile.noRm || "-"}</div>
                 <div><b>Jenis Kelamin:</b> {gender === "female" ? "Perempuan" : "Laki-Laki"}</div>
@@ -604,9 +691,9 @@ export function GrowthTrackingPanel() {
               </div>
 
               {/* Status Alert Header */}
-              <div style={{ background: falteringResult.isFaltering ? "#FEF2F2" : "#ECFDF5", border: `1px solid ${falteringResult.isFaltering ? "#FCA5A5" : "#A7F3D0"}`, borderRadius: 12, padding: 14, marginBottom: 14 }}>
-                <div style={{ fontWeight: 800, color: falteringResult.isFaltering ? "#991B1B" : "#065F46", fontSize: "0.95rem", marginBottom: 4 }}>
-                  {falteringResult.isFaltering ? "⚠️ TERDETEKSI INDIKASI GROWTH FALTERING (GAGAL TUMBUH)" : "✅ STATUS PERTUMBUHAN SESUAI KURVA WHO (NORMAL)"}
+              <div style={{ background: falteringResult.isFaltering ? "#FEF2F2" : "#ECFDF5", border: `1px solid ${falteringResult.isFaltering ? "#FCA5A5" : "#A7F3D0"}`, borderRadius: 10, padding: 12, marginBottom: 14 }}>
+                <div style={{ fontWeight: 700, color: falteringResult.isFaltering ? "#991B1B" : "#065F46", fontSize: "0.9rem", marginBottom: 4 }}>
+                  {falteringResult.isFaltering ? "TERDETEKSI INDIKASI GROWTH FALTERING (GAGAL TUMBUH)" : "STATUS PERTUMBUHAN SESUAI KURVA WHO (NORMAL)"}
                 </div>
                 <div style={{ color: falteringResult.isFaltering ? "#7F1D1D" : "#047857" }}>
                   {falteringResult.summaryText}
@@ -614,18 +701,18 @@ export function GrowthTrackingPanel() {
               </div>
 
               {/* Tabel Riwayat */}
-              <h4 style={{ margin: "16px 0 8px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F" }}>
+              <h4 style={{ margin: "14px 0 8px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontWeight: 600 }}>
                 Riwayat Pengukuran Antropometri:
               </h4>
               <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.8rem", marginBottom: 16 }}>
                 <thead>
-                  <tr style={{ background: "#F1F5F9", borderBottom: "1.5px solid #CBD5E1" }}>
-                    <th style={{ padding: 6, textAlign: "left" }}>Tanggal</th>
-                    <th style={{ padding: 6, textAlign: "left" }}>Usia</th>
-                    <th style={{ padding: 6, textAlign: "left" }}>BB (kg)</th>
-                    <th style={{ padding: 6, textAlign: "left" }}>TB (cm)</th>
-                    <th style={{ padding: 6, textAlign: "left" }}>Z BB/U</th>
-                    <th style={{ padding: 6, textAlign: "left" }}>Catatan</th>
+                  <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #CBD5E1" }}>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Tanggal</th>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Usia</th>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>BB (kg)</th>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>TB (cm)</th>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Z BB/U</th>
+                    <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Catatan</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -642,7 +729,7 @@ export function GrowthTrackingPanel() {
                 </tbody>
               </table>
 
-              <h4 style={{ margin: "12px 0 6px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F" }}>
+              <h4 style={{ margin: "12px 0 6px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontWeight: 600 }}>
                 Rekomendasi Rujukan / Tatalaksana Nutrisi:
               </h4>
               <ol style={{ paddingLeft: 18, margin: 0 }}>
@@ -656,14 +743,14 @@ export function GrowthTrackingPanel() {
               <button
                 type="button"
                 onClick={() => window.print()}
-                style={{ flex: 1, background: "#7C5CFC", color: "#fff", border: "none", borderRadius: 10, padding: 10, fontWeight: 700, cursor: "pointer" }}
+                style={{ flex: 1, background: "#0A0B5F", color: "#fff", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 700, cursor: "pointer", fontSize: "0.85rem" }}
               >
-                🖨️ Cetak / Simpan ke PDF
+                Cetak / Simpan ke PDF
               </button>
               <button
                 type="button"
                 onClick={() => setShowReportModal(false)}
-                style={{ background: "#F1F5F9", color: "#475569", border: "none", borderRadius: 10, padding: "10px 16px", fontWeight: 700, cursor: "pointer" }}
+                style={{ background: "#F1F5F9", color: "#475569", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem" }}
               >
                 Tutup
               </button>
