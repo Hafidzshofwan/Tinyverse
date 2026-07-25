@@ -76,6 +76,26 @@ export interface DenverOverallResult {
   evaluasiList: DenverEvaluation[];
 }
 
+/**
+ * ⚠️ CATATAN PENTING — BACA SEBELUM MENGUBAH DATA DI BAWAH INI:
+ *
+ * 1. CAKUPAN ITEM: Modul ini berisi 68 item (bukan 125 item seperti Denver II
+ *    resmi/lengkap terbitan Frankenburg & Dodds, 1992). Ini adalah adaptasi/
+ *    versi ringkas, dipilih untuk mewakili tiap sektor, BUKAN salinan penuh
+ *    instrumen resmi.
+ *
+ * 2. SUMBER ANGKA PERSENTIL (p25/p50/p75/p90): Tabel usia-persentil asli
+ *    Denver II adalah produk komersial berlisensi (kit fisik terbitan Denver
+ *    Developmental Materials, Inc.) dan TIDAK dipublikasikan bebas di
+ *    internet. Angka-angka di bawah ini adalah ESTIMASI/ADAPTASI klinis
+ *    berdasarkan pengetahuan milestone pediatri umum (textbook-level),
+ *    BUKAN salinan presisi dari kit resmi berlisensi.
+ *
+ * 3. IMPLIKASI: Jangan mengklaim modul ini "sesuai standar Denver II resmi"
+ *    di teks/UI manapun. Jika di kemudian hari tersedia akses ke kit Denver
+ *    II asli/berlisensi, angka-angka ini sebaiknya diverifikasi ulang dan
+ *    diganti dengan nilai resmi.
+ */
 export const DENVER_ITEMS: DenverItem[] = [
   // ==========================================
   // 1. PERSONAL SOSIAL (Personal-Social)
@@ -158,17 +178,6 @@ export const DENVER_ITEMS: DenverItem[] = [
     tipe: "langsung",
   },
   {
-    id: "ps-8",
-    sektor: "personal-social",
-    namaIndo: "Melambaikan Tangan (Dadah)",
-    p25: 6.5,
-    p50: 8.2,
-    p75: 10.0,
-    p90: 12.0,
-    petunjuk: "Anak melambaikan tangan saat berpisah atau diminta.",
-    tipe: "keduanya",
-  },
-  {
     id: "ps-9",
     sektor: "personal-social",
     namaIndo: "Tepuk Tangan",
@@ -177,6 +186,23 @@ export const DENVER_ITEMS: DenverItem[] = [
     p75: 10.5,
     p90: 12.5,
     petunjuk: "Anak bertepuk tangan menirukan atau secara mandiri.",
+    tipe: "keduanya",
+  },
+  {
+    id: "ps-8",
+    sektor: "personal-social",
+    // Catatan: p50/p90 dinaikkan dari nilai sebelumnya (8.2 / 12.0) mengikuti
+    // audit plausibilitas — pengetahuan milestone pediatri umum menempatkan
+    // "dadah" sedikit lebih lambat (p50 ~10 bln, p90 ~14-15 bln). Ini estimasi
+    // klinis, bukan angka resmi Denver II (lihat catatan sumber di atas).
+    // Dipindah setelah "ps-9" agar urutan tampilan tetap naik sesuai usia
+    // (id tidak diubah karena tidak memengaruhi logika skor).
+    namaIndo: "Melambaikan Tangan (Dadah)",
+    p25: 7.0,
+    p50: 10.0,
+    p75: 12.0,
+    p90: 14.5,
+    petunjuk: "Anak melambaikan tangan saat berpisah atau diminta.",
     tipe: "keduanya",
   },
   {
@@ -393,6 +419,19 @@ export const DENVER_ITEMS: DenverItem[] = [
     tipe: "langsung",
   },
   {
+    id: "fm-14",
+    sektor: "fine-motor-adaptive",
+    // Catatan: dipindah sebelum "fm-13" agar urutan tampilan p50 tetap naik
+    // (26 sebelum 27). Id tidak diubah karena tidak memengaruhi logika skor.
+    namaIndo: "Menumpuk 6 Kubus",
+    p25: 22.0,
+    p50: 26.0,
+    p75: 30.0,
+    p90: 36.0,
+    petunjuk: "Menumpuk 6 kubus kayu kecil secara tegak lurus.",
+    tipe: "langsung",
+  },
+  {
     id: "fm-13",
     sektor: "fine-motor-adaptive",
     namaIndo: "Meniru Garis Vertikal",
@@ -401,17 +440,6 @@ export const DENVER_ITEMS: DenverItem[] = [
     p75: 32.0,
     p90: 38.0,
     petunjuk: "Pemeriksa mencontohkan garis tegak, anak menirukan garis tegak ≥2.5 cm.",
-    tipe: "langsung",
-  },
-  {
-    id: "fm-14",
-    sektor: "fine-motor-adaptive",
-    namaIndo: "Menumpuk 6 Kubus",
-    p25: 22.0,
-    p50: 26.0,
-    p75: 30.0,
-    p90: 36.0,
-    petunjuk: "Menumpuk 6 kubus kayu kecil secara tegak lurus.",
     tipe: "langsung",
   },
   {

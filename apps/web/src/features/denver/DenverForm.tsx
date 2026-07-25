@@ -107,7 +107,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
     addRingkasanItem({
       title: `Skrining Perkembangan Denver II (Usia ${ageStr})`,
       body: `Hasil: ${hasil.labelKategori}. Pass: ${hasil.totalPass}, Fail: ${hasil.totalFail}, Delay: ${hasil.delaysCount}, Caution: ${hasil.cautionsCount}.${delayItemsStr} ${hasil.saranKlinis}`,
-      source: "Denver Development Screening Test II (Denver II)",
+      source:
+        "Denver Development Screening Test II (Denver II) — adaptasi 68/125 item, angka persentil estimasi klinis (bukan tabel resmi berlisensi)",
     });
 
     alert("Hasil Denver II berhasil disimpan ke Ringkasan Medis!");
@@ -161,6 +162,27 @@ export function DenverForm({ onBack }: DenverFormProps) {
             Denver Development Screening Test (DDST II)
           </p>
         </div>
+      </div>
+
+      {/* Disclaimer Cakupan & Sumber Data */}
+      <div
+        style={{
+          background: "#FFFBEB",
+          border: "1px solid #FEDF89",
+          borderRadius: 14,
+          padding: "12px 16px",
+          marginBottom: 20,
+          fontSize: 12,
+          color: "#93370D",
+          lineHeight: 1.5,
+          fontWeight: 600,
+        }}
+      >
+        ⚠️ Modul ini adalah <strong>adaptasi/versi ringkas Denver II (68 dari 125 item asli)</strong>,
+        dengan angka usia-persentil berupa <strong>estimasi klinis</strong> berdasarkan pengetahuan
+        milestone pediatri umum — bukan salinan tabel resmi dari kit Denver II berlisensi (Denver
+        Developmental Materials, Inc.). Gunakan sebagai alat bantu skrining awal, bukan pengganti
+        kit skrining Denver II resmi.
       </div>
 
       {/* Form Informasi Usia & Prematuritas */}
