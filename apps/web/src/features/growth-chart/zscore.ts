@@ -12,21 +12,49 @@ export type ZscoreRow = number[];
 /** Tabel per-usia (kunci = usia bulan). */
 export type ZscoreTable = Record<number, ZscoreRow>;
 
-/** Interpolasi baris SD untuk usia pecahan (mis. 18,5 bulan). */
+/** Interpolasi baris SD untuk usia pecahan (mis. 18,5 bulan) atau data tabel dengan interval berjarak. */
 export function tkInterpolasiZscoreRow(table: ZscoreTable, nilaiX: number): ZscoreRow | null {
-  const lo = Math.floor(nilaiX);
-  const hi = Math.ceil(nilaiX);
-  if (lo === hi) return table[lo] ?? null;
-  // Ambil baris ke variabel lokal agar TypeScript menyempitkan tipe (narrowing)
-  // sesudah penjagaan di bawah; akses indeks langsung tidak dipertahankan.
-  const barisLo = table[lo];
-  const barisHi = table[hi];
+  if (!table) return null;
+  if (table[nilaiX]) return table[nilaiX];
+
+  const keys = Object.keys(table)
+    .map(Number)
+    .filter((k) => !isNaN(k))
+    .sort((a, b) => a - b);
+
+  if (keys.length === 0) return null;
+
+  const minKey = keys[0];
+  const maxKey = keys[keys.length - 1];
+
+  if (minKey === undefined || maxKey === undefined) return null;
+
+  if (nilaiX <= minKey) return table[minKey] ?? null;
+  if (nilaiX >= maxKey) return table[maxKey] ?? null;
+
+  let kLo = minKey;
+  let kHi = maxKey;
+
+  for (let i = 0; i < keys.length; i++) {
+    const k = keys[i];
+    if (k !== undefined) {
+      if (k <= nilaiX) kLo = k;
+      if (k >= nilaiX) {
+        kHi = k;
+        break;
+      }
+    }
+  }
+
+  if (kLo === kHi) return table[kLo] ?? null;
+
+  const barisLo = table[kLo];
+  const barisHi = table[kHi];
   if (!barisLo || !barisHi) return null;
-  const t = nilaiX - lo;
+
+  const t = (nilaiX - kLo) / (kHi - kLo);
   return barisLo.map((v, i) => {
     const nilaiHi = barisHi[i];
-    // Untuk tabel WHO yang valid (7 kolom) nilaiHi selalu ada; fallback aman
-    // bila panjang baris tidak sepadan agar tidak menghasilkan NaN diam-diam.
     return nilaiHi === undefined ? v : v + t * (nilaiHi - v);
   });
 }
