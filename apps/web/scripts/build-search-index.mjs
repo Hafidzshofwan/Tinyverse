@@ -185,6 +185,26 @@ const FEATURE_MODULES = [
   {
     type: "content",
     slug: "tumbuh-kembang",
+    label: "Skrining Autisme (M-CHAT-R)",
+    icon: "🧩",
+    href: "/preview/pertumbuhan?tab=skrining&tool=mchat",
+    text: "Skrining Risiko Autisme M-CHAT-R (Modified Checklist for Autism in Toddlers, Revised) - 20 Pertanyaan Usia 16–30 Bulan",
+    keywords: "mchat m-chat mchatr m-chat-r mchat/r autisme asd kuesioner kuisoner kuis skrining autisme toddler anak 16-30 bulan robins fein barton",
+    anchor: "text:M-CHAT-R"
+  },
+  {
+    type: "content",
+    slug: "tumbuh-kembang",
+    label: "Skrining Perkembangan (KPSP)",
+    icon: "🧩",
+    href: "/preview/pertumbuhan?tab=skrining",
+    text: "Kuesioner Pra Skrining Perkembangan (KPSP) Anak Usia 3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72 Bulan",
+    keywords: "kpsp kuesioner pra skrining perkembangan 3 6 9 12 15 18 21 24 30 36 42 48 54 60 66 72 bulan motorik kasar halus bicara bahasa sosialisasi kemandirian ppr penyimpangan meragukan sesuai",
+    anchor: "text:Skrining Perkembangan"
+  },
+  {
+    type: "content",
+    slug: "tumbuh-kembang",
     label: "Pemantauan Longitudinal",
     icon: "📈",
     href: "/preview/pertumbuhan?tab=longitudinal",

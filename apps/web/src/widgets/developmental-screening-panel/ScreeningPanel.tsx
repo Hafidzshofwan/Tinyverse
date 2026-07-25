@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { MchatForm } from "@/features/mchat-r";
 import { KpspForm } from "@/features/kpsp";
 
@@ -15,25 +16,40 @@ interface AlatSkrining {
 const DAFTAR_ALAT: AlatSkrining[] = [
   {
     id: "kpsp",
-    emoji: "\uD83C\uDF31",
+    emoji: "🌱",
     nama: "KPSP (Kuesioner Pra Skrining Perkembangan)",
-    ringkas: "Skrining perkembangan umum anak (Kemenkes RI/SDIDTK) \u2014 10 pertanyaan ya/tidak.",
+    ringkas: "Skrining perkembangan umum anak (Kemenkes RI/SDIDTK) — 10 pertanyaan ya/tidak.",
     usiaSasaran: "3 Bulan (berkelanjutan hingga 72 bulan)",
   },
   {
     id: "mchat",
-    emoji: "\uD83E\uDDE9",
+    emoji: "🧩",
     nama: "M-CHAT-R",
-    ringkas: "Skrining risiko autisme (ASD) \u2014 20 pertanyaan ya/tidak.",
-    usiaSasaran: "16\u201330 bulan",
+    ringkas: "Skrining risiko autisme (ASD) — 20 pertanyaan ya/tidak.",
+    usiaSasaran: "16–30 bulan",
   },
 ];
 
-/**
- * Katalog Skrining Perkembangan. Mendukung M-CHAT-R dan KPSP (dimulai dari usia 3 bulan).
- */
 export function ScreeningPanel() {
+  return (
+    <Suspense fallback={<div style={{ padding: "20px", textAlign: "center", color: "#64748B" }}>Memuat Skrining Perkembangan...</div>}>
+      <ScreeningPanelInner />
+    </Suspense>
+  );
+}
+
+function ScreeningPanelInner() {
+  const searchParams = useSearchParams();
   const [aktif, setAktif] = useState<string | null>(null);
+
+  useEffect(() => {
+    const tool = searchParams ? searchParams.get("tool") : null;
+    if (tool === "mchat" || tool === "mchat-r") {
+      setAktif("mchat");
+    } else if (tool === "kpsp") {
+      setAktif("kpsp");
+    }
+  }, [searchParams]);
 
   if (aktif === "kpsp") {
     return <KpspForm onBack={() => setAktif(null)} />;

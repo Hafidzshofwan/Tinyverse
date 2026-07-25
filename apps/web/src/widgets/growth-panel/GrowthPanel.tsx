@@ -1,11 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
 import { ScreeningPanel } from "@/widgets/developmental-screening-panel";
 
 export function GrowthPanel() {
+  return (
+    <Suspense fallback={<div style={{ padding: "20px", textAlign: "center", color: "#64748B", fontFamily: "Quicksand, sans-serif" }}>Memuat Tumbuh Kembang...</div>}>
+      <GrowthPanelInner />
+    </Suspense>
+  );
+}
+
+function GrowthPanelInner() {
+  const searchParams = useSearchParams();
   const [tab, setTab] = useState<"longitudinal" | "single" | "skrining">("single");
+
+  useEffect(() => {
+    const t = searchParams ? searchParams.get("tab") : null;
+    if (t === "longitudinal" || t === "single" || t === "skrining") {
+      setTab(t);
+    } else if (t === "kpsp" || t === "developmental") {
+      setTab("skrining");
+    }
+  }, [searchParams]);
 
   function tabBtnStyle(aktif: boolean) {
     return {
@@ -52,7 +71,7 @@ export function GrowthPanel() {
         </button>
 
         <button type="button" onClick={() => setTab("skrining")} style={tabBtnStyle(tab === "skrining")}>
-          🧩 Skrining Perkembangan
+          🧩 Skrining Perkembangan (KPSP)
         </button>
       </div>
 
