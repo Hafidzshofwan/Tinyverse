@@ -71,7 +71,7 @@ function GrowthPanelInner() {
         </button>
 
         <button type="button" onClick={() => setTab("skrining")} style={tabBtnStyle(tab === "skrining")}>
-          🧩 Skrining Perkembangan (KPSP)
+          🧩 Skrining Perkembangan
         </button>
       </div>
 
