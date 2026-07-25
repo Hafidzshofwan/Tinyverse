@@ -149,7 +149,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
           Pilih Kelompok Usia KPSP:
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {[3].map((age) => {
+          {[3, 6, 9, 12, 15, 18, 21, 24, 30, 36, 42, 48, 54, 60, 66, 72].map((age) => {
             const aktif = selectedAge === age;
             return (
               <button
@@ -167,30 +167,10 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                   cursor: "pointer",
                 }}
               >
-                {age} Bulan (Aktif)
+                {age} Bulan {aktif ? "(Aktif)" : ""}
               </button>
             );
           })}
-          {[6, 9, 12, 15, 18, 24, 36, 48, 60, 72].map((age) => (
-            <button
-              key={age}
-              type="button"
-              disabled
-              title="Akan hadir bertahap pada pembaruan berikutnya"
-              style={{
-                padding: "8px 14px",
-                borderRadius: 999,
-                border: "1px dashed #CBD5E1",
-                background: "#F8FAFC",
-                color: "#94A3B8",
-                fontWeight: 600,
-                fontSize: 12.5,
-                cursor: "not-allowed",
-              }}
-            >
-              {age} Bln (Segera)
-            </button>
-          ))}
         </div>
         <div style={{ fontSize: 12, color: "#667085", marginTop: 10, lineHeight: 1.5 }}>
           {groupData.deskripsi}
@@ -451,7 +431,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                   color: KATEGORI_TEKS[hasil.kategori],
                 }}
               >
-                Hasil KPSP {selectedAge} Bulan — Total {"'YA'"}: {hasil.totalYa} / {daftarSoal.length}
+                Hasil KPSP {selectedAge} Bulan — Total 'YA': {hasil.totalYa} / {daftarSoal.length}
               </div>
               <div
                 style={{
@@ -497,7 +477,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 borderTop: "1px dashed rgba(0,0,0,0.1)",
               }}
             >
-              <strong>Sektor yang belum tercapai {"('TIDAK')"}:</strong>
+              <strong>Sektor yang belum tercapai ('TIDAK'):</strong>
               <ul style={{ margin: "4px 0 0 18px", padding: 0 }}>
                 {daftarTidak.map((it) => (
                   <li key={it.no}>
