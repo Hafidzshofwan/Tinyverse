@@ -1,14 +1,78 @@
 "use client";
 
-import { type CSSProperties } from "react";
-import { GrowthTool } from "@/features/growth-chart";
-
-const wrap: CSSProperties = { maxWidth: 1080, margin: "0 auto", width: "100%" };
+import { useState } from "react";
+import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
 
 export function GrowthPanel() {
+  const [tab, setTab] = useState<"longitudinal" | "single">("longitudinal");
+
   return (
-    <div style={wrap}>
-      <GrowthTool />
+    <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", fontFamily: "Quicksand, sans-serif" }}>
+      {/* Tab Switcher */}
+      <div
+        style={{
+          display: "flex",
+          gap: 8,
+          marginBottom: 16,
+          background: "#F1F5F9",
+          padding: 6,
+          borderRadius: 14,
+          border: "1px solid #E2E8F0",
+        }}
+      >
+        <button
+          type="button"
+          onClick={() => setTab("single")}
+          style={{
+            flex: 1,
+            padding: "10px 16px",
+            borderRadius: 10,
+            border: "none",
+            fontWeight: 700,
+            fontFamily: "'Quicksand', sans-serif",
+            fontSize: "13px",
+            cursor: "pointer",
+            background: tab === "single" ? "#0A0B5F" : "transparent",
+            color: tab === "single" ? "#FFFFFF" : "#1E293B",
+            boxShadow: tab === "single" ? "0 4px 12px rgba(10,11,95,0.3)" : "none",
+            transition: "all 0.15s ease",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+          }}
+        >
+          📊 Kurva WHO &amp; CDC
+        </button>
+
+        <button
+          type="button"
+          onClick={() => setTab("longitudinal")}
+          style={{
+            flex: 1,
+            padding: "10px 16px",
+            borderRadius: 10,
+            border: "none",
+            fontWeight: 700,
+            fontFamily: "'Quicksand', sans-serif",
+            fontSize: "13px",
+            cursor: "pointer",
+            background: tab === "longitudinal" ? "#0A0B5F" : "transparent",
+            color: tab === "longitudinal" ? "#FFFFFF" : "#1E293B",
+            boxShadow: tab === "longitudinal" ? "0 4px 12px rgba(10,11,95,0.3)" : "none",
+            transition: "all 0.15s ease",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 6,
+          }}
+        >
+          📈 Pemantauan Longitudinal
+        </button>
+      </div>
+
+      {/* Tab Content */}
+      {tab === "longitudinal" ? <GrowthTrackingPanel /> : <GrowthTool />}
     </div>
   );
 }

@@ -4,13 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FormattedMessage } from "./FormattedMessage";
-
-interface Message {
-  id: string;
-  sender: "user" | "ai";
-  text: string;
-  timestamp: string;
-}
+import { useAiChatStore, type Message } from "./useAiChatStore";
 
 const PRESET_PROMPTS = [
   "Berapa dosis Epinefrin resusitasi & nebulizer anak 10 kg?",
@@ -23,17 +17,7 @@ const PRESET_PROMPTS = [
 
 export function AiAssistantWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome",
-      sender: "ai",
-      text: "Halo! Saya **Asisten AI Klinis Tinyverse**. Saya telah mempelajari seluruh modul, kalkulator, pedoman IDAI, dan konten medis di web Tinyverse ini.\n\nAda yang bisa saya bantu terkait dosis obat, terapi cairan, resusitasi PALS, alur tatalaksana, atau panduan alat klinis?",
-      timestamp: new Date().toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    },
-  ]);
+  const { messages, setMessages, resetChat } = useAiChatStore();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -47,15 +31,31 @@ export function AiAssistantWidget() {
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
+      document.body.classList.add("tv-ai-chat-open");
+    } else {
+      document.body.classList.remove("tv-ai-chat-open");
     }
+    return () => {
+      document.body.classList.remove("tv-ai-chat-open");
+    };
   }, [messages, isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isOpen]);
 
   const handleSend = async (promptText?: string) => {
     const textToSend = promptText || input;
     if (!textToSend.trim() || isLoading) return;
 
+    const msgId = `user-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: msgId,
       sender: "user",
       text: textToSend.trim(),
       timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -107,7 +107,7 @@ export function AiAssistantWidget() {
       }
 
       const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `ai-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
         text: data.text,
         timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -120,7 +120,7 @@ export function AiAssistantWidget() {
     } catch (err: unknown) {
       const errText = err instanceof Error ? err.message : "Gagal terhubung ke Asisten AI. Pastikan kunci GEMINI_API_KEY terkonfigurasi di Settings > Secrets.";
       const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `ai-err-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
         text: `⚠️ **Terjadi Kendala:** ${errText}`,
         timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -142,78 +142,80 @@ export function AiAssistantWidget() {
 
   return (
     <>
-      {/* Tombol Melayang AI FAB (Ukuran & Posisi Presisi Sama dengan Profil Pasien) */}
-      <div
-        className="tv-ai-fab-container"
-        style={{
-          position: "fixed",
-          bottom: 18,
-          right: 84,
-          zIndex: 8500,
-          display: "flex",
-          alignItems: "center",
-          gap: 10,
-        }}
-      >
-        {/* Floating Label Badge */}
+      {/* Tombol Melayang AI FAB (Sembunyi saat Drawer Chat Terbuka) */}
+      {!isOpen && (
         <div
+          className="tv-ai-fab-container"
           style={{
-            padding: "6px 13px",
-            borderRadius: 18,
-            backgroundColor: "var(--tv-navy, #0a0b5f)",
-            color: "#ffffff",
-            fontFamily: "'Fredoka', 'Quicksand', sans-serif",
-            fontSize: 12,
-            fontWeight: 700,
-            boxShadow: "0 4px 14px rgba(10, 11, 95, 0.25)",
-            border: "1px solid rgba(217, 54, 166, 0.35)",
+            position: "fixed",
+            bottom: 18,
+            right: 84,
+            zIndex: 8500,
             display: "flex",
             alignItems: "center",
-            gap: 7,
-            cursor: "pointer",
-            whiteSpace: "nowrap",
+            gap: 10,
           }}
-          onClick={() => setIsOpen(true)}
         >
-          <span>Asisten AI</span>
-          <span
+          {/* Floating Label Badge */}
+          <div
             style={{
-              width: 7,
-              height: 7,
-              borderRadius: "50%",
-              backgroundColor: "#4ade80",
-              boxShadow: "0 0 8px #4ade80",
+              padding: "6px 13px",
+              borderRadius: 18,
+              backgroundColor: "var(--tv-navy, #0a0b5f)",
+              color: "#ffffff",
+              fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+              fontSize: 12,
+              fontWeight: 700,
+              boxShadow: "0 4px 14px rgba(10, 11, 95, 0.25)",
+              border: "1px solid rgba(217, 54, 166, 0.35)",
+              display: "flex",
+              alignItems: "center",
+              gap: 7,
+              cursor: "pointer",
+              whiteSpace: "nowrap",
             }}
-          />
-        </div>
+            onClick={() => setIsOpen(true)}
+          >
+            <span>Asisten AI</span>
+            <span
+              style={{
+                width: 7,
+                height: 7,
+                borderRadius: "50%",
+                backgroundColor: "#4ade80",
+                boxShadow: "0 0 8px #4ade80",
+              }}
+            />
+          </div>
 
-        {/* Circle Button - Ukuran (52px x 52px), border 0, ring shadow, & bottom (18px) persis seperti Profil Pasien */}
-        <button
-          type="button"
-          id="tvAiFab"
-          aria-label="Asisten AI Tinyverse"
-          title="Asisten AI Tinyverse"
-          onClick={() => setIsOpen(true)}
-          style={{
-            width: 52,
-            height: 52,
-            border: 0,
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #0a0b5f 0%, #d936a6 100%)",
-            color: "#ffffff",
-            boxShadow: "0 0 0 5px rgba(217, 54, 166, 0.20), 0 8px 22px rgba(10, 11, 95, 0.20)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "1.35rem",
-            cursor: "pointer",
-            transition: "transform 0.15s",
-            flexShrink: 0,
-          }}
-        >
-          🤖
-        </button>
-      </div>
+          {/* Circle Button */}
+          <button
+            type="button"
+            id="tvAiFab"
+            aria-label="Asisten AI Tinyverse"
+            title="Asisten AI Tinyverse"
+            onClick={() => setIsOpen(true)}
+            style={{
+              width: 52,
+              height: 52,
+              border: 0,
+              borderRadius: "50%",
+              background: "linear-gradient(135deg, #0a0b5f 0%, #d936a6 100%)",
+              color: "#ffffff",
+              boxShadow: "0 0 0 5px rgba(217, 54, 166, 0.20), 0 8px 22px rgba(10, 11, 95, 0.20)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "1.35rem",
+              cursor: "pointer",
+              transition: "transform 0.15s",
+              flexShrink: 0,
+            }}
+          >
+            🤖
+          </button>
+        </div>
+      )}
 
       {/* Drawer / Floating Chat Window */}
       {isOpen && (
@@ -226,7 +228,7 @@ export function AiAssistantWidget() {
             bottom: 0,
             backgroundColor: "rgba(10, 11, 79, 0.35)",
             backdropFilter: "blur(4px)",
-            zIndex: 1000,
+            zIndex: 9500,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "stretch",
@@ -322,6 +324,28 @@ export function AiAssistantWidget() {
               </div>
 
               <div style={{ display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 1 }}>
+                <button
+                  type="button"
+                  onClick={resetChat}
+                  style={{
+                    fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                    fontSize: 12,
+                    color: "#dc2626",
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(220, 38, 38, 0.25)",
+                    boxShadow: "0 1px 4px rgba(220, 38, 38, 0.08)",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                  title="Reset Percakapan"
+                >
+                  🔄 Reset
+                </button>
                 <Link
                   href="/preview/ai-assistant"
                   onClick={() => setIsOpen(false)}

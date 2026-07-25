@@ -1093,48 +1093,137 @@ body {
 @media (max-width: 768px){#tvPasienFab{left:14px;bottom:14px;width:48px;height:48px;font-size:1.22rem}}
 #tvPasienOverlay{position:fixed;inset:0;z-index:8600;display:none;align-items:flex-end;justify-content:flex-start;padding:18px;background:rgba(10,11,40,.28)}
 #tvPasienOverlay.tampil{display:flex}
-.tv-pas-card{width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 32px);overflow:auto;background:#fff;border-radius:20px;padding:18px;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:'Quicksand',sans-serif}
-.tv-pas-head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px}
+.tv-pas-card{width:min(440px,calc(100vw - 32px));max-height:calc(100vh - 36px);overflow:auto;background:#fff;border-radius:20px;padding:20px;box-shadow:0 24px 60px rgba(0,0,0,.28);font-family:'Quicksand',sans-serif}
 .tv-pas-card h3{margin:0 0 2px;font-family:'Fredoka',sans-serif;color:#1B2A6B;font-size:1.08rem}
 .tv-pas-sub{margin:0 0 12px;font-size:.78rem;color:#6B7280;line-height:1.4}
 
-/* Tabs & Multi-Pasien */
-.tv-pas-tabs{display:flex;background:#F1F5F9;padding:3px;border-radius:10px;margin-bottom:12px;gap:3px}
-.tv-pas-tab-btn{flex:1;padding:7px 10px;border:none;background:transparent;border-radius:7px;font-family:inherit;font-weight:600;font-size:.8rem;color:#64748B;cursor:pointer;transition:all .15s ease}
-.tv-pas-tab-btn.aktif{background:#ffffff;color:#0F172A;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+/* Multi-patient Section */
+.tv-pas-list-sec {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+.tv-pas-list-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.tv-pas-list-hdr h4 {
+  margin: 0;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.88rem;
+  color: #1E293B;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tv-pas-btn-add {
+  background: #EEF2FF;
+  color: #4F46E5;
+  border: 1px solid #C7D2FE;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  font-family: 'Fredoka', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tv-pas-btn-add:hover {
+  background: #E0E7FF;
+}
 
-.tv-pas-active-banner{background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:12px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:10px}
-.tv-pas-active-info{display:flex;flex-direction:column;gap:2px}
-.tv-pas-active-tag{display:inline-flex;align-items:center;gap:4px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#047857;background:#ECFDF5;padding:2px 8px;border-radius:999px;width:fit-content;border:1px solid #A7F3D0}
-
-.tv-pas-search{width:100%;box-sizing:border-box;padding:8px 12px;border:1px solid #CBD5E1;border-radius:8px;font-size:.84rem;margin-bottom:10px;font-family:inherit;background:#FFFFFF;transition:border-color .15s ease}
-.tv-pas-search:focus{outline:0;border-color:#2563EB}
-
-.tv-pas-list{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow-y:auto;padding-right:2px}
-.tv-pas-item{border:1px solid #E2E8F0;border-radius:12px;padding:12px;background:#ffffff;transition:all .15s ease;display:flex;flex-direction:column;gap:8px;box-shadow:0 1px 2px rgba(0,0,0,.02)}
-.tv-pas-item:hover{border-color:#94A3B8;box-shadow:0 2px 8px rgba(0,0,0,.04)}
-.tv-pas-item.is-active{border:1.5px solid #10B981;background:#F0FDF4}
-.tv-pas-item-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.tv-pas-item-nama{font-family:inherit;font-weight:700;font-size:.92rem;color:#0F172A;line-height:1.2}
-.tv-pas-item-rm{font-size:.72rem;font-weight:600;color:#475467;background:#F1F5F9;padding:2px 6px;border-radius:6px}
-.tv-pas-vitals{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:.8rem;color:#334155}
-.tv-pas-vital-pill{background:#F8FAFC;border:1px solid #E2E8F0;padding:2px 7px;border-radius:6px;color:#334155;font-weight:600;font-size:.76rem}
-.tv-pas-item-actions{display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-top:2px}
-
-.tv-pas-btn-sm{padding:5px 11px;border-radius:6px;font-family:inherit;font-weight:600;font-size:.78rem;border:1px solid transparent;cursor:pointer;transition:all .12s ease}
-.tv-pas-btn-sm:hover{transform:translateY(-1px)}
-.tv-pas-btn-switch{background:#0F172A;color:#ffffff;border:none}
-.tv-pas-btn-switch:hover{background:#1E293B}
-.tv-pas-btn-edit{background:#F1F5F9;color:#334155;border:1px solid #E2E8F0}
-.tv-pas-btn-edit:hover{background:#E2E8F0}
-.tv-pas-btn-del{background:#FFFFFF;color:#B42318;border:1px solid #FECDCA}
-.tv-pas-btn-del:hover{background:#FEF2F2}
-
-/* Topbar Patient Chip */
-.tv-pas-topchip{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:#F2F4F7;border:1px solid #E4E7EC;border-radius:999px;font-family:'Fredoka',sans-serif;font-size:.8rem;color:#344054;cursor:pointer;transition:all .15s ease}
-.tv-pas-topchip:hover{background:#EAECF0;border-color:#D0D5DD;transform:translateY(-1px)}
-.tv-pas-topchip-ic{font-size:.9rem}
-.tv-pas-topchip-txt{max-width:160px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv-pas-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+.tv-pas-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tv-pas-item:hover {
+  border-color: #A5B4FC;
+  background: #F5F3FF;
+}
+.tv-pas-item.aktif {
+  border-color: #7C5CFC;
+  background: #F0EEFF;
+  box-shadow: 0 0 0 1px #7C5CFC;
+}
+.tv-pas-item-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.tv-pas-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #E0E7FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+.tv-pas-item-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tv-pas-item-name {
+  font-weight: 700;
+  font-size: 0.83rem;
+  color: #0F172A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-pas-item-sub {
+  font-size: 0.71rem;
+  color: #64748B;
+}
+.tv-pas-item-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #7C5CFC;
+  background: #EDE9FE;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  flex-shrink: 0;
+}
+.tv-pas-item-del {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: color 0.15s;
+}
+.tv-pas-item-del:hover {
+  color: #EF4444;
+  background: #FEE2E2;
+}
 
 .tv-pas-row{display:flex;gap:8px}
 .tv-pas-f{flex:1;margin-bottom:10px}
@@ -1173,6 +1262,12 @@ body {
   #tvPasienFab { left: auto; right: 14px; }
   .tv-ai-fab-container { bottom: 14px !important; right: 70px !important; gap: 6px !important; }
   #tvAiFab { width: 48px !important; height: 48px !important; font-size: 1.22rem !important; }
+}
+
+/* Sembunyikan tombol melayang (AI & Profil Pasien) saat drawer Chat AI terbuka */
+body.tv-ai-chat-open #tvPasienFab,
+body.tv-ai-chat-open .tv-ai-fab-container {
+  display: none !important;
 }
 
 /* ============================================================
@@ -2172,36 +2267,3 @@ body.tv-tanpa-dekorasi .bg-decor {
   color: #d936a6 !important;
   box-shadow: none !important;
 }
-
-/* ================================================================
-   Responsive Layout & Fix Himpit Chat untuk Asisten AI
-   ================================================================ */
-.tv-ai-page-grid {
-  display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 20px;
-  align-items: start;
-  width: 100%;
-}
-
-.tv-ai-chat-box {
-  width: 100%;
-  min-width: 0;
-}
-
-@media (max-width: 900px) {
-  .tv-ai-page-grid {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
-  }
-  .tv-ai-chat-box {
-    height: 520px !important;
-  }
-}
-
-@media (max-width: 480px) {
-  .tv-ai-chat-box {
-    height: 480px !important;
-  }
-}
-

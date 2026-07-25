@@ -3,13 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
-
-interface Message {
-  id: string;
-  sender: "user" | "ai";
-  text: string;
-  timestamp: string;
-}
+import { useAiChatStore, type Message } from "@/widgets/ai-assistant";
 
 const PRESET_TOPICS = [
   {
@@ -53,29 +47,7 @@ interface PasienData {
 }
 
 export default function AiAssistantPage() {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: "welcome",
-      sender: "ai",
-      text: `Selamat datang di **Asisten AI Klinis Terpusat Tinyverse**! 🤖
-
-Saya telah diprogram untuk memahami seluruh modul, fitur, dan referensi medis di platform Tinyverse:
-- **Mode Darurat & Resusitasi PALS** (/preview/darurat)
-- **Alur Tatalaksana Interaktif** (/preview/alur)
-- **Kalkulator Dosis Obat & Racik Puyer** (/preview/dosing & /preview/puyer)
-- **Terapi Cairan Holliday-Segar & Diare** (/preview/fluids)
-- **Interpretasi AGD & Nilai Lab Pediatrik** (/preview/lab)
-- **Skoring Klinis (PEWS, GCS, Downes, Westley)** (/preview/skoring)
-- **Kurva Z-score Pertumbuhan WHO/CDC** (/preview/pertumbuhan)
-- **Guideline IDAI & Jadwal Imunisasi** (/preview/guideline & /preview/imunisasi)
-
-Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Tinyverse ini!`,
-      timestamp: new Date().toLocaleTimeString("id-ID", {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    },
-  ]);
+  const { messages, setMessages, resetChat } = useAiChatStore();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -106,8 +78,9 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
     const textToSend = promptText || input;
     if (!textToSend.trim() || isLoading) return;
 
+    const msgId = `user-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`;
     const userMsg: Message = {
-      id: Date.now().toString(),
+      id: msgId,
       sender: "user",
       text: textToSend.trim(),
       timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -146,7 +119,7 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
       }
 
       const aiMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `ai-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
         text: data.text,
         timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -159,7 +132,7 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
     } catch (err: unknown) {
       const errText = err instanceof Error ? err.message : "Gagal menghubungkan ke Asisten AI Gemini. Silakan periksa koneksi dan setelan GEMINI_API_KEY.";
       const errorMsg: Message = {
-        id: (Date.now() + 1).toString(),
+        id: `ai-err-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
         text: `⚠️ **Terjadi Kesalahan:** ${errText}`,
         timestamp: new Date().toLocaleTimeString("id-ID", {
@@ -177,12 +150,6 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
-  };
-
-  const resetChat = () => {
-    if (messages[0]) {
-      setMessages([messages[0]]);
-    }
   };
 
   return (
@@ -308,10 +275,17 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
         </div>
       </div>
 
-      <div className="tv-ai-page-grid">
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 320px",
+          gap: 20,
+          alignItems: "start",
+        }}
+        className="tv-ai-page-grid"
+      >
         {/* Kolom Percakapan Utama */}
         <div
-          className="tv-ai-chat-box"
           style={{
             backgroundColor: "#ffffff",
             borderRadius: 16,
@@ -321,8 +295,6 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
             flexDirection: "column",
             height: 680,
             overflow: "hidden",
-            width: "100%",
-            minWidth: 0,
           }}
         >
           {/* Header Panel Chat */}
@@ -498,7 +470,6 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
               disabled={isLoading}
               style={{
                 flex: 1,
-                minWidth: 0,
                 padding: "12px 18px",
                 borderRadius: 24,
                 border: "1px solid #cbd5e1",
@@ -512,7 +483,6 @@ Silakan tanyakan pertanyaan klinis atau minta panduan penggunaan fitur di web Ti
               type="submit"
               disabled={isLoading || !input.trim()}
               style={{
-                flexShrink: 0,
                 padding: "12px 24px",
                 borderRadius: 24,
                 background:
