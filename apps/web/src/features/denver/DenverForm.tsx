@@ -530,10 +530,10 @@ export function DenverForm({ onBack }: DenverFormProps) {
                       <span>📊</span> Skala Persentil Milestone:
                     </span>
                     <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10.5, fontWeight: 700 }}>
-                      <span style={{ background: "#E0F2FE", color: "#0369A1", padding: "2px 7px", borderRadius: 6 }}>25%: {item.p25}b</span>
-                      <span style={{ background: "#DBEAFE", color: "#1D4ED8", padding: "2px 7px", borderRadius: 6 }}>50%: {item.p50}b</span>
-                      <span style={{ background: "#FEF3C7", color: "#B45309", padding: "2px 7px", borderRadius: 6 }}>75%: {item.p75}b</span>
-                      <span style={{ background: "#FEE2E2", color: "#B91C1C", padding: "2px 7px", borderRadius: 6 }}>90%: {item.p90}b</span>
+                      <span style={{ background: "#E0F2FE", color: "#0369A1", padding: "2px 7px", borderRadius: 6 }}>25%: {item.p25} bln</span>
+                      <span style={{ background: "#DBEAFE", color: "#1D4ED8", padding: "2px 7px", borderRadius: 6 }}>50%: {item.p50} bln</span>
+                      <span style={{ background: "#FEF3C7", color: "#B45309", padding: "2px 7px", borderRadius: 6 }}>75%: {item.p75} bln</span>
+                      <span style={{ background: "#FEE2E2", color: "#B91C1C", padding: "2px 7px", borderRadius: 6 }}>90%: {item.p90} bln</span>
                     </div>
                   </div>
 
