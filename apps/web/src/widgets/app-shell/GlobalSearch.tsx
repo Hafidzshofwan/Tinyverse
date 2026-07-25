@@ -105,8 +105,13 @@ export function GlobalSearch() {
   function go(e: SearchEntry) {
     setOpen(false);
     setQuery("");
+    if (e.anchor) {
+      try {
+        sessionStorage.setItem("tv_search_target", JSON.stringify({ anchor: e.anchor, href: e.href }));
+      } catch {}
+    }
     const url = e.anchor
-      ? e.href + "#tk=" + encodeURIComponent(e.anchor)
+      ? (e.href.includes("#") ? e.href : e.href + "#tk=" + encodeURIComponent(e.anchor))
       : e.href;
     router.push(url);
   }

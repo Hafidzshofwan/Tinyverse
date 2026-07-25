@@ -79,35 +79,54 @@ export function ScoreCatalog() {
     if (i === 0) setUsiaAutoDariProfil(false);
   };
 
-  // Deep-link dari pencarian global: gulir & sorot kartu skor yang dituju.
+  // Deep-link dari pencarian global: buka / sorot kartu skor yang dituju.
   useEffect(() => {
-    const h = window.location.hash || "";
-    const m = h.match(/[#&]tk=([^&]+)/);
-    if (!m) return;
-    const tk = decodeURIComponent(m[1] ?? "");
-    const bersih = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "");
-    let el: HTMLElement | null = null;
-    if (tk.indexOf("id:") === 0) {
-      el = document.getElementById(tk.slice(3));
-    } else if (tk.indexOf("text:") === 0) {
-      const needle = bersih(tk.slice(5));
-      const nodes = document.querySelectorAll<HTMLElement>(".tv-skor-card");
-      nodes.forEach((n) => {
-        if (!el && bersih(n.textContent || "").indexOf(needle) !== -1) el = n;
-      });
+    function evaluateSkor() {
+      if (typeof window === "undefined") return;
+
+      // 1) Cek URL search parameter: ?skor=cds
+      const params = new URLSearchParams(window.location.search);
+      const skorParam = params.get("skor");
+      if (skorParam) {
+        buka(skorParam);
+        return;
+      }
+
+      // 2) Cek hash: #tk=id:skor-cds
+      const h = window.location.hash || "";
+      const m = h.match(/[#&]tk=([^&]+)/);
+      if (m) {
+        const tk = decodeURIComponent(m[1] ?? "");
+        if (tk.indexOf("id:skor-") === 0) {
+          const id = tk.slice(8);
+          buka(id);
+          return;
+        }
+      }
+
+      // 3) Cek sessionStorage
+      try {
+        const rawTarget = sessionStorage.getItem("tv_search_target");
+        if (rawTarget) {
+          const parsed = JSON.parse(rawTarget);
+          const anchor = String(parsed.anchor || "");
+          const href = String(parsed.href || "");
+          const matchHref = href.match(/[?&]skor=([^&]+)/);
+          if (matchHref && matchHref[1]) {
+            buka(matchHref[1]);
+            return;
+          }
+          if (anchor.startsWith("id:skor-")) {
+            buka(anchor.replace("id:skor-", ""));
+            return;
+          }
+        }
+      } catch {}
     }
-    const target = el;
-    if (!target) return;
-    window.setTimeout(() => {
-      target.scrollIntoView({ behavior: "smooth", block: "center" });
-      const lama = target.style.boxShadow;
-      target.style.transition = "box-shadow .25s ease";
-      target.style.boxShadow =
-        "0 0 0 3px #E5006D, 0 0 0 8px rgba(229,0,109,.22)";
-      window.setTimeout(() => {
-        target.style.boxShadow = lama;
-      }, 2000);
-    }, 220);
+
+    evaluateSkor();
+    window.addEventListener("hashchange", evaluateSkor);
+    return () => window.removeEventListener("hashchange", evaluateSkor);
   }, []);
 
   const bannerPasien = adaInfoPasien ? (

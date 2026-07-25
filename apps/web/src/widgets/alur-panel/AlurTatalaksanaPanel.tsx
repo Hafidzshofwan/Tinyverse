@@ -297,22 +297,58 @@ export function AlurTatalaksanaPanel() {
     setBagan(false);
   }, []);
 
-  // Deep-link dari pencarian global: buka penyakit langsung dari #tk=alur:<id>.
-  // Contoh: /preview/alur#tk=alur:dbd akan langsung membuka alur DBD.
+  // Deep-link dari pencarian global: buka penyakit langsung dari ?kondisi=<id> atau #tk=alur:<id>.
   useEffect(() => {
-    function bukaDariHash() {
+    function bukaDariHashAtauQuery() {
+      if (typeof window === "undefined") return;
+
+      // 1) Cek query param ?kondisi=dbd
+      const params = new URLSearchParams(window.location.search);
+      const kondisiParam = params.get("kondisi") || params.get("id");
+      if (kondisiParam) {
+        const k = DAFTAR_KONDISI.find((x) => x.id === kondisiParam && x.tersedia);
+        if (k) {
+          pilihKondisi(k);
+          return;
+        }
+      }
+
+      // 2) Cek hash #tk=alur:dbd
       const h = window.location.hash || "";
       const m = h.match(/[#&]tk=([^&]+)/);
-      if (!m) return;
-      const tk = decodeURIComponent(m[1] ?? "");
-      if (tk.indexOf("alur:") !== 0) return;
-      const id = tk.slice(5);
-      const k = DAFTAR_KONDISI.find((x) => x.id === id && x.tersedia);
-      if (k) pilihKondisi(k);
+      if (m) {
+        const tk = decodeURIComponent(m[1] ?? "");
+        if (tk.indexOf("alur:") === 0) {
+          const id = tk.slice(5);
+          const k = DAFTAR_KONDISI.find((x) => x.id === id && x.tersedia);
+          if (k) {
+            pilihKondisi(k);
+            return;
+          }
+        }
+      }
+
+      // 3) Cek sessionStorage
+      try {
+        const rawTarget = sessionStorage.getItem("tv_search_target");
+        if (rawTarget) {
+          const parsed = JSON.parse(rawTarget);
+          const anchor = String(parsed.anchor || "");
+          if (anchor.startsWith("alur:")) {
+            const id = anchor.replace("alur:", "");
+            const k = DAFTAR_KONDISI.find((x) => x.id === id && x.tersedia);
+            if (k) {
+              pilihKondisi(k);
+              return;
+            }
+          }
+        }
+      } catch {}
     }
-    bukaDariHash();
-    window.addEventListener("hashchange", bukaDariHash);
-    return () => window.removeEventListener("hashchange", bukaDariHash);
+
+    bukaDariHashAtauQuery();
+    window.addEventListener("hashchange", bukaDariHashAtauQuery);
+    return () => window.removeEventListener("hashchange", bukaDariHashAtauQuery);
   }, [pilihKondisi]);
 
   const punyaPasien = !!(

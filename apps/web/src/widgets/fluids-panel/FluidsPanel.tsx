@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MaintenanceForm } from "@/features/fluid-maintenance";
 import { DripForm } from "@/features/fluid-drip";
 import { BurnForm } from "@/features/burn-calculator";
@@ -24,6 +24,34 @@ const SUBTITLE: Record<MainTab, string> = {
 
 export function FluidsPanel() {
   const [tab, setTab] = useState<MainTab>("holliday");
+
+  useEffect(() => {
+    function evaluateTab() {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as MainTab | null;
+      if (tabParam && ["holliday", "who", "burn", "drip"].includes(tabParam)) {
+        setTab(tabParam);
+        return;
+      }
+      try {
+        const rawTarget = sessionStorage.getItem("tv_search_target");
+        if (rawTarget) {
+          const parsed = JSON.parse(rawTarget);
+          const anchor = String(parsed.anchor || "").toLowerCase();
+          const href = String(parsed.href || "").toLowerCase();
+          if (href.includes("tab=who") || anchor.includes("who") || anchor.includes("rehidrasi")) setTab("who");
+          else if (href.includes("tab=burn") || anchor.includes("burn") || anchor.includes("luka bakar")) setTab("burn");
+          else if (href.includes("tab=drip") || anchor.includes("drip") || anchor.includes("faktor tetes")) setTab("drip");
+          else if (href.includes("tab=holliday") || anchor.includes("holliday")) setTab("holliday");
+        }
+      } catch {}
+    }
+
+    evaluateTab();
+    window.addEventListener("hashchange", evaluateTab);
+    return () => window.removeEventListener("hashchange", evaluateTab);
+  }, []);
 
   return (
     <div className="tv-page-cairan-wrapper">

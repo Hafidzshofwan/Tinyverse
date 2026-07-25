@@ -29,36 +29,73 @@ export function VaccineCatalog() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const h = window.location.hash || "";
-    const m = h.match(/[#&]tk=([^&]+)/);
-    if (!m) return;
-    const tk = decodeURIComponent(m[1] ?? "");
-    if (tk.indexOf("vaksin:") !== 0) return;
-    const needle = bersih(tk.slice(7));
-    if (needle.length < 2) return;
+    function evaluateVaksin() {
+      if (typeof window === "undefined") return;
 
-    let idx = -1;
-    for (let q = 0; q < VACCINES.length; q++) {
-      const vk = bersih(VACCINES[q]?.nama ?? "");
-      if (vk && (vk.indexOf(needle) !== -1 || needle.indexOf(vk) !== -1)) {
-        idx = q;
-        break;
+      let needle = "";
+
+      // 1) Cek URL search parameter ?vaksin=dpt
+      const params = new URLSearchParams(window.location.search);
+      const vParam = params.get("vaksin");
+      if (vParam) {
+        needle = bersih(vParam);
       }
-    }
-    if (idx < 0) return;
-    setIndex(idx);
 
-    window.setTimeout(() => {
-      const head = document.getElementById("vaksinAktif");
-      if (!head) return;
-      head.scrollIntoView({ behavior: "smooth", block: "center" });
-      const lama = head.style.boxShadow;
-      head.style.transition = "box-shadow .25s ease";
-      head.style.boxShadow = "0 0 0 3px #E5006D, 0 0 0 8px rgba(229,0,109,.22)";
+      // 2) Cek hash #tk=vaksin:dpt
+      if (!needle) {
+        const h = window.location.hash || "";
+        const m = h.match(/[#&]tk=([^&]+)/);
+        if (m) {
+          const tk = decodeURIComponent(m[1] ?? "");
+          if (tk.indexOf("vaksin:") === 0) {
+            needle = bersih(tk.slice(7));
+          }
+        }
+      }
+
+      // 3) Cek sessionStorage
+      if (!needle) {
+        try {
+          const rawTarget = sessionStorage.getItem("tv_search_target");
+          if (rawTarget) {
+            const parsed = JSON.parse(rawTarget);
+            const anchor = String(parsed.anchor || "");
+            if (anchor.startsWith("vaksin:")) {
+              needle = bersih(anchor.slice(7));
+            }
+          }
+        } catch {}
+      }
+
+      if (!needle || needle.length < 2) return;
+
+      let idx = -1;
+      for (let q = 0; q < VACCINES.length; q++) {
+        const vk = bersih(VACCINES[q]?.nama ?? "");
+        if (vk && (vk.indexOf(needle) !== -1 || needle.indexOf(vk) !== -1)) {
+          idx = q;
+          break;
+        }
+      }
+      if (idx < 0) return;
+      setIndex(idx);
+
       window.setTimeout(() => {
-        head.style.boxShadow = lama;
-      }, 2200);
-    }, 450);
+        const head = document.getElementById("vaksinAktif");
+        if (!head) return;
+        head.scrollIntoView({ behavior: "smooth", block: "center" });
+        const lama = head.style.boxShadow;
+        head.style.transition = "box-shadow .25s ease";
+        head.style.boxShadow = "0 0 0 3px #E5006D, 0 0 0 8px rgba(229,0,109,.22)";
+        window.setTimeout(() => {
+          head.style.boxShadow = lama;
+        }, 2200);
+      }, 450);
+    }
+
+    evaluateVaksin();
+    window.addEventListener("hashchange", evaluateVaksin);
+    return () => window.removeEventListener("hashchange", evaluateVaksin);
   }, []);
 
   const v = VACCINES[index];

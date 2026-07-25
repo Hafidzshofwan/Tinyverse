@@ -93,6 +93,34 @@ export function DaruratPanel() {
   }, []);
 
   useEffect(() => {
+    function evaluateTab() {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as TabId | null;
+      if (tabParam && ["gcs", "pat", "pals", "resus"].includes(tabParam)) {
+        setTab(tabParam);
+        return;
+      }
+      try {
+        const rawTarget = sessionStorage.getItem("tv_search_target");
+        if (rawTarget) {
+          const parsed = JSON.parse(rawTarget);
+          const anchor = String(parsed.anchor || "").toLowerCase();
+          const href = String(parsed.href || "").toLowerCase();
+          if (href.includes("tab=pat") || anchor.includes("pat")) setTab("pat");
+          else if (href.includes("tab=pals") || anchor.includes("pals")) setTab("pals");
+          else if (href.includes("tab=resus") || anchor.includes("resus") || anchor.includes("resusitasi")) setTab("resus");
+          else if (href.includes("tab=gcs") || anchor.includes("gcs") || anchor.includes("glasgow")) setTab("gcs");
+        }
+      } catch {}
+    }
+
+    evaluateTab();
+    window.addEventListener("hashchange", evaluateTab);
+    return () => window.removeEventListener("hashchange", evaluateTab);
+  }, []);
+
+  useEffect(() => {
     syncDariPusat();
     const onStorage = (e: StorageEvent) => {
       if (e.key === PASIEN_KEY || e.key === NORM_KEY) syncDariPusat();

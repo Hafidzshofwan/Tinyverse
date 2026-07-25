@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePatientProfile } from "@/shared/lib/patient";
 import { ReferenceTab } from "@/features/lab-reference";
 import { BloodTab } from "@/features/lab-blood";
@@ -19,6 +19,34 @@ const TABS: { id: TabId; label: string }[] = [
 export function LabPanel() {
   const profile = usePatientProfile();
   const [tab, setTab] = useState<TabId>("rujukan");
+
+  useEffect(() => {
+    function evaluateTab() {
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
+      const tabParam = params.get("tab") as TabId | null;
+      if (tabParam && ["rujukan", "darah", "elektrolit", "agd"].includes(tabParam)) {
+        setTab(tabParam);
+        return;
+      }
+      try {
+        const rawTarget = sessionStorage.getItem("tv_search_target");
+        if (rawTarget) {
+          const parsed = JSON.parse(rawTarget);
+          const anchor = String(parsed.anchor || "").toLowerCase();
+          const href = String(parsed.href || "").toLowerCase();
+          if (href.includes("tab=agd") || anchor.includes("agd") || anchor.includes("gas darah")) setTab("agd");
+          else if (href.includes("tab=elektrolit") || anchor.includes("elektrolit")) setTab("elektrolit");
+          else if (href.includes("tab=darah") || anchor.includes("darah") || anchor.includes("hematologi")) setTab("darah");
+          else if (href.includes("tab=rujukan") || anchor.includes("rujukan")) setTab("rujukan");
+        }
+      } catch {}
+    }
+
+    evaluateTab();
+    window.addEventListener("hashchange", evaluateTab);
+    return () => window.removeEventListener("hashchange", evaluateTab);
+  }, []);
 
   const hasProfile = profile.usiaBulan != null || profile.bb != null;
   const info = hasProfile
