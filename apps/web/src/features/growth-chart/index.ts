@@ -1,2 +1,9 @@
 export { GrowthTool } from "./GrowthTool";
-export { hitungIMT, tkHitungZscoreNumerik, tkInterpolasiZscoreRow } from "./zscore";
+export { GrowthTrackingPanel } from "./GrowthTrackingPanel";
+export { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
+
+export {
+  hitungIMT,
+  tkHitungZscoreNumerik,
+  tkInterpolasiZscoreRow,
+} from "./zscore";
