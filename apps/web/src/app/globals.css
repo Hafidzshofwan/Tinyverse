@@ -1101,6 +1101,48 @@ body {
 .tv-pas-card h3{margin:0 0 2px;font-family:'Fredoka',sans-serif;color:#1B2A6B;font-size:1.08rem}
 .tv-pas-sub{margin:0 0 12px;font-size:.78rem;color:#6B7280;line-height:1.4}
 
+/* Tab Navigasi Modal Pasien */
+.tv-pas-tabs {
+  display: flex;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: 12px;
+  gap: 4px;
+  margin-bottom: 14px;
+  border: 1px solid #E2E8F0;
+}
+
+.tv-pas-tab-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: #64748B;
+  font-family: 'Fredoka', 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+
+.tv-pas-tab-btn:hover {
+  color: #1E293B;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tv-pas-tab-btn.aktif {
+  background: #FFFFFF;
+  color: #0F172A;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1), 0 1px 2px rgba(15, 23, 42, 0.06);
+  font-weight: 700;
+}
+
 /* Multi-patient Section */
 .tv-pas-list-sec {
   background: #F8FAFC;

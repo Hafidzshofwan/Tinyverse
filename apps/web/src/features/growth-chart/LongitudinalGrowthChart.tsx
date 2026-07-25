@@ -24,7 +24,6 @@ import {
 import { tkInterpolasiZscoreRow, tkHitungZscoreNumerik, hitungIMT } from "./zscore";
 
 export type ChartMetric = "bbu" | "tbu" | "imtu";
-export type ScaleMode = "zscore" | "physical";
 
 interface LongitudinalGrowthChartProps {
   records: GrowthRecord[];
@@ -37,8 +36,7 @@ export function LongitudinalGrowthChart({
   gender = "male",
 }: LongitudinalGrowthChartProps) {
   const [metric, setMetric] = useState<ChartMetric>("bbu");
-  const scaleMode: ScaleMode = "physical";
-
+  
   // Urutkan catatan pasien
   const sortedRecords = useMemo(() => {
     return [...records].sort((a, b) => a.usiaBulan - b.usiaBulan);

@@ -180,21 +180,60 @@ export function PatientProfile() {
         }}
       >
         <div className="tv-pas-card" role="dialog" aria-label="Profil Pasien">
-          <div className="tv-pas-head-row">
-            <div>
-              <h3>{"\uD83D\uDC64"} Pasien Bangsal &amp; Poliklinik</h3>
-              <p className="tv-pas-sub">
-                Kelola banyak pasien, switch pasien aktif 1-klik untuk semua alat klinis.
-              </p>
+          {/* Header Row dengan Tab Navigation & Close Button di baris yang sama */}
+          <div style={{ marginBottom: "14px", borderBottom: "1px solid #F1F5F9", paddingBottom: "10px" }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
+              <h3 style={{ margin: 0, fontFamily: "'Fredoka', sans-serif", color: "#1B2A6B", fontSize: "1.05rem", display: "flex", alignItems: "center", gap: "6px" }}>
+                {"\uD83D\uDC64"} Pasien Bangsal &amp; Poliklinik
+              </h3>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                {/* 2 Tombol Tab Navigation sejajar dengan tombol silang */}
+                <div className="tv-pas-tabs" style={{ margin: 0 }}>
+                  <button
+                    type="button"
+                    className={tab === "list" ? "tv-pas-tab-btn aktif" : "tv-pas-tab-btn"}
+                    onClick={() => setTab("list")}
+                  >
+                    👥 Pasien Tersimpan ({patientList.length})
+                  </button>
+
+                  <button
+                    type="button"
+                    className={tab === "form" ? "tv-pas-tab-btn aktif" : "tv-pas-tab-btn"}
+                    onClick={() => {
+                      muatFormDariPasien(null);
+                      setTab("form");
+                    }}
+                  >
+                    ➕ {editingId ? "Edit" : "Tambah Pasien"}
+                  </button>
+                </div>
+
+                <button
+                  type="button"
+                  className="tv-pas-btn tv-pas-reset"
+                  style={{
+                    padding: "6px 12px",
+                    fontSize: "0.95rem",
+                    borderRadius: "10px",
+                    background: "#F1F5F9",
+                    border: "1px solid #E2E8F0",
+                    color: "#475467",
+                    cursor: "pointer",
+                    lineHeight: 1,
+                  }}
+                  onClick={() => setOpen(false)}
+                  title="Tutup Modal"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
-            <button
-              type="button"
-              className="tv-pas-btn tv-pas-reset"
-              style={{ padding: "4px 10px", fontSize: "1rem" }}
-              onClick={() => setOpen(false)}
-            >
-              ✕
-            </button>
+
+            <p className="tv-pas-sub" style={{ margin: 0 }}>
+              Kelola banyak pasien, switch pasien aktif 1-klik untuk semua alat klinis.
+            </p>
           </div>
 
           {toastMsg && (
@@ -215,59 +254,51 @@ export function PatientProfile() {
             </div>
           )}
 
-          {/* Navigation Tabs */}
-          <div className="tv-pas-tabs">
-            <button
-              type="button"
-              className={tab === "list" ? "tv-pas-tab-btn aktif" : "tv-pas-tab-btn"}
-              onClick={() => setTab("list")}
-            >
-              👥 Pasien Tersimpan ({patientList.length})
-            </button>
-
-            <button
-              type="button"
-              className={tab === "form" ? "tv-pas-tab-btn aktif" : "tv-pas-tab-btn"}
-              onClick={() => {
-                muatFormDariPasien(null);
-                setTab("form");
-              }}
-            >
-              ➕ {editingId ? "Edit Pasien" : "Tambah Pasien"}
-            </button>
-          </div>
-
           {/* TAB 1: LIST PASIEN */}
           {tab === "list" && (
             <>
               {/* Active Patient Highlight Banner */}
               {activeProfile.nama || activeProfile.bb || activeProfile.usiaBulan ? (
-                <div className="tv-pas-active-banner">
-                  <div className="tv-pas-active-info">
-                    <span className="tv-pas-active-tag">● Pasien Aktif</span>
-                    <strong style={{ fontSize: "0.98rem", color: "#0F172A", marginTop: "2px" }}>
-                      {activeProfile.nama || "An. Tanpa Nama"}{" "}
-                      {activeProfile.noRm ? `(${activeProfile.noRm})` : ""}
-                    </strong>
-                    <div style={{ fontSize: "0.78rem", color: "#64748B", marginTop: "2px" }}>
-                      {activeProfile.jk === "male" ? "Laki-laki" : activeProfile.jk === "female" ? "Perempuan" : "-"}{" "}
-                      • BB: <b>{activeProfile.bb != null ? `${activeProfile.bb} kg` : "-"}</b> • Usia:{" "}
-                      <b>{formatUsiaPasien(activeProfile.usiaBulan)}</b>
+                <div
+                  style={{
+                    background: "#F0FDF4",
+                    border: "1.5px solid #86EFAC",
+                    borderRadius: "12px",
+                    padding: "10px 12px",
+                    marginBottom: "12px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "10px",
+                  }}
+                >
+                  <div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                      <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#166534", background: "#DCFCE7", padding: "2px 8px", borderRadius: "999px" }}>
+                        ● Pasien Aktif
+                      </span>
+                      <strong style={{ fontSize: "0.92rem", color: "#0F172A" }}>
+                        {activeProfile.nama || "An. Tanpa Nama"}{" "}
+                        {activeProfile.noRm ? `(${activeProfile.noRm})` : ""}
+                      </strong>
+                    </div>
+                    <div style={{ fontSize: "0.76rem", color: "#475467", marginTop: "3px" }}>
+                      {activeProfile.jk === "male" ? "Laki-laki" : activeProfile.jk === "female" ? "Perempuan" : "-"} • BB: <b>{activeProfile.bb != null ? `${activeProfile.bb} kg` : "-"}</b> • Usia: <b>{formatUsiaPasien(activeProfile.usiaBulan)}</b>
                       {activeProfile.tb != null && ` • TB: ${activeProfile.tb} cm`}
                     </div>
                   </div>
                   <button
                     type="button"
-                    className="tv-pas-btn-sm"
                     style={{
-                      background: "#F1F5F9",
+                      background: "#FFFFFF",
                       border: "1px solid #CBD5E1",
                       color: "#475467",
+                      fontSize: "0.74rem",
                       fontWeight: 600,
-                      fontSize: "0.75rem",
-                      padding: "4px 10px",
-                      borderRadius: "6px",
+                      padding: "5px 10px",
+                      borderRadius: "8px",
                       cursor: "pointer",
+                      whiteSpace: "nowrap",
                     }}
                     title="Kosongkan Pasien Aktif"
                     onClick={resetActive}
@@ -294,16 +325,28 @@ export function PatientProfile() {
               {patientList.length > 0 && (
                 <input
                   type="text"
-                  className="tv-pas-search"
-                  placeholder="Cari nama, No. RM, atau lokasi/catatan..."
+                  placeholder="🔍 Cari nama, No. RM, atau catatan..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
+                  style={{
+                    width: "100%",
+                    boxSizing: "border-box",
+                    padding: "8px 12px",
+                    borderRadius: "10px",
+                    border: "1.5px solid #E2E8F0",
+                    fontSize: "0.84rem",
+                    marginBottom: "12px",
+                    outline: "none",
+                    background: "#F8FAFC",
+                    fontFamily: "inherit",
+                    color: "#0F172A",
+                  }}
                 />
               )}
 
-              <div className="tv-pas-list">
+              <div className="tv-pas-list" style={{ display: "flex", flexDirection: "column", gap: "8px", maxHeight: "360px", overflowY: "auto" }}>
                 {filteredList.length === 0 ? (
-                  <div className="tv-kosong">
+                  <div className="tv-kosong" style={{ padding: "20px 10px", textAlign: "center" }}>
                     {patientList.length === 0 ? (
                       <>
                         <div style={{ fontSize: "1.8rem", marginBottom: "6px" }}>🏥</div>
@@ -349,143 +392,164 @@ export function PatientProfile() {
                     return (
                       <div
                         key={p.id || p.nama}
-                        className={`tv-pas-item ${isAktif ? "is-active" : ""}`}
                         style={{
                           backgroundColor: itemBg,
                           borderColor: itemBorder,
+                          borderStyle: "solid",
+                          borderWidth: "1.5px",
+                          borderRadius: "14px",
+                          padding: "12px",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "8px",
+                          boxShadow: "0 1px 3px rgba(15, 23, 42, 0.04)",
                         }}
                       >
-                        <div className="tv-pas-item-top">
+                        {/* Top Row: Name & Active Badge */}
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span style={{ fontSize: "1.1rem" }}>
+                            <span style={{ fontSize: "1.2rem" }}>
                               {p.jk === "male" ? "👦" : p.jk === "female" ? "👧" : "👶"}
                             </span>
                             <div>
-                              <div className="tv-pas-item-nama">
+                              <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
                                 {p.nama || "An. Tanpa Nama"}
                               </div>
-                              <div style={{ fontSize: "0.75rem", color: "#64748B", marginTop: "1px" }}>
+                              <div style={{ fontSize: "0.74rem", color: "#64748B", marginTop: "2px" }}>
                                 {p.jk === "male" ? "Laki-laki" : p.jk === "female" ? "Perempuan" : "Anak"}
-                                {p.noRm && ` • ${p.noRm}`}
+                                {p.noRm && ` • RM: ${p.noRm}`}
                               </div>
                             </div>
                           </div>
+
                           {isAktif && (
-                            <span
-                              style={{
-                                fontSize: "0.7rem",
-                                fontWeight: 700,
-                                background: "#ECFDF5",
-                                color: "#047857",
-                                border: "1px solid #A7F3D0",
-                                padding: "2px 8px",
-                                borderRadius: "999px",
-                              }}
-                            >
+                            <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DCFCE7", color: "#15803D", border: "1px solid #86EFAC", padding: "2px 8px", borderRadius: "999px", whiteSpace: "nowrap" }}>
                               ● Aktif
                             </span>
                           )}
                         </div>
 
-                        <div className="tv-pas-vitals">
-                          <span><b>{p.bb != null ? `${p.bb} kg` : "BB -"}</b></span>
-                          <span style={{ color: "#94A3B8" }}>•</span>
-                          <span><b>{formatUsiaPasien(p.usiaBulan)}</b></span>
+                        {/* Vitals Pills Row */}
+                        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px", fontSize: "0.78rem" }}>
+                          <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                            BB: <b>{p.bb != null ? `${p.bb} kg` : "-"}</b>
+                          </span>
+                          <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                            Usia: <b>{formatUsiaPasien(p.usiaBulan)}</b>
+                          </span>
                           {p.tb != null && (
-                            <>
-                              <span style={{ color: "#94A3B8" }}>•</span>
-                              <span>TB <b>{p.tb} cm</b></span>
-                            </>
+                            <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                              TB: <b>{p.tb} cm</b>
+                            </span>
                           )}
                         </div>
 
+                        {/* Catatan if any */}
                         {p.catatan && (
-                          <div style={{ fontSize: "0.76rem", color: "#475467", background: "#F8FAFC", border: "1px solid #F1F5F9", padding: "4px 8px", borderRadius: "6px" }}>
-                            Catatan: {p.catatan}
+                          <div style={{ fontSize: "0.75rem", color: "#475467", background: "rgba(255,255,255,0.7)", border: "1px solid #E2E8F0", padding: "4px 8px", borderRadius: "6px" }}>
+                            📝 {p.catatan}
                           </div>
                         )}
 
-                        <div className="tv-pas-item-actions">
-                          {!isAktif ? (
+                        {/* Action Row */}
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "6px", borderTop: "1px solid rgba(226, 232, 240, 0.7)", marginTop: "2px" }}>
+                          {isAktif ? (
+                            <span style={{ fontSize: "0.75rem", color: "#15803D", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px" }}>
+                              ✓ Terhubung di kalkulator
+                            </span>
+                          ) : (
                             <button
                               type="button"
-                              className="tv-pas-btn-sm tv-pas-btn-switch"
+                              style={{
+                                background: "#0F766E",
+                                color: "#FFFFFF",
+                                border: "none",
+                                fontWeight: 700,
+                                padding: "5px 12px",
+                                borderRadius: "8px",
+                                fontSize: "0.75rem",
+                                cursor: "pointer",
+                                transition: "all 0.15s ease",
+                              }}
                               onClick={() => handleSwitchItem(p)}
                             >
                               Gunakan Pasien
                             </button>
-                          ) : (
-                            <span style={{ fontSize: "0.75rem", color: "#047857", fontWeight: 600, marginRight: "auto" }}>
-                              ✓ Terhubung di kalkulator
-                            </span>
                           )}
 
-                          <button
-                            type="button"
-                            className="tv-pas-btn-sm tv-pas-btn-edit"
-                            onClick={() => handleEditItem(p)}
-                          >
-                            Edit
-                          </button>
-
-                          {confirmDeleteId === p.id ? (
-                            <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                              <button
-                                type="button"
-                                className="tv-pas-btn-sm"
-                                style={{
-                                  background: "#D92D20",
-                                  color: "#ffffff",
-                                  border: "none",
-                                  fontWeight: 700,
-                                  padding: "4px 8px",
-                                  borderRadius: "6px",
-                                  cursor: "pointer",
-                                  fontSize: "0.75rem",
-                                }}
-                                onClick={() => {
-                                  if (p.id) handleHapusItem(p.id, p.nama);
-                                }}
-                              >
-                                Ya, Hapus
-                              </button>
-                              <button
-                                type="button"
-                                className="tv-pas-btn-sm"
-                                style={{
-                                  background: "#F2F4F7",
-                                  color: "#344054",
-                                  border: "1px solid #D0D5DD",
-                                  padding: "4px 8px",
-                                  borderRadius: "6px",
-                                  cursor: "pointer",
-                                  fontSize: "0.75rem",
-                                }}
-                                onClick={() => setConfirmDeleteId(null)}
-                              >
-                                Batal
-                              </button>
-                            </div>
-                          ) : (
+                          <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "auto" }}>
                             <button
                               type="button"
-                              className="tv-pas-btn-sm tv-pas-btn-del"
-                              title="Hapus pasien dari daftar"
                               style={{
                                 background: "#FFFFFF",
-                                color: "#B42318",
-                                border: "1px solid #FECDCA",
+                                border: "1px solid #CBD5E1",
+                                color: "#334155",
                                 fontWeight: 600,
-                                padding: "4px 8px",
+                                padding: "4px 10px",
                                 borderRadius: "6px",
                                 cursor: "pointer",
                                 fontSize: "0.75rem",
                               }}
-                              onClick={() => setConfirmDeleteId(p.id || null)}
+                              onClick={() => handleEditItem(p)}
                             >
-                              Hapus
+                              Edit
                             </button>
-                          )}
+
+                            {confirmDeleteId === p.id ? (
+                              <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                                <button
+                                  type="button"
+                                  style={{
+                                    background: "#DC2626",
+                                    color: "#FFFFFF",
+                                    border: "none",
+                                    fontWeight: 700,
+                                    padding: "4px 8px",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    fontSize: "0.75rem",
+                                  }}
+                                  onClick={() => {
+                                    if (p.id) handleHapusItem(p.id, p.nama);
+                                  }}
+                                >
+                                  Ya, Hapus
+                                </button>
+                                <button
+                                  type="button"
+                                  style={{
+                                    background: "#F1F5F9",
+                                    color: "#475467",
+                                    border: "1px solid #CBD5E1",
+                                    padding: "4px 8px",
+                                    borderRadius: "6px",
+                                    cursor: "pointer",
+                                    fontSize: "0.75rem",
+                                  }}
+                                  onClick={() => setConfirmDeleteId(null)}
+                                >
+                                  Batal
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                type="button"
+                                style={{
+                                  background: "#FEF2F2",
+                                  color: "#991B1B",
+                                  border: "1px solid #FCA5A5",
+                                  fontWeight: 600,
+                                  padding: "4px 8px",
+                                  borderRadius: "6px",
+                                  cursor: "pointer",
+                                  fontSize: "0.75rem",
+                                }}
+                                onClick={() => setConfirmDeleteId(p.id || null)}
+                              >
+                                Hapus
+                              </button>
+                            )}
+                          </div>
                         </div>
                       </div>
                     );
