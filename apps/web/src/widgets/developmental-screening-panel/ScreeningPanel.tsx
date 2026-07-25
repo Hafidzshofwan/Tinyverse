@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { MchatForm } from "@/features/mchat-r";
+import { KpspForm } from "@/features/kpsp";
 
 interface AlatSkrining {
   id: string;
@@ -13,23 +14,30 @@ interface AlatSkrining {
 
 const DAFTAR_ALAT: AlatSkrining[] = [
   {
+    id: "kpsp",
+    emoji: "\uD83C\uDF31",
+    nama: "KPSP (Kuesioner Pra Skrining Perkembangan)",
+    ringkas: "Skrining perkembangan umum anak (Kemenkes RI/SDIDTK) \u2014 10 pertanyaan ya/tidak.",
+    usiaSasaran: "3 Bulan (berkelanjutan hingga 72 bulan)",
+  },
+  {
     id: "mchat",
     emoji: "\uD83E\uDDE9",
     nama: "M-CHAT-R",
     ringkas: "Skrining risiko autisme (ASD) \u2014 20 pertanyaan ya/tidak.",
     usiaSasaran: "16\u201330 bulan",
   },
-  // Lapis berikutnya (belum tersedia): KPSP, Denver II, dst.
 ];
 
 /**
- * Katalog Skrining Perkembangan. Saat ini hanya M-CHAT-R yang tersedia;
- * struktur ini dibuat generik supaya alat skrining lain (KPSP, Denver II)
- * tinggal ditambahkan ke DAFTAR_ALAT tanpa mengubah tab induk di
- * GrowthPanel.
+ * Katalog Skrining Perkembangan. Mendukung M-CHAT-R dan KPSP (dimulai dari usia 3 bulan).
  */
 export function ScreeningPanel() {
   const [aktif, setAktif] = useState<string | null>(null);
+
+  if (aktif === "kpsp") {
+    return <KpspForm onBack={() => setAktif(null)} />;
+  }
 
   if (aktif === "mchat") {
     return <MchatForm onBack={() => setAktif(null)} />;
@@ -37,16 +45,6 @@ export function ScreeningPanel() {
 
   return (
     <div style={{ maxWidth: 720, margin: "0 auto" }}>
-      <div className="judul-section">
-        <div className="ikon-bulat" style={{ background: "#D936A61A", color: "#D936A6" }} aria-hidden>
-          {"\uD83E\uDDE9"}
-        </div>
-        <div>
-          <h2>Skrining Perkembangan</h2>
-          <p>Pilih alat skrining perkembangan anak yang sesuai.</p>
-        </div>
-      </div>
-
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {DAFTAR_ALAT.map((alat) => (
           <button
