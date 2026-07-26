@@ -27,15 +27,14 @@ export function AiAssistantWidget() {
     loadSession,
     deleteSession,
     createNewSession,
-    resetChat,
-  } = useAiChatStore();
+    } = useAiChatStore();
   const [input, setInput] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [showSessionsPanel, setShowSessionsPanel] = useState(false);
-  const [editingTitle, setEditingTitle] = useState(false);
-  const [sessionTitleInput, setSessionTitleInput] = useState("");
+  const [] = useState(false);
+  const [] = useState("");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
