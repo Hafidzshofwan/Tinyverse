@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { hitungPAT } from "@/entities/emergency";
 import type { PatSide, PatState } from "@/entities/emergency";
+import { PatTriangleIcon } from "@/shared/ui";
 
 const SISI: { key: keyof PatState; nama: string; hint: string }[] = [
   {
@@ -34,7 +35,9 @@ export function PatTab() {
 
   return (
     <div className="drt-panel" id="patPanel">
-      <h3>🔺 Penilaian Cepat PAT</h3>
+      <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <PatTriangleIcon size={24} /> Penilaian Cepat PAT
+      </h3>
       <p className="drt-sub">
         Pediatric Assessment Triangle — kesan pertama tanpa alat (lihat &amp;
         dengar). Tandai tiap sisi Normal / Abnormal.

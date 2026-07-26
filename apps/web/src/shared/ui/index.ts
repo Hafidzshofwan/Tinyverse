@@ -5,4 +5,5 @@ export * from "./KopSuratModal";
 export * from "./ScreeningIcon";
 export * from "./SidebarIcon";
 export * from "./AlurIcon";
+export * from "./DaruratIcons";
 

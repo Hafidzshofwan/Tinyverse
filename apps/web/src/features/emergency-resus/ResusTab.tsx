@@ -4,6 +4,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { tambahLog } from "@/entities/emergency";
 import type { ResusLogItem } from "@/entities/emergency";
+import {
+  ResusStopwatchIcon,
+  EmergencyDrugIcon,
+  DefibIcon,
+  StethoscopeIcon,
+  LungsIcon,
+  MetronomeIcon,
+  PlayTimerIcon,
+  StopTimerIcon,
+  MicVoiceIcon,
+  SaveDataIcon,
+  CopyDataIcon,
+  PrintReportIcon,
+} from "@/shared/ui";
 
 type SpeechRecError = { error?: string };
 type SpeechRec = {
@@ -51,10 +65,10 @@ function escapeHtml(s: string): string {
 }
 
 const QUICK = [
-  { aksi: "Epinefrin diberikan", label: "\uD83D\uDC89 Epinefrin" },
-  { aksi: "Syok / Defibrilasi", label: "\u26A1 Syok / Defibrilasi" },
-  { aksi: "Cek nadi / ritme", label: "\uD83E\uDE7A Cek Nadi / Ritme" },
-  { aksi: "Intubasi", label: "\uD83D\uDCA8 Intubasi" },
+  { aksi: "Epinefrin diberikan", label: "Epinefrin", icon: <EmergencyDrugIcon size={16} /> },
+  { aksi: "Syok / Defibrilasi", label: "Syok / Defibrilasi", icon: <DefibIcon size={16} /> },
+  { aksi: "Cek nadi / ritme", label: "Cek Nadi / Ritme", icon: <StethoscopeIcon size={16} /> },
+  { aksi: "Intubasi", label: "Intubasi", icon: <LungsIcon size={16} /> },
 ];
 
 const VOICE_MAP: Array<{ kata: string[]; aksi: string }> = [
@@ -98,8 +112,8 @@ export function ResusTab({
   const [running, setRunning] = useState(false);
   const [log, setLog] = useState<LogItem[]>([]);
   const [catatan, setCatatan] = useState("");
-  const [salinLabel, setSalinLabel] = useState("\uD83D\uDCCB Salin Kronologi");
-  const [simpanLabel, setSimpanLabel] = useState("\uD83D\uDCBE Simpan ke Pasien");
+  const [salinLabel, setSalinLabel] = useState("Salin Kronologi");
+  const [simpanLabel, setSimpanLabel] = useState("Simpan ke Pasien");
 
   const [metroOn, setMetroOn] = useState(false);
   const [bpm, setBpm] = useState(110);
@@ -584,7 +598,7 @@ export function ResusTab({
       /* abaikan */
     }
     setSalinLabel("\u2713 Tersalin");
-    window.setTimeout(() => setSalinLabel("\uD83D\uDCCB Salin Kronologi"), 1400);
+    window.setTimeout(() => setSalinLabel("Salin Kronologi"), 1400);
   };
 
   const simpan = () => {
@@ -597,7 +611,7 @@ export function ResusTab({
       t: Date.now(),
     });
     setSimpanLabel("\u2713 Tersimpan ke pasien");
-    window.setTimeout(() => setSimpanLabel("\uD83D\uDCBE Simpan ke Pasien"), 1600);
+    window.setTimeout(() => setSimpanLabel("Simpan ke Pasien"), 1600);
   };
 
   const cetakLembarKode = () => {
@@ -754,7 +768,9 @@ export function ResusTab({
 
   return (
     <div className="drt-panel">
-      <h3>{"\u23F1\uFE0F Timer & Pencatat Resusitasi"}</h3>
+      <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <ResusStopwatchIcon size={24} /> Timer &amp; Pencatat Resusitasi
+      </h3>
       <p className="drt-sub">
         Stopwatch + metronom CPR, CPR Coach layar penuh, catat tindakan lewat
         suara, pengingat siklus &amp; epinefrin, dan cetak Lembar Kode.
@@ -817,9 +833,14 @@ export function ResusTab({
             color: "#fff",
             background: "linear-gradient(135deg,#1F9D55,#178048)",
             opacity: running ? 0.5 : 1,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
           }}
         >
-          {"\u25B6\uFE0F Mulai Resusitasi"}
+          <PlayTimerIcon size={16} />
+          <span>Mulai Resusitasi</span>
         </button>
         <button
           onClick={selesaiResus}
@@ -834,15 +855,22 @@ export function ResusTab({
             color: "#B00C1A",
             background: "#fff",
             opacity: running ? 1 : 0.5,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
           }}
         >
-          {"\u23F9\uFE0F Selesai"}
+          <StopTimerIcon size={16} />
+          <span>Selesai</span>
         </button>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
       <div style={{ ...kotak, marginBottom: 0 }}>
-        <div style={judulKotak}>{"\uD83E\uDD41 Metronom CPR"}</div>
+        <div style={{ ...judulKotak, display: "flex", alignItems: "center", gap: "6px" }}>
+          <MetronomeIcon size={16} /> Metronom CPR
+        </div>
         <button
           onClick={toggleMetro}
           style={{
@@ -854,9 +882,21 @@ export function ResusTab({
             border: "none",
             color: "#fff",
             background: metroOn ? "#B00C1A" : "#E11D2A",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
           }}
         >
-          {metroOn ? "\u23F8\uFE0F Metronom aktif" : "\u25B6\uFE0F Nyalakan metronom"}
+          {metroOn ? (
+            <>
+              <StopTimerIcon size={14} /> Metronom aktif
+            </>
+          ) : (
+            <>
+              <PlayTimerIcon size={14} /> Nyalakan metronom
+            </>
+          )}
         </button>
         <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
           {[100, 110, 120].map((b) => (
@@ -882,7 +922,9 @@ export function ResusTab({
       </div>
 
       <div style={{ ...kotak, marginBottom: 0 }}>
-        <div style={judulKotak}>{"\uD83D\uDC89 Interval epinefrin"}</div>
+        <div style={{ ...judulKotak, display: "flex", alignItems: "center", gap: "6px" }}>
+          <EmergencyDrugIcon size={16} /> Interval epinefrin
+        </div>
         <div style={{ display: "flex", gap: 6 }}>
           {[180, 240, 300].map((s) => (
             <button
@@ -910,14 +952,15 @@ export function ResusTab({
               : caption
           }
         >
-          {epiInfo ? epiInfo.text : "Tekan \uD83D\uDC89 Epinefrin saat memberi dosis"}
+          {epiInfo ? epiInfo.text : "Tekan Epinefrin saat memberi dosis"}
         </div>
       </div>
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-        <button onClick={bukaCoach} style={{ ...coachBtn, flex: 1 }}>
-          {"\uD83E\uDEC0 Mode CPR Layar Penuh"}
+        <button onClick={bukaCoach} style={{ ...coachBtn, flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+          <DefibIcon size={18} />
+          <span>Mode CPR Layar Penuh</span>
         </button>
         <button
           onClick={toggleSuara}
@@ -931,9 +974,14 @@ export function ResusTab({
             border: "1px solid #E11D2A",
             color: voiceOn ? "#fff" : "#B00C1A",
             background: voiceOn ? "#E11D2A" : "#fff",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
           }}
         >
-          {voiceOn ? "\uD83C\uDF99\uFE0F Mendengarkan\u2026" : "\uD83C\uDF99\uFE0F Catat via Suara"}
+          <MicVoiceIcon size={18} />
+          <span>{voiceOn ? "Mendengarkan…" : "Catat via Suara"}</span>
         </button>
       </div>
 
@@ -994,9 +1042,14 @@ export function ResusTab({
               background: "#fff",
               color: "#B00C1A",
               opacity: running ? 1 : 0.5,
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
             }}
           >
-            {q.label}
+            {q.icon}
+            <span>{q.label}</span>
           </button>
         ))}
       </div>
@@ -1094,9 +1147,14 @@ export function ResusTab({
             border: "1px solid #f0c9cc",
             background: "#fff",
             color: "#B00C1A",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
           }}
         >
-          {salinLabel}
+          <CopyDataIcon size={16} />
+          <span>{salinLabel}</span>
         </button>
         <button
           onClick={simpan}
@@ -1110,9 +1168,14 @@ export function ResusTab({
             border: "1px solid #f0c9cc",
             background: "#fff",
             color: "#B00C1A",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
           }}
         >
-          {simpanLabel}
+          <SaveDataIcon size={16} />
+          <span>{simpanLabel}</span>
         </button>
         <button
           onClick={cetakLembarKode}
@@ -1126,9 +1189,14 @@ export function ResusTab({
             border: "none",
             background: "#E11D2A",
             color: "#fff",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
           }}
         >
-          {"\uD83D\uDDA8\uFE0F Cetak Lembar Kode"}
+          <PrintReportIcon size={18} />
+          <span>Cetak Lembar Kode</span>
         </button>
       </div>
 

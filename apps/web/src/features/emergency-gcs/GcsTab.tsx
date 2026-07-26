@@ -14,6 +14,15 @@ import {
 } from "@/entities/emergency";
 import type { GcsAgeEM, GcsAgeV, GcsState } from "@/entities/emergency";
 
+import {
+  BrainGcsIcon,
+  GcsEyeIcon,
+  GcsVerbalIcon,
+  GcsMotorIcon,
+  SaveDataIcon,
+  CopyDataIcon,
+} from "@/shared/ui";
+
 export function GcsTab({
   ub,
   nama,
@@ -33,8 +42,8 @@ export function GcsTab({
     manualEM: false,
     manualV: false,
   });
-  const [simpanLabel, setSimpanLabel] = useState("💾 Simpan ke Pasien");
-  const [salinLabel, setSalinLabel] = useState("📋 Salin Hasil");
+  const [simpanLabel, setSimpanLabel] = useState("Simpan ke Pasien");
+  const [salinLabel, setSalinLabel] = useState("Salin Hasil");
 
   // Turunkan kelompok usia dari profil, kecuali sudah dipilih manual.
   useEffect(() => {
@@ -94,7 +103,7 @@ export function GcsTab({
       /* abaikan */
     }
     setSalinLabel("\u2713 Tersalin");
-    window.setTimeout(() => setSalinLabel("📋 Salin Hasil"), 1400);
+    window.setTimeout(() => setSalinLabel("Salin Hasil"), 1400);
   };
 
   const simpan = () => {
@@ -107,7 +116,7 @@ export function GcsTab({
       t: Date.now(),
     });
     setSimpanLabel("\u2713 Tersimpan ke pasien");
-    window.setTimeout(() => setSimpanLabel("💾 Simpan ke Pasien"), 1600);
+    window.setTimeout(() => setSimpanLabel("Simpan ke Pasien"), 1600);
   };
 
   const renderOpsi = (
@@ -140,7 +149,9 @@ export function GcsTab({
 
   return (
     <div className="drt-panel" id="gcsPanel">
-      <h3>🧠 Penilaian pGCS</h3>
+      <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <BrainGcsIcon size={24} /> Penilaian pGCS
+      </h3>
       <p className="drt-sub">
         Pediatric Glasgow Coma Scale. Pilihan otomatis menyesuaikan kelompok
         usia dari Profil Pasien (bisa diubah manual). Total skor 3–15.
@@ -152,7 +163,9 @@ export function GcsTab({
       <div className="gcs-grid">
         <div className="gcs-komp" data-komp="eye">
           <div className="gcs-komp-head">
-            <span className="gcs-komp-nama">👁️ Eye (E)</span>
+            <span className="gcs-komp-nama" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <GcsEyeIcon size={20} /> Eye (E)
+            </span>
             <div className="gcs-age-toggle">
               {emAges.map((a) => (
                 <button
@@ -174,7 +187,9 @@ export function GcsTab({
           data-komp="verbal"
         >
           <div className="gcs-komp-head">
-            <span className="gcs-komp-nama">🗣️ Verbal (V)</span>
+            <span className="gcs-komp-nama" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <GcsVerbalIcon size={20} /> Verbal (V)
+            </span>
             <div className="gcs-age-toggle">
               {vAges.map((a) => (
                 <button
@@ -203,7 +218,9 @@ export function GcsTab({
 
         <div className="gcs-komp" data-komp="motor">
           <div className="gcs-komp-head">
-            <span className="gcs-komp-nama">💪 Motor (M)</span>
+            <span className="gcs-komp-nama" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <GcsMotorIcon size={20} /> Motor (M)
+            </span>
             <div className="gcs-age-toggle">
               {emAges.map((a) => (
                 <button
@@ -243,11 +260,13 @@ export function GcsTab({
         )}
       </div>
       <div className="gcs-out-actions">
-        <button className="salin" type="button" onClick={salin}>
-          {salinLabel}
+        <button className="salin" type="button" onClick={salin} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+          <CopyDataIcon size={16} />
+          <span>{salinLabel}</span>
         </button>
-        <button className="simpan" type="button" onClick={simpan}>
-          {simpanLabel}
+        <button className="simpan" type="button" onClick={simpan} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+          <SaveDataIcon size={16} />
+          <span>{simpanLabel}</span>
         </button>
       </div>
     </div>
