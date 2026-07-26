@@ -5,6 +5,7 @@ import type { CSSProperties } from "react";
 import { DAFTAR_KONDISI, KATEGORI_ALUR } from "@/shared/lib/alur/daftar";
 import type { Kondisi } from "@/shared/lib/alur/daftar";
 import { hitungObat } from "@/shared/lib/alur/dosis";
+import { AlurIcon } from "@/shared/ui";
 import {
   bacaPasienAktif,
   PASIEN_AKTIF_KEY,
@@ -373,9 +374,17 @@ export function AlurTatalaksanaPanel() {
           fontSize: "1rem",
           color: "var(--tv-navy)",
           marginBottom: 2,
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
         }}
       >
-        👶 Profil Pasien
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <rect width="24" height="24" rx="5" fill="#EEF2FF" />
+          <circle cx="12" cy="8.5" r="3" fill="#4338CA" />
+          <path d="M6 18.5C6 15.8 8.7 13.8 12 13.8C15.3 13.8 18 15.8 18 18.5" stroke="#4338CA" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        <span>Profil Pasien</span>
       </div>
       {punyaPasien && pasien ? (
         <div style={{ fontSize: ".85rem" }}>
@@ -439,7 +448,9 @@ export function AlurTatalaksanaPanel() {
                 } as CSSProperties
               }
             >
-              <span className="tv-alur-kat-ikon">{kat.ikon}</span>
+              <span className="tv-alur-kat-ikon" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                <AlurIcon id={kat.id} size={26} />
+              </span>
               <span className="tv-alur-kat-nama">{kat.nama}</span>
               <span className="tv-alur-kat-garis" />
               <span className="tv-alur-kat-jml">{items.length}</span>
@@ -459,7 +470,9 @@ export function AlurTatalaksanaPanel() {
                     } as CSSProperties
                   }
                 >
-                  <span className="tv-alur-kartu-ikon">{k.ikon}</span>
+                  <span className="tv-alur-kartu-ikon" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                    <AlurIcon id={k.id} size={36} />
+                  </span>
                   <span className="tv-alur-kartu-teks">
                     <span className="tv-alur-kartu-judul">{k.nama}</span>
                     <span className="tv-alur-kartu-ringkas">{k.ringkas}</span>
@@ -492,8 +505,9 @@ export function AlurTatalaksanaPanel() {
           ← Daftar penyakit
         </button>
         <div className="tv-card">
-          <div className="tv-card-title">
-            {kondisi.ikon} {kondisi.nama}
+          <div className="tv-card-title" style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <AlurIcon id={kondisi.id} size={30} />
+            <span>{kondisi.nama}</span>
           </div>
           <div className="tv-card-desc" style={{ marginTop: 3 }}>
             Pilih lokasi penanganan untuk memulai alur.
@@ -503,15 +517,19 @@ export function AlurTatalaksanaPanel() {
               type="button"
               className="tv-btn tv-btn-blok"
               onClick={() => pilihSetting(kondisi, "fktp")}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
             >
-              🏥 FKTP / Fasilitas Primer
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#EFF6FF"/><path d="M4 20H20M6 20V8L12 4L18 8V20M12 11V15M10 13H14" stroke="#2563EB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <span>FKTP / Fasilitas Primer</span>
             </button>
             <button
               type="button"
               className="tv-btn tv-btn-blok"
               onClick={() => pilihSetting(kondisi, "rs")}
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
             >
-              🏨 Rumah Sakit
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#FDF2F8"/><path d="M3 20H21M5 20V6L12 3L19 6V20M9 10H15M9 14H15" stroke="#D936A6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 10V14" stroke="#D936A6" strokeWidth="1.8" fill="none"/></svg>
+              <span>Rumah Sakit</span>
             </button>
           </div>
           <div
@@ -595,9 +613,13 @@ export function AlurTatalaksanaPanel() {
             borderRadius: 999,
             background: "var(--tv-accent-soft)",
             color: "var(--tv-navy)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
           }}
         >
-          {kondisi.nama}
+          <AlurIcon id={kondisi.id} size={18} />
+          <span>{kondisi.nama}</span>
           {!kondisi.alur.tanpaSetting && ` \u00b7 ${LABEL_SETTING[setting]}`}
         </span>
         {stack.length > 1 && (

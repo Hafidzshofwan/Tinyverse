@@ -1,4 +1,5 @@
 import { ToolShell } from "@/shared/ui/ToolShell";
+import { SidebarIcon } from "@/shared/ui";
 import { AlurTatalaksanaPanel } from "@/widgets/alur-panel";
 
 export default function AlurPage() {
@@ -6,7 +7,7 @@ export default function AlurPage() {
     <ToolShell
       title="Alur Tata Laksana"
       desc="Panduan interaktif tata laksana kegawatdaruratan anak"
-      icon="🧭"
+      icon={<SidebarIcon slug="alur" size={32} />}
     >
       <AlurTatalaksanaPanel />
     </ToolShell>

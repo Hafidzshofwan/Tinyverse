@@ -3,7 +3,7 @@ import type { CSSProperties, ReactNode } from "react";
 export interface ToolShellProps {
   title: string;
   desc?: string;
-  icon?: string;
+  icon?: ReactNode;
   children: ReactNode;
 }
 
@@ -14,18 +14,18 @@ const headRow: CSSProperties = {
 };
 // Kotak ikon: disamakan presisi 46x46, warna #D936A6, bg #D936A61A, font 17.6px Quicksand
 const icoStyle: CSSProperties = {
-  flex: "0 0 46px",
-  width: 46,
-  height: 46,
-  minWidth: 46,
-  borderRadius: 15,
+  flex: "0 0 38px",
+  width: 38,
+  height: 38,
+  minWidth: 38,
+  borderRadius: 0,
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "17.6px",
+  fontSize: "38px",
   fontFamily: "'Quicksand', system-ui, sans-serif",
   lineHeight: 1,
-  background: "#D936A61A",
+  background: "transparent",
   color: "#D936A6",
   boxShadow: "none",
 };
