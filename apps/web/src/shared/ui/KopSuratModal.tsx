@@ -67,8 +67,13 @@ export function KopSuratModal({ isOpen, onClose, onSaved }: KopSuratModalProps) 
       <div style={cardStyle} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div>
-            <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#1E3A8A" }}>
-              🏥 Pengaturan Kop Surat (Letterhead PDF)
+            <h3 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 800, color: "#1E3A8A", display: "flex", alignItems: "center", gap: "8px" }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect width="24" height="24" rx="6" fill="#EEF2FF"/>
+                <rect x="5" y="4" width="14" height="16" rx="2" fill="#FFFFFF" stroke="#3730A3" strokeWidth="1.8"/>
+                <path d="M12 8V14M9 11H15" stroke="#4F46E5" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              Pengaturan Kop Surat (Letterhead PDF)
             </h3>
             <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#64748B" }}>
               Kop surat ini akan otomatis digunakan pada cetak Resep, Growth Chart, dan Ringkasan SOAP.
