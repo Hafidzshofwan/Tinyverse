@@ -1454,7 +1454,7 @@
   .tk-plot-judul { font-weight: 800; font-size: 1.05rem; color: #1565C0; }
   .tk-plot-sub { font-size: 0.85rem; color: #667085; margin-top: 4px; }
   .tk-charts-wrap { display: flex; flex-direction: column; gap: 22px; }
-  .tk-chart-blok { border: 1px solid #EAECF0; border-radius: 14px; padding: 12px; background: #fff; }
+  .tk-chart-blok { border: 1px solid #EAECF0; border-radius: 14px; padding: 12px; background: #fff; width: 100%; }
   .tk-chart-kepala { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 10px; }
   .tk-chart-judul { font-weight: 700; color: #1D2939; }
   .tk-chart-usia { font-size: 0.82rem; font-weight: 600; color: #1565C0; background: #E8F1FB; border-radius: 999px; padding: 3px 10px; }
@@ -1462,76 +1462,92 @@
   .tk-ringkasan {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
   }
   .tk-ringkasan-chip {
-    background: var(--krem);
-    border: 2px solid #EAF6FB;
-    border-radius: 50px;
-    padding: 6px 14px;
-    font-size: 0.7rem;
+    background: #F0F4F8;
+    border: 1px solid rgba(10, 11, 95, 0.1);
+    border-radius: 999px;
+    padding: 3px 10px 3px 6px;
+    font-size: 0.8rem;
     font-weight: 700;
-    color: var(--teks);
-    display: flex;
+    color: #0A0B5F;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
+    box-shadow: 0 1px 2px rgba(10, 11, 95, 0.03);
+    line-height: 1;
+  }
+  .tk-ringkasan-chip svg {
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0;
   }
   .tk-ringkasan-chip button {
     border: none;
     background: none;
-    color: var(--teks-lembut);
+    color: #64748B;
     cursor: pointer;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     line-height: 1;
-    padding: 0;
+    padding: 0 2px;
+    margin-left: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
   }
-  .tk-ringkasan-chip button:hover { color: var(--pink-tua); }
+  .tk-ringkasan-chip button:hover { color: #d936a6; }
 
   .tk-panel { display: none; }
   .tk-panel.tk-aktif { display: block; }
 
   .tk-pilihan-besar {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
   }
   .tk-kartu-pilihan {
-    background: var(--krem);
-    border: 3px solid transparent;
-    border-radius: 20px;
-    padding: 22px 14px;
+    background: #ffffff;
+    border: 2px solid #EAF2FB;
+    border-radius: 16px;
+    padding: 14px 12px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.15s ease, border-color 0.15s ease;
+    transition: all 0.15s ease;
   }
-  .tk-kartu-pilihan:hover { transform: translateY(-4px); }
-  .tk-kartu-pilihan.tk-pilih-aktif { border-color: var(--hijau-tua); background: #F2FBEF; }
-  .tk-kartu-pilihan .tk-emoji-besar { font-size: 2.1rem; display: block; margin-bottom: 8px; }
-  .tk-kartu-pilihan .tk-nama-pilihan { font-weight: 700; font-size: 0.95rem; color: var(--teks); }
-  .tk-kartu-pilihan .tk-sub-pilihan { font-size: 0.75rem; color: var(--teks-lembut); font-weight: 600; margin-top: 3px; }
+  .tk-kartu-pilihan:hover { transform: translateY(-2px); border-color: var(--biru); }
+  .tk-kartu-pilihan.tk-pilih-aktif { border-color: var(--biru); background: #F0F7FF; }
+  .tk-kartu-pilihan .tk-emoji-besar { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+  .tk-kartu-pilihan .tk-nama-pilihan { font-weight: 700; font-size: 0.88rem; color: var(--teks); }
+  .tk-kartu-pilihan .tk-sub-pilihan { font-size: 0.72rem; color: var(--teks-lembut); font-weight: 600; margin-top: 2px; }
 
   .tk-kartu-usia {
     background: var(--putih);
-    border: 3px solid #EAF6FB;
-    border-radius: 18px;
-    padding: 18px 14px;
+    border: 2px solid #EAF6FB;
+    border-radius: 16px;
+    padding: 14px 12px;
     cursor: pointer;
     text-align: center;
     transition: transform 0.15s ease, border-color 0.15s ease;
   }
-  .tk-kartu-usia:hover { transform: translateY(-3px); }
+  .tk-kartu-usia:hover { transform: translateY(-2px); }
   .tk-kartu-usia.tk-pilih-aktif { border-color: var(--biru); background: #EAF8FF; }
-  .tk-kartu-usia .tk-usia-ikon { font-size: 1.6rem; margin-bottom: 6px; }
-  .tk-kartu-usia .tk-usia-label { font-weight: 700; font-size: 0.92rem; color: var(--teks); }
-  .tk-kartu-usia .tk-usia-ket { font-size: 0.72rem; color: var(--teks-lembut); font-weight: 600; margin-top: 4px; }
+  .tk-kartu-usia .tk-usia-ikon { font-size: 1.4rem; margin-bottom: 4px; }
+  .tk-kartu-usia .tk-usia-label { font-weight: 700; font-size: 0.88rem; color: var(--teks); }
+  .tk-kartu-usia .tk-usia-ket { font-size: 0.7rem; color: var(--teks-lembut); font-weight: 600; margin-top: 2px; }
   .tk-kartu-usia .tk-usia-status {
     display: inline-block;
-    margin-top: 8px;
-    font-size: 0.68rem;
+    margin-top: 6px;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 10px;
+    padding: 2px 8px;
     border-radius: 20px;
   }
   .tk-usia-status.ada { background: #EAFBF1; color: var(--hijau-tua); }
@@ -1547,10 +1563,10 @@
     color: var(--biru-tua);
     background: var(--krem);
     border: none;
-    padding: 9px 16px;
+    padding: 8px 14px;
     border-radius: 20px;
     cursor: pointer;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
   }
 
   .tk-chart-stage {
