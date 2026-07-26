@@ -183,15 +183,15 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
       >
         {/* Title & Icon Header */}
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          {/* div.ikon-bulat exact 46x46 #D936A61A background */}
+          {/* div.ikon-bulat 38x38 pink background */}
           <div
             className="ikon-bulat"
             style={{
-              width: 48,
-              height: 48,
-              minWidth: 48,
-              minHeight: 48,
-              borderRadius: 14,
+              width: 38,
+              height: 38,
+              minWidth: 38,
+              minHeight: 38,
+              borderRadius: 10,
               background: "#D936A61A",
               color: "#D936A6",
               display: "flex",
@@ -200,7 +200,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
               flexShrink: 0,
             }}
           >
-            <ScreeningIcon id="longitudinal" variant={iconVariant} fallbackEmoji="📈" size={28} />
+            <ScreeningIcon id="longitudinal" variant={iconVariant} fallbackEmoji="📈" size={24} />
           </div>
           <div>
             <h2

@@ -96,11 +96,11 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
           <div
             className="ikon-bulat"
             style={{
-              width: 48,
-              height: 48,
-              minWidth: 48,
-              minHeight: 48,
-              borderRadius: 14,
+              width: 38,
+              height: 38,
+              minWidth: 38,
+              minHeight: 38,
+              borderRadius: 10,
               background: "#D936A61A",
               color: "#D936A6",
               display: "flex",
@@ -110,7 +110,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
             }}
             aria-hidden
           >
-            <ScreeningIcon id="header" variant={iconVariant} fallbackEmoji="🧩" size={28} />
+            <ScreeningIcon id="header" variant={iconVariant} fallbackEmoji="🧩" size={24} />
           </div>
           <div>
             <h2

@@ -169,14 +169,19 @@
   }
 
   .judul-section .ikon-bulat {
-    width: 42px; height: 42px;
-    border-radius: 50%;
+    width: 38px; height: 38px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 38px;
+    line-height: 1;
     flex-shrink: 0;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .judul-section .ikon-bulat svg {
+    width: 38px; height: 38px;
   }
 
   .judul-section h2 {
@@ -5661,26 +5666,47 @@ html body #page-dosis .obat-card .varian-label {
   color: #FFFFFF !important;
   background: var(--etail-magenta, #D936A6) !important;
 }</style><style>html,body{margin:0;padding:0;background:transparent!important;}.page{display:block!important;}#isl{max-width:1040px;margin:0 auto;padding:6px 10px 40px;}</style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-puyer">
+<style>
+html body #page-puyer > .judul-section .ikon-bulat {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+</style>
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#F2E8FF;">⚗️</div>
+<div class="ikon-bulat" style="background:transparent !important; box-shadow:none !important; border:none !important; display:inline-flex; align-items:center; justify-content:center;">
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+  <rect width="24" height="24" rx="6" fill="#F5F3FF" />
+  <path d="M5 11C5 11 4 17 12 17C20 17 19 11 19 11H5Z" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.8" stroke-linejoin="round"/>
+  <path d="M15 4L11 12" stroke="#6D28D9" stroke-width="2.2" stroke-linecap="round"/>
+  <rect x="4" y="19" width="16" height="2" rx="1" fill="#7C3AED"/>
+</svg>
+</div>
 <div>
 <h2>Racik Puyer</h2>
 <p>Kalkulator puyer multi-obat per bungkus</p>
 </div>
 </div>
 <div class="puyer-shell">
-<div class="puyer-alert">
-⚠️ Fitur ini adalah alat bantu hitung. Pastikan dosis, kompatibilitas obat, stabilitas racikan, dan sediaan yang boleh digerus diverifikasi oleh tenaga kesehatan/apoteker. Hindari memasukkan identitas pasien.
+<div class="puyer-alert" style="display:flex; align-items:flex-start; gap:8px;">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="flex-shrink:0; margin-top:2px;"><path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9V14M12 17H12.01" stroke="#B45309" stroke-width="2" stroke-linecap="round"/></svg>
+<div>Fitur ini adalah alat bantu hitung. Pastikan dosis, kompatibilitas obat, stabilitas racikan, dan sediaan yang boleh digerus diverifikasi oleh tenaga kesehatan/apoteker. Hindari memasukkan identitas pasien.</div>
 </div>
 <div class="kartu">
-<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">👤 Data Pasien & Aturan Puyer</h3>
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" fill="#C4B5FD" stroke="#7C3AED" stroke-width="1.5"/><path d="M5 20C5 16.1 8.1 13 12 13C15.9 13 19 16.1 19 20" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round"/></svg>
+Data Pasien &amp; Aturan Puyer
+</h3>
 <div class="puyer-grid-3">
 <div class="form-group">
-<label for="puyerBb">⚖️ Berat Badan (kg)</label>
+<label for="puyerBb" style="display:inline-flex; align-items:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3V21M6 7H18M4 14L8 7M16 7L20 14M5 14H11M13 14H19" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round"/></svg>Berat Badan (kg)</label>
 <input id="puyerBb" inputmode="decimal" min="0" placeholder="cth: 12" step="0.1" type="number"/>
 </div>
 <div class="form-group">
-<label for="puyerUsia">👶 Usia Anak (bulan)</label>
+<label for="puyerUsia" style="display:inline-flex; align-items:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.5"/><circle cx="9" cy="11" r="1" fill="#6D28D9"/><circle cx="15" cy="11" r="1" fill="#6D28D9"/><path d="M9.5 15C10.2 16 11 16.5 12 16.5C13 16.5 13.8 16 14.5 15" stroke="#6D28D9" stroke-width="1.5" stroke-linecap="round"/></svg>Usia Anak (bulan)</label>
 <input id="puyerUsia" inputmode="numeric" min="0" placeholder="cth: 24" step="1" type="number"/>
 </div>
 <div class="form-group">
@@ -5703,21 +5729,27 @@ html body #page-dosis .obat-card .varian-label {
 </div>
 </div>
 <div class="puyer-actions">
-<button class="puyer-btn yellow" id="puyerAutoBungkus" type="button">🔢 Isi otomatis jumlah bungkus</button>
+<button class="puyer-btn yellow" id="puyerAutoBungkus" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="4" fill="#FEF08A" stroke="#CA8A04" stroke-width="1.5"/><path d="M7 8H11M9 6V12M13 10H17M13 16H17M15 14V18" stroke="#854D0E" stroke-width="1.8" stroke-linecap="round"/></svg>Isi otomatis jumlah bungkus</button>
 </div>
 </div>
 <div class="kartu">
-<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">💊 Daftar Obat dalam Puyer</h3>
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#F3E8FF"/><path d="M14 14.5L18 10.5" stroke="#9333EA" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="15" r="3.5" fill="#C084FC" stroke="#7E22CE" stroke-width="1.5"/><path d="M11 6V11" stroke="#7E22CE" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="13" r="2" fill="#9333EA"/></svg>
+Daftar Obat dalam Puyer
+</h3>
 <div class="puyer-obat-list" id="puyerObatList"></div>
 <datalist id="puyerObatOptions"></datalist>
 <div class="puyer-actions">
-<button class="puyer-btn" id="puyerTambahObat" type="button">➕ Tambah Obat</button>
-<button class="puyer-btn green" id="puyerHitung" type="button">   ️ Hitung Racikan</button>
-<button class="puyer-btn pink" id="puyerReset" type="button">↺ Reset Form</button>
+<button class="puyer-btn" id="puyerTambahObat" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Tambah Obat</button>
+<button class="puyer-btn green" id="puyerHitung" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="3" fill="#BBF7D0" stroke="#15803D" stroke-width="1.5"/><path d="M8 7H16M8 11H12M8 15H16" stroke="#166534" stroke-width="1.8" stroke-linecap="round"/></svg>Hitung Racikan</button>
+<button class="puyer-btn pink" id="puyerReset" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12C4 7.6 7.6 4 12 4C15.5 4 18.5 6.3 19.5 9.5M20 12C20 16.4 16.4 20 12 20C8.5 20 5.5 17.7 4.5 14.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 5V10H15M4 19V14H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Reset Form</button>
 </div>
 </div>
 <div class="kartu">
-<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">📁 Template Resep Puyer</h3>
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 7C3 5.9 3.9 5 5 5H10L12 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z" fill="#DDD6FE" stroke="#7C3AED" stroke-width="1.5"/></svg>
+Template Resep Puyer
+</h3>
 <p style="color:var(--teks-lembut); font-size:.85rem; margin:-4px 0 12px;">Simpan kombinasi obat + aturan yang sering dipakai, lalu panggil ulang kapan saja. Tersimpan di perangkat ini (browser) — tanpa data pasien.</p>
 <div class="puyer-grid-2">
 <div class="form-group">
@@ -5730,17 +5762,20 @@ html body #page-dosis .obat-card .varian-label {
 </div>
 </div>
 <div class="puyer-actions">
-<button class="puyer-btn green" id="puyerTplSimpan" type="button">💾 Simpan sebagai template</button>
-<button class="puyer-btn" id="puyerTplPakai" type="button">📂 Pakai template</button>
-<button class="puyer-btn pink" id="puyerTplHapus" type="button">🗑️ Hapus template</button>
+<button class="puyer-btn green" id="puyerTplSimpan" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H16L21 8V19C21 20.1 20.1 21 19 21Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 21V13H7V21M7 3V8H15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Simpan sebagai template</button>
+<button class="puyer-btn" id="puyerTplPakai" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 7C3 5.9 3.9 5 5 5H10L12 7H19C20.1 7 21 7.9 21 9V17C21 18.1 20.1 19 19 19H5C3.9 19 3 18.1 3 17V7Z" fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.8"/></svg>Pakai template</button>
+<button class="puyer-btn pink" id="puyerTplHapus" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 6H21M8 6V4C8 3.4 8.4 3 9 3H15C15.6 3 16 3.4 16 4V6M19 6V20C19 20.6 18.6 21 18 21H6C5.4 21 5 20.6 5 20V6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Hapus template</button>
 </div>
 </div>
 <div class="kartu" id="puyerHasilKartu" style="display:none;">
-<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px;">🧾 Hasil Racik Puyer</h3>
+<h3 style="font-family:'Fredoka',sans-serif; font-size:1rem; color:var(--biru-tua); margin-bottom:12px; display:flex; align-items:center; gap:8px;">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="#7C3AED" stroke-width="1.8"/><path d="M8 13H16M8 17H13" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round"/></svg>
+Hasil Racik Puyer
+</h3>
 <div class="puyer-result" id="puyerHasil"></div>
 <div class="puyer-actions">
-<button class="puyer-btn" id="puyerCopy" type="button">📋 Salin Hasil</button>
-<button class="puyer-btn green" id="puyerRingkasan" type="button">📄 Tambahkan ke Ringkasan</button>
+<button class="puyer-btn" id="puyerCopy" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15H4C3.4 15 3 14.6 3 14V4C3 3.4 3.4 3 4 3H14C14.6 3 15 3.4 15 4V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Salin Hasil</button>
+<button class="puyer-btn green" id="puyerRingkasan" type="button" style="display:inline-flex; align-items:center; justify-content:center; gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="currentColor" stroke-width="1.8"/><path d="M8 13H16M8 17H13" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Tambahkan ke Ringkasan</button>
 </div>
 </div>
 </div>
@@ -5851,9 +5886,10 @@ var daftarObat=[{"id": "albendazole", "nama": "Albendazole (Flat)", "jenis": "An
   function renderObat() {
     const box = el('puyerObatList'); if (!box) return;
     if (!state.rows.length) {
-      box.innerHTML = '<div class="puyer-empty">Belum ada obat. Klik <strong>➕ Tambah Obat</strong> untuk mulai menyusun racikan.</div>';
+      box.innerHTML = '<div class="puyer-empty">Belum ada obat. Klik <strong>Tambah Obat</strong> untuk mulai menyusun racikan.</div>';
       return;
     }
+    const bulbSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 2C8.1 2 5 5.1 5 9C5 11.4 6.2 13.5 8 14.7V17C8 17.6 8.4 18 9 18H15C15.6 18 16 17.6 16 17V14.7C17.8 13.5 19 11.4 19 9C19 5.1 15.9 2 12 2Z" fill="#FEF08A" stroke="#CA8A04" stroke-width="1.5"/><path d="M9 21H15" stroke="#CA8A04" stroke-width="1.5" stroke-linecap="round"/></svg>';
     box.innerHTML = state.rows.map((r, idx) => `
       <div class="puyer-obat-card" data-puyer-id="${esc(r.id)}">
         <div class="puyer-obat-head">
@@ -5869,7 +5905,7 @@ var daftarObat=[{"id": "albendazole", "nama": "Albendazole (Flat)", "jenis": "An
           <div class="form-group"><label>Isi 1 tablet/kapsul (mg)</label><input data-field="sediaan" inputmode="decimal" type="number" step="0.01" placeholder="cth: 500" value="${esc(r.sediaan)}"/></div>
           <div class="form-group"><label>Bulatkan ke pecahan tablet</label><select data-field="step"><option value="0.25" ${String(r.step)==='0.25'?'selected':''}>¼ tablet terdekat</option><option value="0.5" ${String(r.step)==='0.5'?'selected':''}>½ tablet terdekat</option><option value="1" ${String(r.step)==='1'?'selected':''}>1 tablet terdekat</option></select></div>
         </div>
-        <div class="puyer-dose-range pdr-empty" data-puyer-dose-range>💡 Isi <strong>Berat Badan</strong> &amp; <strong>Usia</strong> pasien di atas, lalu pilih nama obat untuk melihat rentang dosis anak ini.</div>
+        <div class="puyer-dose-range pdr-empty" data-puyer-dose-range>${bulbSvg} Isi <strong>Berat Badan</strong> &amp; <strong>Usia</strong> pasien di atas, lalu pilih nama obat untuk melihat rentang dosis anak ini.</div>
       </div>
     `).join('');
     updateRangeHints();
@@ -6078,20 +6114,24 @@ function hitungRentangPuyer(nama) {
     return { native: native, basis: basis, single: single };
   }
   function renderRentangText(nama) {
+    const bulbSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 2C8.1 2 5 5.1 5 9C5 11.4 6.2 13.5 8 14.7V17C8 17.6 8.4 18 9 18H15C15.6 18 16 17.6 16 17V14.7C17.8 13.5 19 11.4 19 9C19 5.1 15.9 2 12 2Z" fill="#FEF08A" stroke="#CA8A04" stroke-width="1.5"/><path d="M9 21H15" stroke="#CA8A04" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    const warnSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9V14M12 17H12.01" stroke="#B45309" stroke-width="2" stroke-linecap="round"/></svg>';
+    const stopSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="9" fill="#FCA5A5" stroke="#DC2626" stroke-width="1.8"/><path d="M7 12H17" stroke="#991B1B" stroke-width="2" stroke-linecap="round"/></svg>';
+
     const r = hitungRentangPuyer(nama);
-    if (r.state === 'nodb') return { cls: 'pdr-empty', html: '💡 Rentang dosis otomatis belum tersedia untuk obat ini — isi dosis manual &amp; verifikasi ke pedoman.' };
-    if (r.state === 'noinput') return { cls: 'pdr-empty', html: '💡 Isi <strong>Berat Badan</strong> &amp; <strong>Usia</strong> pasien di atas untuk melihat rentang dosis <strong>' + esc(r.obat.nama) + '</strong>.' };
-    if (r.state === 'nocalc') return { cls: 'pdr-empty', html: '💡 Rentang otomatis tidak tersedia saat ini.' };
-    if (r.state === 'error') return { cls: 'pdr-warn', html: '⚠️ ' + esc(r.msg) };
+    if (r.state === 'nodb') return { cls: 'pdr-empty', html: bulbSvg + ' Rentang dosis otomatis belum tersedia untuk obat ini — isi dosis manual &amp; verifikasi ke pedoman.' };
+    if (r.state === 'noinput') return { cls: 'pdr-empty', html: bulbSvg + ' Isi <strong>Berat Badan</strong> &amp; <strong>Usia</strong> pasien di atas untuk melihat rentang dosis <strong>' + esc(r.obat.nama) + '</strong>.' };
+    if (r.state === 'nocalc') return { cls: 'pdr-empty', html: bulbSvg + ' Rentang otomatis tidak tersedia saat ini.' };
+    if (r.state === 'error') return { cls: 'pdr-warn', html: warnSvg + ' ' + esc(r.msg) };
     const h = r.hasil;
     const sat = r.obat.satuanDosis || 'mg';
     const parts = [];
     const fPuyer = puyerFrekPuyer();
     const kl = klasifikasiFrekObat(h);
     if (kl.single && fPuyer && fPuyer > 1) {
-      return { cls: 'pdr-warn', html: '🚫 <strong>' + esc(r.obat.nama) + '</strong> lazimnya diberikan ' + (kl.native === 1 ? '1×/hari' : 'sebagai dosis tunggal') + ', sehingga <strong>tidak boleh dicampur</strong> ke puyer ' + fmt(fPuyer,0) + '×/hari (dosisnya akan salah). Racik / berikan <strong>TERPISAH</strong> — mis. puyer sendiri ' + (kl.native === 1 ? '1×/hari' : 'sebagai dosis tunggal') + '.' };
+      return { cls: 'pdr-warn', html: stopSvg + ' <strong>' + esc(r.obat.nama) + '</strong> lazimnya diberikan ' + (kl.native === 1 ? '1×/hari' : 'sebagai dosis tunggal') + ', sehingga <strong>tidak boleh dicampur</strong> ke puyer ' + fmt(fPuyer,0) + '×/hari (dosisnya akan salah). Racik / berikan <strong>TERPISAH</strong> — mis. puyer sendiri ' + (kl.native === 1 ? '1×/hari' : 'sebagai dosis tunggal') + '.' };
     }
-    parts.push('💡 Dosis lazim <strong>' + esc(r.obat.nama) + '</strong> untuk anak ini: <strong>' + fmtRange(h.dosisMinMg, h.dosisMaxMg) + ' ' + esc(sat) + '/kali</strong>');
+    parts.push(bulbSvg + ' Dosis lazim <strong>' + esc(r.obat.nama) + '</strong> untuk anak ini: <strong>' + fmtRange(h.dosisMinMg, h.dosisMaxMg) + ' ' + esc(sat) + '/kali</strong>');
     const bb = h.beratBadan;
     if (Number.isFinite(bb) && bb > 0 && Number.isFinite(h.dosisMinMg) && Number.isFinite(h.dosisMaxMg)) {
       parts.push(' <span style="color:var(--teks-lembut);font-weight:600;">(≈ ' + fmtRange(h.dosisMinMg / bb, h.dosisMaxMg / bb) + ' ' + esc(sat) + '/kg)</span>');
@@ -6114,14 +6154,14 @@ function hitungRentangPuyer(nama) {
     }
     const adaHarian = Number.isFinite(dHarMin) || Number.isFinite(dHarMax);
     if (adaHarian) {
-      parts.push('<br><span style="color:var(--teks-lembut);font-weight:700;">📅 Total dosis harian: ' + fmtRange(dHarMin, dHarMax) + ' ' + esc(sat) + '/hari' + (kl.native ? ' (lazimnya ' + fmt(kl.native,0) + '×/hari)' : '') + (harianDiturunkan ? ' <span style="font-weight:600;font-style:italic;">(perkiraan dari dosis per-kali × frekuensi)</span>' : '') + '.</span>');
+      parts.push('<br><span style="color:var(--teks-lembut);font-weight:700;">Total dosis harian: ' + fmtRange(dHarMin, dHarMax) + ' ' + esc(sat) + '/hari' + (kl.native ? ' (lazimnya ' + fmt(kl.native,0) + '×/hari)' : '') + (harianDiturunkan ? ' <span style="font-weight:600;font-style:italic;">(perkiraan dari dosis per-kali × frekuensi)</span>' : '') + '.</span>');
     }
     if (adaHarian && fPuyer && fPuyer > 0) {
       const pbMin = Number.isFinite(dHarMin) ? dHarMin / fPuyer : null;
       const pbMax = Number.isFinite(dHarMax) ? dHarMax / fPuyer : null;
-      parts.push('<br><span style="color:var(--utama,#2AA37A);font-weight:700;">➡️ Puyer ' + fmt(fPuyer,0) + '×/hari → isi <em>per bungkus</em>: ' + fmtRange(pbMin, pbMax) + ' ' + esc(sat) + '/bungkus (mode "mg/bungkus") · total harian ≈ ' + fmtRange(dHarMin, dHarMax) + ' ' + esc(sat) + '/hari.</span>');
+      parts.push('<br><span style="color:var(--utama,#2AA37A);font-weight:700;">Puyer ' + fmt(fPuyer,0) + '×/hari → isi <em>per bungkus</em>: ' + fmtRange(pbMin, pbMax) + ' ' + esc(sat) + '/bungkus (mode "mg/bungkus") · total harian ≈ ' + fmtRange(dHarMin, dHarMax) + ' ' + esc(sat) + '/hari.</span>');
       if (kl.native && kl.native !== fPuyer) {
-        parts.push('<br><span style="color:#B26A00;font-weight:700;">⚠️ Obat ini lazimnya ' + fmt(kl.native,0) + '×/hari, tetapi puyer ini ' + fmt(fPuyer,0) + '×/hari. Total harian tetap dijaga (dibagi ' + fmt(fPuyer,0) + '); pastikan sesuai klinis.</span>');
+        parts.push('<br><span style="color:#B26A00;font-weight:700;">' + warnSvg + ' Obat ini lazimnya ' + fmt(kl.native,0) + '×/hari, tetapi puyer ini ' + fmt(fPuyer,0) + '×/hari. Total harian tetap dijaga (dibagi ' + fmt(fPuyer,0) + '); pastikan sesuai klinis.</span>');
       }
     } else if (adaHarian) {
       parts.push('<br><span style="color:var(--teks-lembut);font-weight:600;">Isi <strong>Frekuensi per hari</strong> puyer di atas untuk melihat dosis per bungkus.</span>');
@@ -6129,7 +6169,7 @@ function hitungRentangPuyer(nama) {
       parts.push('<br><span style="color:var(--teks-lembut);font-weight:600;">Pilih dosis dari rentang ini, lalu isi kolom dosis di bawah.</span>');
     }
     if (h.peringatan && h.peringatan.length) {
-      return { cls: 'pdr-warn', html: parts.join('') + '<br><span style="color:#B26A00;font-weight:700;">⚠️ ' + esc(h.peringatan[0]) + '</span>' };
+      return { cls: 'pdr-warn', html: parts.join('') + '<br><span style="color:#B26A00;font-weight:700;">' + warnSvg + ' ' + esc(h.peringatan[0]) + '</span>' };
     }
     return { cls: 'pdr-ok', html: parts.join('') };
   }
@@ -6325,12 +6365,23 @@ function hitungRentangPuyer(nama) {
       rows.push({ nama, mode: r.mode, dosisInput, sed, target, totalTarget, teoritis, aktual, totalAktual, perBungkus, selisih, pct, cls });
     }
     notes.push('ℹ️ Pastikan semua obat kompatibel untuk dicampur dalam satu puyer dan boleh digerus.');
+    const warnSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 9V14M12 17H12.01" stroke="#B45309" stroke-width="2" stroke-linecap="round"/></svg>';
+    const stopSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="9" fill="#FCA5A5" stroke="#DC2626" stroke-width="1.8"/><path d="M7 12H17" stroke="#991B1B" stroke-width="2" stroke-linecap="round"/></svg>';
+    const infoSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><circle cx="12" cy="12" r="9" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.8"/><path d="M12 8V12M12 16H12.01" stroke="#0369A1" stroke-width="2" stroke-linecap="round"/></svg>';
+    const resepSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:6px;"><path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" fill="#F5F3FF" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="#7C3AED" stroke-width="1.8"/><path d="M8 13H16M8 17H13" stroke="#7C3AED" stroke-width="1.8" stroke-linecap="round"/></svg>';
+
     const interaksi = cekInteraksiPuyer(state.rows);
     const valid = rows.length;
     const table = `<div class="puyer-table-wrap"><table class="puyer-table"><thead><tr><th>Obat</th><th>Target / bungkus</th><th>Total target</th><th>Sediaan</th><th>Tablet teoritis</th><th>Tablet dipakai</th><th>Isi aktual / bungkus</th><th>Selisih</th></tr></thead><tbody>` + rows.map(r => `
       <tr><td><strong>${esc(r.nama)}</strong><br><span style="color:var(--teks-lembut)">${r.mode==='mgkg' ? fmt(r.dosisInput,2)+' mg/kg/kali' : fmt(r.dosisInput,2)+' mg/bungkus'}</span></td><td>${fmt(r.target,2)} mg</td><td>${fmt(r.totalTarget,2)} mg</td><td>${fmt(r.sed,2)} mg</td><td>${fmt(r.teoritis,2)} tab</td><td>${fmt(r.aktual,2)} tab</td><td>${fmt(r.perBungkus,2)} mg</td><td class="${r.cls}">${r.selisih>=0?'+':''}${fmt(r.selisih,2)} mg<br>(${r.pct>=0?'+':''}${fmt(r.pct,1)}%)</td></tr>`).join('') + `</tbody></table></div>`;
     const metrics = `<div class="puyer-summary-grid"><div class="puyer-metric"><div class="label">Jumlah puyer</div><div class="value">${fmt(jumlah,0)} bungkus</div></div><div class="puyer-metric"><div class="label">Frekuensi</div><div class="value">${Number.isFinite(f)?fmt(f,0)+'×/hari':'—'}</div></div><div class="puyer-metric"><div class="label">Durasi</div><div class="value">${Number.isFinite(d)?fmt(d,0)+' hari':'—'}</div></div><div class="puyer-metric"><div class="label">Jumlah obat valid</div><div class="value">${valid} obat</div></div></div>`;
-    const noteHtml = `<div class="puyer-note-list">${Array.from(new Set(notes)).map(n => `<div class="puyer-note">${esc(n)}</div>`).join('')}</div>`;
+    const noteHtml = `<div class="puyer-note-list">${Array.from(new Set(notes)).map(n => {
+      let formatted = esc(n);
+      formatted = formatted.replace(/^⚠️\s*/, warnSvg + ' ');
+      formatted = formatted.replace(/^🚫\s*/, stopSvg + ' ');
+      formatted = formatted.replace(/^ℹ️\s*/, infoSvg + ' ');
+      return `<div class="puyer-note">${formatted}</div>`;
+    }).join('')}</div>`;
     const resepLines = [];
     resepLines.push('R/');
     rows.forEach(r => {
@@ -6339,7 +6390,7 @@ function hitungRentangPuyer(nama) {
     resepLines.push('  m.f. pulv. dtd. No. ' + fmt(jumlah, 0));
     resepLines.push('  S ' + aturan.replace(/^S\s*/i, ''));
     const resepText = resepLines.join('\n');
-    const resepHtml = `<div><div class="puyer-resep-title">📝 Draft Resep Racikan</div><div class="puyer-resep-box">${esc(resepText)}</div></div>`;
+    const resepHtml = `<div><div class="puyer-resep-title" style="display:flex;align-items:center;">${resepSvg}Draft Resep Racikan</div><div class="puyer-resep-box">${esc(resepText)}</div></div>`;
     const catatanText = 'Catatan: verifikasi dosis, kompatibilitas, stabilitas, dan apakah sediaan boleh digerus.';
 
     const lines = [];
@@ -6357,8 +6408,9 @@ function hitungRentangPuyer(nama) {
     lines.push('');
     lines.push(catatanText);
     state.lastText = lines.join('\n');
-    const terpisahHtml = terpisah.length ? `<div class="puyer-note-list"><div class="puyer-note" style="border-left:4px solid #C0392B;background:#FDEDEC;color:#922B21;font-weight:700;">🧴 Diracik / diberikan TERPISAH (tidak digabung ke puyer ${Number.isFinite(f)?fmt(f,0):'?'}×/hari): ${esc(terpisah.join(', '))}. Obat ini butuh frekuensi berbeda — buat resep/racikan sendiri.</div></div>` : '';
-    const interaksiHtml = interaksi.length ? `<div class="puyer-note-list">${interaksi.map(function (it) { const keras = it.level === 'hindari'; const brd = keras ? '#C0392B' : '#B26A00'; const bg = keras ? '#FDEDEC' : '#FEF5E7'; const tc = keras ? '#922B21' : '#7E5109'; const ic = keras ? '⛔' : '⚠️'; return `<div class="puyer-note" style="border-left:4px solid ${brd};background:${bg};color:${tc};font-weight:700;">${ic} ${esc(it.pesan)}</div>`; }).join('')}<div class="puyer-note" style="font-weight:600;font-style:italic;color:var(--teks-lembut);">🔎 Deteksi interaksi ini bersifat bantu-ingat &amp; belum lengkap — selalu verifikasi kompatibilitas/interaksi ke apoteker atau pedoman sebelum meracik.</div></div>` : '';
+    const searchSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="display:inline-block;vertical-align:middle;margin-right:4px;"><circle cx="11" cy="11" r="7" stroke="#64748B" stroke-width="1.8"/><path d="M16 16L21 21" stroke="#64748B" stroke-width="1.8" stroke-linecap="round"/></svg>';
+    const terpisahHtml = terpisah.length ? `<div class="puyer-note-list"><div class="puyer-note" style="border-left:4px solid #C0392B;background:#FDEDEC;color:#922B21;font-weight:700;">${stopSvg} Diracik / diberikan TERPISAH (tidak digabung ke puyer ${Number.isFinite(f)?fmt(f,0):'?'}×/hari): ${esc(terpisah.join(', '))}. Obat ini butuh frekuensi berbeda — buat resep/racikan sendiri.</div></div>` : '';
+    const interaksiHtml = interaksi.length ? `<div class="puyer-note-list">${interaksi.map(function (it) { const keras = it.level === 'hindari'; const brd = keras ? '#C0392B' : '#B26A00'; const bg = keras ? '#FDEDEC' : '#FEF5E7'; const tc = keras ? '#922B21' : '#7E5109'; const ic = keras ? stopSvg : warnSvg; return `<div class="puyer-note" style="border-left:4px solid ${brd};background:${bg};color:${tc};font-weight:700;">${ic} ${esc(it.pesan)}</div>`; }).join('')}<div class="puyer-note" style="font-weight:600;font-style:italic;color:var(--teks-lembut);">${searchSvg} Deteksi interaksi ini bersifat bantu-ingat &amp; belum lengkap — selalu verifikasi kompatibilitas/interaksi ke apoteker atau pedoman sebelum meracik.</div></div>` : '';
     el('puyerHasil').innerHTML = metrics + interaksiHtml + terpisahHtml + table + noteHtml + resepHtml + `<div class="puyer-output-text">${esc(catatanText)}</div>`;
     el('puyerHasilKartu').style.display = 'block';
     if (window.TVHomeDashboard) window.TVHomeDashboard.trackOpen('Racik Puyer');
