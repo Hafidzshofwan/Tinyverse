@@ -13,6 +13,181 @@ import {
 
 type Jk = "male" | "female" | null;
 
+function MaleIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
+      <circle cx="12" cy="12" r="10" fill="#E0E7FF" />
+      <path d="M7 11C7 7.5 9 6 12 6C15 6 17 7.5 17 11C17 11 15 9.5 12 9.5C9 9.5 7 11 7 11Z" fill="#1D4ED8" />
+      <circle cx="12" cy="11.5" r="4" fill="#FDE68A" />
+      <circle cx="10.5" cy="11" r="0.6" fill="#1E293B" />
+      <circle cx="13.5" cy="11" r="0.6" fill="#1E293B" />
+      <path d="M11 13C11.5 13.5 12.5 13.5 13 13" stroke="#1E293B" strokeWidth="0.8" strokeLinecap="round" />
+      <path d="M6 20C6 16.5 8.5 15 12 15C15.5 15 18 16.5 18 20" fill="#2563EB" />
+    </svg>
+  );
+}
+
+function FemaleIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
+      <circle cx="12" cy="12" r="10" fill="#FCE7F3" />
+      <path d="M6 13C5.5 9 8 6 12 6C16 6 18.5 9 18 13C17 10 15 9 12 9C9 9 7 10 6 13Z" fill="#BE185D" />
+      <circle cx="6.5" cy="11" r="1.5" fill="#EC4899" />
+      <circle cx="17.5" cy="11" r="1.5" fill="#EC4899" />
+      <circle cx="12" cy="11.5" r="4" fill="#FDE68A" />
+      <circle cx="10.5" cy="11" r="0.6" fill="#1E293B" />
+      <circle cx="13.5" cy="11" r="0.6" fill="#1E293B" />
+      <path d="M11 13C11.5 13.5 12.5 13.5 13 13" stroke="#1E293B" strokeWidth="0.8" strokeLinecap="round" />
+      <path d="M6 20C6 16.5 8.5 15 12 15C15.5 15 18 16.5 18 20" fill="#DB2777" />
+    </svg>
+  );
+}
+
+function BabyIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
+      <circle cx="12" cy="12" r="10" fill="#F3E8FF" />
+      <circle cx="12" cy="12" r="5" fill="#FDE68A" />
+      <path d="M12 7C12.8 6 13.5 6.2 13 7" stroke="#7C3AED" strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="10.2" cy="11.5" r="0.7" fill="#1E293B" />
+      <circle cx="13.8" cy="11.5" r="0.7" fill="#1E293B" />
+      <circle cx="9.2" cy="13" r="0.8" fill="#F43F5E" opacity="0.5" />
+      <circle cx="14.8" cy="13" r="0.8" fill="#F43F5E" opacity="0.5" />
+      <path d="M11 14C11.5 14.5 12.5 14.5 13 14" stroke="#1E293B" strokeWidth="0.8" strokeLinecap="round" />
+      <path d="M7 20C7 18 9 16.5 12 16.5C15 16.5 17 18 17 20" fill="#8B5CF6" />
+    </svg>
+  );
+}
+
+function GenderAvatar({ jk, size = 20 }: { jk?: string | null; size?: number }) {
+  if (jk === "male") return <MaleIcon size={size} />;
+  if (jk === "female") return <FemaleIcon size={size} />;
+  return <BabyIcon size={size} />;
+}
+
+function PatientFabIcon() {
+  return (
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+      <path d="M12 11C14.2091 11 16 9.20914 16 7C16 4.79086 14.2091 3 12 3C9.79086 3 8 4.79086 8 7C8 9.20914 9.79086 11 12 11Z" fill="#FFFFFF"/>
+      <path d="M12 14C7.58172 14 4 16.6863 4 20C4 20.5523 4.44772 21 5 21H19C19.5523 21 20 20.5523 20 20C20 16.6863 16.4183 14 12 14Z" fill="#FFFFFF" fillOpacity="0.88"/>
+    </svg>
+  );
+}
+
+function PatientHeaderIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
+      <rect width="24" height="24" rx="6" fill="#EEF2FF"/>
+      <circle cx="12" cy="9" r="3.5" fill="#3B82F6"/>
+      <path d="M6 19C6 15.6863 8.68629 13 12 13C15.3137 13 18 15.6863 18 19" fill="#1D4ED8"/>
+    </svg>
+  );
+}
+
+function UsersIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "5px" }}>
+      <path d="M17 21V19C17 16.7909 15.2091 15 13 15H5C2.79086 15 1 16.7909 1 19V21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+      <path d="M23 21V19C22.9986 17.1771 21.765 15.5857 20 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M16 3.13C17.7699 3.60312 19.0125 5.18322 19.0125 7C19.0125 8.81678 17.7699 10.3969 16 10.87" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function PlusIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
+      <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function FlameIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "3px" }}>
+      <path d="M12 2C10 5 8 7 8 10C8 13.3 10.2 16 12 16C13.8 16 16 13.3 16 10C16 8.5 15.5 7 14.5 5.8C14.3 8.5 13 10 12 10C11 10 10.2 9 10.5 7.5C10.7 6.2 11.5 4.5 12 2Z" fill="#F59E0B"/>
+      <path d="M12 11C11 11 10 12.2 10 13.5C10 15 11 16 12 16C13 16 14 15 14 13.5C14 12.5 13.2 11.5 12 11Z" fill="#EF4444"/>
+    </svg>
+  );
+}
+
+function CheckToastIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "5px" }}>
+      <circle cx="12" cy="12" r="10" fill="#10B981"/>
+      <path d="M8 12L11 15L16 9" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function HospitalIcon() {
+  return (
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style={{ marginBottom: "6px" }}>
+      <rect width="24" height="24" rx="6" fill="#EFF6FF"/>
+      <path d="M5 20V8C5 6.89543 5.89543 6 7 6H17C18.1046 6 19 6.89543 19 8V20" stroke="#2563EB" strokeWidth="1.8"/>
+      <path d="M12 10V16M9 13H15" stroke="#0284C7" strokeWidth="2" strokeLinecap="round"/>
+      <rect x="9" y="17" width="6" height="3" fill="#3B82F6"/>
+    </svg>
+  );
+}
+
+function NoteIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
+      <path d="M11 4H4C3.44772 4 3 4.44772 3 5V20C3 20.5523 3.44772 21 4 21H18C18.5523 21 19 20.5523 19 20V12" stroke="#64748B" strokeWidth="1.8" strokeLinecap="round"/>
+      <path d="M18.5 2.50001C19.3284 1.67158 20.6716 1.67158 21.5 2.50001C22.3284 3.32844 22.3284 4.67157 21.5 5.50001L12 15L8 16L9 12L18.5 2.50001Z" fill="#38BDF8" stroke="#0284C7" strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
+function LinkConnectedIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
+      <circle cx="12" cy="12" r="9" fill="#DCFCE7" stroke="#16A34A" strokeWidth="1.5"/>
+      <path d="M8 12L11 15L16 9" stroke="#15803D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
+function WarnIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "4px" }}>
+      <path d="M12 3L22 20H2L12 3Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.8" strokeLinejoin="round"/>
+      <path d="M12 9V14M12 17H12.01" stroke="#B45309" strokeWidth="2" strokeLinecap="round"/>
+    </svg>
+  );
+}
+
+function SaveIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "6px" }}>
+      <path d="M19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16L21 8V19C21 20.1046 20.1046 21 19 21Z" fill="#2563EB" stroke="#1E40AF" strokeWidth="1.5"/>
+      <path d="M17 21V13H7V21" fill="#FFFFFF"/>
+      <path d="M7 3V8H14V3" fill="#93C5FD"/>
+    </svg>
+  );
+}
+
+function LockIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
+      <rect x="5" y="11" width="14" height="10" rx="2" fill="#F1F5F9" stroke="#64748B" strokeWidth="1.8"/>
+      <path d="M8 11V7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7V11" stroke="#475467" strokeWidth="1.8" strokeLinecap="round"/>
+      <circle cx="12" cy="16" r="1.5" fill="#0284C7"/>
+    </svg>
+  );
+}
+
+function TrashIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-2px" }}>
+      <path d="M3 6H5H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M8 6V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V6M19 6V20C19 20.5523 18.5523 21 18 21H6C5.44772 21 5 20.5523 5 20V6H19Z" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round"/>
+    </svg>
+  );
+}
+
 function num(v: string): number | null {
   const n = parseFloat(v);
   return isFinite(n) ? n : null;
@@ -168,7 +343,7 @@ export function PatientProfile() {
         title="Kelola Pasien Bangsal / Active Patient"
         onClick={() => buka("list")}
       >
-        {"\uD83D\uDC64"}
+        <PatientFabIcon />
       </button>
 
       {/* Modal Dialog */}
@@ -184,7 +359,7 @@ export function PatientProfile() {
           <div style={{ marginBottom: "14px", borderBottom: "1px solid #F1F5F9", paddingBottom: "10px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
               <h3 style={{ margin: 0, fontFamily: "'Fredoka', sans-serif", color: "#1B2A6B", fontSize: "1.05rem", display: "flex", alignItems: "center", gap: "6px" }}>
-                {"\uD83D\uDC64"} Pasien Bangsal &amp; Poliklinik
+                <PatientHeaderIcon /> Pasien Bangsal &amp; Poliklinik
               </h3>
 
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
@@ -195,7 +370,7 @@ export function PatientProfile() {
                     className={tab === "list" ? "tv-pas-tab-btn aktif" : "tv-pas-tab-btn"}
                     onClick={() => setTab("list")}
                   >
-                    👥 Pasien Tersimpan ({patientList.length})
+                    <UsersIcon />Pasien Tersimpan ({patientList.length})
                   </button>
 
                   <button
@@ -206,7 +381,7 @@ export function PatientProfile() {
                       setTab("form");
                     }}
                   >
-                    ➕ {editingId ? "Edit" : "Tambah Pasien"}
+                    <PlusIcon />{editingId ? "Edit" : "Tambah Pasien"}
                   </button>
                 </div>
 
@@ -252,8 +427,7 @@ export function PatientProfile() {
                 }}
                 title="Tersambung ke Firebase Firestore untuk sinkronisasi otomatis antar-perangkat"
               >
-                <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981", display: "inline-block" }} />
-                🔥 Firebase Cloud Sync
+                <FlameIcon /> Firebase Cloud Sync
               </span>
             </div>
           </div>
@@ -270,9 +444,12 @@ export function PatientProfile() {
                 fontWeight: 600,
                 marginBottom: "10px",
                 textAlign: "center",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              ✓ {toastMsg}
+              <CheckToastIcon />{toastMsg}
             </div>
           )}
 
@@ -371,7 +548,7 @@ export function PatientProfile() {
                   <div className="tv-kosong" style={{ padding: "20px 10px", textAlign: "center" }}>
                     {patientList.length === 0 ? (
                       <>
-                        <div style={{ fontSize: "1.8rem", marginBottom: "6px" }}>🏥</div>
+                        <HospitalIcon />
                         <b>Daftar Pasien Kosong</b>
                         <p style={{ margin: "4px 0 12px", fontSize: "0.82rem", color: "#64748B" }}>
                           Simpan pasien bangsal/poliklinik Anda untuk switch kalkulator dosis &amp; cairan 1-klik.
@@ -384,7 +561,7 @@ export function PatientProfile() {
                             setTab("form");
                           }}
                         >
-                          + Tambah Pasien Baru
+                          <PlusIcon /> Tambah Pasien Baru
                         </button>
                       </>
                     ) : (
@@ -430,9 +607,7 @@ export function PatientProfile() {
                         {/* Top Row: Name & Active Badge */}
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span style={{ fontSize: "1.2rem" }}>
-                              {p.jk === "male" ? "👦" : p.jk === "female" ? "👧" : "👶"}
-                            </span>
+                            <GenderAvatar jk={p.jk} size={24} />
                             <div>
                               <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
                                 {p.nama || "An. Tanpa Nama"}
@@ -468,8 +643,8 @@ export function PatientProfile() {
 
                         {/* Catatan if any */}
                         {p.catatan && (
-                          <div style={{ fontSize: "0.75rem", color: "#475467", background: "rgba(255,255,255,0.7)", border: "1px solid #E2E8F0", padding: "4px 8px", borderRadius: "6px" }}>
-                            📝 {p.catatan}
+                          <div style={{ fontSize: "0.75rem", color: "#475467", background: "rgba(255,255,255,0.7)", border: "1px solid #E2E8F0", padding: "4px 8px", borderRadius: "6px", display: "flex", alignItems: "center", gap: "4px" }}>
+                            <NoteIcon /> {p.catatan}
                           </div>
                         )}
 
@@ -477,7 +652,7 @@ export function PatientProfile() {
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "6px", borderTop: "1px solid rgba(226, 232, 240, 0.7)", marginTop: "2px" }}>
                           {isAktif ? (
                             <span style={{ fontSize: "0.75rem", color: "#15803D", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px" }}>
-                              ✓ Terhubung di kalkulator
+                              <LinkConnectedIcon /> Terhubung di kalkulator
                             </span>
                           ) : (
                             <button
@@ -614,14 +789,14 @@ export function PatientProfile() {
                     className={jk === "male" ? "tv-jk-btn aktif" : "tv-jk-btn"}
                     onClick={() => setJk("male")}
                   >
-                    {"\uD83D\uDC66"} Laki-laki
+                    <MaleIcon size={18} /> Laki-laki
                   </button>
                   <button
                     type="button"
                     className={jk === "female" ? "tv-jk-btn aktif" : "tv-jk-btn"}
                     onClick={() => setJk("female")}
                   >
-                    {"\uD83D\uDC67"} Perempuan
+                    <FemaleIcon size={18} /> Perempuan
                   </button>
                 </div>
               </div>
@@ -689,7 +864,7 @@ export function PatientProfile() {
 
               {warn.length > 0 && (
                 <div className="tv-safety warn">
-                  <b>⚠️ Periksa data</b>
+                  <b><WarnIcon /> Periksa data</b>
                   {warn.map((w, i) => (
                     <div key={i}>{w}</div>
                   ))}
@@ -702,7 +877,7 @@ export function PatientProfile() {
                   className="tv-pas-btn tv-pas-save"
                   onClick={() => simpan(true)}
                 >
-                  💾 Simpan &amp; Aktifkan Pasien
+                  <SaveIcon /> Simpan &amp; Aktifkan Pasien
                 </button>
                 <button
                   type="button"
@@ -710,7 +885,7 @@ export function PatientProfile() {
                   style={{ background: "#F2F4F7", color: "#344054" }}
                   onClick={() => simpan(false)}
                 >
-                  ➕ Simpan Saja (Ke Daftar)
+                  <PlusIcon /> Simpan Saja (Ke Daftar)
                 </button>
                 <button
                   type="button"
@@ -723,8 +898,8 @@ export function PatientProfile() {
             </div>
           )}
 
-          <p className="tv-pas-note" style={{ marginTop: "14px" }}>
-            🔒 Seluruh daftar pasien tersimpan lokal (localStorage) di browser Anda, tidak dikirim ke server luar.
+          <p className="tv-pas-note" style={{ marginTop: "14px", display: "flex", alignItems: "center", gap: "4px" }}>
+            <LockIcon /> Seluruh daftar pasien tersimpan lokal (localStorage) di browser Anda, tidak dikirim ke server luar.
           </p>
         </div>
       </div>
@@ -786,12 +961,8 @@ export function PatientTopBarChip() {
         onClick={() => setOpen(!open)}
         title="Klik untuk switch pasien aktif atau kelola pasien bangsal"
       >
-        <span className="tv-pas-topchip-ic">
-          {hasActive
-            ? activeProfile.jk === "female"
-              ? "👧"
-              : "👦"
-            : "👶"}
+        <span className="tv-pas-topchip-ic" style={{ display: "inline-flex", alignItems: "center" }}>
+          <GenderAvatar jk={hasActive ? activeProfile.jk : null} size={20} />
         </span>
         <span className="tv-pas-topchip-txt">
           {hasActive ? (
@@ -833,8 +1004,8 @@ export function PatientTopBarChip() {
               marginBottom: "6px",
             }}
           >
-            <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-              🏥 Pasien Bangsal / Poliklinik
+            <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "#64748B", textTransform: "uppercase", letterSpacing: "0.5px", display: "flex", alignItems: "center", gap: "6px" }}>
+              <PatientHeaderIcon /> Pasien Bangsal / Poliklinik
             </div>
             {hasActive ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "4px" }}>
@@ -930,9 +1101,7 @@ export function PatientTopBarChip() {
                       }}
                       onClick={() => handleSelectPatient(p)}
                     >
-                      <span style={{ fontSize: "1.1rem" }}>
-                        {p.jk === "female" ? "👧" : p.jk === "male" ? "👦" : "👶"}
-                      </span>
+                      <GenderAvatar jk={p.jk} size={20} />
                       <div>
                         <div style={{ fontSize: "0.88rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
                           {p.nama || "An. Tanpa Nama"}
@@ -965,6 +1134,9 @@ export function PatientTopBarChip() {
                           borderRadius: "6px",
                           cursor: "pointer",
                           lineHeight: 1,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                         }}
                         onClick={(e) => {
                           e.stopPropagation();
@@ -973,7 +1145,7 @@ export function PatientTopBarChip() {
                           }
                         }}
                       >
-                        🗑️
+                        <TrashIcon />
                       </button>
                     </div>
                   </div>
@@ -1003,7 +1175,7 @@ export function PatientTopBarChip() {
               }}
               onClick={handleOpenModal}
             >
-              ➕ Kelola / Tambah Pasien Baru
+              <PlusIcon /> Kelola / Tambah Pasien Baru
             </button>
           </div>
         </div>
