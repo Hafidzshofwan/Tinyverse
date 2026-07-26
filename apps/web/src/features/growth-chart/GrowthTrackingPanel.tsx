@@ -185,22 +185,14 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           {/* div.ikon-bulat 38x38 pink background */}
           <div
-            className="ikon-bulat"
             style={{
-              width: 38,
-              height: 38,
-              minWidth: 38,
-              minHeight: 38,
-              borderRadius: 10,
-              background: "#D936A61A",
-              color: "#D936A6",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
             }}
           >
-            <ScreeningIcon id="longitudinal" variant={iconVariant} fallbackEmoji="📈" size={24} />
+            <ScreeningIcon id="longitudinal" variant={iconVariant} fallbackEmoji="📈" size={38} />
           </div>
           <div>
             <h2
