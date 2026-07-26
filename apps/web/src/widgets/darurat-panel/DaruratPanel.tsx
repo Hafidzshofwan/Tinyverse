@@ -6,16 +6,26 @@ import { ResusTab } from "@/features/emergency-resus";
 import { PalsTab } from "@/features/emergency-pals";
 import { GcsTab } from "@/features/emergency-gcs";
 import { NORM_KEY } from "@/entities/emergency";
+import {
+  SidebarIcon,
+  UserPatientIcon,
+  SaveDataIcon,
+  AlertWarnIcon,
+  BrainGcsIcon,
+  PatTriangleIcon,
+  PillCapsuleIcon,
+  ResusStopwatchIcon,
+} from "@/shared/ui";
 
 const PASIEN_KEY = "tv_pasien_aktif";
 
 type TabId = "gcs" | "pat" | "pals" | "resus";
 
-const TABS: { id: TabId; label: string }[] = [
-  { id: "gcs", label: "🧠 GCS" },
-  { id: "pat", label: "🔺 PAT" },
-  { id: "pals", label: "💊 Dosis & Alat" },
-  { id: "resus", label: "⏱️ Resusitasi" },
+const TABS: { id: TabId; label: string; icon: React.ReactNode }[] = [
+  { id: "gcs", label: "GCS & Glasgow", icon: <BrainGcsIcon size={20} /> },
+  { id: "pat", label: "PAT Triage", icon: <PatTriangleIcon size={20} /> },
+  { id: "pals", label: "Dosis & Alat PALS", icon: <PillCapsuleIcon size={20} /> },
+  { id: "resus", label: "Timer Resusitasi", icon: <ResusStopwatchIcon size={20} /> },
 ];
 
 type Pasien = {
@@ -203,8 +213,8 @@ export function DaruratPanel() {
     <div className="tv-page-darurat-wrapper">
       <div className="tv-page-darurat" id="page-darurat">
         <div className="judul-section">
-          <div className="ikon-bulat" style={{ background: "#FFD9D9" }} aria-hidden>
-            🚨
+          <div className="ikon-bulat" style={{ background: "transparent" }} aria-hidden>
+            <SidebarIcon slug="darurat" size={38} />
           </div>
           <div>
             <h2>Mode Darurat</h2>
@@ -217,7 +227,9 @@ export function DaruratPanel() {
 
         <div className="drt-pasien-bar">
           <div className="drt-pasien-head">
-            <strong>👤 Data Pasien </strong>
+            <strong style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+              <UserPatientIcon size={18} /> Data Pasien
+            </strong>
             <span
               className="drt-pasien-badge"
               style={
@@ -274,8 +286,9 @@ export function DaruratPanel() {
               className="drt-mini-btn simpan"
               type="button"
               onClick={simpanPasien}
+              style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
             >
-              💾 Simpan pasien aktif
+              <SaveDataIcon size={15} /> Simpan pasien aktif
             </button>
             <button
               className="drt-mini-btn hapus"
@@ -296,8 +309,10 @@ export function DaruratPanel() {
               aria-selected={tab === t.id}
               className={"drt-tab" + (tab === t.id ? " aktif" : "")}
               onClick={() => setTab(t.id)}
+              style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
             >
-              {t.label}
+              {t.icon}
+              <span>{t.label}</span>
             </button>
           ))}
         </div>
@@ -311,12 +326,15 @@ export function DaruratPanel() {
           ) : null}
         </div>
 
-        <div className="drt-disclaimer">
-          ⚠️ <strong>Disclaimer:</strong> Mode Darurat adalah alat bantu
-          dokumentasi, penilaian cepat & perhitungan dosis (PALS), bukan
-          pengganti penilaian klinis. PAT menilai kesan awal, bukan diagnosis.
-          Verifikasi setiap tindakan, dosis, dan ukuran alat sesuai protokol
-          resusitasi yang berlaku.
+        <div className="drt-disclaimer" style={{ display: "flex", alignItems: "flex-start", gap: "10px" }}>
+          <AlertWarnIcon size={22} style={{ flexShrink: 0, marginTop: "2px" }} />
+          <div>
+            <strong>Disclaimer:</strong> Mode Darurat adalah alat bantu
+            dokumentasi, penilaian cepat &amp; perhitungan dosis (PALS), bukan
+            pengganti penilaian klinis. PAT menilai kesan awal, bukan diagnosis.
+            Verifikasi setiap tindakan, dosis, dan ukuran alat sesuai protokol
+            resusitasi yang berlaku.
+          </div>
         </div>
       </div>
     </div>
