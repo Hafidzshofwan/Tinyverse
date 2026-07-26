@@ -26,20 +26,20 @@ export type IconVariantMap = Record<SidebarIconSlug, SidebarIconVariant>;
 const STORAGE_KEY = "tv-sidebar-icon-variants";
 
 const DEFAULT_VARIANTS: IconVariantMap = {
-  "beranda": "v1",
-  "ai-assistant": "v1",
-  "darurat": "v1",
-  "alur": "v1",
+  "beranda": "v3",
+  "ai-assistant": "v2",
+  "darurat": "v3",
+  "alur": "v2",
   "dosis": "v1",
   "cairan": "v1",
   "puyer": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
   "lab": "v1",
-  "nutrisi": "v1",
+  "nutrisi": "v3",
   "protokol": "v1",
-  "imunisasi": "v1",
-  "ringkasan": "v1",
+  "imunisasi": "v2",
+  "ringkasan": "v3",
 };
 
 // Global event listener system for real-time synchronization
