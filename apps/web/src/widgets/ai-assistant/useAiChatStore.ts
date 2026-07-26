@@ -129,7 +129,7 @@ export function saveStoredMessages(msgs: Message[], customTitle?: string) {
 
     // Synchronize into tv_ai_chat_sessions
     let activeId = getStoredActiveSessionId();
-    let sessions = getStoredSessions();
+    const sessions = getStoredSessions();
 
     if (!activeId || !sessions.some((s) => s.id === activeId)) {
       activeId = `session-${Date.now()}`;
@@ -250,7 +250,7 @@ export function useAiChatStore() {
 
   const deleteSession = useCallback((sessionId: string) => {
     if (typeof window === "undefined") return;
-    let allSessions = getStoredSessions().filter((s) => s.id !== sessionId);
+    const allSessions = getStoredSessions().filter((s) => s.id !== sessionId);
     const activeId = getStoredActiveSessionId();
 
     if (activeId === sessionId) {
