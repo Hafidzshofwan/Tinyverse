@@ -77,14 +77,25 @@ export function NutritionForm() {
             className={`segmented-btn ${tab === "kalori" ? "aktif" : ""}`}
             onClick={() => setTab("kalori")}
           >
-            🔥 Kalori &amp; Protein
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
+              <path d="M12 2C10 6 7 8 7 13C7 16.5 9.5 19.5 13 20C17 20.5 20 17 20 13C20 8 16 5 14 2C14 5 12 6.5 12 8C12 6 12 2 12 2Z" fill="#EA580C" />
+              <path d="M12 9C11 11 9.5 12 9.5 14.5C9.5 16.5 11 18.5 13 18.5C15 18.5 16.5 16.8 16.5 14.5C16.5 11.5 14 10 13 8.5C13 10 12 11 12 11" fill="#FBBF24" />
+            </svg>
+            <span>Kalori &amp; Protein</span>
           </button>
           <button
             type="button"
             className={`segmented-btn ${tab === "formula" ? "aktif" : ""}`}
             onClick={() => setTab("formula")}
           >
-            🍼 Susu Formula
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
+              <path d="M10 2H14V4H10V2Z" fill="#F59E0B" />
+              <rect x="8" y="4" width="8" height="3" rx="1" fill="#2563EB" />
+              <path d="M7 9C7 8 8 7 9 7H15C16 7 17 8 17 9V19C17 20.6569 15.6569 22 14 22H10C8.34315 22 7 20.6569 7 19V9Z" fill="#0EA5E9" fillOpacity="0.2" stroke="#0284C7" strokeWidth="1.6" />
+              <path d="M9 13H15" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
+              <path d="M9 17H13" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+            <span>Susu Formula</span>
           </button>
         </div>
 
@@ -112,7 +123,11 @@ export function NutritionForm() {
                 setKResult(computeCalorieProtein(bbNum, parseNum(usia)))
               }
             >
-              🔥 Hitung Kebutuhan
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
+                <path d="M12 2C10 6 7 8 7 13C7 16.5 9.5 19.5 13 20C17 20.5 20 17 20 13C20 8 16 5 14 2C14 5 12 6.5 12 8C12 6 12 2 12 2Z" fill="#FF5722" />
+                <path d="M12 9C11 11 9.5 12 9.5 14.5C9.5 16.5 11 18.5 13 18.5C15 18.5 16.5 16.8 16.5 14.5C16.5 11.5 14 10 13 8.5C13 10 12 11 12 11" fill="#FFC107" />
+              </svg>
+              Hitung Kebutuhan
             </button>
             {kResult.error ? (
               <div className="hasil-box-cairan" style={errorBoxStyle}>
@@ -176,7 +191,25 @@ export function NutritionForm() {
                       setTimeout(() => setDitambahkan(false), 2200);
                     }}
                   >
-                    {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                    {ditambahkan ? (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "6px" }}>
+                          <circle cx="12" cy="12" r="10" fill="#10B981" />
+                          <path d="M8 12L11 15L16 9" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        Ditambahkan ke Ringkasan!
+                      </>
+                    ) : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "6px" }}>
+                          <rect x="4" y="3" width="16" height="18" rx="2" fill="#3B82F6" fillOpacity="0.25" stroke="#60A5FA" strokeWidth="1.6" />
+                          <path d="M8 8H16M8 12H16M8 16H12" stroke="#60A5FA" strokeWidth="1.8" strokeLinecap="round" />
+                          <circle cx="17" cy="16" r="3.5" fill="#10B981" />
+                          <path d="M17 14.5V17.5M15.5 16H18.5" stroke="#FFFFFF" strokeWidth="1.2" strokeLinecap="round" />
+                        </svg>
+                        Tambahkan ke Ringkasan
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -213,7 +246,11 @@ export function NutritionForm() {
                 if (v != null) setVol(String(v));
               }}
             >
-              ↧ Isi otomatis 150 mL/kg dari berat pasien
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "6px" }}>
+                <circle cx="12" cy="12" r="10" fill="#2563EB" fillOpacity="0.15" />
+                <path d="M12 7V17M12 17L8 13M12 17L16 13" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              Isi otomatis 150 mL/kg dari berat pasien
             </button>
             {bbNum == null ? (
               <p className="catatan-metode" style={{ marginTop: 0 }}>
@@ -234,7 +271,14 @@ export function NutritionForm() {
                 )
               }
             >
-              🍼 Hitung Takaran
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
+                <path d="M10 2H14V4H10V2Z" fill="#F59E0B" />
+                <rect x="8" y="4" width="8" height="3" rx="1" fill="#60A5FA" />
+                <path d="M7 9C7 8 8 7 9 7H15C16 7 17 8 17 9V19C17 20.6569 15.6569 22 14 22H10C8.34315 22 7 20.6569 7 19V9Z" fill="#38BDF8" fillOpacity="0.3" stroke="#38BDF8" strokeWidth="1.8" />
+                <path d="M9 13H15" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+                <path d="M9 17H13" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+              Hitung Takaran
             </button>
             {fResult.error ? (
               <div className="hasil-box-cairan" style={errorBoxStyle}>
@@ -285,7 +329,25 @@ export function NutritionForm() {
                       setTimeout(() => setDitambahkan(false), 2200);
                     }}
                   >
-                    {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                    {ditambahkan ? (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "6px" }}>
+                          <circle cx="12" cy="12" r="10" fill="#10B981" />
+                          <path d="M8 12L11 15L16 9" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        Ditambahkan ke Ringkasan!
+                      </>
+                    ) : (
+                      <>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px", marginRight: "6px" }}>
+                          <rect x="4" y="3" width="16" height="18" rx="2" fill="#3B82F6" fillOpacity="0.25" stroke="#60A5FA" strokeWidth="1.6" />
+                          <path d="M8 8H16M8 12H16M8 16H12" stroke="#60A5FA" strokeWidth="1.8" strokeLinecap="round" />
+                          <circle cx="17" cy="16" r="3.5" fill="#10B981" />
+                          <path d="M17 14.5V17.5M15.5 16H18.5" stroke="#FFFFFF" strokeWidth="1.2" strokeLinecap="round" />
+                        </svg>
+                        Tambahkan ke Ringkasan
+                      </>
+                    )}
                   </button>
                 </div>
               </div>
@@ -296,7 +358,16 @@ export function NutritionForm() {
 
       {tab === "kalori" ? (
         <div className="kartu info-metode">
-          <h3>📐 Metode</h3>
+          <h3 style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M2 12h20" />
+              <path d="M6 12v-4" />
+              <path d="M10 12v-2" />
+              <path d="M14 12v-4" />
+              <path d="M18 12v-2" />
+            </svg>
+            Metode
+          </h3>
           <ul>
             <li>
               Estimasi energi (Holliday–Segar): 100 kkal/kg (≤10 kg) + 50
@@ -314,7 +385,14 @@ export function NutritionForm() {
         </div>
       ) : (
         <div className="kartu info-metode">
-          <h3>📐 Patokan</h3>
+          <h3 style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 16v-4" />
+              <path d="M12 8h.01" />
+            </svg>
+            Patokan
+          </h3>
           <ul>
             <li>1 sendok takar susu formula bubuk ≈ 60 mL air = 2 oz.</li>
             <li>Konsentrasi standar: 0,67 kkal/mL (ikuti petunjuk kemasan).</li>
@@ -331,7 +409,13 @@ export function NutritionForm() {
       )}
 
       <div className="kartu info-metode">
-        <h3>📚 Sumber Rujukan</h3>
+        <h3 style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+          Sumber Rujukan
+        </h3>
         <ul>
           <li>
             Estimasi energi rumatan: Holliday &amp; Segar, Pediatrics 1957.
