@@ -5690,15 +5690,50 @@ html body #page-dosis .obat-card .varian-label {
 </style>
 
 <div class="imunisasi-shell">
-  <section class="imunisasi-hero">
-    <h2>Jadwal Imunisasi Anak</h2>
-    <p>Rekomendasi Ikatan Dokter Anak Indonesia (IDAI) 2024 &mdash; usia 0&ndash;18 tahun, lengkap dengan materi tiap vaksin.</p>
+  <section class="imunisasi-hero" style="display:flex; align-items:center; gap:12px; text-align:left;">
+    <div class="ikon-bulat" style="width:44px; height:44px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+      <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="6" fill="#E0E7FF" />
+        <rect x="4" y="5" width="16" height="15" rx="2" stroke="#3730A3" stroke-width="1.8" fill="#C7D2FE" fill-opacity="0.4" />
+        <path d="M4 9H20M8 3V6M16 3V6" stroke="#3730A3" stroke-width="1.8" stroke-linecap="round" />
+        <circle cx="8" cy="13" r="1.5" fill="#4338CA" />
+        <circle cx="12" cy="13" r="1.5" fill="#4338CA" />
+        <circle cx="16" cy="13" r="1.5" fill="#10B981" />
+        <path d="M14.5 17L15.5 18L18 15.5" stroke="#10B981" stroke-width="1.8" stroke-linecap="round" />
+      </svg>
+    </div>
+    <div>
+      <h2 style="font-size:18.32px !important; margin:0; line-height:1.2;">Jadwal Imunisasi Anak</h2>
+      <p style="font-size:10.24px !important; margin:2px 0 0 0; opacity:0.8;">Rekomendasi Ikatan Dokter Anak Indonesia (IDAI) 2024 &mdash; usia 0&ndash;18 tahun, lengkap dengan materi tiap vaksin.</p>
+    </div>
   </section>
 
   <div class="imunisasi-card imunisasi-chart-card kartu">
     <div class="imn-tabs" id="imnTabs">
-      <button class="imn-tab aktif" type="button" data-chart="jadwal">📅 Bagan Jadwal</button>
-      <button class="imn-tab" type="button" data-chart="keterangan">📝 Keterangan</button>
+      <button class="imn-tab aktif" type="button" data-chart="jadwal" style="display:inline-flex; align-items:center; gap:6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:-3px;">
+          <rect x="3" y="4" width="18" height="17" rx="3" fill="#EFF6FF" stroke="#2563EB" stroke-width="1.6"/>
+          <path d="M3 7C3 5.34315 4.34315 4 6 4H18C19.6569 4 21 5.34315 21 7V9H3V7Z" fill="#2563EB"/>
+          <path d="M8 2V5M16 2V5" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="7.5" cy="12.5" r="1.5" fill="#10B981"/>
+          <circle cx="12" cy="12.5" r="1.5" fill="#F59E0B"/>
+          <circle cx="16.5" cy="12.5" r="1.5" fill="#3B82F6"/>
+          <circle cx="7.5" cy="16.5" r="1.5" fill="#EC4899"/>
+          <path d="M11 17L12.5 18.5L16.5 14.5" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Bagan Jadwal
+      </button>
+      <button class="imn-tab" type="button" data-chart="keterangan" style="display:inline-flex; align-items:center; gap:6px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:-3px;">
+          <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" fill="#FFFBEB" stroke="#D97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M14 2V8H20" fill="#FDE68A" stroke="#D97706" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="7" y="11" width="3" height="3" rx="1" fill="#EF4444"/>
+          <path d="M12 12.5H17" stroke="#0284C7" stroke-width="1.8" stroke-linecap="round"/>
+          <rect x="7" y="16" width="3" height="3" rx="1" fill="#10B981"/>
+          <path d="M12 17.5H17" stroke="#0284C7" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Keterangan
+      </button>
     </div>
     <div class="imunisasi-toolbar">
       <h3 id="imnChartTitle">Bagan Jadwal Imunisasi IDAI 2024</h3>
@@ -5716,11 +5751,17 @@ html body #page-dosis .obat-card .varian-label {
   </div>
 
   <div class="kartu">
-    <div class="judul-section">
-      <div class="ikon-bulat" style="background:#E6F7EC;">💉</div>
+    <div class="judul-section" style="display:flex; align-items:center; gap:10px;">
+      <div class="ikon-bulat" style="background:#FCE7F3; display:flex; align-items:center; justify-content:center;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <path d="M18 3L21 6M19.5 4.5L16 8M14.5 6.5L17.5 9.5M10.5 10.5L13.5 13.5" stroke="#D936A6" stroke-width="2" stroke-linecap="round"/>
+          <path d="M6 18L13.5 10.5L10.5 7.5L3 15V18H6Z" stroke="#D936A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="#FCE7F3"/>
+          <path d="M3 21L6 18" stroke="#D936A6" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
       <div>
-        <h2>Materi Vaksin</h2>
-        <p>Pilih satu vaksin untuk melihat penyakit yang dicegah, jenis (hidup/mati), cara pemberian, jadwal &amp; dosis, KIPI, dan kontraindikasi.</p>
+        <h2 style="font-size:18.32px !important;">Materi Vaksin</h2>
+        <p style="font-size:10.24px !important;">Pilih satu vaksin untuk melihat penyakit yang dicegah, jenis (hidup/mati), cara pemberian, jadwal &amp; dosis, KIPI, dan kontraindikasi.</p>
       </div>
     </div>
     <div class="imn-select-wrap">
