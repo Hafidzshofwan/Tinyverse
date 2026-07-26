@@ -82,7 +82,13 @@ export function PlanCForm() {
         {calculated ? (
           result?.error ? (
             <div className="hasil-box-cairan tampil">
-              <div className="hasil-rincian">⚠️ {result.error}</div>
+              <div className="hasil-rincian" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.8" strokeLinejoin="round" />
+                  <path d="M12 9V14M12 17H12.01" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
+                </svg>
+                {result.error}
+              </div>
             </div>
           ) : (
             <div className="hasil-box-cairan tampil">
@@ -132,10 +138,26 @@ export function PlanCForm() {
                 <button
                   type="button"
                   className="tv-btn"
-                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
+                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
                   onClick={handleTambahRingkasan}
                 >
-                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  {ditambahkan ? (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17L4 12" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      Ditambahkan ke Ringkasan!
+                    </>
+                  ) : (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M14 2V8H20" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M8 13H16M8 17H13" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                      Tambahkan ke Ringkasan
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -152,12 +174,22 @@ export function PlanCForm() {
                 label: "Buka Mode Darurat Resusitasi",
                 href: "/preview/darurat",
                 primary: true,
-                icon: "⚡",
+                icon: (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#FFFFFF" stroke="#FFFFFF" strokeWidth="1.2" />
+                  </svg>
+                ),
               },
               {
                 label: "Cek Elektrolit / Lab",
                 href: "/preview/lab",
-                icon: "🧪",
+                icon: (
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 3V8L4.5 17C3.8 18.4 4.8 20 6.4 20H17.6C19.2 20 20.2 18.4 19.5 17L15 8V3" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M9 3H15" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                    <path d="M7 14H17" stroke="currentColor" strokeWidth="1.5" strokeDasharray="2 2" />
+                  </svg>
+                ),
               },
             ]}
           />

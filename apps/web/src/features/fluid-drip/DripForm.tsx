@@ -51,20 +51,26 @@ export function DripForm() {
       <div className="kartu">
         <div className="form-row-group">
           <NumberField
-            label="💧 Kebutuhan Cairan (mL)"
+            label="Kebutuhan Cairan (mL)"
             value={volume}
             onValueChange={setVolume}
             placeholder="cth: 500"
           />
           <NumberField
-            label="⏱️ Lama Pemberian (jam)"
+            label="Lama Pemberian (jam)"
             value={hours}
             onValueChange={setHours}
             placeholder="cth: 8"
           />
         </div>
         <div className="form-group" style={{ marginTop: 4, marginBottom: 8 }}>
-          <label>💉 Ukuran Drip Set</label>
+          <label style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3V10M12 10C10.3 10 9 11.3 9 13C9 15.5 12 19 12 19C12 19 15 15.5 15 13C15 11.3 13.7 10 12 10Z" stroke="#0A0B5F" strokeWidth="1.8" fill="#BAE6FD" />
+              <circle cx="12" cy="13" r="1.5" fill="#0369A1" />
+            </svg>
+            Ukuran Drip Set
+          </label>
         </div>
         <div className="segmented-toggle" style={{ marginBottom: 18 }}>
           <button
@@ -86,8 +92,12 @@ export function DripForm() {
             <small style={{ fontSize: "0.72rem" }}>60 tpm/mL</small>
           </button>
         </div>
-        <button type="button" className="btn-hitung" onClick={hitung}>
-          💉 Hitung Faktor Tetes
+        <button type="button" className="btn-hitung" onClick={hitung} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3V10M12 10C10.3 10 9 11.3 9 13C9 15.5 12 19 12 19C12 19 15 15.5 15 13C15 11.3 13.7 10 12 10Z" stroke="#FFFFFF" strokeWidth="1.8" fill="#7DD3FC" />
+            <circle cx="12" cy="13" r="1.5" fill="#FFFFFF" />
+          </svg>
+          Hitung Faktor Tetes
         </button>
         {calculated ? (
           <>
@@ -102,10 +112,26 @@ export function DripForm() {
                 <button
                   type="button"
                   className="tv-btn"
-                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
+                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
                   onClick={handleTambahRingkasan}
                 >
-                  {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  {ditambahkan ? (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17L4 12" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      Ditambahkan ke Ringkasan!
+                    </>
+                  ) : (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M14 2V8H20" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M8 13H16M8 17H13" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                      Tambahkan ke Ringkasan
+                    </>
+                  )}
                 </button>
               </div>
             )}

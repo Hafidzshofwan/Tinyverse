@@ -8,7 +8,7 @@ export interface RedFlagAction {
   href?: string;
   onClick?: () => void;
   primary?: boolean;
-  icon?: string;
+  icon?: React.ReactNode;
 }
 
 export interface RedFlagCrossLinkProps {
@@ -99,7 +99,11 @@ export function RedFlagCrossLink({
     <div style={containerStyle} className="tv-redflag-banner">
       <div>
         <span style={badgeStyle}>
-          <span aria-hidden>🚨</span> {badge}
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2L2 22H22L12 2Z" fill="#FFFFFF" />
+            <path d="M12 8V14M12 17H12.01" stroke="#DC2626" strokeWidth="2.5" strokeLinecap="round" />
+          </svg>
+          {badge}
         </span>
         <div style={titleStyle}>{title}</div>
         <div style={descStyle}>{description}</div>

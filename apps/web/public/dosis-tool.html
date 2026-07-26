@@ -5672,8 +5672,23 @@ html body #page-dosis .obat-card .varian-label {
 </nav>
 <!-- ===== LIBRARY OBAT ===== -->
 <section id="library">
+<style>
+html body #page-dosis #library .judul-section .ikon-bulat {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+</style>
 <div class="judul-section">
-<div class="ikon-bulat" style="background:transparent;">📚</div>
+<div class="ikon-bulat" style="background: transparent !important; box-shadow: none !important; display: inline-flex; align-items: center; justify-content: center;">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="6" fill="#FFF7ED" />
+    <rect x="5" y="8" width="13" height="7" rx="3.5" transform="rotate(-30 5 8)" fill="#FB923C" stroke="#EA580C" stroke-width="1.5" />
+    <line x1="8.5" y1="5" x2="15" y2="16" stroke="#FFFFFF" stroke-width="1.5" />
+    <circle cx="16.5" cy="16.5" r="4" fill="#FED7AA" stroke="#C2410C" stroke-width="1.5" />
+    <line x1="14.5" y1="16.5" x2="18.5" y2="16.5" stroke="#C2410C" stroke-width="1.2" />
+  </svg>
+</div>
 <div>
 <h2>Rak Obat</h2>
 <p>Cari atau pilih obat dari rak di bawah</p>
@@ -5720,7 +5735,7 @@ html body #page-dosis .obat-card .varian-label {
 <div class="kalkulator-isi">
 <div class="obat-terpilih-box">
 <div class="info">
-<span class="emoji" id="emojiTerpilih">💊</span>
+<span class="emoji" id="emojiTerpilih" style="display:inline-flex; align-items:center; justify-content:center;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="6" fill="#FEF2F2" /><path d="M14 14.5L18 10.5" stroke="#EF4444" stroke-width="2" stroke-linecap="round" /><circle cx="9" cy="15" r="3.5" fill="#FCA5A5" stroke="#DC2626" stroke-width="1.5" /><path d="M11 6V11" stroke="#DC2626" stroke-width="2" stroke-linecap="round" /><circle cx="11" cy="13" r="2" fill="#EF4444" /></svg></span>
 <span>
 <span id="namaTerpilih">Paracetamol</span>
 <span class="teks-kecil">Obat yang sedang dipilih</span>
@@ -5948,6 +5963,80 @@ function labelDosisObat(obat) {
           : `${obat.dosisMinPerKg}-${obat.dosisMaxPerKg} ${obat.unitLabel}`;
 }
 
+function getObatIconSvg(obat, sz) {
+  const size = sz || 20;
+  const id = typeof obat === "string" ? obat : (obat && obat.id ? obat.id : "");
+  const jenis = typeof obat === "object" && obat && obat.jenis ? obat.jenis : "";
+
+  // 1. Thermometer & Relief Tablet (Paracetamol, Ibuprofen, Diklofenak, Aspirin)
+  if (id.includes("paracetamol") || id.includes("ibuprofen") || id.includes("diklofenak") || id.includes("aspirin") || id.includes("asetilsalisilat")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FEF2F2" /><path d="M14 14.5L18 10.5" stroke="#EF4444" stroke-width="2" stroke-linecap="round" /><circle cx="9" cy="15" r="3.5" fill="#FCA5A5" stroke="#DC2626" stroke-width="1.5" /><path d="M11 6V11" stroke="#DC2626" stroke-width="2" stroke-linecap="round" /><circle cx="11" cy="13" r="2" fill="#EF4444" /></svg>`;
+  }
+
+  // 2. Antibiotics (Amoxicillin, Co-amoxiclav, Cefixime, Sefadroksil, Sefaklor, Cotrimoxazole, Dikloksasilin, Klindamisin, Kloramfenikol, Eritromisin, Azithromycin)
+  if (jenis === "Antibiotik" || id.includes("amox") || id.includes("cef") || id.includes("sef") || id.includes("cotri") || id.includes("azithro") || id.includes("eritro") || id.includes("klinda") || id.includes("kloram")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#F0F9FF" /><rect x="5" y="8" width="14" height="8" rx="4" fill="#38BDF8" stroke="#0284C7" stroke-width="1.5" /><path d="M12 8V16" stroke="#FFFFFF" stroke-width="1.5" /><path d="M12 8C14.2 8 16 9.8 16 12C16 14.2 14.2 16 12 16H15C17.2 16 19 14.2 19 12C19 9.8 17.2 8 15 8H12Z" fill="#0284C7" /></svg>`;
+  }
+
+  // 3. Cough & Cold / Respiratory / Mukolitik (Ambroxol, Asetilsistein, Salbutamol, Montelukast)
+  if (id.includes("ambroxol") || id.includes("asetilsistein") || id.includes("salbutamol") || id.includes("montelukast") || id.includes("pseudoefedrin")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#F0FDFA" /><path d="M12 4C12 4 7 10 7 14.5C7 17.5 9.2 20 12 20C14.8 20 17 17.5 17 14.5C17 10 12 4 12 4Z" fill="#2DD4BF" stroke="#0D9488" stroke-width="1.5" /><path d="M9.5 14C9.5 14 10.5 16 12 16C13.5 16 14.5 14 14.5 14" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" /></svg>`;
+  }
+
+  // 4. Anti-Tuberkulosis / OAT (Isoniazid, Rifampisin, Pirazinamid, Etambutol)
+  if (jenis === "Anti-Tuberkulosis" || id.includes("isoniazid") || id.includes("rifampisin") || id.includes("pirazinamid") || id.includes("etambutol")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FFF2F2" /><path d="M7 6C5.5 8 5 12 6.5 16C7.5 18.5 9.5 19.5 11 18V6H7Z" fill="#FCA5A5" stroke="#E11D48" stroke-width="1.5" /><path d="M17 6C18.5 8 19 12 17.5 16C16.5 18.5 14.5 19.5 13 18V6H17Z" fill="#FCA5A5" stroke="#E11D48" stroke-width="1.5" /></svg>`;
+  }
+
+  // 5. Antihistamin & Anti-alergi (CTM, Cetirizine, Loratadine, Desloratadin, Difenhidramin, Prometazin)
+  if (jenis === "Antihistamin" || id.includes("ctm") || id.includes("chlorpheniramine") || id.includes("cetirizine") || id.includes("loratad") || id.includes("difenhidramin") || id.includes("prometazin")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FDF4FF" /><circle cx="12" cy="12" r="6" fill="#F0ABFC" stroke="#C084FC" stroke-width="1.5" /><path d="M12 6V18M6 12H18" stroke="#9333EA" stroke-width="1.5" stroke-linecap="round" /></svg>`;
+  }
+
+  // 6. Kortikosteroid (Prednison, Prednisolone, Dexamethasone, Metilprednisolon, Hidrokortison)
+  if (jenis === "Kortikosteroid" || id.includes("predni") || id.includes("dexa") || id.includes("hidrokortison")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#EEF2FF" /><circle cx="9" cy="9" r="4" fill="#A5B4FC" stroke="#4338CA" stroke-width="1.5" /><circle cx="15" cy="15" r="4" fill="#C7D2FE" stroke="#6366F1" stroke-width="1.5" /></svg>`;
+  }
+
+  // 7. Saluran Cerna / Antiemetik / Asam Lambung (Domperidone, Ondansetron, Metoclopramide, Omeprazole, Lansoprazol, Sukralfat, Laktulosa)
+  if (jenis === "Saluran Cerna" || jenis === "Antiemetik" || id.includes("domperi") || id.includes("ondan") || id.includes("metoclo") || id.includes("omepra") || id.includes("lanso") || id.includes("sukralfat") || id.includes("laktulosa")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#ECFDF5" /><path d="M8 6C8 6 11 8 11 11C11 14 8 16 10 19C11.5 21 15 20 16 18C17 16 16 13 14 11C12 9 14 6 14 6" stroke="#059669" stroke-width="2" stroke-linecap="round" /><circle cx="16" cy="7" r="2" fill="#34D399" /></svg>`;
+  }
+
+  // 8. Rehidrasi & Diare (Oralit / ORS, Zinc)
+  if (id.includes("oral") || id.includes("zinc") || id.includes("rehydration")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#EFF6FF" /><path d="M12 5C12 5 7 11 7 15C7 17.8 9.2 20 12 20C14.8 20 17 17.8 17 15C17 11 12 5 12 5Z" fill="#60A5FA" stroke="#2563EB" stroke-width="1.5" /><path d="M12 11V16M9.5 13.5H14.5" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" /></svg>`;
+  }
+
+  // 9. Antikonvulsan / Kejang (Diazepam, Fenobarbital, Valproat)
+  if (jenis === "Antikonvulsan" || id.includes("diaze") || id.includes("feno") || id.includes("valpro")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FEF3C7" /><path d="M13 3L6 13H12L11 21L18 11H12L13 3Z" fill="#FBBF24" stroke="#D97706" stroke-width="1.5" stroke-linejoin="round" /></svg>`;
+  }
+
+  // 10. Anthelmintik / Obat Cacing (Albendazole, Mebendazole, Pyrantel Pamoate, Ivermectin)
+  if (jenis === "Anthelmintik" || id.includes("alben") || id.includes("meben") || id.includes("pyrantel") || id.includes("ivermectin")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FEFCE8" /><rect x="5" y="9" width="14" height="6" rx="3" fill="#FACC15" stroke="#CA8A04" stroke-width="1.5" /><path d="M12 5V19" stroke="#854D0E" stroke-width="1.5" stroke-dasharray="2 2" /></svg>`;
+  }
+
+  // 11. Antijamur (Ketoconazole, Nystatin, Griseofulvin, Flukonazol)
+  if (jenis === "Antijamur" || id.includes("keto") || id.includes("nystat") || id.includes("griseo") || id.includes("fluko")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#F0FDF4" /><path d="M12 5C8 5 5 9 5 12H19C19 9 16 5 12 5Z" fill="#4ADE80" stroke="#16A34A" stroke-width="1.5" /><path d="M10 12V19H14V12" fill="#86EFAC" stroke="#16A34A" stroke-width="1.5" /></svg>`;
+  }
+
+  // 12. Antivirus (Asiklovir, Oseltamivir)
+  if (id.includes("asiklovir") || id.includes("oseltamivir")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#F5F3FF" /><circle cx="12" cy="12" r="5" fill="#A78BFA" stroke="#7C3AED" stroke-width="1.5" /><path d="M12 4V7M12 17V20M4 12H7M17 12H20" stroke="#7C3AED" stroke-width="1.5" stroke-linecap="round" /></svg>`;
+  }
+
+  // 13. Vitamin & Suplemen (Vitamin A, C, D, K, B1, Zat Besi, Asam Folat, Kalsium Laktat)
+  if (jenis === "Vitamin & Suplemen" || id.includes("vitamin") || id.includes("zat-besi") || id.includes("tiamin") || id.includes("folat") || id.includes("kalsium")) {
+    return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FFF7ED" /><circle cx="12" cy="12" r="6" fill="#FB923C" stroke="#EA580C" stroke-width="1.5" /><path d="M12 8L13.5 10.8L16.5 11.3L14.3 13.4L14.8 16.5L12 15L9.2 16.5L9.7 13.4L7.5 11.3L10.5 10.8L12 8Z" fill="#FFFFFF" /></svg>`;
+  }
+
+  // Default: Dual Capsule & Tablet
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:middle;"><rect width="24" height="24" rx="6" fill="#FFF7ED" /><rect x="5" y="8" width="13" height="7" rx="3.5" transform="rotate(-30 5 8)" fill="#FB923C" stroke="#EA580C" stroke-width="1.5" /><line x1="8.5" y1="5" x2="15" y2="16" stroke="#FFFFFF" stroke-width="1.5" /><circle cx="16.5" cy="16.5" r="4" fill="#FED7AA" stroke="#C2410C" stroke-width="1.5" /><line x1="14.5" y1="16.5" x2="18.5" y2="16.5" stroke="#C2410C" stroke-width="1.2" /></svg>`;
+}
+
 function renderLibrary() {
   const grid = document.getElementById("grid-obat");
   grid.innerHTML = "";
@@ -6010,7 +6099,7 @@ function pilihObat(index) {
   if (kartuBaru) kartuBaru.classList.add("selected");
 
   document.getElementById("namaTerpilih").textContent = obat.nama;
-  document.getElementById("emojiTerpilih").textContent = obat.icon || "💊";
+  document.getElementById("emojiTerpilih").innerHTML = getObatIconSvg(obat, 26);
 
   document.getElementById("hasil-box").style.display = "none";
 
