@@ -51,14 +51,14 @@
 .tv-page-lab .judul-section h2 {
   margin: 0;
   font-family: "Fredoka", "Quicksand", sans-serif;
-  font-size: 1.24rem;
+  font-size: 18.32px !important;
   font-weight: 700;
   letter-spacing: -0.035em;
   color: var(--etail-navy);
 }
 .tv-page-lab .judul-section p {
   margin: 2px 0 0;
-  font-size: 0.62rem;
+  font-size: 10.24px !important;
   font-weight: 600;
   color: rgba(10, 11, 95, 0.62);
 }
@@ -166,9 +166,9 @@
 }
 .tv-page-lab .segmented-btn.aktif,
 .tv-page-lab .segmented-btn:hover {
-  background: var(--etail-navy);
-  color: #fff;
-  box-shadow: 0 10px 22px rgba(10, 11, 95, 0.18);
+  background: var(--etail-navy, #0A0B5F);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.22);
 }
 
 /* Info pasien */
