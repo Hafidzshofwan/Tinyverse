@@ -13,8 +13,13 @@ import {
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile } from "@/shared/lib/patient";
 import { hitungIMT } from "./zscore";
+import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
-export function GrowthTrackingPanel() {
+interface GrowthTrackingPanelProps {
+  iconVariant?: IconStyleVariant;
+}
+
+export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPanelProps) {
   const patientProfile: PatientProfile = usePatientProfile();
   const patientId = patientProfile.id || "";
   const belumPilihPasien = !patientId;
@@ -182,22 +187,20 @@ export function GrowthTrackingPanel() {
           <div
             className="ikon-bulat"
             style={{
-              width: 46,
-              height: 46,
-              minWidth: 46,
-              minHeight: 46,
+              width: 48,
+              height: 48,
+              minWidth: 48,
+              minHeight: 48,
               borderRadius: 14,
               background: "#D936A61A",
               color: "#D936A6",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "17.6px",
-              fontFamily: "Quicksand, system-ui, sans-serif",
               flexShrink: 0,
             }}
           >
-            📈
+            <ScreeningIcon id="longitudinal" variant={iconVariant} fallbackEmoji="📈" size={28} />
           </div>
           <div>
             <h2

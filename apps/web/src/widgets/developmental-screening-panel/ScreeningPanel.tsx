@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { MchatForm } from "@/features/mchat-r";
 import { KpspForm } from "@/features/kpsp";
 import { DenverForm } from "@/features/denver";
-import { ScreeningIcon, type IconStyleVariant } from "./ScreeningIcon";
+import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
 interface AlatSkrining {
   id: string;
@@ -39,18 +39,21 @@ const DAFTAR_ALAT: AlatSkrining[] = [
   },
 ];
 
-export function ScreeningPanel() {
+interface ScreeningPanelProps {
+  iconVariant?: IconStyleVariant;
+}
+
+export function ScreeningPanel({ iconVariant = "svg-v1" }: ScreeningPanelProps = {}) {
   return (
     <Suspense fallback={<div style={{ padding: "20px", textAlign: "center", color: "#64748B" }}>Memuat Skrining Perkembangan...</div>}>
-      <ScreeningPanelInner />
+      <ScreeningPanelInner iconVariant={iconVariant} />
     </Suspense>
   );
 }
 
-function ScreeningPanelInner() {
+function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
   const searchParams = useSearchParams();
   const [aktif, setAktif] = useState<string | null>(null);
-  const [iconVariant] = useState<IconStyleVariant>("svg-v1");
 
   useEffect(() => {
     const tool = searchParams ? searchParams.get("tool") : null;
