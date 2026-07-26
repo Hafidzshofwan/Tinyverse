@@ -10,7 +10,6 @@ import {
   LungsIcon,
   IvFluidBagIcon,
   SyringeInfiltrationIcon,
-  EmergencyDrugIcon,
   BookRefIcon,
   AlertWarnIcon,
   DrugEpiIvIcon,
