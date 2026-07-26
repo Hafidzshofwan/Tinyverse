@@ -18,12 +18,32 @@ const PRESET_PROMPTS = [
 
 export function AiAssistantWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const { messages, setMessages, resetChat } = useAiChatStore();
+  const {
+    messages,
+    setMessages,
+    sessions,
+    activeSessionId,
+    saveCurrentSession,
+    loadSession,
+    deleteSession,
+    createNewSession,
+    resetChat,
+  } = useAiChatStore();
   const [input, setInput] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [showSessionsPanel, setShowSessionsPanel] = useState(false);
+  const [editingTitle, setEditingTitle] = useState(false);
+  const [sessionTitleInput, setSessionTitleInput] = useState("");
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    setTimeout(() => setToastMsg(null), 2500);
+  };
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -322,28 +342,79 @@ export function AiAssistantWidget() {
                 </div>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 8, position: "relative", zIndex: 1 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
                 <button
                   type="button"
-                  onClick={resetChat}
+                  onClick={() => setShowSessionsPanel((v) => !v)}
                   style={{
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
-                    color: "#dc2626",
+                    color: showSessionsPanel ? "#ffffff" : "var(--tv-navy, #0a0b5f)",
                     padding: "4px 10px",
                     borderRadius: 20,
-                    backgroundColor: "#ffffff",
-                    border: "1px solid rgba(220, 38, 38, 0.25)",
-                    boxShadow: "0 1px 4px rgba(220, 38, 38, 0.08)",
+                    backgroundColor: showSessionsPanel ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
+                    border: "1px solid rgba(10, 11, 95, 0.15)",
+                    boxShadow: "0 1px 4px rgba(10, 11, 95, 0.05)",
                     cursor: "pointer",
                     fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
                     gap: 4,
                   }}
-                  title="Reset Percakapan"
+                  title="Lihat Sesi Diskusi Tersimpan"
                 >
-                  🔄 Reset
+                  📂 Sesi ({sessions.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    saveCurrentSession();
+                    showToast("Sesi aktif berhasil disimpan!");
+                  }}
+                  style={{
+                    fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                    fontSize: 12,
+                    color: "#059669",
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(16, 185, 129, 0.3)",
+                    boxShadow: "0 1px 4px rgba(16, 185, 129, 0.08)",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                  title="Simpan Sesi Diskusi Saat Ini"
+                >
+                  💾 Simpan
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    createNewSession();
+                    setShowSessionsPanel(false);
+                    showToast("Sesi baru dibuat!");
+                  }}
+                  style={{
+                    fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                    fontSize: 12,
+                    color: "#d936a6",
+                    padding: "4px 10px",
+                    borderRadius: 20,
+                    backgroundColor: "#ffffff",
+                    border: "1px solid rgba(217, 54, 166, 0.3)",
+                    boxShadow: "0 1px 4px rgba(217, 54, 166, 0.08)",
+                    cursor: "pointer",
+                    fontWeight: 600,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 4,
+                  }}
+                  title="Mulai Sesi Chat Baru"
+                >
+                  ➕ Baru
                 </button>
                 <Link
                   href="/preview/ai-assistant"
@@ -380,6 +451,197 @@ export function AiAssistantWidget() {
                 </button>
               </div>
             </div>
+
+            {/* Toast Notification Alert */}
+            {toastMsg && (
+              <div
+                style={{
+                  padding: "8px 16px",
+                  backgroundColor: "#ecfdf5",
+                  color: "#065f46",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  borderBottom: "1px solid #a7f3d0",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  animation: "fadeIn 0.2s ease-out",
+                }}
+              >
+                <span>{toastMsg}</span>
+                <span style={{ fontSize: 10, opacity: 0.7 }}>localStorage</span>
+              </div>
+            )}
+
+            {/* Panel Daftar Sesi Diskusi Tersimpan */}
+            {showSessionsPanel && (
+              <div
+                style={{
+                  backgroundColor: "#f8fafc",
+                  borderBottom: "2px solid rgba(217, 54, 166, 0.2)",
+                  padding: "14px 16px",
+                  maxHeight: 280,
+                  overflowY: "auto",
+                  animation: "fadeIn 0.2s ease-out",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 10,
+                  }}
+                >
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "var(--tv-navy, #0a0b5f)", display: "flex", alignItems: "center", gap: 6 }}>
+                    <span>📂 Sesi Diskusi Klinis Tersimpan</span>
+                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 500 }}>({sessions.length})</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      createNewSession();
+                      setShowSessionsPanel(false);
+                      showToast("Sesi baru dibuat!");
+                    }}
+                    style={{
+                      fontSize: 11,
+                      color: "#d936a6",
+                      backgroundColor: "#fdf2f8",
+                      border: "1px solid rgba(217, 54, 166, 0.3)",
+                      padding: "3px 8px",
+                      borderRadius: 12,
+                      fontWeight: 700,
+                      cursor: "pointer",
+                    }}
+                  >
+                    + Sesi Baru
+                  </button>
+                </div>
+
+                {sessions.length === 0 ? (
+                  <div style={{ fontSize: 12, color: "#64748b", fontStyle: "italic", textAlign: "center", padding: "16px 0" }}>
+                    Belum ada sesi diskusi yang tersimpan. Mulai bertanya dan klik &quot;Simpan&quot;!
+                  </div>
+                ) : (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {sessions.map((s) => {
+                      const isActive = s.id === activeSessionId;
+                      const msgCount = s.messages ? s.messages.length : 0;
+                      const dateFormatted = new Date(s.updatedAt || s.createdAt).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "short",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      });
+
+                      return (
+                        <div
+                          key={s.id}
+                          style={{
+                            padding: "10px 12px",
+                            borderRadius: 12,
+                            backgroundColor: isActive ? "#ffffff" : "#ffffff",
+                            border: isActive ? "2px solid #d936a6" : "1px solid #e2e8f0",
+                            boxShadow: isActive ? "0 2px 8px rgba(217, 54, 166, 0.12)" : "0 1px 3px rgba(0, 0, 0, 0.03)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            gap: 10,
+                          }}
+                        >
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              {isActive && (
+                                <span
+                                  style={{
+                                    fontSize: 9,
+                                    fontWeight: 800,
+                                    backgroundColor: "#d936a6",
+                                    color: "#ffffff",
+                                    padding: "1px 6px",
+                                    borderRadius: 10,
+                                    textTransform: "uppercase",
+                                  }}
+                                >
+                                  Aktif
+                                </span>
+                              )}
+                              <span
+                                style={{
+                                  fontSize: 13,
+                                  fontWeight: 700,
+                                  color: "var(--tv-navy, #0a0b5f)",
+                                  whiteSpace: "nowrap",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  display: "block",
+                                }}
+                                title={s.title}
+                              >
+                                {s.title}
+                              </span>
+                            </div>
+                            <div style={{ fontSize: 11, color: "#64748b", marginTop: 2, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                              <span>{dateFormatted}</span>
+                              <span>•</span>
+                              <span>{msgCount} pesan</span>
+                            </div>
+                          </div>
+
+                          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                            {!isActive && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  loadSession(s.id);
+                                  setShowSessionsPanel(false);
+                                  showToast(`Sesi "${s.title}" dimuat!`);
+                                }}
+                                style={{
+                                  fontSize: 11,
+                                  fontWeight: 700,
+                                  color: "#0f172a",
+                                  backgroundColor: "#f1f5f9",
+                                  border: "1px solid #cbd5e1",
+                                  padding: "4px 8px",
+                                  borderRadius: 10,
+                                  cursor: "pointer",
+                                }}
+                              >
+                                Buka
+                              </button>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                if (confirm(`Hapus sesi "${s.title}" dari localStorage?`)) {
+                                  deleteSession(s.id);
+                                  showToast("Sesi dihapus");
+                                }
+                              }}
+                              style={{
+                                fontSize: 11,
+                                fontWeight: 700,
+                                color: "#ef4444",
+                                backgroundColor: "#fef2f2",
+                                border: "1px solid #fca5a5",
+                                padding: "4px 8px",
+                                borderRadius: 10,
+                                cursor: "pointer",
+                              }}
+                              title="Hapus Sesi"
+                            >
+                              🗑️
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Pesan-Pesan Percakapan */}
             <div
@@ -534,50 +796,98 @@ export function AiAssistantWidget() {
               }}
               style={{
                 padding: "12px 16px",
-                backgroundColor: "#ffffff",
-                borderTop: "1px solid #e2e8f0",
+                backgroundColor: isFocused || input.trim().length > 0 ? "#fdf8fc" : "#ffffff",
+                borderTop: "1px solid rgba(217, 54, 166, 0.15)",
                 display: "flex",
-                gap: 8,
-                alignItems: "center",
+                flexDirection: "column",
+                gap: 6,
+                transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+                boxShadow: isFocused || input.trim().length > 0 ? "0 -4px 18px rgba(217, 54, 166, 0.08)" : "none",
               }}
             >
-              <input
-                type="text"
-                placeholder="Tanyakan dosis, panduan, atau isi web..."
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={isLoading}
-                style={{
-                  flex: 1,
-                  padding: "10px 14px",
-                  borderRadius: 20,
-                  border: "1px solid #cbd5e1",
-                  fontSize: 14,
-                  outline: "none",
-                  color: "#0f172a",
-                }}
-              />
-              <button
-                type="submit"
-                disabled={isLoading || !input.trim()}
-                style={{
-                  padding: "10px 18px",
-                  borderRadius: 20,
-                  background:
-                    isLoading || !input.trim()
-                      ? "#cbd5e1"
-                      : "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
-                  color: "#ffffff",
-                  border: "none",
-                  fontFamily: "'Fredoka', 'Quicksand', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  cursor:
-                    isLoading || !input.trim() ? "not-allowed" : "pointer",
-                }}
-              >
-                Kirim
-              </button>
+              {(isFocused || input.trim().length > 0) && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    fontSize: 11,
+                    color: "var(--tv-navy, #0a0b5f)",
+                    fontWeight: 700,
+                    padding: "0 4px",
+                    animation: "fadeIn 0.2s ease-out",
+                  }}
+                >
+                  <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    <span
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        backgroundColor: "#d936a6",
+                        boxShadow: "0 0 6px #d936a6",
+                      }}
+                    />
+                    Mode Fokus Pertanyaan AI
+                  </span>
+                  <span style={{ fontSize: 10, color: "#64748b", fontWeight: 600 }}>
+                    {input.length} karakter
+                  </span>
+                </div>
+              )}
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <input
+                  type="text"
+                  placeholder="Tanyakan dosis, panduan, atau isi web..."
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  disabled={isLoading}
+                  style={{
+                    flex: 1,
+                    padding: "10px 16px",
+                    borderRadius: 20,
+                    border: isFocused || input.trim().length > 0
+                      ? "1.5px solid #d936a6"
+                      : "1px solid #cbd5e1",
+                    fontSize: 14,
+                    outline: "none",
+                    color: "#0f172a",
+                    backgroundColor: "#ffffff",
+                    boxShadow: isFocused || input.trim().length > 0
+                      ? "0 0 0 4px rgba(217, 54, 166, 0.16), 0 4px 18px rgba(10, 11, 95, 0.09)"
+                      : "0 1px 3px rgba(0, 0, 0, 0.03)",
+                    transition: "all 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={isLoading || !input.trim()}
+                  style={{
+                    padding: "10px 18px",
+                    borderRadius: 20,
+                    background:
+                      isLoading || !input.trim()
+                        ? "#cbd5e1"
+                        : "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
+                    color: "#ffffff",
+                    border: "none",
+                    fontFamily: "'Fredoka', 'Quicksand', sans-serif",
+                    fontWeight: 700,
+                    fontSize: 14,
+                    cursor:
+                      isLoading || !input.trim() ? "not-allowed" : "pointer",
+                    boxShadow: !input.trim()
+                      ? "none"
+                      : "0 4px 14px rgba(217, 54, 166, 0.35)",
+                    transform: isFocused && input.trim() ? "scale(1.02)" : "scale(1)",
+                    transition: "all 0.2s ease",
+                  }}
+                >
+                  Kirim
+                </button>
+              </div>
             </form>
           </div>
         </div>
