@@ -33,8 +33,6 @@ export function AiAssistantWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [showSessionsPanel, setShowSessionsPanel] = useState(false);
-  const [] = useState(false);
-  const [] = useState("");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
