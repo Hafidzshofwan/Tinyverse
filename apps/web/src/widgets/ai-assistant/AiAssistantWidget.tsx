@@ -277,8 +277,8 @@ export function AiAssistantWidget() {
                 WebkitBackdropFilter: "blur(16px)",
                 color: "var(--tv-navy, #0a0b5f)",
                 display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
+                flexDirection: "column",
+                gap: 10,
                 borderBottom: "1px solid rgba(217, 54, 166, 0.15)",
                 boxShadow: "0 4px 16px rgba(10, 11, 95, 0.04)",
                 fontFamily: "'Quicksand', sans-serif",
@@ -299,47 +299,100 @@ export function AiAssistantWidget() {
                 }}
               />
 
-              <div style={{ display: "flex", alignItems: "center", gap: 10, position: "relative", zIndex: 1 }}>
-                <div
-                  style={{
-                    width: 38,
-                    height: 38,
-                    borderRadius: 12,
-                    background: "#ffffff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 2px 6px rgba(10, 11, 95, 0.08)",
-                    border: "1px solid rgba(10, 11, 95, 0.06)",
-                  }}
-                >
-                  <SidebarIcon slug="ai-assistant" size={24} />
-                </div>
-                <div>
+              {/* BARIS 1: Judul & Tombol Tutup */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  width: "100%",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <div
+                    style={{
+                      width: 38,
+                      height: 38,
+                      borderRadius: 12,
+                      background: "#ffffff",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      boxShadow: "0 2px 6px rgba(10, 11, 95, 0.08)",
+                      border: "1px solid rgba(10, 11, 95, 0.06)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <SidebarIcon slug="ai-assistant" size={24} />
+                  </div>
                   <div
                     style={{
                       fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                       fontWeight: 700,
-                      fontSize: 16,
+                      fontSize: 17,
                       color: "var(--tv-navy, #0a0b5f)",
+                      letterSpacing: "-0.2px",
                     }}
                   >
                     Asisten AI Tinyverse
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "'Quicksand', sans-serif",
-                      fontSize: 11,
-                      color: "#6e709a",
-                      fontWeight: 500,
-                    }}
-                  >
-                    Informasi Terpusat Seluruh Web
-                  </div>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  aria-label="Tutup Chat AI"
+                  title="Tutup Chat"
+                  style={{
+                    background: "rgba(10, 11, 95, 0.05)",
+                    border: "1px solid rgba(10, 11, 95, 0.1)",
+                    borderRadius: 10,
+                    color: "var(--tv-navy, #0a0b5f)",
+                    fontSize: 18,
+                    cursor: "pointer",
+                    width: 32,
+                    height: 32,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    lineHeight: 1,
+                    transition: "all 0.18s ease",
+                  }}
+                >
+                  ✕
+                </button>
               </div>
 
-              <div style={{ display: "flex", alignItems: "center", gap: 6, position: "relative", zIndex: 1, flexWrap: "wrap" }}>
+              {/* BARIS 2: Deskripsi */}
+              <div
+                style={{
+                  position: "relative",
+                  zIndex: 1,
+                  fontFamily: "'Quicksand', sans-serif",
+                  fontSize: 12,
+                  color: "#6e709a",
+                  fontWeight: 500,
+                  marginTop: -2,
+                  lineHeight: 1.4,
+                }}
+              >
+                Informasi Terpusat Seluruh Web
+              </div>
+
+              {/* BARIS 3: Fitur Sesi, Simpan, Baru, dan Penuh */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  position: "relative",
+                  zIndex: 1,
+                  flexWrap: "wrap",
+                  marginTop: 2,
+                }}
+              >
                 <button
                   type="button"
                   onClick={() => setShowSessionsPanel((v) => !v)}
@@ -347,7 +400,7 @@ export function AiAssistantWidget() {
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
                     color: showSessionsPanel ? "#ffffff" : "var(--tv-navy, #0a0b5f)",
-                    padding: "4px 10px",
+                    padding: "5px 12px",
                     borderRadius: 20,
                     backgroundColor: showSessionsPanel ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
                     border: "1px solid rgba(10, 11, 95, 0.15)",
@@ -372,7 +425,7 @@ export function AiAssistantWidget() {
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
                     color: "#059669",
-                    padding: "4px 10px",
+                    padding: "5px 12px",
                     borderRadius: 20,
                     backgroundColor: "#ffffff",
                     border: "1px solid rgba(16, 185, 129, 0.3)",
@@ -398,7 +451,7 @@ export function AiAssistantWidget() {
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
                     color: "#d936a6",
-                    padding: "4px 10px",
+                    padding: "5px 12px",
                     borderRadius: 20,
                     backgroundColor: "#ffffff",
                     border: "1px solid rgba(217, 54, 166, 0.3)",
@@ -420,32 +473,21 @@ export function AiAssistantWidget() {
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
                     color: "var(--tv-navy, #0a0b5f)",
-                    padding: "4px 10px",
+                    padding: "5px 12px",
                     borderRadius: 20,
                     backgroundColor: "#ffffff",
-                    border: "1px solid rgba(10, 11, 95, 0.1)",
+                    border: "1px solid rgba(10, 11, 95, 0.15)",
                     boxShadow: "0 1px 4px rgba(10, 11, 95, 0.05)",
                     textDecoration: "none",
                     fontWeight: 600,
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 2,
                   }}
                   title="Buka Halaman Penuh"
                 >
                   Penuh ↗
                 </Link>
-                <button
-                  onClick={() => setIsOpen(false)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    color: "var(--tv-navy, #0a0b5f)",
-                    fontSize: 22,
-                    cursor: "pointer",
-                    padding: "0 4px",
-                    lineHeight: 1,
-                  }}
-                >
-                  ×
-                </button>
               </div>
             </div>
 
