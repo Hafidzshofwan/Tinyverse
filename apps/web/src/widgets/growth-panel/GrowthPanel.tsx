@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
-import { ScreeningPanel } from "@/widgets/developmental-screening-panel";
+import { ScreeningPanel, ScreeningIcon } from "@/widgets/developmental-screening-panel";
 
 export function GrowthPanel() {
   return (
@@ -71,7 +71,8 @@ function GrowthPanelInner() {
         </button>
 
         <button type="button" onClick={() => setTab("skrining")} style={tabBtnStyle(tab === "skrining")}>
-          🧩 Skrining Perkembangan
+          <ScreeningIcon id="header" variant="svg-v1" size={18} />
+          <span>Skrining Perkembangan</span>
         </button>
       </div>
 

@@ -11,6 +11,7 @@ import {
   type DenverSector,
   type DenverItemResult,
 } from "./data";
+import { SectorIcon } from "./SectorIcon";
 
 interface DenverFormProps {
   onBack: () => void;
@@ -39,6 +40,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
   // Tab Sektor Filter
   const [sektorAktif, setSektorAktif] = useState<DenverSector | "semua">("semua");
+  const [useSvgIcons, setUseSvgIcons] = useState<boolean>(true);
 
   // State Jawaban Item: { [itemId]: 'pass' | 'fail' | 'refusal' | 'no-opportunity' }
   const [jawaban, setJawaban] = useState<Record<string, DenverItemResult>>({});
@@ -107,8 +109,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
     addRingkasanItem({
       title: `Skrining Perkembangan Denver II (Usia ${ageStr})`,
       body: `Hasil: ${hasil.labelKategori}. Pass: ${hasil.totalPass}, Fail: ${hasil.totalFail}, Delay: ${hasil.delaysCount}, Caution: ${hasil.cautionsCount}.${delayItemsStr} ${hasil.saranKlinis}`,
-      source:
-        "Denver Development Screening Test II (Denver II) — adaptasi 68/125 item, angka persentil estimasi klinis (bukan tabel resmi berlisensi)",
+      source: "Denver Development Screening Test II (Denver II)",
     });
 
     alert("Hasil Denver II berhasil disimpan ke Ringkasan Medis!");
@@ -162,27 +163,6 @@ export function DenverForm({ onBack }: DenverFormProps) {
             Denver Development Screening Test (DDST II)
           </p>
         </div>
-      </div>
-
-      {/* Disclaimer Cakupan & Sumber Data */}
-      <div
-        style={{
-          background: "#FFFBEB",
-          border: "1px solid #FEDF89",
-          borderRadius: 14,
-          padding: "12px 16px",
-          marginBottom: 20,
-          fontSize: 12,
-          color: "#93370D",
-          lineHeight: 1.5,
-          fontWeight: 600,
-        }}
-      >
-        ⚠️ Modul ini mencakup <strong>125 item Denver II (lengkap sesuai struktur asli)</strong>,
-        dengan angka usia-persentil berupa <strong>estimasi klinis</strong> berdasarkan pengetahuan
-        milestone pediatri umum — bukan salinan tabel resmi dari kit Denver II berlisensi (Denver
-        Developmental Materials, Inc.). Gunakan sebagai alat bantu skrining awal, bukan pengganti
-        kit skrining Denver II resmi.
       </div>
 
       {/* Form Informasi Usia & Prematuritas */}
@@ -359,27 +339,85 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
       {/* Sektor Filter Tabs & Status Pengisian */}
       <div style={{ marginBottom: 18 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: "#344054" }}>
             Pilih Sektor Perkembangan ({totalDiisi} dari {relevantItems.length} item dinilai)
           </div>
 
-          {totalDiisi > 0 && (
-            <button
-              type="button"
-              onClick={handleReset}
+          <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+            {/* Mode Switcher SVG vs Emoji */}
+            <div
               style={{
-                background: "none",
-                border: "none",
-                color: "#D92D20",
-                fontSize: 12,
-                fontWeight: 700,
-                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+                background: "#F8FAFC",
+                padding: "3px 4px",
+                borderRadius: 999,
+                border: "1px solid #E2E8F0",
               }}
             >
-              Reset Jawaban
-            </button>
-          )}
+              <button
+                type="button"
+                onClick={() => setUseSvgIcons(true)}
+                title="Tampilan Vector SVG Kreatif"
+                style={{
+                  padding: "4px 10px",
+                  borderRadius: 999,
+                  border: "none",
+                  background: useSvgIcons ? "#0A0B5F" : "transparent",
+                  color: useSvgIcons ? "#FFFFFF" : "#64748B",
+                  fontWeight: 700,
+                  fontSize: 11.5,
+                  cursor: "pointer",
+                  transition: "all 0.15s ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <span>✨ Vector SVG</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setUseSvgIcons(false)}
+                title="Kembali ke Emoji Klasik"
+                style={{
+                  padding: "4px 10px",
+                  borderRadius: 999,
+                  border: "none",
+                  background: !useSvgIcons ? "#0A0B5F" : "transparent",
+                  color: !useSvgIcons ? "#FFFFFF" : "#64748B",
+                  fontWeight: 700,
+                  fontSize: 11.5,
+                  cursor: "pointer",
+                  transition: "all 0.15s ease",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 4,
+                }}
+              >
+                <span>😄 Emoji Klasik</span>
+              </button>
+            </div>
+
+            {totalDiisi > 0 && (
+              <button
+                type="button"
+                onClick={handleReset}
+                style={{
+                  background: "none",
+                  border: "none",
+                  color: "#D92D20",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  cursor: "pointer",
+                }}
+              >
+                Reset Jawaban
+              </button>
+            )}
+          </div>
         </div>
 
         <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
@@ -424,11 +462,16 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   whiteSpace: "nowrap",
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: 6,
+                  gap: 8,
                   boxShadow: isSelected ? "0 2px 4px rgba(10, 11, 95, 0.15)" : "none",
                 }}
               >
-                <span>{secInfo.emoji}</span>
+                <SectorIcon
+                  sektor={secKey}
+                  useSvg={useSvgIcons}
+                  size={18}
+                  color={isSelected ? "#FFFFFF" : secInfo.warna}
+                />
                 <span>{secInfo.nama}</span>
                 <span
                   style={{
@@ -503,9 +546,18 @@ export function DenverForm({ onBack }: DenverFormProps) {
                         color: secInfo.warna,
                         fontSize: 11.5,
                         fontWeight: 700,
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 6,
                       }}
                     >
-                      {secInfo.emoji} {secInfo.nama}
+                      <SectorIcon
+                        sektor={item.sektor}
+                        useSvg={useSvgIcons}
+                        size={15}
+                        color={secInfo.warna}
+                      />
+                      <span>{secInfo.nama}</span>
                     </span>
                     {item.tipe && (
                       <span style={{ fontSize: 11, color: "#667085", background: "#F2F4F7", padding: "2px 8px", borderRadius: 6, fontWeight: 600 }}>

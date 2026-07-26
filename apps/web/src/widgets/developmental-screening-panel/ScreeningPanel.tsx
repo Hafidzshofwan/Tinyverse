@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { MchatForm } from "@/features/mchat-r";
 import { KpspForm } from "@/features/kpsp";
 import { DenverForm } from "@/features/denver";
+import { ScreeningIcon, type IconStyleVariant } from "./ScreeningIcon";
 
 interface AlatSkrining {
   id: string;
@@ -49,6 +50,7 @@ export function ScreeningPanel() {
 function ScreeningPanelInner() {
   const searchParams = useSearchParams();
   const [aktif, setAktif] = useState<string | null>(null);
+  const [iconVariant] = useState<IconStyleVariant>("svg-v1");
 
   useEffect(() => {
     const tool = searchParams ? searchParams.get("tool") : null;
@@ -82,55 +84,57 @@ function ScreeningPanelInner() {
           marginBottom: 16,
           display: "flex",
           alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
           gap: 12,
         }}
       >
-        <div
-          className="ikon-bulat"
-          style={{
-            width: 46,
-            height: 46,
-            minWidth: 46,
-            minHeight: 46,
-            borderRadius: 14,
-            background: "#D936A61A",
-            color: "#D936A6",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: "17.6px",
-            fontFamily: "Quicksand, system-ui, sans-serif",
-            flexShrink: 0,
-          }}
-          aria-hidden
-        >
-          🧩
-        </div>
-        <div>
-          <h2
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div
+            className="ikon-bulat"
             style={{
-              margin: 0,
-              fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-              fontSize: "18.32px",
-              fontWeight: 700,
-              color: "#0A0B5F",
-              lineHeight: 1.25,
+              width: 48,
+              height: 48,
+              minWidth: 48,
+              minHeight: 48,
+              borderRadius: 14,
+              background: "#D936A61A",
+              color: "#D936A6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
             }}
+            aria-hidden
           >
-            Skrining Perkembangan
-          </h2>
-          <p
-            style={{
-              margin: 0,
-              fontFamily: "Quicksand, system-ui, sans-serif",
-              fontSize: "10.24px",
-              fontWeight: 600,
-              color: "#0A0B5F9E",
-              lineHeight: 1.4,
-            }}
-          >
-            Deteksi Dini &amp; Skrining Tumbuh Kembang Anak
-          </p>
+            <ScreeningIcon id="header" variant={iconVariant} fallbackEmoji="🧩" size={28} />
+          </div>
+          <div>
+            <h2
+              style={{
+                margin: 0,
+                fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
+                fontSize: "18.32px",
+                fontWeight: 700,
+                color: "#0A0B5F",
+                lineHeight: 1.25,
+              }}
+            >
+              Skrining Perkembangan
+            </h2>
+            <p
+              style={{
+                margin: 0,
+                fontFamily: "Quicksand, system-ui, sans-serif",
+                fontSize: "10.24px",
+                fontWeight: 600,
+                color: "#0A0B5F9E",
+                lineHeight: 1.4,
+              }}
+            >
+              Deteksi Dini &amp; Skrining Tumbuh Kembang Anak
+            </p>
+          </div>
         </div>
       </div>
 
@@ -143,7 +147,7 @@ function ScreeningPanelInner() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: 14,
+              gap: 16,
               textAlign: "left",
               border: "1px solid #E2E8F0",
               background: "#fff",
@@ -151,9 +155,26 @@ function ScreeningPanelInner() {
               padding: "16px 18px",
               cursor: "pointer",
               fontFamily: "inherit",
+              transition: "all 0.2s ease",
             }}
           >
-            <span style={{ fontSize: 26 }}>{alat.emoji}</span>
+            <div
+              style={{
+                width: 44,
+                height: 44,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <ScreeningIcon
+                id={alat.id as "kpsp" | "denver" | "mchat"}
+                variant={iconVariant}
+                fallbackEmoji={alat.emoji}
+                size={40}
+              />
+            </div>
             <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
               <span style={{ fontSize: 14.5, fontWeight: 700, color: "#0a0b4f" }}>{alat.nama}</span>
               <span style={{ fontSize: 12.5, color: "#667085" }}>{alat.ringkas}</span>
