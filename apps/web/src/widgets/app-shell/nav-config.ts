@@ -13,6 +13,7 @@ export interface NavGroup {
 }
 
 export interface FiturMeta {
+  slug: string;
   href: string;
   label: string;
   icon: string;
@@ -113,6 +114,7 @@ export const FITUR_TERSEDIA: ReadonlyArray<FiturMeta> = NAV_GROUPS.flatMap(
 )
   .filter((it) => it.built && it.slug !== "beranda")
   .map((it) => ({
+    slug: it.slug,
     href: it.href,
     label: it.label,
     icon: it.icon,

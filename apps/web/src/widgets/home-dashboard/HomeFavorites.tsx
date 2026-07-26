@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FITUR_TERSEDIA, type FiturMeta } from "@/widgets/app-shell/nav-config";
 import { useFavorit, hapusFavorit } from "@/shared/lib/personalisasi";
-import { ScreeningIcon } from "@/shared/ui";
+import { SidebarIcon } from "@/shared/ui";
 
 /**
  * Daftar "Favorit Saya". Sepenuhnya ditentukan user: fitur ditambahkan lewat
@@ -19,8 +19,13 @@ export function HomeFavorites() {
   return (
     <section className="tv-card tv-stack">
       <div className="tv-home-section-head">
-        <h2>
-          <span aria-hidden>{"\u2B50"}</span> Favorit Saya
+        <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span aria-hidden style={{ display: "inline-flex" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span>Favorit Saya</span>
         </h2>
         <p>
           Tekan ikon bintang pada kartu Quick Access untuk menambah, atau tombol
@@ -37,11 +42,7 @@ export function HomeFavorites() {
             <div key={f.href} className="tv-fav-item">
               <Link href={f.href} className="tv-fav-main">
                 <span className="tv-fav-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                  {f.href === "/preview/pertumbuhan" ? (
-                    <ScreeningIcon id="single" size={20} />
-                  ) : (
-                    f.icon
-                  )}
+                  <SidebarIcon slug={f.slug} size={34} />
                 </span>
                 <span className="tv-fav-text">
                   <span className="tv-fav-title">{f.label}</span>

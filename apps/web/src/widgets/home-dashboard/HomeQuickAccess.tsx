@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
 import { usePemakaian, useFavorit, toggleFavorit } from "@/shared/lib/personalisasi";
-import { ScreeningIcon } from "@/shared/ui";
+import { SidebarIcon } from "@/shared/ui";
 
 const JUMLAH_TAMPIL = 6;
 
@@ -31,8 +31,13 @@ export function HomeQuickAccess() {
   return (
     <section className="tv-home-section">
       <div className="tv-home-section-head">
-        <h2>
-          <span aria-hidden>{"\u26A1"}</span> Quick Access
+        <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span aria-hidden style={{ display: "inline-flex" }}>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+              <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" fill="#F59E0B" stroke="#D97706" strokeWidth="1.5" strokeLinejoin="round" />
+            </svg>
+          </span>
+          <span>Quick Access</span>
         </h2>
         <p>
           {adaData
@@ -57,11 +62,7 @@ export function HomeQuickAccess() {
               </button>
               <Link href={item.href} className="tv-tool-main">
                 <span className="tv-tool-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                  {item.href === "/preview/pertumbuhan" ? (
-                    <ScreeningIcon id="single" size={24} />
-                  ) : (
-                    item.icon
-                  )}
+                  <SidebarIcon slug={item.slug} size={38} />
                 </span>
                 <span className="tv-tool-name">{item.label}</span>
                 <span className="tv-tool-desc">{item.desc}</span>
