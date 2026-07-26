@@ -101,6 +101,7 @@ interface SidebarIconProps {
   variant?: SidebarIconVariant;
   size?: number;
   className?: string;
+  hideBackground?: boolean;
 }
 
 export const SidebarIcon: React.FC<SidebarIconProps> = ({
@@ -108,6 +109,7 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
   variant: overrideVariant,
   size = 20,
   className = "",
+  hideBackground = false,
 }) => {
   const { variants } = useSidebarIconVariants();
   const currentVariant = overrideVariant || variants[slug as SidebarIconSlug] || "v1";
@@ -159,9 +161,9 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
       // V2: AI Sparkle Star & Stethoscope Halo
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#FDF2F8" />
-          <path d="M12 3L14 8L19 10L14 12L12 17L10 12L5 10L10 8L12 3Z" fill="#D936A6" />
-          <path d="M18 15L19 17.5L21.5 18.5L19 19.5L18 22L17 19.5L14.5 18.5L17 17.5L18 15Z" fill="#8B5CF6" />
+          {!hideBackground && <rect width="24" height="24" rx="6" fill="#FDF2F8" />}
+          <path d="M12 3L14 8L19 10L14 12L12 17L10 12L5 10L10 8L12 3Z" fill={hideBackground ? "#FFFFFF" : "#D936A6"} />
+          <path d="M18 15L19 17.5L21.5 18.5L19 19.5L18 22L17 19.5L14.5 18.5L17 17.5L18 15Z" fill={hideBackground ? "#FCE7F3" : "#8B5CF6"} />
         </svg>
       );
     }
@@ -169,23 +171,23 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
       // V3: Dual Chat Assistant Bubble
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#F0FDF4" />
-          <path d="M18 14C18 17.3137 15.3137 20 12 20C10.7 20 9.5 19.6 8.5 18.9L4 20L5.3 16.2C4.5 15.1 4 13.6 4 12C4 8.68629 6.68629 6 10 6" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" />
-          <path d="M14 4C17.3137 4 20 6.68629 20 10C20 11.6 19.4 13.1 18.4 14.2L19.5 17.5L16.2 16.4C15.2 17 14.1 17.3 13 17.3" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" />
-          <circle cx="10" cy="11" r="1" fill="#047857" />
-          <circle cx="14" cy="11" r="1" fill="#047857" />
+          {!hideBackground && <rect width="24" height="24" rx="6" fill="#F0FDF4" />}
+          <path d="M18 14C18 17.3137 15.3137 20 12 20C10.7 20 9.5 19.6 8.5 18.9L4 20L5.3 16.2C4.5 15.1 4 13.6 4 12C4 8.68629 6.68629 6 10 6" stroke={hideBackground ? "#FFFFFF" : "#10B981"} strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M14 4C17.3137 4 20 6.68629 20 10C20 11.6 19.4 13.1 18.4 14.2L19.5 17.5L16.2 16.4C15.2 17 14.1 17.3 13 17.3" stroke={hideBackground ? "#FCE7F3" : "#059669"} strokeWidth="1.5" strokeLinecap="round" />
+          <circle cx="10" cy="11" r="1" fill={hideBackground ? "#FFFFFF" : "#047857"} />
+          <circle cx="14" cy="11" r="1" fill={hideBackground ? "#FFFFFF" : "#047857"} />
         </svg>
       );
     }
     // V1: Pediatric AI Bot Head
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-        <rect width="24" height="24" rx="6" fill="#EFF6FF" />
-        <rect x="5" y="8" width="14" height="11" rx="3.5" stroke="#2563EB" strokeWidth="1.8" fill="#DBEAFE" fillOpacity="0.5" />
-        <path d="M12 4V8M12 4C11 4 10.5 2.5 12 2.5C13.5 2.5 13 4 12 4Z" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="9" cy="12.5" r="1.5" fill="#0A0B5F" />
-        <circle cx="15" cy="12.5" r="1.5" fill="#0A0B5F" />
-        <path d="M10 15.5C10.5 16.2 11.2 16.5 12 16.5C12.8 16.5 13.5 16.2 14 15.5" stroke="#2563EB" strokeWidth="1.5" strokeLinecap="round" />
+        {!hideBackground && <rect width="24" height="24" rx="6" fill="#EFF6FF" />}
+        <rect x="5" y="8" width="14" height="11" rx="3.5" stroke={hideBackground ? "#FFFFFF" : "#2563EB"} strokeWidth="1.8" fill={hideBackground ? "rgba(255, 255, 255, 0.25)" : "#DBEAFE"} fillOpacity={hideBackground ? "1" : "0.5"} />
+        <path d="M12 4V8M12 4C11 4 10.5 2.5 12 2.5C13.5 2.5 13 4 12 4Z" stroke={hideBackground ? "#FFFFFF" : "#2563EB"} strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="9" cy="12.5" r="1.5" fill={hideBackground ? "#FFFFFF" : "#0A0B5F"} />
+        <circle cx="15" cy="12.5" r="1.5" fill={hideBackground ? "#FFFFFF" : "#0A0B5F"} />
+        <path d="M10 15.5C10.5 16.2 11.2 16.5 12 16.5C12.8 16.5 13.5 16.2 14 15.5" stroke={hideBackground ? "#FFFFFF" : "#2563EB"} strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     );
   }

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
 import { useAiChatStore, type Message } from "@/widgets/ai-assistant";
+import { SidebarIcon } from "@/shared/ui";
 
 const PRESET_TOPICS = [
   {
@@ -214,7 +215,8 @@ export default function AiAssistantPage() {
                 marginBottom: 10,
               }}
             >
-              🤖 TINYVERSE AI CO-PILOT
+              <SidebarIcon slug="ai-assistant" size={16} />
+              <span>TINYVERSE AI CO-PILOT</span>
             </div>
             <h1
               style={{
@@ -228,7 +230,8 @@ export default function AiAssistantPage() {
                 gap: 10,
               }}
             >
-              Asisten AI Tinyverse 🤖
+              <SidebarIcon slug="ai-assistant" size={28} />
+              <span>Asisten AI Tinyverse</span>
             </h1>
             <p
               style={{
@@ -595,12 +598,12 @@ export default function AiAssistantPage() {
               }}
             >
               {[
-                { href: "/preview/darurat", label: "Mode Darurat", icon: "🚨" },
-                { href: "/preview/dosing", label: "Dosis Obat", icon: "💊" },
-                { href: "/preview/fluids", label: "Terapi Cairan", icon: "💧" },
-                { href: "/preview/lab", label: "Interpretasi Lab", icon: "🔬" },
-                { href: "/preview/skoring", label: "Skor Klinis", icon: "📊" },
-                { href: "/preview/guideline", label: "Guideline IDAI", icon: "📖" },
+                { href: "/preview/darurat", label: "Mode Darurat", slug: "darurat" },
+                { href: "/preview/dosing", label: "Dosis Obat", slug: "dosis" },
+                { href: "/preview/fluids", label: "Terapi Cairan", slug: "cairan" },
+                { href: "/preview/lab", label: "Interpretasi Lab", slug: "lab" },
+                { href: "/preview/skoring", label: "Skor Klinis", slug: "skoring" },
+                { href: "/preview/guideline", label: "Guideline IDAI", slug: "protokol" },
               ].map((mod, mIdx) => (
                 <Link
                   key={mIdx}
@@ -618,7 +621,7 @@ export default function AiAssistantPage() {
                     fontWeight: 600,
                   }}
                 >
-                  <span>{mod.icon}</span>
+                  <SidebarIcon slug={mod.slug} size={18} />
                   <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {mod.label}
                   </span>

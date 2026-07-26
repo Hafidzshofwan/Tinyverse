@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FormattedMessage } from "./FormattedMessage";
 import { useAiChatStore, type Message } from "./useAiChatStore";
+import { SidebarIcon } from "@/shared/ui";
 
 const PRESET_PROMPTS = [
   "Berapa dosis Epinefrin resusitasi & nebulizer anak 10 kg?",
@@ -200,19 +201,18 @@ export function AiAssistantWidget() {
               height: 52,
               border: 0,
               borderRadius: "50%",
-              background: "linear-gradient(135deg, #0a0b5f 0%, #d936a6 100%)",
+              background: "linear-gradient(135deg, #0A0B5F 0%, #D936A6 100%)",
               color: "#ffffff",
-              boxShadow: "0 0 0 5px rgba(217, 54, 166, 0.20), 0 8px 22px rgba(10, 11, 95, 0.20)",
+              boxShadow: "0 0 0 4px rgba(217, 54, 166, 0.25), 0 8px 24px rgba(10, 11, 95, 0.30)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "1.35rem",
               cursor: "pointer",
-              transition: "transform 0.15s",
+              transition: "transform 0.18s ease, box-shadow 0.18s ease",
               flexShrink: 0,
             }}
           >
-            🤖
+            <SidebarIcon slug="ai-assistant" size={28} hideBackground />
           </button>
         </div>
       )}
@@ -292,12 +292,11 @@ export function AiAssistantWidget() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: 20,
                     boxShadow: "0 2px 6px rgba(10, 11, 95, 0.08)",
                     border: "1px solid rgba(10, 11, 95, 0.06)",
                   }}
                 >
-                  🤖
+                  <SidebarIcon slug="ai-assistant" size={24} />
                 </div>
                 <div>
                   <div

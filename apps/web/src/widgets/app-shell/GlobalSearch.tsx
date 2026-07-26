@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SidebarIcon } from "@/shared/ui";
 
 /**
  * Pencarian global (command palette).
@@ -412,8 +413,8 @@ export function GlobalSearch() {
                   onMouseEnter={() => setActive(i)}
                   onClick={() => go(r)}
                 >
-                  <span className="tv-search-item-ico" aria-hidden>
-                    {r.icon}
+                  <span className="tv-search-item-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                    <SidebarIcon slug={r.slug} size={18} />
                   </span>
                   <span className="tv-search-item-body">
                     <span className="tv-search-item-top">
