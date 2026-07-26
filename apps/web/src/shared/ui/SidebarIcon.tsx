@@ -26,20 +26,20 @@ export type IconVariantMap = Record<SidebarIconSlug, SidebarIconVariant>;
 const STORAGE_KEY = "tv-sidebar-icon-variants";
 
 const DEFAULT_VARIANTS: IconVariantMap = {
-  "beranda": "v3",
-  "ai-assistant": "v2",
-  "darurat": "v3",
-  "alur": "v2",
+  "beranda": "v1",
+  "ai-assistant": "v1",
+  "darurat": "v1",
+  "alur": "v1",
   "dosis": "v1",
   "cairan": "v1",
   "puyer": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
   "lab": "v1",
-  "nutrisi": "v3",
+  "nutrisi": "v1",
   "protokol": "v1",
-  "imunisasi": "v2",
-  "ringkasan": "v3",
+  "imunisasi": "v1",
+  "ringkasan": "v1",
 };
 
 // Global event listener system for real-time synchronization
@@ -393,15 +393,16 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
         </svg>
       );
     }
-    // V1: Abacus Beads & Checklist
+    // V1: Pediatric Clinical Score Clipboard
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-        <rect width="24" height="24" rx="6" fill="#FFF7ED" />
-        <rect x="4" y="4" width="16" height="16" rx="3" stroke="#EA580C" strokeWidth="1.8" fill="#FFEDD5" fillOpacity="0.4" />
-        <path d="M8 8H16M8 12H16M8 16H16" stroke="#C2410C" strokeWidth="1.5" strokeLinecap="round" />
-        <circle cx="10" cy="8" r="1.5" fill="#EA580C" />
-        <circle cx="14" cy="12" r="1.5" fill="#EA580C" />
-        <circle cx="11" cy="16" r="1.5" fill="#EA580C" />
+        {!hideBackground && <rect width="24" height="24" rx="6" fill="#FDF2F8" />}
+        <rect x="5.5" y="5" width="13" height="15.5" rx="3" fill="#FFF1F2" fillOpacity="0.8" stroke="#D936A6" strokeWidth="1.6" />
+        <rect x="9.5" y="3.5" width="5" height="2.5" rx="1" fill="#0A0B5F" />
+        <path d="M8.5 9.5H12.5M8.5 12.5H11.5M8.5 15.5H12.5" stroke="#0A0B5F" strokeWidth="1.4" strokeLinecap="round" />
+        <circle cx="15.2" cy="9.5" r="1" fill="#D936A6" />
+        <circle cx="15.2" cy="12.5" r="1" fill="#10B981" />
+        <circle cx="15.2" cy="15.5" r="1" fill="#F59E0B" />
       </svg>
     );
   }
