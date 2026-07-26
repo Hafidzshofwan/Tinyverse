@@ -287,17 +287,19 @@ body {
   color: inherit;
 }
 .tv-tool-ico {
-  width: 46px;
-  height: 46px;
+  width: 38px;
+  height: 38px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
-  font-size: 23px;
-  background: linear-gradient(
-    135deg,
-    rgba(217, 54, 166, 0.14),
-    rgba(10, 11, 95, 0.08)
-  );
+  border-radius: 0;
+  font-size: 38px;
+  line-height: 1;
+  background: transparent;
+  box-shadow: none;
+}
+.tv-tool-ico svg {
+  width: 38px;
+  height: 38px;
 }
 .tv-tool-name {
   font-family: "Fredoka", sans-serif;
@@ -618,10 +620,15 @@ body {
   height: 38px;
   display: grid;
   place-items: center;
-  border-radius: 12px;
-  font-size: 19px;
-  background: #ffffff;
-  box-shadow: var(--tv-chunky-sm);
+  border-radius: 0;
+  font-size: 38px;
+  line-height: 1;
+  background: transparent;
+  box-shadow: none;
+}
+.tv-fav-ico svg {
+  width: 38px;
+  height: 38px;
 }
 .tv-fav-text {
   display: flex;
@@ -2310,18 +2317,18 @@ body.tv-tanpa-dekorasi .bg-decor {
    52x52, radius 17px, background magenta 10%, warna #D936A6, 1.24rem.
    ================================================================ */
 .tv-tool-head span[aria-hidden="true"] {
-  flex: 0 0 46px !important;
-  width: 46px !important;
-  height: 46px !important;
-  min-width: 46px !important;
-  border-radius: 15px !important;
+  flex: 0 0 38px !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 0 !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  font-size: 17.6px !important;
+  font-size: 38px !important;
   font-family: 'Quicksand', system-ui, sans-serif !important;
   line-height: 1 !important;
-  background: #D936A61A !important;
+  background: transparent !important;
   color: #d936a6 !important;
   box-shadow: none !important;
 }

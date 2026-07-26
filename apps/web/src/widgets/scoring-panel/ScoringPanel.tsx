@@ -16,17 +16,17 @@ const headRow: CSSProperties = {
 // border-radius 17px, background magenta 10% (rgba(217,54,166,0.10)),
 // font 1.24rem (=19.84px). Sebelumnya 54x54 radius 18 gradien.
 const icoStyle: CSSProperties = {
-  flex: "0 0 auto",
-  width: 52,
-  height: 52,
-  minWidth: 52,
-  borderRadius: 17,
+  flex: "0 0 38px",
+  width: 38,
+  height: 38,
+  minWidth: 38,
+  borderRadius: 0,
   display: "inline-flex",
   alignItems: "center",
   justifyContent: "center",
-  fontSize: "1.24rem",
+  fontSize: "38px",
   lineHeight: 1,
-  background: "rgba(217, 54, 166, 0.1)",
+  background: "transparent",
   color: "#d936a6",
 };
 // Judul: computed sama dengan island -> 18.32px, Fredoka, warna #0A0B5F.

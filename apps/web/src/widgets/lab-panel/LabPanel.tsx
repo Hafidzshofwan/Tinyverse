@@ -62,7 +62,7 @@ export function LabPanel() {
     <div className="tv-page-lab-wrapper">
       <div className="tv-page-lab">
         <div className="judul-section">
-          <div className="ikon-bulat" style={{ background: "#D936A61A", color: "#D936A6" }} aria-hidden>
+          <div className="ikon-bulat" style={{ background: "transparent", color: "#D936A6" }} aria-hidden>
             🔬
           </div>
           <div>

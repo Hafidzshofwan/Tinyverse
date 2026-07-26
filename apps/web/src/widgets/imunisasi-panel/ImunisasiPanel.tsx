@@ -14,7 +14,7 @@ export function ImunisasiPanel() {
         <div className="judul-section">
           <div
             className="ikon-bulat"
-            style={{ background: "#D936A61A", color: "#D936A6" }}
+            style={{ background: "transparent", color: "#D936A6" }}
             aria-hidden
           >
             💉

@@ -172,14 +172,19 @@
   }
 
   .judul-section .ikon-bulat {
-    width: 42px; height: 42px;
-    border-radius: 50%;
+    width: 38px; height: 38px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 38px;
+    line-height: 1;
     flex-shrink: 0;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .judul-section .ikon-bulat svg {
+    width: 38px; height: 38px;
   }
 
   .judul-section h2 {
@@ -5816,11 +5821,11 @@ html body #page-dosis .obat-card .varian-label {
 .pals-cat.cat-napas .pals-cat-head{ background:#1F9D55; }
 @media (max-width: 768px){ .pals-row{ flex-direction:column; gap:4px; } .pals-val{ text-align:left; } }
 </style>
-<style>html,body{background:transparent;margin:0}body{padding:2px 4px 10px;font-family:"Nunito","Inter",system-ui,sans-serif;color:var(--teks,#0a0b4f)}#isl{max-width:960px;margin:0 auto}.page{display:block!important;}</style>
+<style>html,body{background:transparent;margin:0}body{padding:2px 4px 10px;font-family:"Nunito","Inter",system-ui,sans-serif;color:var(--teks,#0a0b4f)}#isl{max-width:960px;margin:0 auto}.page{display:block!important;}html body .judul-section .ikon-bulat,html body .ikon-bulat,html body .page .judul-section .ikon-bulat{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;border-radius:0!important;font-size:38px!important;line-height:1!important;background:transparent!important;background-color:transparent!important;box-shadow:none!important;}html body .judul-section .ikon-bulat svg,html body .ikon-bulat svg{width:38px!important;height:38px!important;}</style>
 <script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl">
 <main class="page" id="page-darurat">
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#FFD9D9;">🚨</div>
+<div class="ikon-bulat" style="background:transparent;">🚨</div>
 <div>
 <h2>Mode Darurat</h2>
 <p>Alat bantu cepat: Penilaian PAT, Timer resusitasi &amp; Kalkulator dosis PALS.</p>

@@ -169,14 +169,19 @@
   }
 
   .judul-section .ikon-bulat {
-    width: 42px; height: 42px;
-    border-radius: 50%;
+    width: 38px; height: 38px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 38px;
+    line-height: 1;
     flex-shrink: 0;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .judul-section .ikon-bulat svg {
+    width: 38px; height: 38px;
   }
 
   .judul-section h2 {
@@ -5660,10 +5665,10 @@ html body #page-dosis .obat-card .varian-label {
   transform: translateY(-1px);
   color: #FFFFFF !important;
   background: var(--etail-magenta, #D936A6) !important;
-}</style><style>html,body{margin:0;padding:0;background:transparent!important;}.page{display:block!important;}#isl{max-width:1080px;margin:0 auto;padding:6px 10px 40px;}</style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-protokol-wrap">
+}</style><style>html,body{margin:0;padding:0;background:transparent!important;}.page{display:block!important;}#isl{max-width:1080px;margin:0 auto;padding:6px 10px 40px;}html body .judul-section .ikon-bulat,html body .ikon-bulat,html body .page .judul-section .ikon-bulat{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;border-radius:0!important;font-size:38px!important;line-height:1!important;background:transparent!important;background-color:transparent!important;box-shadow:none!important;}html body .judul-section .ikon-bulat svg,html body .ikon-bulat svg{width:38px!important;height:38px!important;}</style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-protokol-wrap">
 <section id="protokol-gallery-section">
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#EFEAFF;">🩺</div>
+<div class="ikon-bulat" style="background:transparent;">🩺</div>
 <div>
 <h2>Guideline Anak</h2>
 <p>Kumpulan guideline pediatri untuk dibaca langsung atau diunduh.</p>
@@ -5694,7 +5699,7 @@ html body #page-dosis .obat-card .varian-label {
 <section id="protokol-detail-section" style="display:none;">
 <button class="btn-kembali" id="btnKembaliProtokol" type="button">⬅️ Kembali ke daftar guideline</button>
 <div class="judul-section">
-<div class="ikon-bulat" id="protokolDetailIkon" style="background:#EFEAFF;">    </div>
+<div class="ikon-bulat" id="protokolDetailIkon" style="background:transparent;">    </div>
 <div>
 <h2 id="protokolDetailNama">Judul Guideline</h2>
 <span class="referensi-badge" id="protokolDetailReferensi">Sumber</span>

@@ -169,14 +169,19 @@
   }
 
   .judul-section .ikon-bulat {
-    width: 42px; height: 42px;
-    border-radius: 50%;
+    width: 38px; height: 38px;
+    border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3rem;
+    font-size: 38px;
+    line-height: 1;
     flex-shrink: 0;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.08);
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  .judul-section .ikon-bulat svg {
+    width: 38px; height: 38px;
   }
 
   .judul-section h2 {
@@ -5668,7 +5673,7 @@ html body #page-dosis .obat-card .varian-label {
 <!-- ===== LIBRARY OBAT ===== -->
 <section id="library">
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#FFE7A3;">📚</div>
+<div class="ikon-bulat" style="background:transparent;">📚</div>
 <div>
 <h2>Rak Obat</h2>
 <p>Cari atau pilih obat dari rak di bawah</p>
@@ -5688,7 +5693,7 @@ html body #page-dosis .obat-card .varian-label {
 <!-- ===== KALKULATOR ===== -->
 <section id="kalkulator">
 <div class="judul-section">
-<div class="ikon-bulat" style="background:#C9F0FF;">🧮</div>
+<div class="ikon-bulat" style="background:transparent;">🧮</div>
 <div>
 <h2>Kalkulator Dosis</h2>
 <p>Masukkan berat badan, lalu hitung dosisnya</p>
