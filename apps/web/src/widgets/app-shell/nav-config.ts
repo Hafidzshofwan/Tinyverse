@@ -18,6 +18,7 @@ export interface FiturMeta {
   label: string;
   icon: string;
   desc: string;
+  detail: string;
 }
 
 // Struktur menu meniru v17 (12 menu, 7 grup). Menu yang belum jadi tetap
@@ -104,6 +105,23 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
 };
 
+// Deskripsi mendalam fungsi alat untuk tooltip hover.
+const DETAIL_DESKRIPSI: Record<string, string> = {
+  "/preview/ai-assistant": "Asisten AI Co-Pilot terpusat: Tanyakan dosis obat pediatrik, protokol klinis, interpretasi lab, atau panduan penggunaan kalkulator Tinyverse secara instan.",
+  "/preview/darurat": "Rujukan resusitasi darurat pediatrik: Dosis obat emergensi, ukuran ETT, kedalaman kompresi, energi defibrilasi, serta timer algoritma RJP/CPR real-time.",
+  "/preview/alur": "Algoritma interaktif tata laksana kegawatan: Panduan langkah-demi-langkah visual untuk penanganan serangan asma akut, kejang, syok, dan kondisi darurat anak.",
+  "/preview/dosing": "Kalkulator presisi dosis obat anak: Dosis mg/kgBB/hari atau rentang usia, rekomendasi frekuensi pemberian, serta batas dosis maksimum aman.",
+  "/preview/fluids": "Kalkulator terapi cairan komprehensif: Kebutuhan rumatan Holliday-Segar, rehidrasi diare WHO, rumus luka bakar Parkland, & perhitungan kecepatan tetesan infus.",
+  "/preview/puyer": "Kalkulator racik puyer pediatri: Hitung konversi tablet utuh yang digerus, penyesuaian dosis puyer & sirup, serta estimasi pembagian bungkus obat.",
+  "/preview/pertumbuhan": "Pemantauan tumbuh kembang anak: Grafik kurva pertumbuhan WHO (0-5 thn) & CDC (2-20 thn), Z-score BB/U, TB/U, IMT/U, serta skrining perkembangan KPSP, Denver II, & M-CHAT-R.",
+  "/preview/skoring": "8 kalkulator skoring klinis pediatrik: Dehidrasi WHO/CDD, Downes/Westley Croup, Pediatric GCS, Skoring TB Anak, APGAR, Skor Nyeri FLACC, & PEWS.",
+  "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
+  "/preview/nutrisi": "Kalkulator nutrisi & kecukupan gizi: Hitung Angka Kecukupan Gizi (AKG), kebutuhan kalori & protein anak, takaran susu, serta kebutuhan enteral/parenteral.",
+  "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
+  "/preview/imunisasi": "Jadwal & panduan imunisasi IDAI: Tabel jadwal imunisasi anak sesuai rekomendasi IDAI terbaru beserta rekomendasi jadwal kejar (Catch-Up Vaccine).",
+  "/preview/ringkasan": "Generator ringkasan medis & SOAP: Otomatisasi kompilasi data pemeriksaan, perhitungan dosis, dan catatan klinis menjadi resume medis SOAP siap cetak/salin.",
+};
+
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan
 // seberapa sering fitur dibuka (lihat shared/lib/personalisasi.ts). GCS & AGD
@@ -119,4 +137,5 @@ export const FITUR_TERSEDIA: ReadonlyArray<FiturMeta> = NAV_GROUPS.flatMap(
     label: it.label,
     icon: it.icon,
     desc: DESKRIPSI[it.href] ?? "",
+    detail: DETAIL_DESKRIPSI[it.href] ?? DESKRIPSI[it.href] ?? "",
   }));
