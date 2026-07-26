@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FITUR_TERSEDIA, type FiturMeta } from "@/widgets/app-shell/nav-config";
 import { useFavorit, hapusFavorit } from "@/shared/lib/personalisasi";
+import { ScreeningIcon } from "@/shared/ui";
 
 /**
  * Daftar "Favorit Saya". Sepenuhnya ditentukan user: fitur ditambahkan lewat
@@ -35,8 +36,12 @@ export function HomeFavorites() {
           {daftar.map((f) => (
             <div key={f.href} className="tv-fav-item">
               <Link href={f.href} className="tv-fav-main">
-                <span className="tv-fav-ico" aria-hidden>
-                  {f.icon}
+                <span className="tv-fav-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                  {f.href === "/preview/pertumbuhan" ? (
+                    <ScreeningIcon id="single" size={20} />
+                  ) : (
+                    f.icon
+                  )}
                 </span>
                 <span className="tv-fav-text">
                   <span className="tv-fav-title">{f.label}</span>

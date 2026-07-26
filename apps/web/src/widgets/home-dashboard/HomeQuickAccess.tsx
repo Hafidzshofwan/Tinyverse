@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
 import { usePemakaian, useFavorit, toggleFavorit } from "@/shared/lib/personalisasi";
+import { ScreeningIcon } from "@/shared/ui";
 
 const JUMLAH_TAMPIL = 6;
 
@@ -55,8 +56,12 @@ export function HomeQuickAccess() {
                 {fav ? "\u2605" : "\u2606"}
               </button>
               <Link href={item.href} className="tv-tool-main">
-                <span className="tv-tool-ico" aria-hidden>
-                  {item.icon}
+                <span className="tv-tool-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
+                  {item.href === "/preview/pertumbuhan" ? (
+                    <ScreeningIcon id="single" size={24} />
+                  ) : (
+                    item.icon
+                  )}
                 </span>
                 <span className="tv-tool-name">{item.label}</span>
                 <span className="tv-tool-desc">{item.desc}</span>
