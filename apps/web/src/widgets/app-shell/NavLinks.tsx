@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavGroup } from "./nav-config";
-import { ScreeningIcon } from "@/shared/ui";
+import { SidebarIcon } from "@/shared/ui";
 
 export interface NavLinksProps {
   groups: ReadonlyArray<NavGroup>;
@@ -41,15 +41,21 @@ export function NavLinks({ groups, query }: NavLinksProps) {
               (item.emergency ? " emergency" : "");
             return (
               <Link key={item.slug} href={item.href} className={cls}>
-                <span className="tv-nav-ico" aria-hidden style={{ display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                  {item.slug === "tumbuh-kembang" ? (
-                    <ScreeningIcon id="single" size={20} />
-                  ) : (
-                    item.icon
-                  )}
+                <span
+                  className="tv-nav-ico"
+                  aria-hidden
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <SidebarIcon slug={item.slug} size={20} />
                 </span>
                 <span className="tv-nav-label">{item.label}</span>
-                {item.built ? null : <span className="tv-nav-soon">Segera</span>}
+                {item.built ? null : (
+                  <span className="tv-nav-soon">Segera</span>
+                )}
               </Link>
             );
           })}
@@ -58,3 +64,5 @@ export function NavLinks({ groups, query }: NavLinksProps) {
     </nav>
   );
 }
+
+

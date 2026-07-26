@@ -3,4 +3,5 @@ export * from "./ResultList";
 export * from "./RedFlagCrossLink";
 export * from "./KopSuratModal";
 export * from "./ScreeningIcon";
+export * from "./SidebarIcon";
 
