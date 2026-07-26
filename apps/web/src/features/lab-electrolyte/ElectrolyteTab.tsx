@@ -40,7 +40,22 @@ function Hasil({ r, title }: { r: DxLine | null; title: string }) {
             setTimeout(() => setDitambahkan(false), 2200);
           }}
         >
-          {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+          {ditambahkan ? (
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Ditambahkan ke Ringkasan!
+            </>
+          ) : (
+            <>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "5px" }}>
+                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              Tambahkan ke Ringkasan
+            </>
+          )}
         </button>
       </div>
     </>
@@ -66,7 +81,14 @@ export function ElectrolyteTab() {
   return (
     <>
       <div className="kartu">
-        <div className="dx-sub-h">🧂 Koreksi Natrium</div>
+        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#2563EB" }}>
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M8 12h8"/>
+            <path d="M12 8v8"/>
+          </svg>
+          Koreksi Natrium
+        </div>
         <NumberField
           label="Berat badan (kg)"
           value={naBB}
@@ -98,7 +120,13 @@ export function ElectrolyteTab() {
       </div>
 
       <div className="kartu">
-        <div className="dx-sub-h">🍌 Koreksi Kalium</div>
+        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#EAB308" }}>
+            <path d="M12 2v20"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+          Koreksi Kalium
+        </div>
         <NumberField
           label="Berat badan (kg)"
           value={kBB}
@@ -122,7 +150,12 @@ export function ElectrolyteTab() {
       </div>
 
       <div className="kartu">
-        <div className="dx-sub-h">🦴 Koreksi Kalsium</div>
+        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#6366F1" }}>
+            <path d="M17 10c.7-.7 1.69-1 2.5-1a2.5 2.5 0 1 1 0 5c-.81 0-1.8-.3-2.5-1l-10 0c-.7.7-1.69 1-2.5 1a2.5 2.5 0 1 1 0-5c.81 0 1.8.3 2.5 1z"/>
+          </svg>
+          Koreksi Kalsium
+        </div>
         <NumberField
           label="Berat badan (kg, opsional)"
           value={caBB}

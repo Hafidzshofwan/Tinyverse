@@ -72,7 +72,13 @@ export function ReferenceTab() {
       </div>
 
       <div className="kartu">
-        <div className="dx-sub-h">🔎 Cek Cepat Satu Nilai</div>
+        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          Cek Cepat Satu Nilai
+        </div>
         <div className="form-group">
           <label>Parameter</label>
           <select value={test} onChange={(e) => setTest(e.target.value)}>
