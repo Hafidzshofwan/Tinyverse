@@ -5665,18 +5665,30 @@ html body #page-dosis .obat-card .varian-label {
   transform: translateY(-1px);
   color: #FFFFFF !important;
   background: var(--etail-magenta, #D936A6) !important;
-}</style><style>html,body{margin:0;padding:0;background:transparent!important;}.page{display:block!important;}#isl{max-width:1080px;margin:0 auto;padding:6px 10px 40px;}html body .judul-section .ikon-bulat,html body .ikon-bulat,html body .page .judul-section .ikon-bulat{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;border-radius:0!important;font-size:38px!important;line-height:1!important;background:transparent!important;background-color:transparent!important;box-shadow:none!important;}html body .judul-section .ikon-bulat svg,html body .ikon-bulat svg{width:38px!important;height:38px!important;}</style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-protokol-wrap">
+}
+html body #page-protokol-wrap .judul-section h2 { font-size: 18.32px !important; font-weight: 800; }
+.guideline-card-icon svg { width: 28px !important; height: 28px !important; display: block; }
+</style><style>html,body{margin:0;padding:0;background:transparent!important;}.page{display:block!important;}#isl{max-width:1080px;margin:0 auto;padding:6px 10px 40px;}html body .judul-section .ikon-bulat,html body .ikon-bulat,html body .page .judul-section .ikon-bulat{width:38px!important;height:38px!important;min-width:38px!important;min-height:38px!important;flex:0 0 38px!important;border-radius:0!important;font-size:38px!important;line-height:1!important;background:transparent!important;background-color:transparent!important;box-shadow:none!important;}html body .judul-section .ikon-bulat svg,html body .ikon-bulat svg{width:38px!important;height:38px!important;}</style><script>window.__TKCH=function(){try{var el=document.getElementById('isl');if(el){var cs=getComputedStyle(el);return Math.ceil(el.getBoundingClientRect().height+(parseFloat(cs.marginTop)||0)+(parseFloat(cs.marginBottom)||0));}var max=0,k=document.body?document.body.children:[];for(var i=0;i<k.length;i++){var c=k[i],s=getComputedStyle(c);if(s.position==='fixed'||s.display==='none'||s.visibility==='hidden')continue;var b=c.getBoundingClientRect().bottom+(window.pageYOffset||0);if(b>max)max=b;}return Math.ceil(max);}catch(e){return Math.max(document.documentElement.scrollHeight,document.body.scrollHeight);}};</script></head><body><div id="isl"><main class="page" id="page-protokol-wrap">
 <section id="protokol-gallery-section">
-<div class="judul-section">
-<div class="ikon-bulat" style="background:transparent;">🩺</div>
+<div class="judul-section" style="display:flex; align-items:center; gap:12px;">
+<div class="ikon-bulat" style="background:transparent; display:flex; align-items:center; justify-content:center;">
+  <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
+    <rect width="24" height="24" rx="6" fill="#F3E8FF" />
+    <path d="M4 19.5C4 18.1 5.1 17 6.5 17H20V4H6.5C5.1 4 4 5.1 4 6.5V19.5Z" fill="#E9D5FF" stroke="#9333EA" stroke-width="1.8" stroke-linejoin="round" />
+    <path d="M4 19.5C4 20.9 5.1 22 6.5 22H20" stroke="#9333EA" stroke-width="1.8" />
+    <path d="M9 8H15M9 12H13" stroke="#6B21A8" stroke-width="1.8" stroke-linecap="round" />
+  </svg>
+</div>
 <div>
-<h2>Guideline Anak</h2>
-<p>Kumpulan guideline pediatri untuk dibaca langsung atau diunduh.</p>
+<h2 style="font-size: 18.32px !important; font-weight: 800; color: #1E1B4B; margin: 0; line-height: 1.2;">Guideline Anak</h2>
+<p style="margin: 3px 0 0 0; color: #64748B; font-size: 13px;">Kumpulan guideline pediatri untuk dibaca langsung atau diunduh.</p>
 </div>
 </div>
 <div class="kartu guideline-hero-card">
 <div class="search-wrap guideline-search-wrap">
-<span class="ikon-cari">🔍</span>
+<span class="ikon-cari" style="display:flex; align-items:center; justify-content:center;">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#2563EB" stroke-width="2.2"/><path d="M16 16L21 21" stroke="#3B82F6" stroke-width="2.5" stroke-linecap="round"/></svg>
+</span>
 <label class="sr-only" for="kotakCariProtokol">Cari guideline</label>
 <input id="kotakCariProtokol" placeholder="Cari judul, kategori, sumber... contoh: Pneumonia" type="text"/>
 </div>
@@ -5693,11 +5705,17 @@ html body #page-dosis .obat-card .varian-label {
 <button class="guideline-chip" data-kategori="Respirologi" type="button">Respirologi</button>
 </div>
 <div id="grid-protokol" class="guideline-grid"><!-- Diisi otomatis oleh JavaScript --></div>
-<p id="pesan-kosong-protokol">😅 Guideline tidak ditemukan, coba kata kunci atau kategori lain.</p>
+<p id="pesan-kosong-protokol">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:inline-block; vertical-align:-4px; margin-right:6px;"><circle cx="11" cy="11" r="7" stroke="#64748B" stroke-width="2"/><path d="M16 16L21 21" stroke="#64748B" stroke-width="2.5" stroke-linecap="round"/><path d="M8 11H14" stroke="#64748B" stroke-width="2" stroke-linecap="round"/></svg>
+  Guideline tidak ditemukan, coba kata kunci atau kategori lain.
+</p>
 </div>
 </section>
 <section id="protokol-detail-section" style="display:none;">
-<button class="btn-kembali" id="btnKembaliProtokol" type="button">⬅️ Kembali ke daftar guideline</button>
+<button class="btn-kembali" id="btnKembaliProtokol" type="button" style="display:inline-flex; align-items:center; gap:6px;">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#2563EB" fill-opacity="0.1"/><path d="M15 12H9M9 12L12 9M9 12L12 15" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Kembali ke daftar guideline
+</button>
 <div class="judul-section">
 <div class="ikon-bulat" id="protokolDetailIkon" style="background:transparent;">    </div>
 <div>
@@ -5724,7 +5742,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Panduan diagnosis dan tata laksana pneumonia pada anak.',
       pdfUrl: 'assets/guidelines/pneumonia-anak-2025.pdf',
-      icon: '🫁',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3V11M12 7L8 5M12 9L16 7" stroke="#0284C7" stroke-width="2" stroke-linecap="round"/><path d="M11 11C8.5 11 4.5 12.5 4.5 16.5C4.5 19 6.5 20.5 8.5 20.5C10.5 20.5 11 19 11 17.5V11Z" fill="#38BDF8" fill-opacity="0.3" stroke="#0284C7" stroke-width="1.8"/><path d="M13 11C15.5 11 19.5 12.5 19.5 16.5C19.5 19 17.5 20.5 15.5 20.5C13.5 20.5 13 19 13 17.5V11Z" fill="#F43F5E" fill-opacity="0.3" stroke="#E11D48" stroke-width="1.8"/><circle cx="16" cy="16.5" r="2" fill="#F43F5E"/></svg>',
       tags: ['pneumonia', 'respirasi', 'respirologi', 'batuk', 'sesak', 'idai']
     },
     {
@@ -5735,7 +5753,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Pedoman Nasional Asma Anak.',
       pdfUrl: 'assets/guidelines/asma-anak-2022.pdf',
-      icon: '🫁',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="9" y="3" width="6" height="5" rx="1" fill="#38BDF8"/><path d="M8 8H16V13C16 14.1 15.1 15 14 15H10C8.9 15 8 14.1 8 13V8Z" fill="#0284C7"/><path d="M8 12L4 14C3.4 14.3 3 14.9 3 15.6V18C3 19.1 3.9 20 5 20H10C11.1 20 12 19.1 12 18V15" fill="#0EA5E9" fill-opacity="0.4" stroke="#0284C7" stroke-width="1.5"/><path d="M15 18C17 18 19 17 21 18M16 21C18 21 20 20 21.5 21" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/></svg>',
       tags: ['asma', 'respirasi', 'respirologi', 'wheezing', 'mengi', 'idai']
     },
     {
@@ -5746,7 +5764,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'Kemenkes',
       description: 'Lintas Diare Anak.',
       pdfUrl: 'assets/guidelines/diare-anak-2011.pdf',
-      icon: '💧',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/><path d="M10 3.5V6.5" stroke="#D97706" stroke-width="2" stroke-linecap="round"/><path d="M10 6.5C13 6.5 18 8.5 18 13C18 17.5 14 19 11 19C7.5 19 5 16.5 5 12.5C5 8.5 8 6.5 10 6.5Z" fill="#F43F5E" fill-opacity="0.3" stroke="#E11D48" stroke-width="1.8" stroke-linejoin="round"/><path d="M8.5 11C10 11.5 10.5 13 12 13.5C13.5 14 14.5 13 15.5 14.5" stroke="#BE123C" stroke-width="1.4" stroke-linecap="round"/><path d="M9 14.5C10.5 15 11.5 16 13.5 16" stroke="#BE123C" stroke-width="1.2" stroke-linecap="round"/><path d="M14.5 16.5C16.5 17.5 17.5 19 17.5 21" stroke="#D97706" stroke-width="2" stroke-linecap="round"/></svg>',
       tags: ['diare', 'gastroenterologi', 'dehidrasi', 'rehidrasi', 'lintas diare', 'kemenkes']
     },
     {
@@ -5757,7 +5775,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'Kemenkes',
       description: 'Petunjuk Teknis Manajemen dan Tatalaksana TB Anak.',
       pdfUrl: 'assets/guidelines/tb-anak-2016.pdf',
-      icon: '🫁',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3V11M12 7L8 5M12 9L16 7" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round"/><path d="M11 11C8.5 11 4.5 12.5 4.5 16.5C4.5 19 6.5 20.5 8.5 20.5C10.5 20.5 11 19 11 17.5V11Z" fill="#C084FC" fill-opacity="0.3" stroke="#7C3AED" stroke-width="1.8"/><path d="M13 11C15.5 11 19.5 12.5 19.5 16.5C19.5 19 17.5 20.5 15.5 20.5C13.5 20.5 13 19 13 17.5V11Z" fill="#F43F5E" fill-opacity="0.3" stroke="#E11D48" stroke-width="1.8"/><path d="M12 14V18M10 16H14" stroke="#E11D48" stroke-width="2" stroke-linecap="round"/></svg>',
       tags: ['tuberkulosis', 'tb', 'respirasi', 'respirologi', 'kemenkes']
     },
     {
@@ -5768,7 +5786,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Penatalaksanaan Kejang Demam',
       pdfUrl: 'assets/guidelines/kejangdemam-anak-2016.pdf',
-      icon: '⚡',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 2C8 2 5 4.5 5 8C5 10 6 11.5 7.5 12.5C6.5 13.5 6 15 6 16.5C6 19 8 21 10.5 21H12" stroke="#EA580C" stroke-width="1.8" stroke-linecap="round"/><path d="M12 2C16 2 19 4.5 19 8C19 10 18 11.5 16.5 12.5C17.5 13.5 18 15 18 16.5C18 19 16 21 13.5 21H12" stroke="#EA580C" stroke-width="1.8" stroke-linecap="round"/><path d="M13 6L8 14H13L11 21L17 12H12L13 6Z" fill="#FBBF24" stroke="#D97706" stroke-width="1.2" stroke-linejoin="round"/></svg>',
       tags: ['kejang demam', 'kejang', 'demam', 'neurologi', 'idai']
     },
     {
@@ -5778,7 +5796,7 @@ html body #page-dosis .obat-card .varian-label {
       year: '2011',
       source: 'Kemenkes',
       description: 'Tatalaksana Anak Gizi Buruk',
-      icon: '🥣',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M4 11C4 16 7.5 20 12 20C16.5 20 20 16 20 11H4Z" fill="#10B981" fill-opacity="0.2" stroke="#059669" stroke-width="1.8"/><path d="M3 11H21" stroke="#059669" stroke-width="2" stroke-linecap="round"/><path d="M15 4L11 11" stroke="#F59E0B" stroke-width="2" stroke-linecap="round"/><circle cx="16" cy="4" r="2" fill="#F59E0B"/><path d="M7 16H17" stroke="#10B981" stroke-width="1.5" stroke-dasharray="2 2"/></svg>',
       tags: ['gizi buruk', 'malnutrisi', 'nutrisi', 'anak', 'kemenkes'],
       pdfFiles: [
         { label: 'Bagian 1', url: 'assets/guidelines/gizi-buruk-bagian-1.pdf' },
@@ -5793,7 +5811,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Buku Ajar Infeksi & Pediatri Tropis',
       pdfUrl: 'assets/guidelines/introp-anak-idai-2008.pdf',
-      icon: '🦟',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#10B981" fill-opacity="0.15" stroke="#059669" stroke-width="1.6"/><path d="M12 6V8M12 16V18M6 12H8M16 12H18" stroke="#DC2626" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5" fill="#EF4444"/><path d="M7.8 7.8L9.2 9.2M14.8 14.8L16.2 16.2M16.2 7.8L14.8 9.2M9.2 14.8L7.8 16.2" stroke="#DC2626" stroke-width="1.5"/></svg>',
       tags: ['infeksi tropis', 'pediatri tropis', 'infeksi', 'tropis', 'anak', 'idai', 'demam', 'dengue', 'malaria']
     },
     {
@@ -5804,7 +5822,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Diagnosis dan Tata Laksana Hipotiroid Kongenital',
       pdfUrl: 'assets/guidelines/HK-2017.pdf',
-      icon: '🦋',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 7V17" stroke="#6D28D9" stroke-width="2" stroke-linecap="round"/><path d="M12 9C9 5 4 6 4 11C4 15 9 17 12 14" fill="#A78BFA" fill-opacity="0.4" stroke="#7C3AED" stroke-width="1.8"/><path d="M12 9C15 5 20 6 20 11C20 15 15 17 12 14" fill="#A78BFA" fill-opacity="0.4" stroke="#7C3AED" stroke-width="1.8"/><circle cx="12" cy="12" r="2" fill="#6D28D9"/></svg>',
       tags: ['hipotiroid kongenital', 'hipotiroid', 'tiroid', 'endokrin', 'skrining bayi baru lahir', 'anak', 'idai']
     },
     {
@@ -5815,7 +5833,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Perawakan Pendek pada Anak dan Remaja di Indonesia',
       pdfUrl: 'assets/guidelines/shortstature-2017.pdf',
-      icon: '📏',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="6" height="18" rx="1.5" fill="#0284C7" fill-opacity="0.2" stroke="#0284C7" stroke-width="1.8"/><path d="M10 6H7M10 10H8M10 14H7M10 18H8" stroke="#0284C7" stroke-width="1.8" stroke-linecap="round"/><circle cx="17" cy="7" r="2.5" fill="#14B8A6"/><path d="M17 10.5C14.8 10.5 13.5 12 13.5 14V21H20.5V14C20.5 12 19.2 10.5 17 10.5Z" fill="#14B8A6" fill-opacity="0.4" stroke="#0D9488" stroke-width="1.6"/></svg>',
       tags: ['short stature', 'perawakan pendek', 'tinggi badan', 'pertumbuhan', 'endokrin', 'anak', 'remaja', 'idai']
     },
     {
@@ -5826,7 +5844,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'Kemenkes',
       description: 'PNPK Infeksi Dengue Anak dan Remaja',
       pdfUrl: 'assets/guidelines/dbd-2021.pdf',
-      icon: '🦟',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#FFE4E6" stroke="#FDA4AF" stroke-width="1"/><path d="M10 10C7 6 10 3 13 7C14.5 9 12 11 10 10Z" fill="#93C5FD" fill-opacity="0.6" stroke="#2563EB" stroke-width="1.2"/><path d="M13 10C16 6 13 3 10 7C8.5 9 11 11 13 10Z" fill="#93C5FD" fill-opacity="0.6" stroke="#2563EB" stroke-width="1.2"/><ellipse cx="11.5" cy="11.5" rx="2" ry="2.5" fill="#1E293B"/><path d="M10.5 13.5C9.5 16 8 18.5 6.5 20" stroke="#0F172A" stroke-width="2.5" stroke-linecap="round"/><path d="M10 14L8.5 15.5M9 16.5L7.5 18" stroke="#FFFFFF" stroke-width="1" stroke-linecap="round"/><circle cx="13" cy="10" r="1.3" fill="#DC2626"/><path d="M14 9.5L19.5 5.5" stroke="#E11D48" stroke-width="1.6" stroke-linecap="round"/><path d="M11 10C9 9 7 9 5 11M11 12C9 13 7 14 5 16M12 12C12 14 11 17 10 20" stroke="#334155" stroke-width="1.2" stroke-linecap="round"/></svg>',
       tags: ['demam berdarah dengue', 'dbd', 'dengue', 'infeksi dengue', 'infeksi', 'anak', 'remaja', 'kemenkes', 'pnpk']
     },
     {
@@ -5837,7 +5855,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Diagnosis dan Tata Laksana Diabetes Melitus Tipe-1 pada Anak dan Remaja',
       pdfUrl: 'assets/guidelines/dm-tipe-1-2017.pdf',
-      icon: '🩸',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3C12 3 6 9.5 6 14.5C6 17.8 8.7 20.5 12 20.5C15.3 20.5 18 17.8 18 14.5C18 9.5 12 3 12 3Z" fill="#DC2626" fill-opacity="0.3" stroke="#DC2626" stroke-width="1.8"/><path d="M12 8C12 8 9 12 9 14.5C9 16.2 10.3 17.5 12 17.5C13.7 17.5 15 16.2 15 14.5C15 12 12 8 12 8Z" fill="#EF4444"/><path d="M12 11V15M10 13H14" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/></svg>',
       tags: ['dm tipe 1', 'diabetes melitus tipe 1', 'diabetes mellitus tipe 1', 'diabetes', 'endokrin', 'anak', 'remaja', 'idai']
     },
     {
@@ -5848,7 +5866,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Diagnosis dan Tatalaksana Alergi Susu Sapi',
       pdfUrl: 'assets/guidelines/alergi-sapi-2014.pdf',
-      icon: '🥛',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M8 3L6 7H18L16 3H8Z" fill="#F59E0B" stroke="#D97706" stroke-width="1.5"/><rect x="6" y="7" width="12" height="14" rx="2" fill="#38BDF8" fill-opacity="0.2" stroke="#0284C7" stroke-width="1.8"/><path d="M12 10C10 10 9 12 9 14C9 16 10.5 17 12 17C13.5 17 15 16 15 14C15 12 14 10 12 10Z" fill="#F59E0B" fill-opacity="0.4" stroke="#D97706" stroke-width="1.5"/><path d="M12 12V15M12 16.5V17" stroke="#B45309" stroke-width="1.5" stroke-linecap="round"/></svg>',
       tags: ['alergi susu sapi', 'alergi', 'susu sapi', 'cow milk allergy', 'cma', 'anak', 'idai']
     },
     {
@@ -5859,7 +5877,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Tatalaksana Sindrom Nefrotik Idiopatik pada Anak',
       pdfUrl: 'assets/guidelines/sindrom-nefrotik-2012.pdf',
-      icon: '🫘',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" fill="#CCFBF1" stroke="#99F6E4" stroke-width="1"/><path d="M9.5 5C6.5 5 4.5 7.5 4.5 11C4.5 15 7 18 9.5 18C10.5 18 11 16 10.5 14C10 12 10 10 10.5 8C11 6 10.5 5 9.5 5Z" fill="#F43F5E" fill-opacity="0.3" stroke="#E11D48" stroke-width="1.6" stroke-linejoin="round"/><path d="M14.5 5C17.5 5 19.5 7.5 19.5 11C19.5 15 17 18 14.5 18C13.5 18 13 16 13.5 14C14 12 14 10 13.5 8C13 6 13.5 5 14.5 5Z" fill="#F43F5E" fill-opacity="0.3" stroke="#E11D48" stroke-width="1.6" stroke-linejoin="round"/><path d="M10.5 11.5H13.5" stroke="#DC2626" stroke-width="1.6" stroke-linecap="round"/><path d="M10.5 13H13.5" stroke="#2563EB" stroke-width="1.6" stroke-linecap="round"/><path d="M11 14C11 16 11.5 18.5 11.5 21M13 14C13 16 12.5 18.5 12.5 21" stroke="#D97706" stroke-width="1.5" stroke-linecap="round"/><path d="M7 5C8 3.5 10 3.5 10.5 5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/><path d="M17 5C16 3.5 14 3.5 13.5 5" fill="#FBBF24" stroke="#D97706" stroke-width="1.2"/></svg>',
       tags: ['sindrom nefrotik', 'nefrotik', 'nefrologi', 'ginjal', 'proteinuria', 'edema', 'idiopatik', 'anak', 'idai']
     },
     {
@@ -5870,7 +5888,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Epilepsi pada Anak: Petunjuk Praktis Sehari-hari',
       pdfUrl: 'assets/guidelines/epilepsi-2025.pdf',
-      icon: '🧠',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M12 3C8 3 5 5.5 5 9C5 11 6 12.5 7.5 13.5C6.5 14.5 6 16 6 17.5C6 20 8 21.5 10.5 21.5H12" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round"/><path d="M12 3C16 3 19 5.5 19 9C19 11 18 12.5 16.5 13.5C17.5 14.5 18 16 18 17.5C18 20 16 21.5 13.5 21.5H12" stroke="#8B5CF6" stroke-width="1.8" stroke-linecap="round"/><path d="M8 12L11 9L10 13L16 8L13 13L15 17L8 12Z" fill="#EC4899" stroke="#DB2777" stroke-width="1.2"/></svg>',
       tags: ['epilepsi', 'seizure', 'kejang', 'neurologi', 'otak', 'anak', 'petunjuk praktis', 'idai']
     },
     {
@@ -5881,7 +5899,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'IDAI',
       description: 'Konsensus Infeksi Saluran Kemih pada Anak (UKK Nefrologi).',
       pdfUrl: 'assets/guidelines/isk-anak-2011.pdf',
-      icon: '🫘',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M8 4C6 4 4.5 6 4.5 8.5C4.5 12 7 14.5 8.5 15.5C9 14 9 10.5 8 9C7 7.5 7.5 5.5 8 4Z" fill="#14B8A6" fill-opacity="0.3" stroke="#0D9488" stroke-width="1.6"/><path d="M16 4C18 4 19.5 6 19.5 8.5C19.5 12 17 14.5 15.5 15.5C15 14 15 10.5 16 9C17 7.5 16.5 5.5 16 4Z" fill="#14B8A6" fill-opacity="0.3" stroke="#0D9488" stroke-width="1.6"/><path d="M12 14V18" stroke="#0D9488" stroke-width="2"/><ellipse cx="12" cy="19.5" rx="3.5" ry="2.5" fill="#F59E0B" fill-opacity="0.4" stroke="#D97706" stroke-width="1.5"/></svg>',
       tags: ['infeksi saluran kemih', 'isk', 'uti', 'nefrologi', 'ginjal', 'kandung kemih', 'pielonefritis', 'sistitis', 'anak', 'idai']
     },
     {
@@ -5892,7 +5910,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'Kemenkes',
       description: 'PNPK Tata Laksana Sepsis pada Anak.',
       pdfUrl: 'assets/guidelines/sepsis-anak-2021.pdf',
-      icon: '🦠',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" fill="#EF4444" fill-opacity="0.2" stroke="#DC2626" stroke-width="1.8"/><circle cx="9" cy="9" r="2" fill="#9333EA"/><circle cx="15" cy="10" r="1.5" fill="#DC2626"/><circle cx="11" cy="15" r="2.5" fill="#9333EA"/><circle cx="16" cy="15" r="1.5" fill="#DC2626"/><path d="M6 6L8 8M18 18L16 16" stroke="#DC2626" stroke-width="1.5" stroke-linecap="round"/></svg>',
       tags: ['sepsis', 'syok sepsis', 'septik', 'infeksi', 'bakteremia', 'sirs', 'anak', 'kemenkes', 'pnpk']
     },
     {
@@ -5903,7 +5921,7 @@ html body #page-dosis .obat-card .varian-label {
       source: 'Kemenkes',
       description: 'Pedoman Teknis Pelayanan Kesehatan Neonatal Esensial (pelayanan tingkat pertama).',
       pdfUrl: 'assets/guidelines/neonatal-esensial-2018.pdf',
-      icon: '👶',
+      icon: '<svg width="28" height="28" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="7" r="3.5" fill="#FCD34D" stroke="#F59E0B" stroke-width="1.5"/><path d="M6 20C6 14.5 8.5 12 12 12C15.5 12 18 14.5 18 20H6Z" fill="#F43F5E" fill-opacity="0.25" stroke="#E11D48" stroke-width="1.8"/><path d="M12 15C12 15 10 13.5 10 12.5C10 11.7 10.7 11 11.5 11C12 11 12.4 11.3 12.5 11.5C12.6 11.3 13 11 13.5 11C14.3 11 15 11.7 15 12.5C15 13.5 13 15 13 15" fill="#F43F5E"/></svg>',
       tags: ['neonatus', 'neonatal', 'neonatal esensial', 'bayi baru lahir', 'asfiksia', 'hipotermi', 'resusitasi', 'kemenkes', 'anak']
     }
   ];
@@ -5926,8 +5944,14 @@ html body #page-dosis .obat-card .varian-label {
   }
   function tvGuidelineDetailActions(files) {
     return files.map(file => `
-          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener">↗️ Buka PDF</a>
-          <a class="guideline-btn download" href="${tvEsc(file.url)}" download>⬇️ Download ${tvEsc(file.label)}</a>
+          <a class="guideline-btn secondary" href="${tvEsc(file.url)}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M18 13V19C18 20.1 17.1 21 16 21H5C3.9 21 3 20.1 3 19V8C3 6.9 3.9 6 5 6H11M15 3H21V9M10 14L20.5 3.5" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Buka PDF
+          </a>
+          <a class="guideline-btn download" href="${tvEsc(file.url)}" download style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 3V15M12 15L7 10M12 15L17 10M4 19H20" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download ${tvEsc(file.label)}
+          </a>
     `).join('');
   }
   function tvGuidelinePdfFrames(item, files) {
@@ -5959,7 +5983,7 @@ html body #page-dosis .obat-card .varian-label {
     grid.innerHTML = data.map(item => `
       <article class="guideline-card protokol-card" data-id="${tvEsc(item.id)}" data-nama="${tvEsc((item.title + ' ' + item.category + ' ' + item.source + ' ' + (item.tags || []).join(' ')).toLowerCase())}" role="button" tabindex="0" aria-label="Buka guideline ${tvEsc(item.title)}">
         <div class="guideline-card-head">
-          <span class="guideline-card-icon">${tvEsc(item.icon || '📄')}</span>
+          <span class="guideline-card-icon">${item.icon || ''}</span>
           <div>
             <h3>${tvEsc(item.title)}</h3>
             <div class="guideline-meta">${tvEsc(item.category)} • ${tvEsc(item.source)} • ${tvEsc(item.year)}</div>
@@ -5980,7 +6004,7 @@ html body #page-dosis .obat-card .varian-label {
     const ref = document.getElementById('protokolDetailReferensi');
     const konten = document.getElementById('protokol-detail-konten');
     const files = tvGuidelinePdfFiles(item);
-    if (ikon) ikon.textContent = item.icon || '📄';
+    if (ikon) ikon.innerHTML = item.icon || '';
     if (nama) nama.textContent = item.title;
     if (ref) ref.textContent = item.category + ' • ' + item.source + ' • ' + item.year;
     if (konten) konten.innerHTML = `
