@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { ScreeningIcon } from "./ScreeningIcon";
 
 export type SidebarIconSlug =
@@ -63,14 +63,18 @@ export function setIconVariant(slug: SidebarIconSlug, variant: SidebarIconVarian
   const next = { ...current, [slug]: variant };
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {}
+  } catch (error) {
+    console.error(error);
+}
   LISTENERS.forEach((cb) => cb());
 }
 
 export function resetAllIconVariants() {
   try {
     window.localStorage.removeItem(STORAGE_KEY);
-  } catch {}
+  } catch (error) {
+    console.error(error);
+}
   LISTENERS.forEach((cb) => cb());
 }
 
