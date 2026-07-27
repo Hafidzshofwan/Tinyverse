@@ -274,6 +274,7 @@ export const ScreeningIcon: React.FC<ScreeningIconProps> = ({
     // V1: Child Growth Silhouette with Milestone Star & Sprout Leaf
     return (
       <svg width={size} height={size} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+        <rect width="36" height="36" rx="10" fill="#D936A6" fillOpacity="0.18" />
         {/* Child Head */}
         <circle cx="18" cy="12" r="4.5" fill="#D936A6" />
         {/* Child Body & Open Caring Arms */}

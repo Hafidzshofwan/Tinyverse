@@ -147,6 +147,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
             key={alat.id}
             type="button"
             onClick={() => setAktif(alat.id)}
+            className="tv-growth-card"
             style={{
               display: "flex",
               alignItems: "center",
@@ -189,6 +190,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
         ))}
 
         <div
+          className="tv-growth-subcard"
           style={{
             border: "1px dashed #E2E8F0",
             borderRadius: 18,

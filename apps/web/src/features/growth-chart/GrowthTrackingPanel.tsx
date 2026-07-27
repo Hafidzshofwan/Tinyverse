@@ -226,6 +226,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           {/* Tombol Data Pasien */}
           <div
+            className="tv-growth-subcard"
             style={{
               background: "#FFFFFF",
               border: "1px solid #CBD5E1",
@@ -365,6 +366,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
         </div>
       ) : (
         <div
+          className="tv-growth-banner-normal"
           style={{
             background: "#ECFDF5",
             border: "1px solid #A7F3D0",
@@ -408,7 +410,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
 
       {/* PLOTTING TREN LONGITUDINAL (RECHARTS CHART) */}
       <LongitudinalGrowthChart records={records} gender={gender} isFaltering={falteringResult.isFaltering} />      {/* RIWAYAT PEMERIKSAAN DATA TABLE */}
-      <div style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "18px", marginBottom: 20 }}>
+      <div className="tv-growth-card" style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "18px", marginBottom: 20 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
             <h4 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.02rem", fontWeight: 600 }}>
@@ -520,6 +522,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
 
       {/* BOTTOM TOOLBAR: SIMULASI KASUS PERTUMBUHAN */}
       <div
+        className="tv-growth-card"
         style={{
           background: "#FFFFFF",
           border: "1px solid #E2E8F0",

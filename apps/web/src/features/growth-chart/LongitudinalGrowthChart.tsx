@@ -207,7 +207,7 @@ export function LongitudinalGrowthChart({
   const metricLabel = metric === "bbu" ? "Berat Badan (kg)" : metric === "tbu" ? "Tinggi Badan (cm)" : "IMT (kg/m²)";
 
   return (
-    <div style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "16px", marginBottom: 16 }}>
+    <div className="tv-growth-card" style={{ background: "#FFFFFF", borderRadius: 16, border: "1px solid #E2E8F0", padding: "16px", marginBottom: 16 }}>
       {/* Chart Selector Header */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
         <div>
@@ -221,7 +221,7 @@ export function LongitudinalGrowthChart({
 
         {/* Indikator Metric Switcher */}
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-          <div style={{ display: "flex", gap: 3, background: "#F1F5F9", padding: 3, borderRadius: 10 }}>
+          <div className="tv-growth-subcard" style={{ display: "flex", gap: 3, background: "#F1F5F9", padding: 3, borderRadius: 10 }}>
             <button
               type="button"
               onClick={() => setMetric("bbu")}
@@ -330,7 +330,7 @@ export function LongitudinalGrowthChart({
       </div>
 
       {/* Legend Footer */}
-      <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, fontSize: "0.75rem", color: "#64748B", background: "#F8FAFC", padding: "8px 12px", borderRadius: 8, border: "1px solid #F1F5F9" }}>
+      <div className="tv-growth-subcard" style={{ marginTop: 12, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 12, fontSize: "0.75rem", color: "#64748B", background: "#F8FAFC", padding: "8px 12px", borderRadius: 8, border: "1px solid #F1F5F9" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#4F46E5", display: "inline-block" }}></span>
           <span><b>Pasien:</b> Riwayat {metricLabel}</span>
