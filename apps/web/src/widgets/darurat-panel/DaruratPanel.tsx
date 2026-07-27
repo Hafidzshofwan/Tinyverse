@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import "@/app/preview/darurat/v17-darurat.css";
 import { PatTab } from "@/features/emergency-pat";
 import { ResusTab } from "@/features/emergency-resus";
 import { PalsTab } from "@/features/emergency-pals";

@@ -776,43 +776,15 @@ export function ResusTab({
         suara, pengingat siklus &amp; epinefrin, dan cetak Lembar Kode.
       </p>
 
-      <div
-        style={{
-          textAlign: "center",
-          margin: "8px 0 14px",
-          padding: "16px 12px",
-          borderRadius: 14,
-          background: "#FFF5F5",
-          border: "1px solid #ebdfe0",
-          boxShadow: "0 2px 8px rgba(176, 12, 26, 0.05)",
-        }}
-      >
-        <div
-          style={{
-            fontSize: 52,
-            fontWeight: 800,
-            color: "#B00C1A",
-            fontVariantNumeric: "tabular-nums",
-            lineHeight: 1,
-            letterSpacing: "1px",
-          }}
-        >
+      <div className="resus-timer-box">
+        <div className="resus-timer-digits">
           {jam}
         </div>
         <div
-          style={
+          className={
             siklus.alarm
-              ? {
-                  marginTop: 10,
-                  fontSize: 13,
-                  fontWeight: 800,
-                  color: "#fff",
-                  background: "#E11D2A",
-                  borderRadius: 8,
-                  padding: "4px 10px",
-                  display: "inline-block",
-                }
-              : { marginTop: 8, fontSize: 13, fontWeight: 600, color: "#8a7f80" }
+              ? "resus-siklus-badge alarm"
+              : "resus-siklus-badge"
           }
         >
           {siklus.text}
@@ -823,15 +795,13 @@ export function ResusTab({
         <button
           onClick={mulaiResus}
           disabled={running}
+          className="resus-btn-mulai"
           style={{
             flex: 1,
             padding: "12px 0",
             borderRadius: 12,
             fontWeight: 800,
             cursor: running ? "default" : "pointer",
-            border: "none",
-            color: "#fff",
-            background: "linear-gradient(135deg,#1F9D55,#178048)",
             opacity: running ? 0.5 : 1,
             display: "inline-flex",
             alignItems: "center",
@@ -845,15 +815,13 @@ export function ResusTab({
         <button
           onClick={selesaiResus}
           disabled={!running}
+          className="resus-btn-selesai"
           style={{
             flex: 1,
             padding: "12px 0",
             borderRadius: 12,
             fontWeight: 800,
             cursor: running ? "pointer" : "default",
-            border: "1px solid #E11D2A",
-            color: "#B00C1A",
-            background: "#fff",
             opacity: running ? 1 : 0.5,
             display: "inline-flex",
             alignItems: "center",
@@ -867,21 +835,19 @@ export function ResusTab({
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 12 }}>
-      <div style={{ ...kotak, marginBottom: 0 }}>
-        <div style={{ ...judulKotak, display: "flex", alignItems: "center", gap: "6px" }}>
+      <div className="resus-kotak">
+        <div className="resus-kotak-judul" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
           <MetronomeIcon size={16} /> Metronom CPR
         </div>
         <button
           onClick={toggleMetro}
+          className="resus-metro-btn"
           style={{
             width: "100%",
             padding: "10px 0",
             borderRadius: 10,
             fontWeight: 800,
             cursor: "pointer",
-            border: "none",
-            color: "#fff",
-            background: metroOn ? "#B00C1A" : "#E11D2A",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
@@ -903,26 +869,24 @@ export function ResusTab({
             <button
               key={b}
               onClick={() => setBpm(b)}
+              className={"resus-opt-btn" + (bpm === b ? " aktif" : "")}
               style={{
                 flex: 1,
                 padding: "6px 0",
                 borderRadius: 8,
                 fontWeight: 700,
                 cursor: "pointer",
-                border: bpm === b ? "none" : "1px solid #f0c9cc",
-                background: bpm === b ? "#E11D2A" : "#fff",
-                color: bpm === b ? "#fff" : "#B00C1A",
               }}
             >
               {b}
             </button>
           ))}
         </div>
-        <div style={caption}>{bpm + "/menit \u00b7 target 100\u2013120"}</div>
+        <div className="resus-caption">{bpm + "/menit \u00b7 target 100\u2013120"}</div>
       </div>
 
-      <div style={{ ...kotak, marginBottom: 0 }}>
-        <div style={{ ...judulKotak, display: "flex", alignItems: "center", gap: "6px" }}>
+      <div className="resus-kotak">
+        <div className="resus-kotak-judul" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
           <EmergencyDrugIcon size={16} /> Interval epinefrin
         </div>
         <div style={{ display: "flex", gap: 6 }}>
@@ -930,15 +894,13 @@ export function ResusTab({
             <button
               key={s}
               onClick={() => setEpi(s)}
+              className={"resus-opt-btn" + (epiInterval === s ? " aktif" : "")}
               style={{
                 flex: 1,
                 padding: "8px 0",
                 borderRadius: 10,
                 fontWeight: 700,
                 cursor: "pointer",
-                border: epiInterval === s ? "none" : "1px solid #f0c9cc",
-                background: epiInterval === s ? "#E11D2A" : "#fff",
-                color: epiInterval === s ? "#fff" : "#B00C1A",
               }}
             >
               {s / 60} mnt
@@ -946,11 +908,7 @@ export function ResusTab({
           ))}
         </div>
         <div
-          style={
-            epiInfo?.alarm
-              ? { ...caption, color: "#E11D2A", fontWeight: 800 }
-              : caption
-          }
+          className={"resus-caption" + (epiInfo?.alarm ? " alarm" : "")}
         >
           {epiInfo ? epiInfo.text : "Tekan Epinefrin saat memberi dosis"}
         </div>
@@ -958,22 +916,20 @@ export function ResusTab({
       </div>
 
       <div style={{ display: "flex", gap: 8, marginBottom: 10 }}>
-        <button onClick={bukaCoach} style={{ ...coachBtn, flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+        <button onClick={bukaCoach} className="resus-btn-coach" style={{ flex: 1, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "8px", padding: "10px 12px", borderRadius: 12, fontWeight: 800, cursor: "pointer" }}>
           <DefibIcon size={18} />
           <span>Mode CPR Layar Penuh</span>
         </button>
         <button
           onClick={toggleSuara}
           aria-pressed={voiceOn}
+          className={"resus-btn-suara" + (voiceOn ? " aktif" : "")}
           style={{
             flex: 1,
             padding: "10px 12px",
             borderRadius: 12,
             fontWeight: 800,
             cursor: "pointer",
-            border: "1px solid #E11D2A",
-            color: voiceOn ? "#fff" : "#B00C1A",
-            background: voiceOn ? "#E11D2A" : "#fff",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1032,15 +988,13 @@ export function ResusTab({
             key={q.aksi}
             onClick={() => aksiCepat(q.aksi)}
             disabled={!running}
+            className="resus-quick-btn"
             style={{
               padding: "12px 8px",
               borderRadius: 12,
               fontWeight: 800,
               fontSize: 13,
               cursor: running ? "pointer" : "default",
-              border: "1px solid #f0c9cc",
-              background: "#fff",
-              color: "#B00C1A",
               opacity: running ? 1 : 0.5,
               display: "inline-flex",
               alignItems: "center",
@@ -1065,27 +1019,24 @@ export function ResusTab({
             }
           }}
           placeholder="Ketik catatan tindakan atau obat di sini (cth: Pasang IV, Bolus NS)..."
+          className="resus-input-catatan"
           style={{
             flex: 1,
             padding: "10px 14px",
             borderRadius: 10,
-            border: "1px solid #d1d5db",
             fontSize: 14,
-            color: "#1e293b",
-            backgroundColor: "#ffffff",
             boxShadow: "inset 0 1px 2px rgba(0,0,0,0.03)",
           }}
         />
         <button
           onClick={catatKustom}
+          className="resus-btn-catat"
           style={{
             padding: "10px 14px",
             borderRadius: 10,
             fontWeight: 800,
             cursor: "pointer",
             border: "none",
-            color: "#fff",
-            background: "#E11D2A",
           }}
         >
           + Catat
@@ -1093,42 +1044,41 @@ export function ResusTab({
       </div>
 
       <div
+        className="resus-log-box"
         style={{
-          border: "1px solid #FDECEC",
           borderRadius: 12,
           padding: "6px 10px",
           maxHeight: 220,
           overflowY: "auto",
-          background: "#fff",
         }}
       >
         {log.length === 0 ? (
-          <div style={{ fontSize: 13, color: "#8a7f80", padding: "8px 0" }}>
+          <div className="resus-log-empty" style={{ fontSize: 13, padding: "8px 0" }}>
             Belum ada tindakan tercatat.
           </div>
         ) : (
           log.map((e, i) => (
             <div
               key={i}
+              className="resus-log-item"
               style={{
                 display: "flex",
                 gap: 10,
                 padding: "5px 0",
-                borderBottom: "1px solid #f6eaea",
                 fontSize: 13,
               }}
             >
               <span
+                className="resus-log-jam"
                 style={{
                   fontVariantNumeric: "tabular-nums",
                   fontWeight: 700,
-                  color: "#B00C1A",
                   whiteSpace: "nowrap",
                 }}
               >
                 {e.jam + " \u00b7 +" + e.lewat}
               </span>
-              <span style={{ color: "#2A0A0C" }}>{e.teks}</span>
+              <span className="resus-log-teks">{e.teks}</span>
             </div>
           ))
         )}
@@ -1137,6 +1087,7 @@ export function ResusTab({
       <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap" }}>
         <button
           onClick={salin}
+          className="resus-action-btn"
           style={{
             flex: 1,
             minWidth: 130,
@@ -1144,9 +1095,6 @@ export function ResusTab({
             borderRadius: 10,
             fontWeight: 700,
             cursor: "pointer",
-            border: "1px solid #f0c9cc",
-            background: "#fff",
-            color: "#B00C1A",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1158,6 +1106,7 @@ export function ResusTab({
         </button>
         <button
           onClick={simpan}
+          className="resus-action-btn"
           style={{
             flex: 1,
             minWidth: 130,
@@ -1165,9 +1114,6 @@ export function ResusTab({
             borderRadius: 10,
             fontWeight: 700,
             cursor: "pointer",
-            border: "1px solid #f0c9cc",
-            background: "#fff",
-            color: "#B00C1A",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
@@ -1179,6 +1125,7 @@ export function ResusTab({
         </button>
         <button
           onClick={cetakLembarKode}
+          className="resus-action-btn primary"
           style={{
             flex: 1,
             minWidth: 130,
@@ -1187,8 +1134,6 @@ export function ResusTab({
             fontWeight: 700,
             cursor: "pointer",
             border: "none",
-            background: "#E11D2A",
-            color: "#fff",
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",

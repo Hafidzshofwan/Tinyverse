@@ -392,9 +392,10 @@ export function PalsTab({
       ) : null}
       <div className="pals-grid">
         {cats.map((cat, i) => (
-          <div style={catBox} key={i}>
+          <div style={catBox} className="pals-cat" key={i}>
             <div
               style={catHead}
+              className="pals-cat-head"
               onClick={() => toggle(i)}
               role="button"
               tabIndex={0}
@@ -404,6 +405,7 @@ export function PalsTab({
             >
               <span>{cat.head}</span>
               <span
+                className="pals-cat-chevron"
                 style={{
                   color: "#B00C1A",
                   opacity: 0.6,
@@ -416,7 +418,7 @@ export function PalsTab({
               </span>
             </div>
             {open[i] ? (
-              <div style={catBody}>
+              <div style={catBody} className="pals-cat-body">
                 {cat.rows.map((row, j) => (
                   <div className="pals-row" key={j}>
                     <div className="pals-label" style={{ display: "flex", alignItems: "flex-start", gap: "8px" }}>
@@ -426,12 +428,12 @@ export function PalsTab({
                         </span>
                       ) : null}
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 700, color: "#1e293b", fontSize: "13px" }}>{row.label}</div>
+                        <div style={{ fontWeight: 700, color: "#1e293b", fontSize: "13px" }} className="pals-label-title">{row.label}</div>
                         {row.note ? (
                           <span className="pals-note">{row.note}</span>
                         ) : null}
                         {row.ref ? (
-                          <span style={refStyle}>
+                          <span style={refStyle} className="pals-ref">
                             <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
                               <BookRefIcon size={12} /> {row.ref}
                             </span>
@@ -448,8 +450,9 @@ export function PalsTab({
         ))}
       </div>
 
-      <div style={sumberBox}>
+      <div style={sumberBox} className="pals-sumber-box">
         <div
+          className="pals-sumber-title"
           style={{
             fontWeight: 800,
             color: "#B00C1A",
