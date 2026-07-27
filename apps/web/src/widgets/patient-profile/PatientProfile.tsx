@@ -356,9 +356,9 @@ export function PatientProfile() {
       >
         <div className="tv-pas-card" role="dialog" aria-label="Profil Pasien">
           {/* Header Row dengan Tab Navigation & Close Button di baris yang sama */}
-          <div style={{ marginBottom: "14px", borderBottom: "1px solid #F1F5F9", paddingBottom: "10px" }}>
+          <div className="tv-pas-hdr-border" style={{ marginBottom: "14px", borderBottom: "1px solid #F1F5F9", paddingBottom: "10px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "10px", flexWrap: "wrap", marginBottom: "6px" }}>
-              <h3 style={{ margin: 0, fontFamily: "'Fredoka', sans-serif", color: "#1B2A6B", fontSize: "1.05rem", display: "flex", alignItems: "center", gap: "6px" }}>
+              <h3 className="tv-pas-title" style={{ margin: 0, fontFamily: "'Fredoka', sans-serif", color: "#1B2A6B", fontSize: "1.05rem", display: "flex", alignItems: "center", gap: "6px" }}>
                 <PatientHeaderIcon /> Pasien Bangsal &amp; Poliklinik
               </h3>
 
@@ -387,7 +387,7 @@ export function PatientProfile() {
 
                 <button
                   type="button"
-                  className="tv-pas-btn tv-pas-reset"
+                  className="tv-pas-btn tv-pas-reset tv-pas-close"
                   style={{
                     padding: "6px 12px",
                     fontSize: "0.95rem",
@@ -411,6 +411,7 @@ export function PatientProfile() {
                 Kelola banyak pasien, switch pasien aktif 1-klik untuk semua alat klinis.
               </p>
               <span
+                className="tv-pas-cloud-badge"
                 style={{
                   fontSize: "0.72rem",
                   background: "#ECFDF5",
@@ -434,6 +435,7 @@ export function PatientProfile() {
 
           {toastMsg && (
             <div
+              className="tv-pas-toast"
               style={{
                 background: "#ECFDF3",
                 border: "1px solid #ABEFC6",
@@ -459,6 +461,7 @@ export function PatientProfile() {
               {/* Active Patient Highlight Banner */}
               {activeProfile.nama || activeProfile.bb || activeProfile.usiaBulan ? (
                 <div
+                  className="tv-pas-active-banner"
                   style={{
                     background: "#F0FDF4",
                     border: "1.5px solid #86EFAC",
@@ -473,21 +476,22 @@ export function PatientProfile() {
                 >
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <span style={{ fontSize: "0.68rem", fontWeight: 700, color: "#166534", background: "#DCFCE7", padding: "2px 8px", borderRadius: "999px" }}>
+                      <span className="tv-pas-active-tag" style={{ fontSize: "0.68rem", fontWeight: 700, color: "#166534", background: "#DCFCE7", padding: "2px 8px", borderRadius: "999px" }}>
                         ● Pasien Aktif
                       </span>
-                      <strong style={{ fontSize: "0.92rem", color: "#0F172A" }}>
+                      <strong className="tv-pas-active-name" style={{ fontSize: "0.92rem", color: "#0F172A" }}>
                         {activeProfile.nama || "An. Tanpa Nama"}{" "}
                         {activeProfile.noRm ? `(${activeProfile.noRm})` : ""}
                       </strong>
                     </div>
-                    <div style={{ fontSize: "0.76rem", color: "#475467", marginTop: "3px" }}>
+                    <div className="tv-pas-active-info" style={{ fontSize: "0.76rem", color: "#475467", marginTop: "3px" }}>
                       {activeProfile.jk === "male" ? "Laki-laki" : activeProfile.jk === "female" ? "Perempuan" : "-"} • BB: <b>{activeProfile.bb != null ? `${activeProfile.bb} kg` : "-"}</b> • Usia: <b>{formatUsiaPasien(activeProfile.usiaBulan)}</b>
                       {activeProfile.tb != null && ` • TB: ${activeProfile.tb} cm`}
                     </div>
                   </div>
                   <button
                     type="button"
+                    className="tv-pas-active-clear-btn"
                     style={{
                       background: "#FFFFFF",
                       border: "1px solid #CBD5E1",
@@ -507,6 +511,7 @@ export function PatientProfile() {
                 </div>
               ) : (
                 <div
+                  className="tv-pas-empty-box"
                   style={{
                     background: "#F8FAFC",
                     border: "1px solid #E2E8F0",
@@ -524,6 +529,7 @@ export function PatientProfile() {
               {patientList.length > 0 && (
                 <input
                   type="text"
+                  className="tv-pas-search-input"
                   placeholder="🔍 Cari nama, No. RM, atau catatan..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -591,6 +597,7 @@ export function PatientProfile() {
                     return (
                       <div
                         key={p.id || p.nama}
+                        className={`tv-pas-card-item ${isMale ? "male" : isFemale ? "female" : "neutral"} ${isAktif ? "aktif" : ""}`}
                         style={{
                           backgroundColor: itemBg,
                           borderColor: itemBorder,
@@ -609,10 +616,10 @@ export function PatientProfile() {
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <GenderAvatar jk={p.jk} size={24} />
                             <div>
-                              <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
+                              <div className="tv-pas-item-name" style={{ fontSize: "0.92rem", fontWeight: 700, color: "#0F172A", lineHeight: 1.2 }}>
                                 {p.nama || "An. Tanpa Nama"}
                               </div>
-                              <div style={{ fontSize: "0.74rem", color: "#64748B", marginTop: "2px" }}>
+                              <div className="tv-pas-item-sub" style={{ fontSize: "0.74rem", color: "#64748B", marginTop: "2px" }}>
                                 {p.jk === "male" ? "Laki-laki" : p.jk === "female" ? "Perempuan" : "Anak"}
                                 {p.noRm && ` • RM: ${p.noRm}`}
                               </div>
@@ -620,7 +627,7 @@ export function PatientProfile() {
                           </div>
 
                           {isAktif && (
-                            <span style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DCFCE7", color: "#15803D", border: "1px solid #86EFAC", padding: "2px 8px", borderRadius: "999px", whiteSpace: "nowrap" }}>
+                            <span className="tv-pas-item-active-pill" style={{ fontSize: "0.7rem", fontWeight: 700, background: "#DCFCE7", color: "#15803D", border: "1px solid #86EFAC", padding: "2px 8px", borderRadius: "999px", whiteSpace: "nowrap" }}>
                               ● Aktif
                             </span>
                           )}
@@ -628,14 +635,14 @@ export function PatientProfile() {
 
                         {/* Vitals Pills Row */}
                         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px", fontSize: "0.78rem" }}>
-                          <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                          <span className="tv-pas-vital-pill" style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
                             BB: <b>{p.bb != null ? `${p.bb} kg` : "-"}</b>
                           </span>
-                          <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                          <span className="tv-pas-vital-pill" style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
                             Usia: <b>{formatUsiaPasien(p.usiaBulan)}</b>
                           </span>
                           {p.tb != null && (
-                            <span style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
+                            <span className="tv-pas-vital-pill" style={{ background: "#FFFFFF", border: "1px solid #E2E8F0", padding: "3px 8px", borderRadius: "6px", color: "#334155" }}>
                               TB: <b>{p.tb} cm</b>
                             </span>
                           )}
@@ -643,20 +650,21 @@ export function PatientProfile() {
 
                         {/* Catatan if any */}
                         {p.catatan && (
-                          <div style={{ fontSize: "0.75rem", color: "#475467", background: "rgba(255,255,255,0.7)", border: "1px solid #E2E8F0", padding: "4px 8px", borderRadius: "6px", display: "flex", alignItems: "center", gap: "4px" }}>
+                          <div className="tv-pas-note-box" style={{ fontSize: "0.75rem", color: "#475467", background: "rgba(255,255,255,0.7)", border: "1px solid #E2E8F0", padding: "4px 8px", borderRadius: "6px", display: "flex", alignItems: "center", gap: "4px" }}>
                             <NoteIcon /> {p.catatan}
                           </div>
                         )}
 
                         {/* Action Row */}
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "6px", borderTop: "1px solid rgba(226, 232, 240, 0.7)", marginTop: "2px" }}>
+                        <div className="tv-pas-card-action-row" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: "6px", borderTop: "1px solid rgba(226, 232, 240, 0.7)", marginTop: "2px" }}>
                           {isAktif ? (
-                            <span style={{ fontSize: "0.75rem", color: "#15803D", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px" }}>
+                            <span className="tv-pas-connected-text" style={{ fontSize: "0.75rem", color: "#15803D", fontWeight: 600, display: "flex", alignItems: "center", gap: "4px" }}>
                               <LinkConnectedIcon /> Terhubung di kalkulator
                             </span>
                           ) : (
                             <button
                               type="button"
+                              className="tv-pas-use-btn"
                               style={{
                                 background: "#0F766E",
                                 color: "#FFFFFF",
@@ -677,6 +685,7 @@ export function PatientProfile() {
                           <div style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: "auto" }}>
                             <button
                               type="button"
+                              className="tv-pas-edit-btn"
                               style={{
                                 background: "#FFFFFF",
                                 border: "1px solid #CBD5E1",
@@ -696,6 +705,7 @@ export function PatientProfile() {
                               <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
                                 <button
                                   type="button"
+                                  className="tv-pas-del-confirm-btn"
                                   style={{
                                     background: "#DC2626",
                                     color: "#FFFFFF",
@@ -714,6 +724,7 @@ export function PatientProfile() {
                                 </button>
                                 <button
                                   type="button"
+                                  className="tv-pas-del-cancel-btn"
                                   style={{
                                     background: "#F1F5F9",
                                     color: "#475467",
@@ -731,6 +742,7 @@ export function PatientProfile() {
                             ) : (
                               <button
                                 type="button"
+                                className="tv-pas-del-btn"
                                 style={{
                                   background: "#FEF2F2",
                                   color: "#991B1B",
@@ -881,7 +893,7 @@ export function PatientProfile() {
                 </button>
                 <button
                   type="button"
-                  className="tv-pas-btn"
+                  className="tv-pas-btn tv-pas-btn-secondary"
                   style={{ background: "#F2F4F7", color: "#344054" }}
                   onClick={() => simpan(false)}
                 >

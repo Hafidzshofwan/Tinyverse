@@ -124,6 +124,7 @@ function AlertTriangleIcon({ size = 15, color = "currentColor" }: { size?: numbe
 const PRESET_TOPICS = [
   {
     title: "Kegawatdaruratan & PALS",
+    slug: "darurat",
     prompts: [
       "Berapa dosis Epinefrin resusitasi & atropin untuk anak?",
       "Bagaimana tahapan defibrilasi pada penderita ventrikel fibrilasi anak?",
@@ -132,6 +133,7 @@ const PRESET_TOPICS = [
   },
   {
     title: "Dosis Obat & Puyer",
+    slug: "dosis",
     prompts: [
       "Hitung dosis Parasetamol sirup untuk anak berat 12.5 kg",
       "Jelaskan perbedaan metode DTM dan DTD pada penulisan resep puyer",
@@ -140,6 +142,7 @@ const PRESET_TOPICS = [
   },
   {
     title: "Terapi Cairan & Dehidrasi",
+    slug: "cairan",
     prompts: [
       "Bagaimana rumus Holliday-Segar untuk kebutuhan cairan pemeliharaan?",
       "Tatalaksana rehidrasi diare berat menurut IDAI / WHO (Rencana C)",
@@ -148,6 +151,7 @@ const PRESET_TOPICS = [
   },
   {
     title: "Skoring & Interpretasi Lab",
+    slug: "skoring",
     prompts: [
       "Penjelasan komponen Pediatric Early Warning Score (PEWS)",
       "Cara menilai Glasgow Coma Scale (GCS) pada bayi di bawah 2 tahun",
@@ -1064,10 +1068,10 @@ export default function AiAssistantPage() {
                       marginBottom: 6,
                       display: "flex",
                       alignItems: "center",
-                      gap: 5,
+                      gap: 6,
                     }}
                   >
-                    <AlertTriangleIcon size={13} color="var(--tv-accent, #ec4899)" />
+                    <SidebarIcon slug={topic.slug} size={16} />
                     <span>{topic.title}</span>
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>

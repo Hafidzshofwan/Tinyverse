@@ -465,117 +465,266 @@ a:focus-visible {
 
 /* Patient Profile FAB & Overlay */
 [data-theme="dark"] #tvPasienOverlay {
-  background: rgba(2, 6, 23, 0.75);
+  background: rgba(2, 6, 23, 0.75) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
 }
 
 [data-theme="dark"] .tv-pas-card {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8) !important;
 }
 
-[data-theme="dark"] .tv-pas-card h3 {
-  color: #38bdf8;
+[data-theme="dark"] .tv-pas-hdr-border {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-pas-card h3,
+[data-theme="dark"] .tv-pas-title {
+  color: #38bdf8 !important;
 }
 
 [data-theme="dark"] .tv-pas-sub {
-  color: #94a3b8;
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .tv-pas-close {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-pas-close:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+}
+
+[data-theme="dark"] .tv-pas-cloud-badge {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .tv-pas-toast {
+  background: rgba(16, 185, 129, 0.2) !important;
+  border-color: rgba(52, 211, 153, 0.4) !important;
+  color: #34d399 !important;
 }
 
 [data-theme="dark"] .tv-pas-tabs {
-  background: #0f172a;
-  border-color: rgba(255, 255, 255, 0.12);
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 [data-theme="dark"] .tv-pas-tab-btn {
-  color: #94a3b8;
+  color: #94a3b8 !important;
 }
 
 [data-theme="dark"] .tv-pas-tab-btn:hover {
-  color: #f8fafc;
-  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc !important;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-theme="dark"] .tv-pas-tab-btn.aktif {
-  background: #1e293b;
-  color: #f8fafc;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  background: #334155 !important;
+  color: #f8fafc !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
 }
 
-[data-theme="dark"] .tv-pas-list-sec {
-  background: #0f172a;
-  border-color: rgba(255, 255, 255, 0.12);
+[data-theme="dark"] .tv-pas-active-banner {
+  background: rgba(16, 185, 129, 0.12) !important;
+  border-color: rgba(52, 211, 153, 0.35) !important;
 }
 
-[data-theme="dark"] .tv-pas-list-hdr h4 {
-  color: #f8fafc;
+[data-theme="dark"] .tv-pas-active-tag {
+  background: rgba(16, 185, 129, 0.25) !important;
+  color: #34d399 !important;
 }
 
-[data-theme="dark"] .tv-pas-btn-add {
-  background: rgba(99, 102, 241, 0.2);
-  color: #818cf8;
-  border-color: rgba(99, 102, 241, 0.35);
+[data-theme="dark"] .tv-pas-active-name {
+  color: #ffffff !important;
 }
 
-[data-theme="dark"] .tv-pas-btn-add:hover {
-  background: rgba(99, 102, 241, 0.35);
-  color: #ffffff;
+[data-theme="dark"] .tv-pas-active-info {
+  color: #cbd5e1 !important;
 }
 
-[data-theme="dark"] .tv-pas-item {
-  background: #0f172a;
-  border-color: rgba(255, 255, 255, 0.12);
+[data-theme="dark"] .tv-pas-active-clear-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: #cbd5e1 !important;
 }
 
-[data-theme="dark"] .tv-pas-item:hover {
-  border-color: #818cf8;
-  background: #1e1b4b;
+[data-theme="dark"] .tv-pas-active-clear-btn:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+  color: #ffffff !important;
 }
 
-[data-theme="dark"] .tv-pas-item.aktif {
-  border-color: #818cf8;
-  background: #1e1b4b;
-  box-shadow: 0 0 0 1px #818cf8;
+[data-theme="dark"] .tv-pas-empty-box {
+  background: rgba(30, 41, 59, 0.5) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-pas-search-input {
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-pas-search-input::placeholder {
+  color: #64748b !important;
+}
+
+/* Patient Cards - Male vs Female distinction in Dark Mode */
+[data-theme="dark"] .tv-pas-card-item.male {
+  background: rgba(15, 23, 42, 0.75) !important;
+  background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-pas-card-item.male.aktif {
+  background-image: linear-gradient(135deg, rgba(30, 58, 138, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-pas-card-item.female {
+  background: rgba(15, 23, 42, 0.75) !important;
+  background-image: linear-gradient(135deg, rgba(131, 24, 67, 0.35) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
+  border-color: rgba(244, 114, 182, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-pas-card-item.female.aktif {
+  background-image: linear-gradient(135deg, rgba(131, 24, 67, 0.6) 0%, rgba(15, 23, 42, 0.9) 100%) !important;
+  border-color: #f472b6 !important;
+  box-shadow: 0 0 16px rgba(244, 114, 182, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-pas-card-item.neutral {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="dark"] .tv-pas-card-item.neutral.aktif {
+  background-image: linear-gradient(135deg, rgba(6, 78, 59, 0.5) 0%, rgba(15, 23, 42, 0.85) 100%) !important;
+  border-color: #34d399 !important;
 }
 
 [data-theme="dark"] .tv-pas-item-name {
-  color: #f8fafc;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .tv-pas-item-sub {
-  color: #94a3b8;
+  color: #cbd5e1 !important;
 }
 
-[data-theme="dark"] .tv-pas-avatar {
-  background: #312e81;
-  color: #a5b4fc;
+[data-theme="dark"] .tv-pas-item-active-pill {
+  background: rgba(16, 185, 129, 0.25) !important;
+  color: #34d399 !important;
+  border-color: rgba(52, 211, 153, 0.4) !important;
 }
 
+[data-theme="dark"] .tv-pas-vital-pill {
+  background: rgba(15, 23, 42, 0.65) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-pas-vital-pill b {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-pas-note-box {
+  background: rgba(15, 23, 42, 0.55) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-pas-card-action-row {
+  border-top-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-pas-connected-text {
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .tv-pas-use-btn {
+  background: #0d9488 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-pas-use-btn:hover {
+  background: #0f766e !important;
+}
+
+[data-theme="dark"] .tv-pas-edit-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-pas-edit-btn:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+}
+
+[data-theme="dark"] .tv-pas-del-btn {
+  background: rgba(220, 38, 38, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+  color: #fca5a5 !important;
+}
+
+[data-theme="dark"] .tv-pas-del-btn:hover {
+  background: rgba(220, 38, 38, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-pas-del-confirm-btn {
+  background: #dc2626 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-pas-del-cancel-btn {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #cbd5e1 !important;
+}
+
+/* Form Controls in Dark Mode */
 [data-theme="dark"] .tv-pas-f label {
-  color: #cbd5e1;
+  color: #cbd5e1 !important;
 }
 
 [data-theme="dark"] .tv-pas-f input {
-  background: #0f172a;
-  border-color: rgba(255, 255, 255, 0.16);
-  color: #f8fafc;
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #f8fafc !important;
 }
 
 [data-theme="dark"] .tv-jk-btn {
-  background: #0f172a;
-  border-color: rgba(255, 255, 255, 0.16);
-  color: #cbd5e1;
+  background: #1e293b !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #cbd5e1 !important;
 }
 
 [data-theme="dark"] .tv-jk-btn.aktif {
-  background: #312e81;
-  border-color: #818cf8;
-  color: #a5b4fc;
+  background: rgba(30, 58, 138, 0.5) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
 }
 
-[data-theme="dark"] .tv-pas-reset {
-  background: #334155;
-  color: #f8fafc;
+[data-theme="dark"] .tv-pas-btn-secondary {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-pas-btn-secondary:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+}
+
+[data-theme="dark"] .tv-pas-note {
+  color: #94a3b8 !important;
 }
 
 /* Warnings, Alerts, Safety */
@@ -2609,20 +2758,33 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   color: #ffffff;
 }
 .tv-drop-item {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   text-align: left;
   border: none;
   background: transparent;
   cursor: pointer;
-  padding: 9px 10px;
+  padding: 9px 12px;
   border-radius: 10px;
   font-family: inherit;
   font-size: 13.5px;
+  font-weight: 500;
   color: var(--tv-teks);
+  transition: all 0.15s ease;
+}
+.tv-drop-item svg {
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.15s ease, opacity 0.15s ease;
 }
 .tv-drop-item:hover {
   background: #f2f4f8;
+}
+.tv-drop-item:hover svg {
+  opacity: 1;
+  transform: translateX(2px);
 }
 
 /* ---- Modal (profil & admin) ---- */
@@ -3209,16 +3371,28 @@ body.tv-tanpa-dekorasi .bg-decor {
   box-shadow: 0 4px 12px rgba(217, 54, 166, 0.2) !important;
 }
 
+.tv-skor-pasien-aktif {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
+  font-size: 13px;
+  color: var(--tv-soft-teks, #64748b);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
 [data-theme="dark"] .tv-skor-pasien-aktif {
-  background: rgba(15, 23, 42, 0.5) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   color: #cbd5e1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 [data-theme="dark"] .tv-skor-pasien-aktif strong {
-  color: #f8fafc !important;
+  color: #ffffff !important;
 }
 
 /* Skoring Catalog Cards (button#skor-cds, #skor-croup, #skor-pas, etc.) */
@@ -3353,7 +3527,64 @@ body.tv-tanpa-dekorasi .bg-decor {
   color: #f8fafc !important;
 }
 
+[data-theme="dark"] .tv-page-skoring-wrapper .tv-card {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
 [data-theme="dark"] .tv-skor-sumber {
   color: #94a3b8 !important;
+}
+
+/* Button inside tv-skor-hasil (Tambahkan ke Ringkasan) */
+[data-theme="dark"] .tv-skor-hasil .tv-btn {
+  background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+/* RedFlag Banner in Dark Mode */
+[data-theme="dark"] .tv-redflag-banner {
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(239, 68, 68, 0.4) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner div {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner a,
+[data-theme="dark"] .tv-redflag-banner button {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner a:hover,
+[data-theme="dark"] .tv-redflag-banner button:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+}
+
+/* AI FAB Floating Badge */
+.tv-ai-fab-badge {
+  background-color: #0a0b5f;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tv-ai-fab-badge {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(217, 54, 166, 0.4) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
 }
 

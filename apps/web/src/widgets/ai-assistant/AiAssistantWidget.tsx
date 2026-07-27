@@ -255,10 +255,10 @@ export function AiAssistantWidget() {
         >
           {/* Floating Label Badge */}
           <div
+            className="tv-ai-fab-badge"
             style={{
               padding: "6px 13px",
               borderRadius: 18,
-              backgroundColor: "var(--tv-navy, #0a0b5f)",
               color: "#ffffff",
               fontFamily: "'Fredoka', 'Quicksand', sans-serif",
               fontSize: 12,
