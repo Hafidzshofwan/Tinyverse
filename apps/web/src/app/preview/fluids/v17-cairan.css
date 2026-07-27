@@ -810,3 +810,100 @@
   fill: #ffffff;
   stroke: rgba(198, 34, 46, 0.35);
 }
+
+/* === DARK MODE OVERRIDES === */
+[data-theme="dark"] .tv-page-cairan-wrapper {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .tv-page-cairan {
+  --navy: #ffffff !important;
+  --navy-soft: #cbd5e1 !important;
+  --teks: #f8fafc !important;
+  --teks-lembut: #94a3b8 !important;
+  --teks-navy: #cbd5e1 !important;
+  --putih: rgba(15, 23, 42, 0.5) !important;
+  --card-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .kartu {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .segmented-toggle {
+  background: rgba(30, 41, 59, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .segmented-btn {
+  color: #cbd5e1 !important;
+  background: transparent !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .segmented-btn.aktif,
+[data-theme="dark"] .tv-page-cairan .segmented-btn:hover {
+  background: #d936a6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-page-cairan h2,
+[data-theme="dark"] .tv-page-cairan h3,
+[data-theme="dark"] .tv-page-cairan .judul-section h2,
+[data-theme="dark"] .tv-page-cairan .kartu h3,
+[data-theme="dark"] .tv-page-cairan .info-metode h3 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .judul-section p {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .form-group label {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .form-group input[type="number"],
+[data-theme="dark"] .tv-page-cairan input {
+  background: rgba(30, 41, 59, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .auto-fill-btn {
+  background: rgba(37, 99, 235, 0.18) !important;
+  border: 2px dashed rgba(96, 165, 250, 0.4) !important;
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .hasil-box-cairan {
+  background: rgba(30, 41, 59, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .hasil-box-cairan h3,
+[data-theme="dark"] .tv-page-cairan .hasil-box-cairan p {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .info-metode ul,
+[data-theme="dark"] .tv-page-cairan .info-metode li {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-page-cairan .catatan-metode {
+  color: #94a3b8 !important;
+}
+

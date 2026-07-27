@@ -656,15 +656,18 @@ a:focus-visible {
 
 /* Domain Previews (Darurat, Cairan, Imunisasi, Lab) */
 [data-theme="dark"] .tv-page-darurat-wrapper,
-[data-theme="dark"] .tv-page-cairan-wrapper,
 [data-theme="dark"] .tv-page-imunisasi-wrapper,
 [data-theme="dark"] .tv-page-lab-wrapper {
   background: #0b0f19 !important;
   color: #f8fafc;
 }
 
+[data-theme="dark"] .tv-page-cairan-wrapper {
+  background: transparent !important;
+  color: #f8fafc;
+}
+
 [data-theme="dark"] .tv-page-darurat .drt-pasien-bar,
-[data-theme="dark"] .tv-page-cairan .kartu,
 [data-theme="dark"] .tv-page-imunisasi .kartu,
 [data-theme="dark"] .tv-page-lab .kartu {
   background: #1e293b;

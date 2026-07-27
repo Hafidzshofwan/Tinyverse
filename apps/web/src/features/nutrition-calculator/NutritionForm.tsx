@@ -240,6 +240,7 @@ export function NutritionForm() {
             </div>
             <button
               type="button"
+              className="auto-fill-btn"
               style={autoBtn}
               onClick={() => {
                 const v = autoFormulaVolume(bbNum);
