@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties } from "react";
 import { DAFTAR_KONDISI, KATEGORI_ALUR } from "@/shared/lib/alur/daftar";
 import type { Kondisi } from "@/shared/lib/alur/daftar";
@@ -232,6 +232,17 @@ export function AlurTatalaksanaPanel() {
   const [stack, setStack] = useState<string[]>([]);
   const [toast, setToast] = useState<string | null>(null);
   const [bagan, setBagan] = useState(false);
+  const activeStepRef = useRef<HTMLDivElement>(null);
+
+  // Fokus kamera otomatis menyorot langkah selanjutnya saat opsi dipilih
+  useEffect(() => {
+    if (stack.length > 0 && activeStepRef.current) {
+      activeStepRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [stack]);
 
   useEffect(() => {
     setPasien(bacaPasienAktif());
@@ -635,38 +646,63 @@ export function AlurTatalaksanaPanel() {
       </div>
 
       {stack.length > 0 && (
-        <ol className="tv-alur-stepper">
-          {stack.map((id, i) => {
-            const L = kondisi.alur.layar[id];
-            const aktif = i === stack.length - 1;
-            const bisaKlik = i < stack.length - 1;
-            return (
-              <li
-                key={`${id}-${i}`}
-                className={"tv-alur-step" + (aktif ? " aktif" : "")}
-                style={{ "--nada": warnaNada(L?.nada) } as CSSProperties}
-              >
-                <button
-                  type="button"
-                  className="tv-alur-step-btn"
-                  disabled={!bisaKlik}
-                  onClick={() => bisaKlik && setStack(stack.slice(0, i + 1))}
-                  title={L?.judul}
+        <>
+          <style>{`
+            @keyframes tvStepEntrance {
+              0% {
+                opacity: 0;
+                transform: translateY(18px) scale(0.98);
+              }
+              100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+              }
+            }
+            .tv-step-card-animated {
+              animation: tvStepEntrance 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+          `}</style>
+
+          <InteractiveDecisionTree
+            stack={stack}
+            kondisi={kondisi}
+            onJumpToStep={(index) => setStack(stack.slice(0, index + 1))}
+          />
+
+          <ol className="tv-alur-stepper">
+            {stack.map((id, i) => {
+              const L = kondisi.alur.layar[id];
+              const aktif = i === stack.length - 1;
+              const bisaKlik = i < stack.length - 1;
+              return (
+                <li
+                  key={`${id}-${i}`}
+                  className={"tv-alur-step" + (aktif ? " aktif" : "")}
+                  style={{ "--nada": warnaNada(L?.nada) } as CSSProperties}
                 >
-                  <span className="tv-alur-step-node">{i + 1}</span>
-                  <span className="tv-alur-step-lbl">
-                    {L?.judul ?? "Langkah"}
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ol>
+                  <button
+                    type="button"
+                    className="tv-alur-step-btn"
+                    disabled={!bisaKlik}
+                    onClick={() => bisaKlik && setStack(stack.slice(0, i + 1))}
+                    title={L?.judul}
+                  >
+                    <span className="tv-alur-step-node">{i + 1}</span>
+                    <span className="tv-alur-step-lbl">
+                      {L?.judul ?? "Langkah"}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </>
       )}
 
       <div
-        className="tv-card"
-        style={{ borderTop: `4px solid ${warnaNada(layar.nada)}` }}
+        ref={activeStepRef}
+        className="tv-card tv-step-card-animated"
+        style={{ borderTop: `4px solid ${warnaNada(layar.nada)}`, scrollMarginTop: "80px" }}
       >
         {layar.derajat && (
           <div
@@ -829,6 +865,252 @@ export function AlurTatalaksanaPanel() {
 
       {disclaimer}
       {toastEl}
+    </div>
+  );
+}
+
+function InteractiveDecisionTree({
+  stack,
+  kondisi,
+  onJumpToStep,
+}: {
+  stack: string[];
+  kondisi: Kondisi;
+  onJumpToStep: (index: number) => void;
+}) {
+  return (
+    <div
+      style={{
+        background: "linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)",
+        border: "1px solid #CBD5E1",
+        borderRadius: 16,
+        padding: "14px 16px",
+        marginBottom: 16,
+        boxShadow: "0 4px 12px rgba(15, 23, 42, 0.04)",
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginBottom: 12,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span
+            style={{
+              background: "#2563EB",
+              color: "#FFF",
+              fontSize: "0.7rem",
+              fontWeight: 800,
+              padding: "2px 8px",
+              borderRadius: 6,
+              textTransform: "uppercase",
+              letterSpacing: "0.5px",
+            }}
+          >
+            Interactive Decision Tree
+          </span>
+          <h4
+            style={{
+              margin: 0,
+              fontSize: "0.92rem",
+              fontWeight: 800,
+              color: "#0F172A",
+              fontFamily: "Fredoka, sans-serif",
+            }}
+          >
+            Diagram Jalur Hidup Alur Klinis
+          </h4>
+        </div>
+        <span
+          style={{
+            fontSize: "0.75rem",
+            color: "#64748B",
+            fontWeight: 700,
+            background: "#E2E8F0",
+            padding: "2px 8px",
+            borderRadius: 999,
+          }}
+        >
+          {stack.length} Langkah
+        </span>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 10,
+        }}
+      >
+        {stack.map((id, i) => {
+          const L = kondisi.alur.layar[id];
+          const isLast = i === stack.length - 1;
+          const nextId = stack[i + 1];
+          let chosenOptionLabel: string | null = null;
+          if (L && nextId) {
+            const foundTb = L.tombol.find((t) => t.tujuan === nextId);
+            if (foundTb) chosenOptionLabel = foundTb.label;
+          }
+
+          const nadaWarna = warnaNada(L?.nada);
+
+          return (
+            <div
+              key={`${id}-${i}`}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 6,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => !isLast && onJumpToStep(i)}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 12,
+                  background: isLast ? "#FFFFFF" : "rgba(255,255,255,0.85)",
+                  border: isLast
+                    ? `2px solid ${nadaWarna}`
+                    : "1px solid #CBD5E1",
+                  borderRadius: 12,
+                  padding: "10px 14px",
+                  cursor: isLast ? "default" : "pointer",
+                  textAlign: "left",
+                  boxShadow: isLast
+                    ? `0 0 0 3px ${nadaWarna}22, 0 4px 12px rgba(0,0,0,0.06)`
+                    : "0 1px 3px rgba(0,0,0,0.03)",
+                  transition: "all 0.2s ease",
+                  width: "100%",
+                }}
+              >
+                <span
+                  style={{
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: isLast ? nadaWarna : "#E2E8F0",
+                    color: isLast ? "#FFFFFF" : "#475569",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 800,
+                    fontSize: "0.82rem",
+                    flexShrink: 0,
+                  }}
+                >
+                  {i + 1}
+                </span>
+
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div
+                    style={{
+                      fontSize: "0.72rem",
+                      color: "#64748B",
+                      fontWeight: 700,
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    Langkah {i + 1}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "0.88rem",
+                      fontWeight: 700,
+                      color: "#0F172A",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                  >
+                    {L?.judul ?? "Langkah"}
+                  </div>
+                </div>
+
+                {isLast ? (
+                  <span
+                    style={{
+                      background: `${nadaWarna}1A`,
+                      color: nadaWarna,
+                      fontWeight: 800,
+                      fontSize: "0.72rem",
+                      padding: "3px 10px",
+                      borderRadius: 999,
+                      border: `1px solid ${nadaWarna}44`,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 4,
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 6,
+                        height: 6,
+                        borderRadius: "50%",
+                        background: nadaWarna,
+                        display: "inline-block",
+                      }}
+                    />
+                    Fokus Kamera
+                  </span>
+                ) : (
+                  <span
+                    style={{
+                      fontSize: "0.72rem",
+                      color: "#2563EB",
+                      fontWeight: 700,
+                      background: "#EFF6FF",
+                      padding: "3px 8px",
+                      borderRadius: 6,
+                    }}
+                  >
+                    Lompat ke sini ↵
+                  </span>
+                )}
+              </button>
+
+              {!isLast && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 8,
+                    paddingLeft: 22,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 2,
+                      height: 16,
+                      background: "#93C5FD",
+                      borderRadius: 2,
+                    }}
+                  />
+                  {chosenOptionLabel && (
+                    <span
+                      style={{
+                        background: "#DBEAFE",
+                        color: "#1E40AF",
+                        fontSize: "0.74rem",
+                        fontWeight: 700,
+                        padding: "2px 8px",
+                        borderRadius: 6,
+                        border: "1px solid #BFDBFE",
+                      }}
+                    >
+                      ➔ Opsi Terpilih: <b>{chosenOptionLabel}</b>
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

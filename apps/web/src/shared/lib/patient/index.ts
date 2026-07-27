@@ -10,6 +10,9 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 
+export { validateAntropometri } from "./validation";
+export type { ValidationAlert } from "./validation";
+
 /** Kunci localStorage profil pasien terpusat & daftar pasien tersimpan. */
 export const PASIEN_AKTIF_KEY = "tv_pasien_aktif";
 export const PASIEN_LIST_KEY = "tv_pasien_list";

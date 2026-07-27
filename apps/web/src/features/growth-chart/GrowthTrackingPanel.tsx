@@ -11,7 +11,7 @@ import {
   useGrowthRecords,
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
-import { usePatientProfile, PatientProfile } from "@/shared/lib/patient";
+import { usePatientProfile, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
 import { hitungIMT } from "./zscore";
 import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
@@ -667,6 +667,58 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
                   />
                 </div>
               </div>
+
+              {/* Smart Validation Outlier Alerts */}
+              {(() => {
+                const alerts = validateAntropometri(bb, tb, usiaBulan);
+                if (alerts.length === 0) return null;
+                return (
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 12 }}>
+                    {alerts.map((alt, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          background: alt.level === "error" ? "#FEF2F2" : "#FFFBEB",
+                          border: `1px solid ${alt.level === "error" ? "#FCA5A5" : "#FDE68A"}`,
+                          borderRadius: 10,
+                          padding: "10px 12px",
+                          fontSize: "0.8rem",
+                          color: alt.level === "error" ? "#991B1B" : "#B45309",
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 4,
+                        }}
+                      >
+                        <div style={{ fontWeight: 700 }}>⚠️ {alt.title}</div>
+                        <div>{alt.message}</div>
+                        {alt.suggestedValue && alt.suggestionLabel && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (alt.field === "bb") setBb(alt.suggestedValue!);
+                              if (alt.field === "tb") setTb(alt.suggestedValue!);
+                            }}
+                            style={{
+                              alignSelf: "flex-start",
+                              background: alt.level === "error" ? "#DC2626" : "#D97706",
+                              color: "#FFFFFF",
+                              border: "none",
+                              borderRadius: 6,
+                              padding: "4px 10px",
+                              fontWeight: 700,
+                              fontSize: "0.75rem",
+                              cursor: "pointer",
+                              marginTop: 2,
+                            }}
+                          >
+                            💡 {alt.suggestionLabel}
+                          </button>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
 
               {/* Instant Z-Score Preview Card */}
               {previewZscores && (

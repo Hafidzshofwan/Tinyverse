@@ -9,6 +9,7 @@ import {
   tambahAtauUpdatePasienInList,
   hapusPasienFromList,
   formatUsiaPasien,
+  validateAntropometri,
 } from "@/shared/lib/patient";
 
 type Jk = "male" | "female" | null;
@@ -313,14 +314,18 @@ export function PatientProfile() {
     showToast("Slot pasien aktif dikosongkan.");
   };
 
-  const bbN = num(bb);
   const t2 = num(thn);
   const b2 = num(bln);
   const ubN = t2 != null || b2 != null ? (t2 || 0) * 12 + (b2 || 0) : null;
-  const warn: string[] = [];
-  if (bbN != null && (bbN <= 0 || bbN > 150))
-    warn.push("Berat badan tampak tidak wajar untuk pasien anak.");
-  if (ubN != null && ubN > 216) warn.push("Usia melebihi 18 tahun — periksa kembali.");
+  const valAlerts = validateAntropometri(bb, tb, ubN);
+  if (ubN != null && ubN > 216) {
+    valAlerts.push({
+      field: "format",
+      level: "warning",
+      title: "Usia Dewasa",
+      message: "Usia pasien melebihi 18 tahun (216 bulan) — periksa kembali jika dimaksudkan untuk pediatri.",
+    });
+  }
 
   const filteredList = patientList.filter((p) => {
     if (!searchQuery.trim()) return true;
@@ -874,11 +879,51 @@ export function PatientProfile() {
                 />
               </div>
 
-              {warn.length > 0 && (
-                <div className="tv-safety warn">
-                  <b><WarnIcon /> Periksa data</b>
-                  {warn.map((w, i) => (
-                    <div key={i}>{w}</div>
+              {valAlerts.length > 0 && (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", margin: "4px 0" }}>
+                  {valAlerts.map((alt, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        background: alt.level === "error" ? "#FEF2F2" : "#FFFBEB",
+                        border: `1px solid ${alt.level === "error" ? "#FCA5A5" : "#FDE68A"}`,
+                        borderRadius: "10px",
+                        padding: "10px 12px",
+                        fontSize: "0.82rem",
+                        color: alt.level === "error" ? "#991B1B" : "#B45309",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "6px",
+                      }}
+                    >
+                      <div style={{ fontWeight: 700, display: "flex", alignItems: "center", gap: "6px" }}>
+                        <WarnIcon /> <span>{alt.title}</span>
+                      </div>
+                      <div>{alt.message}</div>
+                      {alt.suggestedValue && alt.suggestionLabel && (
+                        <button
+                          type="button"
+                          style={{
+                            alignSelf: "flex-start",
+                            background: alt.level === "error" ? "#DC2626" : "#D97706",
+                            color: "#FFFFFF",
+                            border: "none",
+                            borderRadius: "6px",
+                            padding: "4px 10px",
+                            fontWeight: 700,
+                            fontSize: "0.76rem",
+                            cursor: "pointer",
+                            marginTop: "2px",
+                          }}
+                          onClick={() => {
+                            if (alt.field === "bb") setBb(alt.suggestedValue!);
+                            if (alt.field === "tb") setTb(alt.suggestedValue!);
+                          }}
+                        >
+                          💡 {alt.suggestionLabel}
+                        </button>
+                      )}
+                    </div>
                   ))}
                 </div>
               )}
