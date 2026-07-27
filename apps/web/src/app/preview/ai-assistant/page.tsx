@@ -296,7 +296,7 @@ export default function AiAssistantPage() {
           overflow: "hidden",
           padding: "24px 28px",
           borderRadius: "var(--tv-radius-lg, 24px)",
-          backgroundColor: "var(--tv-card, #ffffff)",
+          backgroundColor: "var(--tv-bg, #f4f5fa)",
           border: "1px solid var(--tv-border, rgba(217, 54, 166, 0.2))",
           boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
           marginBottom: 20,

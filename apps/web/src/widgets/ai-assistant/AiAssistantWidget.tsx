@@ -7,6 +7,85 @@ import { FormattedMessage } from "./FormattedMessage";
 import { useAiChatStore, type Message } from "./useAiChatStore";
 import { SidebarIcon } from "@/shared/ui";
 
+function FolderIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
+function SaveIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+      <polyline points="17 21 17 13 7 13 7 21" />
+      <polyline points="7 3 7 8 15 8" />
+    </svg>
+  );
+}
+
+function PlusIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19" />
+      <line x1="5" y1="12" x2="19" y2="12" />
+    </svg>
+  );
+}
+
+function ExternalLinkIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
+}
+
+function TrashIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="3 6 5 6 21 6" />
+      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+    </svg>
+  );
+}
+
+function LightbulbIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18h6" />
+      <path d="M10 22h4" />
+      <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14" />
+    </svg>
+  );
+}
+
+function SpinnerIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg className="tv-ai-spinner" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
+      <line x1="12" y1="2" x2="12" y2="6" />
+      <line x1="12" y1="18" x2="12" y2="22" />
+      <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
+      <line x1="16.24" y1="16.24" x2="19.07" y2="19.07" />
+      <line x1="2" y1="12" x2="6" y2="12" />
+      <line x1="18" y1="12" x2="22" y2="12" />
+      <line x1="4.93" y1="19.07" x2="7.76" y2="16.24" />
+      <line x1="16.24" y1="7.76" x2="19.07" y2="4.93" />
+    </svg>
+  );
+}
+
+function CheckIcon({ size = 12, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
 const PRESET_PROMPTS = [
   "Berapa dosis Epinefrin resusitasi & nebulizer anak 10 kg?",
   "Jelaskan alur tatalaksana Kejang Demam menurut IDAI",
@@ -256,10 +335,11 @@ export function AiAssistantWidget() {
           }}
         >
           <div
+            className="tv-ai-drawer-container"
             style={{
               width: "100%",
               maxWidth: 460,
-              backgroundColor: "#ffffff",
+              backgroundColor: "var(--tv-card, #ffffff)",
               display: "flex",
               flexDirection: "column",
               boxShadow: "-4px 0 24px rgba(10,11,95,0.18)",
@@ -268,6 +348,7 @@ export function AiAssistantWidget() {
           >
             {/* Header Drawer Glassmorphism Magenta Blur */}
             <div
+              className="tv-ai-drawer-header"
               style={{
                 position: "relative",
                 overflow: "hidden",
@@ -312,6 +393,7 @@ export function AiAssistantWidget() {
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <div
+                    className="tv-ai-drawer-icon-box"
                     style={{
                       width: 38,
                       height: 38,
@@ -328,6 +410,7 @@ export function AiAssistantWidget() {
                     <SidebarIcon slug="ai-assistant" size={24} />
                   </div>
                   <div
+                    className="tv-ai-drawer-title"
                     style={{
                       fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                       fontWeight: 700,
@@ -342,6 +425,7 @@ export function AiAssistantWidget() {
 
                 <button
                   type="button"
+                  className="tv-ai-drawer-close-btn"
                   onClick={() => setIsOpen(false)}
                   aria-label="Tutup Chat AI"
                   title="Tutup Chat"
@@ -367,6 +451,7 @@ export function AiAssistantWidget() {
 
               {/* BARIS 2: Deskripsi */}
               <div
+                className="tv-ai-drawer-desc"
                 style={{
                   position: "relative",
                   zIndex: 1,
@@ -402,18 +487,19 @@ export function AiAssistantWidget() {
                     color: showSessionsPanel ? "#ffffff" : "var(--tv-navy, #0a0b5f)",
                     padding: "5px 12px",
                     borderRadius: 20,
-                    backgroundColor: showSessionsPanel ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
-                    border: "1px solid rgba(10, 11, 95, 0.15)",
-                    boxShadow: "0 1px 4px rgba(10, 11, 95, 0.05)",
+                    backgroundColor: showSessionsPanel ? "var(--tv-accent, #ec4899)" : "var(--tv-putih, #ffffff)",
+                    border: "1px solid var(--tv-line, rgba(10, 11, 95, 0.15))",
+                    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.05)",
                     cursor: "pointer",
                     fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
-                    gap: 4,
+                    gap: 6,
                   }}
                   title="Lihat Sesi Diskusi Tersimpan"
                 >
-                  📂 Sesi ({sessions.length})
+                  <FolderIcon size={14} color={showSessionsPanel ? "#ffffff" : "var(--tv-accent, #ec4899)"} />
+                  <span>Sesi ({sessions.length})</span>
                 </button>
                 <button
                   type="button"
@@ -427,18 +513,19 @@ export function AiAssistantWidget() {
                     color: "#059669",
                     padding: "5px 12px",
                     borderRadius: 20,
-                    backgroundColor: "#ffffff",
+                    backgroundColor: "var(--tv-putih, #ffffff)",
                     border: "1px solid rgba(16, 185, 129, 0.3)",
                     boxShadow: "0 1px 4px rgba(16, 185, 129, 0.08)",
                     cursor: "pointer",
                     fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
-                    gap: 4,
+                    gap: 6,
                   }}
                   title="Simpan Sesi Diskusi Saat Ini"
                 >
-                  💾 Simpan
+                  <SaveIcon size={14} color="#059669" />
+                  <span>Simpan</span>
                 </button>
                 <button
                   type="button"
@@ -450,21 +537,22 @@ export function AiAssistantWidget() {
                   style={{
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
                     fontSize: 12,
-                    color: "#d936a6",
+                    color: "var(--tv-magenta, #ec4899)",
                     padding: "5px 12px",
                     borderRadius: 20,
-                    backgroundColor: "#ffffff",
-                    border: "1px solid rgba(217, 54, 166, 0.3)",
-                    boxShadow: "0 1px 4px rgba(217, 54, 166, 0.08)",
+                    backgroundColor: "var(--tv-putih, #ffffff)",
+                    border: "1px solid rgba(236, 72, 153, 0.3)",
+                    boxShadow: "0 1px 4px rgba(236, 72, 153, 0.08)",
                     cursor: "pointer",
                     fontWeight: 600,
                     display: "flex",
                     alignItems: "center",
-                    gap: 4,
+                    gap: 6,
                   }}
                   title="Mulai Sesi Chat Baru"
                 >
-                  ➕ Baru
+                  <PlusIcon size={14} color="var(--tv-magenta, #ec4899)" />
+                  <span>Baru</span>
                 </button>
                 <Link
                   href="/preview/ai-assistant"
@@ -475,18 +563,19 @@ export function AiAssistantWidget() {
                     color: "var(--tv-navy, #0a0b5f)",
                     padding: "5px 12px",
                     borderRadius: 20,
-                    backgroundColor: "#ffffff",
-                    border: "1px solid rgba(10, 11, 95, 0.15)",
-                    boxShadow: "0 1px 4px rgba(10, 11, 95, 0.05)",
+                    backgroundColor: "var(--tv-putih, #ffffff)",
+                    border: "1px solid var(--tv-line, rgba(10, 11, 95, 0.15))",
+                    boxShadow: "0 1px 4px rgba(0, 0, 0, 0.05)",
                     textDecoration: "none",
                     fontWeight: 600,
                     display: "inline-flex",
                     alignItems: "center",
-                    gap: 2,
+                    gap: 4,
                   }}
                   title="Buka Halaman Penuh"
                 >
-                  Penuh ↗
+                  <span>Penuh</span>
+                  <ExternalLinkIcon size={12} color="var(--tv-navy, #0a0b5f)" />
                 </Link>
               </div>
             </div>
@@ -496,11 +585,11 @@ export function AiAssistantWidget() {
               <div
                 style={{
                   padding: "8px 16px",
-                  backgroundColor: "#ecfdf5",
-                  color: "#065f46",
+                  backgroundColor: "rgba(16, 185, 129, 0.15)",
+                  color: "#10b981",
                   fontSize: 12,
                   fontWeight: 700,
-                  borderBottom: "1px solid #a7f3d0",
+                  borderBottom: "1px solid rgba(16, 185, 129, 0.3)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "space-between",
@@ -516,8 +605,8 @@ export function AiAssistantWidget() {
             {showSessionsPanel && (
               <div
                 style={{
-                  backgroundColor: "#f8fafc",
-                  borderBottom: "2px solid rgba(217, 54, 166, 0.2)",
+                  backgroundColor: "var(--tv-soft, #f8fafc)",
+                  borderBottom: "2px solid var(--tv-accent, #ec4899)",
                   padding: "14px 16px",
                   maxHeight: 280,
                   overflowY: "auto",
@@ -532,9 +621,10 @@ export function AiAssistantWidget() {
                     marginBottom: 10,
                   }}
                 >
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "var(--tv-navy, #0a0b5f)", display: "flex", alignItems: "center", gap: 6 }}>
-                    <span>📂 Sesi Diskusi Klinis Tersimpan</span>
-                    <span style={{ fontSize: 11, color: "#64748b", fontWeight: 500 }}>({sessions.length})</span>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: "var(--tv-teks, #0a0b5f)", display: "flex", alignItems: "center", gap: 6 }}>
+                    <FolderIcon size={14} color="var(--tv-accent, #ec4899)" />
+                    <span>Sesi Diskusi Klinis Tersimpan</span>
+                    <span style={{ fontSize: 11, color: "var(--tv-soft-teks, #64748b)", fontWeight: 500 }}>({sessions.length})</span>
                   </div>
                   <button
                     type="button"
@@ -545,21 +635,25 @@ export function AiAssistantWidget() {
                     }}
                     style={{
                       fontSize: 11,
-                      color: "#d936a6",
-                      backgroundColor: "#fdf2f8",
-                      border: "1px solid rgba(217, 54, 166, 0.3)",
-                      padding: "3px 8px",
+                      color: "#ffffff",
+                      backgroundColor: "var(--tv-accent, #ec4899)",
+                      border: "none",
+                      padding: "4px 10px",
                       borderRadius: 12,
                       fontWeight: 700,
                       cursor: "pointer",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 4,
                     }}
                   >
-                    + Sesi Baru
+                    <PlusIcon size={12} color="#ffffff" />
+                    <span>Sesi Baru</span>
                   </button>
                 </div>
 
                 {sessions.length === 0 ? (
-                  <div style={{ fontSize: 12, color: "#64748b", fontStyle: "italic", textAlign: "center", padding: "16px 0" }}>
+                  <div style={{ fontSize: 12, color: "var(--tv-soft-teks, #64748b)", fontStyle: "italic", textAlign: "center", padding: "16px 0" }}>
                     Belum ada sesi diskusi yang tersimpan. Mulai bertanya dan klik &quot;Simpan&quot;!
                   </div>
                 ) : (
@@ -580,9 +674,9 @@ export function AiAssistantWidget() {
                           style={{
                             padding: "10px 12px",
                             borderRadius: 12,
-                            backgroundColor: isActive ? "#ffffff" : "#ffffff",
-                            border: isActive ? "2px solid #d936a6" : "1px solid #e2e8f0",
-                            boxShadow: isActive ? "0 2px 8px rgba(217, 54, 166, 0.12)" : "0 1px 3px rgba(0, 0, 0, 0.03)",
+                            backgroundColor: "var(--tv-putih, #ffffff)",
+                            border: isActive ? "2px solid var(--tv-accent, #ec4899)" : "1px solid var(--tv-line, #e2e8f0)",
+                            boxShadow: isActive ? "0 2px 8px rgba(236, 72, 153, 0.15)" : "0 1px 3px rgba(0, 0, 0, 0.03)",
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "space-between",
@@ -596,7 +690,7 @@ export function AiAssistantWidget() {
                                   style={{
                                     fontSize: 9,
                                     fontWeight: 800,
-                                    backgroundColor: "#d936a6",
+                                    backgroundColor: "var(--tv-accent, #ec4899)",
                                     color: "#ffffff",
                                     padding: "1px 6px",
                                     borderRadius: 10,
@@ -610,7 +704,7 @@ export function AiAssistantWidget() {
                                 style={{
                                   fontSize: 13,
                                   fontWeight: 700,
-                                  color: "var(--tv-navy, #0a0b5f)",
+                                  color: "var(--tv-teks, #0a0b5f)",
                                   whiteSpace: "nowrap",
                                   overflow: "hidden",
                                   textOverflow: "ellipsis",
@@ -621,7 +715,7 @@ export function AiAssistantWidget() {
                                 {s.title}
                               </span>
                             </div>
-                            <div style={{ fontSize: 11, color: "#64748b", marginTop: 2, display: "flex", gap: 8, flexWrap: "wrap" }}>
+                            <div style={{ fontSize: 11, color: "var(--tv-soft-teks, #64748b)", marginTop: 2, display: "flex", gap: 8, flexWrap: "wrap" }}>
                               <span>{dateFormatted}</span>
                               <span>•</span>
                               <span>{msgCount} pesan</span>
@@ -640,9 +734,9 @@ export function AiAssistantWidget() {
                                 style={{
                                   fontSize: 11,
                                   fontWeight: 700,
-                                  color: "#0f172a",
-                                  backgroundColor: "#f1f5f9",
-                                  border: "1px solid #cbd5e1",
+                                  color: "var(--tv-teks, #0f172a)",
+                                  backgroundColor: "var(--tv-soft, #f1f5f9)",
+                                  border: "1px solid var(--tv-line, #cbd5e1)",
                                   padding: "4px 8px",
                                   borderRadius: 10,
                                   cursor: "pointer",
@@ -663,15 +757,18 @@ export function AiAssistantWidget() {
                                 fontSize: 11,
                                 fontWeight: 700,
                                 color: "#ef4444",
-                                backgroundColor: "#fef2f2",
-                                border: "1px solid #fca5a5",
+                                backgroundColor: "rgba(239, 68, 68, 0.1)",
+                                border: "1px solid rgba(239, 68, 68, 0.3)",
                                 padding: "4px 8px",
                                 borderRadius: 10,
                                 cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
                               }}
                               title="Hapus Sesi"
                             >
-                              🗑️
+                              <TrashIcon size={14} color="#ef4444" />
                             </button>
                           </div>
                         </div>
@@ -688,7 +785,7 @@ export function AiAssistantWidget() {
                 flex: 1,
                 overflowY: "auto",
                 padding: "16px",
-                backgroundColor: "#f4f5fa",
+                backgroundColor: "var(--tv-soft, #f4f5fa)",
                 display: "flex",
                 flexDirection: "column",
                 gap: 14,
@@ -714,20 +811,20 @@ export function AiAssistantWidget() {
                           ? "16px 16px 4px 16px"
                           : "16px 16px 16px 4px",
                       backgroundColor:
-                        m.sender === "user" ? "var(--tv-navy, #0a0b5f)" : "#ffffff",
+                        m.sender === "user" ? "var(--tv-accent, #ec4899)" : "var(--tv-putih, #ffffff)",
                       background:
                         m.sender === "user"
-                          ? "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-navy-2, #17186f) 100%)"
-                          : "#ffffff",
+                          ? "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)"
+                          : "var(--tv-putih, #ffffff)",
                       color: m.sender === "user" ? "#ffffff" : "var(--tv-teks, #0a0b4f)",
                       border:
                         m.sender === "user"
                           ? "none"
-                          : "1px solid rgba(10, 11, 95, 0.09)",
+                          : "1px solid var(--tv-line, rgba(10, 11, 95, 0.09))",
                       boxShadow:
                         m.sender === "user"
-                          ? "0 3px 8px rgba(10, 11, 95, 0.25)"
-                          : "0 1px 4px rgba(10, 11, 95, 0.05)",
+                          ? "0 3px 8px rgba(236, 72, 153, 0.3)"
+                          : "0 1px 4px rgba(0, 0, 0, 0.05)",
                       fontSize: 14,
                       lineHeight: 1.5,
                       wordBreak: "break-word",
@@ -745,7 +842,7 @@ export function AiAssistantWidget() {
                       padding: "0 4px",
                     }}
                   >
-                    <span style={{ fontSize: 10, color: "#94a3b8" }}>
+                    <span style={{ fontSize: 10, color: "var(--tv-soft-teks, #94a3b8)" }}>
                       {m.timestamp}
                     </span>
                     {m.sender === "ai" && (
@@ -754,14 +851,24 @@ export function AiAssistantWidget() {
                         style={{
                           background: "none",
                           border: "none",
-                          color: copiedId === m.id ? "#16a34a" : "#64748b",
+                          color: copiedId === m.id ? "#16a34a" : "var(--tv-soft-teks, #64748b)",
                           fontSize: 11,
                           cursor: "pointer",
                           padding: 0,
                           fontWeight: 500,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 3,
                         }}
                       >
-                        {copiedId === m.id ? "✓ Tersalin" : "Salin"}
+                        {copiedId === m.id ? (
+                          <>
+                            <CheckIcon size={12} color="#16a34a" />
+                            <span>Tersalin</span>
+                          </>
+                        ) : (
+                          "Salin"
+                        )}
                       </button>
                     )}
                   </div>
@@ -772,20 +879,20 @@ export function AiAssistantWidget() {
                 <div
                   style={{
                     alignSelf: "flex-start",
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #e2e8f0",
+                    backgroundColor: "var(--tv-putih, #ffffff)",
+                    border: "1px solid var(--tv-line, #e2e8f0)",
                     borderRadius: "16px 16px 16px 4px",
                     padding: "12px 16px",
                     display: "flex",
                     alignItems: "center",
                     gap: 8,
                     fontSize: 13,
-                    color: "#0284c7",
+                    color: "#38bdf8",
                     fontWeight: 600,
                   }}
                 >
-                  <span className="tv-ai-spinner">⏳</span> Menganalisis
-                  informasi klinis...
+                  <SpinnerIcon size={16} color="var(--tv-accent, #ec4899)" />
+                  <span>Menganalisis informasi klinis...</span>
                 </div>
               )}
 
@@ -796,8 +903,8 @@ export function AiAssistantWidget() {
             <div
               style={{
                 padding: "8px 12px",
-                backgroundColor: "#ffffff",
-                borderTop: "1px solid #e2e8f0",
+                backgroundColor: "var(--tv-putih, #ffffff)",
+                borderTop: "1px solid var(--tv-line, #e2e8f0)",
                 display: "flex",
                 gap: 6,
                 overflowX: "auto",
@@ -813,16 +920,20 @@ export function AiAssistantWidget() {
                     whiteSpace: "nowrap",
                     padding: "6px 12px",
                     borderRadius: 16,
-                    backgroundColor: "#f1f5f9",
-                    border: "1px solid #cbd5e1",
-                    color: "#334155",
+                    backgroundColor: "var(--tv-soft, #f1f5f9)",
+                    border: "1px solid var(--tv-line, #cbd5e1)",
+                    color: "var(--tv-teks, #334155)",
                     fontSize: 12,
                     fontWeight: 500,
                     cursor: "pointer",
                     transition: "all 0.15s",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
                   }}
                 >
-                  💡 {prompt}
+                  <LightbulbIcon size={14} color="#f59e0b" />
+                  <span>{prompt}</span>
                 </button>
               ))}
             </div>
@@ -835,13 +946,13 @@ export function AiAssistantWidget() {
               }}
               style={{
                 padding: "12px 16px",
-                backgroundColor: isFocused || input.trim().length > 0 ? "#fdf8fc" : "#ffffff",
-                borderTop: "1px solid rgba(217, 54, 166, 0.15)",
+                backgroundColor: "var(--tv-putih, #ffffff)",
+                borderTop: "1px solid var(--tv-line, rgba(217, 54, 166, 0.15))",
                 display: "flex",
                 flexDirection: "column",
                 gap: 6,
                 transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
-                boxShadow: isFocused || input.trim().length > 0 ? "0 -4px 18px rgba(217, 54, 166, 0.08)" : "none",
+                boxShadow: isFocused || input.trim().length > 0 ? "0 -4px 18px rgba(236, 72, 153, 0.12)" : "none",
               }}
             >
               {(isFocused || input.trim().length > 0) && (
@@ -851,7 +962,7 @@ export function AiAssistantWidget() {
                     alignItems: "center",
                     justifyContent: "space-between",
                     fontSize: 11,
-                    color: "var(--tv-navy, #0a0b5f)",
+                    color: "var(--tv-teks, #0a0b5f)",
                     fontWeight: 700,
                     padding: "0 4px",
                     animation: "fadeIn 0.2s ease-out",
@@ -863,13 +974,13 @@ export function AiAssistantWidget() {
                         width: 6,
                         height: 6,
                         borderRadius: "50%",
-                        backgroundColor: "#d936a6",
-                        boxShadow: "0 0 6px #d936a6",
+                        backgroundColor: "var(--tv-accent, #ec4899)",
+                        boxShadow: "0 0 6px var(--tv-accent, #ec4899)",
                       }}
                     />
                     Mode Fokus Pertanyaan AI
                   </span>
-                  <span style={{ fontSize: 10, color: "#64748b", fontWeight: 600 }}>
+                  <span style={{ fontSize: 10, color: "var(--tv-soft-teks, #64748b)", fontWeight: 600 }}>
                     {input.length} karakter
                   </span>
                 </div>
@@ -888,14 +999,14 @@ export function AiAssistantWidget() {
                     padding: "10px 16px",
                     borderRadius: 20,
                     border: isFocused || input.trim().length > 0
-                      ? "1.5px solid #d936a6"
-                      : "1px solid #cbd5e1",
+                      ? "1.5px solid var(--tv-accent, #ec4899)"
+                      : "1px solid var(--tv-line, #cbd5e1)",
                     fontSize: 14,
                     outline: "none",
-                    color: "#0f172a",
-                    backgroundColor: "#ffffff",
+                    color: "var(--tv-teks, #0f172a)",
+                    backgroundColor: "var(--tv-soft, #ffffff)",
                     boxShadow: isFocused || input.trim().length > 0
-                      ? "0 0 0 4px rgba(217, 54, 166, 0.16), 0 4px 18px rgba(10, 11, 95, 0.09)"
+                      ? "0 0 0 4px rgba(236, 72, 153, 0.2), 0 4px 18px rgba(0, 0, 0, 0.09)"
                       : "0 1px 3px rgba(0, 0, 0, 0.03)",
                     transition: "all 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
@@ -908,8 +1019,8 @@ export function AiAssistantWidget() {
                     borderRadius: 20,
                     background:
                       isLoading || !input.trim()
-                        ? "#cbd5e1"
-                        : "linear-gradient(135deg, var(--tv-navy, #0a0b5f) 0%, var(--tv-magenta, #d936a6) 100%)",
+                        ? "var(--tv-line, #cbd5e1)"
+                        : "linear-gradient(135deg, var(--tv-accent, #ec4899) 0%, #db2777 100%)",
                     color: "#ffffff",
                     border: "none",
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
@@ -919,7 +1030,7 @@ export function AiAssistantWidget() {
                       isLoading || !input.trim() ? "not-allowed" : "pointer",
                     boxShadow: !input.trim()
                       ? "none"
-                      : "0 4px 14px rgba(217, 54, 166, 0.35)",
+                      : "0 4px 14px rgba(236, 72, 153, 0.35)",
                     transform: isFocused && input.trim() ? "scale(1.02)" : "scale(1)",
                     transition: "all 0.2s ease",
                   }}

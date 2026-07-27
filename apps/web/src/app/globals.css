@@ -1,6 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&family=Inter:wght@400;500;600&display=swap");
 
 :root {
+  --tv-bg: #f4f5fa;
+  --tv-card: #ffffff;
   --tv-navy: #0a0b5f;
   --tv-navy-2: #17186f;
   --tv-magenta: #d936a6;
@@ -286,6 +288,14 @@ a:focus-visible {
   color: #F8FAFC;
 }
 
+[data-theme="dark"] .tv-tool-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-tool-lead {
+  color: #ffffff !important;
+}
+
 [data-theme="dark"] .tv-tool-desc {
   color: #CBD5E1;
 }
@@ -305,6 +315,37 @@ a:focus-visible {
   background: #273449;
   color: #EC4899;
   border-color: #EC4899;
+}
+
+/* Floating AI Assistant Drawer - Dark Mode Header & Container */
+[data-theme="dark"] .tv-ai-drawer-container {
+  background-color: #1E293B !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-ai-drawer-header {
+  background: #0F172A !important;
+  border-bottom: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-ai-drawer-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-ai-drawer-desc {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-ai-drawer-close-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-ai-drawer-icon-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
 }
 
 /* 4. Tooltip */
@@ -1017,12 +1058,12 @@ body {
   font-family: "Fredoka", "Quicksand", sans-serif;
   font-weight: 700;
   font-size: 18.32px;
-  color: #0a0b5f;
+  color: var(--tv-text-primary, #0a0b5f);
 }
 .tv-tool-lead {
   margin: 2px 0 0 0;
   max-width: 640px;
-  color: #0a0b5f9e;
+  color: var(--tv-text-secondary, #0a0b5f9e);
   font-family: "Quicksand", system-ui, sans-serif;
   font-size: 10.24px;
   line-height: 1.3;

@@ -62,10 +62,12 @@
   color: rgba(10, 11, 95, 0.62);
 }
 
-/* Kartu putih (etail) */
+/* Kartu blur (etail) */
 .tv-page-imunisasi .kartu {
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 26px;
   padding: 22px;
   box-shadow: var(--etail-soft-shadow);
@@ -80,11 +82,13 @@
   margin-bottom: 10px;
 }
 
-/* Tab tersegmentasi — pill, aktif navy (sama seperti tab Lab/Darurat) */
+/* Tab tersegmentasi — pill blur, aktif navy */
 .tv-page-imunisasi .segmented-toggle {
   display: flex;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(10, 11, 95, 0.08);
   border-radius: 999px;
   padding: 7px;
@@ -322,3 +326,79 @@
     font-size: 0.95rem;
   }
 }
+
+/* === DARK MODE OVERRIDES === */
+[data-theme="dark"] .tv-page-imunisasi-wrapper {
+  background: transparent !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .kartu {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .segmented-toggle {
+  background: rgba(30, 41, 59, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .segmented-btn {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .segmented-btn.aktif,
+[data-theme="dark"] .tv-page-imunisasi .segmented-btn:hover {
+  background: #d936a6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .imunisasi-toolbar h3,
+[data-theme="dark"] .tv-page-imunisasi .imn-detail-head h3,
+[data-theme="dark"] .tv-page-imunisasi .dx-sub-h,
+[data-theme="dark"] .tv-page-imunisasi .judul-section h2 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .judul-section p,
+[data-theme="dark"] .tv-page-imunisasi .imunisasi-zoom-label,
+[data-theme="dark"] .tv-page-imunisasi .imunisasi-note {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi select.imn-select {
+  background: rgba(30, 41, 59, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi select.imn-select option {
+  background: #1e293b !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .imn-row {
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .imn-row .imn-k {
+  color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .imn-row .imn-v {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-imunisasi .imn-disclaimer {
+  background: rgba(245, 158, 11, 0.12) !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+  color: #fef3c7 !important;
+}
+
