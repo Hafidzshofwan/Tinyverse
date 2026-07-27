@@ -81,7 +81,7 @@ const VOICE_MAP: Array<{ kata: string[]; aksi: string }> = [
   { kata: ["intubasi", "tube", "napas buatan"], aksi: "Intubasi" },
 ];
 
-const HT_LIST = [
+const HT_LIST = [	
   "Hipoksia",
   "Hipovolemia",
   "Ion Hidrogen (asidosis)",
@@ -909,7 +909,7 @@ export function ResusTab({
       </div>
 
       {!voiceSupported ? (
-        <div style={voiceWarn}>
+        <div>
           Browser ini tidak mendukung pengenalan suara. Gunakan Chrome atau Edge
           terbaru (di laptop/Android).
         </div>
