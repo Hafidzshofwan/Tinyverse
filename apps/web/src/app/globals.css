@@ -236,6 +236,35 @@ a:focus-visible {
   color: #6366f1;
 }
 
+/* Waving Hand Greeting Icon */
+.tv-greeting-hand-icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 6px;
+  transform: rotate(-28deg);
+  transform-origin: 30% 80%;
+  animation: waveGreeting 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 2px 6px rgba(236, 72, 153, 0.25));
+}
+
+@keyframes waveGreeting {
+  0%, 100% {
+    transform: rotate(-26deg);
+  }
+  20% {
+    transform: rotate(-40deg);
+  }
+  40% {
+    transform: rotate(-18deg);
+  }
+  60% {
+    transform: rotate(-38deg);
+  }
+  80% {
+    transform: rotate(-22deg);
+  }
+}
+
 /* User & Profile Pill */
 [data-theme="dark"] .tv-user-pill,
 [data-theme="dark"] .tv-profile {

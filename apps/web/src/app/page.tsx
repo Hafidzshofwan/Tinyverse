@@ -1,6 +1,43 @@
 import { HomeGreeting, HomeQuickAccess, HomeFavorites } from "@/widgets/home-dashboard";
 import { SidebarIcon } from "@/shared/ui";
 
+function PediatricInsightIcon({ size = 22 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="tvInsightGrad1" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#38BDF8" />
+          <stop offset="100%" stopColor="#6366F1" />
+        </linearGradient>
+        <linearGradient id="tvInsightGrad2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#EC4899" />
+          <stop offset="100%" stopColor="#F43F5E" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M12 2a8 8 0 0 0-8 8c0 3.31 2.02 6.15 4.9 7.33L8.5 20a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1l.4-2.67C18.78 16.15 20 13.31 20 10a8 8 0 0 0-8-8z"
+        stroke="url(#tvInsightGrad1)"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1.5 2-2.5 3v1"
+        stroke="url(#tvInsightGrad2)"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="12" cy="17" r="0.75" fill="#F59E0B" />
+      <path
+        d="M12 4.5v1M6.5 6.5l.7.7M17.5 6.5l-.7.7"
+        stroke="#38BDF8"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 export default function Page() {
   return (
     <div className="tv-container">
@@ -15,7 +52,7 @@ export default function Page() {
           <div className="tv-home-section-head">
             <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span aria-hidden style={{ display: "inline-flex" }}>
-                <SidebarIcon slug="ai-assistant" size={22} />
+                <PediatricInsightIcon size={22} />
               </span>
               <span>Pediatric Insight</span>
             </h2>

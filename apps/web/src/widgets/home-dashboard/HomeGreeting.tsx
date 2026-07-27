@@ -18,14 +18,35 @@ export function HomeGreeting() {
         <SidebarIcon slug="beranda" size={18} />
         <span>Tinyverse Home Dashboard</span>
       </span>
-      <h1 style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+      <h1 style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
         <span>{"Halo, " + sapaan}</span>
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ display: "inline-block" }}>
-          <path d="M7 11.5V16.5C7 19.3 9.2 21.5 12 21.5C14.8 21.5 17 19.3 17 16.5V11.5" stroke="#D936A6" strokeWidth="2" strokeLinecap="round" />
-          <path d="M9 12V6.5C9 5.7 9.7 5 10.5 5C11.3 5 12 5.7 12 6.5V11" stroke="#0A0B5F" strokeWidth="2" strokeLinecap="round" />
-          <path d="M12 11V7.5C12 6.7 12.7 6 13.5 6C14.3 6 15 6.7 15 7.5V11" stroke="#0A0B5F" strokeWidth="2" strokeLinecap="round" />
-          <path d="M15 11.5V9C15 8.2 15.7 7.5 16.5 7.5C17.3 7.5 18 8.2 18 9V14" stroke="#0A0B5F" strokeWidth="2" strokeLinecap="round" />
-          <path d="M6 10.5C6 9.7 6.7 9 7.5 9C8.3 9 9 9.7 9 10.5V12" stroke="#0A0B5F" strokeWidth="2" strokeLinecap="round" />
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 24 24"
+          fill="none"
+          aria-hidden="true"
+          className="tv-greeting-hand-icon"
+        >
+          <defs>
+            <linearGradient id="tvGreetingGrad1" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#EC4899" />
+              <stop offset="100%" stopColor="#8B5CF6" />
+            </linearGradient>
+            <linearGradient id="tvGreetingGrad2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="#F59E0B" />
+              <stop offset="100%" stopColor="#EF4444" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M18 11V6a2 2 0 0 0-4 0v4M14 10V4a2 2 0 0 0-4 0v6M10 10.5V2.5a2 2 0 0 0-4 0v9.5M6 10.5V7a2 2 0 0 0-4 0v8a7 7 0 0 0 14 0v-4a2 2 0 0 0-4 0v0"
+            stroke="url(#tvGreetingGrad1)"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <path d="M20 3l0.8 1.6 1.6 0.8-1.6 0.8L20 7.8l-0.8-1.6-1.6-0.8 1.6-0.8L20 3z" fill="url(#tvGreetingGrad2)" />
+          <path d="M4 2l0.5 1 1 0.5-1 0.5L4 5l-0.5-1-1-0.5 1-0.5L4 2z" fill="#38BDF8" />
         </svg>
       </h1>
       <p>Semua alat bantu pediatri dalam satu tempat.</p>
