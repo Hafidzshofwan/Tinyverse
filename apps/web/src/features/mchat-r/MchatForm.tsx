@@ -147,7 +147,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
       )}
 
       {!selesai && (
-        <div className="kartu">
+        <div className="kartu tv-mchat-card" style={{ borderRadius: 20 }}>
           {/* Progress bar + counter */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
             <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--tv-soft-teks, #667085)" }}>
@@ -169,12 +169,12 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
               Reset
             </button>
           </div>
-          <div style={{ height: 6, background: "var(--tv-line, #F1F3F8)", borderRadius: 999, marginBottom: 14, overflow: "hidden" }}>
+          <div className="tv-progress-bar-track" style={{ height: 6, background: "var(--tv-line, #F1F3F8)", borderRadius: 999, marginBottom: 14, overflow: "hidden" }}>
             <div
+              className="tv-progress-bar-fill"
               style={{
                 height: "100%",
                 width: ((langkah + 1) / MCHAT_ITEMS.length) * 100 + "%",
-                background: "#0a0b5f",
                 borderRadius: 999,
                 transition: "width .2s ease",
               }}
@@ -273,7 +273,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
       )}
 
       {selesai && hasil && (
-        <div className={`kartu tv-res-card ${hasil.kategori}`}>
+        <div className={`kartu tv-res-card tv-mchat-card ${hasil.kategori}`} style={{ borderRadius: 20 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
               <div style={{ fontSize: 13, fontWeight: 700 }}>

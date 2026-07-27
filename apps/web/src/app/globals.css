@@ -4763,8 +4763,33 @@ html.dark .tv-denver-age-banner {
 
 [data-theme="dark"] .tv-prematur-box,
 html.dark .tv-prematur-box {
-  background: rgba(120, 53, 15, 0.25) !important;
-  border-color: #92400E !important;
+  background: rgba(247, 144, 9, 0.16) !important;
+  border: 1.5px solid #F97316 !important;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-prematur-label,
+html.dark .tv-prematur-label {
+  color: #FFEDD5 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-prematur-select,
+html.dark .tv-prematur-select {
+  background: #0F172A !important;
+  border: 1px solid #F97316 !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-prematur-select option,
+html.dark .tv-prematur-select option {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-prematur-note,
+html.dark .tv-prematur-note {
+  color: #FED7AA !important;
 }
 
 [data-theme="dark"] .tv-denver-garis-pill,
@@ -4831,6 +4856,44 @@ html.dark .tv-patient-sub,
 html.dark .tv-pas-item-sub {
   color: #E2E8F0 !important;
 }
+
+/* Question & Section Title text explicitly white in Dark Mode */
+[data-theme="dark"] .tv-soal-teks,
+html.dark .tv-soal-teks,
+[data-theme="dark"] .tv-section-title,
+html.dark .tv-section-title,
+[data-theme="dark"] .kartu .tv-soal-teks,
+html.dark .kartu .tv-soal-teks,
+[data-theme="dark"] .kartu .tv-section-title,
+html.dark .kartu .tv-section-title {
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-soal-counter,
+html.dark .tv-soal-counter,
+[data-theme="dark"] .tv-soal-petunjuk,
+html.dark .tv-soal-petunjuk,
+[data-theme="dark"] .tv-soal-subtext,
+html.dark .tv-soal-subtext {
+  color: #CBD5E1 !important;
+}
+
+/* Progress line div styling for M-CHAT / KPSP in Dark Mode */
+.tv-progress-bar-fill {
+  background: var(--tv-navy, #0a0b5f);
+}
+
+[data-theme="dark"] .tv-progress-bar-fill,
+html.dark .tv-progress-bar-fill {
+  background: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-progress-bar-track,
+html.dark .tv-progress-bar-track {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+
 
 
 

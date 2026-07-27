@@ -136,7 +136,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
       {/* Selector Usia KPSP */}
       <div className="kartu" style={{ marginBottom: 16, borderRadius: 20 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)", marginBottom: 8 }}>
+        <div className="tv-section-title" style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)", marginBottom: 8 }}>
           Pilih Kelompok Usia KPSP:
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -154,7 +154,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
             );
           })}
         </div>
-        <div style={{ fontSize: 12, color: "var(--tv-soft-teks, #667085)", marginTop: 10, lineHeight: 1.5 }}>
+        <div className="tv-soal-subtext" style={{ fontSize: 12, color: "var(--tv-soft-teks, #667085)", marginTop: 10, lineHeight: 1.5 }}>
           {groupData.deskripsi}
         </div>
       </div>
@@ -170,7 +170,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               marginBottom: 10,
             }}
           >
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--tv-soft-teks, #667085)" }}>
+            <span className="tv-soal-counter" style={{ fontSize: 12.5, fontWeight: 700, color: "var(--tv-soft-teks, #667085)" }}>
               Pertanyaan {langkah + 1} dari {daftarSoal.length} · Terjawab {totalDijawab}
             </span>
             <button
@@ -191,6 +191,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
           </div>
 
           <div
+            className="tv-progress-bar-track"
             style={{
               height: 6,
               background: "var(--tv-line, #F1F3F8)",
@@ -200,10 +201,10 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
             }}
           >
             <div
+              className="tv-progress-bar-fill"
               style={{
                 height: "100%",
                 width: ((langkah + 1) / daftarSoal.length) * 100 + "%",
-                background: "var(--tv-navy, #0a0b5f)",
                 borderRadius: 999,
                 transition: "width .2s ease",
               }}
@@ -252,6 +253,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
             </div>
 
             <div
+              className="tv-soal-teks"
               style={{
                 fontSize: 15,
                 fontWeight: 700,
@@ -265,6 +267,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
             {itemAktif.petunjuk && (
               <div
+                className="tv-soal-petunjuk"
                 style={{
                   fontSize: 12.5,
                   color: "var(--tv-soft-teks, #667085)",

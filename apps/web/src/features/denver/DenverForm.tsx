@@ -238,7 +238,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
           </div>
 
           <div style={{ gridColumn: "1 / -1", paddingTop: 2 }}>
-            <label style={{ display: "inline-flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13, color: "#344054", fontWeight: 700 }}>
+            <label style={{ display: "inline-flex", alignItems: "center", gap: 10, cursor: "pointer", fontSize: 13, color: "var(--tv-teks, #344054)", fontWeight: 700 }}>
               <input
                 type="checkbox"
                 checked={isPrematur}
@@ -250,8 +250,9 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
             {isPrematur && (
               <div className="tv-prematur-box" style={{ marginTop: 12, padding: "12px 14px", borderRadius: 12, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-                <span style={{ fontSize: 12.5, color: "#93370D", fontWeight: 700 }}>Usia Kehamilan Saat Lahir:</span>
+                <span className="tv-prematur-label" style={{ fontSize: 12.5, color: "#93370D", fontWeight: 700 }}>Usia Kehamilan Saat Lahir:</span>
                 <select
+                  className="tv-prematur-select"
                   value={mingguPrematur}
                   onChange={(e) => setMingguPrematur(Number(e.target.value))}
                   style={{
@@ -270,7 +271,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
                     </option>
                   ))}
                 </select>
-                <span style={{ fontSize: 11.5, color: "#B45309", fontWeight: 600 }}>
+                <span className="tv-prematur-note" style={{ fontSize: 11.5, color: "#B45309", fontWeight: 600 }}>
                   *Koreksi prematuritas otomatis dihitung untuk usia kronologis &lt; 24 bulan.
                 </span>
               </div>
