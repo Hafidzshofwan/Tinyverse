@@ -36,7 +36,7 @@ export function FormattedMessage({ text, isUser = false }: FormattedMessageProps
               style={{
                 fontWeight: 700,
                 fontSize: 15,
-                color: isUser ? "#ffffff" : "var(--tv-navy, #0a0b5f)",
+                color: isUser ? "#ffffff" : "var(--tv-text-primary, #0a0b5f)",
                 marginTop: index === 0 ? 0 : 6,
                 marginBottom: 2,
                 fontFamily: "'Quicksand', sans-serif",
@@ -63,7 +63,7 @@ export function FormattedMessage({ text, isUser = false }: FormattedMessageProps
             >
               <span
                 style={{
-                  color: isUser ? "#ffffff" : "#d936a6",
+                  color: isUser ? "#ffffff" : "var(--tv-accent, #ec4899)",
                   fontWeight: 700,
                   fontSize: 14,
                   lineHeight: "1.4",
@@ -94,12 +94,12 @@ export function FormattedMessage({ text, isUser = false }: FormattedMessageProps
             >
               <span
                 style={{
-                  color: isUser ? "#ffffff" : "var(--tv-navy, #0a0b5f)",
+                  color: isUser ? "#ffffff" : "var(--tv-text-primary, #0a0b5f)",
                   fontWeight: 700,
                   fontSize: 12,
                   backgroundColor: isUser
                     ? "rgba(255, 255, 255, 0.2)"
-                    : "rgba(10, 11, 95, 0.08)",
+                    : "var(--tv-soft, rgba(10, 11, 95, 0.08))",
                   padding: "1px 6px",
                   borderRadius: 6,
                   lineHeight: "1.4",
@@ -155,12 +155,12 @@ function renderFormattedInline(text: string, isUser = false): React.ReactNode {
           style={{
             backgroundColor: isUser
               ? "rgba(255, 255, 255, 0.2)"
-              : "rgba(10, 11, 95, 0.06)",
+              : "var(--tv-soft, rgba(10, 11, 95, 0.06))",
             padding: "2px 6px",
             borderRadius: 4,
             fontSize: "0.9em",
             fontFamily: "inherit",
-            color: isUser ? "#ffffff" : "#d936a6",
+            color: isUser ? "#ffffff" : "var(--tv-accent, #ec4899)",
           }}
         >
           {codeText}

@@ -16,6 +16,636 @@
   --tv-glass: rgba(255, 255, 255, 0.72);
 }
 
+/* ================================================================
+   MODE GELAP / MALAM (DARK MODE) — ESTETIK, MODERN & HIGH-CONTRAST SPEC
+   ================================================================ */
+:root[data-theme="dark"],
+[data-theme="dark"],
+html.dark {
+  --tv-bg: #0F172A;
+  --tv-card: #1E293B;
+  --tv-border: #334155;
+  --tv-text-primary: #F8FAFC;
+  --tv-text-secondary: #CBD5E1;
+  --tv-accent: #EC4899;
+  --tv-hover: #273449;
+
+  --tv-navy: #F8FAFC;
+  --tv-navy-2: #38BDF8;
+  --tv-magenta: #EC4899;
+  --tv-teks: #F8FAFC;
+  --tv-soft-teks: #CBD5E1;
+  --tv-putih: #1E293B;
+  --tv-line: #334155;
+  --tv-soft: #0F172A;
+  --tv-radius: 24px;
+  --tv-radius-lg: 26px;
+  --tv-chunky: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px #334155;
+  --tv-chunky-sm: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --tv-glass: rgba(30, 41, 59, 0.92);
+  color-scheme: dark;
+}
+
+/* Transisi Halus 250ms Ease untuk Perubahan Warna Tema */
+body,
+.tv-topbar,
+.tv-sidebar,
+.tv-card,
+.tv-tool-card,
+.tv-modal-kartu,
+.tv-pas-card,
+.tv-auth-kartu,
+.tv-search,
+.tv-user-pill,
+.tv-nav-item,
+.tv-tool-info-btn,
+.tv-tool-tooltip-box,
+input,
+select,
+textarea,
+button,
+a.tv-btn,
+.tv-home-header {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+}
+
+/* Focus Ring Accessibility (WCAG AA) */
+:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #EC4899 !important;
+  outline-offset: 2px !important;
+}
+
+[data-theme="dark"] body {
+  color: #F8FAFC;
+  background-color: #0F172A;
+  background:
+    radial-gradient(circle at 18% 6%, rgba(56, 189, 248, 0.10) 0 180px, transparent 181px),
+    radial-gradient(circle at 85% 8%, rgba(236, 72, 153, 0.12) 0 200px, transparent 201px),
+    #0F172A;
+  background-attachment: fixed;
+}
+
+/* 1. Topbar & Header */
+[data-theme="dark"] .tv-topbar {
+  background: rgba(30, 41, 59, 0.92);
+  border-bottom: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-brand {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-hamburger {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-hamburger:hover {
+  background: #273449;
+}
+
+[data-theme="dark"] .tv-search {
+  background: #0F172A;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-search input {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-search input::placeholder {
+  color: #CBD5E1;
+  opacity: 0.7;
+}
+
+[data-theme="dark"] .tv-search-results {
+  background: #1E293B;
+  border: 1px solid #334155;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .tv-search-item:hover,
+[data-theme="dark"] .tv-search-item.aktif {
+  background: #273449;
+}
+
+[data-theme="dark"] .tv-search-item-type {
+  background: #0F172A;
+  color: #38BDF8;
+}
+
+/* Theme Toggle Button */
+.tv-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--tv-line);
+  background: var(--tv-putih);
+  color: var(--tv-navy);
+  cursor: pointer;
+  box-shadow: var(--tv-chunky-sm);
+  transition: all 250ms ease;
+  flex-shrink: 0;
+}
+
+.tv-theme-toggle:hover {
+  transform: translateY(-2px);
+  color: #EC4899;
+  border-color: #EC4899;
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.25);
+  background: #273449;
+}
+
+.tv-theme-icon {
+  transition: transform 250ms ease;
+}
+
+.tv-theme-toggle:hover .tv-theme-icon {
+  transform: rotate(15deg) scale(1.1);
+}
+
+/* User & Profile Pill */
+[data-theme="dark"] .tv-user-pill,
+[data-theme="dark"] .tv-profile {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-user-pill:hover,
+[data-theme="dark"] .tv-profile:hover {
+  background: #273449;
+}
+
+[data-theme="dark"] .tv-user-drop {
+  background: #1E293B;
+  border: 1px solid #334155;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .tv-drop-info {
+  border-bottom-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-drop-item {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .tv-drop-item:hover {
+  background: #273449;
+  color: #F8FAFC;
+}
+
+/* 2. Sidebar & Nav */
+[data-theme="dark"] .tv-sidebar {
+  background: rgba(30, 41, 59, 0.92);
+  border-right: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-nav-cat {
+  color: #38BDF8;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .tv-nav-item {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .tv-nav-item:hover {
+  background: #273449;
+  color: #F8FAFC;
+  border-color: #EC4899;
+}
+
+[data-theme="dark"] .tv-nav-item.aktif {
+  background: linear-gradient(160deg, #EC4899, #DB2777);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4);
+}
+
+[data-theme="dark"] .tv-nav-item.emergency {
+  background: rgba(225, 29, 42, 0.2);
+  color: #FCA5A5;
+  border-color: rgba(225, 29, 42, 0.35);
+}
+
+[data-theme="dark"] .tv-nav-item.emergency:hover {
+  background: rgba(225, 29, 42, 0.32);
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .tv-nav-item.emergency.aktif {
+  background: linear-gradient(160deg, #DC2626, #991B1B);
+  color: #FFFFFF;
+  border-color: transparent;
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.4);
+}
+
+/* 3. Dashboard, Quick Access & Cards */
+[data-theme="dark"] .tv-home-header {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(56, 189, 248, 0.12)), #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-home-badge {
+  background: rgba(15, 23, 42, 0.8);
+  color: #38BDF8;
+}
+
+[data-theme="dark"] .tv-tool-card,
+[data-theme="dark"] .tv-card {
+  background: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .tv-tool-card:hover,
+[data-theme="dark"] .tv-card:hover {
+  background: #273449;
+  border-color: #EC4899;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(236, 72, 153, 0.2);
+}
+
+[data-theme="dark"] .tv-tool-name {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-tool-desc {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .tv-tool-go {
+  color: #EC4899;
+  font-weight: 700;
+}
+
+[data-theme="dark"] .tv-tool-info-btn {
+  background: #0F172A;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-tool-info-btn:hover {
+  background: #273449;
+  color: #EC4899;
+  border-color: #EC4899;
+}
+
+/* 4. Tooltip */
+[data-theme="dark"] .tv-tool-tooltip-box {
+  background: #0F172A;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .tv-tool-tooltip-head {
+  color: #EC4899;
+  font-weight: 700;
+}
+
+/* 5. Favorites Star */
+[data-theme="dark"] .tv-tool-star {
+  color: #CBD5E1;
+}
+
+[data-theme="dark"] .tv-tool-star:hover {
+  color: #FDE047;
+}
+
+[data-theme="dark"] .tv-tool-star.aktif {
+  color: #FDE047;
+  text-shadow: 0 0 8px rgba(253, 224, 71, 0.5);
+}
+
+/* 6. Inputs & Form Controls */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] input[type="email"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea,
+[data-theme="dark"] .tv-field input,
+[data-theme="dark"] .tv-field textarea {
+  background: #0F172A;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] .tv-field input:focus {
+  border-color: #EC4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3);
+}
+
+/* 7. Buttons */
+[data-theme="dark"] button,
+[data-theme="dark"] .tv-btn {
+  border-color: #334155;
+}
+
+/* 8. Modals & Drawers */
+[data-theme="dark"] .tv-modal {
+  background: rgba(15, 23, 42, 0.85);
+}
+
+[data-theme="dark"] .tv-modal-kartu {
+  background: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .tv-modal-tutup {
+  background: #273449;
+  color: #CBD5E1;
+  border: 1px solid #334155;
+}
+
+[data-theme="dark"] .tv-modal-tutup:hover {
+  background: #334155;
+  color: #F8FAFC;
+}
+
+/* 9. Ringkasan & Callouts */
+[data-theme="dark"] .tv-ringkasan,
+[data-theme="dark"] .tv-summary-box {
+  background: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] .tv-field input:focus {
+  border-color: #f472b6;
+  box-shadow: 0 0 0 3px rgba(244, 114, 182, 0.2);
+}
+
+/* Modals & Overlay */
+[data-theme="dark"] .tv-modal {
+  background: rgba(2, 6, 23, 0.78);
+}
+
+[data-theme="dark"] .tv-modal-kartu {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .tv-modal-tutup {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .tv-modal-tutup:hover {
+  background: #475569;
+  color: #ffffff;
+}
+
+/* Patient Profile FAB & Overlay */
+[data-theme="dark"] #tvPasienOverlay {
+  background: rgba(2, 6, 23, 0.75);
+}
+
+[data-theme="dark"] .tv-pas-card {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+}
+
+[data-theme="dark"] .tv-pas-card h3 {
+  color: #38bdf8;
+}
+
+[data-theme="dark"] .tv-pas-sub {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .tv-pas-tabs {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tv-pas-tab-btn {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .tv-pas-tab-btn:hover {
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .tv-pas-tab-btn.aktif {
+  background: #1e293b;
+  color: #f8fafc;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .tv-pas-list-sec {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tv-pas-list-hdr h4 {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-pas-btn-add {
+  background: rgba(99, 102, 241, 0.2);
+  color: #818cf8;
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+[data-theme="dark"] .tv-pas-btn-add:hover {
+  background: rgba(99, 102, 241, 0.35);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tv-pas-item {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tv-pas-item:hover {
+  border-color: #818cf8;
+  background: #1e1b4b;
+}
+
+[data-theme="dark"] .tv-pas-item.aktif {
+  border-color: #818cf8;
+  background: #1e1b4b;
+  box-shadow: 0 0 0 1px #818cf8;
+}
+
+[data-theme="dark"] .tv-pas-item-name {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-pas-item-sub {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .tv-pas-avatar {
+  background: #312e81;
+  color: #a5b4fc;
+}
+
+[data-theme="dark"] .tv-pas-f label {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .tv-pas-f input {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-jk-btn {
+  background: #0f172a;
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .tv-jk-btn.aktif {
+  background: #312e81;
+  border-color: #818cf8;
+  color: #a5b4fc;
+}
+
+[data-theme="dark"] .tv-pas-reset {
+  background: #334155;
+  color: #f8fafc;
+}
+
+/* Warnings, Alerts, Safety */
+[data-theme="dark"] .tv-disclaimer {
+  background: rgba(234, 179, 8, 0.12);
+  border-color: rgba(234, 179, 8, 0.3);
+  color: #fef08a;
+}
+
+[data-theme="dark"] .tv-warn {
+  background: rgba(234, 179, 8, 0.12);
+}
+
+[data-theme="dark"] .tv-warn p {
+  color: #fef08a;
+}
+
+[data-theme="dark"] .tv-safety.ok {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #86efac;
+}
+
+[data-theme="dark"] .tv-safety.warn {
+  background: rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.3);
+  color: #fde047;
+}
+
+[data-theme="dark"] .tv-safety.danger {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+/* Tables & Admin */
+[data-theme="dark"] .tv-tabel th {
+  color: #38bdf8;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="dark"] .tv-tabel td {
+  color: #f1f5f9;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .tv-tabel select {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+/* Auth / Login Modal */
+[data-theme="dark"] .tv-auth {
+  background:
+    radial-gradient(circle at 16% 14%, rgba(56, 189, 248, 0.12) 0 118px, transparent 119px),
+    radial-gradient(circle at 80% 18%, rgba(244, 114, 182, 0.15) 0 180px, transparent 181px),
+    linear-gradient(140deg, #090d16 0%, #0f172a 50%, #0b0f19 100%);
+}
+
+[data-theme="dark"] .tv-auth-kartu {
+  background: rgba(30, 41, 59, 0.88);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.8);
+}
+
+[data-theme="dark"] .tv-auth-panel {
+  background: rgba(15, 23, 42, 0.92);
+}
+
+[data-theme="dark"] .tv-auth-panel h2 {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-auth-sub {
+  color: #94a3b8;
+}
+
+/* Domain Previews (Darurat, Cairan, Imunisasi, Lab) */
+[data-theme="dark"] .tv-page-darurat-wrapper,
+[data-theme="dark"] .tv-page-cairan-wrapper,
+[data-theme="dark"] .tv-page-imunisasi-wrapper,
+[data-theme="dark"] .tv-page-lab-wrapper {
+  background: #0b0f19 !important;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-page-darurat .drt-pasien-bar,
+[data-theme="dark"] .tv-page-cairan .kartu,
+[data-theme="dark"] .tv-page-imunisasi .kartu,
+[data-theme="dark"] .tv-page-lab .kartu {
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="dark"] .tv-page-darurat .judul-section h2,
+[data-theme="dark"] .tv-page-cairan .judul-section h2,
+[data-theme="dark"] .tv-page-imunisasi .judul-section h2,
+[data-theme="dark"] .tv-page-lab .judul-section h2 {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-page-darurat .judul-section p,
+[data-theme="dark"] .tv-page-cairan .judul-section p,
+[data-theme="dark"] .tv-page-imunisasi .judul-section p,
+[data-theme="dark"] .tv-page-lab .judul-section p {
+  color: #94a3b8;
+}
+
+
 * {
   box-sizing: border-box;
 }

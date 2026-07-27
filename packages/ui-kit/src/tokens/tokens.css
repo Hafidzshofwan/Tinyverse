@@ -58,3 +58,40 @@
   --merah-lembut: #F8A5A5;
   /* Catatan: palet warm tidak punya token --etail-*; token itu ikut nilai navy bila dipakai. */
 }
+
+:root[data-theme="dark"],
+[data-theme="dark"],
+html.dark {
+  /* Palet Mode Gelap Modern & Estetik (Clinical Dark Theme Spec) */
+  --bg-dark: #0F172A;
+  --card-dark: #1E293B;
+  --border-dark: #334155;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --accent: #EC4899;
+  --hover-dark: #273449;
+
+  --kuning: #FDE047;
+  --kuning-tua: #EAB308;
+  --biru: #38BDF8;
+  --biru-tua: #0284C7;
+  --hijau: #34D399;
+  --hijau-tua: #059669;
+  --oranye: #FB923C;
+  --oranye-tua: #EA580C;
+  --pink: #EC4899;
+  --pink-tua: #DB2777;
+  --krem: #0F172A;
+  --putih: #1E293B;
+  --teks: #F8FAFC;
+  --teks-lembut: #CBD5E1;
+  --merah-lembut: #F87171;
+
+  --etail-navy: #F8FAFC;
+  --etail-navy-2: #38BDF8;
+  --etail-magenta: #EC4899;
+  --etail-soft: #0F172A;
+  --etail-line: #334155;
+  --etail-shadow: 0 28px 80px rgba(0, 0, 0, 0.50);
+  --etail-soft-shadow: 0 18px 44px rgba(0, 0, 0, 0.40);
+}
