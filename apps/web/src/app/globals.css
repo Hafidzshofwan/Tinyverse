@@ -68,7 +68,7 @@ textarea,
 button,
 a.tv-btn,
 .tv-home-header {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease;
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease, transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Focus Ring Accessibility (WCAG AA) */
@@ -368,10 +368,13 @@ a:focus-visible {
 }
 
 [data-theme="dark"] .tv-tool-card:hover,
-[data-theme="dark"] .tv-card:hover {
+[data-theme="dark"] .tv-card:hover,
+[data-theme="dark"] .tv-tool-card:focus-within {
   background: #273449;
   border-color: #EC4899;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 16px rgba(236, 72, 153, 0.2);
+  transform: translateY(-6px) scale(1.025);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.5), 0 0 22px rgba(236, 72, 153, 0.45), 0 0 40px rgba(236, 72, 153, 0.2);
+  z-index: 5;
 }
 
 [data-theme="dark"] .tv-tool-name {
@@ -1184,12 +1187,18 @@ body {
   box-shadow: var(--tv-chunky);
   text-decoration: none;
   color: var(--tv-navy);
-  transition: transform 0.16s ease, box-shadow 0.16s ease;
+  cursor: pointer;
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.24s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.24s ease, background-color 0.2s ease;
   animation: tvMuncul 0.4s ease both;
+  will-change: transform, box-shadow;
 }
-.tv-tool-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 0 rgba(10, 11, 95, 0.05), 0 22px 44px rgba(10, 11, 95, 0.14);
+.tv-tool-card:hover,
+.tv-tool-card:focus-within {
+  transform: translateY(-6px) scale(1.025);
+  box-shadow: 0 12px 28px rgba(10, 11, 95, 0.08), 0 0 22px rgba(236, 72, 153, 0.38), 0 0 40px rgba(236, 72, 153, 0.15);
+  border-color: rgba(236, 72, 153, 0.8);
+  background: #ffffff;
+  z-index: 5;
 }
 .tv-tool-main {
   display: flex;
@@ -1208,6 +1217,10 @@ body {
   line-height: 1;
   background: transparent;
   box-shadow: none;
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-tool-card:hover .tv-tool-ico {
+  transform: scale(1.12) rotate(-3deg);
 }
 .tv-tool-ico svg {
   width: 38px;
@@ -1229,6 +1242,13 @@ body {
   font-weight: 600;
   font-size: 0.86rem;
   color: var(--tv-magenta);
+  display: inline-block;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease, text-shadow 0.2s ease;
+}
+.tv-tool-card:hover .tv-tool-go {
+  transform: translateX(6px) scale(1.05);
+  color: var(--tv-magenta);
+  text-shadow: 0 0 8px rgba(236, 72, 153, 0.35);
 }
 
 /* ============ SKELETON SCREENS ============ */
@@ -1486,24 +1506,25 @@ body {
 .tv-tool-star {
   position: static;
   z-index: 2;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   display: grid;
   place-items: center;
   padding: 0;
   border: none;
   border-radius: 10px;
   background: transparent;
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1;
   cursor: pointer;
   color: rgba(10, 11, 95, 0.28);
-  transition: transform 0.14s ease, color 0.14s ease, background 0.14s ease;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
 }
 .tv-tool-star:hover {
-  transform: scale(1.12);
-  background: rgba(217, 54, 166, 0.12);
+  transform: scale(1.25) rotate(12deg);
+  background: rgba(236, 72, 153, 0.16);
   color: var(--tv-magenta);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
 }
 .tv-tool-star.aktif {
   color: var(--tv-magenta);
@@ -1609,6 +1630,19 @@ body {
 }
 
 /* ============ FAVORIT ============ */
+.tv-fav-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+}
+.tv-fav-card:hover {
+  transform: translateY(-3px) scale(1.012);
+  box-shadow: 0 10px 0 rgba(10, 11, 95, 0.04), 0 20px 38px rgba(10, 11, 95, 0.12);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+[data-theme="dark"] .tv-fav-card:hover {
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
+  border-color: rgba(245, 158, 11, 0.5);
+}
+
 .tv-fav-list {
   display: flex;
   flex-direction: column;
@@ -1622,10 +1656,27 @@ body {
   border-radius: 16px;
   border: 1px solid var(--tv-line);
   background: var(--tv-soft);
-  transition: transform 0.15s ease;
+  cursor: pointer;
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.24s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.24s ease, background 0.2s ease;
 }
-.tv-fav-item:hover {
-  transform: translateX(2px);
+.tv-fav-item:hover,
+.tv-fav-item:focus-within {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.22), 0 2px 8px rgba(10, 11, 95, 0.08);
+  border-color: rgba(245, 158, 11, 0.65);
+  background: #ffffff;
+}
+[data-theme="dark"] .tv-fav-item {
+  background: #1E293B;
+  border: 1px solid #334155;
+  color: #F8FAFC;
+}
+[data-theme="dark"] .tv-fav-item:hover,
+[data-theme="dark"] .tv-fav-item:focus-within {
+  transform: translateY(-3px) scale(1.02);
+  background: #273449;
+  border-color: rgba(245, 158, 11, 0.65);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 14px rgba(245, 158, 11, 0.3);
 }
 .tv-fav-main {
   display: flex;
@@ -1650,11 +1701,13 @@ body {
   font-size: 15px;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.14s ease, color 0.14s ease;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease, color 0.15s ease, box-shadow 0.2s ease;
 }
 .tv-fav-del:hover {
-  background: rgba(217, 54, 166, 0.12);
-  color: var(--tv-magenta);
+  transform: scale(1.22) rotate(90deg);
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
 }
 .tv-fav-empty {
   padding: 16px;
@@ -1675,6 +1728,10 @@ body {
   line-height: 1;
   background: transparent;
   box-shadow: none;
+  transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-fav-item:hover .tv-fav-ico {
+  transform: scale(1.12) rotate(-3deg);
 }
 .tv-fav-ico svg {
   width: 38px;
@@ -1695,6 +1752,33 @@ body {
 }
 
 /* ============ INSIGHT & UPDATE ============ */
+.tv-insight-card,
+.tv-update-card {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
+}
+
+.tv-insight-card:hover {
+  transform: translateY(-3px) scale(1.012);
+  box-shadow: 0 10px 0 rgba(10, 11, 95, 0.04), 0 20px 38px rgba(10, 11, 95, 0.12);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+.tv-update-card:hover {
+  transform: translateY(-3px) scale(1.012);
+  box-shadow: 0 10px 0 rgba(10, 11, 95, 0.04), 0 20px 38px rgba(10, 11, 95, 0.12);
+  border-color: rgba(2, 132, 199, 0.45);
+}
+
+[data-theme="dark"] .tv-insight-card:hover {
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
+  border-color: rgba(56, 189, 248, 0.45);
+}
+
+[data-theme="dark"] .tv-update-card:hover {
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
+  border-color: rgba(2, 132, 199, 0.45);
+}
+
 .tv-insight-body {
   margin: 0;
   color: var(--tv-teks);
@@ -1723,6 +1807,22 @@ body {
   padding: 12px 14px;
   border-radius: 14px;
   background: var(--tv-soft);
+  border: 1px solid transparent;
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease, background 0.2s ease;
+}
+.tv-update-list li:hover {
+  transform: translateX(4px) scale(1.01);
+  background: #ffffff;
+  border-color: rgba(2, 132, 199, 0.35);
+  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.12);
+}
+[data-theme="dark"] .tv-update-list li {
+  background: #1E293B;
+}
+[data-theme="dark"] .tv-update-list li:hover {
+  background: #273449;
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 /* ============ FOOTER ============ */

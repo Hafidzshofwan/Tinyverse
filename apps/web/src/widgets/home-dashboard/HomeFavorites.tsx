@@ -24,7 +24,7 @@ export function HomeFavorites() {
 
   if (!isMounted) {
     return (
-      <section className="tv-card tv-stack">
+      <section className="tv-card tv-stack tv-fav-card">
         <div className="tv-home-section-head">
           <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span aria-hidden style={{ display: "inline-flex" }}>
@@ -55,7 +55,7 @@ export function HomeFavorites() {
   }
 
   return (
-    <section className="tv-card tv-stack">
+    <section className="tv-card tv-stack tv-fav-card">
       <div className="tv-home-section-head">
         <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
           <span aria-hidden style={{ display: "inline-flex" }}>

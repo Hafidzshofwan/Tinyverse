@@ -48,7 +48,7 @@ export default function Page() {
       <div className="tv-home-cols">
         <HomeFavorites />
 
-        <section className="tv-card tv-stack">
+        <section className="tv-card tv-stack tv-insight-card">
           <div className="tv-home-section-head">
             <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span aria-hidden style={{ display: "inline-flex" }}>
@@ -69,7 +69,7 @@ export default function Page() {
         </section>
       </div>
 
-      <section className="tv-card tv-stack">
+      <section className="tv-card tv-stack tv-update-card">
         <div className="tv-home-section-head">
           <h2 style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <span aria-hidden style={{ display: "inline-flex" }}>
