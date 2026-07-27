@@ -27,54 +27,43 @@ function GrowthPanelInner() {
     }
   }, [searchParams]);
 
-  function tabBtnStyle(aktif: boolean) {
-    return {
-      flex: 1,
-      minWidth: "160px",
-      padding: "10px 12px",
-      borderRadius: 10,
-      border: "none",
-      fontWeight: 700,
-      fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-      fontSize: "12.5px",
-      cursor: "pointer" as const,
-      background: aktif ? "#0A0B5F" : "transparent",
-      color: aktif ? "#FFFFFF" : "#1E293B",
-      boxShadow: aktif ? "0 4px 12px rgba(10,11,95,0.3)" : "none",
-      transition: "all 0.15s ease",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 6,
-    };
-  }
-
   return (
     <div style={{ maxWidth: 1080, margin: "0 auto", width: "100%", fontFamily: "Quicksand, sans-serif" }}>
       {/* Tab Switcher */}
       <div
+        className="tv-growth-tabs-switcher"
         style={{
           display: "flex",
           gap: 8,
           marginBottom: 16,
-          background: "#F1F5F9",
           padding: 6,
           borderRadius: 14,
-          border: "1px solid #E2E8F0",
           flexWrap: "wrap",
         }}
       >
-        <button type="button" onClick={() => setTab("single")} style={tabBtnStyle(tab === "single")}>
+        <button
+          type="button"
+          onClick={() => setTab("single")}
+          className={`tv-growth-tab-btn ${tab === "single" ? "active" : ""}`}
+        >
           <ScreeningIcon id="single" fallbackEmoji="📊" size={18} />
           <span>Kurva WHO &amp; CDC</span>
         </button>
 
-        <button type="button" onClick={() => setTab("longitudinal")} style={tabBtnStyle(tab === "longitudinal")}>
+        <button
+          type="button"
+          onClick={() => setTab("longitudinal")}
+          className={`tv-growth-tab-btn ${tab === "longitudinal" ? "active" : ""}`}
+        >
           <ScreeningIcon id="longitudinal" fallbackEmoji="📈" size={18} />
           <span>Pemantauan Longitudinal</span>
         </button>
 
-        <button type="button" onClick={() => setTab("skrining")} style={tabBtnStyle(tab === "skrining")}>
+        <button
+          type="button"
+          onClick={() => setTab("skrining")}
+          className={`tv-growth-tab-btn ${tab === "skrining" ? "active" : ""}`}
+        >
           <ScreeningIcon id="skrining" fallbackEmoji="🧩" size={18} />
           <span>Skrining Perkembangan</span>
         </button>

@@ -4127,5 +4127,505 @@ body.tv-tanpa-dekorasi .bg-decor {
 [data-theme="dark"] .tv-rk-btn.type-kop { background: rgba(251, 191, 36, 0.15); color: #FBBF24; border-color: rgba(251, 191, 36, 0.3); }
 [data-theme="dark"] .tv-rk-btn.type-hapus { background: rgba(251, 113, 133, 0.15); color: #FB7185; border-color: rgba(251, 113, 133, 0.3); }
 
+/* ================================================================
+   TUMBUH KEMBANG & SKRINING PERKEMBANGAN — DARK MODE SPEC
+   ================================================================ */
+
+.tv-growth-tabs-switcher {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+}
+
+[data-theme="dark"] .tv-growth-tabs-switcher,
+html.dark .tv-growth-tabs-switcher {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+.tv-growth-tab-btn {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  font-family: Fredoka, Quicksand, system-ui, sans-serif;
+  font-size: 12.5px;
+  cursor: pointer;
+  background: transparent;
+  color: #1E293B;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tv-growth-tab-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tv-growth-tab-btn.active {
+  background: #0A0B5F;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(10, 11, 95, 0.3);
+}
+
+[data-theme="dark"] .tv-growth-tab-btn,
+html.dark .tv-growth-tab-btn {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-growth-tab-btn:hover,
+html.dark .tv-growth-tab-btn:hover {
+  background: #273449 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-growth-tab-btn.active,
+html.dark .tv-growth-tab-btn.active {
+  background: linear-gradient(135deg, #EC4899, #DB2777) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4) !important;
+}
+
+/* Cards & Containers inside Growth Tracking & Screening */
+[data-theme="dark"] .kartu,
+html.dark .kartu,
+[data-theme="dark"] .tv-growth-card,
+html.dark .tv-growth-card {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+.tv-patient-info-box {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+}
+
+.tv-patient-info-box .tv-patient-name {
+  color: #0A0B5F;
+  font-weight: 700;
+}
+
+.tv-patient-info-box .tv-patient-meta {
+  color: #64748B;
+  font-weight: 500;
+}
+
+[data-theme="dark"] .tv-growth-subcard,
+html.dark .tv-growth-subcard,
+[data-theme="dark"] .tv-patient-info-box,
+html.dark .tv-patient-info-box {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-patient-info-box .tv-patient-name,
+html.dark .tv-patient-info-box .tv-patient-name {
+  color: #38BDF8 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-patient-info-box .tv-patient-meta,
+html.dark .tv-patient-info-box .tv-patient-meta {
+  color: #CBD5E1 !important;
+  font-weight: 500 !important;
+}
+
+/* Typography contrast in dark mode */
+[data-theme="dark"] h1,
+html.dark h1,
+[data-theme="dark"] h2,
+html.dark h2,
+[data-theme="dark"] h3,
+html.dark h3,
+[data-theme="dark"] h4,
+html.dark h4,
+[data-theme="dark"] h5,
+html.dark h5 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] p,
+html.dark p,
+[data-theme="dark"] label,
+html.dark label {
+  color: #CBD5E1 !important;
+}
+
+/* Force dark-mode text visibility for hardcoded light-theme color elements */
+[data-theme="dark"] [style*="color: #0A0B5F"],
+html.dark [style*="color: #0A0B5F"],
+[data-theme="dark"] [style*="color: #0a0b4f"],
+html.dark [style*="color: #0a0b4f"],
+[data-theme="dark"] [style*="color: #0A0B5F9E"],
+html.dark [style*="color: #0A0B5F9E"],
+[data-theme="dark"] [style*="color: #1E293B"],
+html.dark [style*="color: #1E293B"],
+[data-theme="dark"] [style*="color: #0F172A"],
+html.dark [style*="color: #0F172A"],
+[data-theme="dark"] [style*="color: #344054"],
+html.dark [style*="color: #344054"],
+[data-theme="dark"] [style*="color: #667085"],
+html.dark [style*="color: #667085"],
+[data-theme="dark"] [style*="color: #64748B"],
+html.dark [style*="color: #64748B"],
+[data-theme="dark"] [style*="color: #98A2B3"],
+html.dark [style*="color: #98A2B3"] {
+  color: #F8FAFC !important;
+}
+
+/* Secondary descriptions */
+[data-theme="dark"] [style*="color: #0A0B5F9E"],
+html.dark [style*="color: #0A0B5F9E"],
+[data-theme="dark"] [style*="color: #667085"],
+html.dark [style*="color: #667085"],
+[data-theme="dark"] [style*="color: #64748B"],
+html.dark [style*="color: #64748B"],
+[data-theme="dark"] [style*="color: #98A2B3"],
+html.dark [style*="color: #98A2B3"] {
+  color: #CBD5E1 !important;
+}
+
+/* Form controls in Dark Mode */
+[data-theme="dark"] input,
+html.dark input,
+[data-theme="dark"] select,
+html.dark select,
+[data-theme="dark"] textarea,
+html.dark textarea {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] input::placeholder,
+html.dark input::placeholder,
+[data-theme="dark"] textarea::placeholder,
+html.dark textarea::placeholder {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) !important;
+}
+
+/* ================================================================
+   SKRINING & PEMANTAUAN (KPSP, DENVER, M-CHAT, GROWTH) UNIFIED STYLING
+   ================================================================ */
+
+/* Patient Active Info Banner */
+.tv-patient-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0A0B5F;
+  background: rgba(217, 54, 166, 0.08);
+  border: 1px solid rgba(217, 54, 166, 0.18);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+[data-theme="dark"] .tv-patient-active-banner,
+html.dark .tv-patient-active-banner {
+  color: #F472B6 !important;
+  background: rgba(217, 54, 166, 0.2) !important;
+  border-color: rgba(217, 54, 166, 0.4) !important;
+}
+
+/* Age Pill Buttons */
+.tv-age-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #344054);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tv-age-btn:hover {
+  border-color: #CBD5E1;
+}
+
+.tv-age-btn.active {
+  background: var(--tv-navy, #0a0b5f) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+[data-theme="dark"] .tv-age-btn,
+html.dark .tv-age-btn {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-age-btn.active,
+html.dark .tv-age-btn.active {
+  background: linear-gradient(135deg, #38BDF8, #2563EB) !important;
+  color: #ffffff !important;
+  border: 1px solid #7DD3FC !important;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="dark"] .tv-age-btn.active span,
+html.dark .tv-age-btn.active span {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Number Dot Buttons (1..10 navigator) */
+.tv-num-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #98A2B3);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.tv-num-dot.active-step {
+  border: 2px solid var(--tv-navy, #0a0b5f) !important;
+}
+
+.tv-num-dot.ans-ya {
+  background: #0a0b5f !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+.tv-num-dot.ans-tidak {
+  background: #991B1B !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+[data-theme="dark"] .tv-num-dot,
+html.dark .tv-num-dot {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tv-num-dot.active-step,
+html.dark .tv-num-dot.active-step {
+  border: 2px solid #38BDF8 !important;
+}
+
+[data-theme="dark"] .tv-num-dot.ans-ya,
+html.dark .tv-num-dot.ans-ya {
+  background: #2563EB !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-num-dot.ans-tidak,
+html.dark .tv-num-dot.ans-tidak {
+  background: #DC2626 !important;
+  color: #ffffff !important;
+}
+
+/* Option Buttons (YA / TIDAK, PASS / FAIL, etc.) */
+.tv-opt-btn {
+  flex: 1;
+  padding: 13px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #344054);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.tv-opt-btn.selected-ya,
+.tv-opt-btn.selected-pass {
+  background: #0a0b5f !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.tv-opt-btn.selected-tidak,
+.tv-opt-btn.selected-fail {
+  background: #991B1B !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+[data-theme="dark"] .tv-opt-btn,
+html.dark .tv-opt-btn {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-opt-btn.selected-ya,
+[data-theme="dark"] .tv-opt-btn.selected-pass,
+html.dark .tv-opt-btn.selected-ya,
+html.dark .tv-opt-btn.selected-pass {
+  background: linear-gradient(135deg, #38BDF8, #2563EB) !important;
+  color: #ffffff !important;
+  border: 1px solid #7DD3FC !important;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="dark"] .tv-opt-btn.selected-tidak,
+[data-theme="dark"] .tv-opt-btn.selected-fail,
+html.dark .tv-opt-btn.selected-tidak,
+html.dark .tv-opt-btn.selected-fail {
+  background: linear-gradient(135deg, #DC2626, #B91C1C) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4) !important;
+}
+
+/* Secondary Action Buttons (Kembali, Reset, Ubah, Simpan) */
+.tv-btn-sec {
+  background: var(--tv-card, #ffffff);
+  border: 1px solid var(--tv-line, #EAECF0);
+  border-radius: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--tv-navy, #0A0B5F);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .tv-btn-sec,
+html.dark .tv-btn-sec {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+  box-shadow: none !important;
+}
+
+/* Primary Action Buttons (Hitung Hasil, Submit) */
+.tv-btn-pri {
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--tv-navy, #0a0b5f);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tv-btn-pri:disabled {
+  background: #E2E8F0 !important;
+  color: #98A2B3 !important;
+  cursor: not-allowed !important;
+}
+
+[data-theme="dark"] .tv-btn-pri,
+html.dark .tv-btn-pri {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-btn-pri:disabled,
+html.dark .tv-btn-pri:disabled {
+  background: #334155 !important;
+  color: #64748B !important;
+}
+
+/* Result Cards for KPSP / MCHAT / Denver */
+.tv-res-card {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.tv-res-card.sesuai,
+.tv-res-card.rendah {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+  color: #047857;
+}
+
+.tv-res-card.meragukan,
+.tv-res-card.sedang {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+  color: #B45309;
+}
+
+.tv-res-card.penyimpangan,
+.tv-res-card.tinggi {
+  background: #FEF2F2;
+  border-color: #FCA5A5;
+  color: #B42318;
+}
+
+[data-theme="dark"] .tv-res-card.sesuai,
+[data-theme="dark"] .tv-res-card.rendah,
+html.dark .tv-res-card.sesuai,
+html.dark .tv-res-card.rendah {
+  background: rgba(6, 78, 59, 0.45) !important;
+  border-color: #059669 !important;
+  color: #A7F3D0 !important;
+}
+
+[data-theme="dark"] .tv-res-card.meragukan,
+[data-theme="dark"] .tv-res-card.sedang,
+html.dark .tv-res-card.meragukan,
+html.dark .tv-res-card.sedang {
+  background: rgba(120, 53, 15, 0.45) !important;
+  border-color: #D97706 !important;
+  color: #FDE047 !important;
+}
+
+[data-theme="dark"] .tv-res-card.penyimpangan,
+[data-theme="dark"] .tv-res-card.tinggi,
+html.dark .tv-res-card.penyimpangan,
+html.dark .tv-res-card.tinggi {
+  background: rgba(127, 29, 29, 0.45) !important;
+  border-color: #DC2626 !important;
+  color: #FCA5A5 !important;
+}
+
+/* Specific text inside result cards in dark mode */
+[data-theme="dark"] .tv-res-card p,
+[data-theme="dark"] .tv-res-card div,
+[data-theme="dark"] .tv-res-card li,
+[data-theme="dark"] .tv-res-card span,
+html.dark .tv-res-card p,
+html.dark .tv-res-card div,
+html.dark .tv-res-card li,
+html.dark .tv-res-card span {
+  color: inherit !important;
+}
+
+
+
 
 

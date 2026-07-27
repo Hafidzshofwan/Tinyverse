@@ -14,7 +14,7 @@ import {
 
 type Jk = "male" | "female" | null;
 
-function MaleIcon({ size = 20 }: { size?: number }) {
+export function MaleIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
       <circle cx="12" cy="12" r="10" fill="#E0E7FF" />
@@ -28,7 +28,7 @@ function MaleIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-function FemaleIcon({ size = 20 }: { size?: number }) {
+export function FemaleIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
       <circle cx="12" cy="12" r="10" fill="#FCE7F3" />
@@ -44,7 +44,7 @@ function FemaleIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-function BabyIcon({ size = 20 }: { size?: number }) {
+export function BabyIcon({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-3px" }}>
       <circle cx="12" cy="12" r="10" fill="#F3E8FF" />
@@ -60,7 +60,7 @@ function BabyIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-function GenderAvatar({ jk, size = 20 }: { jk?: string | null; size?: number }) {
+export function GenderAvatar({ jk, size = 20 }: { jk?: string | null; size?: number }) {
   if (jk === "male") return <MaleIcon size={size} />;
   if (jk === "female") return <FemaleIcon size={size} />;
   return <BabyIcon size={size} />;

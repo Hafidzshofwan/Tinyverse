@@ -105,20 +105,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
           <button
             type="button"
             onClick={onBack}
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid #EAECF0",
-              borderRadius: 12,
-              padding: "8px 14px",
-              cursor: "pointer",
-              fontWeight: 700,
-              color: "#0A0B5F",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 13,
-              boxShadow: "0 1px 2px rgba(16, 24, 40, 0.04)",
-            }}
+            className="tv-btn-sec"
           >
             ← Kembali
           </button>
@@ -129,14 +116,14 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
               margin: 0,
               fontSize: 20,
               fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-              color: "#0A0B5F",
+              color: "var(--tv-navy, #0A0B5F)",
               fontWeight: 700,
               lineHeight: 1.25,
             }}
           >
             Skrining Autisme M-CHAT-R/F
           </h2>
-          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
+          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "var(--tv-soft-teks, #667085)", fontWeight: 600 }}>
             Modified Checklist for Autism in Toddlers, Revised
           </p>
         </div>
@@ -145,22 +132,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
 
 
       {(profil.nama || profil.usiaBulan != null) && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            flexWrap: "wrap",
-            fontSize: 12.5,
-            fontWeight: 600,
-            color: "#0a0b5f",
-            background: "rgba(217,54,166,0.08)",
-            border: "1px solid rgba(217,54,166,0.18)",
-            borderRadius: 12,
-            padding: "8px 14px",
-            marginBottom: 14,
-          }}
-        >
+        <div className="tv-patient-active-banner">
           {"\uD83D\uDC64"} Pasien aktif: <strong>{profil.nama || "(tanpa nama)"}</strong>
           {profil.usiaBulan != null ? " \u00b7 " + usiaTeks(profil.usiaBulan) : ""}
         </div>
@@ -189,7 +161,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
         <div className="kartu">
           {/* Progress bar + counter */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: "#667085" }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--tv-soft-teks, #667085)" }}>
               Pertanyaan {langkah + 1} dari {MCHAT_ITEMS.length} · Terjawab {totalDijawab}
             </span>
             <button
@@ -198,7 +170,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
               style={{
                 border: "none",
                 background: "transparent",
-                color: "#667085",
+                color: "var(--tv-soft-teks, #667085)",
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -208,7 +180,7 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
               Reset
             </button>
           </div>
-          <div style={{ height: 6, background: "#F1F3F8", borderRadius: 999, marginBottom: 14, overflow: "hidden" }}>
+          <div style={{ height: 6, background: "var(--tv-line, #F1F3F8)", borderRadius: 999, marginBottom: 14, overflow: "hidden" }}>
             <div
               style={{
                 height: "100%",
@@ -231,21 +203,9 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                   type="button"
                   onClick={() => setLangkah(idx)}
                   title={"Soal #" + it.no + (terjawab ? " (sudah dijawab)" : " (belum dijawab)")}
-                  style={{
-                    width: 26,
-                    height: 26,
-                    borderRadius: 8,
-                    border: aktifDot ? "2px solid #0a0b5f" : "1px solid #E2E8F0",
-                    background: terjawab
-                      ? jawaban[it.no] === "ya"
-                        ? "#0a0b5f"
-                        : "#991B1B"
-                      : "#fff",
-                    color: terjawab ? "#fff" : "#98A2B3",
-                    fontSize: 10.5,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
+                  className={`tv-num-dot ${aktifDot ? "active-step" : ""} ${
+                    terjawab ? (jawaban[it.no] === "ya" ? "ans-ya" : "ans-tidak") : ""
+                  }`}
                 >
                   {it.no}
                 </button>
@@ -255,11 +215,11 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
 
           {/* Pertanyaan aktif */}
           <div style={{ minHeight: 120 }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: "#0a0b4f", marginBottom: 4, lineHeight: 1.5 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)", marginBottom: 4, lineHeight: 1.5 }}>
               {itemAktif.no}. {itemAktif.teks}
             </div>
             {itemAktif.contoh && (
-              <div style={{ fontSize: 12.5, color: "#667085", marginBottom: 10 }}>{itemAktif.contoh}</div>
+              <div style={{ fontSize: 12.5, color: "var(--tv-soft-teks, #667085)", marginBottom: 10 }}>{itemAktif.contoh}</div>
             )}
             <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
               {(["ya", "tidak"] as const).map((opt) => {
@@ -269,24 +229,11 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                     key={opt}
                     type="button"
                     onClick={() => pilih(itemAktif.no, opt)}
-                    style={{
-                      flex: 1,
-                      padding: "13px 10px",
-                      borderRadius: 12,
-                      border: aktif ? "none" : "1px solid #E2E8F0",
-                      background: aktif
-                        ? opt === "ya"
-                          ? "#0a0b5f"
-                          : "#991B1B"
-                        : "#fff",
-                      color: aktif ? "#fff" : "#344054",
-                      fontWeight: 700,
-                      fontSize: 14,
-                      cursor: "pointer",
-                      textTransform: "capitalize",
-                    }}
+                    className={`tv-opt-btn ${
+                      aktif ? (opt === "ya" ? "selected-ya" : "selected-tidak") : ""
+                    }`}
                   >
-                    {opt}
+                    {opt === "ya" ? "✓ YA" : "✕ TIDAK"}
                   </button>
                 );
               })}
@@ -299,17 +246,8 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
               type="button"
               disabled={langkah === 0}
               onClick={() => setLangkah((l) => Math.max(0, l - 1))}
-              style={{
-                flex: 1,
-                padding: "11px",
-                borderRadius: 999,
-                border: "1px solid #E2E8F0",
-                background: "#fff",
-                color: langkah === 0 ? "#CBD5E1" : "#344054",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: langkah === 0 ? "not-allowed" : "pointer",
-              }}
+              className="tv-btn-sec"
+              style={{ flex: 1, justifyContent: "center" }}
             >
               {"\u2190"} Sebelumnya
             </button>
@@ -319,17 +257,8 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                 type="button"
                 disabled={jawaban[itemAktif.no] == null}
                 onClick={() => setLangkah((l) => Math.min(MCHAT_ITEMS.length - 1, l + 1))}
-                style={{
-                  flex: 1,
-                  padding: "11px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: jawaban[itemAktif.no] != null ? "#0a0b5f" : "#E2E8F0",
-                  color: jawaban[itemAktif.no] != null ? "#fff" : "#98A2B3",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: jawaban[itemAktif.no] != null ? "pointer" : "not-allowed",
-                }}
+                className="tv-btn-pri"
+                style={{ flex: 1 }}
               >
                 Selanjutnya {"\u2192"}
               </button>
@@ -338,24 +267,15 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
                 type="button"
                 disabled={!semuaTerjawab}
                 onClick={() => setSelesai(true)}
-                style={{
-                  flex: 1,
-                  padding: "11px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: semuaTerjawab ? "var(--tv-navy, #0a0b5f)" : "#E2E8F0",
-                  color: semuaTerjawab ? "#fff" : "#98A2B3",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: semuaTerjawab ? "pointer" : "not-allowed",
-                }}
+                className="tv-btn-pri"
+                style={{ flex: 1 }}
               >
                 Hitung Hasil Skrining
               </button>
             )}
           </div>
           {!semuaTerjawab && iniTerakhir && (
-            <p style={{ fontSize: 11.5, color: "#98A2B3", marginTop: 8, textAlign: "center" }}>
+            <p style={{ fontSize: 11.5, color: "var(--tv-soft-teks, #98A2B3)", marginTop: 8, textAlign: "center" }}>
               Masih ada {MCHAT_ITEMS.length - totalDijawab} pertanyaan belum dijawab —
               klik nomor di atas untuk melengkapinya.
             </p>
@@ -364,38 +284,26 @@ export function MchatForm({ onBack }: { onBack?: () => void } = {}) {
       )}
 
       {selesai && hasil && (
-        <div
-          className="kartu"
-          style={{ marginTop: 14, background: KATEGORI_WARNA[hasil.kategori] }}
-        >
+        <div className={`kartu tv-res-card ${hasil.kategori}`}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
             <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori] }}>
+              <div style={{ fontSize: 13, fontWeight: 700 }}>
                 Total item berisiko: {hasil.totalRisiko} / 20
               </div>
-              <div style={{ fontSize: 17, fontWeight: 700, color: KATEGORI_TEKS[hasil.kategori], marginTop: 4 }}>
+              <div style={{ fontSize: 17, fontWeight: 700, marginTop: 4 }}>
                 {hasil.label}
               </div>
             </div>
             <button
               type="button"
               onClick={ubahJawaban}
-              style={{
-                border: "1px solid currentColor",
-                background: "#fff",
-                color: KATEGORI_TEKS[hasil.kategori],
-                borderRadius: 999,
-                padding: "6px 12px",
-                fontSize: 11.5,
-                fontWeight: 700,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-              }}
+              className="tv-btn-sec"
+              style={{ fontSize: 11.5, padding: "6px 12px", borderRadius: 999 }}
             >
               Ubah Jawaban
             </button>
           </div>
-          <p style={{ fontSize: 13, color: "#344054", marginTop: 8, lineHeight: 1.6 }}>{hasil.saran}</p>
+          <p style={{ fontSize: 13, marginTop: 8, lineHeight: 1.6 }}>{hasil.saran}</p>
 
           {daftarBerisiko.length > 0 && (
             <div style={{ fontSize: 12.5, color: "#475467", marginTop: 8 }}>

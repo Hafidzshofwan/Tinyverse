@@ -93,7 +93,25 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <ScreeningIcon id="header" variant={iconVariant} fallbackEmoji="🧩" size={38} />
+          <div
+            className="ikon-bulat"
+            style={{
+              width: 38,
+              height: 38,
+              minWidth: 38,
+              minHeight: 38,
+              borderRadius: 10,
+              background: "#D936A61A",
+              color: "#D936A6",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+            aria-hidden
+          >
+            <ScreeningIcon id="header" variant={iconVariant} fallbackEmoji="🧩" size={24} />
+          </div>
           <div>
             <h2
               style={{
@@ -101,7 +119,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
                 fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
                 fontSize: "18.32px",
                 fontWeight: 700,
-                color: "#0A0B5F",
+                color: "var(--tv-navy, #0A0B5F)",
                 lineHeight: 1.25,
               }}
             >
@@ -113,7 +131,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
                 fontFamily: "Quicksand, system-ui, sans-serif",
                 fontSize: "10.24px",
                 fontWeight: 600,
-                color: "#0A0B5F9E",
+                color: "var(--tv-soft-teks, #667085)",
                 lineHeight: 1.4,
               }}
             >
@@ -135,8 +153,8 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
               alignItems: "center",
               gap: 16,
               textAlign: "left",
-              border: "1px solid #E2E8F0",
-              background: "#fff",
+              border: "1px solid var(--tv-line, #E2E8F0)",
+              background: "var(--tv-card, #fff)",
               borderRadius: 18,
               padding: "16px 18px",
               cursor: "pointer",
@@ -162,9 +180,9 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
               />
             </div>
             <span style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <span style={{ fontSize: 14.5, fontWeight: 700, color: "#0a0b4f" }}>{alat.nama}</span>
-              <span style={{ fontSize: 12.5, color: "#667085" }}>{alat.ringkas}</span>
-              <span style={{ fontSize: 11.5, color: "#98A2B3", fontWeight: 600 }}>
+              <span style={{ fontSize: 14.5, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)" }}>{alat.nama}</span>
+              <span style={{ fontSize: 12.5, color: "var(--tv-soft-teks, #667085)" }}>{alat.ringkas}</span>
+              <span style={{ fontSize: 11.5, color: "var(--tv-soft-teks, #98A2B3)", fontWeight: 600 }}>
                 Usia sasaran: {alat.usiaSasaran}
               </span>
             </span>
@@ -174,10 +192,10 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
         <div
           className="tv-growth-subcard"
           style={{
-            border: "1px dashed #E2E8F0",
+            border: "1px dashed var(--tv-line, #E2E8F0)",
             borderRadius: 18,
             padding: "16px 18px",
-            color: "#98A2B3",
+            color: "var(--tv-soft-teks, #98A2B3)",
             fontSize: 12.5,
             textAlign: "center",
           }}

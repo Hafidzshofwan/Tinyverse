@@ -112,20 +112,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
           <button
             type="button"
             onClick={onBack}
-            style={{
-              background: "#FFFFFF",
-              border: "1px solid #EAECF0",
-              borderRadius: 12,
-              padding: "8px 14px",
-              cursor: "pointer",
-              fontWeight: 700,
-              color: "#0A0B5F",
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 6,
-              fontSize: 13,
-              boxShadow: "0 1px 2px rgba(16, 24, 40, 0.04)",
-            }}
+            className="tv-btn-sec"
           >
             ← Kembali
           </button>
@@ -136,14 +123,14 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               margin: 0,
               fontSize: 20,
               fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-              color: "#0A0B5F",
+              color: "var(--tv-navy, #0A0B5F)",
               fontWeight: 700,
               lineHeight: 1.25,
             }}
           >
             Skrining Perkembangan KPSP
           </h2>
-          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
+          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "var(--tv-soft-teks, #667085)", fontWeight: 600 }}>
             Kuesioner Pra Skrining Perkembangan
           </p>
         </div>
@@ -153,22 +140,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
       {/* Pasien Aktif Info */}
       {(profil.nama || profil.usiaBulan != null) && (
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            flexWrap: "wrap",
-            fontSize: 12.5,
-            fontWeight: 600,
-            color: "#0a0b5f",
-            background: "rgba(217,54,166,0.08)",
-            border: "1px solid rgba(217,54,166,0.18)",
-            borderRadius: 12,
-            padding: "8px 14px",
-            marginBottom: 14,
-          }}
-        >
+        <div className="tv-patient-active-banner">
           {"\uD83D\uDC64"} Pasien aktif: <strong>{profil.nama || "(tanpa nama)"}</strong>
           {profil.usiaBulan != null ? " \u00b7 " + usiaTeks(profil.usiaBulan) : ""}
         </div>
@@ -176,7 +148,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
       {/* Selector Usia KPSP */}
       <div className="kartu" style={{ marginBottom: 16 }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: "#0a0b4f", marginBottom: 8 }}>
+        <div style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)", marginBottom: 8 }}>
           Pilih Kelompok Usia KPSP:
         </div>
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -187,23 +159,14 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 key={age}
                 type="button"
                 onClick={() => gantiUsia(age)}
-                style={{
-                  padding: "8px 14px",
-                  borderRadius: 999,
-                  border: aktif ? "none" : "1px solid #E2E8F0",
-                  background: aktif ? "#0a0b5f" : "#fff",
-                  color: aktif ? "#fff" : "#344054",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: "pointer",
-                }}
+                className={`tv-age-btn ${aktif ? "active" : ""}`}
               >
                 {age} Bulan {aktif ? "(Aktif)" : ""}
               </button>
             );
           })}
         </div>
-        <div style={{ fontSize: 12, color: "#667085", marginTop: 10, lineHeight: 1.5 }}>
+        <div style={{ fontSize: 12, color: "var(--tv-soft-teks, #667085)", marginTop: 10, lineHeight: 1.5 }}>
           {groupData.deskripsi}
         </div>
       </div>
@@ -219,7 +182,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               marginBottom: 10,
             }}
           >
-            <span style={{ fontSize: 12.5, fontWeight: 700, color: "#667085" }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, color: "var(--tv-soft-teks, #667085)" }}>
               Pertanyaan {langkah + 1} dari {daftarSoal.length} · Terjawab {totalDijawab}
             </span>
             <button
@@ -228,7 +191,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               style={{
                 border: "none",
                 background: "transparent",
-                color: "#667085",
+                color: "var(--tv-soft-teks, #667085)",
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: "pointer",
@@ -242,7 +205,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
           <div
             style={{
               height: 6,
-              background: "#F1F3F8",
+              background: "var(--tv-line, #F1F3F8)",
               borderRadius: 999,
               marginBottom: 14,
               overflow: "hidden",
@@ -252,7 +215,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               style={{
                 height: "100%",
                 width: ((langkah + 1) / daftarSoal.length) * 100 + "%",
-                background: "#0a0b5f",
+                background: "var(--tv-navy, #0a0b5f)",
                 borderRadius: 999,
                 transition: "width .2s ease",
               }}
@@ -272,21 +235,9 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                   title={`Soal #${it.no} (${it.sektorLabel}) ${
                     terjawab ? `- Jawaban: ${jawaban[it.no]!.toUpperCase()}` : "(belum dijawab)"
                   }`}
-                  style={{
-                    width: 28,
-                    height: 28,
-                    borderRadius: 8,
-                    border: aktifDot ? "2px solid #0a0b5f" : "1px solid #E2E8F0",
-                    background: terjawab
-                      ? jawaban[it.no] === "ya"
-                        ? "#0a0b5f"
-                        : "#991B1B"
-                      : "#fff",
-                    color: terjawab ? "#fff" : "#98A2B3",
-                    fontSize: 11,
-                    fontWeight: 700,
-                    cursor: "pointer",
-                  }}
+                  className={`tv-num-dot ${aktifDot ? "active-step" : ""} ${
+                    terjawab ? (jawaban[it.no] === "ya" ? "ans-ya" : "ans-tidak") : ""
+                  }`}
                 >
                   {it.no}
                 </button>
@@ -316,7 +267,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               style={{
                 fontSize: 15,
                 fontWeight: 700,
-                color: "#0a0b4f",
+                color: "var(--tv-teks, #0a0b4f)",
                 marginBottom: 6,
                 lineHeight: 1.5,
               }}
@@ -328,7 +279,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               <div
                 style={{
                   fontSize: 12.5,
-                  color: "#667085",
+                  color: "var(--tv-soft-teks, #667085)",
                   marginBottom: 12,
                   fontStyle: "italic",
                 }}
@@ -345,22 +296,9 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                     key={opt}
                     type="button"
                     onClick={() => pilih(itemAktif.no, opt)}
-                    style={{
-                      flex: 1,
-                      padding: "13px 10px",
-                      borderRadius: 12,
-                      border: aktif ? "none" : "1px solid #E2E8F0",
-                      background: aktif
-                        ? opt === "ya"
-                          ? "#0a0b5f"
-                          : "#991B1B"
-                        : "#fff",
-                      color: aktif ? "#fff" : "#344054",
-                      fontWeight: 700,
-                      fontSize: 14,
-                      cursor: "pointer",
-                      textTransform: "uppercase",
-                    }}
+                    className={`tv-opt-btn ${
+                      aktif ? (opt === "ya" ? "selected-ya" : "selected-tidak") : ""
+                    }`}
                   >
                     {opt === "ya" ? "✓ YA" : "✕ TIDAK"}
                   </button>
@@ -375,17 +313,8 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
               type="button"
               disabled={langkah === 0}
               onClick={() => setLangkah((l) => Math.max(0, l - 1))}
-              style={{
-                flex: 1,
-                padding: "11px",
-                borderRadius: 999,
-                border: "1px solid #E2E8F0",
-                background: "#fff",
-                color: langkah === 0 ? "#CBD5E1" : "#344054",
-                fontWeight: 700,
-                fontSize: 13,
-                cursor: langkah === 0 ? "not-allowed" : "pointer",
-              }}
+              className="tv-btn-sec"
+              style={{ flex: 1, justifyContent: "center" }}
             >
               {"\u2190"} Sebelumnya
             </button>
@@ -395,17 +324,8 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 type="button"
                 disabled={jawaban[itemAktif.no] == null}
                 onClick={() => setLangkah((l) => Math.min(daftarSoal.length - 1, l + 1))}
-                style={{
-                  flex: 1,
-                  padding: "11px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: jawaban[itemAktif.no] != null ? "#0a0b5f" : "#E2E8F0",
-                  color: jawaban[itemAktif.no] != null ? "#fff" : "#98A2B3",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: jawaban[itemAktif.no] != null ? "pointer" : "not-allowed",
-                }}
+                className="tv-btn-pri"
+                style={{ flex: 1 }}
               >
                 Selanjutnya {"\u2192"}
               </button>
@@ -414,17 +334,8 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 type="button"
                 disabled={!semuaTerjawab}
                 onClick={() => setSelesai(true)}
-                style={{
-                  flex: 1,
-                  padding: "11px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: semuaTerjawab ? "#0a0b5f" : "#E2E8F0",
-                  color: semuaTerjawab ? "#fff" : "#98A2B3",
-                  fontWeight: 700,
-                  fontSize: 13,
-                  cursor: semuaTerjawab ? "pointer" : "not-allowed",
-                }}
+                className="tv-btn-pri"
+                style={{ flex: 1 }}
               >
                 Hitung Hasil KPSP
               </button>
@@ -432,7 +343,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
           </div>
 
           {!semuaTerjawab && iniTerakhir && (
-            <p style={{ fontSize: 11.5, color: "#98A2B3", marginTop: 8, textAlign: "center" }}>
+            <p style={{ fontSize: 11.5, color: "var(--tv-soft-teks, #98A2B3)", marginTop: 8, textAlign: "center" }}>
               Masih ada {daftarSoal.length - totalDijawab} pertanyaan belum dijawab — klik nomor di
               atas untuk melengkapinya.
             </p>
@@ -442,10 +353,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
       {/* Hasil Skrining */}
       {selesai && hasil && (
-        <div
-          className="kartu"
-          style={{ marginTop: 14, background: KATEGORI_WARNA[hasil.kategori] }}
-        >
+        <div className={`kartu tv-res-card ${hasil.kategori}`}>
           <div
             style={{
               display: "flex",
@@ -459,7 +367,6 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 style={{
                   fontSize: 13,
                   fontWeight: 700,
-                  color: KATEGORI_TEKS[hasil.kategori],
                 }}
               >
                 Hasil KPSP {selectedAge} Bulan — Total {"'YA'"}: {hasil.totalYa} / {daftarSoal.length}
@@ -468,7 +375,6 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
                 style={{
                   fontSize: 17,
                   fontWeight: 700,
-                  color: KATEGORI_TEKS[hasil.kategori],
                   marginTop: 4,
                 }}
               >
@@ -478,23 +384,14 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
             <button
               type="button"
               onClick={ubahJawaban}
-              style={{
-                border: "1px solid currentColor",
-                background: "#fff",
-                color: KATEGORI_TEKS[hasil.kategori],
-                borderRadius: 999,
-                padding: "6px 12px",
-                fontSize: 11.5,
-                fontWeight: 700,
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-              }}
+              className="tv-btn-sec"
+              style={{ fontSize: 11.5, padding: "6px 12px", borderRadius: 999 }}
             >
               Ubah Jawaban
             </button>
           </div>
 
-          <p style={{ fontSize: 13, color: "#344054", marginTop: 10, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 13, marginTop: 10, lineHeight: 1.6 }}>
             {hasil.saran}
           </p>
 

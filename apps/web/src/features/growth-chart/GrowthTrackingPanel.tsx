@@ -12,6 +12,7 @@ import {
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
+import { GenderAvatar } from "@/widgets/patient-profile/PatientProfile";
 import { hitungIMT } from "./zscore";
 import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
@@ -226,27 +227,24 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
           {/* Tombol Data Pasien */}
           <div
-            className="tv-growth-subcard"
+            className="tv-growth-subcard tv-patient-info-box"
             style={{
-              background: "#FFFFFF",
-              border: "1px solid #CBD5E1",
               borderRadius: 8,
               padding: "7px 14px",
               display: "flex",
               alignItems: "center",
-              gap: 6,
+              gap: 8,
               fontSize: "13px",
-              color: "#1E293B",
               fontWeight: 600,
               boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
             }}
           >
-            <span style={{ fontSize: "14px" }}>👶</span>
+            <GenderAvatar jk={patientProfile.jk} size={22} />
             <div>
-              <span style={{ color: "#0A0B5F", fontWeight: 700 }}>
+              <span className="tv-patient-name">
                 {patientProfile.nama || "An. Tanpa Nama"}
               </span>{" "}
-              <span style={{ color: "#64748B", fontWeight: 500 }}>
+              <span className="tv-patient-meta">
                 ({gender === "female" ? "Perempuan" : "Laki-Laki"} &bull; {records.length} Catatan)
               </span>
             </div>
