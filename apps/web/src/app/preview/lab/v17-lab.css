@@ -1,7 +1,7 @@
 /* === TinyVerse — Interpretasi Lab (port v17 lab-tool, tema etail/navy) === */
 
 .tv-page-lab-wrapper {
-  background: #f8fafc;
+  background: transparent !important;
   min-height: 100vh;
   padding: 24px 16px;
 }

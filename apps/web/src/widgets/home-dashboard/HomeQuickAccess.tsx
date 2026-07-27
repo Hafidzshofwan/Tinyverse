@@ -84,10 +84,14 @@ export function HomeQuickAccess() {
         </p>
       </div>
       <div className="tv-grid">
-        {daftar.map((item) => {
+        {daftar.map((item, index) => {
           const fav = favorit.includes(item.href);
           return (
-            <div key={item.href} className="tv-tool-card">
+            <div
+              key={item.href}
+              className="tv-tool-card"
+              style={{ animationDelay: `${index * 0.05}s` }}
+            >
               <div className="tv-tool-actions">
                 <div className="tv-tool-tooltip-wrapper">
                   <button
