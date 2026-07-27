@@ -4625,6 +4625,149 @@ html.dark .tv-res-card span {
   color: inherit !important;
 }
 
+/* Denver Screening Specific Component Styles */
+.tv-denver-card {
+  background: #FFFFFF;
+  border: 1px solid #EAECF0;
+  color: #101828;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
+}
+
+.tv-denver-item-title {
+  color: #101828;
+}
+
+.tv-denver-item-desc {
+  color: #475569;
+}
+
+.tv-denver-type-tag {
+  color: #667085;
+  background: #F2F4F7;
+}
+
+.tv-denver-milestone-box {
+  background: #F8FAFC;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-milestone-title {
+  color: #344054;
+}
+
+.tv-denver-milestone-footer {
+  color: #667085;
+}
+
+.tv-denver-age-banner {
+  background: #F8FAFC;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-mode-switcher {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+}
+
+.tv-prematur-box {
+  background: #FEF8EE;
+  border: 1px solid #F9DBAF;
+}
+
+.tv-denver-track {
+  background: #EAECF0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tv-denver-metric-box {
+  background: #FAFAFA;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-rekomendasi {
+  background: #F8FAFC;
+  border-left: 4px solid #0A0B5F;
+  color: #1D2939;
+}
+
+/* Dark Mode Overrides for Denver Screening Components */
+[data-theme="dark"] .tv-denver-card,
+html.dark .tv-denver-card {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-denver-item-title,
+html.dark .tv-denver-item-title {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-item-desc,
+html.dark .tv-denver-item-desc {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-denver-type-tag,
+html.dark .tv-denver-type-tag {
+  color: #CBD5E1 !important;
+  background: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-box,
+html.dark .tv-denver-milestone-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-title,
+html.dark .tv-denver-milestone-title {
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-footer,
+html.dark .tv-denver-milestone-footer {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tv-denver-track,
+html.dark .tv-denver-track {
+  background: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-metric-box,
+html.dark .tv-denver-metric-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-rekomendasi,
+html.dark .tv-denver-rekomendasi {
+  background: #1E293B !important;
+  border-left-color: #38BDF8 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-rekomendasi strong,
+html.dark .tv-denver-rekomendasi strong {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tv-denver-age-banner,
+html.dark .tv-denver-age-banner {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .tv-prematur-box,
+html.dark .tv-prematur-box {
+  background: rgba(120, 53, 15, 0.25) !important;
+  border-color: #92400E !important;
+}
+
+
 
 
 

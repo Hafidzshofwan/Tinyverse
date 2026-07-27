@@ -40,7 +40,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
   // Tab Sektor Filter
   const [sektorAktif, setSektorAktif] = useState<DenverSector | "semua">("semua");
-  const [useSvgIcons, setUseSvgIcons] = useState<boolean>(true);
+  const useSvgIcons = true; // Tetapkan vector SVG untuk keseluruhan menu skrining Denver II
 
   // State Jawaban Item: { [itemId]: 'pass' | 'fail' | 'refusal' | 'no-opportunity' }
   const [jawaban, setJawaban] = useState<Record<string, DenverItemResult>>({});
@@ -152,14 +152,14 @@ export function DenverForm({ onBack }: DenverFormProps) {
               margin: 0,
               fontSize: 20,
               fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-              color: "#0A0B5F",
+              color: "var(--tv-navy, #0A0B5F)",
               fontWeight: 700,
               lineHeight: 1.25,
             }}
           >
             Skrining Perkembangan Denver II
           </h2>
-          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "#667085", fontWeight: 600 }}>
+          <p style={{ margin: "2px 0 0 0", fontSize: 12.5, color: "var(--tv-soft-teks, #667085)", fontWeight: 600 }}>
             Denver Development Screening Test (DDST II)
           </p>
         </div>
@@ -167,13 +167,11 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
       {/* Form Informasi Usia & Prematuritas */}
       <div
+        className="kartu"
         style={{
-          background: "#FFFFFF",
-          border: "1px solid #EAECF0",
           borderRadius: 20,
           padding: 20,
           marginBottom: 20,
-          boxShadow: "0 1px 3px rgba(16, 24, 40, 0.03)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
@@ -182,8 +180,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
               width: 32,
               height: 32,
               borderRadius: 10,
-              background: "#0A0B5F14",
-              color: "#0A0B5F",
+              background: "rgba(10, 11, 95, 0.08)",
+              color: "var(--tv-navy, #0A0B5F)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -193,14 +191,14 @@ export function DenverForm({ onBack }: DenverFormProps) {
           >
             📅
           </div>
-          <h3 style={{ margin: 0, fontSize: 15, color: "#0A0B5F", fontWeight: 700, fontFamily: "Fredoka, Quicksand, sans-serif" }}>
+          <h3 style={{ margin: 0, fontSize: 15, color: "var(--tv-navy, #0A0B5F)", fontWeight: 700, fontFamily: "Fredoka, Quicksand, sans-serif" }}>
             Data Tanggal & Usia Pemeriksaan
           </h3>
         </div>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 16 }}>
           <div>
-            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#344054", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--tv-teks, #344054)", marginBottom: 6 }}>
               Tanggal Lahir Anak
             </label>
             <input
@@ -210,20 +208,17 @@ export function DenverForm({ onBack }: DenverFormProps) {
               style={{
                 width: "100%",
                 padding: "9px 12px",
-                border: "1px solid #D0D5DD",
                 borderRadius: 10,
                 fontSize: 13.5,
-                color: "#101828",
                 fontWeight: 600,
                 boxSizing: "border-box",
                 outline: "none",
-                background: "#FAFAFA",
               }}
             />
           </div>
 
           <div>
-            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#344054", marginBottom: 6 }}>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "var(--tv-teks, #344054)", marginBottom: 6 }}>
               Tanggal Tes / Pemeriksaan
             </label>
             <input
@@ -233,14 +228,11 @@ export function DenverForm({ onBack }: DenverFormProps) {
               style={{
                 width: "100%",
                 padding: "9px 12px",
-                border: "1px solid #D0D5DD",
                 borderRadius: 10,
                 fontSize: 13.5,
-                color: "#101828",
                 fontWeight: 600,
                 boxSizing: "border-box",
                 outline: "none",
-                background: "#FAFAFA",
               }}
             />
           </div>
@@ -257,7 +249,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
             </label>
 
             {isPrematur && (
-              <div style={{ marginTop: 12, padding: "12px 14px", background: "#FEF8EE", borderRadius: 12, border: "1px solid #F9DBAF", display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+              <div className="tv-prematur-box" style={{ marginTop: 12, padding: "12px 14px", borderRadius: 12, display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
                 <span style={{ fontSize: 12.5, color: "#93370D", fontWeight: 700 }}>Usia Kehamilan Saat Lahir:</span>
                 <select
                   value={mingguPrematur}
@@ -288,12 +280,11 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
         {/* Display Banner Usia */}
         <div
+          className="tv-denver-age-banner"
           style={{
             marginTop: 18,
             padding: "14px 18px",
-            background: "#F8FAFC",
             borderRadius: 14,
-            border: "1px solid #EAECF0",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -302,10 +293,10 @@ export function DenverForm({ onBack }: DenverFormProps) {
           }}
         >
           <div>
-            <div style={{ fontSize: 11.5, color: "#667085", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
+            <div style={{ fontSize: 11.5, color: "var(--tv-soft-teks, #667085)", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>
               Usia Kronologis Anak
             </div>
-            <div style={{ fontSize: 15, fontWeight: 800, color: "#0A0B5F", marginTop: 2 }}>
+            <div style={{ fontSize: 15, fontWeight: 800, color: "var(--tv-navy, #0A0B5F)", marginTop: 2 }}>
               {calcUsia.usiaTahun > 0 ? `${calcUsia.usiaTahun} Tahun ` : ""}
               {calcUsia.sisaBulan} Bulan {calcUsia.sisaHari} Hari ({calcUsia.usiaBulanEksak} Bln)
             </div>
@@ -325,7 +316,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
           <div
             style={{
               padding: "6px 14px",
-              background: "#0A0B5F",
+              background: "var(--tv-navy, #0A0B5F)",
               color: "#FFFFFF",
               borderRadius: 999,
               fontSize: 12,
@@ -340,67 +331,11 @@ export function DenverForm({ onBack }: DenverFormProps) {
       {/* Sektor Filter Tabs & Status Pengisian */}
       <div style={{ marginBottom: 18 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
-          <div style={{ fontSize: 13, fontWeight: 700, color: "#344054" }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-teks, #344054)" }}>
             Pilih Sektor Perkembangan ({totalDiisi} dari {relevantItems.length} item dinilai)
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-            {/* Mode Switcher SVG vs Emoji */}
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 4,
-                background: "#F8FAFC",
-                padding: "3px 4px",
-                borderRadius: 999,
-                border: "1px solid #E2E8F0",
-              }}
-            >
-              <button
-                type="button"
-                onClick={() => setUseSvgIcons(true)}
-                title="Tampilan Vector SVG Kreatif"
-                style={{
-                  padding: "4px 10px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: useSvgIcons ? "#0A0B5F" : "transparent",
-                  color: useSvgIcons ? "#FFFFFF" : "#64748B",
-                  fontWeight: 700,
-                  fontSize: 11.5,
-                  cursor: "pointer",
-                  transition: "all 0.15s ease",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 4,
-                }}
-              >
-                <span>✨ Vector SVG</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setUseSvgIcons(false)}
-                title="Kembali ke Emoji Klasik"
-                style={{
-                  padding: "4px 10px",
-                  borderRadius: 999,
-                  border: "none",
-                  background: !useSvgIcons ? "#0A0B5F" : "transparent",
-                  color: !useSvgIcons ? "#FFFFFF" : "#64748B",
-                  fontWeight: 700,
-                  fontSize: 11.5,
-                  cursor: "pointer",
-                  transition: "all 0.15s ease",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 4,
-                }}
-              >
-                <span>😄 Emoji Klasik</span>
-              </button>
-            </div>
-
             {totalDiisi > 0 && (
               <button
                 type="button"
@@ -424,20 +359,16 @@ export function DenverForm({ onBack }: DenverFormProps) {
           <button
             type="button"
             onClick={() => setSektorAktif("semua")}
+            className={`tv-age-btn ${sektorAktif === "semua" ? "active" : ""}`}
             style={{
               padding: "8px 16px",
-              borderRadius: 999,
-              border: sektorAktif === "semua" ? "none" : "1px solid #E2E8F0",
-              background: sektorAktif === "semua" ? "#0A0B5F" : "#FFFFFF",
-              color: sektorAktif === "semua" ? "#FFFFFF" : "#344054",
-              fontSize: 12.5,
-              fontWeight: 700,
-              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 8,
               whiteSpace: "nowrap",
-              boxShadow: sektorAktif === "semua" ? "0 2px 4px rgba(10, 11, 95, 0.15)" : "none",
             }}
           >
-            Semua Sektor ({relevantItems.length})
+            <span>Semua Sektor ({relevantItems.length})</span>
           </button>
 
           {(Object.keys(DENVER_SECTORS) as DenverSector[]).map((secKey) => {
@@ -450,20 +381,12 @@ export function DenverForm({ onBack }: DenverFormProps) {
                 key={secKey}
                 type="button"
                 onClick={() => setSektorAktif(secKey)}
+                className={`tv-age-btn ${isSelected ? "active" : ""}`}
                 style={{
-                  padding: "8px 16px",
-                  borderRadius: 999,
-                  border: isSelected ? "none" : "1px solid #E2E8F0",
-                  background: isSelected ? "#0A0B5F" : "#FFFFFF",
-                  color: isSelected ? "#FFFFFF" : "#344054",
-                  fontSize: 12.5,
-                  fontWeight: 700,
-                  cursor: "pointer",
-                  whiteSpace: "nowrap",
                   display: "inline-flex",
                   alignItems: "center",
                   gap: 8,
-                  boxShadow: isSelected ? "0 2px 4px rgba(10, 11, 95, 0.15)" : "none",
+                  whiteSpace: "nowrap",
                 }}
               >
                 <SectorIcon
@@ -476,8 +399,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
                 <span
                   style={{
                     fontSize: 11,
-                    background: isSelected ? "rgba(255,255,255,0.2)" : "#F2F4F7",
-                    color: isSelected ? "#FFFFFF" : "#475569",
+                    background: isSelected ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.08)",
+                    color: "inherit",
                     padding: "1px 7px",
                     borderRadius: 999,
                     fontWeight: 700,
@@ -520,18 +443,17 @@ export function DenverForm({ onBack }: DenverFormProps) {
             return (
               <div
                 key={item.id}
+                className="kartu tv-denver-card"
                 style={{
-                  background: "#FFFFFF",
                   border: currentRes === "fail" && isDelayEligible
                     ? "1.5px solid #FDA29B"
                     : currentRes === "fail" && isCautionEligible
                     ? "1.5px solid #FEC84B"
                     : currentRes === "pass"
                     ? "1.5px solid #6EE7B7"
-                    : "1px solid #EAECF0",
+                    : undefined,
                   borderRadius: 18,
                   padding: "18px 20px",
-                  boxShadow: "0 1px 3px rgba(16, 24, 40, 0.03)",
                   transition: "all 0.15s ease",
                 }}
               >
@@ -560,7 +482,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
                       <span>{secInfo.nama}</span>
                     </span>
                     {item.tipe && (
-                      <span style={{ fontSize: 11, color: "#667085", background: "#F2F4F7", padding: "2px 8px", borderRadius: 6, fontWeight: 600 }}>
+                      <span className="tv-denver-type-tag" style={{ fontSize: 11, padding: "2px 8px", borderRadius: 6, fontWeight: 600 }}>
                         {item.tipe === "langsung" ? "Pengamatan Langsung" : item.tipe === "laporan" ? "Laporan Orang Tua" : "Pengamatan / Laporan"}
                       </span>
                     )}
@@ -579,28 +501,27 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   )}
                 </div>
 
-                <h4 style={{ margin: "0 0 6px 0", fontSize: 15, fontWeight: 700, color: "#101828", lineHeight: 1.35 }}>
+                <h4 className="tv-denver-item-title" style={{ margin: "0 0 6px 0", fontSize: 15, fontWeight: 700, lineHeight: 1.35 }}>
                   {item.namaIndo}
                 </h4>
 
                 {item.petunjuk && (
-                  <p style={{ margin: "0 0 14px 0", fontSize: 12.5, color: "#475569", lineHeight: 1.5 }}>
+                  <p className="tv-denver-item-desc" style={{ margin: "0 0 14px 0", fontSize: 12.5, lineHeight: 1.5 }}>
                     {item.petunjuk}
                   </p>
                 )}
 
                 {/* Colorful Denver II Milestone Scale */}
                 <div
+                  className="tv-denver-milestone-box"
                   style={{
-                    background: "#F8FAFC",
-                    border: "1px solid #EAECF0",
                     borderRadius: 14,
                     padding: "12px 16px",
                     marginBottom: 16,
                   }}
                 >
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 11, fontWeight: 700, marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
-                    <span style={{ color: "#344054", display: "flex", alignItems: "center", gap: 5 }}>
+                    <span className="tv-denver-milestone-title" style={{ display: "flex", alignItems: "center", gap: 5 }}>
                       <span>📊</span> Skala Persentil Milestone:
                     </span>
                     <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 10.5, fontWeight: 700 }}>
@@ -623,7 +544,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
                     return (
                       <div style={{ position: "relative", padding: "6px 0" }}>
                         {/* Track Background */}
-                        <div style={{ position: "relative", height: 16, background: "#EAECF0", borderRadius: 999, overflow: "hidden", boxShadow: "inset 0 1px 2px rgba(0,0,0,0.06)" }}>
+                        <div className="tv-denver-track" style={{ position: "relative", height: 16, borderRadius: 999, overflow: "hidden" }}>
                           {/* Segment 25% - 50% (Sky Blue) */}
                           <div
                             style={{
@@ -701,7 +622,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
                     );
                   })()}
 
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10.5, color: "#667085", marginTop: 4, fontWeight: 700 }}>
+                  <div className="tv-denver-milestone-footer" style={{ display: "flex", justifyContent: "space-between", fontSize: 10.5, marginTop: 4, fontWeight: 700 }}>
                     <span>0 bln</span>
                     <span style={{ color: "#E11D48", fontWeight: 800 }}>
                       Garis Usia: {effectiveAgeMonths} Bln
@@ -715,20 +636,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   <button
                     type="button"
                     onClick={() => handleSetJawaban(item.id, "pass")}
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 10,
-                      border: currentRes === "pass" ? "1.5px solid #10B981" : "1px solid #D0D5DD",
-                      background: currentRes === "pass" ? "#ECFDF5" : "#FFFFFF",
-                      color: currentRes === "pass" ? "#047857" : "#344054",
-                      fontWeight: 700,
-                      fontSize: 12.5,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 6,
-                    }}
+                    className={`tv-opt-btn ${currentRes === "pass" ? "selected-pass" : ""}`}
+                    style={{ padding: "8px 12px", borderRadius: 10, fontSize: 12.5, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, textTransform: "none" }}
                   >
                     <span>✅</span>
                     <span>Lulus (P)</span>
@@ -737,20 +646,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   <button
                     type="button"
                     onClick={() => handleSetJawaban(item.id, "fail")}
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 10,
-                      border: currentRes === "fail" ? "1.5px solid #EF4444" : "1px solid #D0D5DD",
-                      background: currentRes === "fail" ? "#FEF2F2" : "#FFFFFF",
-                      color: currentRes === "fail" ? "#B42318" : "#344054",
-                      fontWeight: 700,
-                      fontSize: 12.5,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 6,
-                    }}
+                    className={`tv-opt-btn ${currentRes === "fail" ? "selected-fail" : ""}`}
+                    style={{ padding: "8px 12px", borderRadius: 10, fontSize: 12.5, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, textTransform: "none" }}
                   >
                     <span>❌</span>
                     <span>Gagal (F)</span>
@@ -759,20 +656,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   <button
                     type="button"
                     onClick={() => handleSetJawaban(item.id, "refusal")}
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 10,
-                      border: currentRes === "refusal" ? "1.5px solid #F59E0B" : "1px solid #D0D5DD",
-                      background: currentRes === "refusal" ? "#FFFBEB" : "#FFFFFF",
-                      color: currentRes === "refusal" ? "#B45309" : "#344054",
-                      fontWeight: 700,
-                      fontSize: 12.5,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 6,
-                    }}
+                    className={`tv-opt-btn ${currentRes === "refusal" ? "selected-tidak" : ""}`}
+                    style={{ padding: "8px 12px", borderRadius: 10, fontSize: 12.5, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, textTransform: "none" }}
                   >
                     <span>🚫</span>
                     <span>Menolak (R)</span>
@@ -781,20 +666,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
                   <button
                     type="button"
                     onClick={() => handleSetJawaban(item.id, "no-opportunity")}
-                    style={{
-                      padding: "8px 12px",
-                      borderRadius: 10,
-                      border: currentRes === "no-opportunity" ? "1.5px solid #64748B" : "1px solid #D0D5DD",
-                      background: currentRes === "no-opportunity" ? "#F8FAFC" : "#FFFFFF",
-                      color: currentRes === "no-opportunity" ? "#1E293B" : "#64748B",
-                      fontWeight: 700,
-                      fontSize: 12.5,
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 6,
-                    }}
+                    className={`tv-opt-btn ${currentRes === "no-opportunity" ? "selected-tidak" : ""}`}
+                    style={{ padding: "8px 12px", borderRadius: 10, fontSize: 12.5, display: "flex", alignItems: "center", justifyContent: "center", gap: 6, textTransform: "none" }}
                   >
                     <span>⚪</span>
                     <span>Tak Kesempatan</span>
@@ -809,8 +682,8 @@ export function DenverForm({ onBack }: DenverFormProps) {
       {/* Ringkasan & Interpretasi Hasil Skrining */}
       {hasil && (
         <div
+          className="kartu tv-denver-card"
           style={{
-            background: "#FFFFFF",
             border: hasil.kategori === "suspect"
               ? "1.5px solid #FDA29B"
               : hasil.kategori === "untestable"
@@ -822,7 +695,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 16 }}>
-            <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "#0A0B5F", fontFamily: "Fredoka, Quicksand, sans-serif", display: "flex", alignItems: "center", gap: 8 }}>
+            <h3 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "var(--tv-navy, #0A0B5F)", fontFamily: "Fredoka, Quicksand, sans-serif", display: "flex", alignItems: "center", gap: 8 }}>
               <span>📊</span> Interpretasi Hasil Denver II
             </h3>
 
@@ -855,9 +728,9 @@ export function DenverForm({ onBack }: DenverFormProps) {
 
           {/* Metric Summary Counter */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))", gap: 10, marginBottom: 18 }}>
-            <div style={{ background: "#FAFAFA", padding: "10px 12px", borderRadius: 12, textAlign: "center", border: "1px solid #EAECF0" }}>
-              <div style={{ fontSize: 11, color: "#667085", fontWeight: 700 }}>Item Diuji</div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: "#101828", marginTop: 2 }}>{hasil.totalItemDiuji}</div>
+            <div className="tv-denver-metric-box" style={{ padding: "10px 12px", borderRadius: 12, textAlign: "center" }}>
+              <div style={{ fontSize: 11, color: "var(--tv-soft-teks, #667085)", fontWeight: 700 }}>Item Diuji</div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: "var(--tv-teks, #101828)", marginTop: 2 }}>{hasil.totalItemDiuji}</div>
             </div>
             <div style={{ background: "#ECFDF5", padding: "10px 12px", borderRadius: 12, textAlign: "center", border: "1px solid #A7F3D0" }}>
               <div style={{ fontSize: 11, color: "#047857", fontWeight: 700 }}>Lulus (P)</div>
@@ -877,12 +750,12 @@ export function DenverForm({ onBack }: DenverFormProps) {
             </div>
           </div>
 
-          <p style={{ margin: "0 0 12px 0", fontSize: 13, color: "#344054", lineHeight: 1.5, fontWeight: 500 }}>
-            <strong style={{ color: "#101828" }}>Penjelasan:</strong> {hasil.penjelasan}
+          <p style={{ margin: "0 0 12px 0", fontSize: 13, color: "var(--tv-teks, #344054)", lineHeight: 1.5, fontWeight: 500 }}>
+            <strong style={{ color: "var(--tv-navy, #101828)" }}>Penjelasan:</strong> {hasil.penjelasan}
           </p>
 
-          <div style={{ margin: "0 0 20px 0", fontSize: 13, color: "#1D2939", lineHeight: 1.55, background: "#F8FAFC", padding: 14, borderRadius: 12, borderLeft: "4px solid #0A0B5F", fontWeight: 500 }}>
-            <strong style={{ color: "#0A0B5F" }}>💡 Rekomendasi Klinis:</strong> {hasil.saranKlinis}
+          <div className="tv-denver-rekomendasi" style={{ margin: "0 0 20px 0", fontSize: 13, lineHeight: 1.55, padding: 14, borderRadius: 12, fontWeight: 500 }}>
+            <strong style={{ color: "var(--tv-navy, #0A0B5F)" }}>💡 Rekomendasi Klinis:</strong> {hasil.saranKlinis}
           </div>
 
           <div style={{ display: "flex", justifyContent: "flex-end" }}>
