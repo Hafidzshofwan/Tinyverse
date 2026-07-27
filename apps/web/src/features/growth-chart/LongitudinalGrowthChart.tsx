@@ -293,26 +293,34 @@ export function LongitudinalGrowthChart({
       <div style={{ width: "100%", height: 330 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={chartData} margin={{ top: 10, right: 15, left: 10, bottom: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#F1F5F9" vertical={false} />
-            <XAxis dataKey="usiaLabel" stroke="#94A3B8" fontSize={11} tickLine={false} axisLine={{ stroke: "#E2E8F0" }} />
-            <YAxis
-              stroke="#64748B"
+            <CartesianGrid strokeDasharray="3 3" stroke="#CBD5E1" vertical={false} />
+            <XAxis
+              dataKey="usiaLabel"
+              stroke="#475467"
               fontSize={11}
-              tickLine={false}
-              axisLine={{ stroke: "#E2E8F0" }}
+              tickLine={{ stroke: "#64748B" }}
+              axisLine={{ stroke: "#475467", strokeWidth: 1.5 }}
+              tick={{ fill: "#1E293B", fontSize: 11, fontWeight: 600 }}
+            />
+            <YAxis
+              stroke="#475467"
+              fontSize={11}
+              tickLine={{ stroke: "#64748B" }}
+              axisLine={{ stroke: "#475467", strokeWidth: 1.5 }}
+              tick={{ fill: "#1E293B", fontSize: 11, fontWeight: 600 }}
               domain={["auto", "auto"]}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: "0.75rem", paddingBottom: "8px" }} />
 
             {/* WHO Standard Lines */}
-            <Line type="monotone" dataKey="sdPlus3" name="+3 SD" stroke="#F87171" strokeDasharray="4 4" dot={false} strokeWidth={1} />
-            <Line type="monotone" dataKey="sdPlus2" name="+2 SD" stroke="#FBBF24" strokeDasharray="4 4" dot={false} strokeWidth={1} />
-            <Line type="monotone" dataKey="sdPlus1" name="+1 SD" stroke="#CBD5E1" strokeDasharray="2 2" dot={false} strokeWidth={1} />
-            <Line type="monotone" dataKey="sdMedian" name="Median (0 SD)" stroke="#059669" dot={false} strokeWidth={2} />
-            <Line type="monotone" dataKey="sdMinus1" name="-1 SD" stroke="#CBD5E1" strokeDasharray="2 2" dot={false} strokeWidth={1} />
-            <Line type="monotone" dataKey="sdMinus2" name="-2 SD" stroke="#FBBF24" strokeDasharray="4 4" dot={false} strokeWidth={1} />
-            <Line type="monotone" dataKey="sdMinus3" name="-3 SD" stroke="#F87171" strokeDasharray="4 4" dot={false} strokeWidth={1} />
+            <Line type="monotone" dataKey="sdPlus3" name="+3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
+            <Line type="monotone" dataKey="sdPlus2" name="+2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
+            <Line type="monotone" dataKey="sdPlus1" name="+1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} />
+            <Line type="monotone" dataKey="sdMedian" name="Median (0 SD)" stroke="#059669" dot={false} strokeWidth={2.5} />
+            <Line type="monotone" dataKey="sdMinus1" name="-1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} />
+            <Line type="monotone" dataKey="sdMinus2" name="-2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
+            <Line type="monotone" dataKey="sdMinus3" name="-3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
 
             {/* Patient Recorded Trend Line */}
             <Line

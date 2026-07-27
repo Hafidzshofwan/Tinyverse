@@ -53,6 +53,15 @@ function TrashIcon({ size = 14, color = "currentColor" }: { size?: number; color
   );
 }
 
+function SearchIcon({ size = 14, color = "currentColor", style }: { size?: number; color?: string; style?: React.CSSProperties }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
+
 function LightbulbIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -112,7 +121,16 @@ export function AiAssistantWidget() {
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [showSessionsPanel, setShowSessionsPanel] = useState(false);
+  const [sessionSearchQuery, setSessionSearchQuery] = useState("");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+
+  const filteredSessions = sessions.filter((s) => {
+    if (!sessionSearchQuery.trim()) return true;
+    const q = sessionSearchQuery.toLowerCase();
+    const matchTitle = (s.title || "").toLowerCase().includes(q);
+    const matchMsg = s.messages?.some((m) => m.text?.toLowerCase().includes(q));
+    return matchTitle || matchMsg;
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
@@ -619,12 +637,37 @@ export function AiAssistantWidget() {
                     alignItems: "center",
                     justifyContent: "space-between",
                     marginBottom: 10,
+                    gap: 8,
                   }}
                 >
-                  <div style={{ fontSize: 12, fontWeight: 700, color: "var(--tv-teks, #0a0b5f)", display: "flex", alignItems: "center", gap: 6 }}>
-                    <FolderIcon size={14} color="var(--tv-accent, #ec4899)" />
-                    <span>Sesi Diskusi Klinis Tersimpan</span>
-                    <span style={{ fontSize: 11, color: "var(--tv-soft-teks, #64748b)", fontWeight: 500 }}>({sessions.length})</span>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: "var(--tv-teks, #0a0b5f)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      minWidth: 0,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    <FolderIcon size={15} color="var(--tv-accent, #ec4899)" />
+                    <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Sesi Tersimpan</span>
+                    <span
+                      style={{
+                        fontSize: 11,
+                        color: "var(--tv-accent, #ec4899)",
+                        backgroundColor: "rgba(236, 72, 153, 0.12)",
+                        padding: "2px 7px",
+                        borderRadius: 10,
+                        fontWeight: 700,
+                        whiteSpace: "nowrap",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {sessionSearchQuery.trim() ? `${filteredSessions.length}/${sessions.length}` : sessions.length}
+                    </span>
                   </div>
                   <button
                     type="button"
@@ -634,17 +677,20 @@ export function AiAssistantWidget() {
                       showToast("Sesi baru dibuat!");
                     }}
                     style={{
-                      fontSize: 11,
+                      fontSize: 11.5,
                       color: "#ffffff",
                       backgroundColor: "var(--tv-accent, #ec4899)",
                       border: "none",
-                      padding: "4px 10px",
-                      borderRadius: 12,
+                      padding: "6px 12px",
+                      borderRadius: 10,
                       fontWeight: 700,
                       cursor: "pointer",
-                      display: "flex",
+                      display: "inline-flex",
                       alignItems: "center",
-                      gap: 4,
+                      gap: 5,
+                      whiteSpace: "nowrap",
+                      flexShrink: 0,
+                      boxShadow: "0 2px 8px rgba(236, 72, 153, 0.25)",
                     }}
                   >
                     <PlusIcon size={12} color="#ffffff" />
@@ -652,13 +698,59 @@ export function AiAssistantWidget() {
                   </button>
                 </div>
 
+                {sessions.length > 0 && (
+                  <div style={{ marginBottom: 10, position: "relative" }}>
+                    <input
+                      type="text"
+                      value={sessionSearchQuery}
+                      onChange={(e) => setSessionSearchQuery(e.target.value)}
+                      placeholder="Cari riwayat sesi..."
+                      style={{
+                        width: "100%",
+                        padding: "6px 10px 6px 30px",
+                        fontSize: 12,
+                        borderRadius: 8,
+                        border: "1px solid var(--tv-line, #e2e8f0)",
+                        backgroundColor: "var(--tv-putih, #ffffff)",
+                        color: "var(--tv-teks, #0f172a)",
+                        outline: "none",
+                      }}
+                    />
+                    <SearchIcon size={13} color="var(--tv-soft-teks, #94a3b8)" style={{ position: "absolute", left: 9, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
+                    {sessionSearchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => setSessionSearchQuery("")}
+                        style={{
+                          position: "absolute",
+                          right: 8,
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          background: "none",
+                          border: "none",
+                          fontSize: 11,
+                          color: "var(--tv-soft-teks, #94a3b8)",
+                          cursor: "pointer",
+                          padding: "2px 4px",
+                        }}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                )}
+
                 {sessions.length === 0 ? (
                   <div style={{ fontSize: 12, color: "var(--tv-soft-teks, #64748b)", fontStyle: "italic", textAlign: "center", padding: "16px 0" }}>
                     Belum ada sesi diskusi yang tersimpan. Mulai bertanya dan klik &quot;Simpan&quot;!
                   </div>
+                ) : filteredSessions.length === 0 ? (
+                  <div style={{ fontSize: 12, color: "var(--tv-soft-teks, #64748b)", fontStyle: "italic", textAlign: "center", padding: "16px 0" }}>
+                    Tidak ada sesi yang cocok dengan &quot;{sessionSearchQuery}&quot;.
+                  </div>
                 ) : (
                   <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    {sessions.map((s) => {
+                    {filteredSessions.map((s) => {
                       const isActive = s.id === activeSessionId;
                       const msgCount = s.messages ? s.messages.length : 0;
                       const dateFormatted = new Date(s.updatedAt || s.createdAt).toLocaleDateString("id-ID", {

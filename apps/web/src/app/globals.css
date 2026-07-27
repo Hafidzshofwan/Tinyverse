@@ -1200,7 +1200,7 @@ body {
 
 .tv-tool-card {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   gap: 7px;
@@ -1627,14 +1627,16 @@ body {
   top: calc(100% + 8px);
   right: 0;
   width: 260px;
+  max-width: min(260px, calc(100vw - 32px));
   padding: 12px 14px;
   border-radius: 14px;
   background: #0f172a;
+  border: 1px solid #334155;
   color: #f8fafc;
-  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.38);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
   font-size: 0.8rem;
   line-height: 1.45;
-  z-index: 50;
+  z-index: 999;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
@@ -1655,6 +1657,7 @@ body {
 .tv-tool-tooltip-wrapper {
   position: relative;
   display: inline-block;
+  z-index: 50;
 }
 
 .tv-tool-tooltip-wrapper:hover .tv-tool-tooltip-box,
@@ -1706,7 +1709,7 @@ body {
 }
 .tv-fav-item {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -4022,19 +4025,30 @@ body.tv-tanpa-dekorasi .bg-decor {
 }
 
 /* Recharts Charts Dark Customizations */
-[data-theme="dark"] .tv-growth-panel-root .recharts-cartesian-grid line {
-  stroke: rgba(255, 255, 255, 0.12) !important;
+[data-theme="dark"] .recharts-cartesian-grid line,
+html.dark .recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.18) !important;
 }
 
-[data-theme="dark"] .tv-growth-panel-root .recharts-text.recharts-cartesian-axis-tick-value {
-  fill: #94A3B8 !important;
+[data-theme="dark"] .recharts-text.recharts-cartesian-axis-tick-value,
+html.dark .recharts-text.recharts-cartesian-axis-tick-value,
+[data-theme="dark"] .recharts-cartesian-axis-tick tspan,
+html.dark .recharts-cartesian-axis-tick tspan {
+  fill: #CBD5E1 !important;
 }
 
-[data-theme="dark"] .tv-growth-panel-root .recharts-legend-item-text {
+[data-theme="dark"] .recharts-cartesian-axis-line,
+html.dark .recharts-cartesian-axis-line {
+  stroke: #475569 !important;
+}
+
+[data-theme="dark"] .recharts-legend-item-text,
+html.dark .recharts-legend-item-text {
   color: #CBD5E1 !important;
 }
 
-[data-theme="dark"] .tv-growth-panel-root .recharts-default-tooltip {
+[data-theme="dark"] .recharts-default-tooltip,
+html.dark .recharts-default-tooltip {
   background-color: #0F172A !important;
   border-color: rgba(255, 255, 255, 0.2) !important;
   color: #F8FAFC !important;
