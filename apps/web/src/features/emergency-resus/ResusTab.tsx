@@ -710,28 +710,6 @@ export function ResusTab({
     }, 350);
   };
 
-  const kotak: CSSProperties = {
-    border: "1px solid #FDECEC",
-    background: "#fff",
-    borderRadius: 14,
-    padding: "10px 12px",
-    marginBottom: 10,
-  };
-  const judulKotak: CSSProperties = {
-    fontSize: 12,
-    fontWeight: 700,
-    color: "#2A0A0C",
-    marginBottom: 6,
-  };
-  const coachBtn: CSSProperties = {
-    padding: "10px 12px",
-    borderRadius: 12,
-    fontWeight: 800,
-    cursor: "pointer",
-    border: "none",
-    color: "#fff",
-    background: "linear-gradient(135deg,#E11D2A,#B00C1A)",
-  };
   const overlay: CSSProperties = {
     position: "fixed",
     inset: 0,
@@ -754,18 +732,7 @@ export function ResusTab({
     background: "rgba(255,255,255,0.12)",
     color: "#fff",
   };
-  const caption: CSSProperties = { marginTop: 8, fontSize: 12, color: "#8a7f80" };
-  const voiceWarn: CSSProperties = {
-    marginBottom: 10,
-    fontSize: 12,
-    fontWeight: 600,
-    color: "#B00C1A",
-    background: "#FDECEC",
-    border: "1px solid #f5cfd2",
-    borderRadius: 10,
-    padding: "8px 10px",
-  };
-
+  
   return (
     <div className="drt-panel">
       <h3 style={{ display: "flex", alignItems: "center", gap: "8px" }}>

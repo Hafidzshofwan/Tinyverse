@@ -29,7 +29,6 @@ const actionsRow: CSSProperties = {
   gap: 10,
   marginTop: 4,
 };
-const btnAuto: CSSProperties = { width: "auto" };
 const itemCard: CSSProperties = {
   border: "1px solid var(--tv-line)",
   borderRadius: 12,
