@@ -914,7 +914,7 @@ export function ResusTab({
           terbaru (di laptop/Android).
         </div>
       ) : null}
-      {voiceErr ? <div style={voiceWarn}>{voiceErr}</div> : null}
+      {voiceErr ? <div>{voiceErr}</div> : null}
       {voiceDiag ? (
         <div
           style={{
