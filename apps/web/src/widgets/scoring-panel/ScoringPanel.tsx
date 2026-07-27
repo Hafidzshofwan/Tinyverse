@@ -45,14 +45,14 @@ const leadStyle: CSSProperties = {
 
 export function ScoringPanel() {
   return (
-    <div style={wrapStyle}>
+    <div style={wrapStyle} className="tv-page-skoring-wrapper">
       <div style={headRow}>
-        <div style={icoStyle} aria-hidden="true">
+        <div style={icoStyle} className="tv-skor-header-ico" aria-hidden="true">
           <ClinicalScoreIcon id="header" size={24} fallbackEmoji="🧮" />
         </div>
         <div>
-          <h1 style={titleStyle}>Skoring Klinis</h1>
-          <p style={leadStyle}>Skor klinis pediatri tervalidasi.</p>
+          <h1 style={titleStyle} className="tv-skor-header-title">Skoring Klinis</h1>
+          <p style={leadStyle} className="tv-skor-header-lead">Skor klinis pediatri tervalidasi.</p>
         </div>
       </div>
       <section className="tv-card tv-stack">

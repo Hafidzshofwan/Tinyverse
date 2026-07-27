@@ -655,21 +655,20 @@ a:focus-visible {
 }
 
 /* Domain Previews (Darurat, Cairan, Imunisasi, Lab) */
-[data-theme="dark"] .tv-page-darurat-wrapper,
-[data-theme="dark"] .tv-page-imunisasi-wrapper,
-[data-theme="dark"] .tv-page-lab-wrapper {
+[data-theme="dark"] .tv-page-imunisasi-wrapper {
   background: #0b0f19 !important;
   color: #f8fafc;
 }
 
-[data-theme="dark"] .tv-page-cairan-wrapper {
+[data-theme="dark"] .tv-page-darurat-wrapper,
+[data-theme="dark"] .tv-page-cairan-wrapper,
+[data-theme="dark"] .tv-page-skoring-wrapper,
+[data-theme="dark"] .tv-page-lab-wrapper {
   background: transparent !important;
   color: #f8fafc;
 }
 
-[data-theme="dark"] .tv-page-darurat .drt-pasien-bar,
-[data-theme="dark"] .tv-page-imunisasi .kartu,
-[data-theme="dark"] .tv-page-lab .kartu {
+[data-theme="dark"] .tv-page-imunisasi .kartu {
   background: #1e293b;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
@@ -3194,3 +3193,167 @@ body.tv-tanpa-dekorasi .bg-decor {
   color: #d936a6 !important;
   box-shadow: none !important;
 }
+
+/* ===== SKORING KLINIS DARK MODE OVERRIDES ===== */
+[data-theme="dark"] .tv-skor-header-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-header-lead {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-header-ico {
+  background: rgba(217, 54, 166, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(217, 54, 166, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-skor-pasien-aktif {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-pasien-aktif strong {
+  color: #f8fafc !important;
+}
+
+/* Skoring Catalog Cards (button#skor-cds, #skor-croup, #skor-pas, etc.) */
+[data-theme="dark"] .tv-skor-card {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-card:hover {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border-color: rgba(217, 54, 166, 0.5) !important;
+  box-shadow: 0 10px 30px rgba(217, 54, 166, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-skor-card-ic {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-skor-card-nama {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-card-ket {
+  color: #cbd5e1 !important;
+}
+
+/* Detail Skoring View */
+[data-theme="dark"] .tv-skor-back {
+  color: #f472b6 !important;
+}
+
+[data-theme="dark"] .tv-skor-detail-nama {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-detail-ket {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-param {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-skor-label {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-auto-tag {
+  background: rgba(217, 54, 166, 0.3) !important;
+  color: #f472b6 !important;
+  border: 1px solid rgba(244, 114, 182, 0.3) !important;
+}
+
+[data-theme="dark"] .tv-skor-opt {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-opt:hover {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-skor-opt.aktif {
+  background: linear-gradient(160deg, #d936a6, #9d1772) !important;
+  border-color: #d936a6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.4) !important;
+}
+
+[data-theme="dark"] .tv-skor-poin {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-opt.aktif .tv-skor-poin {
+  color: #ffffff !important;
+}
+
+/* Hasil / Results */
+[data-theme="dark"] .tv-skor-hasil {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.ok {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.ok .tv-skor-kat {
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.warn {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border-color: rgba(245, 158, 11, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.warn .tv-skor-kat {
+  color: #fbbf24 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.crit {
+  background: rgba(239, 68, 68, 0.18) !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.crit .tv-skor-kat {
+  color: #f87171 !important;
+}
+
+[data-theme="dark"] .tv-skor-total {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-total strong {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-saran {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-sumber {
+  color: #94a3b8 !important;
+}
+
