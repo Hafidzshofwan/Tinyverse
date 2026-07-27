@@ -128,14 +128,14 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
 
       {/* Pasien Aktif Info */}
       {(profil.nama || profil.usiaBulan != null) && (
-        <div className="tv-patient-active-banner">
-          {"\uD83D\uDC64"} Pasien aktif: <strong>{profil.nama || "(tanpa nama)"}</strong>
+        <div className="tv-patient-active-banner tv-patient-info" style={{ borderRadius: 16 }}>
+          {"\uD83D\uDC64"} Pasien aktif: <strong className="tv-patient-name">{profil.nama || "(tanpa nama)"}</strong>
           {profil.usiaBulan != null ? " \u00b7 " + usiaTeks(profil.usiaBulan) : ""}
         </div>
       )}
 
       {/* Selector Usia KPSP */}
-      <div className="kartu" style={{ marginBottom: 16 }}>
+      <div className="kartu" style={{ marginBottom: 16, borderRadius: 20 }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-teks, #0a0b4f)", marginBottom: 8 }}>
           Pilih Kelompok Usia KPSP:
         </div>
@@ -160,7 +160,7 @@ export function KpspForm({ onBack }: { onBack?: () => void } = {}) {
       </div>
 
       {!selesai && (
-        <div className="kartu">
+        <div className="kartu" style={{ borderRadius: 20 }}>
           {/* Progress bar + header */}
           <div
             style={{

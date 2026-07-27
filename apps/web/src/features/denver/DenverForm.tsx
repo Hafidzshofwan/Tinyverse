@@ -314,6 +314,7 @@ export function DenverForm({ onBack }: DenverFormProps) {
           )}
 
           <div
+            className="tv-denver-garis-pill"
             style={{
               padding: "6px 14px",
               background: "var(--tv-navy, #0A0B5F)",

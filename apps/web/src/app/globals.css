@@ -4767,6 +4767,72 @@ html.dark .tv-prematur-box {
   border-color: #92400E !important;
 }
 
+[data-theme="dark"] .tv-denver-garis-pill,
+html.dark .tv-denver-garis-pill {
+  color: #0A0B5F !important;
+}
+
+/* ================================================================
+   KPSP & DENVER RECTANGLE ROUNDED CORNERS & DARK MODE LIGHT PATIENT DATA
+   ================================================================ */
+
+/* Rounded corners for general .kartu rectangle boxes (age groups, questions) */
+.kartu {
+  background: var(--tv-card, #ffffff);
+  border: 1px solid var(--tv-line, #E2E8F0);
+  border-radius: 20px !important;
+  padding: 20px;
+  box-shadow: var(--tv-chunky-sm, 0 4px 16px rgba(10, 11, 95, 0.06));
+  overflow: hidden;
+}
+
+[data-theme="dark"] .kartu,
+html.dark .kartu {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+  color: #F8FAFC !important;
+}
+
+/* Brighter & Lighter Patient Data in Dark Mode */
+[data-theme="dark"] .tv-patient-active-banner,
+html.dark .tv-patient-active-banner,
+[data-theme="dark"] .tv-pasien-aktif-banner,
+html.dark .tv-pasien-aktif-banner,
+[data-theme="dark"] .tv-patient-info-box,
+html.dark .tv-patient-info-box {
+  background: rgba(30, 58, 138, 0.45) !important;
+  border: 1.5px solid #38BDF8 !important;
+  color: #7DD3FC !important;
+  border-radius: 16px !important;
+}
+
+[data-theme="dark"] .tv-patient-active-banner strong,
+html.dark .tv-patient-active-banner strong,
+[data-theme="dark"] .tv-pasien-aktif-banner strong,
+html.dark .tv-pasien-aktif-banner strong,
+[data-theme="dark"] .tv-patient-info-box strong,
+html.dark .tv-patient-info-box strong,
+[data-theme="dark"] .tv-patient-name,
+html.dark .tv-patient-name,
+[data-theme="dark"] .tv-pas-chip-nama,
+html.dark .tv-pas-chip-nama {
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+[data-theme="dark"] .tv-patient-meta,
+html.dark .tv-patient-meta,
+[data-theme="dark"] .tv-patient-sub,
+html.dark .tv-patient-sub,
+[data-theme="dark"] .tv-pas-item-sub,
+html.dark .tv-pas-item-sub {
+  color: #E2E8F0 !important;
+}
+
+
 
 
 

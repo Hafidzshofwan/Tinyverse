@@ -1024,7 +1024,7 @@ export function PatientTopBarChip() {
         <span className="tv-pas-topchip-txt">
           {hasActive ? (
             <>
-              <strong>{activeProfile.nama || "Pasien Aktif"}</strong>
+              <strong className="tv-pas-chip-nama">{activeProfile.nama || "Pasien Aktif"}</strong>
               {activeProfile.bb != null && ` • ${activeProfile.bb} kg`}
               {activeProfile.noRm && ` (${activeProfile.noRm})`}
             </>
