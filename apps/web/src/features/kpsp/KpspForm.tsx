@@ -19,18 +19,6 @@ function usiaTeks(bulan: number): string {
   return sisa ? th + " th " + sisa + " bln" : th + " tahun";
 }
 
-const KATEGORI_WARNA: Record<string, string> = {
-  sesuai: "#ECFDF5",
-  meragukan: "#FFFBEB",
-  penyimpangan: "#FEF2F2",
-};
-
-const KATEGORI_TEKS: Record<string, string> = {
-  sesuai: "#047857",
-  meragukan: "#B45309",
-  penyimpangan: "#B42318",
-};
-
 const SEKTOR_WARNA: Record<KpspSektor, { bg: string; fg: string }> = {
   kasar: { bg: "#EFF6FF", fg: "#1D4ED8" },
   halus: { bg: "#F0FDF4", fg: "#15803D" },

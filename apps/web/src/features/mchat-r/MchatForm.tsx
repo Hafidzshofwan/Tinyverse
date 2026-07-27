@@ -13,17 +13,6 @@ function usiaTeks(bulan: number): string {
   return sisa ? th + " th " + sisa + " bln" : th + " tahun";
 }
 
-const KATEGORI_WARNA: Record<string, string> = {
-  rendah: "#ECFDF5",
-  sedang: "#FFFBEB",
-  tinggi: "#FEF2F2",
-};
-const KATEGORI_TEKS: Record<string, string> = {
-  rendah: "#047857",
-  sedang: "#B45309",
-  tinggi: "#B42318",
-};
-
 /**
  * Skrining M-CHAT-R (Modified Checklist for Autism in Toddlers, Revised) -
  * 20 item ya/tidak, usia sasaran 16-30 bulan. Item 2, 5, 12 diberi skor

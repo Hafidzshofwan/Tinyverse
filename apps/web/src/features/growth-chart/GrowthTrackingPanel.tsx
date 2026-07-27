@@ -12,7 +12,7 @@ import {
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
-import { GenderAvatar } from "@/widgets/patient-profile/PatientProfile";
+import { GenderAvatar } from "./PatientProfile";
 import { hitungIMT } from "./zscore";
 import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
