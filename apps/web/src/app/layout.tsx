@@ -19,6 +19,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="id" data-theme="navy" suppressHydrationWarning>
       <head>
+        {/* Font dimuat lewat @import di globals.css. Preconnect di sini
+            memangkas jeda tampil huruf (FOUT) pada kunjungan pertama. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('tv-theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');}}catch(e){}})()`,
