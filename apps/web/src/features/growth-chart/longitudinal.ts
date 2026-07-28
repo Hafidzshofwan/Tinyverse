@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
 import { doc, setDoc, onSnapshot } from "firebase/firestore";
-import { db } from "../../shared/lib/firebase";
+import { db, pastikanAuthData } from "../../shared/lib/firebase";
+import {
+  kunciRiwayatTumbuh,
+  jalurRiwayatTumbuh,
+} from "../../shared/lib/patient/skope";
 import {
   tkInterpolasiZscoreRow,
   tkHitungZscoreNumerik,
@@ -590,7 +594,8 @@ export function detectGrowthFaltering(
 // ==========================================
 
 export function getGrowthRecordsKey(patientId: string): string {
-  return `tv_growth_history_${patientId || "default"}`;
+  // Kunci kini mengandung accountId; lihat shared/lib/patient/skope.ts
+  return kunciRiwayatTumbuh(patientId);
 }
 
 export function loadGrowthRecords(patientId: string): GrowthRecord[] {
@@ -617,19 +622,23 @@ export function saveGrowthRecords(patientId: string, records: GrowthRecord[], sy
     /* abaikan */
   }
 
-  if (syncToFirebase && db && patientId) {
+  const jalur = jalurRiwayatTumbuh(patientId);
+  if (syncToFirebase && db && patientId && jalur) {
     try {
-      const docRef = doc(db, "growthRecords", patientId);
-      setDoc(
-        docRef,
-        {
-          patientId,
-          records,
-          updatedAt: new Date().toISOString(),
-        },
-        { merge: true },
-      ).catch((err) => {
-        console.warn("Firebase growth records save error:", err);
+      const docRef = doc(db, jalur);
+      void pastikanAuthData().then((siap) => {
+        if (!siap) return;
+        setDoc(
+          docRef,
+          {
+            patientId,
+            records,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true },
+        ).catch((err) => {
+          console.warn("Firebase growth records save error:", err);
+        });
       });
     } catch (e) {
       console.warn("Firebase growth records save error:", e);
@@ -650,9 +659,40 @@ export function syncGrowthRecordsFromFirebase(
     activeGrowthUnsubscribers[patientId]!();
   }
 
+  const jalur = jalurRiwayatTumbuh(patientId);
+  if (!jalur) return () => {};
+
   try {
-    const docRef = doc(db, "growthRecords", patientId);
-    const unsub = onSnapshot(
+    const docRef = doc(db, jalur);
+    let batal = false;
+    let unsubDalam: (() => void) | null = null;
+
+    // Listener hanya dipasang setelah SDK data benar-benar masuk. Bila dipasang
+    // lebih dulu, Rules menolaknya dan listener mati untuk selamanya.
+    void pastikanAuthData().then((siap) => {
+      if (!siap || batal) return;
+      unsubDalam = pasangListenerRiwayat(docRef, patientId, onUpdate);
+    });
+
+    const unsub = () => {
+      batal = true;
+      if (unsubDalam) unsubDalam();
+    };
+    activeGrowthUnsubscribers[patientId] = unsub;
+    return unsub;
+  } catch (e) {
+    console.warn("Firebase growth records sync init error:", e);
+    return () => {};
+  }
+}
+
+function pasangListenerRiwayat(
+  docRef: ReturnType<typeof doc>,
+  patientId: string,
+  onUpdate?: (records: GrowthRecord[]) => void,
+): () => void {
+  try {
+    return onSnapshot(
       docRef,
       (snap) => {
         if (snap.exists()) {
@@ -676,11 +716,8 @@ export function syncGrowthRecordsFromFirebase(
         console.warn(`Firestore growthRecords listener warning [${patientId}]:`, err);
       },
     );
-
-    activeGrowthUnsubscribers[patientId] = unsub;
-    return unsub;
   } catch (e) {
-    console.warn("Firebase growth records sync init error:", e);
+    console.warn("Firebase growth records listener error:", e);
     return () => {};
   }
 }

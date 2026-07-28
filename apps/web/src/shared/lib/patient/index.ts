@@ -8,14 +8,28 @@ import {
   deleteDoc,
   onSnapshot,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, pastikanAuthData } from "../firebase";
+import {
+  akunPasien,
+  dengarAkunPasien,
+  kunciDaftarPasien,
+  jalurKoleksiPasien,
+  jalurPasien,
+  jalurPasienAktif,
+} from "./skope";
+
+export { setAkunPasien, akunPasien } from "./skope";
 
 export { validateAntropometri } from "./validation";
 export type { ValidationAlert } from "./validation";
 
 /** Kunci localStorage profil pasien terpusat & daftar pasien tersimpan. */
 export const PASIEN_AKTIF_KEY = "tv_pasien_aktif";
-export const PASIEN_LIST_KEY = "tv_pasien_list";
+/**
+ * Kunci daftar pasien kini dipisah per akun lewat kunciDaftarPasien().
+ * Nama lama disimpan hanya sebagai catatan; jangan dipakai untuk menulis.
+ */
+export const PASIEN_LIST_KEY_LAMA = "tv_pasien_list";
 
 export type PatientProfile = {
   id?: string;
@@ -53,7 +67,7 @@ export function bacaProfil(): PatientProfile {
 export function bacaDaftarPasien(): PatientProfile[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = window.localStorage.getItem(PASIEN_LIST_KEY);
+    const raw = window.localStorage.getItem(kunciDaftarPasien());
     if (!raw) return [];
     const list = JSON.parse(raw);
     if (!Array.isArray(list)) return [];
@@ -74,7 +88,7 @@ export function bacaDaftarPasien(): PatientProfile[] {
       .filter(Boolean);
 
     if (needsSave) {
-      window.localStorage.setItem(PASIEN_LIST_KEY, JSON.stringify(cleanList));
+      window.localStorage.setItem(kunciDaftarPasien(), JSON.stringify(cleanList));
     }
     return cleanList;
   } catch {
@@ -116,18 +130,22 @@ export function pilihPasienAktif(p: PatientProfile, syncToFirebase = true) {
   }
   sebarKeIsland();
 
-  if (syncToFirebase && db) {
+  const jalurAktif = jalurPasienAktif();
+  if (syncToFirebase && db && jalurAktif) {
     try {
-      const activeRef = doc(db, "appState", "activePatient");
-      setDoc(
-        activeRef,
-        {
-          patient: p,
-          updatedAt: new Date().toISOString(),
-        },
-        { merge: true },
-      ).catch((err) => {
-        console.warn("Firebase active patient sync error:", err);
+      const activeRef = doc(db, jalurAktif);
+      void pastikanAuthData().then((siap) => {
+        if (!siap) return;
+        setDoc(
+          activeRef,
+          {
+            patient: p,
+            updatedAt: new Date().toISOString(),
+          },
+          { merge: true },
+        ).catch((err) => {
+          console.warn("Firebase active patient sync error:", err);
+        });
       });
     } catch (e) {
       console.warn("Firebase active patient sync error:", e);
@@ -138,7 +156,7 @@ export function pilihPasienAktif(p: PatientProfile, syncToFirebase = true) {
 export function simpanDaftarPasien(list: PatientProfile[]) {
   if (typeof window === "undefined") return;
   try {
-    window.localStorage.setItem(PASIEN_LIST_KEY, JSON.stringify(list));
+    window.localStorage.setItem(kunciDaftarPasien(), JSON.stringify(list));
   } catch {
     /* abaikan */
   }
@@ -175,11 +193,15 @@ export function tambahAtauUpdatePasienInList(
   }
 
   // Sync item ke Firestore
-  if (db) {
+  const jalurSimpan = jalurPasien(id);
+  if (db && jalurSimpan) {
     try {
-      const pRef = doc(db, "patients", id);
-      setDoc(pRef, itemBaru, { merge: true }).catch((err) => {
-        console.warn("Firebase patient save error:", err);
+      const pRef = doc(db, jalurSimpan);
+      void pastikanAuthData().then((siap) => {
+        if (!siap) return;
+        setDoc(pRef, itemBaru, { merge: true }).catch((err) => {
+          console.warn("Firebase patient save error:", err);
+        });
       });
     } catch (e) {
       console.warn("Firebase patient save error:", e);
@@ -210,11 +232,15 @@ export function hapusPasienFromList(id: string) {
   }
 
   // Hapus dari Firestore
-  if (db) {
+  const jalurHapus = jalurPasien(id);
+  if (db && jalurHapus) {
     try {
-      const pRef = doc(db, "patients", id);
-      deleteDoc(pRef).catch((err) => {
-        console.warn("Firebase patient delete error:", err);
+      const pRef = doc(db, jalurHapus);
+      void pastikanAuthData().then((siap) => {
+        if (!siap) return;
+        deleteDoc(pRef).catch((err) => {
+          console.warn("Firebase patient delete error:", err);
+        });
       });
     } catch (e) {
       console.warn("Firebase patient delete error:", e);
@@ -222,20 +248,70 @@ export function hapusPasienFromList(id: string) {
   }
 }
 
-/** Flag status sinkronisasi Firebase global */
-let isFirebaseInitialized = false;
+/** Listener yang sedang aktif, dan akun yang sedang tersinkron. */
+let unsubAktif: Array<() => void> = [];
+let akunTersinkron: string | null = null;
+
+export function matikanSinkronPasien(): void {
+  unsubAktif.forEach((f) => {
+    try {
+      f();
+    } catch {
+      /* abaikan */
+    }
+  });
+  unsubAktif = [];
+  akunTersinkron = null;
+}
+
+/**
+ * Membersihkan jejak pasien di browser saat pengguna keluar.
+ *
+ * Daftar pasien sudah dipisah per akun, tetapi pasien AKTIF masih memakai satu
+ * kunci bersama, jadi ia wajib dihapus. Tanpa ini, pengguna berikutnya di
+ * komputer yang sama akan menemukan pasien orang lain sudah terpilih.
+ */
+export function bersihkanPasienLokal(): void {
+  if (typeof window === "undefined") return;
+  matikanSinkronPasien();
+  try {
+    window.localStorage.removeItem(PASIEN_AKTIF_KEY);
+  } catch {
+    /* abaikan */
+  }
+  sebarKeIsland();
+  sebarPerubahanDaftarPasien();
+}
 
 /**
  * Inisialisasi listener real-time Firestore untuk sinkronisasi antar-perangkat.
+ * Dipasang ulang setiap kali akun berganti, dan tidak dipasang sama sekali
+ * sebelum ada akun yang masuk.
  */
 export function initFirebasePatientSync() {
-  if (typeof window === "undefined" || !db || isFirebaseInitialized) return;
-  isFirebaseInitialized = true;
+  if (typeof window === "undefined" || !db) return;
+  const akun = akunPasien();
+  if (!akun || akunTersinkron === akun) return;
+
+  matikanSinkronPasien();
+  akunTersinkron = akun;
+
+  void pastikanAuthData().then((siap) => {
+    // Akun bisa berganti selagi token diterbitkan; jangan pasang listener basi.
+    if (!siap || akunPasien() !== akun || akunTersinkron !== akun) return;
+    pasangListenerPasien();
+  });
+}
+
+function pasangListenerPasien() {
+  const jalurKoleksi = jalurKoleksiPasien();
+  const jalurAktif = jalurPasienAktif();
+  if (!db || !jalurKoleksi || !jalurAktif) return;
 
   try {
-    // 1. Dengar perubahan koleksi "patients" dari Firestore
-    const patientsCol = collection(db, "patients");
-    onSnapshot(
+    // 1. Dengar perubahan koleksi pasien milik akun ini
+    const patientsCol = collection(db, jalurKoleksi);
+    const unsub1 = onSnapshot(
       patientsCol,
       (snapshot) => {
         const remotePatients: PatientProfile[] = [];
@@ -258,8 +334,9 @@ export function initFirebasePatientSync() {
           const localList = bacaDaftarPasien();
           if (localList.length > 0) {
             localList.forEach((item) => {
-              if (item.id) {
-                const pRef = doc(db, "patients", item.id);
+              const jalurItem = item.id ? jalurPasien(item.id) : null;
+              if (jalurItem) {
+                const pRef = doc(db, jalurItem);
                 setDoc(pRef, item, { merge: true }).catch(() => {});
               }
             });
@@ -267,7 +344,7 @@ export function initFirebasePatientSync() {
         } else {
           // Perbarui localStorage dari data Firestore
           window.localStorage.setItem(
-            PASIEN_LIST_KEY,
+            kunciDaftarPasien(),
             JSON.stringify(remotePatients),
           );
           sebarPerubahanDaftarPasien();
@@ -278,9 +355,11 @@ export function initFirebasePatientSync() {
       },
     );
 
-    // 2. Dengar perubahan "appState/activePatient"
-    const activeDocRef = doc(db, "appState", "activePatient");
-    onSnapshot(
+    unsubAktif.push(unsub1);
+
+    // 2. Dengar perubahan pasien aktif milik akun ini
+    const activeDocRef = doc(db, jalurAktif);
+    const unsub2 = onSnapshot(
       activeDocRef,
       (snap) => {
         if (snap.exists()) {
@@ -301,6 +380,7 @@ export function initFirebasePatientSync() {
         console.warn("Firestore active patient subscription warning:", err);
       },
     );
+    unsubAktif.push(unsub2);
   } catch (e) {
     console.warn("Firebase sync init error:", e);
   }
@@ -326,7 +406,12 @@ export function usePatientProfile(): PatientProfile {
     window.addEventListener("storage", onStorage);
     window.addEventListener("message", onMsg);
     window.addEventListener("tv-pasien-change", muat);
+    const lepasAkun = dengarAkunPasien(() => {
+      initFirebasePatientSync();
+      muat();
+    });
     return () => {
+      lepasAkun();
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("message", onMsg);
       window.removeEventListener("tv-pasien-change", muat);
@@ -350,11 +435,16 @@ export function usePatientList(): PatientProfile[] {
     initFirebasePatientSync();
     muat();
     const onStorage = (e: StorageEvent) => {
-      if (!e.key || e.key === PASIEN_LIST_KEY) muat();
+      if (!e.key || e.key === kunciDaftarPasien()) muat();
     };
     window.addEventListener("storage", onStorage);
     window.addEventListener("tv-pasien-list-change", muat);
+    const lepasAkun = dengarAkunPasien(() => {
+      initFirebasePatientSync();
+      muat();
+    });
     return () => {
+      lepasAkun();
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("tv-pasien-list-change", muat);
     };

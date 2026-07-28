@@ -14,7 +14,11 @@ import {
   initFirebase,
   petaError,
 } from "@/shared/firebase/firebaseClient";
-import { akhiriSesi, pastikanSesiServer } from "@/shared/auth/sesiServer";
+import { keluarAuthData } from "@/shared/lib/firebase";
+import {
+  setAkunPasien,
+  bersihkanPasienLokal,
+} from "@/shared/lib/patient";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any;
@@ -159,15 +163,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const db = dbRef.current;
       uidRef.current = user.uid;
       setStatus("loading");
-      /*
-       * Tukarkan ID Token menjadi cookie sesi httpOnly SEBELUM profil dimuat.
-       * Tanpa langkah ini server tidak pernah tahu siapa yang masuk, dan semua
-       * pemeriksaan langganan di sisi server akan menjawab "belum masuk".
-       *
-       * Kegagalan penukaran sengaja tidak menggagalkan login: aplikasi klinis
-       * tetap dapat dipakai, hanya fitur berbayar yang belum terbuka.
-       */
-      await pastikanSesiServer(user);
       try {
         const ref = db.collection("users").doc(user.uid);
         const snap = await ref.get();
@@ -212,11 +207,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         dbRef.current = db;
         unsub = auth.onAuthStateChanged((user: Any) => {
           if (user) {
+            // Data pasien memakai SDK Firebase terpisah, jadi lingkup akunnya
+            // harus diberitahu SEBELUM komponen mulai membaca. Bila terlambat,
+            // pembacaan pertama jatuh ke jalur tanpa akun.
+            setAkunPasien(user.uid);
             handleMasuk(user);
           } else {
             uidRef.current = null;
             setProfil(null);
             terapkanPref(null);
+            setAkunPasien(null);
+            bersihkanPasienLokal();
+            void keluarAuthData();
             setStatus("signedOut");
           }
         });
@@ -281,14 +283,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const keluar = useCallback(() => {
-    /*
-     * Hapus cookie server DULU, baru keluar di klien. Urutan sebaliknya membuat
-     * permintaan DELETE kehilangan cookie yang hendak dicabutnya, sehingga sesi
-     * server tetap hidup meski layar sudah menampilkan halaman login.
-     */
-    void akhiriSesi().finally(() => {
-      if (authRef.current) authRef.current.signOut();
-    });
+    if (authRef.current) authRef.current.signOut();
   }, []);
 
   const simpanProfil = useCallback(
