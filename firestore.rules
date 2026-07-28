@@ -90,30 +90,50 @@ service cloud.firestore {
     }
 
     /* ============================================================
-     *  2. DATA KLINIS BERSAMA
+     *  2. DATA KLINIS PER AKUN
      * ============================================================
      *
-     * CATATAN PENTING: patients, growthRecords, dan appState saat ini bersifat
-     * BERSAMA untuk seluruh pengguna yang masuk, bukan milik per-pengguna.
-     * Jalur dokumennya tidak memuat uid (contoh: patients/{id}), sehingga
-     * kepemilikan tidak mungkin ditegakkan di lapisan aturan ini.
+     * Data pasien kini bersarang di bawah akun pemiliknya:
+     *   accounts/{accountId}/patients/{patientId}
+     *   accounts/{accountId}/growthRecords/{patientId}
+     *   accounts/{accountId}/appState/{docId}
      *
-     * Yang berubah di sini hanyalah: dari "siapa pun di internet" menjadi
-     * "pengguna yang sudah masuk". Itu peningkatan besar, tetapi BELUM
-     * pemisahan data antar dokter. Untuk data pasien, pemisahan itu semestinya
-     * menyusul - lihat catatan di akhir berkas.
+     * accountId sama dengan uid pemilik akun personal, sehingga kepemilikan
+     * bisa ditegakkan langsung di aturan ini tanpa membaca dokumen lain.
+     *
+     * CATATAN: subkoleksi TIDAK mewarisi aturan dokumen induknya. Blok
+     * accounts/{accountId} di bagian 4 ber-write:false, dan itu tidak
+     * memengaruhi tiga blok di bawah ini.
+     *
+     * Klien memakai custom token dari POST /api/auth/firestore-token, jadi
+     * request.auth.uid di sini adalah uid pengguna sungguhan.
      */
 
+    match /accounts/{accountId}/patients/{patientId} {
+      allow read, write: if masuk() && accountId == request.auth.uid;
+    }
+
+    match /accounts/{accountId}/growthRecords/{patientId} {
+      allow read, write: if masuk() && accountId == request.auth.uid;
+    }
+
+    match /accounts/{accountId}/appState/{docId} {
+      allow read, write: if masuk() && accountId == request.auth.uid;
+    }
+
+    /* Koleksi datar lama ditutup total. Data di sana ditinggalkan dengan
+       sengaja, bukan dimigrasikan. */
+
     match /patients/{patientId} {
-      allow read, write: if masuk();
+      allow read, write: if false;
     }
 
     match /growthRecords/{patientId} {
-      allow read, write: if masuk();
+      allow read, write: if false;
     }
 
     match /appState/{docId} {
-      allow read, write: if masuk();
+      allow read, write: if false;
     }
 
     /* ============================================================
