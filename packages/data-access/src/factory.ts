@@ -1,3 +1,5 @@
+import { InMemoryAccountRepository } from "./accounts/in-memory"
+import type { AccountRepository } from "./accounts/repository"
 import { InMemoryDrugRepository } from "./drugs/in-memory"
 import type { DrugRepository } from "./drugs/repository"
 import type { DrugRecord } from "./drugs/types"
@@ -8,6 +10,7 @@ import type { UserRepository } from "./users/repository"
 export type Repositories = {
 	drugs: DrugRepository
 	users: UserRepository
+	accounts: AccountRepository
 }
 
 /**
@@ -20,5 +23,6 @@ export function createInMemoryRepositories(
 	return {
 		drugs: new InMemoryDrugRepository(seed.drugs ?? []),
 		users: new InMemoryUserRepository(),
+		accounts: new InMemoryAccountRepository(),
 	}
 }

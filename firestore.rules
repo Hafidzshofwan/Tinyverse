@@ -1,8 +1,228 @@
 rules_version = '2';
+
+/*
+ * ============================================================
+ *  TinyVerse - Firestore Security Rules
+ * ============================================================
+ *
+ * PRINSIP DASAR
+ * -------------
+ * Aturan ini adalah SATU-SATUNYA hal yang berdiri antara data Anda dan
+ * internet terbuka. Kunci API Firebase di sisi klien memang publik dan bisa
+ * dibaca siapa saja dari kode browser; yang melindungi data BUKAN kerahasiaan
+ * kunci itu, melainkan berkas ini.
+ *
+ * Aturan ditulis dengan pola "tolak secara bawaan": apa pun yang tidak
+ * disebutkan secara eksplisit di bawah akan ditolak. Menambah koleksi baru
+ * berarti harus menambah aturannya di sini, dan itu memang disengaja.
+ *
+ * FIREBASE ADMIN SDK MELEWATI SELURUH ATURAN INI
+ * ----------------------------------------------
+ * Kode di apps/web/src/server/ memakai Admin SDK, yang secara desain TIDAK
+ * tunduk pada berkas ini. Itulah sebabnya seluruh koleksi penagihan di bawah
+ * bisa ditutup rapat dari klien tanpa membuat aplikasi lumpuh: hanya server
+ * yang boleh menyentuhnya.
+ */
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    /* ---------- fungsi bantu ---------- */
+
+    function masuk() {
+      return request.auth != null;
+    }
+
+    function pemilik(uid) {
+      return masuk() && request.auth.uid == uid;
+    }
+
+    /*
+     * Peran admin dibaca dari CUSTOM CLAIMS, bukan dari dokumen users.
+     *
+     * WHY: dokumen users/{uid} bisa ditulis oleh pemiliknya sendiri. Bila
+     * status admin ditentukan dari isi dokumen itu, siapa pun bisa mengangkat
+     * dirinya menjadi admin hanya dengan satu operasi tulis dari browser.
+     * Custom claims hanya bisa dipasang oleh Admin SDK, jadi tidak bisa
+     * dipalsukan dari sisi klien.
+     */
+    function admin() {
+      return masuk() && request.auth.token.role == 'admin';
+    }
+
+    /* Menjaga agar sebuah field tidak berubah nilainya saat update. */
+    function tetap(field) {
+      return !request.resource.data.diff(resource.data).affectedKeys().hasAny([field]);
+    }
+
+    /* ============================================================
+     *  1. PROFIL PENGGUNA
+     * ============================================================ */
+
+    match /users/{uid} {
+      /* Pengguna melihat dirinya sendiri; admin melihat semua (halaman kelola
+         pengguna memanggil users.get() tanpa filter). */
+      allow read: if pemilik(uid) || admin();
+
+      /* Pembuatan profil saat pendaftaran. Akun baru tidak boleh langsung
+         menyandang peran admin. */
+      allow create: if pemilik(uid)
+                    && request.resource.data.role == 'user';
+
+      /*
+       * Pengguna boleh memperbarui profilnya SELAIN dua field kewenangan.
+       * Tanpa penjagaan ini, satu perintah update dari konsol peramban sudah
+       * cukup untuk menjadi admin atau menghidupkan kembali akun yang
+       * dinonaktifkan.
+       */
+      allow update: if (pemilik(uid) && tetap('role') && tetap('aktif'))
+                    || admin();
+
+      /* Penghapusan akun hanya lewat admin, agar jejak audit tetap utuh. */
+      allow delete: if admin();
+
+      match /riwayat/{docId} {
+        allow read, write: if pemilik(uid) || admin();
+      }
+    }
+
+    match /userSettings/{uid} {
+      allow read, write: if pemilik(uid);
+    }
+
+    /* ============================================================
+     *  2. DATA KLINIS BERSAMA
+     * ============================================================
+     *
+     * CATATAN PENTING: patients, growthRecords, dan appState saat ini bersifat
+     * BERSAMA untuk seluruh pengguna yang masuk, bukan milik per-pengguna.
+     * Jalur dokumennya tidak memuat uid (contoh: patients/{id}), sehingga
+     * kepemilikan tidak mungkin ditegakkan di lapisan aturan ini.
+     *
+     * Yang berubah di sini hanyalah: dari "siapa pun di internet" menjadi
+     * "pengguna yang sudah masuk". Itu peningkatan besar, tetapi BELUM
+     * pemisahan data antar dokter. Untuk data pasien, pemisahan itu semestinya
+     * menyusul - lihat catatan di akhir berkas.
+     */
+
+    match /patients/{patientId} {
+      allow read, write: if masuk();
+    }
+
+    match /growthRecords/{patientId} {
+      allow read, write: if masuk();
+    }
+
+    match /appState/{docId} {
+      allow read, write: if masuk();
+    }
+
+    /* ============================================================
+     *  3. KATALOG OBAT (rujukan, hanya baca)
+     * ============================================================ */
+
+    match /obat/{obatId} {
+      allow read: if masuk();
+      /* Penulisan katalog dilakukan lewat skrip seeding ber-Admin SDK. */
+      allow write: if false;
+    }
+
+    /* ============================================================
+     *  4. AKUN & KEANGGOTAAN  (Fase 0)
+     * ============================================================
+     *
+     * Boleh dibaca pemiliknya agar antarmuka bisa menampilkan nama akun,
+     * tetapi TIDAK boleh ditulis dari klien sama sekali. Keanggotaan adalah
+     * penentu hak akses; bila klien bisa menulisnya, seluruh sistem langganan
+     * runtuh - cukup tambahkan diri ke akun berlangganan milik orang lain.
+     */
+
+    match /accounts/{accountId} {
+      allow read: if masuk() && resource.data.ownerUid == request.auth.uid;
+      allow write: if false;
+    }
+
+    match /memberships/{membershipId} {
+      allow read: if masuk() && resource.data.uid == request.auth.uid;
+      allow write: if false;
+    }
+
+    /* ============================================================
+     *  5. PENAGIHAN  (disiapkan untuk Fase 2 dan seterusnya)
+     * ============================================================
+     *
+     * Ditutup SEKARANG, sebelum satu baris data pun ada di dalamnya.
+     *
+     * WHY sekarang: mengunci koleksi kosong tidak berisiko sama sekali.
+     * Mengunci koleksi yang sudah dipakai berarti menebak-nebak akses mana
+     * yang masih dibutuhkan, dan kesalahan sekecil apa pun langsung terasa
+     * oleh pengguna. Urutan ini dipilih justru agar tidak ada momen ketika
+     * data pembayaran hidup di bawah aturan yang longgar.
+     */
+
+    /* Daftar paket & harga: publik dan hanya baca. Halaman harga perlu
+       menampilkannya bahkan sebelum pengguna masuk. */
+    match /plans/{planId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    /*
+     * Status langganan boleh DIBACA oleh anggota akunnya sekadar untuk
+     * tampilan. Ia tidak pernah menjadi dasar penentuan hak akses - itu selalu
+     * dihitung ulang di server. Pembacaan ini hanya kenyamanan antarmuka.
+     */
+    match /subscriptions/{accountId} {
+      allow read: if masuk()
+                  && exists(/databases/$(database)/documents/memberships/$(accountId + '_' + request.auth.uid));
+      allow write: if false;
+    }
+
+    /* Pesanan: boleh dilihat pembuatnya, tidak pernah ditulis dari klien.
+       Pembuatan pesanan berjalan lewat POST /api/checkout. */
+    match /orders/{orderId} {
+      allow read: if masuk() && resource.data.createdByUid == request.auth.uid;
+      allow write: if false;
+    }
+
+    /*
+     * Tertutup total, bahkan untuk dibaca.
+     *
+     * paymentEvents dan webhookInbox memuat muatan mentah dari Midtrans,
+     * termasuk data yang tidak perlu dan tidak boleh dilihat pengguna.
+     * auditLogs harus kebal dari manipulasi agar berguna sebagai bukti.
+     * vouchers bila terbaca akan membocorkan seluruh daftar kode diskon.
+     */
+    match /paymentEvents/{eventId} { allow read, write: if false; }
+    match /webhookInbox/{notifId}  { allow read, write: if false; }
+    match /auditLogs/{logId}       { allow read, write: if false; }
+    match /vouchers/{voucherId}    { allow read, write: if false; }
+
+    /* ============================================================
+     *  6. PENOLAKAN BAWAAN
+     * ============================================================
+     *
+     * Koleksi apa pun yang tidak disebut di atas ditolak sepenuhnya. Bila
+     * suatu fitur tiba-tiba gagal menulis setelah perubahan ini, kemungkinan
+     * besar ia memakai koleksi yang belum terdaftar - tambahkan aturannya di
+     * sini, jangan longgarkan blok ini.
+     */
     match /{document=**} {
-      allow read, write: if true;
+      allow read, write: if false;
     }
   }
 }
+
+/*
+ * ============================================================
+ *  UTANG TEKNIS YANG DIKETAHUI
+ * ============================================================
+ * patients / growthRecords / appState masih dipakai bersama oleh seluruh
+ * pengguna yang masuk. Selama aplikasi dipakai satu praktik, ini dapat
+ * diterima. Begitu ada pelanggan kedua yang tidak saling kenal, data pasien
+ * WAJIB dipindahkan ke jalur ber-akun, misalnya:
+ *
+ *     accounts/{accountId}/patients/{patientId}
+ *
+ * Perubahan itu menyentuh kode aplikasi, bukan hanya aturan ini, sehingga
+ * sengaja tidak dikerjakan pada Fase 1.
+ */

@@ -10,6 +10,7 @@ export * from "./shared/types"
 export * from "./shared/errors"
 export * from "./drugs"
 export * from "./users"
+export * from "./accounts"
 
 export { createInMemoryRepositories } from "./factory"
 export type { Repositories } from "./factory"
