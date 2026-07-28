@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
 import { ProfileModal } from "./ProfileModal";
@@ -33,6 +34,16 @@ function ShieldUserIcon({ size = 16, color = "currentColor" }: { size?: number; 
       <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
       <circle cx="12" cy="10" r="3" />
       <path d="M7 16c0-2 2.5-3 5-3s5 1 5 3" />
+    </svg>
+  );
+}
+
+function LanggananIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M2 10h20" />
+      <path d="M6 15h4" />
     </svg>
   );
 }
@@ -121,6 +132,14 @@ export function UserMenu() {
           >
             <KopSuratIcon size={16} /> <span>Kop Surat (PDF)</span>
           </button>
+          <Link
+            href="/langganan"
+            className="tv-drop-item"
+            style={{ textDecoration: "none" }}
+            onClick={() => setBuka(false)}
+          >
+            <LanggananIcon size={16} /> <span>Langganan</span>
+          </Link>
           {admin && (
             <button
               className="tv-drop-item"
