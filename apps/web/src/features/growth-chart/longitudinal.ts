@@ -670,10 +670,18 @@ export function syncGrowthRecordsFromFirebase(
 
     // Listener hanya dipasang setelah SDK data benar-benar masuk. Bila dipasang
     // lebih dulu, Rules menolaknya dan listener mati untuk selamanya.
-    void pastikanAuthData(uidPasien()).then((siap) => {
-      if (!siap || batal) return;
-      unsubDalam = pasangListenerRiwayat(docRef, patientId, onUpdate);
-    });
+    const coba = (sisa: number) => {
+      void pastikanAuthData(uidPasien()).then((siap) => {
+        if (batal) return;
+        if (!siap) {
+          // Kegagalan pertama wajar: cookie sesi bisa belum terpasang.
+          if (sisa > 1) window.setTimeout(() => coba(sisa - 1), 2000);
+          return;
+        }
+        unsubDalam = pasangListenerRiwayat(docRef, patientId, onUpdate);
+      });
+    };
+    coba(4);
 
     const unsub = () => {
       batal = true;

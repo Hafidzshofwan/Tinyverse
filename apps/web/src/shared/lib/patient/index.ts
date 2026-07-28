@@ -289,7 +289,7 @@ export function bersihkanPasienLokal(): void {
  * Dipasang ulang setiap kali akun berganti, dan tidak dipasang sama sekali
  * sebelum ada akun yang masuk.
  */
-export function initFirebasePatientSync() {
+export function initFirebasePatientSync(sisaCoba = 4) {
   if (typeof window === "undefined" || !db) return;
   const akun = akunPasien();
   if (!akun || akunTersinkron === akun) return;
@@ -299,7 +299,30 @@ export function initFirebasePatientSync() {
 
   void pastikanAuthData(uidPasien()).then((siap) => {
     // Akun bisa berganti selagi token diterbitkan; jangan pasang listener basi.
-    if (!siap || akunPasien() !== akun || akunTersinkron !== akun) return;
+    if (akunPasien() !== akun || akunTersinkron !== akun) return;
+
+    if (!siap) {
+      /*
+       * Tanda "sudah tersinkron" WAJIB dilepas saat gagal.
+       *
+       * Sebelumnya tanda itu dipasang sebelum penerbitan token dan tidak pernah
+       * dilepas. Bila token gagal sekali - dan itu wajar terjadi pada pemuatan
+       * pertama, ketika cookie sesi belum terpasang - setiap panggilan
+       * berikutnya berhenti di pemeriksaan di atas. Sinkronisasi lalu mati
+       * untuk seluruh sesi tanpa satu pun pesan, dan gejalanya persis seperti
+       * "tidak tersinkron antar perangkat".
+       */
+      akunTersinkron = null;
+      if (sisaCoba > 1) {
+        window.setTimeout(() => initFirebasePatientSync(sisaCoba - 1), 2000);
+      } else {
+        console.warn(
+          "Sinkronisasi pasien antar perangkat tidak aktif. Data tetap tersimpan di perangkat ini.",
+        );
+      }
+      return;
+    }
+
     pasangListenerPasien();
   });
 }
@@ -330,26 +353,37 @@ function pasangListenerPasien() {
           return tB - tA;
         });
 
-        // Jika Firestore masih kosong tetapi localStorage memiliki data, migrasi data lokal ke Firebase
-        if (remotePatients.length === 0) {
-          const localList = bacaDaftarPasien();
-          if (localList.length > 0) {
-            localList.forEach((item) => {
-              const jalurItem = item.id ? jalurPasien(item.id) : null;
-              if (jalurItem) {
-                const pRef = doc(db, jalurItem);
-                setDoc(pRef, item, { merge: true }).catch(() => {});
-              }
+        /*
+         * Gabungkan, jangan timpa.
+         *
+         * Menimpa localStorage dengan isi Firestore terasa lebih sederhana,
+         * tetapi menghapus pasien yang dibuat di perangkat ini dan belum
+         * terunggah - misalnya dibuat saat jaringan mati. Untuk data medis,
+         * kehilangan seperti itu tidak bisa diterima.
+         *
+         * Satu jalur untuk semua keadaan: yang hanya ada di lokal diunggah,
+         * yang ada di awan diturunkan. Tidak ada lagi cabang "awan kosong".
+         */
+        const idRemote = new Set(remotePatients.map((p) => p.id));
+        const lokalSaja = bacaDaftarPasien().filter(
+          (p) => p.id && !idRemote.has(p.id),
+        );
+
+        lokalSaja.forEach((item) => {
+          const jalurItem = item.id ? jalurPasien(item.id) : null;
+          if (jalurItem) {
+            const pRef = doc(db, jalurItem);
+            setDoc(pRef, item, { merge: true }).catch((err) => {
+              console.warn("Firebase patient upload error:", err);
             });
           }
-        } else {
-          // Perbarui localStorage dari data Firestore
-          window.localStorage.setItem(
-            kunciDaftarPasien(),
-            JSON.stringify(remotePatients),
-          );
-          sebarPerubahanDaftarPasien();
-        }
+        });
+
+        window.localStorage.setItem(
+          kunciDaftarPasien(),
+          JSON.stringify([...remotePatients, ...lokalSaja]),
+        );
+        sebarPerubahanDaftarPasien();
       },
       (err) => {
         console.warn("Firestore patients subscription warning:", err);
