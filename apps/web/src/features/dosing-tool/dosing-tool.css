@@ -1,0 +1,650 @@
+/* Style sheet untuk Kalkulator Dosis Obat (Native Next.js) */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700;800&display=swap');
+
+.dosis-container {
+  --putih: #ffffff;
+  --krem: #FFFDF9;
+  --teks: #0F172A;
+  --teks-lembut: #64748B;
+  --biru: #3B82F6;
+  --biru-tua: #0A0B5F;
+  --pink-grad-start: #EC4899;
+  --pink-grad-end: #D946EF;
+
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--teks);
+  background: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dosis-container * {
+  box-sizing: border-box;
+}
+
+/* Navigasi / Quick Nav */
+.dosis-nav {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.dosis-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  color: #ffffff;
+  background: linear-gradient(135deg, #EC4899 0%, #D946EF 100%);
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+}
+
+.dosis-nav-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(236, 72, 153, 0.45);
+  opacity: 0.95;
+}
+
+/* Main Container - Transparent (Direct on Web Background) */
+.dosis-main-card {
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: none !important;
+  margin-bottom: 32px;
+}
+
+/* Section & Headings */
+.dosis-section {
+  margin-bottom: 0;
+}
+
+.dosis-judul-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.dosis-judul-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border-radius: 16px;
+}
+
+.dosis-judul-teks h2 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0;
+  color: #0F172A;
+  letter-spacing: -0.01em;
+}
+
+.dosis-judul-teks p {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+/* Search bar */
+.dosis-search-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.dosis-search-input {
+  width: 100%;
+  padding: 14px 20px 14px 48px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 9999px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0F172A;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.dosis-search-input:focus {
+  outline: none;
+  border-color: #EC4899;
+  box-shadow: 0 0 0 4px rgba(236, 72, 153, 0.12);
+}
+
+.dosis-search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  color: #94A3B8;
+  pointer-events: none;
+}
+
+/* Category filter chips */
+.dosis-filter-wrap {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+  scrollbar-width: thin;
+}
+
+.dosis-filter-wrap::-webkit-scrollbar {
+  height: 4px;
+}
+
+.dosis-filter-wrap::-webkit-scrollbar-thumb {
+  background: #E2E8F0;
+  border-radius: 4px;
+}
+
+.dosis-chip {
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  background-color: #F1F5F9;
+  border: none;
+  color: #334155;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.dosis-chip:hover {
+  background-color: #E2E8F0;
+  color: #0F172A;
+}
+
+.dosis-chip.aktif {
+  background-color: #0A0B5F;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(10, 11, 95, 0.25);
+}
+
+/* Drug Grid */
+.dosis-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 18px;
+}
+
+.dosis-card {
+  position: relative;
+  background-color: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 22px;
+  padding: 18px 18px 16px 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+}
+
+.dosis-card:hover {
+  transform: translateY(-3px);
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.dosis-card.terpilih {
+  border-color: #6366F1;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
+  background: #FFFFFF;
+}
+
+.dosis-card-top-strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 22px 22px 0 0;
+  background: linear-gradient(90deg, #312E81 0%, #D946EF 100%);
+}
+
+.dosis-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Category Tag Pill */
+.dosis-jenis-tag {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* Top Right Soft Circle Glow Backdrop & Solid Toggle Dot */
+.dosis-card-glow-bg {
+  position: absolute;
+  top: -16px;
+  right: -16px;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #FCE7F3;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dosis-card-centang {
+  display: none;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  background-color: #0A0B5F;
+  color: #ffffff;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  z-index: 3;
+  box-shadow: 0 2px 6px rgba(10, 11, 95, 0.3);
+}
+
+.dosis-card.terpilih .dosis-card-centang {
+  display: flex;
+}
+
+.dosis-card-body {
+  flex: 1;
+  margin-top: 8px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.dosis-card-title-text {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 4px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.dosis-card-subtitle {
+  font-size: 0.8rem;
+  color: #818CF8;
+  font-weight: 600;
+}
+
+.dosis-card-footer {
+  margin-top: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.dosis-btn-pilih-sediaan {
+  display: inline-block;
+  background-color: #F1F5F9;
+  color: #334155;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  border: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.dosis-card:hover .dosis-btn-pilih-sediaan,
+.dosis-card.terpilih .dosis-btn-pilih-sediaan {
+  background-color: #EEF2FF;
+  color: #312E81;
+}
+
+.dosis-pesan-kosong {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #F8FAFC;
+  border: 2px dashed #CBD5E1;
+  border-radius: 20px;
+  color: #64748B;
+  font-weight: 700;
+}
+
+/* Calculator Form Container */
+.dosis-kartu-kalkulator {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 24px;
+  border: 1.5px solid #F1F5F9;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+.dosis-obat-terpilih-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.dosis-obat-terpilih-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dosis-obat-terpilih-icon {
+  font-size: 1.8rem;
+}
+
+.dosis-obat-terpilih-teks h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+  color: #0A0B5F;
+}
+
+.dosis-obat-terpilih-teks p {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin: 2px 0 0;
+  font-weight: 600;
+}
+
+.dosis-btn-ganti {
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border: 1.5px solid #CBD5E1;
+  color: #0F172A;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dosis-btn-ganti:hover {
+  background-color: #0A0B5F;
+  color: #ffffff;
+  border-color: #0A0B5F;
+}
+
+/* Form Groups */
+.dosis-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.dosis-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dosis-form-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+.dosis-form-input,
+.dosis-form-select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #0F172A;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.dosis-form-input:focus,
+.dosis-form-select:focus {
+  outline: none;
+  border-color: #EC4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.12);
+}
+
+.dosis-btn-hitung {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #EC4899 0%, #D946EF 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.3);
+  margin-bottom: 24px;
+}
+
+.dosis-btn-hitung:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+}
+
+/* Result Box */
+.dosis-hasil-box {
+  background-color: #F8FAFC;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.dosis-hasil-box.error-box {
+  background-color: #FEF2F2;
+  border-color: #FCA5A5;
+}
+
+.dosis-hasil-title {
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748B;
+  margin: 0 0 16px;
+}
+
+/* Hasil Card Dosis */
+.hasil-card-dosis {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hasil-ringkasan {
+  background-color: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+}
+
+.hasil-label-kecil {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.hasil-dosis {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0A0B5F;
+  margin: 4px 0;
+}
+
+.hasil-volume {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #16A34A;
+  margin-bottom: 4px;
+}
+
+.hasil-subtext {
+  font-size: 0.76rem;
+  color: #64748B;
+  font-style: italic;
+}
+
+.hasil-daily {
+  background-color: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #92400E;
+}
+
+.hasil-section {
+  background-color: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 16px;
+}
+
+.hasil-section-title {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #64748B;
+  margin-bottom: 12px;
+  letter-spacing: 0.04em;
+}
+
+.hasil-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #F1F5F9;
+  font-size: 0.85rem;
+}
+
+.hasil-row:last-child {
+  border-bottom: none;
+}
+
+.hasil-row .label {
+  color: #64748B;
+}
+
+.hasil-row .value {
+  color: #0F172A;
+  text-align: right;
+}
+
+.hasil-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hasil-frekuensi {
+  background-color: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  color: #1E40AF;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9999px;
+}
+
+.hasil-warning {
+  background-color: #FEF3C7;
+  border: 1.5px solid #FCD34D;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  color: #92400E;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.hasil-note {
+  background-color: #F1F5F9;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 0.82rem;
+  color: #475569;
+  line-height: 1.5;
+}
+
+/* Safety Panel */
+.keamanan-panel {
+  margin-top: 24px;
+  background-color: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.keamanan-panel h3 {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748B;
+  margin: 0 0 14px;
+}
+
+.keamanan-disclaimer {
+  font-size: 0.8rem;
+  color: #92400E;
+  background-color: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-radius: 14px;
+  padding: 12px 16px;
+  line-height: 1.5;
+  margin-top: 14px;
+}
