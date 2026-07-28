@@ -17,6 +17,7 @@ import {
   jalurKoleksiPasien,
   jalurPasien,
   jalurPasienAktif,
+  jalurNisanPasien,
 } from "./skope";
 
 export { setAkunPasien, akunPasien } from "./skope";
@@ -298,9 +299,72 @@ export function hapusPasienFromList(id: string) {
     }
   }
 
-  // Catat nisan lebih dulu, baru hapus di awan.
+  // Catat nisan lebih dulu - lokal dan awan - baru hapus dokumennya.
   tandaiDihapus(id);
+  catatNisanDiAwan(id);
   hapusDiAwan(id);
+}
+
+/**
+ * Menuliskan nisan ke awan agar perangkat lain ikut tahu pasien ini dihapus.
+ *
+ * Tanpa ini, perangkat kedua yang masih menyimpan salinan lokal akan
+ * mengunggahnya kembali dan penghapusan terasa "tidak mempan".
+ */
+function catatNisanDiAwan(id: string, sisaCoba = 4): void {
+  const jalurNisan = jalurNisanPasien();
+  if (!db || !jalurNisan) return;
+
+  const ulangi = () => {
+    if (sisaCoba > 0 && typeof window !== "undefined") {
+      window.setTimeout(() => catatNisanDiAwan(id, sisaCoba - 1), 2000);
+    }
+  };
+
+  try {
+    const nisanRef = doc(db, jalurNisan);
+    void pastikanAuthData(uidPasien()).then((siap) => {
+      if (!siap) {
+        ulangi();
+        return;
+      }
+      setDoc(nisanRef, { [id]: new Date().toISOString() }, { merge: true }).catch(
+        (err: unknown) => {
+          console.warn("Firebase tombstone write error:", err);
+          ulangi();
+        },
+      );
+    });
+  } catch (e) {
+    console.warn("Firebase tombstone write error:", e);
+  }
+}
+
+/** Menyerap nisan dari awan ke perangkat ini, lalu membersihkan daftar lokal. */
+function serapNisanAwan(data: Record<string, unknown>): void {
+  if (typeof window === "undefined") return;
+
+  const idDihapus = Object.keys(data).filter((k) => k !== "updatedAt");
+  if (idDihapus.length === 0) return;
+
+  const nisan = bacaNisan();
+  let berubah = false;
+  idDihapus.forEach((id) => {
+    if (nisan[id] === undefined) {
+      const nilai = data[id];
+      const t = typeof nilai === "number" ? nilai : Date.parse(String(nilai));
+      nisan[id] = Number.isFinite(t) ? t : Date.now();
+      berubah = true;
+    }
+  });
+  if (berubah) tulisNisan(nisan);
+
+  const daftar = bacaDaftarPasien();
+  const sisa = daftar.filter((p) => !(p.id && nisan[p.id] !== undefined));
+  if (sisa.length !== daftar.length) {
+    window.localStorage.setItem(kunciDaftarPasien(), JSON.stringify(sisa));
+    sebarPerubahanDaftarPasien();
+  }
 }
 
 /**
@@ -499,6 +563,25 @@ function pasangListenerPasien() {
     );
 
     unsubAktif.push(unsub1);
+
+    // 1b. Dengar nisan penghapusan milik akun ini
+    const jalurNisan = jalurNisanPasien();
+    if (jalurNisan) {
+      const nisanRef = doc(db, jalurNisan);
+      const unsubNisan = onSnapshot(
+        nisanRef,
+        (snap) => {
+          const isi = snap.exists()
+            ? (snap.data() as Record<string, unknown>)
+            : {};
+          serapNisanAwan(isi);
+        },
+        (err) => {
+          console.warn("Firestore tombstone subscription warning:", err);
+        },
+      );
+      unsubAktif.push(unsubNisan);
+    }
 
     // 2. Dengar perubahan pasien aktif milik akun ini
     const activeDocRef = doc(db, jalurAktif);

@@ -84,6 +84,19 @@ export function jalurPasienAktif(): string | null {
   return akun ? `accounts/${akun}/appState/activePatient` : null;
 }
 
+/**
+ * Dokumen nisan penghapusan milik akun ini.
+ *
+ * WHY di awan, bukan hanya di localStorage: menghapus pasien di satu perangkat
+ * tidak cukup. Perangkat lain masih menyimpan salinan lokalnya, dan listener di
+ * sana akan mengunggahnya kembali karena melihat "ada di lokal, hilang di awan".
+ * Pasien pun hidup lagi di semua perangkat. Nisan bersama inilah yang membuat
+ * penghapusan ikut tersinkron.
+ */
+export function jalurNisanPasien(): string | null {
+  return akun ? `accounts/${akun}/appState/deletedPatients` : null;
+}
+
 export function jalurRiwayatTumbuh(patientId: string): string | null {
   return akun ? `accounts/${akun}/growthRecords/${patientId}` : null;
 }
