@@ -1,0 +1,1233 @@
+/*
+ * Gaya layar "Kurva WHO & CDC" — DISALIN PERSIS dari public/growth-tool.html.
+ *
+ * WHY: island iframe membawa stylesheet v17 sendiri. Saat dijadikan komponen
+ * React, gaya itu harus ikut pindah agar tampilannya identik. Setiap aturan
+ * di sini dibatasi ke dalam .tk-island-wrap — sama seperti pembungkus di
+ * island — supaya tidak ada satu pun gaya yang membocor ke halaman lain.
+ * Nilai properti TIDAK diubah sedikit pun; hanya selector yang diberi awalan.
+ */
+
+.tk-island-wrap {
+    --kuning: #FFD23F;
+    --kuning-tua: #F5B700;
+    --biru: #54C6EB;
+    --biru-tua: #2BA9D6;
+    --hijau: #7ED957;
+    --hijau-tua: #4EAE2E;
+    --oranye: #FF9F45;
+    --oranye-tua: #F0791C;
+    --pink: #FF8FAE;
+    --pink-tua: #F06387;
+    --krem: #FFFBF0;
+    --putih: #FFFFFF;
+    --teks: #4A3728;
+    --teks-lembut: #8A7868;
+    --merah-lembut: #F8A5A5;
+  }
+
+@keyframes goyang {
+    0%, 100% { transform: rotate(-4deg); }
+    50% { transform: rotate(4deg); }
+  }
+
+.tk-island-wrap .judul-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+.tk-island-wrap .judul-section .ikon-bulat {
+    width: 38px; height: 38px;
+    border-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    line-height: 1;
+    flex-shrink: 0;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+.tk-island-wrap .judul-section .ikon-bulat svg {
+    width: 38px; height: 38px;
+  }
+
+.tk-island-wrap .judul-section h2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--teks);
+  }
+
+.tk-island-wrap .judul-section p {
+    font-size: 0.85rem;
+    color: var(--teks-lembut);
+    font-weight: 600;
+  }
+
+.tk-island-wrap .kartu {
+    background: var(--putih);
+    border-radius: 26px;
+    padding: 26px 22px;
+    box-shadow: 0 10px 0 rgba(0,0,0,0.04), 0 12px 30px rgba(84, 198, 235, 0.15);
+    position: relative;
+  }
+
+.tk-island-wrap .kalkulator-kartu {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+.tk-island-wrap .form-group { margin-bottom: 18px; }
+
+.tk-island-wrap .btn-hitung {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(160deg, var(--hijau), var(--hijau-tua));
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 5px 0 var(--hijau-tua), 0 8px 18px rgba(78,174,46,0.3);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+.tk-island-wrap .btn-hitung:hover { transform: translateY(-2px); }
+
+.tk-island-wrap .btn-hitung:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--hijau-tua); }
+
+@keyframes muncul {
+    from { opacity: 0; transform: scale(0.92) translateY(6px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+.tk-island-wrap .obat-protokol-form .form-group { margin-bottom: 0; flex: 1; min-width: 130px; }
+
+.tk-island-wrap .btn-hitung-mini {
+    padding: 11px 20px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(160deg, var(--hijau), var(--hijau-tua));
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 0 var(--hijau-tua);
+    white-space: nowrap;
+    transition: transform 0.15s ease;
+  }
+
+.tk-island-wrap .btn-hitung-mini:hover { transform: translateY(-1px); }
+
+.tk-island-wrap .btn-hitung-mini:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--hijau-tua); }
+
+.tk-island-wrap .form-row-group {
+    display: flex;
+    gap: 10px;
+  }
+
+.tk-island-wrap .form-row-group .form-group { flex: 1; min-width: 0; }
+
+.tk-island-wrap .catatan-metode {
+    font-size: 0.74rem;
+    color: var(--teks-lembut);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+.tk-island-wrap #rencana-a .kartu {
+    background: linear-gradient(135deg, #F0FFE8, #FFFFFF);
+    border-color: rgba(126,217,87,0.45);
+  }
+
+.tk-island-wrap #rencana-b .kartu {
+    background: linear-gradient(135deg, #FFF8D8, #FFFFFF);
+    border-color: rgba(245,183,0,0.45);
+  }
+
+.tk-island-wrap #rencana-b .btn-hitung {
+    background: linear-gradient(135deg, var(--kuning), #FFE97A);
+    color: var(--teks);
+    box-shadow: 0 4px 0 var(--kuning-tua);
+  }
+
+.tk-island-wrap #rencana-c .kartu {
+    background: linear-gradient(135deg, #FFE8E8, #FFFFFF);
+    border-color: rgba(230,57,70,0.38);
+  }
+
+.tk-island-wrap #rencana-c .btn-hitung {
+    background: linear-gradient(135deg, #E63946, #FF7A7A);
+    color: #FFFFFF;
+    box-shadow: 0 4px 0 #B71C1C;
+  }
+
+.tk-island-wrap .tk-cdc-block {
+    background: #FFFFFF;
+    border: 1px solid rgba(43,169,214,0.22);
+    border-radius: 16px;
+    padding: 12px 14px;
+    margin-top: 10px;
+    box-shadow: 0 4px 14px rgba(43,169,214,0.06);
+  }
+
+.tk-island-wrap .tk-cdc-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    border-top: 1px dashed rgba(117,100,83,0.18);
+    font-size: 0.86rem;
+  }
+
+.tk-island-wrap .tk-cdc-row:first-child { border-top: none; padding-top: 0; }
+
+.tk-island-wrap .tk-cdc-label { color: var(--teks-lembut); font-weight: 800; }
+
+.tk-island-wrap .tk-cdc-value { color: var(--teks); font-weight: 800; text-align: right; }
+
+.tk-island-wrap .tk-cdc-status {
+    margin-top: 8px;
+    border-radius: 14px;
+    padding: 9px 11px;
+    font-size: 0.86rem;
+    line-height: 1.45;
+    font-weight: 700;
+  }
+
+@media (max-width: 480px) {
+  .tk-island-wrap .tk-cdc-row { flex-direction: column; gap: 2px; }
+  .tk-island-wrap .tk-cdc-value { text-align: left; }
+}
+
+.tk-island-wrap .tk-cdc-materi {
+    margin-top: 10px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.92), rgba(234,251,241,0.92));
+    border: 1px solid rgba(78,174,46,0.22);
+    border-radius: 16px;
+    padding: 12px 14px;
+    font-size: 0.82rem;
+    line-height: 1.55;
+  }
+
+.tk-island-wrap .tk-cdc-materi-title {
+    font-family: 'Fredoka', sans-serif;
+    color: var(--hijau-tua);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+.tk-island-wrap .tk-cdc-materi h4 {
+    font-size: 0.82rem;
+    color: var(--biru-tua);
+    margin: 10px 0 5px;
+  }
+
+.tk-island-wrap .tk-cdc-materi ul { padding-left: 18px; margin: 4px 0; }
+
+.tk-island-wrap .tk-cdc-materi li { margin: 3px 0; }
+
+.tk-island-wrap .tk-cdc-materi .tk-cdc-grid-kriteria {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+.tk-island-wrap .tk-cdc-materi .tk-cdc-kriteria-box {
+    background: rgba(255,255,255,0.75);
+    border-radius: 12px;
+    padding: 9px;
+    border: 1px dashed rgba(43,169,214,0.22);
+  }
+
+.tk-island-wrap .tk-cdc-materi .tk-cdc-kriteria-box strong { color: var(--teks); }
+
+.tk-island-wrap .tk-cdc-materi-note {
+    margin-top: 10px;
+    padding: 9px 10px;
+    border-radius: 12px;
+    background: rgba(255, 197, 41, 0.14);
+    font-weight: 700;
+  }
+
+@media (max-width: 768px) {
+  .tk-island-wrap .tk-cdc-materi .tk-cdc-grid-kriteria { grid-template-columns: 1fr; }
+}
+
+.tk-island-wrap .tk-stepper {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+.tk-island-wrap .tk-step-dot {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    background: var(--putih);
+    border-radius: 14px;
+    padding: 8px 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--teks-lembut);
+    box-shadow: 0 3px 0 rgba(0,0,0,0.04);
+    border: 2px solid #EAF6FB;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    line-height: 1.3;
+  }
+
+.tk-island-wrap .tk-step-dot .tk-step-num {
+    display: block;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 0.82rem;
+    margin-bottom: 2px;
+  }
+
+.tk-island-wrap .tk-step-dot.tk-aktif { background: var(--biru); color: white; border-color: var(--biru); box-shadow: 0 3px 0 var(--biru-tua); }
+
+.tk-island-wrap .tk-step-dot.tk-selesai { background: #EAFBF1; color: var(--hijau-tua); border-color: var(--hijau); }
+
+.tk-island-wrap .tk-step-dot.tk-terkunci { opacity: 0.5; cursor: not-allowed; }
+
+.tk-island-wrap .tk-plot-header { margin-bottom: 16px; }
+
+.tk-island-wrap .tk-plot-judul { font-weight: 800; font-size: 1.05rem; color: #1565C0; }
+
+.tk-island-wrap .tk-plot-sub { font-size: 0.85rem; color: #667085; margin-top: 4px; }
+
+.tk-island-wrap .tk-charts-wrap { display: flex; flex-direction: column; gap: 22px; }
+
+.tk-island-wrap .tk-chart-blok { border: 1px solid #EAECF0; border-radius: 14px; padding: 12px; background: #fff; width: 100%; }
+
+.tk-island-wrap .tk-chart-kepala { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 10px; }
+
+.tk-island-wrap .tk-chart-judul { font-weight: 700; color: #1D2939; }
+
+.tk-island-wrap .tk-chart-usia { font-size: 0.82rem; font-weight: 600; color: #1565C0; background: #E8F1FB; border-radius: 999px; padding: 3px 10px; }
+
+.tk-island-wrap .tk-ringkasan {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+.tk-island-wrap .tk-ringkasan-chip {
+    background: #F0F4F8;
+    border: 1px solid rgba(10, 11, 95, 0.1);
+    border-radius: 999px;
+    padding: 3px 10px 3px 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0A0B5F;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 1px 2px rgba(10, 11, 95, 0.03);
+    line-height: 1;
+  }
+
+.tk-island-wrap .tk-ringkasan-chip svg {
+    width: 22px !important;
+    height: 22px !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    flex-shrink: 0;
+  }
+
+.tk-island-wrap .tk-ringkasan-chip button {
+    border: none;
+    background: none;
+    color: #64748B;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1;
+    padding: 0 2px;
+    margin-left: 2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.15s ease;
+  }
+
+.tk-island-wrap .tk-ringkasan-chip button:hover { color: #d936a6; }
+
+.tk-island-wrap .tk-panel { display: none; }
+
+.tk-island-wrap .tk-panel.tk-aktif { display: block; }
+
+.tk-island-wrap .tk-pilihan-besar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+  }
+
+.tk-island-wrap .tk-kartu-pilihan {
+    background: #ffffff;
+    border: 2px solid #EAF2FB;
+    border-radius: 16px;
+    padding: 14px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+.tk-island-wrap .tk-kartu-pilihan:hover { transform: translateY(-2px); border-color: var(--biru); }
+
+.tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif { border-color: var(--biru); background: #F0F7FF; }
+
+.tk-island-wrap .tk-kartu-pilihan .tk-emoji-besar { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+
+.tk-island-wrap .tk-kartu-pilihan .tk-nama-pilihan { font-weight: 700; font-size: 0.88rem; color: var(--teks); }
+
+.tk-island-wrap .tk-kartu-pilihan .tk-sub-pilihan { font-size: 0.72rem; color: var(--teks-lembut); font-weight: 600; margin-top: 2px; }
+
+.tk-island-wrap .tk-kartu-usia {
+    background: var(--putih);
+    border: 2px solid #EAF6FB;
+    border-radius: 16px;
+    padding: 14px 12px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+
+.tk-island-wrap .tk-kartu-usia:hover { transform: translateY(-2px); }
+
+.tk-island-wrap .tk-kartu-usia.tk-pilih-aktif { border-color: var(--biru); background: #EAF8FF; }
+
+.tk-island-wrap .tk-kartu-usia .tk-usia-ikon { font-size: 1.4rem; margin-bottom: 4px; }
+
+.tk-island-wrap .tk-kartu-usia .tk-usia-label { font-weight: 700; font-size: 0.88rem; color: var(--teks); }
+
+.tk-island-wrap .tk-kartu-usia .tk-usia-ket { font-size: 0.7rem; color: var(--teks-lembut); font-weight: 600; margin-top: 2px; }
+
+.tk-island-wrap .tk-kartu-usia .tk-usia-status {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+.tk-island-wrap .tk-usia-status.ada { background: #EAFBF1; color: var(--hijau-tua); }
+
+.tk-island-wrap .tk-usia-status.belum { background: #FFF1E0; color: var(--oranye-tua); }
+
+.tk-island-wrap .tk-btn-kembali-mini {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.74rem;
+    color: var(--biru-tua);
+    background: var(--krem);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-bottom: 12px;
+  }
+
+.tk-island-wrap .tk-chart-stage {
+    position: relative;
+    width: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--krem);
+    border: 3px solid #EAF6FB;
+  }
+
+.tk-island-wrap .tk-chart-stage img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+.tk-island-wrap .tk-chart-stage .tk-chart-belum {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 280px;
+    padding: 24px;
+    text-align: center;
+    color: var(--teks-lembut);
+    font-weight: 600;
+    background: repeating-linear-gradient(135deg, var(--krem), var(--krem) 12px, #FFF7E0 12px, #FFF7E0 24px);
+  }
+
+.tk-island-wrap .tk-chart-belum code {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--putih);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    color: var(--pink-tua);
+    word-break: break-all;
+  }
+
+.tk-island-wrap .tk-titik-pasien {
+    position: absolute;
+    width: 7px; height: 7px;
+    margin-left: -3.5px;
+    margin-top: -3.5px;
+    border-radius: 50%;
+    background: var(--pink-tua);
+    border: 1.5px solid white;
+    box-shadow: 0 0 0 1.5px rgba(240,99,135,0.5), 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 5;
+    animation: tkMuncul 0.35s ease;
+  }
+
+.tk-island-wrap .tk-label-pasien {
+    position: absolute;
+    transform: translate(-50%, 0);
+    background: var(--teks);
+    color: white;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 10px;
+    white-space: nowrap;
+    z-index: 6;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    line-height: 1.4;
+  }
+
+.tk-island-wrap .tk-label-pasien::after {
+    content: "";
+    position: absolute;
+    top: 100%; left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: var(--teks);
+  }
+
+@keyframes tkMuncul {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+.tk-island-wrap .tk-garis-bantu {
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+    background: repeating-linear-gradient(var(--arah, 90deg), var(--pink-tua), var(--pink-tua) 4px, transparent 4px, transparent 8px);
+    opacity: 0.75;
+    animation: tkMuncul 0.35s ease;
+  }
+
+.tk-island-wrap .tk-garis-bantu.vertikal { width: 2px; transform: translateX(-1px); --arah: 0deg; }
+
+.tk-island-wrap .tk-garis-bantu.horizontal { height: 2px; transform: translateY(-1px); --arah: 90deg; }
+
+.tk-island-wrap .tk-kalibrasi-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.68rem;
+    color: var(--biru-tua);
+    background: #EAF8FF;
+    border: 2px solid #CDEBF7;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 14px;
+  }
+
+.tk-island-wrap .tk-kalibrasi-toggle.aktif { background: var(--biru); color: white; border-color: var(--biru-tua); }
+
+.tk-island-wrap .tk-kalibrasi-box {
+    display: none;
+    margin-top: 14px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    background: #F4FAFF;
+    border: 2px dashed var(--biru);
+  }
+
+.tk-island-wrap .tk-kalibrasi-box.tampil { display: block; animation: muncul 0.3s ease; }
+
+.tk-island-wrap .tk-kalibrasi-box h4 { font-family: 'Fredoka', sans-serif; font-size: 0.95rem; color: var(--biru-tua); margin-bottom: 6px; }
+
+.tk-island-wrap .tk-kalibrasi-box p { font-size: 0.8rem; color: var(--teks-lembut); font-weight: 600; line-height: 1.5; margin-bottom: 10px; }
+
+.tk-island-wrap .tk-kalibrasi-langkah {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.74rem; font-weight: 700; color: var(--teks);
+    padding: 7px 0; border-top: 1px solid #DCEEF8;
+  }
+
+.tk-island-wrap .tk-kalibrasi-langkah .nomor {
+    flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--putih); border: 2px solid #CDEBF7; font-size: 0.75rem; color: var(--biru-tua);
+  }
+
+.tk-island-wrap .tk-kalibrasi-langkah.selesai .nomor { background: var(--hijau); border-color: var(--hijau-tua); color: white; }
+
+.tk-island-wrap .tk-kalibrasi-langkah.aktif .nomor { background: var(--biru); border-color: var(--biru-tua); color: white; }
+
+.tk-island-wrap .tk-kalibrasi-langkah .nilai-px { margin-left: auto; font-size: 0.74rem; color: var(--teks-lembut); font-weight: 600; }
+
+.tk-island-wrap .tk-kalibrasi-range { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0; }
+
+.tk-island-wrap .tk-kalibrasi-range .form-group { flex: 1; min-width: 110px; margin: 0; }
+
+.tk-island-wrap .tk-kalibrasi-range label { font-size: 0.74rem; }
+
+.tk-island-wrap .tk-kalibrasi-aksi { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+
+.tk-island-wrap .tk-kalibrasi-btn {
+    font-family: 'Fredoka', sans-serif; font-weight: 600; font-size: 0.8rem;
+    padding: 8px 14px; border-radius: 14px; cursor: pointer; border: none;
+  }
+
+.tk-island-wrap .tk-kalibrasi-btn.mulai { background: var(--biru); color: white; }
+
+.tk-island-wrap .tk-kalibrasi-btn.reset { background: var(--krem); color: var(--teks-lembut); }
+
+.tk-island-wrap .tk-kalibrasi-output {
+    margin-top: 12px; background: var(--teks); color: #EAFBF1;
+    border-radius: 10px; padding: 12px 14px; font-size: 0.74rem;
+    font-family: 'Courier New', monospace; white-space: pre-wrap; word-break: break-all;
+    display: none;
+  }
+
+.tk-island-wrap .tk-kalibrasi-output.tampil { display: block; }
+
+.tk-island-wrap .tk-chart-stage.mode-kalibrasi { cursor: crosshair; box-shadow: 0 0 0 3px var(--biru); }
+
+.tk-island-wrap .tk-kalibrasi-marker {
+    position: absolute; width: 14px; height: 14px; margin-left: -7px; margin-top: -7px;
+    border-radius: 50%; border: 2px solid white; background: var(--biru-tua);
+    box-shadow: 0 0 0 2px var(--biru-tua); z-index: 7; font-size: 0.6rem; color: white;
+    display: flex; align-items: center; justify-content: center; font-weight: 700;
+  }
+
+.tk-island-wrap .tk-hasil-box {
+    display: none;
+    background: linear-gradient(135deg, #FFF7E0, #EAFBF1);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-top: 16px;
+    border: 3px dashed var(--kuning-tua);
+    animation: muncul 0.4s ease;
+  }
+
+.tk-island-wrap .tk-hasil-box.tampil { display: block; }
+
+.tk-island-wrap .tk-hasil-box .tk-hasil-judul {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--teks-lembut);
+    margin-bottom: 8px;
+  }
+
+.tk-island-wrap .tk-hasil-baris {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    padding: 4px 0;
+  }
+
+.tk-island-wrap .tk-hasil-label { color: var(--teks-lembut); font-weight: 600; }
+
+.tk-island-wrap .tk-hasil-nilai { font-weight: 700; color: var(--teks); }
+
+.tk-island-wrap .tk-hasil-peringatan {
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 2px dashed rgba(240,167,28,0.4);
+    font-size: 0.74rem;
+    color: var(--oranye-tua);
+    font-weight: 600;
+  }
+
+@media (max-width: 480px) {
+  .tk-island-wrap .form-row-group { flex-direction: column; gap: 0; }
+}
+
+@media (max-width: 480px) {
+  .tk-island-wrap .kartu { padding: 22px 16px; }
+  .tk-island-wrap .btn-hitung-mini { width: 100%; }
+}
+
+.tk-island-wrap .tk-zscore-block {
+    margin-top: 12px;
+    border-top: 2px dashed #E0E0E0;
+    padding-top: 10px;
+  }
+
+.tk-island-wrap .tk-zscore-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+.tk-island-wrap .tk-zscore-label {
+    font-size: 0.74rem;
+    font-weight: 700;
+    color: var(--teks-lembut);
+  }
+
+.tk-island-wrap .tk-zscore-nilai {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--teks);
+    font-family: 'Fredoka', sans-serif;
+  }
+
+.tk-island-wrap .tk-zscore-status {
+    margin-top: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-family: 'Fredoka', sans-serif;
+  }
+
+.tk-island-wrap {
+  --kuning: #F9D85C;
+  --kuning-tua: #E7B900;
+  --biru: #0B0C63;
+  --biru-tua: #090A4E;
+  --hijau: #22C7A7;
+  --hijau-tua: #12957E;
+  --oranye: #FF9F45;
+  --oranye-tua: #E67818;
+  --pink: #E23CA7;
+  --pink-tua: #C5228D;
+  --krem: #F1F3F8;
+  --putih: #FFFFFF;
+  --teks: #0A0B4F;
+  --teks-lembut: #667085;
+  --merah-lembut: #FDA4AF;
+  --etail-navy: #0A0B5F;
+  --etail-navy-2: #17186F;
+  --etail-magenta: #D936A6;
+  --etail-soft: #F4F5FA;
+  --etail-line: rgba(10, 11, 95, 0.09);
+  --etail-shadow: 0 28px 80px rgba(10, 11, 95, 0.14);
+  --etail-soft-shadow: 0 18px 44px rgba(10, 11, 95, 0.10);
+}
+
+.tk-island-wrap .kartu, .tk-island-wrap .tv-home-card, .tk-island-wrap #page-imunisasi .imunisasi-card, .tk-island-wrap .guideline-card, .tk-island-wrap .guideline-detail-card, .tk-island-wrap .obat-protokol-card, .tk-island-wrap .info-metode, .tk-island-wrap .summary-item, .tk-island-wrap .puyer-alert, .tk-island-wrap .puyer-result, .tk-island-wrap .tk-panel, .tk-island-wrap .tk-ringkasan, .tk-island-wrap .tk-hasil-box, .tk-island-wrap .tk-kalibrasi-box, .tk-island-wrap .alur-block, .tk-island-wrap .burn-map-card, .tk-island-wrap .hasil-box-cairan, .tk-island-wrap #hasil-box {
+  background: rgba(255,255,255,0.92) !important;
+  border: 1px solid rgba(255,255,255,0.95) !important;
+  border-radius: 34px !important;
+  box-shadow: var(--etail-soft-shadow) !important;
+}
+
+.tk-island-wrap .kartu, .tk-island-wrap .tv-home-card, .tk-island-wrap #page-imunisasi .imunisasi-card, .tk-island-wrap .guideline-detail-card, .tk-island-wrap .info-metode, .tk-island-wrap .summary-item, .tk-island-wrap .puyer-result, .tk-island-wrap .tk-panel, .tk-island-wrap .tk-ringkasan, .tk-island-wrap .tk-hasil-box, .tk-island-wrap .tk-kalibrasi-box {
+  padding: clamp(20px, 3vw, 32px) !important;
+}
+
+.tk-island-wrap .tv-home-hero h2, .tk-island-wrap #page-imunisasi .imunisasi-hero h2, .tk-island-wrap .judul-section h2, .tk-island-wrap .tv-home-section-head h3, .tk-island-wrap #page-imunisasi .imunisasi-toolbar h3 {
+  color: var(--etail-navy) !important;
+  letter-spacing: -0.07em;
+}
+
+.tk-island-wrap .tv-home-hero p, .tk-island-wrap #page-imunisasi .imunisasi-hero p, .tk-island-wrap .judul-section p, .tk-island-wrap .tv-home-section-head p, .tk-island-wrap .guideline-desc, .tk-island-wrap .guideline-meta, .tk-island-wrap .summary-item-body, .tk-island-wrap .tk-sub-pilihan, .tk-island-wrap .tk-usia-ket, .tk-island-wrap .catatan-metode, .tk-island-wrap .info-metode {
+  color: rgba(10,11,95,0.62) !important;
+  line-height: 1.68;
+}
+
+.tk-island-wrap .tv-home-grid, .tk-island-wrap .guideline-grid, .tk-island-wrap #grid-obat, .tk-island-wrap .imunisasi-grid, .tk-island-wrap .summary-grid, .tk-island-wrap .puyer-grid-2, .tk-island-wrap .puyer-grid-3, .tk-island-wrap .tk-charts-wrap { gap: 20px !important; }
+
+.tk-island-wrap .tv-home-tool, .tk-island-wrap .guideline-card.protokol-card, .tk-island-wrap .obat-card, .tk-island-wrap .tk-kartu-pilihan, .tk-island-wrap .tk-kartu-usia, .tk-island-wrap .tv-home-row-item, .tk-island-wrap .tv-home-insight, .tk-island-wrap .summary-empty, .tk-island-wrap .hasil-mini, .tk-island-wrap .obat-terpilih-box {
+  border-radius: 30px !important;
+  background: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,0.98) !important;
+  box-shadow: 0 14px 36px rgba(10,11,95,0.08) !important;
+}
+
+.tk-island-wrap .tv-home-tool, .tk-island-wrap .guideline-card.protokol-card, .tk-island-wrap .obat-card, .tk-island-wrap .tk-kartu-pilihan, .tk-island-wrap .tk-kartu-usia { transition: transform .18s ease, box-shadow .18s ease; overflow: hidden; }
+
+.tk-island-wrap .tv-home-tool:hover, .tk-island-wrap .guideline-card.protokol-card:hover, .tk-island-wrap .obat-card:hover, .tk-island-wrap .tk-kartu-pilihan:hover, .tk-island-wrap .tk-kartu-usia:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 26px 56px rgba(10,11,95,0.14) !important;
+}
+
+.tk-island-wrap .tv-home-icon, .tk-island-wrap .guideline-card-icon, .tk-island-wrap .tv-home-row-icon, .tk-island-wrap .judul-section .ikon-bulat, .tk-island-wrap .ikon-bulat, .tk-island-wrap .tk-step-num {
+  border-radius: 20px !important;
+  background: rgba(217,54,166,0.10) !important;
+  color: var(--etail-magenta) !important;
+  box-shadow: none !important;
+}
+
+.tk-island-wrap .btn-hitung, .tk-island-wrap .btn-hitung-mini, .tk-island-wrap .guideline-btn, .tk-island-wrap .btn-kembali, .tk-island-wrap .summary-btn, .tk-island-wrap .summary-add-btn, .tk-island-wrap .puyer-btn, .tk-island-wrap .imunisasi-zoom-btn, .tk-island-wrap .tk-kalibrasi-btn, .tk-island-wrap .nav-btn {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: var(--etail-magenta) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 14px 28px rgba(217,54,166,0.26) !important;
+  font-family: 'Quicksand', sans-serif !important;
+  font-weight: 900 !important;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+
+.tk-island-wrap .btn-hitung:hover, .tk-island-wrap .btn-hitung-mini:hover, .tk-island-wrap .guideline-btn:hover, .tk-island-wrap .btn-kembali:hover, .tk-island-wrap .summary-btn:hover, .tk-island-wrap .summary-add-btn:hover, .tk-island-wrap .puyer-btn:hover, .tk-island-wrap .imunisasi-zoom-btn:hover, .tk-island-wrap .tk-kalibrasi-btn:hover, .tk-island-wrap .nav-btn:hover {
+  transform: translateY(-2px) !important;
+  filter: brightness(1.03);
+  box-shadow: 0 18px 36px rgba(217,54,166,0.32) !important;
+}
+
+.tk-island-wrap .guideline-btn.secondary, .tk-island-wrap .puyer-btn.yellow, .tk-island-wrap .summary-btn.yellow, .tk-island-wrap .tk-kalibrasi-btn.reset {
+  background: #FFFFFF !important;
+  color: var(--etail-navy) !important;
+  border: 1px solid rgba(10,11,95,0.10) !important;
+  box-shadow: none !important;
+}
+
+.tk-island-wrap .summary-btn.green, .tk-island-wrap .puyer-btn.green, .tk-island-wrap .btn-hitung-mini, .tk-island-wrap .summary-add-btn {
+  background: var(--etail-navy) !important;
+  box-shadow: 0 14px 28px rgba(10,11,95,0.22) !important;
+}
+
+.tk-island-wrap #hasil-box, .tk-island-wrap .hasil-box-cairan, .tk-island-wrap .tk-hasil-box, .tk-island-wrap .summary-status {
+  background: linear-gradient(180deg, #FFFFFF, #F7F8FC) !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap .kartu, .tk-island-wrap .tv-home-card, .tk-island-wrap #page-imunisasi .imunisasi-card, .tk-island-wrap .guideline-detail-card, .tk-island-wrap .info-metode, .tk-island-wrap .summary-item, .tk-island-wrap .puyer-result, .tk-island-wrap .tk-panel, .tk-island-wrap .tk-ringkasan, .tk-island-wrap .tk-hasil-box, .tk-island-wrap .tk-kalibrasi-box { border-radius: 26px !important; padding: 18px !important; }
+}
+
+.tk-island-wrap html body .judul-section h2, .tk-island-wrap html body .tv-home-section-head h3, .tk-island-wrap html body #page-imunisasi .imunisasi-toolbar h3, .tk-island-wrap html body .guideline-card h3 {
+  font-size: clamp(1.05rem, 2.2vw, 1.55rem) !important;
+  line-height: 1.15 !important;
+  letter-spacing: -0.045em !important;
+}
+
+.tk-island-wrap html body .judul-section p, .tk-island-wrap html body .tv-home-section-head p, .tk-island-wrap html body .guideline-desc, .tk-island-wrap html body .guideline-meta {
+  font-size: 0.78rem !important;
+  line-height: 1.5 !important;
+}
+
+.tk-island-wrap html body .judul-section .ikon-bulat, .tk-island-wrap html body .ikon-bulat {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  border-radius: 14px !important;
+  font-size: 1rem !important;
+}
+
+.tk-island-wrap html body .kartu, .tk-island-wrap html body .tv-home-card, .tk-island-wrap html body #page-imunisasi .imunisasi-card, .tk-island-wrap html body .guideline-detail-card, .tk-island-wrap html body .info-metode, .tk-island-wrap html body .summary-item, .tk-island-wrap html body .puyer-result, .tk-island-wrap html body .tk-panel, .tk-island-wrap html body .tk-ringkasan, .tk-island-wrap html body .tk-hasil-box, .tk-island-wrap html body .tk-kalibrasi-box {
+  border-radius: 26px !important;
+  padding: clamp(16px, 2.5vw, 24px) !important;
+}
+
+.tk-island-wrap html body #page-dosis #library .kartu {
+  background: rgba(255,255,255,0.92) !important;
+  border: 1px solid rgba(10,11,95,0.07) !important;
+  box-shadow: 0 18px 44px rgba(10,11,95,0.08) !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section > div:last-child {
+  min-height: 52px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  gap: 3px !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section .ikon-bulat {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  flex: 0 0 52px !important;
+  border-radius: 17px !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transform: translateY(0) !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section h2 {
+  margin: 0 !important;
+  font-size: clamp(1.12rem, 2vw, 1.42rem) !important;
+  line-height: 1.04 !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.055em !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section p, .tk-island-wrap html body .page:not(#page-beranda) .judul-section .referensi-badge {
+  margin-top: 0 !important;
+  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  line-height: 1.22 !important;
+  font-weight: 650 !important;
+  letter-spacing: -0.012em !important;
+}
+
+.tk-island-wrap html body .page:not(#page-beranda) .judul-section .referensi-badge {
+  width: fit-content !important;
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+}
+
+.tk-island-wrap html body #page-imunisasi .imunisasi-hero .judul-section {
+  margin-bottom: 0 !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body .page:not(#page-beranda) .judul-section {
+    gap: 11px !important;
+    margin-bottom: 15px !important;
+  }
+  .tk-island-wrap html body .page:not(#page-beranda) .judul-section > div:last-child {
+    min-height: 46px !important;
+  }
+  .tk-island-wrap html body .page:not(#page-beranda) .judul-section .ikon-bulat {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+  .tk-island-wrap html body .page:not(#page-beranda) .judul-section h2 {
+    font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
+  }
+  .tk-island-wrap html body .page:not(#page-beranda) .judul-section p, .tk-island-wrap html body .page:not(#page-beranda) .judul-section .referensi-badge {
+    font-size: 0.62rem !important;
+    line-height: 1.18 !important;
+  }
+}
+
+.tk-island-wrap html body h1, .tk-island-wrap html body h2, .tk-island-wrap html body h3, .tk-island-wrap html body h4, .tk-island-wrap html body .logo-row, .tk-island-wrap html body header h1, .tk-island-wrap html body .tv-home-hero h2, .tk-island-wrap html body .judul-section h2, .tk-island-wrap html body .tv-home-section-head h3, .tk-island-wrap html body .nama-obat-card, .tk-island-wrap html body .sidebar-item, .tk-island-wrap html body button, .tk-island-wrap html body .tombol, .tk-island-wrap html body .nav-btn, .tk-island-wrap html body .btn-hitung, .tk-island-wrap html body .btn-hitung-mini, .tk-island-wrap html body .guideline-btn, .tk-island-wrap html body .summary-btn, .tk-island-wrap html body .puyer-btn {
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em !important;
+}
+
+.tk-island-wrap html body #page-beranda .tv-home-hero h2, .tk-island-wrap html body .tv-home-hero h2, .tk-island-wrap html body .judul-section h2 {
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  letter-spacing: -0.035em !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body h1, .tk-island-wrap html body h2, .tk-island-wrap html body h3, .tk-island-wrap html body h4, .tk-island-wrap html body header h1, .tk-island-wrap html body .logo-row h1, .tk-island-wrap html body .tv-home-hero h2, .tk-island-wrap html body .judul-section h2, .tk-island-wrap html body button, .tk-island-wrap html body .sidebar-item, .tk-island-wrap html body .nama-obat-card {
+    font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+    font-weight: 700 !important;
+  }
+}
+
+.tk-island-wrap html body .sidebar-item .label, .tk-island-wrap html body #sidebar .sidebar-item .label, .tk-island-wrap html body .tv-home-tool h4, .tk-island-wrap html body #page-beranda .tv-home-tool h4, .tk-island-wrap html body .tv-home-row-item strong, .tk-island-wrap html body .tv-home-row-item b, .tk-island-wrap html body .tv-home-section-head h3, .tk-island-wrap html body .judul-section h2, .tk-island-wrap html body .nama-obat-card, .tk-island-wrap html body .obat-card .nama-obat-card, .tk-island-wrap html body .protokol-card .nama-protokol-card, .tk-island-wrap html body .obat-protokol-head .nama, .tk-island-wrap html body .guideline-card h3, .tk-island-wrap html body .tk-kartu-pilihan .tk-nama-pilihan, .tk-island-wrap html body .tk-kartu-usia .tk-usia-label, .tk-island-wrap html body .tk-chart-judul, .tk-island-wrap html body .tk-plot-judul, .tk-island-wrap html body .tk-cdc-materi-title, .tk-island-wrap html body .summary-item-title, .tk-island-wrap html body .puyer-obat-title, .tk-island-wrap html body .puyer-metric .value, .tk-island-wrap html body .puyer-table th, .tk-island-wrap html body .puyer-resep-title, .tk-island-wrap html body #page-imunisasi .imunisasi-item strong, .tk-island-wrap html body #page-imunisasi .imunisasi-card h3, .tk-island-wrap html body .hasil-section-title, .tk-island-wrap html body .burn-map-title, .tk-island-wrap html body .burn-result-card h4, .tk-island-wrap html body .burn-result-value, .tk-island-wrap html body .segmented-btn, .tk-island-wrap html body .guideline-chip, .tk-island-wrap html body .summary-btn, .tk-island-wrap html body .summary-add-btn, .tk-island-wrap html body .puyer-btn, .tk-island-wrap html body .btn-hitung, .tk-island-wrap html body .btn-hitung-mini, .tk-island-wrap html body .btn-kembali, .tk-island-wrap html body .ganti-link, .tk-island-wrap html body .badge-dosis, .tk-island-wrap html body .referensi-badge, .tk-island-wrap html body .tk-ringkasan-chip, .tk-island-wrap html body .tk-step-dot, .tk-island-wrap html body .tk-step-dot .tk-step-num {
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.012em !important;
+  -webkit-font-smoothing: antialiased !important;
+  text-rendering: geometricPrecision !important;
+}
+
+.tk-island-wrap html body .tv-home-tool p, .tk-island-wrap html body .tv-home-row-item span, .tk-island-wrap html body .tk-kartu-pilihan .tk-sub-pilihan, .tk-island-wrap html body .tk-kartu-usia .tk-usia-ket, .tk-island-wrap html body #page-imunisasi .imunisasi-item span, .tk-island-wrap html body .guideline-meta, .tk-island-wrap html body .guideline-desc, .tk-island-wrap html body .puyer-metric .label {
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 700 !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body .sidebar-item .label, .tk-island-wrap html body #sidebar .sidebar-item .label, .tk-island-wrap html body .tv-home-tool h4, .tk-island-wrap html body #page-beranda .tv-home-tool h4, .tk-island-wrap html body .tv-home-row-item strong, .tk-island-wrap html body .nama-obat-card, .tk-island-wrap html body .obat-card .nama-obat-card, .tk-island-wrap html body .protokol-card .nama-protokol-card, .tk-island-wrap html body .guideline-card h3, .tk-island-wrap html body .tk-kartu-pilihan .tk-nama-pilihan, .tk-island-wrap html body .tk-kartu-usia .tk-usia-label, .tk-island-wrap html body #page-imunisasi .imunisasi-item strong, .tk-island-wrap html body .summary-item-title, .tk-island-wrap html body .puyer-obat-title {
+    font-weight: 700 !important;
+    line-height: 1.16 !important;
+    letter-spacing: -0.01em !important;
+    overflow-wrap: anywhere;
+  }
+  .tk-island-wrap html body .nama-obat-card, .tk-island-wrap html body .obat-card .nama-obat-card, .tk-island-wrap html body .protokol-card .nama-protokol-card, .tk-island-wrap html body .guideline-card h3, .tk-island-wrap html body .tk-kartu-pilihan .tk-nama-pilihan, .tk-island-wrap html body .tk-kartu-usia .tk-usia-label, .tk-island-wrap html body .summary-item-title, .tk-island-wrap html body .puyer-obat-title, .tk-island-wrap html body #page-imunisasi .imunisasi-item strong {
+    font-size: clamp(0.82rem, 3.4vw, 1rem) !important;
+  }
+  .tk-island-wrap html body .tv-home-tool p, .tk-island-wrap html body .tv-home-row-item span, .tk-island-wrap html body .tk-kartu-pilihan .tk-sub-pilihan, .tk-island-wrap html body .tk-kartu-usia .tk-usia-ket, .tk-island-wrap html body #page-imunisasi .imunisasi-item span, .tk-island-wrap html body .guideline-desc {
+    line-height: 1.28 !important;
+  }
+}
+
+.tk-island-wrap html body #page-cairan > .judul-section, .tk-island-wrap html body #page-puyer > .judul-section, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.tk-island-wrap html body #page-cairan > .judul-section > div:last-child, .tk-island-wrap html body #page-puyer > .judul-section > div:last-child, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section > div:last-child {
+  min-height: 52px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  padding: 0 !important;
+}
+
+.tk-island-wrap html body #page-cairan > .judul-section .ikon-bulat, .tk-island-wrap html body #page-puyer > .judul-section .ikon-bulat, .tk-island-wrap html body #tk-island-wrap > .judul-section .ikon-bulat, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section .ikon-bulat {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  flex: 0 0 52px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 17px !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.tk-island-wrap html body #page-cairan > .judul-section h2, .tk-island-wrap html body #page-puyer > .judul-section h2, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section h2 {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  font-size: clamp(1.12rem, 2vw, 1.42rem) !important;
+  line-height: 1.04 !important;
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.055em !important;
+}
+
+.tk-island-wrap html body #page-cairan > .judul-section p, .tk-island-wrap html body #page-puyer > .judul-section p, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section p {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(10,11,95,0.62) !important;
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  line-height: 1.22 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.012em !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body #page-cairan > .judul-section, .tk-island-wrap html body #page-puyer > .judul-section, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section {
+    gap: 11px !important;
+    margin-bottom: 15px !important;
+  }
+  .tk-island-wrap html body #page-cairan > .judul-section > div:last-child, .tk-island-wrap html body #page-puyer > .judul-section > div:last-child, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section > div:last-child {
+    min-height: 46px !important;
+  }
+  .tk-island-wrap html body #page-cairan > .judul-section .ikon-bulat, .tk-island-wrap html body #page-puyer > .judul-section .ikon-bulat, .tk-island-wrap html body #tk-island-wrap > .judul-section .ikon-bulat, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section .ikon-bulat {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+  .tk-island-wrap html body #page-cairan > .judul-section h2, .tk-island-wrap html body #page-puyer > .judul-section h2, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section h2 {
+    font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
+  }
+  .tk-island-wrap html body #page-cairan > .judul-section p, .tk-island-wrap html body #page-puyer > .judul-section p, .tk-island-wrap html body #page-tumbuh-kembang > .judul-section p {
+    font-size: 0.62rem !important;
+    line-height: 1.18 !important;
+  }
+}
+
+.tk-island-wrap html body #page-ringkasan > .judul-section {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+  margin-bottom: 18px !important;
+}
+
+.tk-island-wrap html body #page-ringkasan > .judul-section > div:last-child {
+  min-height: 52px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  padding: 0 !important;
+}
+
+.tk-island-wrap html body #page-ringkasan > .judul-section .ikon-bulat {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  flex: 0 0 52px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 17px !important;
+  font-size: 1.24rem !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+  transform: none !important;
+}
+
+.tk-island-wrap html body #page-ringkasan > .judul-section h2 {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--etail-navy, #0A0B5F) !important;
+  font-size: clamp(1.12rem, 2vw, 1.42rem) !important;
+  line-height: 1.04 !important;
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important;
+  font-weight: 850 !important;
+  letter-spacing: -0.055em !important;
+}
+
+.tk-island-wrap html body #page-ringkasan > .judul-section p {
+  display: block !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: rgba(10,11,95,0.62) !important;
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  line-height: 1.22 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.012em !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body #page-ringkasan > .judul-section {
+    gap: 11px !important;
+    margin-bottom: 15px !important;
+  }
+  .tk-island-wrap html body #page-ringkasan > .judul-section > div:last-child {
+    min-height: 46px !important;
+  }
+  .tk-island-wrap html body #page-ringkasan > .judul-section .ikon-bulat {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    flex-basis: 46px !important;
+    border-radius: 15px !important;
+    font-size: 1.1rem !important;
+  }
+  .tk-island-wrap html body #page-ringkasan > .judul-section h2 {
+    font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
+  }
+  .tk-island-wrap html body #page-ringkasan > .judul-section p {
+    font-size: 0.62rem !important;
+    line-height: 1.18 !important;
+  }
+}
+
+.tk-island-wrap html body #page-dosis #kalkulator .judul-section {
+  margin-bottom: 10px !important;
+  gap: 10px !important;
+}
+
+.tk-island-wrap html body #page-dosis #kalkulator .judul-section .ikon-bulat {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  font-size: 1rem !important;
+  border-radius: 14px !important;
+}
+
+.tk-island-wrap html body #page-dosis #kalkulator .judul-section h2 {
+  font-size: 1rem !important;
+  margin-bottom: 2px !important;
+  line-height: 1.1 !important;
+}
+
+.tk-island-wrap html body #page-dosis #kalkulator .judul-section p {
+  font-size: .72rem !important;
+  line-height: 1.25 !important;
+}
+
+.tk-island-wrap html body #page-dosis .kalkulator-kartu {
+  display: block !important;
+  max-width: 760px !important;
+  margin: 0 auto !important;
+  padding: 16px !important;
+  border-radius: 22px !important;
+  box-shadow: 0 10px 26px rgba(10,11,95,.07) !important;
+}
+
+.tk-island-wrap html body #page-dosis .form-group {
+  margin-bottom: 0 !important;
+}
+
+.tk-island-wrap html body #page-dosis .form-group label {
+  font-size: .72rem !important;
+  margin-bottom: 5px !important;
+  line-height: 1.15 !important;
+}
+
+@media (max-width: 768px) {
+  .tk-island-wrap html body #page-dosis .kalkulator-kartu {
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+}
+
+
+/* ------------------------------------------------------------------
+ * Blok gaya tambahan dari akhir <head> island (ukuran header, ikon 38px,
+ * font hasil MPH, dan kartu MPH yang dapat dilipat). Disalin apa adanya;
+ * hanya selector yang diikat ke .tk-island-wrap.
+ * ------------------------------------------------------------------ */
+.tk-island-wrap{max-width:920px;margin:0 auto}
+/* TV: samakan ukuran header Tumbuh Kembang dengan Racik Puyer (judul 18.32px, subjudul 10.24px). Warna & font sudah sama. */
+.tk-island-wrap > .judul-section h2{font-size:1.145rem !important}
+.tk-island-wrap > .judul-section p{font-size:0.64rem !important}
+.tk-island-wrap > .judul-section .ikon-bulat,
+.tk-island-wrap > .judul-section .ikon-bulat,
+.tk-island-wrap .judul-section .ikon-bulat {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  max-width: 38px !important;
+  flex: 0 0 38px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.tk-island-wrap > .judul-section .ikon-bulat svg,
+.tk-island-wrap > .judul-section .ikon-bulat svg {
+  width: 38px !important;
+  height: 38px !important;
+}
+/* TV: perkecil font hasil Prediksi Tinggi (MPH) agar minimalis & rapi */
+.tk-island-wrap .dx-res{font-size:13.12px !important}
+/* TV: kartu Prediksi Tinggi (MPH) dibuat collapsible agar ringkas */
+.tk-island-wrap details.tk-mph-card > summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;user-select:none}
+.tk-island-wrap details.tk-mph-card > summary::-webkit-details-marker{display:none}
+.tk-island-wrap details.tk-mph-card > summary .tk-mph-chevron{transition:transform .2s ease;color:#0a0b5f;font-weight:900;font-size:24px !important;line-height:1}
+.tk-island-wrap details.tk-mph-card[open] > summary .tk-mph-chevron{transform:rotate(90deg)}
+.tk-island-wrap .tk-mph-body{margin-top:12px}

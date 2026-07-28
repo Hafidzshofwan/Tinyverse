@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { GrowthTool, GrowthTrackingPanel } from "@/features/growth-chart";
+import { GrowthChartTool, GrowthTrackingPanel } from "@/features/growth-chart";
 import { ScreeningPanel } from "@/widgets/developmental-screening-panel";
 import { ScreeningIcon } from "@/shared/ui";
 
@@ -75,7 +75,9 @@ function GrowthPanelInner() {
       ) : tab === "skrining" ? (
         <ScreeningPanel iconVariant="svg-v1" />
       ) : (
-        <GrowthTool />
+        /* Sebelumnya <GrowthTool /> yang memuat iframe public/growth-tool.html.
+           Kini komponen React murni dengan gambar, kalibrasi, dan desain identik. */
+        <GrowthChartTool />
       )}
     </div>
   );
