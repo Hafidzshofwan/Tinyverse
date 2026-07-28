@@ -2,20 +2,27 @@ import "server-only";
 import type { Plan } from "@tinyverse/billing";
 
 /**
- * Katalog paket SEMENTARA.
+ * Katalog paket langganan.
  *
- * PERHATIAN: nama, durasi, dan harga di bawah ini masih karangan untuk
- * keperluan pengujian. Ganti dengan angka sungguhan sebelum pembayaran
- * dinyalakan di Fase 5.
+ * Harga di bawah ini sudah ditetapkan pemilik aplikasi. Model penagihannya
+ * SEKALI BAYAR: bila tidak diperpanjang, tidak ada tagihan berikutnya dan tidak
+ * ada penarikan otomatis.
  *
- * WHY masih di kode, belum di Firestore: selama harga belum final, menyimpannya
- * di basis data hanya menambah satu tempat lagi yang harus disunting setiap
- * kali berubah. Bentuk datanya sudah sama persis dengan dokumen `plans` nanti,
- * jadi pemindahannya kelak tidak mengubah satu pun pemakainya.
+ * WHY masih di kode, belum di Firestore: satu-satunya pemakainya adalah server,
+ * dan menyimpannya di basis data akan menambah satu tempat lagi yang harus
+ * disunting setiap kali harga berubah. Bentuk datanya sudah sama persis dengan
+ * dokumen `plans` nanti, jadi pemindahannya kelak tidak mengubah pemakainya.
+ *
+ * PENTING: `id` adalah kunci abadi. Ia tersimpan di dokumen langganan dan
+ * pesanan yang sudah terlanjur dibuat, jadi jangan pernah mengubah atau memakai
+ * ulang id lama untuk paket yang berbeda. Menambah paket baru selalu aman;
+ * memensiunkan paket lama cukup dengan `aktif: false` agar riwayat tetap
+ * terbaca.
  */
 export const KATALOG_PLAN: readonly Plan[] = [
-  { id: "bulanan", nama: "Bulanan", durasiHari: 30, hargaRupiah: 49000, aktif: true },
-  { id: "tahunan", nama: "Tahunan", durasiHari: 365, hargaRupiah: 490000, aktif: true },
+  { id: "bulanan", nama: "1 Bulan", durasiHari: 30, hargaRupiah: 15000, aktif: true },
+  { id: "semesteran", nama: "6 Bulan", durasiHari: 180, hargaRupiah: 60000, aktif: true },
+  { id: "tahunan", nama: "1 Tahun", durasiHari: 365, hargaRupiah: 100000, aktif: true },
 ];
 
 export function cariPlan(planId: string): Plan | null {
