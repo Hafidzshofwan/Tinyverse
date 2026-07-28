@@ -247,6 +247,15 @@ a:focus-visible {
   filter: drop-shadow(0 2px 6px rgba(236, 72, 153, 0.25));
 }
 
+[data-theme="dark"] .tv-greeting-hand-icon,
+html.dark .tv-greeting-hand-icon {
+  --tv-greeting-stop1: #FF70BA;
+  --tv-greeting-stop2: #C084FC;
+  --tv-greeting-stop3: #FCD34D;
+  --tv-greeting-stop4: #F87171;
+  filter: drop-shadow(0 0 8px rgba(255, 112, 186, 0.7)) drop-shadow(0 0 3px rgba(192, 132, 252, 0.8)) brightness(1.25);
+}
+
 @keyframes waveGreeting {
   0%, 100% {
     transform: rotate(-26deg);
@@ -4906,6 +4915,86 @@ html.dark .tv-progress-bar-fill {
 html.dark .tv-progress-bar-track {
   background: rgba(255, 255, 255, 0.15) !important;
 }
+
+/* ===== ALUR TATALAKSANA DARK MODE STYLES ===== */
+[data-theme="dark"] .tv-alur-kartu,
+html.dark .tv-alur-kartu {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  border-left-width: 4px !important;
+  border-left-style: solid !important;
+  border-left-color: var(--kat, #EC4899) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-alur-kartu:hover:not(:disabled),
+html.dark .tv-alur-kartu:hover:not(:disabled) {
+  background: #273549 !important;
+  border-left-width: 5px !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-alur-kat[style*="respirasi"],
+[data-theme="dark"] .tv-alur-kartu[style*="respirasi"],
+html.dark .tv-alur-kat[style*="respirasi"],
+html.dark .tv-alur-kartu[style*="respirasi"] {
+  --kat: #34D399 !important;
+  --kat-lembut: rgba(52, 211, 153, 0.18) !important;
+  border-left-color: #34D399 !important;
+}
+
+[data-theme="dark"] .tv-alur-kat[style*="neurologi"],
+[data-theme="dark"] .tv-alur-kartu[style*="neurologi"],
+html.dark .tv-alur-kat[style*="neurologi"],
+html.dark .tv-alur-kartu[style*="neurologi"] {
+  --kat: #C084FC !important;
+  --kat-lembut: rgba(192, 132, 252, 0.18) !important;
+  border-left-color: #C084FC !important;
+}
+
+[data-theme="dark"] .tv-alur-kat[style*="metabolik"],
+[data-theme="dark"] .tv-alur-kartu[style*="metabolik"],
+html.dark .tv-alur-kat[style*="metabolik"],
+html.dark .tv-alur-kartu[style*="metabolik"] {
+  --kat: #FBBF24 !important;
+  --kat-lembut: rgba(251, 191, 36, 0.18) !important;
+  border-left-color: #FBBF24 !important;
+}
+
+[data-theme="dark"] .tv-alur-kat[style*="infeksi"],
+[data-theme="dark"] .tv-alur-kartu[style*="infeksi"],
+html.dark .tv-alur-kat[style*="infeksi"],
+html.dark .tv-alur-kartu[style*="infeksi"] {
+  --kat: #2DD4BF !important;
+  --kat-lembut: rgba(45, 212, 191, 0.18) !important;
+  border-left-color: #2DD4BF !important;
+}
+
+[data-theme="dark"] .tv-alur-kartu-judul,
+html.dark .tv-alur-kartu-judul {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-alur-kartu-ringkas,
+html.dark .tv-alur-kartu-ringkas {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tv-decision-tree-box,
+html.dark .tv-decision-tree-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  --tv-tree-bg: #1E293B !important;
+  --tv-tree-border: #334155 !important;
+}
+
+[data-theme="dark"] .tv-decision-tree-card,
+html.dark .tv-decision-tree-card {
+  --tv-tree-card-bg: #0F172A !important;
+  background: #0F172A !important;
+  border-color: #334155 !important;
+}
+
 
 
 

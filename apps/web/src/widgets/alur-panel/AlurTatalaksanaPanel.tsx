@@ -456,6 +456,7 @@ export function AlurTatalaksanaPanel() {
                 {
                   "--kat": kat.warna,
                   "--kat-lembut": kat.warnaLembut,
+                  "--kat-id": kat.id,
                 } as CSSProperties
               }
             >
@@ -478,6 +479,7 @@ export function AlurTatalaksanaPanel() {
                     {
                       "--kat": kat.warna,
                       "--kat-lembut": kat.warnaLembut,
+                      "--kat-id": kat.id,
                     } as CSSProperties
                   }
                 >
@@ -880,9 +882,10 @@ function InteractiveDecisionTree({
 }) {
   return (
     <div
+      className="tv-decision-tree-box"
       style={{
-        background: "linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)",
-        border: "1px solid #CBD5E1",
+        background: "var(--tv-tree-bg, linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%))",
+        border: "1px solid var(--tv-tree-border, #CBD5E1)",
         borderRadius: 16,
         padding: "14px 16px",
         marginBottom: 16,
@@ -913,11 +916,12 @@ function InteractiveDecisionTree({
             Interactive Decision Tree
           </span>
           <h4
+            className="tv-decision-tree-title"
             style={{
               margin: 0,
               fontSize: "0.92rem",
               fontWeight: 800,
-              color: "#0F172A",
+              color: "var(--tv-teks, #0F172A)",
               fontFamily: "Fredoka, sans-serif",
             }}
           >
@@ -925,11 +929,12 @@ function InteractiveDecisionTree({
           </h4>
         </div>
         <span
+          className="tv-decision-tree-badge"
           style={{
             fontSize: "0.75rem",
-            color: "#64748B",
+            color: "var(--tv-soft-teks, #64748B)",
             fontWeight: 700,
-            background: "#E2E8F0",
+            background: "var(--tv-accent-soft, #E2E8F0)",
             padding: "2px 8px",
             borderRadius: 999,
           }}
@@ -968,15 +973,17 @@ function InteractiveDecisionTree({
             >
               <button
                 type="button"
+                className="tv-decision-tree-card"
                 onClick={() => !isLast && onJumpToStep(i)}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 12,
-                  background: isLast ? "#FFFFFF" : "rgba(255,255,255,0.85)",
+                  background: isLast ? "var(--tv-putih, #FFFFFF)" : "var(--tv-tree-card-bg, rgba(255,255,255,0.85))",
                   border: isLast
                     ? `2px solid ${nadaWarna}`
-                    : "1px solid #CBD5E1",
+                    : "1px solid var(--tv-line, #CBD5E1)",
+                  borderLeft: `5px solid ${nadaWarna}`,
                   borderRadius: 12,
                   padding: "10px 14px",
                   cursor: isLast ? "default" : "pointer",
@@ -993,8 +1000,8 @@ function InteractiveDecisionTree({
                     width: 28,
                     height: 28,
                     borderRadius: "50%",
-                    background: isLast ? nadaWarna : "#E2E8F0",
-                    color: isLast ? "#FFFFFF" : "#475569",
+                    background: isLast ? nadaWarna : "var(--tv-accent-soft, #E2E8F0)",
+                    color: isLast ? "#FFFFFF" : "var(--tv-teks, #475569)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1010,7 +1017,7 @@ function InteractiveDecisionTree({
                   <div
                     style={{
                       fontSize: "0.72rem",
-                      color: "#64748B",
+                      color: "var(--tv-soft-teks, #64748B)",
                       fontWeight: 700,
                       textTransform: "uppercase",
                     }}
@@ -1018,10 +1025,11 @@ function InteractiveDecisionTree({
                     Langkah {i + 1}
                   </div>
                   <div
+                    className="tv-decision-tree-step-judul"
                     style={{
                       fontSize: "0.88rem",
                       fontWeight: 700,
-                      color: "#0F172A",
+                      color: "var(--tv-teks, #0F172A)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",

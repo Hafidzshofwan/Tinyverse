@@ -30,12 +30,12 @@ export function HomeGreeting() {
         >
           <defs>
             <linearGradient id="tvGreetingGrad1" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#EC4899" />
-              <stop offset="100%" stopColor="#8B5CF6" />
+              <stop offset="0%" stopColor="var(--tv-greeting-stop1, #EC4899)" />
+              <stop offset="100%" stopColor="var(--tv-greeting-stop2, #8B5CF6)" />
             </linearGradient>
             <linearGradient id="tvGreetingGrad2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#F59E0B" />
-              <stop offset="100%" stopColor="#EF4444" />
+              <stop offset="0%" stopColor="var(--tv-greeting-stop3, #F59E0B)" />
+              <stop offset="100%" stopColor="var(--tv-greeting-stop4, #EF4444)" />
             </linearGradient>
           </defs>
           <path
