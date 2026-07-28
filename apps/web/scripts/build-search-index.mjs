@@ -26,7 +26,8 @@ const TOOLS = [
   { srcDirs: ["widgets/darurat-panel", "features/emergency-pat", "features/emergency-gcs", "features/emergency-pals", "features/emergency-resus", "entities/emergency"],
     slug: "darurat", label: "Mode Darurat", icon: "\uD83D\uDEA8", href: "/preview/darurat",
     keywords: ["gcs","glasgow","pat","pediatric assessment triangle","pals","resusitasi","henti jantung","rjp","cpr","kejang","syok","triase","kegawatan","emergency","gawat darurat","epinefrin","defibrilasi","kardioversi"] },
-  { file: "cairan-tool.html", slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids",
+  { srcDirs: ["widgets/fluids-panel", "features/fluid-maintenance", "features/fluid-drip", "features/burn-calculator", "entities/fluid", "entities/burn"],
+    slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids",
     keywords: ["dehidrasi","rumatan","maintenance","holliday","segar","resusitasi cairan","bolus","kristaloid","rehidrasi","defisit","tetesan","infus","cairan","luka bakar","parkland","lund browder"] },
   { file: "dosis-tool.html", slug: "dosis", label: "Dosis Obat", icon: "\uD83D\uDC8A", href: "/preview/dosing",
     keywords: ["dosis obat","antibiotik","paracetamol","mg/kg","obat","kalkulator dosis","sediaan","dosing"] },
@@ -38,7 +39,8 @@ const TOOLS = [
   { srcDirs: ["widgets/lab-panel", "features/lab-reference", "features/lab-blood", "features/lab-electrolyte", "features/abg-analyzer", "entities/lab", "entities/abg"],
     slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab",
     keywords: ["natrium","kalium","elektrolit","agd","analisa gas darah","abg","ph","hb","hemoglobin","leukosit","trombosit","darah","interpretasi lab","asidosis","alkalosis"] },
-  { file: "nutrisi-tool.html", slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "🍎", href: "/preview/nutrisi",
+  { srcDirs: ["widgets/nutrition-panel", "features/nutrition-calculator", "entities/nutrition"],
+    slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "🍎", href: "/preview/nutrisi",
     keywords: ["kalori","protein","kebutuhan energi","susu formula","mpasi","gizi","holliday","rda","takaran susu","sendok takar","nutrisi"] },
 ];
 
@@ -531,8 +533,18 @@ for (const t of TOOLS) {
   let phrases = [];
   if (t.file) {
     let html = "";
-    try { html = readFileSync(join(PUBLIC, t.file), "utf8"); } catch { html = ""; }
+    try {
+      html = readFileSync(join(PUBLIC, t.file), "utf8");
+    } catch {
+      // WHY berisik: island yang hilang dulu ditelan diam-diam, sehingga alat
+      // yang sudah dimigrasi ke React tetap menunjuk berkas HTML yang sudah
+      // dihapus dan kehilangan SELURUH entri kontennya tanpa peringatan.
+      // Bila ini muncul, ubah entri alat tersebut dari `file` menjadi `srcDirs`.
+      console.warn("island tidak ditemukan untuk alat:", t.slug, "->", t.file, "(entri konten kosong)");
+      html = "";
+    }
     if (html) phrases = extractPhrases(html);
+    else if (!phrases.length) console.warn("frasa island kosong untuk alat:", t.slug);
   } else if (t.srcDirs) {
     phrases = extractPhrasesFromSource(t.srcDirs);
     if (!phrases.length) console.warn("frasa React kosong untuk alat:", t.slug);
