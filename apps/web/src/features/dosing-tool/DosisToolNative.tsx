@@ -204,15 +204,9 @@ export function DosisToolNative() {
                     className={`dosis-card ${terpilih ? "terpilih" : ""}`}
                     onClick={() => handlePilihObat(o.id)}
                   >
-                    <div
-                      className="dosis-card-top-strip"
-                      style={{
-                        background: terpilih
-                          ? "linear-gradient(90deg, #312E81 0%, #D946EF 100%)"
-                          : tagStyle.color
-                      }}
-                    />
+                    <div className="dosis-card-top-strip" />
                     {terpilih && <div className="dosis-card-glow-bg" />}
+                    {terpilih && <div className="dosis-card-toggle-dot" />}
                     
                     <div className="dosis-card-header">
                       <span
@@ -224,7 +218,6 @@ export function DosisToolNative() {
                       >
                         {kat}
                       </span>
-                      <span className="dosis-card-centang"></span>
                     </div>
 
                     <div className="dosis-card-body">
