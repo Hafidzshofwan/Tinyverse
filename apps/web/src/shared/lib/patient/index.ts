@@ -32,6 +32,72 @@ export const PASIEN_AKTIF_KEY = "tv_pasien_aktif";
  */
 export const PASIEN_LIST_KEY_LAMA = "tv_pasien_list";
 
+/*
+ * NISAN PENGHAPUSAN (tombstone)
+ *
+ * WHY: menghapus pasien hanya dari localStorage tidak cukup. Listener Firestore
+ * akan segera mengirim snapshot yang masih memuat dokumen itu, lalu menulisnya
+ * kembali ke localStorage - pasien "hidup lagi". Bila penghapusan di awan gagal
+ * (jaringan mati, token belum siap), pasien itu akan terus hidup selamanya.
+ *
+ * Karena itu penghapusan dicatat lebih dulu sebagai nisan yang ikut bertahan
+ * di localStorage, sehingga muat ulang halaman pun tidak menghidupkannya.
+ * Nisan dibuang setelah penghapusan di awan benar-benar berhasil, dan
+ * kedaluwarsa sendiri setelah 30 hari agar tidak menumpuk.
+ */
+function kunciHapusPasien(): string {
+  return `${kunciDaftarPasien()}__hapus`;
+}
+
+const UMUR_NISAN_MS = 30 * 24 * 60 * 60 * 1000;
+
+function bacaNisan(): Record<string, number> {
+  if (typeof window === "undefined") return {};
+  try {
+    const mentah: unknown = JSON.parse(
+      window.localStorage.getItem(kunciHapusPasien()) || "{}",
+    );
+    if (!mentah || typeof mentah !== "object") return {};
+    const sekarang = Date.now();
+    const bersih: Record<string, number> = {};
+    Object.entries(mentah as Record<string, unknown>).forEach(([id, pada]) => {
+      const t = typeof pada === "number" ? pada : 0;
+      if (sekarang - t < UMUR_NISAN_MS) bersih[id] = t;
+    });
+    return bersih;
+  } catch {
+    return {};
+  }
+}
+
+function tulisNisan(nisan: Record<string, number>): void {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(kunciHapusPasien(), JSON.stringify(nisan));
+  } catch {
+    /* Kuota localStorage penuh: abaikan, bukan kegagalan fatal. */
+  }
+}
+
+function tandaiDihapus(id: string): void {
+  const nisan = bacaNisan();
+  nisan[id] = Date.now();
+  tulisNisan(nisan);
+}
+
+function lupakanNisan(id: string): void {
+  const nisan = bacaNisan();
+  if (nisan[id] === undefined) return;
+  delete nisan[id];
+  tulisNisan(nisan);
+}
+
+/** True bila pasien ini sudah dihapus pengguna dan tidak boleh muncul lagi. */
+export function sudahDihapus(id?: string): boolean {
+  if (!id) return false;
+  return bacaNisan()[id] !== undefined;
+}
+
 export type PatientProfile = {
   id?: string;
   nama?: string;
@@ -232,20 +298,49 @@ export function hapusPasienFromList(id: string) {
     }
   }
 
-  // Hapus dari Firestore
+  // Catat nisan lebih dulu, baru hapus di awan.
+  tandaiDihapus(id);
+  hapusDiAwan(id);
+}
+
+/**
+ * Menghapus satu dokumen pasien di Firestore, dengan percobaan ulang.
+ *
+ * Penghapusan pertama sering jatuh tepat sebelum token data siap. Tanpa coba
+ * ulang, dokumen tertinggal di awan dan akan dikirim balik oleh listener.
+ */
+function hapusDiAwan(id: string, sisaCoba = 4): void {
   const jalurHapus = jalurPasien(id);
-  if (db && jalurHapus) {
-    try {
-      const pRef = doc(db, jalurHapus);
-      void pastikanAuthData(uidPasien()).then((siap) => {
-        if (!siap) return;
-        deleteDoc(pRef).catch((err) => {
-          console.warn("Firebase patient delete error:", err);
-        });
-      });
-    } catch (e) {
-      console.warn("Firebase patient delete error:", e);
+  if (!db || !jalurHapus) return;
+
+  const ulangi = () => {
+    if (sisaCoba > 0 && typeof window !== "undefined") {
+      window.setTimeout(() => hapusDiAwan(id, sisaCoba - 1), 2000);
     }
+  };
+
+  try {
+    const pRef = doc(db, jalurHapus);
+    void pastikanAuthData(uidPasien()).then((siap) => {
+      if (!siap) {
+        ulangi();
+        return;
+      }
+      deleteDoc(pRef).then(
+        () => {
+          /* Beri jeda agar snapshot yang sedang di jalan tidak menghidupkannya. */
+          if (typeof window !== "undefined") {
+            window.setTimeout(() => lupakanNisan(id), 10000);
+          }
+        },
+        (err: unknown) => {
+          console.warn("Firebase patient delete error:", err);
+          ulangi();
+        },
+      );
+    });
+  } catch (e) {
+    console.warn("Firebase patient delete error:", e);
   }
 }
 
@@ -364,9 +459,22 @@ function pasangListenerPasien() {
          * Satu jalur untuk semua keadaan: yang hanya ada di lokal diunggah,
          * yang ada di awan diturunkan. Tidak ada lagi cabang "awan kosong".
          */
-        const idRemote = new Set(remotePatients.map((p) => p.id));
+        /*
+         * Hormati nisan. Pasien yang sudah dihapus pengguna tidak boleh
+         * dihidupkan lagi oleh snapshot; dan bila dokumennya masih ada di awan,
+         * berarti penghapusan sebelumnya gagal - hapus ulang sekarang.
+         */
+        const hidup = remotePatients.filter((p) => {
+          if (p.id && sudahDihapus(p.id)) {
+            hapusDiAwan(p.id);
+            return false;
+          }
+          return true;
+        });
+
+        const idRemote = new Set(hidup.map((p) => p.id));
         const lokalSaja = bacaDaftarPasien().filter(
-          (p) => p.id && !idRemote.has(p.id),
+          (p) => p.id && !idRemote.has(p.id) && !sudahDihapus(p.id),
         );
 
         lokalSaja.forEach((item) => {
@@ -381,7 +489,7 @@ function pasangListenerPasien() {
 
         window.localStorage.setItem(
           kunciDaftarPasien(),
-          JSON.stringify([...remotePatients, ...lokalSaja]),
+          JSON.stringify([...hidup, ...lokalSaja]),
         );
         sebarPerubahanDaftarPasien();
       },
