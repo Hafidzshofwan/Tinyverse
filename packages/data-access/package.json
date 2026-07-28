@@ -14,6 +14,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@tinyverse/billing": "workspace:*",
     "firebase": "^10.13.0"
   },
   "devDependencies": {

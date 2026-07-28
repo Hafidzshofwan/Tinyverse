@@ -197,6 +197,9 @@ importers:
 
   packages/data-access:
     dependencies:
+      '@tinyverse/billing':
+        specifier: workspace:*
+        version: link:../billing
       firebase:
         specifier: ^10.13.0
         version: 10.14.1

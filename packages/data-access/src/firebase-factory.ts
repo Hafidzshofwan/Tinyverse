@@ -1,6 +1,8 @@
 import { type Firestore } from "firebase/firestore"
 import { FirebaseDrugRepository } from "./drugs/firebase"
 import { ClientUnsupportedAccountRepository } from "./accounts/client-unsupported"
+import { ClientUnsupportedOrderRepository } from "./orders/client-unsupported"
+import { ClientUnsupportedSubscriptionRepository } from "./subscriptions/client-unsupported"
 import { FirebaseUserRepository } from "./users/firebase"
 import type { Repositories } from "./factory"
 
@@ -32,5 +34,7 @@ export function createFirebaseRepositories(
 		}),
 		/* Akun & keanggotaan tertutup bagi klien; lihat accounts/client-unsupported.ts. */
 		accounts: new ClientUnsupportedAccountRepository(),
+		subscriptions: new ClientUnsupportedSubscriptionRepository(),
+		orders: new ClientUnsupportedOrderRepository(),
 	}
 }
