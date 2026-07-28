@@ -87,7 +87,63 @@
     gap: 10px;
   }
 
-.tk-island-wrap .form-group { margin-bottom: 18px; }
+.tk-island-wrap .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.tk-island-wrap .form-group label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--tv-navy, #0a0b5f);
+  margin-bottom: 8px;
+}
+
+.tk-island-wrap .form-group label svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--biru-tua, #2BA9D6);
+}
+
+.tk-island-wrap .form-group input,
+.tk-island-wrap .form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  font-family: 'Quicksand', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--teks, #4A3728);
+  background: var(--putih, #ffffff);
+  border: 2px solid #E2E8F0;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.tk-island-wrap .form-group input:hover,
+.tk-island-wrap .form-group select:hover {
+  border-color: #CBD5E1;
+}
+
+.tk-island-wrap .form-group input:focus,
+.tk-island-wrap .form-group select:focus {
+  border-color: var(--biru-tua, #2BA9D6);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 4px rgba(43, 169, 212, 0.18);
+}
+
+.tk-island-wrap .form-group input::placeholder {
+  color: #94A3B8;
+  font-weight: 500;
+}
 
 .tk-island-wrap .btn-hitung {
     width: 100%;
@@ -1237,3 +1293,452 @@
 .tk-island-wrap details.tk-mph-card > summary .tk-mph-chevron{transition:transform .2s ease;color:#0a0b5f;font-weight:900;font-size:24px !important;line-height:1}
 .tk-island-wrap details.tk-mph-card[open] > summary .tk-mph-chevron{transform:rotate(90deg)}
 .tk-island-wrap .tk-mph-body{margin-top:12px}
+
+/* ------------------------------------------------------------------
+ * Mode Gelap (Dark Mode Overrides) untuk Kurva WHO & CDC
+ * ------------------------------------------------------------------ */
+[data-theme="dark"] .tk-island-wrap,
+html.dark .tk-island-wrap {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tk-island-wrap > .judul-section h2,
+html.dark .tk-island-wrap > .judul-section h2 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap > .judul-section p,
+html.dark .tk-island-wrap > .judul-section p {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .kartu,
+html.dark .tk-island-wrap .kartu {
+  background: #111827 !important;
+  border: 1px solid #1F2937 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+  color: #F9FAFB !important;
+}
+
+/* Hilangkan background terang pada panel & ringkasan di mode gelap */
+[data-theme="dark"] .tk-island-wrap .tk-ringkasan,
+html.dark .tk-island-wrap .tk-ringkasan,
+[data-theme="dark"] .tk-island-wrap .tk-panel,
+html.dark .tk-island-wrap .tk-panel {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* Stepper & Dots */
+[data-theme="dark"] .tk-island-wrap .tk-step-dot,
+html.dark .tk-island-wrap .tk-step-dot {
+  background: #1F2937 !important;
+  border-color: #374151 !important;
+  color: #9CA3AF !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot .tk-step-num,
+html.dark .tk-island-wrap .tk-step-dot .tk-step-num {
+  background: #374151 !important;
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-aktif,
+html.dark .tk-island-wrap .tk-step-dot.tk-aktif {
+  background: #0284C7 !important;
+  border-color: #38BDF8 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.4) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-aktif .tk-step-num,
+html.dark .tk-island-wrap .tk-step-dot.tk-aktif .tk-step-num {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-selesai,
+html.dark .tk-island-wrap .tk-step-dot.tk-selesai {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border-color: #10B981 !important;
+  color: #34D399 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-selesai .tk-step-num,
+html.dark .tk-island-wrap .tk-step-dot.tk-selesai .tk-step-num {
+  background: rgba(16, 185, 129, 0.25) !important;
+  color: #34D399 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-terkunci,
+html.dark .tk-island-wrap .tk-step-dot.tk-terkunci {
+  background: #111827 !important;
+  border-color: #1F2937 !important;
+  color: #6B7280 !important;
+  opacity: 0.7 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-step-dot.tk-terkunci .tk-step-num,
+html.dark .tk-island-wrap .tk-step-dot.tk-terkunci .tk-step-num {
+  background: #1F2937 !important;
+  color: #6B7280 !important;
+}
+
+/* Summary Chips */
+[data-theme="dark"] .tk-island-wrap .tk-ringkasan-chip,
+html.dark .tk-island-wrap .tk-ringkasan-chip {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  color: #F9FAFB !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-ringkasan-chip span,
+html.dark .tk-island-wrap .tk-ringkasan-chip span {
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-ringkasan-chip button,
+html.dark .tk-island-wrap .tk-ringkasan-chip button {
+  color: #9CA3AF !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-ringkasan-chip button:hover,
+html.dark .tk-island-wrap .tk-ringkasan-chip button:hover {
+  color: #F472B6 !important;
+}
+
+/* Method Notes & Text */
+[data-theme="dark"] .tk-island-wrap .catatan-metode,
+html.dark .tk-island-wrap .catatan-metode {
+  color: #E2E8F0 !important;
+}
+
+/* Choice Cards (Standar & Kelamin) */
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan,
+html.dark .tk-island-wrap .tk-kartu-pilihan {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan:hover,
+html.dark .tk-island-wrap .tk-kartu-pilihan:hover {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif,
+html.dark .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif {
+  background: #0284C7 !important;
+  border: 2px solid #38BDF8 !important;
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan .tk-nama-pilihan,
+html.dark .tk-island-wrap .tk-kartu-pilihan .tk-nama-pilihan {
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif .tk-nama-pilihan,
+html.dark .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif .tk-nama-pilihan {
+  color: #FFFFFF !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan .tk-sub-pilihan,
+html.dark .tk-island-wrap .tk-kartu-pilihan .tk-sub-pilihan {
+  color: #9CA3AF !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif .tk-sub-pilihan,
+html.dark .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif .tk-sub-pilihan {
+  color: #E0F2FE !important;
+  font-weight: 600 !important;
+}
+
+/* Back Button Mini */
+[data-theme="dark"] .tk-island-wrap .tk-btn-kembali-mini,
+html.dark .tk-island-wrap .tk-btn-kembali-mini {
+  background: #1F2937 !important;
+  color: #38BDF8 !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Plot Header */
+[data-theme="dark"] .tk-island-wrap .tk-plot-judul,
+html.dark .tk-island-wrap .tk-plot-judul {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-plot-sub,
+html.dark .tk-island-wrap .tk-plot-sub {
+  color: #CBD5E1 !important;
+}
+
+/* Chart Blocks & Stage */
+[data-theme="dark"] .tk-island-wrap .tk-chart-blok,
+html.dark .tk-island-wrap .tk-chart-blok {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-chart-judul,
+html.dark .tk-island-wrap .tk-chart-judul {
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-chart-usia,
+html.dark .tk-island-wrap .tk-chart-usia {
+  background: rgba(56, 189, 248, 0.18) !important;
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-chart-stage,
+html.dark .tk-island-wrap .tk-chart-stage {
+  background: #FFFFFF !important;
+  border: 2px solid #374151 !important;
+  border-radius: 18px !important;
+  padding: 4px;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-label-pasien,
+html.dark .tk-island-wrap .tk-label-pasien {
+  background: #1F2937 !important;
+  color: #F9FAFB !important;
+  border: 1px solid #374151 !important;
+}
+
+/* Form Inputs & Selects */
+[data-theme="dark"] .tk-island-wrap .form-group label,
+html.dark .tk-island-wrap .form-group label {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group label svg,
+html.dark .tk-island-wrap .form-group label svg {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group input,
+[data-theme="dark"] .tk-island-wrap .form-group select,
+html.dark .tk-island-wrap .form-group input,
+html.dark .tk-island-wrap .form-group select {
+  background: #111827 !important;
+  border: 1.5px solid #374151 !important;
+  color: #F9FAFB !important;
+  border-radius: 14px !important;
+  padding: 12px 16px !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group input:hover,
+[data-theme="dark"] .tk-island-wrap .form-group select:hover,
+html.dark .tk-island-wrap .form-group input:hover,
+html.dark .tk-island-wrap .form-group select:hover {
+  border-color: #4B5563 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group input:focus,
+[data-theme="dark"] .tk-island-wrap .form-group select:focus,
+html.dark .tk-island-wrap .form-group input:focus,
+html.dark .tk-island-wrap .form-group select:focus {
+  border-color: #38BDF8 !important;
+  background: #1F2937 !important;
+  box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group input::placeholder,
+html.dark .tk-island-wrap .form-group input::placeholder {
+  color: #6B7280 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .form-group select option,
+html.dark .tk-island-wrap .form-group select option {
+  background: #111827 !important;
+  color: #F9FAFB !important;
+}
+
+/* Plot Button */
+[data-theme="dark"] .tk-island-wrap .btn-hitung,
+html.dark .tk-island-wrap .btn-hitung {
+  background: linear-gradient(135deg, #0284C7, #0369A1) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.35) !important;
+}
+
+/* Result Box */
+[data-theme="dark"] .tk-island-wrap .tk-hasil-box,
+html.dark .tk-island-wrap .tk-hasil-box {
+  background: #1F2937 !important;
+  border: 2px dashed #F59E0B !important;
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-hasil-judul,
+html.dark .tk-island-wrap .tk-hasil-judul {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-hasil-label,
+html.dark .tk-island-wrap .tk-hasil-label {
+  color: #9CA3AF !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-hasil-nilai,
+html.dark .tk-island-wrap .tk-hasil-nilai {
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-hasil-peringatan,
+html.dark .tk-island-wrap .tk-hasil-peringatan {
+  color: #FBBF24 !important;
+  border-top-color: rgba(245, 158, 11, 0.3) !important;
+}
+
+/* MPH Card Collapsible */
+[data-theme="dark"] .tk-island-wrap details.tk-mph-card,
+html.dark .tk-island-wrap details.tk-mph-card {
+  background: #1F2937 !important;
+  border: 1px solid #374151 !important;
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap details.tk-mph-card > summary .dx-sub-h,
+html.dark .tk-island-wrap details.tk-mph-card > summary .dx-sub-h {
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap details.tk-mph-card > summary .tk-mph-chevron,
+html.dark .tk-island-wrap details.tk-mph-card > summary .tk-mph-chevron {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap #mphHasil,
+html.dark .tk-island-wrap #mphHasil {
+  color: #38BDF8 !important;
+  background: rgba(56, 189, 248, 0.1) !important;
+  border-color: rgba(56, 189, 248, 0.25) !important;
+}
+
+/* Calibration Toggle & Box */
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-toggle,
+html.dark .tk-island-wrap .tk-kalibrasi-toggle {
+  background: #0F172A !important;
+  border: 1.5px solid #334155 !important;
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-box,
+html.dark .tk-island-wrap .tk-kalibrasi-box {
+  background: #0F172A !important;
+  border: 2px dashed #0284C7 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-box h4,
+html.dark .tk-island-wrap .tk-kalibrasi-box h4 {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-box p,
+html.dark .tk-island-wrap .tk-kalibrasi-box p {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-langkah,
+html.dark .tk-island-wrap .tk-kalibrasi-langkah {
+  color: #E2E8F0 !important;
+  border-top-color: #334155 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-langkah .nomor,
+html.dark .tk-island-wrap .tk-kalibrasi-langkah .nomor {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-kalibrasi-output,
+html.dark .tk-island-wrap .tk-kalibrasi-output {
+  background: #020617 !important;
+  color: #4ADE80 !important;
+}
+
+/* Educational Material (Materi CDC & WHO) */
+[data-theme="dark"] .tk-island-wrap .tk-cdc-materi,
+html.dark .tk-island-wrap .tk-cdc-materi {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-materi-title,
+html.dark .tk-island-wrap .tk-cdc-materi-title {
+  color: #34D399 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-materi h4,
+html.dark .tk-island-wrap .tk-cdc-materi h4 {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-kriteria-box,
+html.dark .tk-island-wrap .tk-cdc-kriteria-box {
+  background: #1E293B !important;
+  border: 1px dashed #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-kriteria-box strong,
+html.dark .tk-island-wrap .tk-cdc-kriteria-box strong {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-materi-note,
+html.dark .tk-island-wrap .tk-cdc-materi-note {
+  background: rgba(245, 158, 11, 0.15) !important;
+  color: #FCD34D !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-block,
+html.dark .tk-island-wrap .tk-cdc-block {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-row,
+html.dark .tk-island-wrap .tk-cdc-row {
+  border-top-color: #334155 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-label,
+html.dark .tk-island-wrap .tk-cdc-label {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-cdc-value,
+html.dark .tk-island-wrap .tk-cdc-value {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-zscore-block,
+html.dark .tk-island-wrap .tk-zscore-block {
+  border-top-color: #334155 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-zscore-label,
+html.dark .tk-island-wrap .tk-zscore-label {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-zscore-nilai,
+html.dark .tk-island-wrap .tk-zscore-nilai {
+  color: #F8FAFC !important;
+}

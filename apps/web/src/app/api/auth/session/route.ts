@@ -73,6 +73,20 @@ export async function POST(request: Request) {
   }
 }
 
+/**
+ * Apakah permintaan ini membawa cookie sesi yang sah?
+ *
+ * Dipakai klien untuk memutuskan perlu-tidaknya menukar ID Token. Cookie
+ * bersifat httpOnly sehingga JavaScript tidak bisa memeriksanya sendiri; tanpa
+ * endpoint ini, klien terpaksa menukar sesi pada SETIAP pemuatan halaman.
+ *
+ * Sengaja tidak membocorkan apa pun selain benar/salah.
+ */
+export async function GET() {
+  const sesi = await bacaSesi();
+  return NextResponse.json({ masuk: sesi !== null });
+}
+
 export async function DELETE() {
   const sesi = await bacaSesi();
 
