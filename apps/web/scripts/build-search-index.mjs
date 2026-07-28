@@ -28,15 +28,14 @@ const TOOLS = [
     keywords: ["pertumbuhan","tinggi badan","berat badan","who","cdc","z-score","persentil","stunting","mph","mid parental height","kurva","grafik","tumbuh kembang"] },
   { file: "lab-tool.html", slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab",
     keywords: ["natrium","kalium","elektrolit","agd","analisa gas darah","abg","ph","hb","hemoglobin","leukosit","trombosit","darah","interpretasi lab","asidosis","alkalosis"] },
-  { file: "nutrisi-tool.html", slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "\uD83C\uDF4E", href: "/preview/nutrisi",
+  { file: "nutrisi-tool.html", slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "🍎", href: "/preview/nutrisi",
     keywords: ["kalori","protein","kebutuhan energi","susu formula","mpasi","gizi","holliday","rda","takaran susu","sendok takar","nutrisi"] },
-  { file: "guideline-tool.html", slug: "protokol", label: "Guideline", icon: "\uD83E\uDE7A", href: "/preview/guideline",
-    keywords: ["guideline","protokol","panduan","pedoman","who","idai","referensi","pdf"] },
 ];
 
 // Menu tambahan agar seluruh navigasi dapat ditemukan.
 const EXTRA_MENUS = [
-  { slug: "beranda", label: "Beranda", icon: "\uD83C\uDFE0", href: "/", keywords: ["home","utama","dashboard","kalkulator","favorit","akses cepat"] },
+  { slug: "protokol", label: "Guideline", icon: "🩺", href: "/preview/guideline", keywords: ["guideline","protokol","panduan","pedoman","who","idai","referensi","pdf"] },
+  { slug: "beranda", label: "Beranda", icon: "🏠", href: "/", keywords: ["home","utama","dashboard","kalkulator","favorit","akses cepat"] },
   { slug: "ai-assistant", label: "Asisten AI", icon: "🤖", href: "/preview/ai-assistant", keywords: ["ai","asisten","tanya","konsultasi","chat","bantuan","prompt","gemini","klinis","pertanyaan","jawaban"] },
   { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", keywords: ["skor","skoring","scoring","kriteria","penilaian klinis","cds","croup","pas","downes","pass","kawasaki","centor","tbanak"] },
   { slug: "imunisasi", label: "Jadwal Imunisasi", icon: "\uD83D\uDCC5", href: "/preview/imunisasi", keywords: ["imunisasi","vaksin","vaksinasi","jadwal","idai","catch up","kejar","katalog vaksin","efek samping","kontraindikasi"] },
@@ -464,48 +463,37 @@ try {
   console.warn("data.ts skoring tidak terbaca:", e.message);
 }
 
-// 3b) Guideline/protokol dari TV_GUIDELINE_LIST di guideline-tool.html.
+// 3b) Guideline/protokol dari data.ts di features/guideline-tool.
 try {
-  const gl = readFileSync(join(PUBLIC, "guideline-tool.html"), "utf8");
-  const blok = gl.match(/TV_GUIDELINE_LIST\s*=\s*\[([\s\S]*?)\n\s*\];/);
-  if (blok) {
-    const parts = blok[1].split(/id:\s*'/).slice(1);
-    let n = 0;
-    for (const part of parts) {
-      const pick = (re) => {
-        const m = part.match(re);
-        return m ? m[1] : "";
-      };
-      const title = pick(/title:\s*'([^']+)'/);
-      if (!title) continue;
-      const category = pick(/category:\s*'([^']+)'/);
-      const source = pick(/source:\s*'([^']+)'/);
-      const year = pick(/year:\s*'([^']+)'/);
-      const description = pick(/description:\s*'([^']+)'/);
-      const tagsRaw = pick(/tags:\s*\[([^\]]*)\]/);
-      const tags = (tagsRaw.match(/'[^']+'/g) || []).map((s) => s.slice(1, -1));
-      const kw = [title, category, source, year, description, ...tags, "guideline", "protokol", "panduan", "pedoman"]
-        .filter(Boolean)
-        .join(" ")
-        .slice(0, 300);
-      entries.push({
-        type: "content",
-        slug: "protokol",
-        label: "Guideline",
-        icon: "\uD83E\uDE7A",
-        href: "/preview/guideline",
-        text: title + (category ? " \u00B7 " + category : ""),
-        keywords: kw,
-        anchor: "text:" + title,
-      });
-      n += 1;
-    }
-    console.log("guideline diindeks:", n);
-  } else {
-    console.warn("TV_GUIDELINE_LIST tidak ditemukan di guideline-tool.html");
+  const gts = readFileSync(join(SRC, "features", "guideline-tool", "data.ts"), "utf8");
+  const re = /title:\s*"([^"]+)"[\s\S]{0,300}?category:\s*"([^"]+)"[\s\S]{0,300}?year:\s*"([^"]+)"[\s\S]{0,300}?source:\s*"([^"]+)"[\s\S]{0,300}?description:\s*"([^"]+)"/g;
+  let m;
+  let n = 0;
+  while ((m = re.exec(gts))) {
+    const title = m[1];
+    const category = m[2];
+    const year = m[3];
+    const source = m[4];
+    const description = m[5];
+    const kw = [title, category, source, year, description, "guideline", "protokol", "panduan", "pedoman"]
+      .filter(Boolean)
+      .join(" ")
+      .slice(0, 300);
+    entries.push({
+      type: "content",
+      slug: "protokol",
+      label: "Guideline",
+      icon: "\uD83E\uDE7A",
+      href: "/preview/guideline",
+      text: title + (category ? " \u00B7 " + category : ""),
+      keywords: kw,
+      anchor: "text:" + title,
+    });
+    n += 1;
   }
+  console.log("guideline diindeks:", n);
 } catch (e) {
-  console.warn("guideline-tool.html tidak terbaca:", e.message);
+  console.warn("data.ts guideline tidak terbaca:", e.message);
 }
 
 // 3c) Alur Tata Laksana (React) dari daftar.ts -> deep-link buka penyakit.

@@ -100,17 +100,11 @@ dummy tanpa Firebase.
 
 ## Pencarian isi Guideline (pneumonia, kejang demam, dll.)
 
-Daftar guideline berada di array JavaScript `TV_GUIDELINE_LIST` di dalam
-`public/guideline-tool.html` (di dalam `<script>`). Karena pembuat indeks
-membuang blok `<script>`, judul & tag penyakit dulunya tidak masuk indeks,
-sehingga kata seperti “pneumonia”, “alergi susu sapi”, atau “kejang demam”
-tidak menemukan apa pun.
-
-Perbaikan: `scripts/build-search-index.mjs` kini mem-parse `TV_GUIDELINE_LIST`
+Daftar guideline berada di array `DAFTAR_GUIDELINE` di dalam
+`src/features/guideline-tool/data.ts`. `scripts/build-search-index.mjs` mem-parse `DAFTAR_GUIDELINE`
 secara khusus dan menambahkan satu entri per guideline (judul + kategori +
 sumber + tahun + tags sebagai kata kunci). Anchor-nya `text:<judul>` sehingga
-saat diklik, island guideline menyorot kartu `<h3>` yang cocok (lewat
-`tv-deeplink.js`, yang punya retry ~4 detik untuk menunggu kartu dirender).
+saat diklik, komponen guideline menyorot kartu yang cocok.
 
 Saat konten guideline diubah/ditambah, jalankan ulang dari `apps/web`:
 
