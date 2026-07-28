@@ -15,29 +15,45 @@
 import type { Obat } from "@tinyverse/clinical-core";
 
 /** Bentuk katalog v17: Obat clinical-core + metadata khusus layar puyer. */
+/*
+ * Bentuk entri katalog obat v17.
+ *
+ * Daftar bidang di bawah ini DIKUMPULKAN SECARA MEKANIS dari seluruh 35 entri
+ * katalog (union semua kunci), bukan dari perkiraan — supaya tidak ada lagi
+ * bidang yang lolos satu per satu saat kompilasi.
+ *
+ * Bidang yang sudah dideklarasikan tipe `Obat` clinical-core (nama, doseType,
+ * dosisMinPerKg, sediaanMg, bands, dst) sengaja TIDAK diulang di sini.
+ * Yang ditambahkan hanyalah bidang khas v17: identitas, label tampilan,
+ * metadata keselamatan, dan preset puyer. Tidak satu pun dipakai dalam
+ * perhitungan dosis.
+ */
 export interface ObatPuyer extends Obat {
+	/* Identitas & tampilan */
 	id: string;
+	jenis: string;
+	icon: string;
 
-	/* Bidang v17 yang tidak ada di tipe Obat clinical-core. Semuanya label &
-	   metadata keselamatan — tidak dipakai dalam perhitungan dosis. */
-	jenis?: string;
-	icon?: string;
-	alias?: string[];
-	kelasAlergi?: string[];
-	interaksiTags?: string[];
-	kontraindikasi?: string[];
-	peringatan?: string[];
-	keselamatanVersi?: string;
+	/* Metadata keselamatan (label & penyaring, bukan bahan hitungan) */
+	kelasAlergi: string[];
+	interaksiTags: string[];
+	kontraindikasi: string[];
+	peringatan: string[];
+	keselamatanVersi: string;
+	keselamatanCatatan: string;
 
-	/* Preset khusus layar Racik Puyer. */
+	/* Sediaan khusus: hanya dipakai oleh 1 entri (Vitamin A/D dalam IU) */
+	sediaanIU?: number;
+
+	/* Preset layar Racik Puyer — 28 dari 35 entri memilikinya */
 	bisaDipuyer?: boolean;
 	puyerSediaanMg?: number;
 	puyer?: {
 		mode: "mgkg" | "mgkali";
 		dosis: number;
 		sediaan: number;
-		alias?: string[];
-		catatan?: string;
+		alias: string[];
+		catatan: string;
 	};
 }
 
