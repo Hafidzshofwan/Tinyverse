@@ -31,7 +31,7 @@ const TOOLS = [
     keywords: ["dehidrasi","rumatan","maintenance","holliday","segar","resusitasi cairan","bolus","kristaloid","rehidrasi","defisit","tetesan","infus","cairan","luka bakar","parkland","lund browder"] },
   { file: "dosis-tool.html", slug: "dosis", label: "Dosis Obat", icon: "\uD83D\uDC8A", href: "/preview/dosing",
     keywords: ["dosis obat","antibiotik","paracetamol","mg/kg","obat","kalkulator dosis","sediaan","dosing"] },
-  { file: "puyer-tool.html", slug: "puyer", label: "Racik Puyer", icon: "\u2697\uFE0F", href: "/preview/puyer",
+  { srcDirs: ["widgets/puyer-panel", "features/puyer-tool", "features/puyer-calculator", "entities/dosing"], slug: "puyer", label: "Racik Puyer", icon: "\u2697\uFE0F", href: "/preview/puyer",
     keywords: ["racik","puyer","pulveres","bagi","tablet","kapsul","racikan","serbuk"] },
   { srcDirs: ["widgets/growth-panel", "features/growth-chart", "widgets/developmental-screening-panel", "features/developmental-screening"],
     slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "\uD83D\uDCC8", href: "/preview/pertumbuhan",

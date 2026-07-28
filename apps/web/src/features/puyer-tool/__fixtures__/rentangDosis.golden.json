@@ -1,0 +1,5363 @@
+[
+ {
+  "id": "albendazole",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "albendazole",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "albendazole",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "albendazole",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "albendazole",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "albendazole",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "albendazole",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ambroxol",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ambroxol",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 3.333333,
+  "dosisMaxMg": 6.666667,
+  "dosisMinMl": 1.111111,
+  "dosisMaxMl": 2.222222,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ambroxol",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 1.166667,
+  "dosisMaxMg": 2.333333,
+  "dosisMinMl": 0.388889,
+  "dosisMaxMl": 0.777778,
+  "dosisHarianMinMg": 3.5,
+  "dosisHarianMaxMg": 7,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ambroxol",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.6,
+  "dosisMaxMg": 1.2,
+  "dosisMinMl": 0.2,
+  "dosisMaxMl": 0.4,
+  "dosisHarianMinMg": 1.8,
+  "dosisHarianMaxMg": 3.6,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ambroxol",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 6,
+  "dosisMaxMg": 12,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": 18,
+  "dosisHarianMaxMg": 36,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ambroxol",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 11.666667,
+  "dosisMaxMg": 15,
+  "dosisMinMl": 3.888889,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 35,
+  "dosisHarianMaxMg": 45,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (70.0 mg/hari) melebihi batas harian (45.0 mg/hari), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "ambroxol",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 15,
+  "dosisMaxMg": 15,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 45,
+  "dosisHarianMaxMg": 45,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (130.0 mg/hari) melebihi batas harian (45.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ambroxol",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 15,
+  "dosisMaxMg": 15,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 45,
+  "dosisHarianMaxMg": 45,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (240.0 mg/hari) melebihi batas harian (45.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ambroxol",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 8,
+  "dosisMinMl": 1.333333,
+  "dosisMaxMl": 2.666667,
+  "dosisHarianMinMg": 12,
+  "dosisHarianMaxMg": 24,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ambroxol",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ambroxol",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 6.666667,
+  "dosisMaxMg": 13.333333,
+  "dosisMinMl": 2.222222,
+  "dosisMaxMl": 4.444444,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 40,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ambroxol",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 83.333333,
+  "dosisMaxMg": 166.666667,
+  "dosisMinMl": 1.666667,
+  "dosisMaxMl": 3.333333,
+  "dosisHarianMinMg": 250,
+  "dosisHarianMaxMg": 500,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 29.166667,
+  "dosisMaxMg": 58.333333,
+  "dosisMinMl": 0.583333,
+  "dosisMaxMl": 1.166667,
+  "dosisHarianMinMg": 87.5,
+  "dosisHarianMaxMg": 175,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 15,
+  "dosisMaxMg": 30,
+  "dosisMinMl": 0.3,
+  "dosisMaxMl": 0.6,
+  "dosisHarianMinMg": 45,
+  "dosisHarianMaxMg": 90,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 150,
+  "dosisMaxMg": 300,
+  "dosisMinMl": 3,
+  "dosisMaxMl": 6,
+  "dosisHarianMinMg": 450,
+  "dosisHarianMaxMg": 900,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 291.666667,
+  "dosisMaxMg": 583.333333,
+  "dosisMinMl": 5.833333,
+  "dosisMaxMl": 11.666667,
+  "dosisHarianMinMg": 875,
+  "dosisHarianMaxMg": 1750,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 541.666667,
+  "dosisMaxMg": 666.666667,
+  "dosisMinMl": 10.833333,
+  "dosisMaxMl": 13.333333,
+  "dosisHarianMinMg": 1625,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (3250.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 666.666667,
+  "dosisMaxMg": 666.666667,
+  "dosisMinMl": 13.333333,
+  "dosisMaxMl": 13.333333,
+  "dosisHarianMinMg": 2000,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (6000.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 200,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": 300,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 166.666667,
+  "dosisMaxMg": 333.333333,
+  "dosisMinMl": 3.333333,
+  "dosisMaxMl": 6.666667,
+  "dosisHarianMinMg": 500,
+  "dosisHarianMaxMg": 1000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "amoxicillin",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "3.5",
+  "usia": "2",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "1.8",
+  "usia": "1",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 200,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 200,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 200,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "asetilsistein",
+  "bb": "0",
+  "usia": "12",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "asiklovir",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "asiklovir",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 150,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 7.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "asiklovir",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 52.5,
+  "dosisMinMl": 1.75,
+  "dosisMaxMl": 2.625,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "asiklovir",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 27,
+  "dosisMinMl": 0.9,
+  "dosisMaxMl": 1.35,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "asiklovir",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 180,
+  "dosisMaxMg": 270,
+  "dosisMinMl": 9,
+  "dosisMaxMl": 13.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "asiklovir",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 350,
+  "dosisMaxMg": 525,
+  "dosisMinMl": 17.5,
+  "dosisMaxMl": 26.25,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "asiklovir",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 650,
+  "dosisMaxMg": 800,
+  "dosisMinMl": 32.5,
+  "dosisMaxMl": 40,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Hasil perhitungan (975.0 mg) melebihi dosis maksimal per kali (800 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "asiklovir",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 800,
+  "dosisMaxMg": 800,
+  "dosisMinMl": 40,
+  "dosisMaxMl": 40,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Hasil perhitungan (1800.0 mg) melebihi dosis maksimal per kali (800 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "asiklovir",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 120,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 6,
+  "dosisMaxMl": 9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "asiklovir",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "asiklovir",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 300,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 15,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "asiklovir",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "azithromycin",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "azithromycin",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 50,
+  "dosisMaxMg": 100,
+  "dosisMinMl": 1.25,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": 50,
+  "dosisHarianMaxMg": 100,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "azithromycin",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 17.5,
+  "dosisMaxMg": 35,
+  "dosisMinMl": 0.4375,
+  "dosisMaxMl": 0.875,
+  "dosisHarianMinMg": 17.5,
+  "dosisHarianMaxMg": 35,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "azithromycin",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 9,
+  "dosisMaxMg": 18,
+  "dosisMinMl": 0.225,
+  "dosisMaxMl": 0.45,
+  "dosisHarianMinMg": 9,
+  "dosisHarianMaxMg": 18,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "azithromycin",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 90,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 2.25,
+  "dosisMaxMl": 4.5,
+  "dosisHarianMinMg": 90,
+  "dosisHarianMaxMg": 180,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "azithromycin",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 175,
+  "dosisMaxMg": 350,
+  "dosisMinMl": 4.375,
+  "dosisMaxMl": 8.75,
+  "dosisHarianMinMg": 175,
+  "dosisHarianMaxMg": 350,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "azithromycin",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 325,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 8.125,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": 325,
+  "dosisHarianMaxMg": 500,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (650.0 mg/hari) melebihi batas harian (500.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "azithromycin",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 500,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": 500,
+  "dosisHarianMaxMg": 500,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (1200.0 mg/hari) melebihi batas harian (500.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "azithromycin",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 1.5,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 120,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "azithromycin",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "azithromycin",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 200,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 100,
+  "dosisHarianMaxMg": 200,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "azithromycin",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cefixime",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cefixime",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 80,
+  "dosisMaxMg": 80,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": 80,
+  "dosisHarianMaxMg": 80,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cefixime",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 28,
+  "dosisMaxMg": 28,
+  "dosisMinMl": 1.4,
+  "dosisMaxMl": 1.4,
+  "dosisHarianMinMg": 28,
+  "dosisHarianMaxMg": 28,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cefixime",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 14.4,
+  "dosisMaxMg": 14.4,
+  "dosisMinMl": 0.72,
+  "dosisMaxMl": 0.72,
+  "dosisHarianMinMg": 14.4,
+  "dosisHarianMaxMg": 14.4,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cefixime",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 144,
+  "dosisMaxMg": 144,
+  "dosisMinMl": 7.2,
+  "dosisMaxMl": 7.2,
+  "dosisHarianMinMg": 144,
+  "dosisHarianMaxMg": 144,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cefixime",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 280,
+  "dosisMaxMg": 280,
+  "dosisMinMl": 14,
+  "dosisMaxMl": 14,
+  "dosisHarianMinMg": 280,
+  "dosisHarianMaxMg": 280,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cefixime",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (520.0 mg/hari) melebihi batas harian (400.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cefixime",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (960.0 mg/hari) melebihi batas harian (400.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cefixime",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 96,
+  "dosisMaxMg": 96,
+  "dosisMinMl": 4.8,
+  "dosisMaxMl": 4.8,
+  "dosisHarianMinMg": 96,
+  "dosisHarianMaxMg": 96,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cefixime",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cefixime",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 160,
+  "dosisMaxMg": 160,
+  "dosisMinMl": 8,
+  "dosisMaxMl": 8,
+  "dosisHarianMinMg": 160,
+  "dosisHarianMaxMg": 160,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cefixime",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cetirizine",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cetirizine",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 2.5,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": 2,
+  "dosisHarianMaxMg": 2.5,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cetirizine",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.7,
+  "dosisMaxMg": 0.875,
+  "dosisMinMl": 0.7,
+  "dosisMaxMl": 0.875,
+  "dosisHarianMinMg": 0.7,
+  "dosisHarianMaxMg": 0.875,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cetirizine",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.36,
+  "dosisMaxMg": 0.45,
+  "dosisMinMl": 0.36,
+  "dosisMaxMl": 0.45,
+  "dosisHarianMinMg": 0.36,
+  "dosisHarianMaxMg": 0.45,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cetirizine",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 3.6,
+  "dosisMaxMg": 4.5,
+  "dosisMinMl": 3.6,
+  "dosisMaxMl": 4.5,
+  "dosisHarianMinMg": 3.6,
+  "dosisHarianMaxMg": 4.5,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cetirizine",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 7,
+  "dosisMaxMg": 8.75,
+  "dosisMinMl": 7,
+  "dosisMaxMl": 8.75,
+  "dosisHarianMinMg": 7,
+  "dosisHarianMaxMg": 8.75,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cetirizine",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (16.3 mg/hari) melebihi batas harian (10.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cetirizine",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (30.0 mg/hari) melebihi batas harian (10.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cetirizine",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 2.4,
+  "dosisMaxMg": 3,
+  "dosisMinMl": 2.4,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": 2.4,
+  "dosisHarianMaxMg": 3,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "cetirizine",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cetirizine",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 5,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 4,
+  "dosisHarianMaxMg": 5,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cetirizine",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 1,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": []
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.35,
+  "dosisMaxMg": 0.35,
+  "dosisMinMl": 0.875,
+  "dosisMaxMl": 0.875,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": []
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.18,
+  "dosisMaxMg": 0.18,
+  "dosisMinMl": 0.45,
+  "dosisMaxMl": 0.45,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 1,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": []
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 2,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": []
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 1,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 6,
+  "peringatan": []
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "chlorpheniramine-maleate-ctm",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini."
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 125,
+  "dosisMaxMg": 250,
+  "dosisMinMl": 4.00641,
+  "dosisMaxMl": 8.012821,
+  "dosisHarianMinMg": 250,
+  "dosisHarianMaxMg": 500,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 43.75,
+  "dosisMaxMg": 87.5,
+  "dosisMinMl": 1.402244,
+  "dosisMaxMl": 2.804487,
+  "dosisHarianMinMg": 87.5,
+  "dosisHarianMaxMg": 175,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 22.5,
+  "dosisMaxMg": 45,
+  "dosisMinMl": 0.721154,
+  "dosisMaxMl": 1.442308,
+  "dosisHarianMinMg": 45,
+  "dosisHarianMaxMg": 90,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 225,
+  "dosisMaxMg": 450,
+  "dosisMinMl": 7.211538,
+  "dosisMaxMl": 14.423077,
+  "dosisHarianMinMg": 450,
+  "dosisHarianMaxMg": 900,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 437.5,
+  "dosisMaxMg": 875,
+  "dosisMinMl": 14.022436,
+  "dosisMaxMl": 28.044872,
+  "dosisHarianMinMg": 875,
+  "dosisHarianMaxMg": 1750,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 812.5,
+  "dosisMaxMg": 1000,
+  "dosisMinMl": 26.041667,
+  "dosisMaxMl": 32.051282,
+  "dosisHarianMinMg": 1625,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (3250.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 1000,
+  "dosisMaxMg": 1000,
+  "dosisMinMl": 32.051282,
+  "dosisMaxMl": 32.051282,
+  "dosisHarianMinMg": 2000,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (6000.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 150,
+  "dosisMaxMg": 300,
+  "dosisMinMl": 4.807692,
+  "dosisMaxMl": 9.615385,
+  "dosisHarianMinMg": 300,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 250,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 8.012821,
+  "dosisMaxMl": 16.025641,
+  "dosisHarianMinMg": 500,
+  "dosisHarianMaxMg": 1000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "co-amoxiclav",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 40,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 1,
+  "dosisMaxMl": 1.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 14,
+  "dosisMaxMg": 21,
+  "dosisMinMl": 0.35,
+  "dosisMaxMl": 0.525,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 7.2,
+  "dosisMaxMg": 10.8,
+  "dosisMinMl": 0.18,
+  "dosisMaxMl": 0.27,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 72,
+  "dosisMaxMg": 108,
+  "dosisMinMl": 1.8,
+  "dosisMaxMl": 2.7,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 140,
+  "dosisMaxMg": 160,
+  "dosisMinMl": 3.5,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (210.0 mg) melebihi dosis maksimal per kali (160 mg), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 160,
+  "dosisMaxMg": 160,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (390.0 mg) melebihi dosis maksimal per kali (160 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 160,
+  "dosisMaxMg": 160,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (720.0 mg) melebihi dosis maksimal per kali (160 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 48,
+  "dosisMaxMg": 72,
+  "dosisMinMl": 1.2,
+  "dosisMaxMl": 1.8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 80,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "cotrimoxazole",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1.5,
+  "dosisMaxMg": 6,
+  "dosisMinMl": 0.15,
+  "dosisMaxMl": 0.6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.525,
+  "dosisMaxMg": 2.1,
+  "dosisMinMl": 0.0525,
+  "dosisMaxMl": 0.21,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.27,
+  "dosisMaxMg": 1.08,
+  "dosisMinMl": 0.027,
+  "dosisMaxMl": 0.108,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 2.7,
+  "dosisMaxMg": 10.8,
+  "dosisMinMl": 0.27,
+  "dosisMaxMl": 1.08,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 5.25,
+  "dosisMaxMg": 16,
+  "dosisMinMl": 0.525,
+  "dosisMaxMl": 1.6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Hasil perhitungan (21.0 mg) melebihi dosis maksimal per kali (16 mg), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 9.75,
+  "dosisMaxMg": 16,
+  "dosisMinMl": 0.975,
+  "dosisMaxMl": 1.6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Hasil perhitungan (39.0 mg) melebihi dosis maksimal per kali (16 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 16,
+  "dosisMaxMg": 16,
+  "dosisMinMl": 1.6,
+  "dosisMaxMl": 1.6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Hasil perhitungan (72.0 mg) melebihi dosis maksimal per kali (16 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 7.2,
+  "dosisMinMl": 0.18,
+  "dosisMaxMl": 0.72,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 3,
+  "dosisMaxMg": 12,
+  "dosisMinMl": 0.3,
+  "dosisMaxMl": 1.2,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "dexamethasone",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "domperidone",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "domperidone",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "domperidone",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.7,
+  "dosisMaxMg": 1.4,
+  "dosisMinMl": 0.7,
+  "dosisMaxMl": 1.4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "domperidone",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.36,
+  "dosisMaxMg": 0.72,
+  "dosisMinMl": 0.36,
+  "dosisMaxMl": 0.72,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "domperidone",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 3.6,
+  "dosisMaxMg": 7.2,
+  "dosisMinMl": 3.6,
+  "dosisMaxMl": 7.2,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "domperidone",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 7,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 7,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (14.0 mg) melebihi dosis maksimal per kali (10 mg), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "domperidone",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (26.0 mg) melebihi dosis maksimal per kali (10 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "domperidone",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (48.0 mg) melebihi dosis maksimal per kali (10 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "domperidone",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 2.4,
+  "dosisMaxMg": 4.8,
+  "dosisMinMl": 2.4,
+  "dosisMaxMl": 4.8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "domperidone",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "domperidone",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 8,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "domperidone",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "eritromisin",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "eritromisin",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 125,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 3.125,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 500,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "eritromisin",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 43.75,
+  "dosisMinMl": 0.875,
+  "dosisMaxMl": 1.09375,
+  "dosisHarianMinMg": 140,
+  "dosisHarianMaxMg": 175,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "eritromisin",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 22.5,
+  "dosisMinMl": 0.45,
+  "dosisMaxMl": 0.5625,
+  "dosisHarianMinMg": 72,
+  "dosisHarianMaxMg": 90,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "eritromisin",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 180,
+  "dosisMaxMg": 225,
+  "dosisMinMl": 4.5,
+  "dosisMaxMl": 5.625,
+  "dosisHarianMinMg": 720,
+  "dosisHarianMaxMg": 900,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "eritromisin",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 350,
+  "dosisMaxMg": 437.5,
+  "dosisMinMl": 8.75,
+  "dosisMaxMl": 10.9375,
+  "dosisHarianMinMg": 1400,
+  "dosisHarianMaxMg": 1750,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "eritromisin",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 500,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": 2000,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (3250.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "eritromisin",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 500,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": 2000,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (6000.0 mg/hari) melebihi batas harian (2000.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "eritromisin",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 120,
+  "dosisMaxMg": 150,
+  "dosisMinMl": 3,
+  "dosisMaxMl": 3.75,
+  "dosisHarianMinMg": 480,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "eritromisin",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "eritromisin",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 250,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 6.25,
+  "dosisHarianMinMg": 800,
+  "dosisHarianMaxMg": 1000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "eritromisin",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 50,
+  "dosisMaxMg": 100,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 17.5,
+  "dosisMaxMg": 35,
+  "dosisMinMl": 0.875,
+  "dosisMaxMl": 1.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 9,
+  "dosisMaxMg": 18,
+  "dosisMinMl": 0.45,
+  "dosisMaxMl": 0.9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 90,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 4.5,
+  "dosisMaxMl": 9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 175,
+  "dosisMaxMg": 350,
+  "dosisMinMl": 8.75,
+  "dosisMaxMl": 17.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Jika dosis atas diberikan 4 kali/hari, totalnya dapat melebihi batas harian (1200.0 mg/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter."
+  ]
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 325,
+  "dosisMaxMg": 400,
+  "dosisMinMl": 16.25,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Hasil perhitungan (650.0 mg) melebihi dosis maksimal per kali (400 mg), sehingga nilai atas dibatasi.",
+   "Jika dosis atas diberikan 4 kali/hari, totalnya dapat melebihi batas harian (1200.0 mg/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Hasil perhitungan (1200.0 mg) melebihi dosis maksimal per kali (400 mg), sehingga nilai atas dibatasi.",
+   "Jika dosis atas diberikan 4 kali/hari, totalnya dapat melebihi batas harian (1200.0 mg/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 3,
+  "dosisMaxMl": 6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 200,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ibuprofen",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 30,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 0.75,
+  "dosisMaxMl": 1.5,
+  "dosisHarianMinMg": 30,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 10.5,
+  "dosisMaxMg": 21,
+  "dosisMinMl": 0.2625,
+  "dosisMaxMl": 0.525,
+  "dosisHarianMinMg": 10.5,
+  "dosisHarianMaxMg": 21,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 5.4,
+  "dosisMaxMg": 10.8,
+  "dosisMinMl": 0.135,
+  "dosisMaxMl": 0.27,
+  "dosisHarianMinMg": 5.4,
+  "dosisHarianMaxMg": 10.8,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 54,
+  "dosisMaxMg": 108,
+  "dosisMinMl": 1.35,
+  "dosisMaxMl": 2.7,
+  "dosisHarianMinMg": 54,
+  "dosisHarianMaxMg": 108,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 105,
+  "dosisMaxMg": 210,
+  "dosisMinMl": 2.625,
+  "dosisMaxMl": 5.25,
+  "dosisHarianMinMg": 105,
+  "dosisHarianMaxMg": 210,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 195,
+  "dosisMaxMg": 390,
+  "dosisMinMl": 4.875,
+  "dosisMaxMl": 9.75,
+  "dosisHarianMinMg": 195,
+  "dosisHarianMaxMg": 390,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 360,
+  "dosisMaxMg": 400,
+  "dosisMinMl": 9,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 360,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (720.0 mg/hari) melebihi batas harian (400.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 36,
+  "dosisMaxMg": 72,
+  "dosisMinMl": 0.9,
+  "dosisMaxMl": 1.8,
+  "dosisHarianMinMg": 36,
+  "dosisHarianMaxMg": 72,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 1.5,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 120,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ketoconazole",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "loratadine",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "loratadine",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 2,
+  "dosisMinMl": 1,
+  "dosisMaxMl": 2,
+  "dosisHarianMinMg": 1,
+  "dosisHarianMaxMg": 2,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "loratadine",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.35,
+  "dosisMaxMg": 0.7,
+  "dosisMinMl": 0.35,
+  "dosisMaxMl": 0.7,
+  "dosisHarianMinMg": 0.35,
+  "dosisHarianMaxMg": 0.7,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "loratadine",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.18,
+  "dosisMaxMg": 0.36,
+  "dosisMinMl": 0.18,
+  "dosisMaxMl": 0.36,
+  "dosisHarianMinMg": 0.18,
+  "dosisHarianMaxMg": 0.36,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "loratadine",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 3.6,
+  "dosisMinMl": 1.8,
+  "dosisMaxMl": 3.6,
+  "dosisHarianMinMg": 1.8,
+  "dosisHarianMaxMg": 3.6,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "loratadine",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 3.5,
+  "dosisMaxMg": 7,
+  "dosisMinMl": 3.5,
+  "dosisMaxMl": 7,
+  "dosisHarianMinMg": 3.5,
+  "dosisHarianMaxMg": 7,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "loratadine",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 6.5,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 6.5,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 6.5,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (13.0 mg/hari) melebihi batas harian (10.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "loratadine",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (24.0 mg/hari) melebihi batas harian (10.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "loratadine",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1.2,
+  "dosisMaxMg": 2.4,
+  "dosisMinMl": 1.2,
+  "dosisMaxMl": 2.4,
+  "dosisHarianMinMg": 1.2,
+  "dosisHarianMaxMg": 2.4,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "loratadine",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "loratadine",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": 2,
+  "dosisHarianMaxMg": 4,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "loratadine",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "mebendazole",
+  "bb": "3.5",
+  "usia": "2",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "1.8",
+  "usia": "1",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "mebendazole",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "mebendazole",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "mebendazole",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "mebendazole",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "mebendazole",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "mebendazole",
+  "bb": "0",
+  "usia": "12",
+  "error": "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter."
+ },
+ {
+  "id": "metronidazole",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "metronidazole",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 75,
+  "dosisMaxMg": 100,
+  "dosisMinMl": 1.875,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metronidazole",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 26.25,
+  "dosisMaxMg": 35,
+  "dosisMinMl": 0.65625,
+  "dosisMaxMl": 0.875,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metronidazole",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 13.5,
+  "dosisMaxMg": 18,
+  "dosisMinMl": 0.3375,
+  "dosisMaxMl": 0.45,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "metronidazole",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 135,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 3.375,
+  "dosisMaxMl": 4.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metronidazole",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 262.5,
+  "dosisMaxMg": 350,
+  "dosisMinMl": 6.5625,
+  "dosisMaxMl": 8.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metronidazole",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 487.5,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 12.1875,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (650.0 mg) melebihi dosis maksimal per kali (500 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "metronidazole",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 500,
+  "dosisMaxMg": 500,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (1200.0 mg) melebihi dosis maksimal per kali (500 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "metronidazole",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 90,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 2.25,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metronidazole",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "metronidazole",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 150,
+  "dosisMaxMg": 200,
+  "dosisMinMl": 3.75,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "metronidazole",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "nystatin",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "nystatin",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "nystatin",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "nystatin",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "nystatin",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "nystatin",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "nystatin",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "nystatin",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "nystatin",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "nystatin",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "nystatin",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "nystatin",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ondansetron",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ondansetron",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 1.5,
+  "dosisMinMl": 1.25,
+  "dosisMaxMl": 1.875,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ondansetron",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.35,
+  "dosisMaxMg": 0.525,
+  "dosisMinMl": 0.4375,
+  "dosisMaxMl": 0.65625,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ondansetron",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.18,
+  "dosisMaxMg": 0.27,
+  "dosisMinMl": 0.225,
+  "dosisMaxMl": 0.3375,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ondansetron",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 2.7,
+  "dosisMinMl": 2.25,
+  "dosisMaxMl": 3.375,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ondansetron",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 3.5,
+  "dosisMaxMg": 5.25,
+  "dosisMinMl": 4.375,
+  "dosisMaxMl": 6.5625,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ondansetron",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 6.5,
+  "dosisMaxMg": 8,
+  "dosisMinMl": 8.125,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (9.8 mg) melebihi dosis maksimal per kali (8 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ondansetron",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 8,
+  "dosisMaxMg": 8,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (18.0 mg) melebihi dosis maksimal per kali (8 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "ondansetron",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1.2,
+  "dosisMaxMg": 1.8,
+  "dosisMinMl": 1.5,
+  "dosisMaxMl": 2.25,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "ondansetron",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ondansetron",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 3,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 3.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "ondansetron",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 100,
+  "dosisMaxMl": 200,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 35,
+  "dosisMaxMl": 70,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 18,
+  "dosisMaxMl": 36,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 180,
+  "dosisMaxMl": 360,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 350,
+  "dosisMaxMl": 700,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 650,
+  "dosisMaxMl": 1300,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 1200,
+  "dosisMaxMl": 2400,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 120,
+  "dosisMaxMl": 240,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": null,
+  "dosisMaxMg": null,
+  "dosisMinMl": 200,
+  "dosisMaxMl": 400,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perEpisode",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "oral-rehydration-salt-ors",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 30,
+  "dosisMinMl": 3.333333,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 7,
+  "dosisMaxMg": 10.5,
+  "dosisMinMl": 1.166667,
+  "dosisMaxMl": 1.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 3.6,
+  "dosisMaxMg": 5.4,
+  "dosisMinMl": 0.6,
+  "dosisMaxMl": 0.9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 36,
+  "dosisMaxMg": 54,
+  "dosisMinMl": 6,
+  "dosisMaxMl": 9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 70,
+  "dosisMaxMg": 75,
+  "dosisMinMl": 11.666667,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (105.0 mg) melebihi dosis maksimal per kali (75 mg), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 75,
+  "dosisMaxMg": 75,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (195.0 mg) melebihi dosis maksimal per kali (75 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 75,
+  "dosisMaxMg": 75,
+  "dosisMinMl": 12.5,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Hasil perhitungan (360.0 mg) melebihi dosis maksimal per kali (75 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 24,
+  "dosisMaxMg": 36,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": []
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 40,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 6.666667,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 2,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "oseltamivir",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "paracetamol",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "paracetamol",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 150,
+  "dosisMinMl": 4.166667,
+  "dosisMaxMl": 6.25,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "paracetamol",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 52.5,
+  "dosisMinMl": 1.458333,
+  "dosisMaxMl": 2.1875,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "paracetamol",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 27,
+  "dosisMinMl": 0.75,
+  "dosisMaxMl": 1.125,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "paracetamol",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 180,
+  "dosisMaxMg": 270,
+  "dosisMinMl": 7.5,
+  "dosisMaxMl": 11.25,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "paracetamol",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 350,
+  "dosisMaxMg": 525,
+  "dosisMinMl": 14.583333,
+  "dosisMaxMl": 21.875,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "paracetamol",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 650,
+  "dosisMaxMg": 975,
+  "dosisMinMl": 27.083333,
+  "dosisMaxMl": 40.625,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Jika dosis atas diberikan 5 kali/hari, totalnya dapat melebihi batas harian (4000.0 mg/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "paracetamol",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 1000,
+  "dosisMaxMg": 1000,
+  "dosisMinMl": 41.666667,
+  "dosisMaxMl": 41.666667,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Hasil perhitungan (1800.0 mg) melebihi dosis maksimal per kali (1000 mg), sehingga nilai atas dibatasi.",
+   "Jika dosis atas diberikan 5 kali/hari, totalnya dapat melebihi batas harian (4000.0 mg/hari). Kurangi jumlah pemberian atau gunakan dosis lebih rendah sesuai instruksi dokter.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "paracetamol",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 120,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 7.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": []
+ },
+ {
+  "id": "paracetamol",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "paracetamol",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 300,
+  "dosisMinMl": 8.333333,
+  "dosisMaxMl": 12.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 5,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "paracetamol",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednisolone",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednisolone",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 3.333333,
+  "dosisMaxMl": 6.666667,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednisolone",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 3.5,
+  "dosisMaxMg": 7,
+  "dosisMinMl": 1.166667,
+  "dosisMaxMl": 2.333333,
+  "dosisHarianMinMg": 3.5,
+  "dosisHarianMaxMg": 7,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednisolone",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 3.6,
+  "dosisMinMl": 0.6,
+  "dosisMaxMl": 1.2,
+  "dosisHarianMinMg": 1.8,
+  "dosisHarianMaxMg": 3.6,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "prednisolone",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 36,
+  "dosisMinMl": 6,
+  "dosisMaxMl": 12,
+  "dosisHarianMinMg": 18,
+  "dosisHarianMaxMg": 36,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednisolone",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 11.666667,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 35,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (70.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "prednisolone",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (130.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "prednisolone",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (240.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "prednisolone",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 12,
+  "dosisMaxMg": 24,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 8,
+  "dosisHarianMinMg": 12,
+  "dosisHarianMaxMg": 24,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednisolone",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednisolone",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 40,
+  "dosisMinMl": 6.666667,
+  "dosisMaxMl": 13.333333,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 40,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "prednisolone",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednison",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednison",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednison",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 7,
+  "dosisMaxMg": 7,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 7,
+  "dosisHarianMaxMg": 7,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednison",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 3.6,
+  "dosisMaxMg": 3.6,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 3.6,
+  "dosisHarianMaxMg": 3.6,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "prednison",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 36,
+  "dosisMaxMg": 36,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 36,
+  "dosisHarianMaxMg": 36,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednison",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (70.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "prednison",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (130.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "prednison",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (240.0 mg/hari) melebihi batas harian (60.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "prednison",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 24,
+  "dosisMaxMg": 24,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 24,
+  "dosisHarianMaxMg": 24,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "prednison",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "prednison",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 40,
+  "dosisMaxMg": 40,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 40,
+  "dosisHarianMaxMg": 40,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "prednison",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 100,
+  "dosisMinMl": 4,
+  "dosisMaxMl": 4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 35,
+  "dosisMinMl": 1.4,
+  "dosisMaxMl": 1.4,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 18,
+  "dosisMinMl": 0.72,
+  "dosisMaxMl": 0.72,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 180,
+  "dosisMaxMg": 180,
+  "dosisMinMl": 7.2,
+  "dosisMaxMl": 7.2,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 350,
+  "dosisMaxMg": 350,
+  "dosisMinMl": 14,
+  "dosisMaxMl": 14,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 650,
+  "dosisMaxMg": 650,
+  "dosisMinMl": 26,
+  "dosisMaxMl": 26,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 1000,
+  "dosisMaxMg": 1000,
+  "dosisMinMl": 40,
+  "dosisMaxMl": 40,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Hasil perhitungan (1200.0 mg) melebihi dosis maksimal per kali (1000 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 120,
+  "dosisMaxMg": 120,
+  "dosisMinMl": 4.8,
+  "dosisMaxMl": 4.8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 200,
+  "dosisMinMl": 8,
+  "dosisMaxMl": 8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "pyrantel-pamoate",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "salbutamol",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "salbutamol",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 2,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "salbutamol",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.35,
+  "dosisMaxMg": 0.7,
+  "dosisMinMl": 0.875,
+  "dosisMaxMl": 1.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "salbutamol",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.18,
+  "dosisMaxMg": 0.36,
+  "dosisMinMl": 0.45,
+  "dosisMaxMl": 0.9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "salbutamol",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 3.6,
+  "dosisMinMl": 4.5,
+  "dosisMaxMl": 9,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "salbutamol",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 3.5,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 8.75,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Hasil perhitungan (7.0 mg) melebihi dosis maksimal per kali (4 mg), sehingga nilai atas dibatasi."
+  ]
+ },
+ {
+  "id": "salbutamol",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Hasil perhitungan (13.0 mg) melebihi dosis maksimal per kali (4 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "salbutamol",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 4,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Hasil perhitungan (24.0 mg) melebihi dosis maksimal per kali (4 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "salbutamol",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1.2,
+  "dosisMaxMg": 2.4,
+  "dosisMinMl": 3,
+  "dosisMaxMl": 6,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": []
+ },
+ {
+  "id": "salbutamol",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "salbutamol",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 4,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 4,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "salbutamol",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di bawah rentang indikasi umum obat ini (mulai usia 6 bulan). Mohon konsultasikan ke dokter."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 100000,
+  "dosisMaxMg": 100000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di bawah rentang indikasi umum obat ini (mulai usia 6 bulan). Mohon konsultasikan ke dokter.",
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di atas rentang indikasi umum obat ini (hingga usia 59 bulan). Mohon konsultasikan ke dokter."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di atas rentang indikasi umum obat ini (hingga usia 59 bulan). Mohon konsultasikan ke dokter."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di atas rentang indikasi umum obat ini (hingga usia 59 bulan). Mohon konsultasikan ke dokter.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": [
+   "Usia di atas rentang indikasi umum obat ini (hingga usia 59 bulan). Mohon konsultasikan ke dokter.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "vitamin-a",
+  "bb": "0",
+  "usia": "12",
+  "dosisMinMg": 200000,
+  "dosisMaxMg": 200000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "singleDose",
+  "dosesPerDayFinal": null,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 400,
+  "dosisMaxMg": 400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 400,
+  "dosisHarianMaxMg": 400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "vitamin-d",
+  "bb": "0",
+  "usia": "12",
+  "dosisMinMg": 600,
+  "dosisMaxMg": 600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 600,
+  "dosisHarianMaxMg": 600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zat-besi",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "zat-besi",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 30,
+  "dosisMinMl": 6.666667,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 30,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 7,
+  "dosisMaxMg": 10.5,
+  "dosisMinMl": 2.333333,
+  "dosisMaxMl": 3.5,
+  "dosisHarianMinMg": 7,
+  "dosisHarianMaxMg": 10.5,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 3.6,
+  "dosisMaxMg": 5.4,
+  "dosisMinMl": 1.2,
+  "dosisMaxMl": 1.8,
+  "dosisHarianMinMg": 3.6,
+  "dosisHarianMaxMg": 5.4,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil.",
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 18,
+  "dosisMinMl": 6,
+  "dosisMaxMl": 6,
+  "dosisHarianMinMg": 18,
+  "dosisHarianMaxMg": 18,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 35,
+  "dosisMinMl": 11.666667,
+  "dosisMaxMl": 11.666667,
+  "dosisHarianMinMg": 35,
+  "dosisHarianMaxMg": 35,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 60,
+  "dosisMaxMg": 60,
+  "dosisMinMl": 20,
+  "dosisMaxMl": 20,
+  "dosisHarianMinMg": 60,
+  "dosisHarianMaxMg": 60,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "zat-besi",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "zat-besi",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini."
+ },
+ {
+  "id": "zat-besi",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "zat-besi",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini."
+ },
+ {
+  "id": "zinc",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "zinc",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zinc",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zinc",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 2.5,
+  "dosisMaxMl": 2.5,
+  "dosisHarianMinMg": 10,
+  "dosisHarianMaxMg": 10,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "zinc",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zinc",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zinc",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "zinc",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "zinc",
+  "bb": "12",
+  "usia": "",
+  "error": "Mohon masukkan usia anak yang valid (dalam bulan)."
+ },
+ {
+  "id": "zinc",
+  "bb": "",
+  "usia": "36",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "zinc",
+  "bb": "20",
+  "usia": "300",
+  "error": "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda."
+ },
+ {
+  "id": "zinc",
+  "bb": "0",
+  "usia": "12",
+  "dosisMinMg": 20,
+  "dosisMaxMg": 20,
+  "dosisMinMl": 5,
+  "dosisMaxMl": 5,
+  "dosisHarianMinMg": 20,
+  "dosisHarianMaxMg": 20,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "ivermectin",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ivermectin",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1500,
+  "dosisMaxMg": 2000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 1500,
+  "dosisHarianMaxMg": 2000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 525,
+  "dosisMaxMg": 700,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 525,
+  "dosisHarianMaxMg": 700,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 270,
+  "dosisMaxMg": 360,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 270,
+  "dosisHarianMaxMg": 360,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil.",
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 2700,
+  "dosisMaxMg": 3600,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 2700,
+  "dosisHarianMaxMg": 3600,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 5250,
+  "dosisMaxMg": 7000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 5250,
+  "dosisHarianMaxMg": 7000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 9750,
+  "dosisMaxMg": 13000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 9750,
+  "dosisHarianMaxMg": 13000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis.",
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 18000,
+  "dosisMaxMg": 24000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 18000,
+  "dosisHarianMaxMg": 24000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis.",
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1800,
+  "dosisMaxMg": 2400,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 1800,
+  "dosisHarianMaxMg": 2400,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "ivermectin",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 3000,
+  "dosisMaxMg": 4000,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 3000,
+  "dosisHarianMaxMg": 4000,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil.",
+   "Obat ini belum memiliki batas dosis maksimum absolut di basis data, padahal dosis dihitung per kg berat badan. Untuk anak dengan berat besar, verifikasi manual agar tidak melebihi dosis dewasa."
+  ]
+ },
+ {
+  "id": "ivermectin",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 100,
+  "dosisMaxMg": 150,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 100,
+  "dosisHarianMaxMg": 150,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 35,
+  "dosisMaxMg": 52.5,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 35,
+  "dosisHarianMaxMg": 52.5,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 18,
+  "dosisMaxMg": 27,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 18,
+  "dosisHarianMaxMg": 27,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 180,
+  "dosisMaxMg": 270,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 180,
+  "dosisHarianMaxMg": 270,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 350,
+  "dosisMaxMg": 525,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 350,
+  "dosisHarianMaxMg": 525,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 650,
+  "dosisMaxMg": 800,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 650,
+  "dosisHarianMaxMg": 800,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (975.0 mg/hari) melebihi batas harian (800.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 800,
+  "dosisMaxMg": 800,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 800,
+  "dosisHarianMaxMg": 800,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Total dosis harian hasil perhitungan (1800.0 mg/hari) melebihi batas harian (800.0 mg/hari), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 120,
+  "dosisMaxMg": 180,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 120,
+  "dosisHarianMaxMg": 180,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": []
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 200,
+  "dosisMaxMg": 300,
+  "dosisMinMl": null,
+  "dosisMaxMl": null,
+  "dosisHarianMinMg": 200,
+  "dosisHarianMaxMg": 300,
+  "doseBasisFinal": "perDay",
+  "dosesPerDayFinal": 1,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "albendazole-perkg",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "",
+  "usia": "",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "10",
+  "usia": "24",
+  "dosisMinMg": 1,
+  "dosisMaxMg": 1.5,
+  "dosisMinMl": 1,
+  "dosisMaxMl": 1.5,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "3.5",
+  "usia": "2",
+  "dosisMinMg": 0.35,
+  "dosisMaxMg": 0.525,
+  "dosisMinMl": 0.35,
+  "dosisMaxMl": 0.525,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "1.8",
+  "usia": "1",
+  "dosisMinMg": 0.18,
+  "dosisMaxMg": 0.27,
+  "dosisMinMl": 0.18,
+  "dosisMaxMl": 0.27,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 1.8 kg sangat rendah — pastikan satuannya kg (bukan gram) dan bukan salah ketik.",
+   "Berat 1.8 kg tampak tidak sesuai untuk usia 1 bulan (perkiraan ±5.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "18",
+  "usia": "60",
+  "dosisMinMg": 1.8,
+  "dosisMaxMg": 2.7,
+  "dosisMinMl": 1.8,
+  "dosisMaxMl": 2.7,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "35",
+  "usia": "144",
+  "dosisMinMg": 3.5,
+  "dosisMaxMg": 5.25,
+  "dosisMinMl": 3.5,
+  "dosisMaxMl": 5.25,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "65",
+  "usia": "200",
+  "dosisMinMg": 6.5,
+  "dosisMaxMg": 9.75,
+  "dosisMinMl": 6.5,
+  "dosisMaxMl": 9.75,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat badan 65 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "120",
+  "usia": "216",
+  "dosisMinMg": 10,
+  "dosisMaxMg": 10,
+  "dosisMinMl": 10,
+  "dosisMaxMl": 10,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Hasil perhitungan (18.0 mg) melebihi dosis maksimal per kali (10 mg), sehingga nilai atas dibatasi.",
+   "Berat badan 120 kg tergolong tinggi untuk pasien anak — pastikan bukan salah ketik (mis. 45 kg vs 4,5 kg) sebelum memberikan dosis."
+  ]
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "12",
+  "usia": "",
+  "dosisMinMg": 1.2,
+  "dosisMaxMg": 1.8,
+  "dosisMinMl": 1.2,
+  "dosisMaxMl": 1.8,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": []
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "",
+  "usia": "36",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "20",
+  "usia": "300",
+  "dosisMinMg": 2,
+  "dosisMaxMg": 3,
+  "dosisMinMl": 2,
+  "dosisMaxMl": 3,
+  "dosisHarianMinMg": null,
+  "dosisHarianMaxMg": null,
+  "doseBasisFinal": "perDose",
+  "dosesPerDayFinal": 3,
+  "peringatan": [
+   "Berat 20 kg tampak tidak sesuai untuk usia 300 bulan (perkiraan ±82.0 kg). Periksa kembali input sebelum memakai hasil."
+  ]
+ },
+ {
+  "id": "metoclopramide",
+  "bb": "0",
+  "usia": "12",
+  "error": "Mohon masukkan berat badan yang valid (lebih dari 0 kg)."
+ }
+]
