@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FormattedMessage } from "./FormattedMessage";
 import { useAiChatStore, type Message } from "./useAiChatStore";
-import { SidebarIcon } from "@/shared/ui";
+import { SidebarIcon, ConfirmationModal } from "@/shared/ui";
 
 function FolderIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -123,6 +123,8 @@ export function AiAssistantWidget() {
   const [showSessionsPanel, setShowSessionsPanel] = useState(false);
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [sessionToDelete, setSessionToDelete] = useState<{ id: string; title: string } | null>(null);
+  const [isConfirmNewSessionOpen, setIsConfirmNewSessionOpen] = useState(false);
 
   const filteredSessions = sessions.filter((s) => {
     if (!sessionSearchQuery.trim()) return true;
@@ -548,9 +550,13 @@ export function AiAssistantWidget() {
                 <button
                   type="button"
                   onClick={() => {
-                    createNewSession();
-                    setShowSessionsPanel(false);
-                    showToast("Sesi baru dibuat!");
+                    if (messages.length > 0) {
+                      setIsConfirmNewSessionOpen(true);
+                    } else {
+                      createNewSession();
+                      setShowSessionsPanel(false);
+                      showToast("Sesi baru dibuat!");
+                    }
                   }}
                   style={{
                     fontFamily: "'Fredoka', 'Quicksand', sans-serif",
@@ -672,9 +678,13 @@ export function AiAssistantWidget() {
                   <button
                     type="button"
                     onClick={() => {
-                      createNewSession();
-                      setShowSessionsPanel(false);
-                      showToast("Sesi baru dibuat!");
+                      if (messages.length > 0) {
+                        setIsConfirmNewSessionOpen(true);
+                      } else {
+                        createNewSession();
+                        setShowSessionsPanel(false);
+                        showToast("Sesi baru dibuat!");
+                      }
                     }}
                     style={{
                       fontSize: 11.5,
@@ -840,10 +850,7 @@ export function AiAssistantWidget() {
                             <button
                               type="button"
                               onClick={() => {
-                                if (confirm(`Hapus sesi "${s.title}" dari localStorage?`)) {
-                                  deleteSession(s.id);
-                                  showToast("Sesi dihapus");
-                                }
+                                setSessionToDelete({ id: s.id, title: s.title || "Sesi" });
                               }}
                               style={{
                                 fontSize: 11,
@@ -1134,6 +1141,39 @@ export function AiAssistantWidget() {
           </div>
         </div>
       )}
+
+      <ConfirmationModal
+        isOpen={!!sessionToDelete}
+        onClose={() => setSessionToDelete(null)}
+        onConfirm={() => {
+          if (sessionToDelete) {
+            deleteSession(sessionToDelete.id);
+            showToast("Sesi dihapus");
+            setSessionToDelete(null);
+          }
+        }}
+        title="Hapus Sesi Chat?"
+        description={`Apakah Anda yakin ingin menghapus sesi "${sessionToDelete?.title}"? Riwayat percakapan dalam sesi ini akan dihapus permanen.`}
+        confirmText="Hapus Sesi"
+        cancelText="Batal"
+        variant="danger"
+      />
+
+      <ConfirmationModal
+        isOpen={isConfirmNewSessionOpen}
+        onClose={() => setIsConfirmNewSessionOpen(false)}
+        onConfirm={() => {
+          createNewSession();
+          setShowSessionsPanel(false);
+          showToast("Sesi baru dibuat!");
+          setIsConfirmNewSessionOpen(false);
+        }}
+        title="Buat Sesi Baru?"
+        description="Percakapan saat ini akan ditutup dan disimpan ke riwayat sesi. Anda akan memulai percakapan baru yang kosong."
+        confirmText="Sesi Baru"
+        cancelText="Batal"
+        variant="warning"
+      />
     </>
   );
 }

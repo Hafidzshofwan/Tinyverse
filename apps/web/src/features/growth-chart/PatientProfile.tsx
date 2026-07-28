@@ -11,6 +11,7 @@ import {
   formatUsiaPasien,
   validateAntropometri,
 } from "@/shared/lib/patient";
+import { ConfirmationModal } from "@/shared/ui";
 
 type Jk = "male" | "female" | null;
 
@@ -215,6 +216,8 @@ export function PatientProfile() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const [patientToDelete, setPatientToDelete] = useState<{ id: string; nama?: string } | null>(null);
+  const [isConfirmResetActiveOpen, setIsConfirmResetActiveOpen] = useState(false);
 
   const terisi = !!(activeProfile.bb || activeProfile.usiaBulan || activeProfile.nama);
 
@@ -509,7 +512,7 @@ export function PatientProfile() {
                       whiteSpace: "nowrap",
                     }}
                     title="Kosongkan Pasien Aktif"
-                    onClick={resetActive}
+                    onClick={() => setIsConfirmResetActiveOpen(true)}
                   >
                     Kosongkan
                   </button>
@@ -960,6 +963,36 @@ export function PatientProfile() {
           </p>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={!!patientToDelete}
+        onClose={() => setPatientToDelete(null)}
+        onConfirm={() => {
+          if (patientToDelete?.id) {
+            handleHapusItem(patientToDelete.id, patientToDelete.nama);
+            setPatientToDelete(null);
+          }
+        }}
+        title="Hapus Data Pasien?"
+        description={`Apakah Anda yakin ingin menghapus data rekam medis pasien ${patientToDelete?.nama ? `"${patientToDelete.nama}"` : "ini"}? Data yang dihapus tidak dapat dikembalikan.`}
+        confirmText="Hapus Pasien"
+        cancelText="Batal"
+        variant="danger"
+      />
+
+      <ConfirmationModal
+        isOpen={isConfirmResetActiveOpen}
+        onClose={() => setIsConfirmResetActiveOpen(false)}
+        onConfirm={() => {
+          resetActive();
+          setIsConfirmResetActiveOpen(false);
+        }}
+        title="Kosongkan Pasien Aktif?"
+        description="Apakah Anda yakin ingin mengosongkan profil pasien aktif saat ini? Slot data antropometri aktif akan dibersihkan."
+        confirmText="Kosongkan"
+        cancelText="Batal"
+        variant="warning"
+      />
     </>
   );
 }
@@ -971,6 +1004,8 @@ export function PatientTopBarChip() {
   const activeProfile = usePatientProfile();
   const patientList = usePatientList();
   const [open, setOpen] = useState(false);
+  const [chipPatientToDelete, setChipPatientToDelete] = useState<{ id: string; nama?: string } | null>(null);
+  const [chipResetConfirmOpen, setChipResetConfirmOpen] = useState(false);
 
   const handleOpenModal = () => {
     setOpen(false);
@@ -985,8 +1020,7 @@ export function PatientTopBarChip() {
 
   const handleReset = (e: React.MouseEvent) => {
     e.stopPropagation();
-    pilihPasienAktif({});
-    setOpen(false);
+    setChipResetConfirmOpen(true);
   };
 
   const hasActive = !!(activeProfile.nama || activeProfile.bb || activeProfile.usiaBulan);
@@ -1198,7 +1232,7 @@ export function PatientTopBarChip() {
                         onClick={(e) => {
                           e.stopPropagation();
                           if (p.id) {
-                            hapusPasienFromList(p.id);
+                            setChipPatientToDelete({ id: p.id, nama: p.nama });
                           }
                         }}
                       >
@@ -1237,6 +1271,37 @@ export function PatientTopBarChip() {
           </div>
         </div>
       )}
+
+      <ConfirmationModal
+        isOpen={!!chipPatientToDelete}
+        onClose={() => setChipPatientToDelete(null)}
+        onConfirm={() => {
+          if (chipPatientToDelete?.id) {
+            hapusPasienFromList(chipPatientToDelete.id);
+            setChipPatientToDelete(null);
+          }
+        }}
+        title="Hapus Data Pasien?"
+        description={`Apakah Anda yakin ingin menghapus data rekam medis pasien ${chipPatientToDelete?.nama ? `"${chipPatientToDelete.nama}"` : "ini"}? Data yang dihapus tidak dapat dikembalikan.`}
+        confirmText="Hapus Pasien"
+        cancelText="Batal"
+        variant="danger"
+      />
+
+      <ConfirmationModal
+        isOpen={chipResetConfirmOpen}
+        onClose={() => setChipResetConfirmOpen(false)}
+        onConfirm={() => {
+          pilihPasienAktif({});
+          setOpen(false);
+          setChipResetConfirmOpen(false);
+        }}
+        title="Kosongkan Pasien Aktif?"
+        description="Apakah Anda yakin ingin mengosongkan profil pasien aktif saat ini? Slot data antropometri aktif akan dibersihkan."
+        confirmText="Kosongkan"
+        cancelText="Batal"
+        variant="warning"
+      />
     </div>
   );
 }

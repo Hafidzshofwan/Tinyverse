@@ -6,4 +6,5 @@ export * from "./ScreeningIcon";
 export * from "./SidebarIcon";
 export * from "./AlurIcon";
 export * from "./DaruratIcons";
+export * from "./ConfirmationModal";
 

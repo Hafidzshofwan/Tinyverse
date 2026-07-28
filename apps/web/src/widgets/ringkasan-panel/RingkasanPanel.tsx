@@ -16,6 +16,7 @@ import {
 } from "@/shared/lib/ringkasan";
 import { printSoapSummary } from "@/shared/lib/pdfExport";
 import { KopSuratModal } from "@/shared/ui/KopSuratModal";
+import { ConfirmationModal } from "@/shared/ui";
 
 const wrapStyle: CSSProperties = { maxWidth: 860 };
 const gridStyle: CSSProperties = {
@@ -84,6 +85,8 @@ export function RingkasanPanel() {
     "Ringkasan hanya menyimpan poin klinis utama tiap alat, bukan seluruh hitungan mentah.",
   );
   const [siap, setSiap] = useState(false);
+  const [isConfirmClearAllOpen, setIsConfirmClearAllOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState<RingkasanItem | null>(null);
 
   useEffect(() => {
     setItems(loadItems());
@@ -125,10 +128,7 @@ export function RingkasanPanel() {
 
   const bersihkan = () => {
     if (!items.length) return;
-    if (!window.confirm("Hapus semua item ringkasan?")) return;
-    clearItems();
-    setItems([]);
-    setStatus("Semua item ringkasan dihapus.");
+    setIsConfirmClearAllOpen(true);
   };
 
   const salin = async () => {
@@ -291,7 +291,7 @@ export function RingkasanPanel() {
                       {it.time}
                     </div>
                   </div>
-                  <button type="button" aria-label="Hapus item" style={delBtn} onClick={() => hapus(it.id)}>×</button>
+                  <button type="button" aria-label="Hapus item" style={delBtn} onClick={() => setItemToDelete(it)}>×</button>
                 </div>
                 <div style={itemBody}>{it.body}</div>
               </div>
@@ -299,6 +299,38 @@ export function RingkasanPanel() {
           </div>
         )}
       </section>
+
+      <ConfirmationModal
+        isOpen={!!itemToDelete}
+        onClose={() => setItemToDelete(null)}
+        onConfirm={() => {
+          if (itemToDelete) {
+            hapus(itemToDelete.id);
+            setItemToDelete(null);
+          }
+        }}
+        title="Hapus Catatan Ringkasan?"
+        description={`Apakah Anda yakin ingin menghapus poin ringkasan "${itemToDelete?.title}"?`}
+        confirmText="Hapus"
+        cancelText="Batal"
+        variant="danger"
+      />
+
+      <ConfirmationModal
+        isOpen={isConfirmClearAllOpen}
+        onClose={() => setIsConfirmClearAllOpen(false)}
+        onConfirm={() => {
+          clearItems();
+          setItems([]);
+          setStatus("Semua item ringkasan dihapus.");
+          setIsConfirmClearAllOpen(false);
+        }}
+        title="Kosongkan Semua Ringkasan?"
+        description="Semua poin ringkasan rekam medis yang telah terkumpul akan dihapus permanen. Tindakan ini tidak dapat dibatalkan."
+        confirmText="Kosongkan Semua"
+        cancelText="Batal"
+        variant="danger"
+      />
     </div>
   );
 }

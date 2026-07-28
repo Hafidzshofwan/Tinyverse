@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
 import { useAiChatStore, type Message } from "@/widgets/ai-assistant";
-import { SidebarIcon } from "@/shared/ui";
+import { SidebarIcon, ConfirmationModal } from "@/shared/ui";
 
 function FolderIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -186,6 +186,8 @@ export default function AiAssistantPage() {
   const [editingTitleId, setEditingTitleId] = useState<string | null>(null);
   const [titleInputValue, setTitleInputValue] = useState("");
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
+  const [sessionToDelete, setSessionToDelete] = useState<{ id: string; title: string } | null>(null);
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
   const filteredSessions = sessions.filter((s) => {
     if (!sessionSearchQuery.trim()) return true;
@@ -530,7 +532,14 @@ export default function AiAssistantPage() {
               </button>
               <button
                 type="button"
-                onClick={resetChat}
+                onClick={() => {
+                  if (messages.length > 0) {
+                    setIsResetConfirmOpen(true);
+                  } else {
+                    resetChat();
+                    showToast("Percakapan direset");
+                  }
+                }}
                 style={{
                   background: "transparent",
                   border: "1px solid var(--tv-border, #cbd5e1)",
@@ -1049,10 +1058,7 @@ export default function AiAssistantPage() {
                           <button
                             type="button"
                             onClick={() => {
-                              if (confirm(`Hapus sesi "${s.title}" dari localStorage?`)) {
-                                deleteSession(s.id);
-                                showToast("Sesi dihapus");
-                              }
+                              setSessionToDelete({ id: s.id, title: s.title || "Sesi" });
                             }}
                             style={{
                               background: "none",
@@ -1239,6 +1245,38 @@ export default function AiAssistantPage() {
           </div>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={!!sessionToDelete}
+        onClose={() => setSessionToDelete(null)}
+        onConfirm={() => {
+          if (sessionToDelete) {
+            deleteSession(sessionToDelete.id);
+            showToast("Sesi dihapus");
+            setSessionToDelete(null);
+          }
+        }}
+        title="Hapus Sesi Chat?"
+        description={`Apakah Anda yakin ingin menghapus sesi "${sessionToDelete?.title}"? Riwayat percakapan dalam sesi ini akan dihapus permanen.`}
+        confirmText="Hapus Sesi"
+        cancelText="Batal"
+        variant="danger"
+      />
+
+      <ConfirmationModal
+        isOpen={isResetConfirmOpen}
+        onClose={() => setIsResetConfirmOpen(false)}
+        onConfirm={() => {
+          resetChat();
+          showToast("Percakapan direset");
+          setIsResetConfirmOpen(false);
+        }}
+        title="Reset Percakapan?"
+        description="Apakah Anda yakin ingin mereset pesan percakapan saat ini? Semua pesan dalam percakapan aktif akan dibersihkan."
+        confirmText="Reset Chat"
+        cancelText="Batal"
+        variant="warning"
+      />
     </div>
   );
 }
