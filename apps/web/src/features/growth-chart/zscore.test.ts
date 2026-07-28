@@ -4,7 +4,22 @@ import {
   tkHitungZscoreNumerik,
   hitungIMT,
   type ZscoreTable,
+  type ZscoreRow,
 } from "./zscore";
+
+/**
+ * Ambil satu baris tabel golden dengan penjagaan eksplisit.
+ *
+ * WHY: `noUncheckedIndexedAccess` membuat `TABEL[0]` bertipe `ZscoreRow |
+ * undefined`. Kami TIDAK memakai non-null assertion (`!`) di sini karena bila
+ * suatu saat baris golden terhapus, test akan gagal dengan pesan samar
+ * ("cannot read property of undefined") alih-alih menunjuk usia yang hilang.
+ */
+function baris(table: ZscoreTable, usiaBulan: number): ZscoreRow {
+  const row = table[usiaBulan];
+  if (!row) throw new Error(`Baris golden usia ${usiaBulan} bln tidak ada di tabel uji`);
+  return row;
+}
 
 // Golden vectors dari WHO BB/U laki-laki 0-60 bln (potongan awal, sama persis v17).
 const WHO_BBU_MALE: ZscoreTable = {
@@ -13,7 +28,7 @@ const WHO_BBU_MALE: ZscoreTable = {
 };
 
 describe("tkHitungZscoreNumerik (garis SD)", () => {
-  const row = WHO_BBU_MALE[0];
+  const row = baris(WHO_BBU_MALE, 0);
   it("tepat di median -> z = 0", () => {
     expect(tkHitungZscoreNumerik(row, 3.3)).toBeCloseTo(0, 6);
   });
@@ -38,13 +53,14 @@ describe("tkHitungZscoreNumerik (garis SD)", () => {
 
 describe("tkInterpolasiZscoreRow (usia pecahan)", () => {
   it("usia bulat -> baris apa adanya", () => {
-    expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 1)).toEqual(WHO_BBU_MALE[1]);
+    expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 1)).toEqual(baris(WHO_BBU_MALE, 1));
   });
   it("usia 0,5 bln -> rata-rata dua baris", () => {
-    const r = tkInterpolasiZscoreRow(WHO_BBU_MALE, 0.5)!;
-    expect(r[0]).toBeCloseTo(2.5, 6);
-    expect(r[3]).toBeCloseTo(3.9, 6);
-    expect(r[6]).toBeCloseTo(5.8, 6);
+    const r = tkInterpolasiZscoreRow(WHO_BBU_MALE, 0.5);
+    expect(r).not.toBeNull();
+    expect(r?.[0]).toBeCloseTo(2.5, 6);
+    expect(r?.[3]).toBeCloseTo(3.9, 6);
+    expect(r?.[6]).toBeCloseTo(5.8, 6);
   });
   it("usia di luar tabel -> null", () => {
     expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 5)).toBeNull();
@@ -60,20 +76,20 @@ const WHO_IMTU_MALE: ZscoreTable = {
 
 describe("IMT/U z-score (garis SD WHO)", () => {
   it("lahir: tepat di median -> z = 0", () => {
-    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 13.4)).toBeCloseTo(0, 6);
+    expect(tkHitungZscoreNumerik(baris(WHO_IMTU_MALE, 0), 13.4)).toBeCloseTo(0, 6);
   });
   it("lahir: tepat di -3 SD -> z = -3 (gizi buruk)", () => {
-    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 10.2)).toBeCloseTo(-3, 6);
+    expect(tkHitungZscoreNumerik(baris(WHO_IMTU_MALE, 0), 10.2)).toBeCloseTo(-3, 6);
   });
   it("lahir: tepat di +3 SD -> z = 3 (obesitas)", () => {
-    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[0], 18.1)).toBeCloseTo(3, 6);
+    expect(tkHitungZscoreNumerik(baris(WHO_IMTU_MALE, 0), 18.1)).toBeCloseTo(3, 6);
   });
   it("24 bln: pertengahan median..+1 SD -> z = 0,5", () => {
     // median 16.0, +1 SD 17.3 ; nilai 16.65 -> z = 0,5
-    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[24], 16.65)).toBeCloseTo(0.5, 6);
+    expect(tkHitungZscoreNumerik(baris(WHO_IMTU_MALE, 24), 16.65)).toBeCloseTo(0.5, 6);
   });
   it("60 bln: tepat di -2 SD -> z = -2 (gizi kurang)", () => {
-    expect(tkHitungZscoreNumerik(WHO_IMTU_MALE[60], 12.9)).toBeCloseTo(-2, 6);
+    expect(tkHitungZscoreNumerik(baris(WHO_IMTU_MALE, 60), 12.9)).toBeCloseTo(-2, 6);
   });
 });
 

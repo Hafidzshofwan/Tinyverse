@@ -72,7 +72,9 @@ Ini menulis ulang `public/search-index.json`.
   `src/widgets/app-shell/Logo.tsx`, `public/brand/logo.png`,
   `scripts/obat.json`.
 - Diubah: `scripts/build-search-index.mjs`, `public/search-index.json`,
-  `public/darurat-tool.html` (+ semua `*-tool.html` disuntik bridge),
+  island `*-tool.html` yang masih tersisa disuntik bridge (`dosis`, `puyer`,
+  `growth`; island `darurat`, `lab`, dan `imunisasi` sudah dihapus karena
+  panelnya kini native React dan frasa pencariannya dipanen dari `src/`),
   `src/widgets/app-shell/{GlobalSearch,AppShell}.tsx`, 8 loader di
   `src/features/*`, `src/features/clinical-scores/ScoreCatalog.tsx`,
   `src/app/globals.css`.

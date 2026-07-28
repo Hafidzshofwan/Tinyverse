@@ -1,12 +1,13 @@
 // Generator indeks pencarian global Tinyverse (pure Node, tanpa dependency).
-// Membaca tiap island HTML di public/, data obat (scripts/obat.json),
+// Membaca island HTML yang MASIH tersisa di public/, sumber React (src/) untuk
+// alat yang sudah dimigrasi, data obat (scripts/obat.json),
 // katalog skoring (src/features/clinical-scores/data.ts), alur, guideline,
 // serta modul-modul fitur React, lalu menulis public/search-index.json.
 // Setiap entri konten menyimpan "anchor" agar saat diklik, alat bisa
 // auto-scroll & membuka bagian tepatnya (lihat tv-deeplink.js).
 // Jalankan dari folder apps/web:  node scripts/build-search-index.mjs
 
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -14,9 +15,16 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PUBLIC = join(__dirname, "..", "public");
 const SRC = join(__dirname, "..", "src");
 
-// Peta island -> menu/route + kata kunci/alias (bahasa Indonesia + istilah medis).
+// Peta alat -> menu/route + kata kunci/alias (bahasa Indonesia + istilah medis).
+//
+// Sumber frasa konten:
+//   - `file`    : island HTML v17 di public/ (alat yang BELUM dimigrasi).
+//   - `srcDirs` : folder sumber React di src/ (alat yang SUDAH dimigrasi).
+// Alat tanpa keduanya hanya menyumbang entri menu; konten detailnya diambil
+// dari FEATURE_MODULES di bawah.
 const TOOLS = [
-  { file: "darurat-tool.html", slug: "darurat", label: "Mode Darurat", icon: "\uD83D\uDEA8", href: "/preview/darurat",
+  { srcDirs: ["widgets/darurat-panel", "features/emergency-pat", "features/emergency-gcs", "features/emergency-pals", "features/emergency-resus", "entities/emergency"],
+    slug: "darurat", label: "Mode Darurat", icon: "\uD83D\uDEA8", href: "/preview/darurat",
     keywords: ["gcs","glasgow","pat","pediatric assessment triangle","pals","resusitasi","henti jantung","rjp","cpr","kejang","syok","triase","kegawatan","emergency","gawat darurat","epinefrin","defibrilasi","kardioversi"] },
   { file: "cairan-tool.html", slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids",
     keywords: ["dehidrasi","rumatan","maintenance","holliday","segar","resusitasi cairan","bolus","kristaloid","rehidrasi","defisit","tetesan","infus","cairan","luka bakar","parkland","lund browder"] },
@@ -26,7 +34,8 @@ const TOOLS = [
     keywords: ["racik","puyer","pulveres","bagi","tablet","kapsul","racikan","serbuk"] },
   { file: "growth-tool.html", slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "\uD83D\uDCC8", href: "/preview/pertumbuhan",
     keywords: ["pertumbuhan","tinggi badan","berat badan","who","cdc","z-score","persentil","stunting","mph","mid parental height","kurva","grafik","tumbuh kembang"] },
-  { file: "lab-tool.html", slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab",
+  { srcDirs: ["widgets/lab-panel", "features/lab-reference", "features/lab-blood", "features/lab-electrolyte", "features/abg-analyzer", "entities/lab", "entities/abg"],
+    slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab",
     keywords: ["natrium","kalium","elektrolit","agd","analisa gas darah","abg","ph","hb","hemoglobin","leukosit","trombosit","darah","interpretasi lab","asidosis","alkalosis"] },
   { file: "nutrisi-tool.html", slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "🍎", href: "/preview/nutrisi",
     keywords: ["kalori","protein","kebutuhan energi","susu formula","mpasi","gizi","holliday","rda","takaran susu","sendok takar","nutrisi"] },
@@ -399,19 +408,139 @@ function extractPhrases(html) {
   return out;
 }
 
-const entries = [];
+// ---------------------------------------------------------------------------
+// Ekstraksi frasa dari SUMBER REACT (untuk alat yang islandnya sudah dihapus).
+//
+// WHY: dulu frasa konten dipanen dari island HTML v17 di public/. Setelah alat
+// dimigrasi ke React, HTML-nya dihapus — kalau tidak diganti sumbernya, entri
+// pencarian alat tersebut ikut hilang. Fungsi di bawah memanen teks JSX dan
+// properti teks manusiawi (label/judul/deskripsi) dari file .ts/.tsx sehingga
+// jumlah & kualitas entri tetap setara.
+// ---------------------------------------------------------------------------
 
-// 1) Island tools: entri menu + konten (dengan anchor text: untuk deep-link).
-for (const t of TOOLS) {
-  entries.push({ type: "menu", slug: t.slug, label: t.label, icon: t.icon, href: t.href, text: t.label, keywords: t.keywords.join(" ") });
-  let html = "";
-  try { html = readFileSync(join(PUBLIC, t.file), "utf8"); } catch { html = ""; }
-  if (html) {
-    const phrases = extractPhrases(html);
-    for (const p of phrases) {
-      entries.push({ type: "content", slug: t.slug, label: t.label, icon: t.icon, href: t.href, text: p, anchor: "text:" + p.slice(0, 70) });
+function listSourceFiles(dir) {
+  const out = [];
+  if (!existsSync(dir)) return out;
+  for (const name of readdirSync(dir).sort()) {
+    const p = join(dir, name);
+    if (statSync(p).isDirectory()) {
+      if (name === "node_modules" || name === "__tests__" || name === "__fixtures__") continue;
+      out.push(...listSourceFiles(p));
+      continue;
+    }
+    if (!/\.(ts|tsx)$/.test(name)) continue;
+    if (/\.(test|spec)\.tsx?$/.test(name) || /\.d\.ts$/.test(name)) continue;
+    out.push(p);
+  }
+  return out;
+}
+
+const BUKAN_FRASA = /^(true|false|null|undefined|use client|use server|button|submit|number|string|boolean|none|auto|center|flex|div|span)$/i;
+
+// Potongan yang terlihat seperti kode, bukan kalimat untuk pengguna.
+// WHY: literal string juga dipanen dari dalam ekspresi (mis. daftar obat PALS),
+// sehingga sisa-sisa sintaks bisa ikut terjaring bila tidak disaring di sini.
+function tampakKode(line) {
+  if (/[[\]]/.test(line)) return true;
+  if (/=>|&&|\|\||\+\+/.test(line)) return true;
+  if (/(^|\s)\+(\s|$)/.test(line)) return true;
+  if (/\w\(/.test(line)) return true;                 // pemanggilan fungsi
+  if (/^[,:;.+)?]/.test(line) || /[,:+(&?]$/.test(line)) return true;
+  if (/\b(const|let|return|function|export|import|typeof|await)\b/.test(line)) return true;
+  if (/\.(map|filter|push|join|slice|concat|toFixed|key)\b/.test(line)) return true;
+  const buka = (line.match(/\(/g) || []).length;
+  const tutup = (line.match(/\)/g) || []).length;
+  if (buka !== tutup) return true;                    // tanda kurung tidak seimbang
+  return false;
+}
+
+// Saring kandidat agar hanya kalimat/label yang benar-benar dibaca pengguna.
+function frasaLayak(raw) {
+  const line = String(raw || "").replace(/\s+/g, " ").trim();
+  if (line.length < 3 || line.length > 90) return "";
+  if (!/[a-zA-Z\u00C0-\u024F]/.test(line)) return "";
+  if (BUKAN_FRASA.test(line)) return "";
+  if (/[{}<>$`|=\\]/.test(line)) return "";        // ekspresi/JSX/template
+  if (/^[#./]/.test(line) || /^https?:/i.test(line)) return ""; // selector/path/URL
+  if (/_/.test(line)) return "";                    // KONSTANTA_SNAKE / kelas internal
+  if (/^[a-z0-9-]+$/.test(line)) return "";         // slug / nama kelas css
+  if (/^[a-z]+([A-Z][a-zA-Z0-9]*)+$/.test(line)) return ""; // camelCase identifier
+  if (/\d\s*(px|rem|em|vh|vw|deg)\b/.test(line)) return "";  // nilai styling
+  if (/^[\d\s.,%+-]+$/.test(line)) return "";       // angka murni
+  if (/#[0-9a-fA-F]{3,8}\b/.test(line)) return "";  // kode warna
+  if (/sans-serif|system-ui|monospace|cubic-bezier|rgba?\(|var\(--|\bsvg\b/i.test(line)) return "";
+  // Frasa untuk pengguna selalu punya huruf kapital atau karakter non-ASCII
+  // (emoji/simbol medis). Tanpa itu hampir pasti nama kelas atau utility CSS
+  // seperti "tv-card tv-stack" atau "flex items-center".
+  if (!/[A-Z\u00C0-\u024F]/.test(line) && !/[^\x00-\x7F]/.test(line)) return "";
+  if (tampakKode(line)) return "";
+  return line;
+}
+
+// Teks JSX boleh melintasi baris (mis. <label>\n  Kelompok Usia\n</label>),
+// jadi hasil tangkapan dipecah per baris sebelum disaring.
+const POLA_TEKS_JSX = />([^<>{}]+)</g;
+const POLA_PROP_GANDA =
+  /(?:label|text|nama|judul|title|desc|deskripsi|ringkas|keterangan|placeholder|aria-label)\s*[:=]\s*"([^"\\]+)"/g;
+const POLA_PROP_TUNGGAL =
+  /(?:label|text|nama|judul|title|desc|deskripsi|ringkas|keterangan)\s*:\s*'([^'\\]+)'/g;
+// Literal string umum: menangkap teks di dalam ekspresi/array data, mis.
+// useState("Salin Kronologi") atau hint pada daftar penilaian PAT.
+// Wajib mengandung spasi supaya identifier & slug tidak ikut terjaring.
+// Hanya tanda kutip ganda: apostrof pada teks Indonesia bikin pasangan kutip
+// tunggal meleset dan menggeser seluruh hasil tangkapan berikutnya.
+const POLA_STRING_UMUM = /"([^"\\\n]*\s[^"\\\n]*)"/g;
+
+function extractPhrasesFromSource(dirs) {
+  const seen = new Set();
+  const out = [];
+  for (const rel of dirs) {
+    for (const file of listSourceFiles(join(SRC, ...rel.split("/")))) {
+      const s = readFileSync(file, "utf8")
+        .replace(/\/\*[\s\S]*?\*\//g, " ")
+        .replace(/^\s*\/\/.*$/gm, " ");
+      const kandidat = [];
+      for (const m of s.matchAll(POLA_TEKS_JSX)) {
+        for (const baris of String(m[1]).split("\n")) kandidat.push(baris);
+      }
+      for (const m of s.matchAll(POLA_PROP_GANDA)) kandidat.push(m[1]);
+      for (const m of s.matchAll(POLA_PROP_TUNGGAL)) kandidat.push(m[1]);
+      for (const m of s.matchAll(POLA_STRING_UMUM)) kandidat.push(m[1]);
+      for (const c of kandidat) {
+        const line = frasaLayak(decode(c));
+        if (!line) continue;
+        const key = line.toLowerCase();
+        if (seen.has(key)) continue;
+        seen.add(key);
+        out.push(line);
+        if (out.length >= 320) return out;
+      }
     }
   }
+  return out;
+}
+
+const entries = [];
+
+// 1) Alat utama: entri menu + konten (dengan anchor text: untuk deep-link).
+//    Sumber frasa = island HTML (belum migrasi) ATAU sumber React (sudah migrasi).
+for (const t of TOOLS) {
+  entries.push({ type: "menu", slug: t.slug, label: t.label, icon: t.icon, href: t.href, text: t.label, keywords: t.keywords.join(" ") });
+
+  let phrases = [];
+  if (t.file) {
+    let html = "";
+    try { html = readFileSync(join(PUBLIC, t.file), "utf8"); } catch { html = ""; }
+    if (html) phrases = extractPhrases(html);
+  } else if (t.srcDirs) {
+    phrases = extractPhrasesFromSource(t.srcDirs);
+    if (!phrases.length) console.warn("frasa React kosong untuk alat:", t.slug);
+  }
+
+  for (const p of phrases) {
+    entries.push({ type: "content", slug: t.slug, label: t.label, icon: t.icon, href: t.href, text: p, anchor: "text:" + p.slice(0, 70) });
+  }
+  if (t.srcDirs) console.log(`frasa React ${t.slug}:`, phrases.length);
 }
 
 // 2) Nama obat (Dosis Obat) dari scripts/obat.json -> deep-link ke kartu obat.
@@ -536,19 +665,21 @@ try {
   console.warn("daftar.ts alur tidak terbaca:", e.message);
 }
 
-// 3d) Materi vaksin (Jadwal Imunisasi) dari array VAKSIN di imunisasi-tool.html.
+// 3d) Materi vaksin (Jadwal Imunisasi) dari VACCINES di entities/immunization.
+//     Sumber sebelumnya adalah array VAKSIN di public/imunisasi-tool.html; island
+//     itu sudah digantikan panel React, dan data ini adalah port 1:1-nya.
 try {
-  const im = readFileSync(join(PUBLIC, "imunisasi-tool.html"), "utf8");
-  const blok = im.match(/var\s+VAKSIN\s*=\s*\[([\s\S]*?)\n\s*\];/);
-  if (blok) {
-    const parts = blok[1].split(/\{\s*n:\s*'/).slice(1);
+  const vsrc = readFileSync(join(SRC, "entities", "immunization", "data", "vaccines.ts"), "utf8");
+  const re = /id:\s*"([^"]+)"[\s\S]{0,200}?nama:\s*"([^"]+)"[\s\S]{0,200}?mencegah:\s*"([^"]+)"/g;
+  const cocok = [...vsrc.matchAll(re)];
+  if (cocok.length) {
     let n = 0;
-    for (const part of parts) {
-      const nameRaw = (part.match(/^([^']+)'/) || [])[1];
-      if (!nameRaw) continue;
-      const prevRaw = (part.match(/p:\s*'([^']+)'/) || [])[1] || "";
-      const nama = decode(nameRaw).replace(/\s+/g, " ").trim();
-      const cegah = decode(prevRaw).replace(/\s+/g, " ").trim();
+    for (const m of cocok) {
+      const nama = String(m[2] || "").replace(/\s+/g, " ").trim();
+      const cegah = String(m[3] || "").replace(/\s+/g, " ").trim();
+      if (!nama) continue;
+      // Anchor tetap memakai kunci dari NAMA (bukan id) agar skema deep-link
+      // "vaksin:<kunci>" identik dengan indeks lama & cocok dengan VaccineCatalog.
       const slug = kunciCocok(nama);
       if (!slug) continue;
       const kw = [nama, cegah, "imunisasi", "vaksin", "vaksinasi", "jadwal", "idai"]
@@ -569,10 +700,10 @@ try {
     }
     console.log("vaksin diindeks:", n);
   } else {
-    console.warn("VAKSIN tidak ditemukan di imunisasi-tool.html");
+    console.warn("VACCINES tidak ditemukan di entities/immunization/data/vaccines.ts");
   }
 } catch (e) {
-  console.warn("imunisasi-tool.html tidak terbaca:", e.message);
+  console.warn("vaccines.ts tidak terbaca:", e.message);
 }
 
 // 4) Modul-modul fitur spesifik

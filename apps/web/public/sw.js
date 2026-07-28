@@ -9,7 +9,7 @@
  *
  * Naikkan CACHE_VERSION setiap kali file inti berubah agar cache lama dibersihkan.
  */
-const CACHE_VERSION = "tinyverse-v2"
+const CACHE_VERSION = "tinyverse-v3"
 const OFFLINE_URL = "/offline.html"
 const PRECACHE_URLS = [OFFLINE_URL, "/manifest.webmanifest", "/icon.svg"]
 

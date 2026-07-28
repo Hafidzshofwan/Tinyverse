@@ -1,1 +1,0 @@
-export { ImunisasiTool } from "./ImunisasiTool";
