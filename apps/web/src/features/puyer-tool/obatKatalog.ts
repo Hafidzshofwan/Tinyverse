@@ -17,6 +17,19 @@ import type { Obat } from "@tinyverse/clinical-core";
 /** Bentuk katalog v17: Obat clinical-core + metadata khusus layar puyer. */
 export interface ObatPuyer extends Obat {
 	id: string;
+
+	/* Bidang v17 yang tidak ada di tipe Obat clinical-core. Semuanya label &
+	   metadata keselamatan — tidak dipakai dalam perhitungan dosis. */
+	jenis?: string;
+	icon?: string;
+	alias?: string[];
+	kelasAlergi?: string[];
+	interaksiTags?: string[];
+	kontraindikasi?: string[];
+	peringatan?: string[];
+	keselamatanVersi?: string;
+
+	/* Preset khusus layar Racik Puyer. */
 	bisaDipuyer?: boolean;
 	puyerSediaanMg?: number;
 	puyer?: {
