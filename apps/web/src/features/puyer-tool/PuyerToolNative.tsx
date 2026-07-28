@@ -12,6 +12,8 @@
  */
 import { useCallback, useEffect, useMemo, useRef, useState, type JSX } from "react";
 import "./puyer-tool.css";
+import { usePatientProfile, useSyncedField, formatUsiaPasien } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { fmt, fmtResepAngka } from "./format";
 import {
 	aturanMengikutiFrekuensi,
@@ -119,8 +121,9 @@ function simpanTemplate(arr: TemplatePuyer[]): boolean {
 }
 
 export function PuyerToolNative(): JSX.Element {
-	const [bb, setBb] = useState("");
-	const [usia, setUsia] = useState("");
+	const profile = usePatientProfile();
+	const [bb, setBb] = useSyncedField(profile.bb);
+	const [usia, setUsia] = useSyncedField(profile.usiaBulan);
 	const [frekuensi, setFrekuensi] = useState("3");
 	const [durasi, setDurasi] = useState("3");
 	const [jumlah, setJumlah] = useState("");
@@ -197,7 +200,8 @@ export function PuyerToolNative(): JSX.Element {
 
 	const reset = () => {
 		setRows([]);
-		setBb("");
+		setBb(profile.bb != null ? String(profile.bb) : "");
+		setUsia(profile.usiaBulan != null ? String(profile.usiaBulan) : "");
 		setFrekuensi("3");
 		setDurasi("3");
 		setJumlah("");
@@ -286,10 +290,24 @@ export function PuyerToolNative(): JSX.Element {
 	};
 
 	const tambahKeRingkasan = () => {
-		if (!hasil) hitung();
-		const fn = (window as unknown as { tvRingkasanTambahPuyer?: () => void }).tvRingkasanTambahPuyer;
-		if (typeof fn === "function") fn();
-		else window.alert("Ringkasan belum siap. Muat ulang halaman lalu coba lagi.");
+		const res = hasil || (() => {
+			isiOtomatis(frekuensi, durasi);
+			const jumlahEfektif = jumlah || String(hitungJumlahBungkus(frekuensi, durasi) ?? "");
+			return hitungRacikan({ bb, usia, frekuensi, durasi, jumlah: jumlahEfektif, aturan, rows });
+		})();
+
+		if (res && !res.gagal && res.ringkasanText) {
+			addRingkasanItem({
+				title: `Racik Puyer${profile.nama ? ` — ${profile.nama}` : ""}`,
+				source: "Racik Puyer",
+				body: res.ringkasanText,
+			});
+			window.alert("✅ Hasil racik puyer telah ditambahkan ke Ringkasan.");
+		} else {
+			const fn = (window as unknown as { tvRingkasanTambahPuyer?: () => void }).tvRingkasanTambahPuyer;
+			if (typeof fn === "function") fn();
+			else window.alert(res?.gagal || "Belum ada hasil racikan yang dapat ditambahkan.");
+		}
 	};
 
 	return (
@@ -323,6 +341,16 @@ export function PuyerToolNative(): JSX.Element {
 						<IkonPasien />
 						Data Pasien &amp; Aturan Puyer
 					</h3>
+
+					{(profile.nama || profile.bb != null || profile.usiaBulan != null) && (
+						<div className="tv-patient-active-banner" style={{ marginBottom: 14 }}>
+							👤 Pasien aktif: <strong>{profile.nama || "(Tanpa Nama)"}</strong>
+							{profile.noRm ? ` · RM: ${profile.noRm}` : ""}
+							{profile.bb != null ? ` · BB ${profile.bb} kg` : ""}
+							{profile.usiaBulan != null ? ` · Usia ${formatUsiaPasien(profile.usiaBulan)}` : ""}
+							<span style={{ fontSize: "0.8rem", opacity: 0.8, marginLeft: 6 }}>(terisi otomatis)</span>
+						</div>
+					)}
 					<div className="puyer-grid-3">
 						<div className="form-group">
 							<label htmlFor="puyerBb" style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>

@@ -281,8 +281,15 @@ export function RingkasanPanel() {
           </div>
         ) : (
           <div className="tv-stack">
-            {items.map((it) => (
-              <div key={it.id} style={itemCard}>
+            {items.map((it, index) => (
+              <div
+                key={it.id}
+                className="tv-ringkasan-item"
+                style={{
+                  ...itemCard,
+                  animationDelay: `${Math.min(index * 65, 390)}ms`,
+                }}
+              >
                 <div style={itemHead}>
                   <div>
                     <div style={itemTitleStyle}>{it.title}</div>
@@ -291,7 +298,15 @@ export function RingkasanPanel() {
                       {it.time}
                     </div>
                   </div>
-                  <button type="button" aria-label="Hapus item" style={delBtn} onClick={() => setItemToDelete(it)}>×</button>
+                  <button
+                    type="button"
+                    aria-label="Hapus item"
+                    className="tv-ringkasan-del-btn"
+                    style={delBtn}
+                    onClick={() => setItemToDelete(it)}
+                  >
+                    ×
+                  </button>
                 </div>
                 <div style={itemBody}>{it.body}</div>
               </div>

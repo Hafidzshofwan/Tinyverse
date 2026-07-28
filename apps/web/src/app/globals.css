@@ -4150,6 +4150,51 @@ html.dark .recharts-default-tooltip {
 [data-theme="dark"] .tv-rk-btn.type-kop { background: rgba(251, 191, 36, 0.15); color: #FBBF24; border-color: rgba(251, 191, 36, 0.3); }
 [data-theme="dark"] .tv-rk-btn.type-hapus { background: rgba(251, 113, 133, 0.15); color: #FB7185; border-color: rgba(251, 113, 133, 0.3); }
 
+/* Ringkasan Klinis Staggered Fade-In & Hover Styles */
+@keyframes tvRingkasanFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tv-ringkasan-item {
+  animation: tvRingkasanFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tv-ringkasan-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="dark"] .tv-ringkasan-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tv-ringkasan-del-btn {
+  transition: all 0.15s ease;
+}
+
+.tv-ringkasan-del-btn:hover {
+  background: #FFF1F2 !important;
+  color: #E11D48 !important;
+  border-color: #FECDD3 !important;
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .tv-ringkasan-del-btn:hover {
+  background: rgba(251, 113, 133, 0.2) !important;
+  color: #FB7185 !important;
+  border-color: rgba(251, 113, 133, 0.4) !important;
+}
+
 /* ================================================================
    TUMBUH KEMBANG & SKRINING PERKEMBANGAN — DARK MODE SPEC
    ================================================================ */
