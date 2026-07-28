@@ -600,6 +600,10 @@ html.dark .tv-greeting-hand-icon {
   color: #94a3b8 !important;
 }
 
+[data-theme="dark"] .tv-kosong b {
+  color: #f8fafc !important;
+}
+
 [data-theme="dark"] .tv-pas-close {
   background: rgba(30, 41, 59, 0.8) !important;
   border-color: rgba(255, 255, 255, 0.16) !important;

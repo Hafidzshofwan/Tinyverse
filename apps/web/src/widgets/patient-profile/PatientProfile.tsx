@@ -125,11 +125,11 @@ function CheckToastIcon() {
 
 function HospitalIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" style={{ marginBottom: "6px" }}>
-      <rect width="24" height="24" rx="6" fill="#EFF6FF"/>
+    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" style={{ display: "block", margin: "0 auto 10px auto", flexShrink: 0 }}>
+      <rect width="24" height="24" rx="6" fill="#EFF6FF" stroke="#DBEAFE" strokeWidth="1"/>
       <path d="M5 20V8C5 6.89543 5.89543 6 7 6H17C18.1046 6 19 6.89543 19 8V20" stroke="#2563EB" strokeWidth="1.8"/>
       <path d="M12 10V16M9 13H15" stroke="#0284C7" strokeWidth="2" strokeLinecap="round"/>
-      <rect x="9" y="17" width="6" height="3" fill="#3B82F6"/>
+      <rect x="9" y="17" width="6" height="3" rx="0.5" fill="#3B82F6"/>
     </svg>
   );
 }
@@ -559,17 +559,18 @@ export function PatientProfile() {
 
               <div className="tv-pas-list" style={{ display: "flex", flexDirection: "column", gap: "8px", maxHeight: "360px", overflowY: "auto" }}>
                 {filteredList.length === 0 ? (
-                  <div className="tv-kosong" style={{ padding: "20px 10px", textAlign: "center" }}>
+                  <div className="tv-kosong" style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px", textAlign: "center" }}>
                     {patientList.length === 0 ? (
                       <>
                         <HospitalIcon />
-                        <b>Daftar Pasien Kosong</b>
-                        <p style={{ margin: "4px 0 12px", fontSize: "0.82rem", color: "#64748B" }}>
+                        <b style={{ display: "block", fontSize: "0.95rem", color: "var(--tv-teks, #1E293B)", marginBottom: "4px" }}>Daftar Pasien Kosong</b>
+                        <p style={{ margin: "0 0 14px 0", fontSize: "0.82rem", color: "#64748B", maxWidth: "280px" }}>
                           Simpan pasien bangsal/poliklinik Anda untuk switch kalkulator dosis &amp; cairan 1-klik.
                         </p>
                         <button
                           type="button"
                           className="tv-pas-btn tv-pas-save"
+                          style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "6px" }}
                           onClick={() => {
                             muatFormDariPasien(null);
                             setTab("form");
