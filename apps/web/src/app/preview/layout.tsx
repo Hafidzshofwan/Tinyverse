@@ -16,6 +16,19 @@
  * mengaktifkan langganannya sendiri lewat aktivasi manual. Setiap jalan pintas
  * adalah cabang kode yang tidak pernah dilalui pengguna sungguhan, sehingga
  * kerusakan di jalur utama bisa lama tidak tertangkap.
+ *
+ * SATU-SATUNYA pengecualian ada di `gerbangDimatikan()` di bawah, khusus untuk
+ * lingkungan pengembangan. Alasannya praktis: penyunting seperti Google AI
+ * Studio menjalankan aplikasi pada host lain dan di dalam iframe, sehingga
+ * cookie sesi `tv_sesi` tidak pernah ikut terkirim dan seluruh alat klinis
+ * terkunci meski penyuntingnya sudah masuk.
+ *
+ * Pengecualian itu dibuat mustahil menyentuh produksi: syaratnya NODE_ENV harus
+ * bukan "production". Vercel selalu membangun dengan NODE_ENV=production, baik
+ * untuk domain utama maupun untuk deployment pratinjau, jadi situs yang diakses
+ * pengguna tetap terjaga tanpa perlu mengingat mematikan saklar apa pun. Inilah
+ * sebabnya saya tidak memakai environment variable: saklar yang harus diingat
+ * cepat atau lambat akan lupa dimatikan.
  */
 import type { ReactNode } from "react";
 import Link from "next/link";
@@ -52,7 +65,17 @@ function tanggal(iso: string | null): string {
   });
 }
 
+/**
+ * Benar hanya saat aplikasi dijalankan lewat `next dev` (mesin sendiri atau
+ * penyunting daring). Selalu salah pada hasil build produksi.
+ */
+function gerbangDimatikan(): boolean {
+  return process.env.NODE_ENV !== "production";
+}
+
 export default async function LayoutPreview({ children }: { children: ReactNode }) {
+  if (gerbangDimatikan()) return <>{children}</>;
+
   const status = await statusAksesSaatIni();
 
   /* Belum masuk. AppShell sudah menampilkan layar masuk di sisi klien, tetapi
