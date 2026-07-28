@@ -173,7 +173,7 @@ service cloud.firestore {
      */
     match /subscriptions/{accountId} {
       allow read: if masuk()
-                  && exists(/databases/$(database)/documents/memberships/$(accountId + '_' + request.auth.uid));
+                  && exists(/databases/$(database)/documents/memberships/$(accountId + '__' + request.auth.uid));
       allow write: if false;
     }
 
