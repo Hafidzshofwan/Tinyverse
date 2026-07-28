@@ -1,1 +1,1 @@
-export { akhiriSesi, pastikanSesiServer, sesiServerAda } from "./sesiServer";
+export { akhiriSesi, pastikanSesiServer, uidSesiServer } from "./sesiServer";

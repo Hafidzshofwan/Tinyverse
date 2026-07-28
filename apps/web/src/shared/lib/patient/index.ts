@@ -11,6 +11,7 @@ import {
 import { db, pastikanAuthData } from "../firebase";
 import {
   akunPasien,
+  uidPasien,
   dengarAkunPasien,
   kunciDaftarPasien,
   jalurKoleksiPasien,
@@ -134,7 +135,7 @@ export function pilihPasienAktif(p: PatientProfile, syncToFirebase = true) {
   if (syncToFirebase && db && jalurAktif) {
     try {
       const activeRef = doc(db, jalurAktif);
-      void pastikanAuthData().then((siap) => {
+      void pastikanAuthData(uidPasien()).then((siap) => {
         if (!siap) return;
         setDoc(
           activeRef,
@@ -197,7 +198,7 @@ export function tambahAtauUpdatePasienInList(
   if (db && jalurSimpan) {
     try {
       const pRef = doc(db, jalurSimpan);
-      void pastikanAuthData().then((siap) => {
+      void pastikanAuthData(uidPasien()).then((siap) => {
         if (!siap) return;
         setDoc(pRef, itemBaru, { merge: true }).catch((err) => {
           console.warn("Firebase patient save error:", err);
@@ -236,7 +237,7 @@ export function hapusPasienFromList(id: string) {
   if (db && jalurHapus) {
     try {
       const pRef = doc(db, jalurHapus);
-      void pastikanAuthData().then((siap) => {
+      void pastikanAuthData(uidPasien()).then((siap) => {
         if (!siap) return;
         deleteDoc(pRef).catch((err) => {
           console.warn("Firebase patient delete error:", err);
@@ -296,7 +297,7 @@ export function initFirebasePatientSync() {
   matikanSinkronPasien();
   akunTersinkron = akun;
 
-  void pastikanAuthData().then((siap) => {
+  void pastikanAuthData(uidPasien()).then((siap) => {
     // Akun bisa berganti selagi token diterbitkan; jangan pasang listener basi.
     if (!siap || akunPasien() !== akun || akunTersinkron !== akun) return;
     pasangListenerPasien();

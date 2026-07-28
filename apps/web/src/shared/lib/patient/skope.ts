@@ -12,22 +12,36 @@
  * accountId. Untuk akun perorangan, accountId sama dengan UID pengguna.
  *
  * localStorage juga harus ikut dipisah, bukan hanya Firestore. Dua akun yang
- * dipakai di browser yang sama akan berbagi localStorage, jadi tanpa pemisahan
- * ini akun kedua tetap membaca daftar pasien akun pertama dari penyimpanan
- * lokal — meskipun Rules di server sudah benar.
+ * dipakai di browser yang sama berbagi localStorage, jadi tanpa pemisahan ini
+ * akun kedua tetap membaca daftar pasien akun pertama dari penyimpanan lokal —
+ * meskipun Rules di server sudah benar.
  */
 
 let akun: string | null = null;
+let uidPengguna: string | null = null;
 const pendengar = new Set<() => void>();
 
 export function akunPasien(): string | null {
   return akun;
 }
 
+/**
+ * UID pengguna yang sedang masuk.
+ *
+ * Dipisahkan dari accountId meski nilainya kini sama, karena keduanya menjawab
+ * pertanyaan berbeda: accountId = "data ini milik siapa", uid = "siapa yang
+ * sedang menulis". Saat akun institusi datang keduanya berbeda, dan pemanggil
+ * tidak perlu diubah.
+ */
+export function uidPasien(): string | null {
+  return uidPengguna;
+}
+
 /** Dipanggil AuthProvider saat pengguna masuk (uid) dan keluar (null). */
 export function setAkunPasien(uid: string | null): void {
   if (akun === uid) return;
   akun = uid;
+  uidPengguna = uid;
   pendengar.forEach((f) => {
     try {
       f();

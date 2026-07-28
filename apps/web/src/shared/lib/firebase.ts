@@ -10,9 +10,7 @@
  * sehingga tidak ada cara memeriksa siapa pemiliknya.
  *
  * SEKARANG berkas ini memakai project yang sama dengan akun, dan masuk sebagai
- * pengguna sungguhan melalui custom token dari server. Dengan begitu satu
- * berkas Rules melindungi seluruh data, dan pemilik setiap dokumen bisa
- * diperiksa.
+ * pengguna sungguhan lewat custom token dari server.
  *
  * App diberi nama tersendiri ("tinyverse-data") supaya tidak bertabrakan dengan
  * instance compat SDK yang dipakai halaman login pada project yang sama.
@@ -39,25 +37,38 @@ const app = ambilApp();
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-/**
- * Memastikan SDK data sudah masuk sebagai pengguna yang sama dengan sesi server.
- *
- * Aman dipanggil berkali-kali: bila sudah masuk ia langsung selesai, dan bila
- * ada panggilan yang sedang berjalan panggilan berikutnya menumpang hasil yang
- * sama. Tanpa penjagaan itu, sepuluh komponen yang memulai serentak akan
- * menerbitkan sepuluh token dan sepuluh proses masuk.
- *
- * Mengembalikan false, tidak melempar error. Kegagalan menyalakan sinkronisasi
- * awan tidak boleh mematikan alat klinis — data tetap tersimpan di localStorage.
- */
 let sedangMasuk: Promise<boolean> | null = null;
 
-export function pastikanAuthData(): Promise<boolean> {
+/**
+ * Memastikan SDK data sudah masuk sebagai pengguna yang diharapkan.
+ *
+ * uidDiharapkan WAJIB diperhatikan, bukan sekadar "apakah sudah masuk". Bila
+ * hanya keberadaan sesi yang diperiksa, pergantian akun di browser yang sama
+ * akan membuat SDK data tetap masuk sebagai akun LAMA, dan data pasien tertulis
+ * ke akun yang salah.
+ *
+ * Aman dipanggil berkali-kali; panggilan serentak menumpang hasil yang sama.
+ * Mengembalikan false, tidak melempar. Gagal menyalakan sinkronisasi awan tidak
+ * boleh mematikan alat klinis — data tetap tersimpan di localStorage.
+ */
+export function pastikanAuthData(
+  uidDiharapkan?: string | null,
+): Promise<boolean> {
   if (typeof window === "undefined") return Promise.resolve(false);
-  if (auth.currentUser) return Promise.resolve(true);
+
+  const kini = auth.currentUser;
+  if (kini && (!uidDiharapkan || kini.uid === uidDiharapkan)) {
+    return Promise.resolve(true);
+  }
   if (sedangMasuk) return sedangMasuk;
 
   sedangMasuk = (async () => {
+    /* Identitas milik akun sebelumnya harus dikeluarkan lebih dulu. */
+    const basi = auth.currentUser;
+    if (basi && uidDiharapkan && basi.uid !== uidDiharapkan) {
+      await auth.signOut();
+    }
+
     const res = await fetch("/api/auth/firestore-token", {
       method: "POST",
       credentials: "same-origin",

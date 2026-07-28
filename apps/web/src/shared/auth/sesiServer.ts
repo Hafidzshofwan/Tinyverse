@@ -15,28 +15,39 @@ type Any = any;
 
 const RUTE = "/api/auth/session";
 
-/** Apakah server sudah punya cookie sesi yang sah untuk permintaan ini? */
-export async function sesiServerAda(): Promise<boolean> {
+/**
+ * UID pemilik cookie sesi di server, atau null bila tidak ada cookie yang sah.
+ *
+ * Mengembalikan UID, bukan sekadar ada/tidak ada. Versi sebelumnya hanya
+ * menjawab "ada cookie atau tidak", dan itu adalah cacat serius: bila pengguna
+ * berganti akun di browser yang sama, cookie akun LAMA masih ada, jawabannya
+ * tetap "ada", dan penukaran dilewati. Server pun terus mengenali pengguna
+ * sebagai akun sebelumnya — termasuk status langganannya.
+ */
+export async function uidSesiServer(): Promise<string | null> {
   try {
     const res = await fetch(RUTE, { method: "GET", credentials: "same-origin" });
-    if (!res.ok) return false;
-    const data = (await res.json()) as { masuk?: boolean };
-    return data.masuk === true;
+    if (!res.ok) return null;
+    const data = (await res.json()) as { masuk?: boolean; uid?: string | null };
+    if (data.masuk !== true || typeof data.uid !== "string") return null;
+    return data.uid;
   } catch {
-    return false;
+    return null;
   }
 }
 
 /**
- * Pastikan cookie sesi ada. Aman dipanggil berkali-kali.
+ * Pastikan cookie sesi ada DAN milik pengguna yang sedang masuk.
+ * Aman dipanggil berkali-kali.
  *
- * Diperiksa lebih dulu sebelum menukar, karena penukaran memanggil Firebase
- * Admin dan menambah beban pada setiap pemuatan halaman. Cookie berlaku
- * beberapa hari, jadi sebagian besar kunjungan tidak perlu menukar apa pun.
+ * Penukaran hanya dilewati bila UID di cookie sama dengan UID pengguna saat
+ * ini. Kunjungan biasa tetap murah karena cookie berlaku beberapa hari, tetapi
+ * pergantian akun selalu memaksa penukaran ulang.
  */
 export async function pastikanSesiServer(user: Any): Promise<boolean> {
   if (!user || typeof user.getIdToken !== "function") return false;
-  if (await sesiServerAda()) return true;
+  const uidCookie = await uidSesiServer();
+  if (uidCookie && uidCookie === user.uid) return true;
 
   /*
    * Argumen true = paksa segarkan. Firebase menolak ID Token yang dibuat lebih

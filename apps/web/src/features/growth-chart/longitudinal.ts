@@ -4,6 +4,7 @@ import { db, pastikanAuthData } from "../../shared/lib/firebase";
 import {
   kunciRiwayatTumbuh,
   jalurRiwayatTumbuh,
+  uidPasien,
 } from "../../shared/lib/patient/skope";
 import {
   tkInterpolasiZscoreRow,
@@ -626,7 +627,7 @@ export function saveGrowthRecords(patientId: string, records: GrowthRecord[], sy
   if (syncToFirebase && db && patientId && jalur) {
     try {
       const docRef = doc(db, jalur);
-      void pastikanAuthData().then((siap) => {
+      void pastikanAuthData(uidPasien()).then((siap) => {
         if (!siap) return;
         setDoc(
           docRef,
@@ -669,7 +670,7 @@ export function syncGrowthRecordsFromFirebase(
 
     // Listener hanya dipasang setelah SDK data benar-benar masuk. Bila dipasang
     // lebih dulu, Rules menolaknya dan listener mati untuk selamanya.
-    void pastikanAuthData().then((siap) => {
+    void pastikanAuthData(uidPasien()).then((siap) => {
       if (!siap || batal) return;
       unsubDalam = pasangListenerRiwayat(docRef, patientId, onUpdate);
     });

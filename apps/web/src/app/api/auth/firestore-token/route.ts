@@ -9,11 +9,10 @@
  *
  * Custom token menjembataninya: server memastikan sesi sah lewat cookie, lalu
  * menerbitkan token yang membuat SDK data masuk sebagai UID yang sama persis.
- * Sejak itu Rules bisa membandingkan UID pemilik data dengan UID penulis.
  *
- * UID diambil HANYA dari cookie sesi, tidak pernah dari badan permintaan.
- * Kalau klien boleh menyebut UID sendiri, siapa pun bisa meminta token milik
- * orang lain dan membaca seluruh data pasien mereka.
+ * UID diambil HANYA dari cookie sesi, tidak pernah dari badan permintaan. Kalau
+ * klien boleh menyebut UID sendiri, siapa pun bisa meminta token milik orang
+ * lain dan membaca seluruh data pasien mereka.
  */
 import { NextResponse } from "next/server";
 import { bacaSesi } from "@/server/session";
@@ -30,13 +29,10 @@ export async function POST() {
 
   try {
     const token = await adminAuth().createCustomToken(sesi.uid);
-    return NextResponse.json({ token });
+    return NextResponse.json({ token, uid: sesi.uid });
   } catch (e) {
     const pesan = e instanceof Error ? e.message : String(e);
     console.error("Gagal menerbitkan custom token:", pesan);
-    return NextResponse.json(
-      { error: "Gagal menerbitkan token." },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Gagal menerbitkan token." }, { status: 500 });
   }
 }

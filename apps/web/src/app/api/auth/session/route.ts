@@ -80,11 +80,17 @@ export async function POST(request: Request) {
  * bersifat httpOnly sehingga JavaScript tidak bisa memeriksanya sendiri; tanpa
  * endpoint ini, klien terpaksa menukar sesi pada SETIAP pemuatan halaman.
  *
- * Sengaja tidak membocorkan apa pun selain benar/salah.
+ * Mengembalikan uid pemilik cookie. Ini bukan kebocoran: uid yang diberikan
+ * adalah milik pemanggil sendiri, diturunkan dari cookie-nya sendiri. Klien
+ * memerlukannya untuk mengenali cookie milik akun lain yang masih tertinggal di
+ * browser yang sama.
  */
 export async function GET() {
   const sesi = await bacaSesi();
-  return NextResponse.json({ masuk: sesi !== null });
+  return NextResponse.json({
+    masuk: sesi !== null,
+    uid: sesi ? sesi.uid : null,
+  });
 }
 
 export async function DELETE() {
