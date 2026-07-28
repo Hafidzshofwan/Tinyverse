@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@google/genai": "^2.13.0",
+    "@tinyverse/billing": "workspace:*",
     "@tinyverse/clinical-core": "workspace:*",
     "@tinyverse/data-access": "workspace:*",
     "@tinyverse/ui-kit": "workspace:*",

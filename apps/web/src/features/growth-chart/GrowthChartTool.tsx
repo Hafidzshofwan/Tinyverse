@@ -560,7 +560,7 @@ export function GrowthChartTool() {
 
   return (
     <div className="tk-island-wrap">
-      <div className="judul-section">
+      <div className="judul-section" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
         <div
           className="ikon-bulat"
           style={{
@@ -572,13 +572,36 @@ export function GrowthChartTool() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            flexShrink: 0,
           }}
         >
           <IkonJudulTumbuhKembang />
         </div>
         <div>
-          <h2>Tumbuh Kembang</h2>
-          <p>Kurva pertumbuhan WHO &amp; CDC</p>
+          <h2
+            style={{
+              margin: 0,
+              fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
+              fontSize: "18.32px",
+              fontWeight: 700,
+              color: "var(--tv-navy, #0a0b5f)",
+              lineHeight: 1.25,
+            }}
+          >
+            Tumbuh Kembang
+          </h2>
+          <p
+            style={{
+              margin: 0,
+              fontFamily: "Quicksand, system-ui, sans-serif",
+              fontSize: "10.24px",
+              fontWeight: 600,
+              color: "var(--tv-soft-teks, rgba(10, 11, 95, 0.62))",
+              lineHeight: 1.4,
+            }}
+          >
+            Kurva pertumbuhan WHO &amp; CDC
+          </p>
         </div>
       </div>
 

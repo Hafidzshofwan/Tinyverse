@@ -202,7 +202,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
                 fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
                 fontSize: "18.32px",
                 fontWeight: 700,
-                color: "#0A0B5F",
+                color: "var(--tv-navy, #0A0B5F)",
                 lineHeight: 1.25,
               }}
             >
@@ -214,7 +214,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
                 fontFamily: "Quicksand, system-ui, sans-serif",
                 fontSize: "10.24px",
                 fontWeight: 600,
-                color: "#0A0B5F9E",
+                color: "var(--tv-soft-teks, rgba(10, 11, 95, 0.62))",
                 lineHeight: 1.4,
               }}
             >

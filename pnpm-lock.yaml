@@ -66,6 +66,9 @@ importers:
       '@google/genai':
         specifier: ^2.13.0
         version: 2.13.0
+      '@tinyverse/billing':
+        specifier: workspace:*
+        version: link:../../packages/billing
       '@tinyverse/clinical-core':
         specifier: workspace:*
         version: link:../../packages/clinical-core

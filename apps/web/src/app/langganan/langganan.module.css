@@ -1,0 +1,68 @@
+.wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+
+.judul {
+  font-size: 1.6rem;
+  margin: 0 0 4px;
+}
+
+.sub {
+  margin: 0 0 24px;
+  opacity: 0.75;
+}
+
+.kartu {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.baris {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 0;
+}
+
+.label {
+  opacity: 0.7;
+}
+
+.nilai {
+  font-weight: 600;
+  text-align: right;
+}
+
+.lencana {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.aktif {
+  background: #e8f7e4;
+  color: #2f6b1d;
+}
+
+.belum {
+  background: #eef1f4;
+  color: #4a5560;
+}
+
+.kedaluwarsa {
+  background: #fdeded;
+  color: #922b21;
+}
+
+.catatan {
+  font-size: 0.9rem;
+  opacity: 0.7;
+  line-height: 1.6;
+}
