@@ -14,7 +14,7 @@ export function NutritionPanel() {
             </svg>
           </div>
           <div>
-            <h2 style={{ fontSize: "18.32px" }}>Kalkulator Nutrisi</h2>
+            <h2 style={{ fontSize: "19.48px" }}>Kalkulator Nutrisi</h2>
             <p style={{ fontSize: "10.24px" }}>Kebutuhan kalori &amp; protein dan takaran susu formula.</p>
           </div>
         </div>

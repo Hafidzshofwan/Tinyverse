@@ -75,7 +75,7 @@ export function GuidelineTool() {
 
         .guideline-judul-section h2 {
           font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif;
-          font-size: 18.32px !important;
+          font-size: 19.48px !important;
           font-weight: 800;
           color: var(--tv-teks, #1E1B4B);
           margin: 0;
@@ -87,9 +87,9 @@ export function GuidelineTool() {
         }
 
         .guideline-judul-section p {
-          margin: 3px 0 0 0;
+          margin: 0 !important;
           color: var(--tv-soft-teks, #64748B);
-          font-size: 13px;
+          font-size: 10.24px !important;
           font-weight: 600;
         }
 
