@@ -262,7 +262,7 @@ export function DosisToolNative() {
           <div className="dosis-obat-terpilih-box">
             <div className="dosis-obat-terpilih-info">
               <span className="dosis-obat-terpilih-icon">
-                <MedicineCardIcon jenis={obatTerpilih.jenis} size={28} />
+                <MedicineCardIcon jenis={obatTerpilih.jenis} size={22} />
               </span>
               <div className="dosis-obat-terpilih-teks">
                 <h4>{obatTerpilih.nama}</h4>

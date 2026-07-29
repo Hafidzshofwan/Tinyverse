@@ -9,7 +9,7 @@
   --teks-lembut: #64748B;
   --biru: #3B82F6;
   --biru-tua: #0A0B5F;
-  --pink-grad-start: #EC99;
+  --pink-grad-start: #EC4899;
   --pink-grad-end: #D946EF;
 
   font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -352,44 +352,46 @@
   justify-content: space-between;
   background-color: #F8FAFC;
   border: 1.5px solid #E2E8F0;
-  border-radius: 20px;
-  padding: 16px 20px;
-  margin-bottom: 24px;
-  gap: 12px;
+  border-radius: 14px;
+  padding: 10px 16px;
+  margin-bottom: 18px;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
 .dosis-obat-terpilih-info {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
 }
 
 .dosis-obat-terpilih-icon {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
 }
 
 .dosis-obat-terpilih-teks h4 {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   margin: 0;
   color: #0A0B5F;
 }
 
 .dosis-obat-terpilih-teks p {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #64748B;
-  margin: 2px 0 0;
+  margin: 1px 0 0;
   font-weight: 600;
 }
 
 .dosis-btn-ganti {
-  padding: 8px 16px;
+  padding: 5px 12px;
   background-color: #ffffff;
   border: 1.5px solid #CBD5E1;
   color: #0F172A;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.2s ease;
