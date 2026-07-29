@@ -34,11 +34,11 @@ export function formatRentangDosis(
     return "Sesuai aturan dosis";
   }
   const fmt = (v: number) =>
-    Number(v).toLocaleString("id-ID", { maximumFractionDigits: 1 });
+    Number(v).toLocaleString("id-ID", { maximumFractionDigits: 2 });
   if (min === max) {
     return `${fmt(min)} ${unit}`.trim();
   }
-  return `${fmt(min)} - ${fmt(max)} ${unit}`.trim();
+  return `${fmt(min)}–${fmt(max)} ${unit}`.trim();
 }
 
 export function keteranganDosisAcuan(
@@ -140,55 +140,62 @@ export function hitungDosisInti(
   let band: AgeBand | null = null;
 
   const sediaanAktif: SediaanOption | null = pilihSediaanAktif(obat, sediaanIndexInput);
-  let sedMgFinal: number | undefined = sediaanAktif?.sediaanMg ?? obat.sediaanMg;
-  let sedMlFinal: number | undefined = sediaanAktif?.sediaanMl ?? obat.sediaanMl;
+  // Bila sebuah sediaan dipilih, pakai HANYA nilai milik sediaan tersebut.
+  // Memakai "??" membuat opsi tablet mewarisi mL sirup sehingga volume salah dihitung.
+  let sedMgFinal: number | undefined = sediaanAktif
+    ? sediaanAktif.sediaanMg
+    : obat.sediaanMg;
+  let sedMlFinal: number | undefined = sediaanAktif
+    ? sediaanAktif.sediaanMl
+    : obat.sediaanMl;
   let sedKekuatanMgFinal: number | undefined = sediaanAktif?.kekuatanMg;
   let sedBentukFinal: string | null = sediaanAktif?.bentuk || null;
   let sediaanLabelFinal: string | null = sediaanAktif?.label || null;
 
-  let doseBasisFinal = obat.doseBasis || "perDose";
-  let dosesPerDayFinal = obat.dosesPerDay || null;
+  let doseBasisFinal =
+    obat.doseBasis ||
+    (String(obat.unitLabel || "").toLowerCase().includes("/hari")
+      ? "perDay"
+      : "perDose");
+  let dosesPerDayFinal = obat.dosesPerDay || obat.maxDosesPerDay || null;
 
   const batasHarianMg = (): number | null => {
-    if (obat.dosisMaksimalHarianMg) return obat.dosisMaksimalHarianMg;
-    if (band && band.dosisMaksimalHarianMg) return band.dosisMaksimalHarianMg;
-    if (obat.dosisMaksimalHarianPerKg && beratBadan) return obat.dosisMaksimalHarianPerKg * beratBadan;
-    return null;
+    // Semua batas yang berlaku dikumpulkan, lalu diambil yang TERKECIL.
+    const batas: number[] = [];
+    if (obat.dosisMaksimalHarianMg) batas.push(obat.dosisMaksimalHarianMg);
+    if (obat.dosisMaksimalHarianPerKg && isFinite(beratBadan as number))
+      batas.push(obat.dosisMaksimalHarianPerKg * (beratBadan as number));
+    if (band && band.dosisMaksimalHarianMg) batas.push(band.dosisMaksimalHarianMg);
+    return batas.length ? Math.min(...batas) : null;
   };
 
   const batasTunggalMg = (): number | null => {
-    if (obat.dosisMaksimalTunggalMg) return obat.dosisMaksimalTunggalMg;
-    if (band && band.dosisMaksimalTunggalMg) return band.dosisMaksimalTunggalMg;
-    return null;
+    // Batas milik kelompok usia (band) diutamakan di atas batas umum obat.
+    return (
+      (band && band.dosisMaksimalTunggalMg) || obat.dosisMaksimalTunggalMg || null
+    );
   };
 
   const batasiDosisTunggal = () => {
-    const maxMg = batasTunggalMg();
-    if (maxMg && dosisMaxMg !== null) {
-      if (dosisMaxMg > maxMg) {
-        peringatan.push(
-          `Dosis telah dibatasi ke maksimum per kali pemberian yang direkomendasikan (${maxMg} ${obat.satuanDosis || "mg"}).`
-        );
-        dosisMaxMg = maxMg;
-      }
-      if (dosisMinMg !== null && dosisMinMg > dosisMaxMg) {
-        dosisMinMg = dosisMaxMg;
-      }
+    const maxSingle = batasTunggalMg();
+    if (maxSingle && dosisMaxMg !== null && dosisMaxMg > maxSingle) {
+      peringatan.push(
+        `Hasil perhitungan (${dosisMaxMg.toFixed(1)} ${obat.satuanDosis || "mg"}) melebihi dosis maksimal per kali (${maxSingle} ${obat.satuanDosis || "mg"}), sehingga nilai atas dibatasi.`
+      );
+      dosisMaxMg = maxSingle;
+      if (dosisMinMg !== null && dosisMinMg > dosisMaxMg) dosisMinMg = dosisMaxMg;
     }
   };
 
   const batasiDosisHarian = () => {
     const maxDaily = batasHarianMg();
-    if (maxDaily && dosisHarianMaxMg !== null) {
-      if (dosisHarianMaxMg > maxDaily) {
-        peringatan.push(
-          `Total dosis harian telah dibatasi ke maksimum harian yang direkomendasikan (${maxDaily} ${obat.satuanDosis || "mg"}/hari).`
-        );
-        dosisHarianMaxMg = maxDaily;
-      }
-      if (dosisHarianMinMg !== null && dosisHarianMinMg > dosisHarianMaxMg) {
+    if (maxDaily && dosisHarianMaxMg !== null && dosisHarianMaxMg > maxDaily) {
+      peringatan.push(
+        `Total dosis harian hasil perhitungan (${dosisHarianMaxMg.toFixed(1)} ${obat.satuanDosis || "mg"}/hari) melebihi batas harian (${maxDaily.toFixed(1)} ${obat.satuanDosis || "mg"}/hari), sehingga nilai atas dibatasi.`
+      );
+      dosisHarianMaxMg = maxDaily;
+      if (dosisHarianMinMg !== null && dosisHarianMinMg > dosisHarianMaxMg)
         dosisHarianMinMg = dosisHarianMaxMg;
-      }
     }
   };
 
