@@ -1,0 +1,40 @@
+# Menyeragamkan akhir baris di seluruh repo.
+#
+# WHY: sebelum berkas ini ada, repo bercampur CRLF dan LF, bahkan di dalam satu
+# folder yang sama (apps/web/src/app/preview/layout.tsx CRLF, sementara
+# apps/web/src/widgets/app-shell/AppShell.tsx LF). Akibatnya git status kadang
+# melaporkan berkas berubah padahal tidak ada satu huruf pun yang disunting, dan
+# perbandingan versi menandai seluruh berkas berubah padahal hanya satu baris.
+# Pada proyek yang menyimpan angka kalibrasi kurva dan rumus dosis, kehilangan
+# kemampuan melihat perubahan yang sesungguhnya adalah kerugian nyata.
+#
+# Keputusan: LF di mana-mana, termasuk di komputer Windows. Editor modern
+# (VS Code, Notepad sejak Windows 10) menangani LF tanpa masalah.
+* text=auto eol=lf
+
+# Berkas biner: JANGAN pernah disentuh normalisasi.
+#
+# WHY: gambar kurva WHO dan CDC adalah berkas .jpg. Bila Git salah menganggapnya
+# teks lalu mengubah byte yang kebetulan mirip akhir baris, gambar kurva bisa
+# rusak dan titik pasien tergambar di atas latar yang salah. Baris-baris di bawah
+# menutup kemungkinan itu sepenuhnya.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.avif binary
+*.pdf binary
+*.zip binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary
+*.mp3 binary
+*.mp4 binary
+*.webm binary
+
+# Berkas yang wajib LF apa pun kondisinya, karena dijalankan sebagai skrip.
+*.sh text eol=lf
