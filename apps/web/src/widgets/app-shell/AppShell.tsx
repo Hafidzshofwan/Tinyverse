@@ -11,12 +11,21 @@ import { ThemeToggle } from "./ThemeToggle";
 import { PatientProfile } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
 import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
+import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
   children: ReactNode;
+  /**
+   * Pengingat masa langganan yang sudah dihitung di server oleh layout akar.
+   *
+   * Dititipkan, bukan diambil sendiri: komponen ini berjalan di browser dan
+   * tidak boleh menjadi sumber kebenaran kedua tentang siapa yang masih
+   * berlangganan. null berarti tidak ada yang perlu diingatkan.
+   */
+  pengingat?: Pengingat | null;
 }
 
 const STORAGE_KEY = "tv-sidebar-open";
@@ -58,15 +67,15 @@ const LABEL_BY_HREF: Record<string, string> = (() => {
   return m;
 })();
 
-export function AppShell({ children }: AppShellProps) {
+export function AppShell({ children, pengingat }: AppShellProps) {
   return (
     <AuthProvider>
-      <AppShellInner>{children}</AppShellInner>
+      <AppShellInner pengingat={pengingat}>{children}</AppShellInner>
     </AuthProvider>
   );
 }
 
-function AppShellInner({ children }: AppShellProps) {
+function AppShellInner({ children, pengingat }: AppShellProps) {
   const { status, catatRiwayat } = useAuth();
   const [open, setOpen] = useState(true);
   const pathname = usePathname();
@@ -199,7 +208,13 @@ function AppShellInner({ children }: AppShellProps) {
           <NavLinks groups={NAV_GROUPS} />
         </aside>
         <main className="tv-main">
-          <div className="tv-main-inner">{children}</div>
+          <div className="tv-main-inner">
+            {/* Pengingat langganan sengaja di dalam tv-main-inner, sejajar isi
+                halaman: ia ikut tergulung bersama konten dan tidak pernah
+                menutupi header maupun hasil perhitungan alat klinis. */}
+            {pengingat ? <SpandukLangganan pengingat={pengingat} /> : null}
+            {children}
+          </div>
         </main>
       </div>
       <footer className="tv-footer">
