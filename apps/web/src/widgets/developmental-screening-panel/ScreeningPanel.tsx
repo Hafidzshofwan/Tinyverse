@@ -113,7 +113,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
               style={{
                 margin: 0,
                 fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-                fontSize: "18.32px",
+                fontSize: "19.48px",
                 fontWeight: 700,
                 color: "var(--tv-navy, #0A0B5F)",
                 lineHeight: 1.25,

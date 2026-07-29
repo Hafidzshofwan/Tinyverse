@@ -200,7 +200,7 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
               style={{
                 margin: 0,
                 fontFamily: "Fredoka, Quicksand, system-ui, sans-serif",
-                fontSize: "18.32px",
+                fontSize: "19.48px",
                 fontWeight: 700,
                 color: "var(--tv-navy, #0A0B5F)",
                 lineHeight: 1.25,
@@ -765,23 +765,23 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
 
       {/* MODAL PRINT / LAPORAN PDF RUJUKAN */}
       {showReportModal && (
-        <div className="tv-report-modal-overlay" style={{ position: "fixed", inset: 0, zIndex: 9500, background: "rgba(15,23,42,0.5)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
-          <div className="tv-report-modal-card" style={{ borderRadius: 16, width: "100%", maxWidth: 680, maxHeight: "90vh", overflowY: "auto", padding: 24, boxShadow: "0 20px 40px rgba(0,0,0,0.18)", fontFamily: "Quicksand, system-ui, sans-serif" }}>
-            <div className="tv-report-modal-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E2E8F0", paddingBottom: 12, marginBottom: 16 }}>
+        <div style={{ position: "fixed", inset: 0, zIndex: 9500, background: "rgba(15,23,42,0.5)", backdropFilter: "blur(2px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 16 }}>
+          <div style={{ background: "#fff", borderRadius: 16, width: "100%", maxWidth: 680, maxHeight: "90vh", overflowY: "auto", padding: 24, boxShadow: "0 20px 40px rgba(0,0,0,0.18)", fontFamily: "Quicksand, system-ui, sans-serif" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid #E2E8F0", paddingBottom: 12, marginBottom: 16 }}>
               <div>
-                <h3 className="tv-report-modal-title" style={{ margin: 0, fontFamily: "Fredoka, sans-serif", fontSize: "1.15rem", fontWeight: 600 }}>
+                <h3 style={{ margin: 0, fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontSize: "1.15rem", fontWeight: 600 }}>
                   Laporan Pemantauan Pertumbuhan &amp; Evaluasi Gagal Tumbuh
                 </h3>
-                <span className="tv-report-modal-subtitle" style={{ fontSize: "0.74rem" }}>TINYVERSE CLINICAL PEDIATRIC REPORT</span>
+                <span style={{ fontSize: "0.74rem", color: "#64748B" }}>TINYVERSE CLINICAL PEDIATRIC REPORT</span>
               </div>
-              <button type="button" onClick={() => setShowReportModal(false)} className="tv-report-modal-close" style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer" }}>
+              <button type="button" onClick={() => setShowReportModal(false)} style={{ background: "transparent", border: "none", fontSize: "1.2rem", cursor: "pointer", color: "#64748B" }}>
                 ✕
               </button>
             </div>
 
             {/* Content Printable */}
-            <div id="printableReport" className="tv-report-modal-body" style={{ fontSize: "0.85rem", lineHeight: 1.5 }}>
-              <div className="tv-report-patient-info" style={{ borderRadius: 10, padding: 12, marginBottom: 14, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+            <div id="printableReport" style={{ color: "#1E293B", fontSize: "0.85rem", lineHeight: 1.5 }}>
+              <div style={{ background: "#F8FAFC", border: "1px solid #E2E8F0", borderRadius: 10, padding: 12, marginBottom: 14, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
                 <div><b>Nama Pasien:</b> {patientProfile.nama || "An. Tanpa Nama"}</div>
                 <div><b>No. RM / Bed:</b> {patientProfile.noRm || "-"}</div>
                 <div><b>Jenis Kelamin:</b> {gender === "female" ? "Perempuan" : "Laki-Laki"}</div>
@@ -789,22 +789,22 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
               </div>
 
               {/* Status Alert Header */}
-              <div className={`tv-report-status-card ${falteringResult.isFaltering ? "faltering" : "normal"}`} style={{ borderRadius: 10, padding: 12, marginBottom: 14 }}>
-                <div className="tv-report-status-title" style={{ fontWeight: 700, fontSize: "0.9rem", marginBottom: 4 }}>
+              <div style={{ background: falteringResult.isFaltering ? "#FEF2F2" : "#ECFDF5", border: `1px solid ${falteringResult.isFaltering ? "#FCA5A5" : "#A7F3D0"}`, borderRadius: 10, padding: 12, marginBottom: 14 }}>
+                <div style={{ fontWeight: 700, color: falteringResult.isFaltering ? "#991B1B" : "#065F46", fontSize: "0.9rem", marginBottom: 4 }}>
                   {falteringResult.isFaltering ? "TERDETEKSI INDIKASI GROWTH FALTERING (GAGAL TUMBUH)" : "STATUS PERTUMBUHAN SESUAI KURVA WHO (NORMAL)"}
                 </div>
-                <div className="tv-report-status-text">
+                <div style={{ color: falteringResult.isFaltering ? "#7F1D1D" : "#047857" }}>
                   {falteringResult.summaryText}
                 </div>
               </div>
 
               {/* Tabel Riwayat */}
-              <h4 className="tv-report-section-h4" style={{ margin: "14px 0 8px", fontFamily: "Fredoka, sans-serif", fontWeight: 600 }}>
+              <h4 style={{ margin: "14px 0 8px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontWeight: 600 }}>
                 Riwayat Pengukuran Antropometri:
               </h4>
-              <table className="tv-report-table" style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.8rem", marginBottom: 16 }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.8rem", marginBottom: 16 }}>
                 <thead>
-                  <tr className="tv-report-thead-tr">
+                  <tr style={{ background: "#F1F5F9", borderBottom: "1px solid #CBD5E1" }}>
                     <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Tanggal</th>
                     <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>Usia</th>
                     <th style={{ padding: 6, textAlign: "left", fontWeight: 700 }}>BB (kg)</th>
@@ -815,42 +815,40 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
                 </thead>
                 <tbody>
                   {records.map((r) => (
-                    <tr key={r.id} className="tv-report-tbody-tr">
+                    <tr key={r.id} style={{ borderBottom: "1px solid #E2E8F0" }}>
                       <td style={{ padding: 6 }}>{r.tanggal}</td>
                       <td style={{ padding: 6 }}>{r.usiaBulan} bln</td>
                       <td style={{ padding: 6, fontWeight: 700 }}>{r.bb} kg</td>
                       <td style={{ padding: 6 }}>{r.tb} cm</td>
                       <td style={{ padding: 6, fontWeight: 700 }}>{r.bbuZ} SD</td>
-                      <td className="tv-report-catatan" style={{ padding: 6 }}>{r.catatan || "-"}</td>
+                      <td style={{ padding: 6, color: "#64748B" }}>{r.catatan || "-"}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
 
-              <h4 className="tv-report-section-h4" style={{ margin: "12px 0 6px", fontFamily: "Fredoka, sans-serif", fontWeight: 600 }}>
+              <h4 style={{ margin: "12px 0 6px", fontFamily: "Fredoka, sans-serif", color: "#0A0B5F", fontWeight: 600 }}>
                 Rekomendasi Rujukan / Tatalaksana Nutrisi:
               </h4>
-              <ol className="tv-report-ol-recommendations" style={{ paddingLeft: 18, margin: 0 }}>
+              <ol style={{ paddingLeft: 18, margin: 0 }}>
                 {falteringResult.recommendations.map((rec, i) => (
                   <li key={i} style={{ marginBottom: 4 }}>{rec}</li>
                 ))}
               </ol>
             </div>
 
-            <div className="tv-report-modal-footer" style={{ display: "flex", gap: 10, marginTop: 20, paddingTop: 16 }}>
+            <div style={{ display: "flex", gap: 10, marginTop: 20, paddingTop: 16, borderTop: "1px solid #E2E8F0" }}>
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="tv-report-btn-print"
-                style={{ flex: 1, border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 700, cursor: "pointer", fontSize: "0.85rem" }}
+                style={{ flex: 1, background: "#0A0B5F", color: "#fff", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 700, cursor: "pointer", fontSize: "0.85rem" }}
               >
                 Cetak / Simpan ke PDF
               </button>
               <button
                 type="button"
                 onClick={() => setShowReportModal(false)}
-                className="tv-report-btn-close"
-                style={{ border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem" }}
+                style={{ background: "#F1F5F9", color: "#475569", border: "none", borderRadius: 8, padding: "10px 16px", fontWeight: 600, cursor: "pointer", fontSize: "0.85rem" }}
               >
                 Tutup
               </button>

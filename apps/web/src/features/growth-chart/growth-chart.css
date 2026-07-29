@@ -1262,7 +1262,7 @@
  * ------------------------------------------------------------------ */
 .tk-island-wrap{max-width:920px;margin:0 auto}
 /* TV: samakan ukuran header Tumbuh Kembang dengan Racik Puyer (judul 18.32px, subjudul 10.24px). Warna & font sudah sama. */
-.tk-island-wrap > .judul-section h2 { font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important; font-size: 18.32px !important; color: var(--tv-navy, #0a0b5f) !important; }
+.tk-island-wrap > .judul-section h2 { font-family: 'Fredoka', 'Quicksand', system-ui, sans-serif !important; font-size: 19.48px !important; color: var(--tv-navy, #0a0b5f) !important; }
 .tk-island-wrap > .judul-section p { font-family: 'Quicksand', system-ui, sans-serif !important; font-size: 10.24px !important; color: var(--tv-soft-teks, rgba(10, 11, 95, 0.62)) !important; }
 .tk-island-wrap > .judul-section .ikon-bulat,
 .tk-island-wrap > .judul-section .ikon-bulat,
