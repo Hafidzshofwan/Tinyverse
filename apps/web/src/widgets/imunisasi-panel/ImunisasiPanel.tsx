@@ -28,8 +28,8 @@ export function ImunisasiPanel() {
             </svg>
           </div>
           <div>
-            <h2 style={{ fontSize: "18.32px", fontWeight: 800, margin: 0, color: "#0A0B5F" }}>Jadwal Imunisasi Anak</h2>
-            <p style={{ fontSize: "10.24px", margin: "2px 0 0 0", color: "rgba(10, 11, 95, 0.62)" }}>
+            <h2 style={{ fontSize: "19.48px", fontWeight: 800, margin: 0, color: "#0A0B5F" }}>Jadwal Imunisasi Anak</h2>
+            <p style={{ fontSize: "10.24px", margin: 0, color: "rgba(10, 11, 95, 0.62)" }}>
               Rekomendasi IDAI 2024 — usia 0–18 tahun, lengkap dengan materi
               tiap vaksin.
             </p>

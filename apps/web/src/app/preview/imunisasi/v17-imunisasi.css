@@ -50,13 +50,13 @@
 .tv-page-imunisasi .judul-section h2 {
   margin: 0;
   font-family: "Fredoka", "Quicksand", sans-serif;
-  font-size: 18.32px !important;
+  font-size: 19.48px !important;
   font-weight: 800;
   letter-spacing: -0.035em;
   color: var(--etail-navy);
 }
 .tv-page-imunisasi .judul-section p {
-  margin: 2px 0 0;
+  margin: 0 !important;
   font-size: 10.24px !important;
   font-weight: 600;
   color: rgba(10, 11, 95, 0.62);
