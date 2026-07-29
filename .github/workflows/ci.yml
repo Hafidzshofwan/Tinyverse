@@ -1,0 +1,59 @@
+name: Pemeriksaan
+
+# Berjalan otomatis setiap kali ada push ke main, dan bisa juga dijalankan
+# manual dari tab Actions lewat tombol "Run workflow".
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  periksa:
+    name: typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    # Nilai-nilai di bawah SENGAJA palsu. Tugasnya hanya membuat pnpm build
+    # tidak berhenti karena variabel lingkungan kosong. Tidak ada satu pun
+    # kunci sungguhan di berkas ini, dan tidak boleh pernah ada.
+    env:
+      FIREBASE_PROJECT_ID: contoh-ci
+      FIREBASE_CLIENT_EMAIL: ci@contoh-ci.iam.gserviceaccount.com
+      FIREBASE_PRIVATE_KEY: '-----BEGIN PRIVATE KEY-----\nQ09OVE9IIFVOVFVLIENJIFNBSkE=\n-----END PRIVATE KEY-----\n'
+      NEXT_PUBLIC_FIREBASE_API_KEY: contoh-api-key-ci
+      NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: contoh-ci.firebaseapp.com
+      NEXT_PUBLIC_FIREBASE_PROJECT_ID: contoh-ci
+      NEXT_PUBLIC_FIREBASE_APP_ID: 1:000000000000:web:0000000000000000000000
+      MIDTRANS_MODE: sandbox
+      MIDTRANS_SERVER_KEY: SB-Mid-server-CONTOH-UNTUK-CI
+      MIDTRANS_CLIENT_KEY: SB-Mid-client-CONTOH-UNTUK-CI
+      APP_BASE_URL: http://localhost:3000
+      CRON_SECRET: contoh-cron-secret-ci
+
+    steps:
+      - name: Ambil kode
+        uses: actions/checkout@v4
+
+      - name: Siapkan pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.7.0
+
+      - name: Siapkan Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Pasang dependensi
+        run: pnpm install --frozen-lockfile
+
+      - name: Periksa tipe
+        run: pnpm typecheck
+
+      - name: Jalankan uji
+        run: pnpm test
+
+      - name: Bangun aplikasi
+        run: pnpm build
