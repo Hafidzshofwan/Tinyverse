@@ -140,24 +140,25 @@ export const WARNA_JENIS_OBAT: Record<string, string> = {
   "Lainnya": "#9AA4B0"
 };
 
-const WARNA_DEFAULT = "#9AA4B0"; // fallback terakhir, sama dgn warna "Lainnya"
-
 export function warnaJenis(jenis?: string): string {
-  if (!jenis) return WARNA_JENIS_OBAT["Lainnya"] ?? WARNA_DEFAULT;
-  return WARNA_JENIS_OBAT[jenis] ?? WARNA_JENIS_OBAT["Lainnya"] ?? WARNA_DEFAULT;
+  if (!jenis) return WARNA_JENIS_OBAT["Lainnya"];
+  return WARNA_JENIS_OBAT[jenis] || WARNA_JENIS_OBAT["Lainnya"];
 }
 
 export function kategoriTagStyle(jenis?: string): { bg: string; color: string } {
   if (!jenis) return { bg: "#F1F5F9", color: "#475569" };
   const lower = jenis.toLowerCase();
-  if (lower.includes("anthelmintik") || lower.includes("tuberkulosis")) {
-    return { bg: "#FEF3C7", color: "#B45309" };
+  if (lower.includes("anthelmintik")) {
+    return { bg: "#F7EFE5", color: "#8C6A4B" };
   }
-  if (lower.includes("mukolitik") || lower.includes("bronkodilator")) {
+  if (lower.includes("tuberkulosis")) {
+    return { bg: "#FDF4E7", color: "#9A3412" };
+  }
+  if (lower.includes("mukolitik") || lower.includes("bronkodilator") || lower.includes("ekspektoran")) {
     return { bg: "#E0F2FE", color: "#0284C7" };
   }
   if (lower.includes("antibiotik")) {
-    return { bg: "#DCFCE7", color: "#15803D" };
+    return { bg: "#DCFCE7", color: "#16A34A" };
   }
   if (lower.includes("vitamin") || lower.includes("suplemen")) {
     return { bg: "#FEF9C3", color: "#A16207" };
@@ -172,7 +173,7 @@ export function kategoriTagStyle(jenis?: string): { bg: string; color: string } 
     return { bg: "#CFFAFE", color: "#0891B2" };
   }
   if (lower.includes("kortikosteroid")) {
-    return { bg: "#FFEDD5", color: "#EA580C" };
+    return { bg: "#FEF3C7", color: "#D97706" };
   }
   if (lower.includes("antijamur")) {
     return { bg: "#CCFBF1", color: "#0D9488" };

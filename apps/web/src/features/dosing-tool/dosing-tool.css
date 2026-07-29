@@ -1,6 +1,6 @@
 /* Style sheet untuk Kalkulator Dosis Obat (Native Next.js) */
 
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700;800&display=swap');
 
 .dosis-container {
   --putih: #ffffff;
@@ -92,16 +92,18 @@
 }
 
 .dosis-judul-teks h2 {
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-family: 'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 19.48px;
+  font-weight: 700;
   margin: 0;
-  color: #0F172A;
+  color: #0A0B5F;
   letter-spacing: -0.01em;
 }
 
 .dosis-judul-teks p {
-  font-size: 0.85rem;
-  color: #64748B;
+  font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 10.24px;
+  color: #0A0B5F9E;
   margin: 2px 0 0;
   font-weight: 600;
 }
@@ -196,26 +198,26 @@
   position: relative;
   background-color: #ffffff;
   border: 1.5px solid #E2E8F0;
-  border-radius: 22px;
-  padding: 18px 18px 16px 18px;
+  border-radius: 24px;
+  padding: 20px 20px 18px 20px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
 }
 
 .dosis-card:hover {
   transform: translateY(-3px);
   border-color: #CBD5E1;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
 .dosis-card.terpilih {
-  border-color: #6366F1;
-  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.15);
-  background: #FFFFFF;
+  border: 1.5px solid #818CF8;
+  box-shadow: 0 10px 30px -5px rgba(99, 102, 241, 0.16), 0 4px 12px rgba(0, 0, 0, 0.03);
+  background-color: #ffffff;
 }
 
 .dosis-card-top-strip {
@@ -223,28 +225,29 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  border-radius: 22px 22px 0 0;
-  background: linear-gradient(90deg, #312E81 0%, #D946EF 100%);
+  height: 5px;
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(90deg, #0A0B5F 0%, #3B82F6 40%, #D946EF 100%);
+  z-index: 5;
 }
 
 .dosis-card-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   position: relative;
   z-index: 2;
 }
 
 /* Category Tag Pill */
 .dosis-jenis-tag {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 800;
-  padding: 5px 12px;
+  padding: 5px 13px;
   border-radius: 9999px;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   line-height: 1.2;
   display: inline-block;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
@@ -253,38 +256,26 @@
 /* Top Right Soft Circle Glow Backdrop & Solid Toggle Dot */
 .dosis-card-glow-bg {
   position: absolute;
-  top: -16px;
-  right: -16px;
-  width: 76px;
-  height: 76px;
-  border-radius: 50%;
-  background: #FCE7F3;
-  opacity: 0.85;
+  top: 0;
+  right: 0;
+  width: 95px;
+  height: 95px;
+  border-radius: 0 24px 0 100%;
+  background: radial-gradient(circle at top right, #F5E8F8 0%, #FAF0FA 65%, transparent 100%);
   pointer-events: none;
   z-index: 1;
 }
 
-.dosis-card-centang {
-  display: none;
+.dosis-card-toggle-dot {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 16px;
+  right: 16px;
   width: 22px;
   height: 22px;
   background-color: #0A0B5F;
-  color: #ffffff;
   border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 800;
-  flex-shrink: 0;
   z-index: 3;
-  box-shadow: 0 2px 6px rgba(10, 11, 95, 0.3);
-}
-
-.dosis-card.terpilih .dosis-card-centang {
-  display: flex;
+  box-shadow: 0 2px 8px rgba(10, 11, 95, 0.35);
 }
 
 .dosis-card-body {
@@ -296,12 +287,13 @@
 }
 
 .dosis-card-title-text {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #0F172A;
-  margin-bottom: 4px;
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  font-family: 'Fredoka', 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #0A0B5F;
+  margin-bottom: 5px;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
 }
 
 .dosis-card-subtitle {
