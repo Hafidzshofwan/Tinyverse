@@ -13,6 +13,7 @@ import {
 } from "./dosisData";
 import { hitungDosisInti, HasilPerhitungan, keteranganDosisAcuan } from "./hitungDosis";
 import { usePatientProfile } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   RakObatHeaderIcon,
   KalkulatorHeaderIcon,
@@ -34,6 +35,7 @@ export function DosisToolNative() {
   const [inputAlergi, setInputAlergi] = useState<string>("");
 
   const [hasil, setHasil] = useState<HasilPerhitungan | null>(null);
+  const [ditambahkan, setDitambahkan] = useState<boolean>(false);
 
   const libraryRef = useRef<HTMLDivElement>(null);
   const kalkulatorRef = useRef<HTMLDivElement>(null);
@@ -86,6 +88,7 @@ export function DosisToolNative() {
     setObatTerpilihId(id);
     setSediaanIndex(0);
     setHasil(null);
+    setDitambahkan(false);
 
     // Smooth scroll to kalkulator
     if (kalkulatorRef.current) {
@@ -103,6 +106,103 @@ export function DosisToolNative() {
     if (!obatTerpilih) return;
     const res = hitungDosisInti(obatTerpilih, beratBadan, usiaBulan, sediaanIndex);
     setHasil(res);
+    setDitambahkan(false);
+  };
+
+  const handleTambahRingkasan = () => {
+    if (!obatTerpilih || !hasil) return;
+
+    const lines: string[] = [];
+    lines.push(`Obat: ${obatTerpilih.nama}${obatTerpilih.varian ? ` — ${obatTerpilih.varian}` : ""}`);
+    lines.push(
+      `Pasien: ${
+        obatTerpilih.doseType === "byAge"
+          ? `Usia ${hasil.usiaBulan} bulan`
+          : obatTerpilih.doseType === "ageBands" && hasil.band
+          ? `Usia ${hasil.usiaBulan} bulan (${hasil.band.labelUsia || ""}) ${hasil.band.tipe === "perKg" ? `; BB ${hasil.beratBadan} kg` : ""}`
+          : `BB ${hasil.beratBadan} kg`
+      }`
+    );
+    lines.push(`Acuan Dosis: ${keteranganDosisAcuan(obatTerpilih, hasil)}`);
+    if (hasil.sediaanLabelFinal || obatTerpilih.sediaanCustomText) {
+      lines.push(`Sediaan: ${hasil.sediaanLabelFinal || obatTerpilih.sediaanCustomText}`);
+    }
+
+    if (hasil.dosisMinMg !== null && hasil.dosisMinMg !== undefined) {
+      const isRange =
+        hasil.dosisMaxMg !== null &&
+        hasil.dosisMaxMg !== undefined &&
+        hasil.dosisMaxMg !== hasil.dosisMinMg;
+      const unit = obatTerpilih.satuanDosis || "mg";
+      lines.push(
+        `Dosis Per Pemberian: ${hasil.dosisMinMg.toFixed(1)}${
+          isRange ? ` - ${hasil.dosisMaxMg?.toFixed(1)}` : ""
+        } ${unit}`
+      );
+    }
+
+    if (
+      hasil.dosisMinMl !== null &&
+      hasil.dosisMinMl !== undefined &&
+      hasil.dosisMinMl > 0
+    ) {
+      const isRange =
+        hasil.dosisMaxMl !== null &&
+        hasil.dosisMaxMl !== undefined &&
+        hasil.dosisMaxMl !== hasil.dosisMinMl;
+      lines.push(
+        `Takaran Volume: ${hasil.dosisMinMl.toFixed(1)}${
+          isRange ? ` - ${hasil.dosisMaxMl?.toFixed(1)}` : ""
+        } mL (${hasil.sedBentukFinal || "sirup"})`
+      );
+    } else if (
+      hasil.dosisMinTablet !== null &&
+      hasil.dosisMinTablet !== undefined &&
+      obatTerpilih.doseType !== "perKgVolume"
+    ) {
+      const isRange =
+        hasil.dosisMaxTablet !== null &&
+        hasil.dosisMaxTablet !== undefined &&
+        hasil.dosisMaxTablet !== hasil.dosisMinTablet;
+      lines.push(
+        `Takaran Tablet: ${hasil.dosisMinTablet.toFixed(1)}${
+          isRange ? ` - ${hasil.dosisMaxTablet?.toFixed(1)}` : ""
+        } ${hasil.sedBentukFinal || "tablet"}`
+      );
+    }
+
+    if (hasil.doseBasisFinal === "perDay" && hasil.dosisHarianMinMg !== null) {
+      lines.push(
+        `Total Dosis Harian: ${hasil.dosisHarianMinMg.toFixed(1)}${
+          hasil.dosisHarianMaxMg
+            ? ` - ${hasil.dosisHarianMaxMg.toFixed(1)}`
+            : ""
+        } ${obatTerpilih.satuanDosis || "mg"}/hari`
+      );
+    }
+
+    const frek =
+      hasil.band?.frekuensi ||
+      obatTerpilih.frekuensi ||
+      "Sesuai aturan pakai";
+    lines.push(`Frekuensi: ${frek}`);
+
+    if (hasil.peringatan && hasil.peringatan.length > 0) {
+      lines.push(`Peringatan: ${hasil.peringatan.join("; ")}`);
+    }
+
+    if (obatTerpilih.catatan) {
+      lines.push(`Catatan: ${obatTerpilih.catatan}`);
+    }
+
+    addRingkasanItem({
+      title: `Dosis ${obatTerpilih.nama}`,
+      source: "Dosis Obat",
+      body: lines.join("\n"),
+    });
+
+    setDitambahkan(true);
+    setTimeout(() => setDitambahkan(false), 2200);
   };
 
   // Check if sediaan options exist for selected drug
@@ -510,6 +610,17 @@ export function DosisToolNative() {
                       <strong>Catatan:</strong> {obatTerpilih.catatan}
                     </div>
                   )}
+
+                  {/* Tambahkan ke Ringkasan Button */}
+                  <div style={{ marginTop: "16px" }}>
+                    <button
+                      type="button"
+                      className="dosis-btn-ringkasan"
+                      onClick={handleTambahRingkasan}
+                    >
+                      {ditambahkan ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>

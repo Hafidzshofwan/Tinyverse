@@ -1769,3 +1769,43 @@ html.dark .tk-island-wrap .tk-cdc-status span {
   filter: brightness(1.3) contrast(1.1);
 }
 
+/* Button Tambahkan ke Ringkasan */
+.tk-island-wrap .tk-btn-ringkasan {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0A0B5F 0%, #1A1C8A 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.25);
+  transition: all 0.2s ease;
+}
+
+.tk-island-wrap .tk-btn-ringkasan:hover {
+  background: linear-gradient(135deg, #131580 0%, #2528B0 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.35);
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-btn-ringkasan,
+html.dark .tk-island-wrap .tk-btn-ringkasan {
+  background: linear-gradient(135deg, #0A0B5F 0%, #1E2298 100%) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.45) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-btn-ringkasan:hover,
+html.dark .tk-island-wrap .tk-btn-ringkasan:hover {
+  background: linear-gradient(135deg, #131580 0%, #2A2EC8 100%) !important;
+  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.6) !important;
+}
+
+

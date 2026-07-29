@@ -19,6 +19,7 @@ import {
   tkInterpretasiZscore,
 } from "./interpretasi";
 import { hitungIMT } from "./zscore";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   IkonBmi,
   IkonBook,
@@ -74,6 +75,7 @@ interface HasilPlot {
   adaChartHilang?: boolean;
   belumKalibrasi?: string[];
   interpretasi?: ReactNode[];
+  zTextSummary?: string[];
 }
 
 interface PasienAktif {
@@ -365,6 +367,7 @@ export function GrowthChartTool() {
     const baris: HasilPlot["baris"] = [];
     const titikPerChart: Record<string, TitikTergambar[]> = {};
     const interpretasi: ReactNode[] = [];
+    const zTextSummary: string[] = [];
     const belumKalibrasi: string[] = [];
     let adaLuarBatas = false;
     let adaChartHilang = false;
@@ -405,6 +408,9 @@ export function GrowthChartTool() {
             cdcSudah.add(key);
             const cdcInterp = tkInterpretasiCdcPercentile(kelamin, s.zKey, nilaiX, nilai);
             if (cdcInterp) {
+              zTextSummary.push(
+                `${cdcInterp.judul}: ${cdcInterp.pctMedian.toFixed(1)}% (${cdcInterp.judul === "TB/U CDC" ? "TB P50" : "BB P50"}: ${cdcInterp.median.toFixed(1)} ${cdcInterp.unit}) — Status: ${cdcInterp.status}`
+              );
               interpretasi.push(
                 <div className="tk-cdc-block" key={`cdc-${c.id}-${s.key}`}>
                   <div className="tk-cdc-row">
@@ -435,6 +441,9 @@ export function GrowthChartTool() {
           const z = tkInterpretasiZscore(standar, kelamin, s.zKey, c.zAge, nilaiX, nilai);
           if (z) {
             const zSign = z.z >= 0 ? "+" : "";
+            zTextSummary.push(
+              `${s.yLabel}: Z-score ${zSign}${z.z} (${z.rentang || z.zonaLabel})${z.statusGizi ? ` — Status: ${z.statusGizi}` : ""}`
+            );
             interpretasi.push(
               <div className="tk-zscore-block" key={`z-${c.id}-${s.key}`}>
                 <div className="tk-zscore-row">
@@ -466,6 +475,7 @@ export function GrowthChartTool() {
     if (standar === "cdc" && isFinite(berat) && isFinite(tinggi)) {
       const bbtb = tkInterpretasiCdcBbtb(kelamin, berat, tinggi);
       if (bbtb) {
+        zTextSummary.push(`BB/TB CDC: ${bbtb.pct.toFixed(1)}% (BB ideal: ${bbtb.standar.toFixed(1)} kg) — Status: ${bbtb.status}`);
         interpretasi.push(
           <div className="tk-cdc-block" key="cdc-bbtb">
             <div className="tk-cdc-row">
@@ -503,7 +513,9 @@ export function GrowthChartTool() {
       adaChartHilang,
       belumKalibrasi,
       interpretasi,
+      zTextSummary,
     });
+    setDitambahkanPlot(false);
   }
 
   /* ---------------- MPH ---------------- */
@@ -511,16 +523,25 @@ export function GrowthChartTool() {
   const [mphAyah, setMphAyah] = useState("");
   const [mphIbu, setMphIbu] = useState("");
   const [mphHasil, setMphHasil] = useState<ReactNode>(null);
+  const [mphData, setMphData] = useState<{ mph: number; lo: number; hi: number; kelamin: Kelamin; ayah: number; ibu: number } | null>(null);
+
+  const [ditambahkanPlot, setDitambahkanPlot] = useState(false);
+  const [ditambahkanMph, setDitambahkanMph] = useState(false);
 
   function klikHitungMph() {
     const a = num(mphAyah);
     const i = num(mphIbu);
     if (a == null || i == null) {
       setMphHasil(<div className="dx-res dx-neutral">Isi tinggi ayah &amp; ibu.</div>);
+      setMphData(null);
       return;
     }
     const r = hitungMPH(a, i, mphKelamin);
     if (!r) return;
+
+    setMphData({ mph: r.mph, lo: r.lo, hi: r.hi, kelamin: mphKelamin, ayah: a, ibu: i });
+    setDitambahkanMph(false);
+
     setMphHasil(
       <div className="dx-res dx-ok">
         <b>MPH ≈ {f(r.mph, 1)} cm</b> ({mphKelamin === "female" ? "perempuan" : "laki-laki"})
@@ -538,6 +559,51 @@ export function GrowthChartTool() {
       </div>,
     );
   }
+
+  const handleTambahPlotRingkasan = () => {
+    if (!hasil || !indikator) return;
+
+    const lines: string[] = [];
+    const stdLabel = standar ? GROWTH_CHART_CONFIG[standar]?.label || standar.toUpperCase() : "Kurva Pertumbuhan";
+    const kelLabel = kelamin === "female" ? "Perempuan" : "Laki-laki";
+
+    lines.push(`Standar Kurva: ${stdLabel} (${kelLabel})`);
+    lines.push(`Indikator: ${indikator.label}`);
+    lines.push(`${indikator.xLabel}: ${hasil.nilaiX} ${indikator.xUnit}`);
+
+    if (hasil.baris?.length) {
+      hasil.baris.forEach((b) => {
+        lines.push(`${b.yLabel}: ${b.nilai} ${b.yUnit}`);
+      });
+    }
+
+    if (hasil.zTextSummary?.length) {
+      lines.push("--- Evaluasi & Z-Score ---");
+      hasil.zTextSummary.forEach((t) => lines.push(t));
+    }
+
+    addRingkasanItem({
+      title: `Plotting ${stdLabel} — ${indikator.label}`,
+      source: "Tumbuh Kembang",
+      body: lines.join("\n"),
+    });
+
+    setDitambahkanPlot(true);
+    setTimeout(() => setDitambahkanPlot(false), 2200);
+  };
+
+  const handleTambahMphRingkasan = () => {
+    if (!mphData) return;
+    const genderLabel = mphData.kelamin === "female" ? "Perempuan" : "Laki-laki";
+    addRingkasanItem({
+      title: "Prediksi Tinggi Dewasa (MPH)",
+      source: "Tumbuh Kembang",
+      body: `Tinggi Ayah: ${mphData.ayah} cm\nTinggi Ibu: ${mphData.ibu} cm\nJenis Kelamin Anak: ${genderLabel}\nMid-Parental Height (MPH): ~${f(mphData.mph, 1)} cm\nRentang Target Genetik (MPH ± 8,5 cm): ${f(mphData.lo, 1)} – ${f(mphData.hi, 1)} cm`,
+    });
+
+    setDitambahkanMph(true);
+    setTimeout(() => setDitambahkanMph(false), 2200);
+  };
 
   /* ---------------- Render ---------------- */
 
@@ -947,6 +1013,17 @@ export function GrowthChartTool() {
                   </div>
                 ) : null}
                 {hasil.interpretasi}
+
+                {/* Tambahkan ke Ringkasan Button */}
+                <div style={{ marginTop: "16px" }}>
+                  <button
+                    type="button"
+                    className="tk-btn-ringkasan"
+                    onClick={handleTambahPlotRingkasan}
+                  >
+                    {ditambahkanPlot ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  </button>
+                </div>
               </>
             ) : null}
           </div>
@@ -1007,6 +1084,17 @@ export function GrowthChartTool() {
               <div className="dx-hasil" id="mphHasil">
                 {mphHasil}
               </div>
+              {mphData && (
+                <div style={{ marginTop: "12px" }}>
+                  <button
+                    type="button"
+                    className="tk-btn-ringkasan"
+                    onClick={handleTambahMphRingkasan}
+                  >
+                    {ditambahkanMph ? "✓ Ditambahkan ke Ringkasan!" : "📄 Tambahkan ke Ringkasan"}
+                  </button>
+                </div>
+              )}
             </div>
           </details>
 

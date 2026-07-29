@@ -12,6 +12,7 @@ import {
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
+import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { GenderAvatar } from "./PatientProfile";
 import { hitungIMT } from "./zscore";
 import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
@@ -130,6 +131,29 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
     navigator.clipboard.writeText(falteringResult.summaryText);
     setCopiedNote(true);
     setTimeout(() => setCopiedNote(false), 2000);
+  };
+
+  const [ditambahkanRingkasan, setDitambahkanRingkasan] = useState<boolean>(false);
+
+  const handleTambahRingkasan = () => {
+    const lines: string[] = [];
+    if (patientProfile.nama) lines.push(`Pasien: ${patientProfile.nama}`);
+    lines.push(`Evaluasi Pertumbuhan: ${falteringResult.summaryText}`);
+    if (falteringResult.alerts.length > 0) {
+      lines.push(`Peringatan: ${falteringResult.alerts.map((a) => `${a.title} (${a.details})`).join("; ")}`);
+    }
+    if (falteringResult.recommendations.length > 0) {
+      lines.push(`Rekomendasi: ${falteringResult.recommendations.join("; ")}`);
+    }
+
+    addRingkasanItem({
+      title: "Pemantauan Pertumbuhan Longitudinal",
+      source: "Tumbuh Kembang",
+      body: lines.join("\n"),
+    });
+
+    setDitambahkanRingkasan(true);
+    setTimeout(() => setDitambahkanRingkasan(false), 2200);
   };
 
   return (
@@ -329,6 +353,23 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             <button
               type="button"
+              onClick={handleTambahRingkasan}
+              style={{
+                background: "linear-gradient(135deg, #0A0B5F 0%, #1A1C8A 100%)",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: 6,
+                padding: "7px 12px",
+                fontSize: "0.78rem",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {ditambahkanRingkasan ? "✓ Ditambahkan!" : "📄 Tambahkan ke Ringkasan"}
+            </button>
+
+            <button
+              type="button"
               onClick={handleCopySummary}
               style={{
                 background: "#991B1B",
@@ -386,23 +427,43 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
             </div>
           </div>
 
-          <button
-            type="button"
-            onClick={() => setShowReportModal(true)}
-            style={{
-              background: "#059669",
-              color: "#FFFFFF",
-              border: "none",
-              borderRadius: 6,
-              padding: "6px 12px",
-              fontSize: "0.76rem",
-              fontWeight: 700,
-              cursor: "pointer",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Lihat Laporan
-          </button>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <button
+              type="button"
+              onClick={handleTambahRingkasan}
+              style={{
+                background: "linear-gradient(135deg, #0A0B5F 0%, #1A1C8A 100%)",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: 6,
+                padding: "6px 12px",
+                fontSize: "0.76rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {ditambahkanRingkasan ? "✓ Ditambahkan!" : "📄 Tambahkan ke Ringkasan"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setShowReportModal(true)}
+              style={{
+                background: "#059669",
+                color: "#FFFFFF",
+                border: "none",
+                borderRadius: 6,
+                padding: "6px 12px",
+                fontSize: "0.76rem",
+                fontWeight: 700,
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+              }}
+            >
+              Lihat Laporan
+            </button>
+          </div>
         </div>
       )}
 
