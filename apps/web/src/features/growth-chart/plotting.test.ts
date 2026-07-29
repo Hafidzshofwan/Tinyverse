@@ -66,6 +66,20 @@ describe("tkHitungKoordinatTitik", () => {
     if (!kal) return;
     const t = tkHitungKoordinatTitik(kal, 120, 40);
     expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
+    // Pada chart BERAT CDC, baris tick bulan memang BERIMPIT dengan tepi bawah
+    // area kurva: kalibrasi v17 memberi plot.y1 = 1467 dan usiaLineY = 1467.
+    // Jadi keduanya wajib sama, bukan berbeda.
+    expect(t.sumbuBawahPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
+  });
+
+  it("membedakan baris tick bulan dari tepi bawah pada chart TINGGI CDC", () => {
+    const cdc = GROWTH_CHART_CONFIG.cdc?.genders.male?.indicators.bbtbu?.charts[0];
+    const kal = cdc?.calibration.tinggi;
+    expect(kal).toBeDefined();
+    if (!kal) return;
+    const t = tkHitungKoordinatTitik(kal, 120, 150);
+    expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // usiaLineY 1467 / 1650
+    expect(t.sumbuBawahPersen).toBeCloseTo(73.5758, 3); // plot.y1 1214 / 1650
     expect(t.sumbuUsiaPersen).not.toBeCloseTo(t.sumbuBawahPersen, 3);
   });
 });
