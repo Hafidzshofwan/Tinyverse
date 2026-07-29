@@ -6,11 +6,14 @@
  * berubah, dan status sesungguhnya tidak pernah bergantung pada apa pun yang
  * dijalankan di browser.
  *
- * Pada fase ini belum ada tombol beli — pembayaran baru masuk di Fase 5.
+ * Tombol beli adalah satu-satunya bagian yang berjalan di browser, dan ia
+ * hanya meminta server membuatkan pesanan. Yang membuka akses tetap hanya
+ * webhook Midtrans, setelah uangnya benar-benar masuk.
  */
 import type { StatusLangganan } from "@tinyverse/billing";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { KATALOG_PLAN } from "@/server/planKatalog";
+import { TombolBeli } from "./TombolBeli";
 import gaya from "./langganan.module.css";
 
 export const runtime = "nodejs";
@@ -40,7 +43,7 @@ function rupiah(nilai: number): string {
 }
 
 function tanggal(iso: string | null): string {
-  if (!iso) return "—";
+  if (!iso) return "\u2014";
   return new Date(iso).toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
@@ -61,6 +64,11 @@ export default async function HalamanLangganan() {
   }
 
   const e = status.entitlement;
+
+  /* Kata kerjanya mengikuti keadaan: pelanggan yang masih aktif sedang
+     menambah masa, bukan membeli dari nol. Masa baru ditumpuk di atas sisa
+     yang ada, sehingga membeli lebih awal tidak pernah merugikan. */
+  const labelTombol = e.status === "aktif" ? "Perpanjang" : "Beli";
 
   return (
     <main className={gaya.wrap}>
@@ -91,16 +99,21 @@ export default async function HalamanLangganan() {
           <strong>Paket</strong>
         </div>
         {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
-          <div className={gaya.baris} key={p.id}>
-            <span className={gaya.label}>
-              {p.nama} · {p.durasiHari} hari
-            </span>
-            <span className={gaya.nilai}>{rupiah(p.hargaRupiah)}</span>
+          <div className={gaya.barisPaket} key={p.id}>
+            <div>
+              <div className={gaya.namaPaket}>{p.nama}</div>
+              <div className={gaya.detailPaket}>
+                {p.durasiHari} hari · {rupiah(p.hargaRupiah)}
+              </div>
+            </div>
+            <TombolBeli planId={p.id} label={labelTombol} />
           </div>
         ))}
         <p className={gaya.catatan}>
           Sekali bayar. Bila tidak diperpanjang, tidak ada tagihan berikutnya dan tidak
-          ada penarikan otomatis. Nama serta harga paket di atas masih sementara.
+          ada penarikan otomatis. Pembayaran diproses oleh Midtrans; masa aktif terbuka
+          setelah pembayaran dikonfirmasi, yang untuk transfer bank dan gerai ritel bisa
+          memerlukan beberapa menit.
         </p>
       </section>
     </main>

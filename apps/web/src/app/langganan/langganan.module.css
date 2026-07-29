@@ -66,3 +66,56 @@
   opacity: 0.7;
   line-height: 1.6;
 }
+
+/* ---- Baris paket yang dapat dibeli ---- */
+
+.barisPaket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.namaPaket {
+  font-weight: 600;
+}
+
+.detailPaket {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.aksi {
+  text-align: right;
+}
+
+.tombol {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1f6feb;
+  cursor: pointer;
+  /* Sasaran sentuh yang nyaman di ponsel; alat ini banyak dipakai sambil
+     berdiri di bangsal. */
+  min-height: 44px;
+}
+
+.tombol:hover:not(:disabled) {
+  background: #1a5fd0;
+}
+
+.tombol:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.kesalahan {
+  margin: 8px 0 0;
+  font-size: 0.85rem;
+  color: #922b21;
+}
