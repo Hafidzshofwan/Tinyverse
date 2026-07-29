@@ -52,8 +52,11 @@ export function DosisToolNative() {
 
 
   // Selected drug object
-  const obatTerpilih = useMemo(() => {
-    return OBAT_LIST.find((o) => o.id === obatTerpilihId) || OBAT_LIST[0];
+  // Note: OBAT_LIST[0] fallback aman di runtime (list gak pernah kosong),
+  // tapi dgn noUncheckedIndexedAccess TS tetap infer `Obat | undefined`.
+  // Cast ke Obat di sini valid krn OBAT_LIST dijamin non-empty.
+  const obatTerpilih = useMemo<Obat>(() => {
+    return (OBAT_LIST.find((o) => o.id === obatTerpilihId) ?? OBAT_LIST[0]) as Obat;
   }, [obatTerpilihId]);
 
   // Categories list
