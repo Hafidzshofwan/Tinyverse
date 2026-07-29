@@ -11,7 +11,7 @@ type Mode = "masuk" | "daftar";
  * brand + form).
  */
 export function AuthScreen() {
-  const { status, errorMsg, masuk, daftar } = useAuth();
+  const { status, errorMsg, masuk, masukGoogle, daftar } = useAuth();
   const [mode, setMode] = useState<Mode>("masuk");
   const [sibuk, setSibuk] = useState(false);
   const [pesan, setPesan] = useState<{ txt: string; jenis: "galat" | "info" }>(
@@ -61,6 +61,17 @@ export function AuthScreen() {
     setSibuk(true);
     try {
       await daftar(dNama.trim(), dInst.trim(), dEmail.trim(), dPass);
+    } catch (e) {
+      setPesan({ txt: (e as Error).message, jenis: "galat" });
+      setSibuk(false);
+    }
+  }
+
+  async function submitGoogle() {
+    setPesan({ txt: "", jenis: "galat" });
+    setSibuk(true);
+    try {
+      await masukGoogle();
     } catch (e) {
       setPesan({ txt: (e as Error).message, jenis: "galat" });
       setSibuk(false);
@@ -148,6 +159,14 @@ export function AuthScreen() {
               <button className="tv-btn" disabled={sibuk} onClick={submitMasuk}>
                 {sibuk ? "Memproses\u2026" : "Masuk ke Tinyverse"}
               </button>
+              <div className="tv-divider">atau</div>
+              <button
+                className="tv-btn sekunder"
+                disabled={sibuk}
+                onClick={submitGoogle}
+              >
+                Lanjutkan dengan Google
+              </button>
               <p className="tv-tukar">
                 Belum punya akun?{" "}
                 <a onClick={() => gantiMode("daftar")}>Daftar di sini</a>
@@ -205,6 +224,14 @@ export function AuthScreen() {
               </div>
               <button className="tv-btn" disabled={sibuk} onClick={submitDaftar}>
                 {sibuk ? "Memproses\u2026" : "Buat akun"}
+              </button>
+              <div className="tv-divider">atau</div>
+              <button
+                className="tv-btn sekunder"
+                disabled={sibuk}
+                onClick={submitGoogle}
+              >
+                Lanjutkan dengan Google
               </button>
               <p className="tv-tukar">
                 Sudah punya akun?{" "}

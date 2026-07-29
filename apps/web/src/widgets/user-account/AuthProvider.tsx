@@ -61,6 +61,7 @@ interface AuthContextValue {
   errorMsg: string;
   infoMsg: string;
   masuk: (email: string, pass: string) => Promise<void>;
+  masukGoogle: () => Promise<void>;
   daftar: (
     nama: string,
     institusi: string,
@@ -257,6 +258,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  const masukGoogle = useCallback(async () => {
+    const auth = authRef.current;
+    const fb = (window as unknown as { firebase?: Any }).firebase;
+    if (!auth || !fb) throw new Error("Firebase belum siap.");
+    try {
+      const provider = new fb.auth.GoogleAuthProvider();
+      await auth.signInWithPopup(provider);
+      // onAuthStateChanged otomatis menangani sisanya (buat profil bila baru).
+    } catch (e) {
+      throw new Error(petaError(e));
+    }
+  }, []);
+
   const daftar = useCallback(
     async (nama: string, institusi: string, email: string, pass: string) => {
       const auth = authRef.current;
@@ -431,6 +445,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     errorMsg,
     infoMsg,
     masuk,
+    masukGoogle,
     daftar,
     keluar,
     simpanProfil,
