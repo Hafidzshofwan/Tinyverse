@@ -89,8 +89,27 @@
 
 .ajakan {
   margin: 16px 0 0;
+}
+
+/* Tautan yang tampil sebagai tombol. Sengaja sebuah <a>, bukan <button>:
+   ia memang berpindah halaman, sehingga harus bisa dibuka di tab baru dan
+   terbaca sebagai tautan oleh pembaca layar. */
+.tautMasuk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
+  color: #fff;
+  background: #1f6feb;
+  text-decoration: none;
+}
+
+.tautMasuk:hover {
+  background: #1a5fd0;
 }
 
 .aksi {

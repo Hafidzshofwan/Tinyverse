@@ -20,6 +20,8 @@
  * muncul bagi yang sudah masuk, dan akses ke alat klinis tetap diputuskan di
  * server oleh gerbang berbayar.
  */
+import Link from "next/link";
+
 import type { StatusLangganan } from "@tinyverse/billing";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { KATALOG_PLAN } from "@/server/planKatalog";
@@ -118,9 +120,12 @@ export default async function HalamanLangganan() {
         ))}
 
         {masuk ? null : (
-          <p className={gaya.ajakan}>
-            Masuk ke akun Anda untuk membeli paket.
-          </p>
+          <div className={gaya.ajakan}>
+            {/* Halaman masuk Tinyverse berada di akar situs. */}
+            <Link href="/" className={gaya.tautMasuk}>
+              Masuk untuk membeli
+            </Link>
+          </div>
         )}
 
         <p className={gaya.catatan}>
