@@ -52,6 +52,7 @@ const RUTE_PUBLIK: readonly string[] = [
   "/langganan",
   "/syarat-ketentuan",
   "/pengembalian-dana",
+  "/kebijakan-privasi",
   "/kontak",
 ];
 
@@ -165,6 +166,7 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
             <Link href="/langganan">Langganan</Link>
             <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>
             <Link href="/pengembalian-dana">Pengembalian Dana</Link>
+            <Link href="/kebijakan-privasi">Kebijakan Privasi</Link>
             <Link href="/kontak">Kontak</Link>
           </nav>
           <div>Alat bantu klinis pediatri, bukan pengganti penilaian klinis.</div>
