@@ -29,7 +29,7 @@ const TOOLS = [
   { srcDirs: ["widgets/fluids-panel", "features/fluid-maintenance", "features/fluid-drip", "features/burn-calculator", "entities/fluid", "entities/burn"],
     slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids",
     keywords: ["dehidrasi","rumatan","maintenance","holliday","segar","resusitasi cairan","bolus","kristaloid","rehidrasi","defisit","tetesan","infus","cairan","luka bakar","parkland","lund browder"] },
-  { file: "dosis-tool.html", slug: "dosis", label: "Dosis Obat", icon: "\uD83D\uDC8A", href: "/preview/dosing",
+  { srcDirs: ["widgets/dosing-panel", "features/dosing-tool"], slug: "dosis", label: "Dosis Obat", icon: "\uD83D\uDC8A", href: "/preview/dosing",
     keywords: ["dosis obat","antibiotik","paracetamol","mg/kg","obat","kalkulator dosis","sediaan","dosing"] },
   { srcDirs: ["widgets/puyer-panel", "features/puyer-tool", "features/puyer-calculator", "entities/dosing"], slug: "puyer", label: "Racik Puyer", icon: "\u2697\uFE0F", href: "/preview/puyer",
     keywords: ["racik","puyer","pulveres","bagi","tablet","kapsul","racikan","serbuk"] },
