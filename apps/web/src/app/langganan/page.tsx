@@ -1,24 +1,19 @@
 /**
- * Halaman status langganan sekaligus halaman harga.
+ * Halaman langganan.
  *
  * Server Component dengan sengaja. Statusnya dibaca di server sebelum HTML
  * dikirim, sehingga halaman tidak pernah berkedip "belum berlangganan" lalu
  * berubah, dan status sesungguhnya tidak pernah bergantung pada apa pun yang
  * dijalankan di browser.
  *
- * Daftar paket dan harganya ditampilkan kepada SIAPA PUN, termasuk pengunjung
- * yang belum masuk. Ada dua alasan, dan keduanya penting:
+ * WHY daftar harga tampil juga bagi yang belum masuk: calon pelanggan berhak
+ * tahu harganya sebelum membuat akun, dan peninjau pendaftaran merchant
+ * Midtrans mensyaratkan harga rupiah terlihat dari luar. Yang disembunyikan
+ * dari pengunjung hanyalah kartu status miliknya sendiri dan tombol beli --
+ * checkout menuntut sesi, jadi tombolnya tidak akan berguna tanpa masuk.
  *
- *   1. Calon pembeli tidak akan membuat akun demi mengetahui harga. Harga yang
- *      disembunyikan di balik pintu masuk adalah harga yang tidak pernah
- *      dibaca.
- *   2. Penyedia pembayaran mensyaratkan situs yang dapat diakses dengan
- *      informasi produk dan harga rupiah yang terlihat. Situs yang seluruhnya
- *      terkunci tampak seperti situs kosong bagi peninjau mereka.
- *
- * Yang tetap dijaga adalah pembeliannya, bukan informasinya. Tombol beli hanya
- * muncul bagi yang sudah masuk, dan akses ke alat klinis tetap diputuskan di
- * server oleh gerbang berbayar.
+ * Halaman ini tidak membuka akses apa pun. Alat klinis di /preview dijaga
+ * Server Component terpisah yang memutuskan sebelum HTML dikirim.
  */
 import Link from "next/link";
 
@@ -50,6 +45,15 @@ const KELAS_STATUS: Record<StatusLangganan, string> = {
   kedaluwarsa: gaya.kedaluwarsa ?? "",
 };
 
+const ISI_LANGGANAN: readonly string[] = [
+  "Dosis obat, terapi cairan, dan racik puyer",
+  "Kurva pertumbuhan WHO dan CDC dengan pemantauan longitudinal",
+  "Skrining perkembangan dan skoring klinis",
+  "Interpretasi lab dan kalkulator nutrisi",
+  "Guideline, jadwal imunisasi, dan alur tata laksana",
+  "Mode darurat dan asisten AI",
+];
+
 function rupiah(nilai: number): string {
   return "Rp" + nilai.toLocaleString("id-ID");
 }
@@ -68,19 +72,14 @@ export default async function HalamanLangganan() {
   const masuk = status.masuk;
   const e = status.entitlement;
 
-  /* Kata kerjanya mengikuti keadaan: pelanggan yang masih aktif sedang
-     menambah masa, bukan membeli dari nol. Masa baru ditumpuk di atas sisa
-     yang ada, sehingga membeli lebih awal tidak pernah merugikan. */
+  /* Pelanggan yang masih aktif tetap boleh membeli: masa berlakunya menumpuk
+     di belakang periode berjalan, bukan menggantikannya. */
   const labelTombol = masuk && e.status === "aktif" ? "Perpanjang" : "Beli";
 
   return (
     <main className={gaya.wrap}>
       <h1 className={gaya.judul}>Langganan</h1>
-      <p className={gaya.sub}>
-        {masuk
-          ? "Status akses akun Anda."
-          : "Akses penuh ke seluruh alat klinis Tinyverse."}
-      </p>
+      <p className={gaya.sub}>Akses penuh ke seluruh alat klinis Tinyverse.</p>
 
       {masuk ? (
         <section className={gaya.kartu}>
@@ -104,18 +103,18 @@ export default async function HalamanLangganan() {
       ) : null}
 
       <section className={gaya.kartu}>
-        <div className={gaya.baris}>
-          <strong>Paket</strong>
-        </div>
+        <h2 className={gaya.kepalaKartu}>Paket</h2>
+
         {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
           <div className={gaya.barisPaket} key={p.id}>
             <div>
               <div className={gaya.namaPaket}>{p.nama}</div>
-              <div className={gaya.detailPaket}>
-                {p.durasiHari} hari · {rupiah(p.hargaRupiah)}
-              </div>
+              <div className={gaya.detailPaket}>{p.durasiHari} hari</div>
             </div>
-            {masuk ? <TombolBeli planId={p.id} label={labelTombol} /> : null}
+            <div className={gaya.aksi}>
+              <div className={gaya.hargaPaket}>{rupiah(p.hargaRupiah)}</div>
+              {masuk ? <TombolBeli planId={p.id} label={labelTombol} /> : null}
+            </div>
           </div>
         ))}
 
@@ -129,27 +128,24 @@ export default async function HalamanLangganan() {
         )}
 
         <p className={gaya.catatan}>
-          Sekali bayar. Bila tidak diperpanjang, tidak ada tagihan berikutnya dan tidak
-          ada penarikan otomatis. Pembayaran diproses oleh Midtrans; masa aktif terbuka
-          setelah pembayaran dikonfirmasi, yang untuk transfer bank dan gerai ritel bisa
-          memerlukan beberapa menit.
+          Sekali bayar. Bila tidak diperpanjang, tidak ada tagihan berikutnya dan
+          tidak ada penarikan otomatis. Pembayaran diproses oleh Midtrans; untuk
+          transfer bank dan pembayaran di gerai, konfirmasi bisa datang beberapa
+          menit setelah pembayaran diselesaikan.
         </p>
       </section>
 
       <section className={gaya.kartu}>
-        <div className={gaya.baris}>
-          <strong>Yang Anda dapatkan</strong>
-        </div>
-        <p className={gaya.catatan}>
-          Kalkulator dosis obat, terapi cairan, racik puyer, kurva pertumbuhan WHO dan
-          CDC dengan pemantauan longitudinal, skrining perkembangan, skoring klinis,
-          interpretasi laboratorium, kalkulator nutrisi, jadwal imunisasi, alur tata
-          laksana, mode darurat, dan asisten AI. Seluruhnya dalam bahasa Indonesia.
-        </p>
-        <p className={gaya.catatan}>
-          Tinyverse adalah alat bantu hitung untuk tenaga kesehatan. Hasilnya tidak
-          menggantikan penilaian klinis, dan setiap keputusan tetap berada pada dokter
-          yang merawat.
+        <h2 className={gaya.kepalaKartu}>Yang Anda dapatkan</h2>
+        <ul className={gaya.daftar}>
+          {ISI_LANGGANAN.map((butir) => (
+            <li key={butir}>{butir}</li>
+          ))}
+        </ul>
+        <p className={gaya.penyangkalan}>
+          Tinyverse adalah alat bantu hitung untuk tenaga kesehatan. Hasilnya
+          tidak menggantikan penilaian klinis, dan setiap keputusan tetap berada
+          pada dokter yang merawat.
         </p>
       </section>
     </main>

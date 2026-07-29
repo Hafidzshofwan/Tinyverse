@@ -1,3 +1,18 @@
+/* Gaya halaman langganan.
+
+   Halaman ini kini dibaca juga oleh pengunjung yang belum masuk -- termasuk
+   peninjau pendaftaran merchant Midtrans -- jadi warnanya harus bekerja di tema
+   terang maupun gelap.
+
+   WHY memakai abu-abu semi-transparan, bukan putih semi-transparan: latar putih
+   60% menjadi kelabu pucat yang nyaris menyatu dengan latar pada tema navy, dan
+   itulah sebabnya kotak paket sebelumnya sulit terlihat. Lapisan abu-abu netral
+   menaikkan kontras pada latar gelap dan tetap lembut pada latar terang.
+
+   WHY teks memakai warna warisan tema: satu berkas ini tidak perlu tahu tema
+   mana yang sedang aktif. Yang diatur di sini hanya seberapa redup teks
+   sekunder boleh tampil. */
+
 .wrap {
   max-width: 640px;
   margin: 0 auto;
@@ -11,30 +26,38 @@
 
 .sub {
   margin: 0 0 24px;
-  opacity: 0.75;
+  opacity: 0.85;
 }
 
 .kartu {
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(148, 163, 184, 0.32);
   border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 16px;
-  background: rgba(255, 255, 255, 0.6);
+  padding: 20px 22px;
+  margin-bottom: 18px;
+  background: rgba(148, 163, 184, 0.14);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+.kepalaKartu {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
 .baris {
   display: flex;
   justify-content: space-between;
   gap: 16px;
-  padding: 6px 0;
+  padding: 7px 0;
 }
 
 .label {
-  opacity: 0.7;
+  opacity: 0.85;
 }
 
 .nilai {
-  font-weight: 600;
+  font-weight: 700;
   text-align: right;
 }
 
@@ -43,28 +66,29 @@
   border-radius: 999px;
   padding: 4px 12px;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .aktif {
-  background: #e8f7e4;
-  color: #2f6b1d;
+  background: #d8f3d0;
+  color: #24591a;
 }
 
 .belum {
-  background: #eef1f4;
-  color: #4a5560;
+  background: #e3e8ee;
+  color: #39434e;
 }
 
 .kedaluwarsa {
-  background: #fdeded;
-  color: #922b21;
+  background: #fbdcdc;
+  color: #7d241c;
 }
 
 .catatan {
+  margin: 14px 0 0;
   font-size: 0.9rem;
-  opacity: 0.7;
-  line-height: 1.6;
+  opacity: 0.8;
+  line-height: 1.65;
 }
 
 /* ---- Baris paket yang dapat dibeli ---- */
@@ -74,42 +98,27 @@
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 14px 0;
+  border-top: 1px solid rgba(148, 163, 184, 0.28);
 }
 
 .namaPaket {
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.02rem;
 }
 
 .detailPaket {
+  margin-top: 2px;
   font-size: 0.9rem;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-.ajakan {
-  margin: 16px 0 0;
-}
-
-/* Tautan yang tampil sebagai tombol. Sengaja sebuah <a>, bukan <button>:
-   ia memang berpindah halaman, sehingga harus bisa dibuka di tab baru dan
-   terbaca sebagai tautan oleh pembaca layar. */
-.tautMasuk {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #fff;
-  background: #1f6feb;
-  text-decoration: none;
-}
-
-.tautMasuk:hover {
-  background: #1a5fd0;
+/* Harga dibuat paling menonjol di dalam barisnya. Inilah satu-satunya angka
+   yang dicari pengunjung, dan yang wajib terlihat oleh peninjau Midtrans. */
+.hargaPaket {
+  font-size: 1.15rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .aksi {
@@ -123,7 +132,7 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
-  background: #1f6feb;
+  background: #2f7cf6;
   cursor: pointer;
   /* Sasaran sentuh yang nyaman di ponsel; alat ini banyak dipakai sambil
      berdiri di bangsal. */
@@ -131,7 +140,7 @@
 }
 
 .tombol:hover:not(:disabled) {
-  background: #1a5fd0;
+  background: #2568d8;
 }
 
 .tombol:disabled {
@@ -142,5 +151,50 @@
 .kesalahan {
   margin: 8px 0 0;
   font-size: 0.85rem;
-  color: #922b21;
+  color: #ff8f88;
+}
+
+/* ---- Ajakan bagi pengunjung yang belum masuk ---- */
+
+.ajakan {
+  margin: 18px 0 0;
+}
+
+/* Sengaja sebuah <a>, bukan <button>: ia memang berpindah halaman, sehingga
+   harus bisa dibuka di tab baru dan terbaca sebagai tautan oleh pembaca layar. */
+.tautMasuk {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: #2f7cf6;
+  text-decoration: none;
+}
+
+.tautMasuk:hover {
+  background: #2568d8;
+}
+
+/* ---- Daftar isi langganan ---- */
+
+.daftar {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.75;
+}
+
+.daftar li {
+  opacity: 0.88;
+}
+
+.penyangkalan {
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.65;
 }
