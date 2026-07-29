@@ -52,7 +52,7 @@ export function DosisToolNative() {
 
 
   // Selected drug object
-  const obatTerpilih = useMemo(() => {
+  const obatTerpilih: Obat | undefined = useMemo(() => {
     return OBAT_LIST.find((o) => o.id === obatTerpilihId) || OBAT_LIST[0];
   }, [obatTerpilihId]);
 
@@ -107,18 +107,22 @@ export function DosisToolNative() {
 
   // Check if sediaan options exist for selected drug
   const hasMultipleSediaan =
-    Array.isArray(obatTerpilih.sediaanOptions) && obatTerpilih.sediaanOptions.length > 1;
+    Array.isArray(obatTerpilih?.sediaanOptions) && (obatTerpilih?.sediaanOptions?.length ?? 0) > 1;
 
   // Determine form input visibility
   const showUsia =
-    obatTerpilih.doseType === "byAge" || obatTerpilih.doseType === "ageBands";
+    obatTerpilih?.doseType === "byAge" || obatTerpilih?.doseType === "ageBands";
   const showBerat =
-    obatTerpilih.doseType !== "byAge" &&
+    obatTerpilih?.doseType !== "byAge" &&
     !(
-      obatTerpilih.doseType === "ageBands" &&
+      obatTerpilih?.doseType === "ageBands" &&
       hasil?.band &&
       hasil.band.tipe !== "perKg"
     );
+
+  if (!obatTerpilih) {
+    return null;
+  }
 
   return (
     <div className="dosis-container" id="page-dosis">
@@ -323,7 +327,7 @@ export function DosisToolNative() {
                   value={sediaanIndex}
                   onChange={(e) => setSediaanIndex(Number(e.target.value))}
                 >
-                  {obatTerpilih.sediaanOptions!.map((s, idx) => (
+                  {obatTerpilih.sediaanOptions?.map((s, idx) => (
                     <option key={idx} value={idx}>
                       {s.label || `Sediaan ${idx + 1}`}
                     </option>
