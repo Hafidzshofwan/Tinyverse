@@ -836,6 +836,7 @@ export function GrowthChartTool() {
                     <>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
+                        key={`${c.image}-${c.id}`}
                         src={c.image}
                         alt={`Growth chart ${c.title || indikator.label} ${labelKelamin}`}
                         onError={() => setGambarGagal((g) => ({ ...g, [c.image]: true }))}
@@ -848,7 +849,7 @@ export function GrowthChartTool() {
                         const dekatKanan = t.titik.leftPercent > 68;
                         const dekatBawah = t.titik.topPercent > 72;
                         return (
-                          <div key={t.seriKey}>
+                          <div key={`${t.seriKey}-${t.nilai}-${t.titik.leftPercent}`}>
                             <div
                               className="tk-garis-bantu vertikal"
                               style={{

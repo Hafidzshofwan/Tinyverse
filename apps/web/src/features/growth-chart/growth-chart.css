@@ -515,12 +515,20 @@
     overflow: hidden;
     background: var(--krem);
     border: 3px solid #EAF6FB;
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
 .tk-island-wrap .tk-chart-stage img {
     display: block;
     width: 100%;
     height: auto;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: tkChartFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+@keyframes tkChartFadeIn {
+    0% { opacity: 0; transform: scale(0.98); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
 .tk-island-wrap .tk-chart-stage .tk-chart-belum {
@@ -549,15 +557,16 @@
 
 .tk-island-wrap .tk-titik-pasien {
     position: absolute;
-    width: 7px; height: 7px;
-    margin-left: -3.5px;
-    margin-top: -3.5px;
+    width: 9px; height: 9px;
+    margin-left: -4.5px;
+    margin-top: -4.5px;
     border-radius: 50%;
     background: var(--pink-tua);
-    border: 1.5px solid white;
-    box-shadow: 0 0 0 1.5px rgba(240,99,135,0.5), 0 2px 5px rgba(0,0,0,0.2);
+    border: 2px solid white;
+    box-shadow: 0 0 0 3px rgba(240, 99, 135, 0.45), 0 3px 8px rgba(0,0,0,0.25);
     z-index: 5;
-    animation: tkMuncul 0.35s ease;
+    animation: tkPopDot 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    transition: all 0.3s ease;
   }
 
 .tk-island-wrap .tk-label-pasien {
@@ -571,8 +580,10 @@
     border-radius: 10px;
     white-space: nowrap;
     z-index: 6;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.22);
     line-height: 1.4;
+    animation: tkSlideLabel 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: all 0.3s ease;
   }
 
 .tk-island-wrap .tk-label-pasien::after {
@@ -589,13 +600,30 @@
     to { transform: scale(1); opacity: 1; }
   }
 
+@keyframes tkPopDot {
+    0% { transform: scale(0) translateY(-6px); opacity: 0; }
+    60% { transform: scale(1.35) translateY(0); opacity: 1; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+  }
+
+@keyframes tkSlideLabel {
+    0% { opacity: 0; transform: scale(0.85) translateY(6px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+@keyframes tkGarisGrow {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 0.85; transform: scale(1); }
+  }
+
 .tk-island-wrap .tk-garis-bantu {
     position: absolute;
     z-index: 4;
     pointer-events: none;
     background: repeating-linear-gradient(var(--arah, 90deg), var(--pink-tua), var(--pink-tua) 4px, transparent 4px, transparent 8px);
-    opacity: 0.75;
-    animation: tkMuncul 0.35s ease;
+    opacity: 0.85;
+    animation: tkGarisGrow 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transition: all 0.35s ease;
   }
 
 .tk-island-wrap .tk-garis-bantu.vertikal { width: 2px; transform: translateX(-1px); --arah: 0deg; }
@@ -1513,6 +1541,19 @@ html.dark .tk-island-wrap .tk-label-pasien {
   background: #1F2937 !important;
   color: #F9FAFB !important;
   border: 1px solid #374151 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-titik-pasien,
+html.dark .tk-island-wrap .tk-titik-pasien {
+  box-shadow: 0 0 0 3px rgba(240, 99, 135, 0.6), 0 0 10px rgba(255, 255, 255, 0.5) !important;
+  border-color: #0F172A !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-garis-bantu,
+html.dark .tk-island-wrap .tk-garis-bantu {
+  opacity: 0.95 !important;
+  filter: drop-shadow(0 0 2px rgba(240, 99, 135, 0.5));
 }
 
 /* Form Inputs & Selects */

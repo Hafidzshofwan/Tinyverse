@@ -314,13 +314,13 @@ export function LongitudinalGrowthChart({
             <Legend verticalAlign="top" height={32} wrapperStyle={{ fontSize: "0.75rem", paddingBottom: "8px" }} />
 
             {/* WHO Standard Lines */}
-            <Line type="monotone" dataKey="sdPlus3" name="+3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
-            <Line type="monotone" dataKey="sdPlus2" name="+2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
-            <Line type="monotone" dataKey="sdPlus1" name="+1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} />
-            <Line type="monotone" dataKey="sdMedian" name="Median (0 SD)" stroke="#059669" dot={false} strokeWidth={2.5} />
-            <Line type="monotone" dataKey="sdMinus1" name="-1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} />
-            <Line type="monotone" dataKey="sdMinus2" name="-2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
-            <Line type="monotone" dataKey="sdMinus3" name="-3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} />
+            <Line type="monotone" dataKey="sdPlus3" name="+3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdPlus2" name="+2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdPlus1" name="+1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdMedian" name="Median (0 SD)" stroke="#059669" dot={false} strokeWidth={2.5} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdMinus1" name="-1 SD" stroke="#64748B" strokeDasharray="3 3" dot={false} strokeWidth={1.2} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdMinus2" name="-2 SD" stroke="#D97706" strokeDasharray="4 4" dot={false} strokeWidth={1.5} isAnimationActive animationDuration={800} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="sdMinus3" name="-3 SD" stroke="#DC2626" strokeDasharray="4 4" dot={false} strokeWidth={1.5} isAnimationActive animationDuration={800} animationEasing="ease-out" />
 
             {/* Patient Recorded Trend Line */}
             <Line
@@ -330,6 +330,9 @@ export function LongitudinalGrowthChart({
               stroke="#4F46E5"
               strokeWidth={3}
               connectNulls
+              isAnimationActive
+              animationDuration={1000}
+              animationEasing="ease-in-out"
               dot={{ r: 5, fill: "#4F46E5", stroke: "#FFFFFF", strokeWidth: 2 }}
               activeDot={{ r: 7, fill: "#4338CA", stroke: "#FFFFFF", strokeWidth: 2 }}
             />
