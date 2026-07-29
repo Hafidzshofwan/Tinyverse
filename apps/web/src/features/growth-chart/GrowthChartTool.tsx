@@ -845,9 +845,26 @@ export function GrowthChartTool() {
                         const baseBawah = isFinite(t.titik.sumbuUsiaPersen)
                           ? t.titik.sumbuUsiaPersen
                           : t.titik.sumbuBawahPersen;
-                        const targetX = tkTargetGarisHorizontal(t.titik, t.yLabel, t.yUnit, t.nilai);
-                        const dekatKanan = t.titik.leftPercent > 68;
-                        const dekatBawah = t.titik.topPercent > 72;
+                        const targetX = tkTargetGarisHorizontal(t.titik, t.yLabel, t.yUnit, t.nilai, c.id);
+                        const isGarisKeKanan = targetX === t.titik.sumbuKananPersen;
+                        let pangkasKeKiri = false;
+                        if (isGarisKeKanan) {
+                          // Garis horizontal ke kanan (mis. Berat Badan CDC) -> div ke KIRI
+                          pangkasKeKiri = true;
+                          if (t.titik.leftPercent < 20) {
+                            pangkasKeKiri = false;
+                          }
+                        } else {
+                          // Garis horizontal ke kiri (mis. WHO, TB CDC) -> div ke KANAN
+                          pangkasKeKiri = false;
+                          if (t.titik.leftPercent > 72) {
+                            pangkasKeKiri = true;
+                          }
+                        }
+                        const pangkasKeBawah = t.titik.topPercent < 22;
+                        const offsetX = pangkasKeKiri ? "calc(-100% - 16px)" : "16px";
+                        const offsetY = pangkasKeBawah ? "16px" : "calc(-100% - 14px)";
+
                         return (
                           <div key={`${t.seriKey}-${t.nilai}-${t.titik.leftPercent}`}>
                             <div
@@ -881,9 +898,7 @@ export function GrowthChartTool() {
                               style={{
                                 left: `${t.titik.leftPercent}%`,
                                 top: `${t.titik.topPercent}%`,
-                                transform: `translate(${dekatKanan ? "calc(-100% - 10px)" : "10px"}, ${
-                                  dekatBawah ? "calc(-100% - 10px)" : "10px"
-                                })`,
+                                transform: `translate(${offsetX}, ${offsetY})`,
                                 borderColor: t.warna,
                               }}
                             >

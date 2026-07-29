@@ -94,14 +94,18 @@ export function tkKalibrasiValid(cal: Kalibrasi | undefined | null): cal is Kali
  */
 export function tkTargetGarisHorizontal(
   titik: TitikPlot,
-  yLabel: string,
-  yUnit: string,
-  nilai: number,
+  yLabel?: string,
+  yUnit?: string,
+  _nilai?: number,
+  chartId?: string,
 ): number {
   const labelLower = String(yLabel || "").toLowerCase();
   const unitLower = String(yUnit || "").toLowerCase();
   const isBerat = labelLower.includes("berat") || unitLower === "kg";
-  const isTinggiLebih166 =
-    (labelLower.includes("tinggi") || unitLower === "cm") && Number(nilai) > 166;
-  return isBerat || isTinggiLebih166 ? titik.sumbuKananPersen : titik.sumbuKiriPersen;
+  const isCdc = String(chartId || "").toLowerCase().includes("cdc");
+
+  if (isCdc && isBerat) {
+    return titik.sumbuKananPersen;
+  }
+  return titik.sumbuKiriPersen;
 }

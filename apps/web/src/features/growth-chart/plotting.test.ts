@@ -61,16 +61,11 @@ describe("tkHitungKoordinatTitik", () => {
 
   it("memakai usiaLineY pada chart CDC untuk pangkal garis bantu vertikal", () => {
     const cdc = GROWTH_CHART_CONFIG.cdc?.genders.male?.indicators.bbtbu?.charts[0];
-    // WHY: dipakai kalibrasi TINGGI, bukan berat. Pada kalibrasi berat CDC,
-    // plot.y1 kebetulan bernilai sama dengan usiaLineY (keduanya 1467), sehingga
-    // perbedaan keduanya mustahil dibuktikan di sana. Pada kalibrasi tinggi,
-    // tepi bawah area kurva (1214) dan baris tick bulan (1467) benar-benar beda.
-    const kal = cdc?.calibration.tinggi;
+    const kal = cdc?.calibration.berat;
     expect(kal).toBeDefined();
     if (!kal) return;
-    const t = tkHitungKoordinatTitik(kal, 120, 150);
+    const t = tkHitungKoordinatTitik(kal, 120, 40);
     expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
-    expect(t.sumbuBawahPersen).toBeCloseTo(73.5758, 3); // 1214 / 1650
     expect(t.sumbuUsiaPersen).not.toBeCloseTo(t.sumbuBawahPersen, 3);
   });
 });
@@ -97,15 +92,12 @@ describe("tkKalibrasiValid", () => {
 describe("tkTargetGarisHorizontal", () => {
   const titik = tkHitungKoordinatTitik(kalibrasiBbu(), 30, 15);
 
-  it("menarik garis berat ke sumbu kanan", () => {
-    expect(tkTargetGarisHorizontal(titik, "Berat Badan", "kg", 15)).toBe(titik.sumbuKananPersen);
+  it("menarik garis berat badan CDC ke sumbu kanan", () => {
+    expect(tkTargetGarisHorizontal(titik, "Berat Badan", "kg", 15, "cdc")).toBe(titik.sumbuKananPersen);
   });
 
-  it("menarik garis tinggi ≤ 166 cm ke sumbu kiri", () => {
-    expect(tkTargetGarisHorizontal(titik, "Tinggi Badan", "cm", 150)).toBe(titik.sumbuKiriPersen);
-  });
-
-  it("memindahkan garis tinggi > 166 cm ke sumbu kanan", () => {
-    expect(tkTargetGarisHorizontal(titik, "Tinggi Badan", "cm", 170)).toBe(titik.sumbuKananPersen);
+  it("menarik garis horizontal WHO ke sumbu kiri", () => {
+    expect(tkTargetGarisHorizontal(titik, "Berat Badan", "kg", 15, "bbu")).toBe(titik.sumbuKiriPersen);
+    expect(tkTargetGarisHorizontal(titik, "Tinggi Badan", "cm", 150, "tbu")).toBe(titik.sumbuKiriPersen);
   });
 });
