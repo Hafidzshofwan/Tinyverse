@@ -140,9 +140,11 @@ export const WARNA_JENIS_OBAT: Record<string, string> = {
   "Lainnya": "#9AA4B0"
 };
 
+const WARNA_DEFAULT = "#999999";
+
 export function warnaJenis(jenis?: string): string {
-  if (!jenis) return WARNA_JENIS_OBAT["Lainnya"];
-  return WARNA_JENIS_OBAT[jenis] || WARNA_JENIS_OBAT["Lainnya"];
+  if (!jenis) return WARNA_JENIS_OBAT["Lainnya"] ?? WARNA_DEFAULT;
+  return WARNA_JENIS_OBAT[jenis] || WARNA_JENIS_OBAT["Lainnya"] || WARNA_DEFAULT;
 }
 
 export function kategoriTagStyle(jenis?: string): { bg: string; color: string } {
