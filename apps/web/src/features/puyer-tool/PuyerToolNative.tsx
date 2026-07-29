@@ -321,7 +321,7 @@ export function PuyerToolNative(): JSX.Element {
 				</div>
 				<div>
 					<h2>Racik Puyer</h2>
-					<p>Kalkulator puyer multi-obat per bungkus</p>
+					<p style={{ fontSize: "10.24px" }}>Kalkulator puyer multi-obat per bungkus</p>
 				</div>
 			</div>
 
