@@ -70,7 +70,7 @@
 }
 
 .tv-page-cairan .judul-section p {
-  font-size: 0.62rem;
+  font-size: 10.24px;
   color: rgba(10, 11, 95, 0.62);
   font-weight: 600;
   margin: 0;
@@ -903,7 +903,40 @@
   color: #cbd5e1 !important;
 }
 
+.tv-page-cairan table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.tv-page-cairan table th {
+  text-align: left;
+  padding: 10px 12px;
+  background: rgba(10, 11, 95, 0.05);
+  color: #0A0B5F;
+  font-weight: 700;
+  border-radius: 10px;
+}
+
+.tv-page-cairan table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(10, 11, 95, 0.07);
+  color: rgba(10, 11, 95, 0.72);
+  font-weight: 700;
+}
+
 [data-theme="dark"] .tv-page-cairan .catatan-metode {
   color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .tv-page-cairan table th {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-page-cairan table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #cbd5e1 !important;
 }
 

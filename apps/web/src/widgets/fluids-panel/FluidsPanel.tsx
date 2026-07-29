@@ -117,7 +117,7 @@ export function FluidsPanel() {
           </div>
           <div>
             <h2>Terapi Cairan</h2>
-            <p>{SUBTITLE[tab]}</p>
+            <p style={{ fontSize: "10.24px" }}>{SUBTITLE[tab]}</p>
           </div>
         </div>
 
