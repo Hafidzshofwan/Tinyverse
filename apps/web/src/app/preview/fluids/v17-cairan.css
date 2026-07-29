@@ -940,3 +940,132 @@
   color: #cbd5e1 !important;
 }
 
+/* === DARK MODE OVERRIDES FOR REHIDRASI LUKA BAKAR === */
+[data-theme="dark"] .burn-quick-panel,
+html.dark .burn-quick-panel,
+.dark .burn-quick-panel {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .burn-quick-btn,
+html.dark .burn-quick-btn,
+.dark .burn-quick-btn {
+  background: rgba(30, 41, 59, 0.7) !important;
+  color: #f8fafc !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .burn-quick-btn:hover,
+html.dark .burn-quick-btn:hover,
+.dark .burn-quick-btn:hover {
+  background: rgba(51, 65, 85, 0.8) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+}
+
+[data-theme="dark"] .burn-quick-btn.aktif,
+html.dark .burn-quick-btn.aktif,
+.dark .burn-quick-btn.aktif {
+  background: linear-gradient(90deg, #ef3d9e 0%, #ff8a3d 100%) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: 0 6px 16px rgba(239, 61, 158, 0.45) !important;
+}
+
+[data-theme="dark"] .burn-map-card,
+html.dark .burn-map-card,
+.dark .burn-map-card {
+  background: linear-gradient(
+    125deg,
+    rgba(70, 18, 48, 0.8) 0%,
+    rgba(18, 52, 48, 0.75) 30%,
+    rgba(22, 40, 78, 0.75) 58%,
+    rgba(72, 22, 54, 0.8) 85%,
+    rgba(75, 38, 22, 0.8) 100%
+  ) !important;
+  border: 1.5px solid rgba(244, 114, 182, 0.35) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 24px rgba(236, 72, 153, 0.12) !important;
+}
+
+[data-theme="dark"] .burn-map-title,
+html.dark .burn-map-title,
+.dark .burn-map-title {
+  color: #ff9e66 !important;
+}
+
+[data-theme="dark"] .burn-chart-hint,
+html.dark .burn-chart-hint,
+.dark .burn-chart-hint {
+  background: rgba(30, 41, 59, 0.9) !important;
+  color: #f1f5f9 !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .burn-reset-btn,
+html.dark .burn-reset-btn,
+.dark .burn-reset-btn {
+  background: rgba(30, 41, 59, 0.7) !important;
+  color: #f472b6 !important;
+  border-color: #f472b6 !important;
+}
+
+[data-theme="dark"] .burn-reset-btn:hover,
+html.dark .burn-reset-btn:hover,
+.dark .burn-reset-btn:hover {
+  background: #f472b6 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .burn-result-card,
+html.dark .burn-result-card,
+.dark .burn-result-card {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .burn-result-card .ikon-title,
+html.dark .burn-result-card .ikon-title,
+.dark .burn-result-card .ikon-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .burn-result-card .burn-result-value,
+html.dark .burn-result-card .burn-result-value,
+.dark .burn-result-card .burn-result-value {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .burn-result-card .hasil-rincian,
+html.dark .burn-result-card .hasil-rincian,
+.dark .burn-result-card .hasil-rincian {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .burn-tbsa-chart-block,
+html.dark .burn-tbsa-chart-block,
+.dark .burn-tbsa-chart-block {
+  background: rgba(30, 41, 59, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .burn-tbsa-chart-block h4,
+html.dark .burn-tbsa-chart-block h4,
+.dark .burn-tbsa-chart-block h4 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .burn-body-svg text,
+html.dark .burn-body-svg text,
+.dark .burn-body-svg text {
+  fill: #0a0b5f !important;
+  stroke: rgba(255, 255, 255, 0.95) !important;
+}
+
+

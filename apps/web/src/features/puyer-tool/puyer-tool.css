@@ -673,7 +673,7 @@
   box-shadow: none !important;
   color: rgba(10,11,95,0.62) !important;
   font-family: 'Quicksand', system-ui, sans-serif !important;
-  font-size: clamp(0.64rem, 1vw, 0.74rem) !important;
+  font-size: 10.24px !important;
   line-height: 1.22 !important;
   font-weight: 700 !important;
   letter-spacing: -0.012em !important;
@@ -699,7 +699,7 @@
     font-size: clamp(1rem, 6.2vw, 1.24rem) !important;
   }
   .puyer-island-wrap #page-cairan > .judul-section p, .puyer-island-wrap > .judul-section p, .puyer-island-wrap #page-tumbuh-kembang > .judul-section p {
-    font-size: 0.62rem !important;
+    font-size: 10.24px !important;
     line-height: 1.18 !important;
   }
 }
