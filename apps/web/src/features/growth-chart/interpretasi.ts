@@ -12,7 +12,7 @@
  */
 import { TK_CDC_P50 } from "./chartConfig";
 import { TK_ZSCORE_TABLES } from "./zscoreTables";
-import { tkHitungZscoreNumerik, tkInterpolasiZscoreRow } from "./zscore";
+import { tkHitungZscoreNumerik, tkInterpolasiZscoreRow, tkUsiaDiLuarTabel } from "./zscore";
 
 export interface HasilZscore {
   z: number;
@@ -20,6 +20,13 @@ export interface HasilZscore {
   rentang: string;
   statusGizi: string;
   statusColor: string;
+  /**
+   * Benar bila usia berada di luar rentang tabel rujukan, sehingga z-score
+   * dihitung dari baris tepi terdekat (penjepitan v17), bukan dari baris tabel
+   * untuk usia tersebut. Angka tetap ditampilkan, tetapi harus disertai
+   * peringatan agar tidak dibaca sebagai nilai tabel.
+   */
+  diLuarTabel: boolean;
 }
 
 /** Interpretasi WHO berbasis Z-score. Mengembalikan null bila tabel tak tersedia. */
@@ -37,6 +44,8 @@ export function tkInterpretasiZscore(
 
   const row = tkInterpolasiZscoreRow(table, nilaiX);
   if (!row) return null;
+
+  const diLuarTabel = tkUsiaDiLuarTabel(table, nilaiX);
 
   const z = tkHitungZscoreNumerik(row, nilaiY);
   const zRounded = Math.round(z * 10) / 10;
@@ -129,7 +138,7 @@ export function tkInterpretasiZscore(
     else rentang = "> +3 SD";
   }
 
-  return { z: zRounded, zonaLabel, rentang, statusGizi, statusColor };
+  return { z: zRounded, zonaLabel, rentang, statusGizi, statusColor, diLuarTabel };
 }
 
 /* ===================== Jalur CDC — % median / Waterlow ===================== */

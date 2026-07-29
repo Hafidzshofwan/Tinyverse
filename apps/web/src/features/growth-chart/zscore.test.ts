@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   tkInterpolasiZscoreRow,
+  tkUsiaDiLuarTabel,
   tkHitungZscoreNumerik,
   hitungIMT,
   type ZscoreTable,
@@ -62,8 +63,26 @@ describe("tkInterpolasiZscoreRow (usia pecahan)", () => {
     expect(r?.[3]).toBeCloseTo(3.9, 6);
     expect(r?.[6]).toBeCloseTo(5.8, 6);
   });
-  it("usia di luar tabel -> null", () => {
-    expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 5)).toBeNull();
+  it("usia di luar tabel -> dijepit ke baris tepi terdekat (perilaku v17)", () => {
+    // WHY: mesin v17 TIDAK pernah mengembalikan null untuk usia di luar tabel;
+    // ia memakai baris tepi terdekat. Perilaku itu dipertahankan agar hasil
+    // perhitungan identik dengan sebelum migrasi. Penjepitannya tidak dibiarkan
+    // senyap: `tkUsiaDiLuarTabel` melaporkannya agar UI bisa memperingatkan.
+    expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, 5)).toEqual(baris(WHO_BBU_MALE, 1));
+    expect(tkInterpolasiZscoreRow(WHO_BBU_MALE, -2)).toEqual(baris(WHO_BBU_MALE, 0));
+  });
+});
+
+describe("tkUsiaDiLuarTabel (penanda penjepitan)", () => {
+  it("menandai usia di luar rentang tabel", () => {
+    expect(tkUsiaDiLuarTabel(WHO_BBU_MALE, 5)).toBe(true);
+    expect(tkUsiaDiLuarTabel(WHO_BBU_MALE, -2)).toBe(true);
+  });
+
+  it("tidak menandai usia yang masih di dalam tabel, termasuk tepinya", () => {
+    expect(tkUsiaDiLuarTabel(WHO_BBU_MALE, 0)).toBe(false);
+    expect(tkUsiaDiLuarTabel(WHO_BBU_MALE, 0.5)).toBe(false);
+    expect(tkUsiaDiLuarTabel(WHO_BBU_MALE, 1)).toBe(false);
   });
 });
 

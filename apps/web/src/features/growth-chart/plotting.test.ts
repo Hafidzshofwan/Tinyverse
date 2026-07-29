@@ -61,11 +61,16 @@ describe("tkHitungKoordinatTitik", () => {
 
   it("memakai usiaLineY pada chart CDC untuk pangkal garis bantu vertikal", () => {
     const cdc = GROWTH_CHART_CONFIG.cdc?.genders.male?.indicators.bbtbu?.charts[0];
-    const kal = cdc?.calibration.berat;
+    // WHY: dipakai kalibrasi TINGGI, bukan berat. Pada kalibrasi berat CDC,
+    // plot.y1 kebetulan bernilai sama dengan usiaLineY (keduanya 1467), sehingga
+    // perbedaan keduanya mustahil dibuktikan di sana. Pada kalibrasi tinggi,
+    // tepi bawah area kurva (1214) dan baris tick bulan (1467) benar-benar beda.
+    const kal = cdc?.calibration.tinggi;
     expect(kal).toBeDefined();
     if (!kal) return;
-    const t = tkHitungKoordinatTitik(kal, 120, 40);
+    const t = tkHitungKoordinatTitik(kal, 120, 150);
     expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
+    expect(t.sumbuBawahPersen).toBeCloseTo(73.5758, 3); // 1214 / 1650
     expect(t.sumbuUsiaPersen).not.toBeCloseTo(t.sumbuBawahPersen, 3);
   });
 });

@@ -6,6 +6,7 @@ export {
   hitungIMT,
   tkHitungZscoreNumerik,
   tkInterpolasiZscoreRow,
+  tkUsiaDiLuarTabel,
 } from "./zscore";
 
 export { tkHitungKoordinatTitik, tkKalibrasiValid } from "./plotting";

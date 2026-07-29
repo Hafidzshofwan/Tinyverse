@@ -59,6 +59,31 @@ export function tkInterpolasiZscoreRow(table: ZscoreTable, nilaiX: number): Zsco
   });
 }
 
+/**
+ * Apakah usia yang diminta berada DI LUAR rentang tabel rujukan?
+ *
+ * WHY: `tkInterpolasiZscoreRow` sengaja menjepit usia di luar tabel ke baris
+ * tepi terdekat — perilaku asli v17 yang tidak boleh diubah, karena mengubahnya
+ * berarti mengubah hasil perhitungan. Namun angka hasil penjepitan bukan angka
+ * tabel untuk usia tersebut, jadi pemanggil WAJIB bisa mengetahuinya dan
+ * memberi tahu pengguna. Fungsi ini murni pelapor: ia tidak mengubah satu pun
+ * hasil perhitungan.
+ */
+export function tkUsiaDiLuarTabel(table: ZscoreTable, nilaiX: number): boolean {
+  if (!table) return false;
+
+  const keys = Object.keys(table)
+    .map(Number)
+    .filter((k) => !isNaN(k))
+    .sort((a, b) => a - b);
+
+  const minKey = keys[0];
+  const maxKey = keys[keys.length - 1];
+  if (minKey === undefined || maxKey === undefined) return false;
+
+  return nilaiX < minKey || nilaiX > maxKey;
+}
+
 /** Hitung z-score pecahan dari sebuah baris SD dan nilai terukur. */
 export function tkHitungZscoreNumerik(row: ZscoreRow, nilaiY: number): number {
   const sdLabels = [-3, -2, -1, 0, 1, 2, 3];

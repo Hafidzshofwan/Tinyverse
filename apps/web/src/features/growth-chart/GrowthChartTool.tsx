@@ -448,6 +448,14 @@ export function GrowthChartTool() {
                   <span className="tk-zscore-label">Posisi</span>
                   <span className="tk-zscore-nilai">{z.rentang || z.zonaLabel}</span>
                 </div>
+                {z.diLuarTabel ? (
+                  <div className="tk-zscore-row">
+                    <span className="tk-zscore-label">Catatan</span>
+                    <span className="tk-zscore-nilai">
+                      Usia di luar rentang tabel — z-score dihitung dari baris tabel terdekat.
+                    </span>
+                  </div>
+                ) : null}
                 {z.statusGizi ? (
                   <div
                     className="tk-zscore-status"

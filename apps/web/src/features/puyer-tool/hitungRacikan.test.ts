@@ -119,7 +119,9 @@ describe("hitungRacikan", () => {
 		expect(r.perBungkus).toBeCloseTo(125, 10);
 		expect(r.pct).toBeCloseTo(25, 10);
 		expect(r.cls).toBe("puyer-danger");
-		expect(h.catatan.some((c) => c.teks.includes("Selisih dosis Obat Uji +25,0%"))).toBe(true);
+		// fmt() memakai String(x) sehingga nol di belakang koma dibuang:
+		// 25 ditulis "25", bukan "25,0". Ini perilaku asli island, bukan cacat.
+		expect(h.catatan.some((c) => c.teks.includes("Selisih dosis Obat Uji +25%"))).toBe(true);
 	});
 
 	it("menolak menghitung tanpa jumlah bungkus atau tanpa obat", () => {
