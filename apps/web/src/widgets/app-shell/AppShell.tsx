@@ -13,12 +13,37 @@ import { AiAssistantWidget } from "@/widgets/ai-assistant";
 import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
+import publik from "./publik.module.css";
 
 export interface AppShellProps {
   children: ReactNode;
 }
 
 const STORAGE_KEY = "tv-sidebar-open";
+
+/**
+ * Rute yang boleh dilihat tanpa masuk.
+ *
+ * WHY: calon pelanggan -- dan peninjau pendaftaran merchant Midtrans -- harus
+ * bisa melihat daftar paket beserta harganya sebelum membuat akun. Sebelum ini
+ * seluruh situs hanya menampilkan layar masuk, sehingga tidak ada satu pun
+ * harga yang terlihat dari luar.
+ *
+ * Pencocokan sengaja PERSIS, bukan awalan. "/langganan/selesai" menampilkan
+ * status pesanan milik seseorang, jadi tidak boleh ikut terbuka hanya karena
+ * awalan jalurnya kebetulan sama. Setiap rute publik baru harus ditulis satu
+ * per satu di sini, dan itu memang disengaja.
+ *
+ * Daftar ini hanya mengatur TAMPILAN. Gerbang berbayar /preview adalah Server
+ * Component terpisah yang memutuskan sebelum HTML dikirim, dan sama sekali
+ * tidak terpengaruh oleh daftar ini.
+ */
+const RUTE_PUBLIK: readonly string[] = ["/langganan"];
+
+function rutePublik(pathname: string | null): boolean {
+  if (!pathname) return false;
+  return RUTE_PUBLIK.includes(pathname);
+}
 
 // Peta href -> label menu untuk mencatat riwayat "Buka Fitur" (seperti v17).
 const LABEL_BY_HREF: Record<string, string> = (() => {
@@ -99,6 +124,31 @@ function AppShellInner({ children }: AppShellProps) {
     () => (open ? "tv-shell" : "tv-shell tv-shell-collapsed"),
     [open],
   );
+
+  /* Rute publik ditampilkan apa adanya, tanpa menunggu Firebase selesai
+     memeriksa sesi. Menunggu hanya akan memunculkan pemuatan yang tidak perlu
+     bagi pengunjung yang memang belum punya akun. Kerangka di bawah sengaja
+     minimal: tanpa sidebar, tanpa menu pengguna, tanpa profil pasien, dan
+     tanpa asisten AI -- semuanya menuntut pengguna yang sudah masuk. */
+  if (status !== "signedIn" && rutePublik(pathname)) {
+    return (
+      <div className={publik.wrap}>
+        <header className={publik.topbar}>
+          <Link href="/" className="tv-brand">
+            <Logo />
+            <span className="tv-brand-txt">Tinyverse</span>
+          </Link>
+          <Link href="/" className={publik.masuk}>
+            Masuk
+          </Link>
+        </header>
+        <main className={publik.isi}>{children}</main>
+        <footer className={publik.footer}>
+          Alat bantu klinis pediatri, bukan pengganti penilaian klinis.
+        </footer>
+      </div>
+    );
+  }
 
   // Wajib login: sebelum berhasil masuk, tampilkan layar login/daftar penuh.
   if (status !== "signedIn") {

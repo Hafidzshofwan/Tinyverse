@@ -1,0 +1,52 @@
+/* Kerangka minimal untuk halaman yang boleh dibuka tanpa masuk.
+   Sengaja dipisahkan dari .tv-shell di globals.css: kerangka penuh menuntut
+   pengguna yang sudah masuk, sedangkan berkas ini hanya perlu memberi bingkai
+   yang rapi bagi satu halaman harga. */
+
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.masuk {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: #1f6feb;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.masuk:hover {
+  background: #1a5fd0;
+}
+
+.isi {
+  flex: 1;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
