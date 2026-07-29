@@ -27,4 +27,10 @@ export class ClientUnsupportedOrderRepository implements OrderRepository {
 	}): Promise<boolean> {
 		return this.tolak("updateStatus")
 	}
+	async listPerluRekonsiliasi(_args: {
+		sampai: string
+		batas: number
+	}): Promise<Pesanan[]> {
+		return this.tolak("listPerluRekonsiliasi")
+	}
 }

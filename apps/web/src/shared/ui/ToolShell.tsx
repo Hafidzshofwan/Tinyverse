@@ -29,13 +29,13 @@ const icoStyle: CSSProperties = {
   color: "#D936A6",
   boxShadow: "none",
 };
-// Judul: diselaraskan presisi dengan contoh v17 (18.32px Fredoka, #0A0B5F).
+// Judul: diselaraskan presisi dengan contoh v17 (19.48px Fredoka, #0A0B5F).
 const titleStyle: CSSProperties = {
   margin: 0,
   fontFamily:
     '"Fredoka", "Quicksand", system-ui, -apple-system, "Segoe UI", sans-serif',
   fontWeight: 700,
-  fontSize: "18.32px",
+  fontSize: "19.48px",
   color: "#0A0B5F",
 };
 // Subjudul: diselaraskan presisi dengan contoh v17 (10.24px Quicksand, #0A0B5F9E, margin 2px 0 0).

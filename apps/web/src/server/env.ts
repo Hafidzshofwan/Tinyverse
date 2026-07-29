@@ -124,3 +124,15 @@ export function envMidtrans() {
 export function envAplikasi() {
   return { baseUrl: wajib("APP_BASE_URL").replace(/\/+$/, "") };
 }
+
+/**
+ * Rahasia untuk rute rekonsiliasi terjadwal.
+ *
+ * WHY memakai wajib(): rute rekonsiliasi berwenang memperpanjang masa aktif
+ * langganan, sehingga alamatnya tidak boleh pernah terbuka tanpa penjaga.
+ * Bila rahasianya lupa dipasang, lebih baik rute itu gagal keras daripada
+ * hidup tanpa kunci.
+ */
+export function envCron() {
+  return { secret: wajib("CRON_SECRET") };
+}

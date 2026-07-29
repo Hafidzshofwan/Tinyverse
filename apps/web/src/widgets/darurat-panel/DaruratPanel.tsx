@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import "./v17-darurat.css";
+import "@/app/preview/darurat/v17-darurat.css";
 import { PatTab } from "@/features/emergency-pat";
 import { ResusTab } from "@/features/emergency-resus";
 import { PalsTab } from "@/features/emergency-pals";
@@ -219,7 +219,7 @@ export function DaruratPanel() {
           </div>
           <div>
             <h2>Mode Darurat</h2>
-            <p>
+            <p style={{ fontSize: "10.24px" }}>
               Alat bantu cepat: Penilaian PAT, Timer resusitasi & Kalkulator
               dosis PALS.
             </p>

@@ -51,4 +51,22 @@ export class InMemoryOrderRepository implements OrderRepository {
 		this.data.set(args.id, { ...p, status: args.keStatus, updatedAt: args.padaWaktu })
 		return true
 	}
+
+	async listPerluRekonsiliasi(args: {
+		sampai: string
+		batas: number
+	}): Promise<Pesanan[]> {
+		/* Urutannya disengaja: yang berstatus "dibayar" didahulukan, karena di
+		   sanalah dana pelanggan sudah masuk tetapi aksesnya belum terbuka. Bila
+		   satu putaran tidak cukup, yang paling merugikan tetap tertangani dulu. */
+		const tertahan = [...this.data.values()].filter((p) => p.status === "dibayar")
+
+		const lewatTempo = [...this.data.values()].filter(
+			(p) => p.status === "menunggu" && p.expiresAt <= args.sampai,
+		)
+
+		return [...tertahan, ...lewatTempo]
+			.slice(0, args.batas)
+			.map((p) => ({ ...p }))
+	}
 }

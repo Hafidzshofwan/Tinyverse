@@ -34,4 +34,28 @@ export type OrderRepository = {
 		keStatus: StatusPesanan
 		padaWaktu: string
 	}): Promise<boolean>
+	/**
+	 * Pesanan yang perlu ditanyakan ulang kepada gateway.
+	 *
+	 * WHY metode ini ada:
+	 * Seluruh pembukaan akses bergantung pada notifikasi yang datang sendiri dari
+	 * gateway. Bila notifikasi itu hilang di jalan - server sedang tumbang, deploy
+	 * sedang berjalan - tidak ada apa pun yang menyusul, dan pelanggan yang sudah
+	 * membayar tidak akan pernah menerima aksesnya. Rekonsiliasi membalik arahnya:
+	 * kita yang bertanya. Metode inilah daftar yang perlu ditanyakan.
+	 *
+	 * Yang wajib dikembalikan ada dua rupa:
+	 * 1. status "dibayar" - berapa pun umurnya. Dana sudah masuk tetapi langganan
+	 *    belum diperpanjang; inilah kegagalan yang merugikan pelanggan.
+	 * 2. status "menunggu" yang `expiresAt`-nya sudah melewati `sampai`.
+	 *
+	 * @param args.sampai batas waktu ISO; pemanggil sengaja memberi jeda aman,
+	 *   bukan waktu sekarang, agar pesanan yang baru saja lewat tempo tidak
+	 *   diusik selagi pembayarannya mungkin masih berlangsung.
+	 * @param args.batas jumlah maksimum yang dikembalikan dalam satu putaran.
+	 */
+	listPerluRekonsiliasi(args: {
+		sampai: string
+		batas: number
+	}): Promise<Pesanan[]>
 }
