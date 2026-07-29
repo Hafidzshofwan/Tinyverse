@@ -198,9 +198,9 @@ export function pilihSediaanAktif(
       ? indexInput
       : parseInt(String(indexInput || "0"), 10);
   if (!isNaN(idx) && idx >= 0 && idx < obat.sediaanOptions.length) {
-    return obat.sediaanOptions[idx];
+    return obat.sediaanOptions[idx] ?? null;
   }
-  return obat.sediaanOptions[0];
+  return obat.sediaanOptions[0] ?? null;
 }
 
 
