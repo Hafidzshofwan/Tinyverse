@@ -276,7 +276,10 @@
 
 .puyer-island-wrap .puyer-note-list { display: grid; gap: 8px; }
 
-.puyer-island-wrap .puyer-note { border-radius: 14px; padding: 10px 12px; background: #FFF7E2; border: 1px solid #FFE4A0; font-size: .8rem; font-weight: 700; line-height: 1.45; }
+.puyer-island-wrap .puyer-note { border-radius: 14px; padding: 10px 12px; background: #FFF7E2; border: 1px solid #FFE4A0; font-size: .8rem; font-weight: 700; line-height: 1.45; color: #7E5109; }
+.puyer-island-wrap .puyer-note.puyer-note-stop { background: #FDEDEC; border: 1px solid #FADBD8; color: #922B21; }
+.puyer-island-wrap .puyer-note.puyer-note-info { background: #EBF5FB; border: 1px solid #D4E6F1; color: #1B4F72; }
+.puyer-island-wrap .puyer-note.puyer-note-warn { background: #FFF7E2; border: 1px solid #FFE4A0; color: #7E5109; }
 
 .puyer-island-wrap .puyer-output-text { white-space: pre-wrap; background: #fff; border: 2px dashed #EAF6FB; border-radius: 16px; padding: 12px; font-size: .82rem; line-height: 1.55; }
 
@@ -1176,5 +1179,33 @@ html.dark .puyer-island-wrap .puyer-empty {
 [data-theme="dark"] .puyer-island-wrap .puyer-empty strong,
 html.dark .puyer-island-wrap .puyer-empty strong {
   color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .puyer-island-wrap .puyer-note,
+html.dark .puyer-island-wrap .puyer-note {
+  background: rgba(245, 158, 11, 0.15) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  color: #FDE68A !important;
+}
+
+[data-theme="dark"] .puyer-island-wrap .puyer-note.puyer-note-stop,
+html.dark .puyer-island-wrap .puyer-note.puyer-note-stop {
+  background: rgba(225, 29, 72, 0.15) !important;
+  border: 1px solid rgba(225, 29, 72, 0.4) !important;
+  color: #FECDD3 !important;
+}
+
+[data-theme="dark"] .puyer-island-wrap .puyer-note.puyer-note-info,
+html.dark .puyer-island-wrap .puyer-note.puyer-note-info {
+  background: rgba(56, 189, 248, 0.15) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  color: #BAE6FD !important;
+}
+
+[data-theme="dark"] .puyer-island-wrap .puyer-note.puyer-note-warn,
+html.dark .puyer-island-wrap .puyer-note.puyer-note-warn {
+  background: rgba(245, 158, 11, 0.15) !important;
+  border: 1px solid rgba(245, 158, 11, 0.4) !important;
+  color: #FDE68A !important;
 }
 

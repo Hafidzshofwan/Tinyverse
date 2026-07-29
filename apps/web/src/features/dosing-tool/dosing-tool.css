@@ -642,3 +642,302 @@
   line-height: 1.5;
   margin-top: 14px;
 }
+
+/* ==========================================================================
+   Dark Mode Support for Dosis Tool
+   ========================================================================== */
+
+[data-theme="dark"] .dosis-container,
+html.dark .dosis-container {
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .dosis-judul-teks h2,
+html.dark .dosis-judul-teks h2 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-judul-teks p,
+html.dark .dosis-judul-teks p {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dosis-judul-icon,
+html.dark .dosis-judul-icon {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .dosis-search-input,
+html.dark .dosis-search-input {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] .dosis-search-input::placeholder,
+html.dark .dosis-search-input::placeholder {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] .dosis-search-icon,
+html.dark .dosis-search-icon {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dosis-chip,
+html.dark .dosis-chip {
+  background-color: #1E293B !important;
+  color: #94A3B8 !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .dosis-chip:hover,
+html.dark .dosis-chip:hover {
+  background-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-chip.aktif,
+html.dark .dosis-chip.aktif {
+  background-color: #6366F1 !important;
+  color: #ffffff !important;
+  border-color: #6366F1 !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35) !important;
+}
+
+[data-theme="dark"] .dosis-card,
+html.dark .dosis-card {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="dark"] .dosis-card:hover,
+html.dark .dosis-card:hover {
+  border-color: #475569 !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] .dosis-card.terpilih,
+html.dark .dosis-card.terpilih {
+  border-color: #818CF8 !important;
+  background-color: #1E293B !important;
+  box-shadow: 0 10px 30px -5px rgba(129, 140, 248, 0.3) !important;
+}
+
+[data-theme="dark"] .dosis-card-glow-bg,
+html.dark .dosis-card-glow-bg {
+  background: radial-gradient(circle at top right, rgba(217, 70, 239, 0.2) 0%, rgba(236, 72, 153, 0.1) 65%, transparent 100%) !important;
+}
+
+[data-theme="dark"] .dosis-card-toggle-dot,
+html.dark .dosis-card-toggle-dot {
+  background-color: #818CF8 !important;
+  box-shadow: 0 2px 8px rgba(129, 140, 248, 0.5) !important;
+}
+
+[data-theme="dark"] .dosis-card-title-text,
+html.dark .dosis-card-title-text {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-card-subtitle,
+html.dark .dosis-card-subtitle {
+  color: #A5B4FC !important;
+}
+
+[data-theme="dark"] .dosis-btn-pilih-sediaan,
+html.dark .dosis-btn-pilih-sediaan {
+  background-color: #334155 !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .dosis-card:hover .dosis-btn-pilih-sediaan,
+[data-theme="dark"] .dosis-card.terpilih .dosis-btn-pilih-sediaan,
+html.dark .dosis-card:hover .dosis-btn-pilih-sediaan,
+html.dark .dosis-card.terpilih .dosis-btn-pilih-sediaan {
+  background-color: #4338CA !important;
+  color: #EEF2FF !important;
+}
+
+[data-theme="dark"] .dosis-pesan-kosong,
+html.dark .dosis-pesan-kosong {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dosis-kartu-kalkulator,
+html.dark .dosis-kartu-kalkulator {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35) !important;
+}
+
+[data-theme="dark"] .dosis-obat-terpilih-box,
+html.dark .dosis-obat-terpilih-box {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .dosis-obat-terpilih-teks h4,
+html.dark .dosis-obat-terpilih-teks h4 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-obat-terpilih-teks p,
+html.dark .dosis-obat-terpilih-teks p {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dosis-btn-ganti,
+html.dark .dosis-btn-ganti {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-btn-ganti:hover,
+html.dark .dosis-btn-ganti:hover {
+  background-color: #334155 !important;
+  color: #FFFFFF !important;
+  border-color: #475569 !important;
+}
+
+[data-theme="dark"] .dosis-form-label,
+html.dark .dosis-form-label {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-form-input,
+[data-theme="dark"] .dosis-form-select,
+html.dark .dosis-form-input,
+html.dark .dosis-form-select {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-form-select option,
+html.dark .dosis-form-select option {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dosis-hasil-box,
+html.dark .dosis-hasil-box {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .dosis-hasil-box.error-box,
+html.dark .dosis-hasil-box.error-box {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+[data-theme="dark"] .dosis-hasil-title,
+html.dark .dosis-hasil-title {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .hasil-ringkasan,
+html.dark .hasil-ringkasan {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .hasil-label-kecil,
+html.dark .hasil-label-kecil {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .hasil-dosis,
+html.dark .hasil-dosis {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .hasil-volume,
+html.dark .hasil-volume {
+  color: #4ADE80 !important;
+}
+
+[data-theme="dark"] .hasil-subtext,
+html.dark .hasil-subtext {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .hasil-daily,
+html.dark .hasil-daily {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #FDE68A !important;
+}
+
+[data-theme="dark"] .hasil-section,
+html.dark .hasil-section {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .hasil-section-title,
+html.dark .hasil-section-title {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .hasil-row,
+html.dark .hasil-row {
+  border-bottom-color: #334155 !important;
+}
+
+[data-theme="dark"] .hasil-row .label,
+html.dark .hasil-row .label {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .hasil-row .value,
+html.dark .hasil-row .value {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .hasil-frekuensi,
+html.dark .hasil-frekuensi {
+  background-color: rgba(59, 130, 246, 0.2) !important;
+  border-color: rgba(59, 130, 246, 0.4) !important;
+  color: #93C5FD !important;
+}
+
+[data-theme="dark"] .hasil-warning,
+html.dark .hasil-warning {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #FDE68A !important;
+}
+
+[data-theme="dark"] .hasil-note,
+html.dark .hasil-note {
+  background-color: #1E293B !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .keamanan-panel,
+html.dark .keamanan-panel {
+  background-color: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .keamanan-panel h3,
+html.dark .keamanan-panel h3 {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .keamanan-disclaimer,
+html.dark .keamanan-disclaimer {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+  border-color: rgba(245, 158, 11, 0.4) !important;
+  color: #FDE68A !important;
+}
+

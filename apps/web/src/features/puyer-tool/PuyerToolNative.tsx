@@ -654,7 +654,7 @@ export function PuyerToolNative(): JSX.Element {
 
 							<div className="puyer-note-list">
 								{hasil.catatan.map((c) => (
-									<div className="puyer-note" key={c.teks}>
+									<div className={`puyer-note puyer-note-${c.jenis}`} key={c.teks}>
 										{c.jenis === "stop" ? <IkonCatatanStop /> : c.jenis === "info" ? <IkonCatatanInfo /> : <IkonCatatanWarn />} {c.teks}
 									</div>
 								))}
