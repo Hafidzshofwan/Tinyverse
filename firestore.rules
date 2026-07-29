@@ -234,15 +234,22 @@ service cloud.firestore {
 
 /*
  * ============================================================
- *  UTANG TEKNIS YANG DIKETAHUI
+ *  CATATAN PEMELIHARAAN
  * ============================================================
- * patients / growthRecords / appState masih dipakai bersama oleh seluruh
- * pengguna yang masuk. Selama aplikasi dipakai satu praktik, ini dapat
- * diterima. Begitu ada pelanggan kedua yang tidak saling kenal, data pasien
- * WAJIB dipindahkan ke jalur ber-akun, misalnya:
+ * Data pasien SUDAH dipindahkan ke jalur ber-akun:
  *
  *     accounts/{accountId}/patients/{patientId}
+ *     accounts/{accountId}/growthRecords/{patientId}
+ *     accounts/{accountId}/appState/{docId}
  *
- * Perubahan itu menyentuh kode aplikasi, bukan hanya aturan ini, sehingga
- * sengaja tidak dikerjakan pada Fase 1.
+ * Kepemilikan ditegakkan di bagian 2 lewat accountId == request.auth.uid.
+ * Ketiga koleksi datar lama (patients, growthRecords, appState) sudah
+ * ditutup total dan data di dalamnya sengaja ditinggalkan, tidak
+ * dimigrasikan.
+ *
+ * Koleksi penagihan (orders, subscriptions, paymentEvents, webhookInbox)
+ * ditulis dan dibaca oleh Admin SDK dari apps/web/src/server/, yang tidak
+ * tunduk pada berkas ini. Bila kelak ada fitur yang perlu membacanya dari
+ * peramban, tambahkan aturan barunya secara eksplisit - jangan longgarkan
+ * blok penolakan bawaan di bagian 6.
  */
