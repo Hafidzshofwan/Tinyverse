@@ -117,7 +117,7 @@ export function LabPanel() {
             <SidebarIcon slug="lab" size={38} />
           </div>
           <div>
-            <h2 style={{ fontSize: "18.32px" }}>Interpretasi Lab Anak</h2>
+            <h2 style={{ fontSize: "19.48px" }}>Interpretasi Lab Anak</h2>
             <p style={{ fontSize: "10.24px" }}>
               Nilai rujukan per usia, interpretasi hitung darah & koreksi
               elektrolit.

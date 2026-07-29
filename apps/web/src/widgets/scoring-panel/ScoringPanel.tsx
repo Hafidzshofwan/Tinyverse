@@ -29,7 +29,7 @@ const titleStyle: CSSProperties = {
   fontFamily:
     '"Fredoka", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif',
   fontWeight: 700,
-  fontSize: "18.32px",
+  fontSize: "19.48px",
   lineHeight: 1.2,
   color: "var(--tv-navy, #0a0b5f)",
 };
