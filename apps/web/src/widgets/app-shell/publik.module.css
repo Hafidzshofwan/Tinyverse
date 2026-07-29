@@ -1,7 +1,9 @@
-/* Kerangka minimal untuk halaman yang boleh dibuka tanpa masuk.
-   Sengaja dipisahkan dari .tv-shell di globals.css: kerangka penuh menuntut
-   pengguna yang sudah masuk, sedangkan berkas ini hanya perlu memberi bingkai
-   yang rapi bagi satu halaman harga. */
+/* Kerangka halaman untuk pengunjung yang belum masuk.
+
+   Sengaja sederhana: hanya kepala berisi logo dan tombol masuk, isi halaman,
+   lalu kaki berisi penyangkalan dan tautan dokumen wajib merchant. Tidak ada
+   sidebar, menu pengguna, profil pasien, maupun asisten AI -- semuanya
+   menuntut pengguna yang sudah masuk. */
 
 .wrap {
   display: flex;
@@ -22,18 +24,16 @@
   display: inline-flex;
   align-items: center;
   min-height: 40px;
-  padding: 8px 18px;
+  padding: 0 18px;
   border-radius: 999px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  background: #2f7cf6;
   color: #fff;
-  background: #1f6feb;
+  font-weight: 700;
   text-decoration: none;
-  white-space: nowrap;
 }
 
 .masuk:hover {
-  background: #1a5fd0;
+  background: #2568d8;
 }
 
 .isi {
@@ -41,12 +41,24 @@
   width: 100%;
   max-width: 880px;
   margin: 0 auto;
-  padding: 24px 20px 48px;
 }
 
 .footer {
   padding: 20px;
   text-align: center;
   font-size: 0.85rem;
-  opacity: 0.7;
+  opacity: 0.75;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.kakiTautan {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-bottom: 10px;
+}
+
+.kakiTautan a {
+  color: inherit;
 }

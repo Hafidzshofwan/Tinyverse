@@ -40,9 +40,21 @@ export const SESI_BERLAKU_HARI = 5;
 /**
  * Konfigurasi Midtrans.
  *
- * WHY tidak ada NEXT_PUBLIC_ di sini: mode redirect tidak memerlukan Client Key
- * di browser. Pelanggan dibawa ke halaman milik Midtrans, sehingga seluruh
- * percakapan dengan gateway berlangsung dari server ke server.
+ * Mode tampilan pembayaran adalah POPUP: jendela Snap muncul di atas halaman
+ * Tinyverse, sehingga pelanggan tidak pernah berpindah domain. Itu menuntut
+ * dua hal yang tidak diperlukan mode redirect: berkas snap.js dan Client Key.
+ *
+ * WHY Client Key tetap dibaca di sini, tanpa awalan NEXT_PUBLIC_: nilainya
+ * memang dirancang untuk terbaca publik, tetapi MODE-nya tidak boleh hidup di
+ * dua tempat. Bila mode disimpan sekali lagi sebagai NEXT_PUBLIC_, cepat atau
+ * lambat keduanya akan berbeda -- dan gejalanya adalah pembayaran sandbox yang
+ * tampil di situs produksi. Karena itu Server Component membaca keduanya dari
+ * satu sumber ini, lalu menurunkannya sebagai prop ke Client Component.
+ *
+ * Client Key sengaja TIDAK memakai wajib(). Ketiadaannya bukan alasan untuk
+ * menjatuhkan halaman langganan yang kini terbuka untuk umum; tanpa kunci itu,
+ * tombol beli cukup kembali ke cara lama, yaitu mengalihkan ke halaman
+ * Midtrans.
  */
 export type ModeMidtrans = "sandbox" | "production";
 
@@ -56,6 +68,7 @@ export function envMidtrans() {
   }
 
   const serverKey = wajib("MIDTRANS_SERVER_KEY");
+  const clientKey = process.env.MIDTRANS_CLIENT_KEY ?? "";
 
   /*
    * Penjaga satu arah, dan sengaja hanya satu arah.
@@ -72,14 +85,27 @@ export function envMidtrans() {
     );
   }
 
+  if (mode === "production" && clientKey.startsWith("SB-")) {
+    throw new Error(
+      "MIDTRANS_MODE bernilai production, tetapi MIDTRANS_CLIENT_KEY adalah " +
+        "kunci sandbox. Jendela pembayaran akan menolak transaksi sungguhan.",
+    );
+  }
+
   return {
     mode,
     serverKey,
-    /** Pembuatan transaksi Snap. */
+    clientKey,
+    /** Pembuatan transaksi Snap (server ke server). */
     urlSnap:
       mode === "production"
         ? "https://app.midtrans.com/snap/v1"
         : "https://app.sandbox.midtrans.com/snap/v1",
+    /** Berkas snap.js yang memunculkan jendela pembayaran di peramban. */
+    urlSnapJs:
+      mode === "production"
+        ? "https://app.midtrans.com/snap/snap.js"
+        : "https://app.sandbox.midtrans.com/snap/snap.js",
     /** Pembacaan status transaksi (verifikasi ganda webhook). */
     urlApi:
       mode === "production"

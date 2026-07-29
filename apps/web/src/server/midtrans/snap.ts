@@ -1,10 +1,17 @@
 /**
  * Pembuatan transaksi Snap.
  *
- * Mode yang dipakai adalah REDIRECT: pelanggan dibawa ke halaman milik
- * Midtrans. Konsekuensinya kita tidak memuat snap.js dan tidak pernah
- * menaruh Client Key di peramban - seluruh percakapan dengan gateway
- * berlangsung dari server ke server.
+ * Berkas ini hanya berbicara dari SERVER ke server. Ia menukar rincian pesanan
+ * dengan sepasang nilai dari Midtrans:
+ *
+ *   - token       dipakai snap.js untuk memunculkan jendela pembayaran di atas
+ *                 halaman Tinyverse (mode popup, jalur utama);
+ *   - redirectUrl halaman pembayaran milik Midtrans, dipakai sebagai jalur
+ *                 cadangan bila snap.js gagal dimuat -- misalnya karena
+ *                 pemblokir skrip di peramban pelanggan.
+ *
+ * Server Key tidak pernah meninggalkan berkas ini. Yang boleh sampai ke
+ * peramban hanyalah token pesanan dan Client Key.
  *
  * Tidak ada dependensi baru: pemanggilan HTTP memakai fetch bawaan Node 20.
  */
@@ -70,6 +77,10 @@ export async function buatTransaksiSnap(args: {
     ],
     ...(args.email ? { customer_details: { email: args.email } } : {}),
     credit_card: { secure: true },
+    /* callbacks.finish tetap dikirim meski jalur utama kini popup. Ia dipakai
+       oleh jalur cadangan redirect, dan oleh metode pembayaran yang memang
+       memindahkan pelanggan ke aplikasi lain (mis. dompet digital) lalu
+       memulangkannya. */
     callbacks: { finish: args.finishUrl },
     /* start_time sengaja tidak dikirim: formatnya menuntut zona waktu eksplisit
        dan mudah salah. Tanpa start_time, Midtrans menghitung dari saat
@@ -105,7 +116,7 @@ export async function buatTransaksiSnap(args: {
   }
 
   if (typeof data.token !== "string" || typeof data.redirect_url !== "string") {
-    throw new Error(`Jawaban Snap tidak memuat redirect_url: ${potong(teks, 300)}`);
+    throw new Error(`Jawaban Snap tidak lengkap: ${potong(teks, 300)}`);
   }
 
   return { token: data.token, redirectUrl: data.redirect_url };

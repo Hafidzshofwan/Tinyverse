@@ -1,38 +1,28 @@
 /**
  * Halaman langganan.
  *
- * Server Component dengan sengaja. Statusnya dibaca di server sebelum HTML
- * dikirim, sehingga halaman tidak pernah berkedip "belum berlangganan" lalu
- * berubah, dan status sesungguhnya tidak pernah bergantung pada apa pun yang
- * dijalankan di browser.
+ * Server Component. Halaman ini boleh dibuka tanpa masuk -- calon pelanggan,
+ * dan peninjau pendaftaran merchant Midtrans, harus bisa melihat paket beserta
+ * harganya sebelum membuat akun. Keterbukaannya diatur oleh RUTE_PUBLIK di
+ * AppShell.
  *
- * WHY daftar harga tampil juga bagi yang belum masuk: calon pelanggan berhak
- * tahu harganya sebelum membuat akun, dan peninjau pendaftaran merchant
- * Midtrans mensyaratkan harga rupiah terlihat dari luar. Yang disembunyikan
- * dari pengunjung hanyalah kartu status miliknya sendiri dan tombol beli --
- * checkout menuntut sesi, jadi tombolnya tidak akan berguna tanpa masuk.
- *
- * Halaman ini tidak membuka akses apa pun. Alat klinis di /preview dijaga
- * Server Component terpisah yang memutuskan sebelum HTML dikirim.
+ * Bagian yang menyangkut akun (status langganan dan tombol beli) hanya
+ * ditampilkan kepada pengguna yang sudah masuk.
  */
 import Link from "next/link";
 
 import type { StatusLangganan } from "@tinyverse/billing";
+
 import { statusAksesSaatIni } from "@/server/entitlementServer";
+import { envMidtrans } from "@/server/env";
 import { KATALOG_PLAN } from "@/server/planKatalog";
+
 import { TombolBeli } from "./TombolBeli";
 import gaya from "./langganan.module.css";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-/*
- * Kedua peta di bawah diberi tipe Record<StatusLangganan, ...> secara eksplisit.
- * Manfaatnya bukan sekadar menyenangkan TypeScript: bila kelak ada nilai status
- * baru ditambahkan di @tinyverse/billing, kompilasi akan langsung menunjuk ke
- * baris ini. Tanpa itu, status baru akan tampil sebagai teks kosong di layar
- * dan tidak ada yang menyadarinya.
- */
 const LABEL_STATUS: Record<StatusLangganan, string> = {
   belum: "Belum berlangganan",
   aktif: "Aktif",
@@ -46,20 +36,19 @@ const KELAS_STATUS: Record<StatusLangganan, string> = {
 };
 
 const ISI_LANGGANAN: readonly string[] = [
-  "Dosis obat, terapi cairan, dan racik puyer",
-  "Kurva pertumbuhan WHO dan CDC dengan pemantauan longitudinal",
-  "Skrining perkembangan dan skoring klinis",
-  "Interpretasi lab dan kalkulator nutrisi",
-  "Guideline, jadwal imunisasi, dan alur tata laksana",
-  "Mode darurat dan asisten AI",
+  "Dosis Obat, Terapi Cairan, dan Racik Puyer",
+  "Tumbuh Kembang: kurva WHO & CDC serta pemantauan longitudinal",
+  "Skoring Klinis dan Interpretasi Lab",
+  "Kalkulator Nutrisi dan Jadwal Imunisasi",
+  "Guideline, Alur Tata Laksana, dan Mode Darurat",
+  "Asisten AI dan pencarian global lintas alat",
 ];
 
 function rupiah(nilai: number): string {
   return "Rp" + nilai.toLocaleString("id-ID");
 }
 
-function tanggal(iso: string | null): string {
-  if (!iso) return "\u2014";
+function tanggal(iso: string): string {
   return new Date(iso).toLocaleDateString("id-ID", {
     day: "numeric",
     month: "long",
@@ -67,87 +56,123 @@ function tanggal(iso: string | null): string {
   });
 }
 
+/**
+ * Konfigurasi jendela pembayaran.
+ *
+ * Dibungkus try/catch dengan sengaja: halaman ini kini terbuka untuk umum, dan
+ * satu variabel lingkungan yang belum terpasang tidak boleh menjatuhkan
+ * halaman harga. Bila konfigurasinya tidak lengkap, tombol beli otomatis
+ * kembali ke cara lama, yaitu mengalihkan ke halaman Midtrans.
+ */
+function konfigPembayaran(): { clientKey: string; urlSnapJs: string } {
+  try {
+    const { clientKey, urlSnapJs } = envMidtrans();
+    return { clientKey, urlSnapJs };
+  } catch {
+    return { clientKey: "", urlSnapJs: "" };
+  }
+}
+
 export default async function HalamanLangganan() {
   const status = await statusAksesSaatIni();
   const masuk = status.masuk;
   const e = status.entitlement;
 
-  /* Pelanggan yang masih aktif tetap boleh membeli: masa berlakunya menumpuk
-     di belakang periode berjalan, bukan menggantikannya. */
+  const { clientKey, urlSnapJs } = konfigPembayaran();
   const labelTombol = masuk && e.status === "aktif" ? "Perpanjang" : "Beli";
 
   return (
-    <main className={gaya.wrap}>
+    <div className={gaya.wrap}>
       <h1 className={gaya.judul}>Langganan</h1>
       <p className={gaya.sub}>Akses penuh ke seluruh alat klinis Tinyverse.</p>
 
       {masuk ? (
-        <section className={gaya.kartu}>
+        <div className={gaya.kartu}>
           <div className={gaya.baris}>
             <span className={gaya.label}>Status</span>
-            <span className={`${gaya.lencana} ${KELAS_STATUS[e.status]}`}>
-              {LABEL_STATUS[e.status]}
+            <span className={gaya.nilai}>
+              <span className={`${gaya.lencana} ${KELAS_STATUS[e.status]}`}>
+                {LABEL_STATUS[e.status]}
+              </span>
             </span>
           </div>
-          <div className={gaya.baris}>
-            <span className={gaya.label}>Berlaku sampai</span>
-            <span className={gaya.nilai}>{tanggal(e.berakhirPada)}</span>
-          </div>
+          {e.berakhirPada ? (
+            <div className={gaya.baris}>
+              <span className={gaya.label}>Berlaku sampai</span>
+              <span className={gaya.nilai}>{tanggal(e.berakhirPada)}</span>
+            </div>
+          ) : null}
           {e.status === "aktif" ? (
             <div className={gaya.baris}>
-              <span className={gaya.label}>Sisa waktu</span>
+              <span className={gaya.label}>Sisa</span>
               <span className={gaya.nilai}>{e.sisaHari} hari</span>
             </div>
           ) : null}
-        </section>
+        </div>
       ) : null}
 
-      <section className={gaya.kartu}>
-        <h2 className={gaya.kepalaKartu}>Paket</h2>
-
+      <div className={gaya.kartu}>
+        <div className={gaya.kepalaKartu}>Paket</div>
         {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
-          <div className={gaya.barisPaket} key={p.id}>
+          <div key={p.id} className={gaya.barisPaket}>
             <div>
               <div className={gaya.namaPaket}>{p.nama}</div>
               <div className={gaya.detailPaket}>{p.durasiHari} hari</div>
             </div>
             <div className={gaya.aksi}>
               <div className={gaya.hargaPaket}>{rupiah(p.hargaRupiah)}</div>
-              {masuk ? <TombolBeli planId={p.id} label={labelTombol} /> : null}
+              {masuk ? (
+                <TombolBeli
+                  planId={p.id}
+                  label={labelTombol}
+                  clientKey={clientKey}
+                  urlSnapJs={urlSnapJs}
+                />
+              ) : null}
             </div>
           </div>
         ))}
 
-        {masuk ? null : (
+        {masuk ? (
+          <p className={gaya.catatan}>
+            Sekali bayar, tanpa perpanjangan otomatis. Pembayaran diproses oleh
+            Midtrans dan akses terbuka segera setelah pembayaran dikonfirmasi.
+          </p>
+        ) : (
           <div className={gaya.ajakan}>
-            {/* Halaman masuk Tinyverse berada di akar situs. */}
             <Link href="/" className={gaya.tautMasuk}>
               Masuk untuk membeli
             </Link>
+            <p className={gaya.catatan}>
+              Sekali bayar, tanpa perpanjangan otomatis. Pembayaran diproses
+              oleh Midtrans.
+            </p>
           </div>
         )}
+      </div>
 
-        <p className={gaya.catatan}>
-          Sekali bayar. Bila tidak diperpanjang, tidak ada tagihan berikutnya dan
-          tidak ada penarikan otomatis. Pembayaran diproses oleh Midtrans; untuk
-          transfer bank dan pembayaran di gerai, konfirmasi bisa datang beberapa
-          menit setelah pembayaran diselesaikan.
-        </p>
-      </section>
-
-      <section className={gaya.kartu}>
-        <h2 className={gaya.kepalaKartu}>Yang Anda dapatkan</h2>
+      <div className={gaya.kartu}>
+        <div className={gaya.kepalaKartu}>Yang Anda dapatkan</div>
         <ul className={gaya.daftar}>
           {ISI_LANGGANAN.map((butir) => (
             <li key={butir}>{butir}</li>
           ))}
         </ul>
-        <p className={gaya.penyangkalan}>
-          Tinyverse adalah alat bantu hitung untuk tenaga kesehatan. Hasilnya
-          tidak menggantikan penilaian klinis, dan setiap keputusan tetap berada
-          pada dokter yang merawat.
-        </p>
-      </section>
-    </main>
+      </div>
+
+      <p className={gaya.tautanLegal}>
+        <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>
+        <span aria-hidden>{" \u00B7 "}</span>
+        <Link href="/pengembalian-dana">Kebijakan Pengembalian Dana</Link>
+        <span aria-hidden>{" \u00B7 "}</span>
+        <Link href="/kontak">Kontak</Link>
+      </p>
+
+      <p className={gaya.penyangkalan}>
+        Tinyverse adalah alat bantu klinis pediatri, bukan pengganti penilaian
+        klinis. Seluruh hasil perhitungan wajib diperiksa ulang oleh tenaga
+        kesehatan.
+      </p>
+    </div>
   );
 }

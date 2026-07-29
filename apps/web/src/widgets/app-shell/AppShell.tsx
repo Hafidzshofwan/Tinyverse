@@ -25,9 +25,10 @@ const STORAGE_KEY = "tv-sidebar-open";
  * Rute yang boleh dilihat tanpa masuk.
  *
  * WHY: calon pelanggan -- dan peninjau pendaftaran merchant Midtrans -- harus
- * bisa melihat daftar paket beserta harganya sebelum membuat akun. Sebelum ini
- * seluruh situs hanya menampilkan layar masuk, sehingga tidak ada satu pun
- * harga yang terlihat dari luar.
+ * bisa melihat daftar paket beserta harganya, syarat & ketentuan, kebijakan
+ * pengembalian dana, dan cara menghubungi kami sebelum membuat akun. Sebelum
+ * ini seluruh situs hanya menampilkan layar masuk, sehingga tidak ada satu pun
+ * harga maupun dokumen yang terlihat dari luar.
  *
  * Pencocokan sengaja PERSIS, bukan awalan. "/langganan/selesai" menampilkan
  * status pesanan milik seseorang, jadi tidak boleh ikut terbuka hanya karena
@@ -38,7 +39,12 @@ const STORAGE_KEY = "tv-sidebar-open";
  * Component terpisah yang memutuskan sebelum HTML dikirim, dan sama sekali
  * tidak terpengaruh oleh daftar ini.
  */
-const RUTE_PUBLIK: readonly string[] = ["/langganan"];
+const RUTE_PUBLIK: readonly string[] = [
+  "/langganan",
+  "/syarat-ketentuan",
+  "/pengembalian-dana",
+  "/kontak",
+];
 
 function rutePublik(pathname: string | null): boolean {
   if (!pathname) return false;
@@ -144,7 +150,15 @@ function AppShellInner({ children }: AppShellProps) {
         </header>
         <main className={publik.isi}>{children}</main>
         <footer className={publik.footer}>
-          Alat bantu klinis pediatri, bukan pengganti penilaian klinis.
+          {/* Tautan dokumen wajib merchant. Ditaruh di kaki setiap halaman
+              publik supaya peninjau menemukannya tanpa harus menebak alamat. */}
+          <nav className={publik.kakiTautan}>
+            <Link href="/langganan">Langganan</Link>
+            <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>
+            <Link href="/pengembalian-dana">Pengembalian Dana</Link>
+            <Link href="/kontak">Kontak</Link>
+          </nav>
+          <div>Alat bantu klinis pediatri, bukan pengganti penilaian klinis.</div>
         </footer>
       </div>
     );

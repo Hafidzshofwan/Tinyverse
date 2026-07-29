@@ -2,12 +2,13 @@
  * POST /api/checkout
  *
  * Membuat satu pesanan lalu meminta Midtrans menyiapkan halaman pembayaran.
- * Jawabannya berisi alamat yang harus dibuka peramban.
+ * Jawabannya berisi dua hal: token untuk jendela Snap, dan alamat halaman
+ * Midtrans sebagai jalur cadangan bila snap.js gagal dimuat.
  *
  * Rute ini TIDAK PERNAH membuka akses. Yang membuka akses hanya webhook,
  * setelah Midtrans menyatakan uangnya benar-benar masuk. Pemisahan ini
- * disengaja: apa pun yang dilakukan pelanggan di peramban - menutup tab,
- * menekan tombol kembali, memanggil ulang alamat ini - tidak dapat
+ * disengaja: apa pun yang dilakukan pelanggan di peramban - menutup jendela
+ * pembayaran, menekan tombol kembali, memanggil ulang alamat ini - tidak dapat
  * menghasilkan masa aktif.
  */
 import { randomBytes } from "node:crypto";
@@ -107,7 +108,7 @@ export async function POST(permintaan: Request) {
   const { baseUrl } = envAplikasi();
 
   try {
-    const { redirectUrl } = await buatTransaksiSnap({
+    const { token, redirectUrl } = await buatTransaksiSnap({
       orderId,
       hargaRupiah: plan.hargaRupiah,
       planId: plan.id,
@@ -116,7 +117,10 @@ export async function POST(permintaan: Request) {
       finishUrl: `${baseUrl}/langganan/selesai?order_id=${encodeURIComponent(orderId)}`,
     });
 
-    return NextResponse.json({ orderId, redirectUrl });
+    /* token dipakai jendela Snap, redirectUrl dipakai jalur cadangan. Keduanya
+       dikirim sekaligus supaya peramban tidak perlu meminta dua kali - dan
+       supaya kegagalan snap.js tidak melahirkan pesanan kedua. */
+    return NextResponse.json({ orderId, token, redirectUrl });
   } catch (kesalahan) {
     /* Snap gagal, jadi tidak akan pernah ada pembayaran atas pesanan ini.
        Menutupnya sekarang mencegah nomor pesanan menggantung sebagai
