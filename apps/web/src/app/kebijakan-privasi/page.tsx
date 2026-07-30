@@ -12,6 +12,10 @@
  *
  * ATURAN saat menyunting: setiap kalimat di halaman ini harus dapat dibuktikan
  * dari kode. Jangan menambahkan janji yang belum benar-benar dijalankan.
+ *
+ * Bagian 6 (Asisten AI) terikat langsung pada isi
+ * apps/web/src/app/api/chat/route.ts. Setiap perubahan pada data yang dikirim
+ * ke penyedia model WAJIB diikuti perubahan di bagian tersebut.
  */
 import Link from "next/link";
 
@@ -27,7 +31,7 @@ export default function HalamanKebijakanPrivasi() {
   return (
     <div className={gaya.wrap}>
       <h1 className={gaya.judul}>Kebijakan Privasi</h1>
-      <p className={gaya.berlaku}>Berlaku sejak 29 Juli 2026</p>
+      <p className={gaya.berlaku}>Berlaku sejak 30 Juli 2026</p>
 
       <section className={gaya.bagian}>
         <h2 className={gaya.kepala}>Ringkasan</h2>
@@ -70,6 +74,12 @@ export default function HalamanKebijakanPrivasi() {
           keperluan perhitungan dan pemantauan kurva pertumbuhan.
         </p>
         <p className={gaya.teks}>
+          <strong>Isi pertanyaan pada Asisten AI.</strong> Pertanyaan yang Anda
+          tulis beserta riwayat percakapan yang sedang berlangsung, yang dikirim
+          ke penyedia model bahasa untuk dijawab. Rinciannya diuraikan pada
+          bagian 6.
+        </p>
+        <p className={gaya.teks}>
           <strong>Data langganan.</strong> Nomor pesanan, paket yang dipilih,
           nominal, status pembayaran, serta tanggal mulai dan berakhirnya masa
           aktif. Kami <strong>tidak pernah menerima maupun menyimpan</strong>{" "}
@@ -87,6 +97,7 @@ export default function HalamanKebijakanPrivasi() {
         <h2 className={gaya.kepala}>3. Tujuan pemrosesan</h2>
         <ul className={gaya.daftar}>
           <li>Menyediakan alat hitung dan kurva pertumbuhan yang Anda gunakan.</li>
+          <li>Menjawab pertanyaan klinis Anda melalui Asisten AI.</li>
           <li>Mengenali Anda saat masuk dan menjaga sesi tetap aman.</li>
           <li>Menentukan apakah masa langganan Anda masih aktif.</li>
           <li>Memproses pembayaran dan menyimpan bukti pesanan.</li>
@@ -120,6 +131,10 @@ export default function HalamanKebijakanPrivasi() {
             basis data.
           </li>
           <li>
+            <strong>Google Gemini API</strong> — model bahasa yang menjawab
+            pertanyaan pada Asisten AI. Lihat bagian 6.
+          </li>
+          <li>
             <strong>Vercel</strong> — hosting aplikasi dan pencatatan teknis
             peladen.
           </li>
@@ -136,7 +151,54 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>6. Tanggung jawab Anda atas data pasien</h2>
+        <h2 className={gaya.kepala}>6. Asisten AI</h2>
+        <p className={gaya.teks}>
+          Asisten AI dijalankan menggunakan model bahasa <strong>Gemini</strong>{" "}
+          milik Google LLC melalui Gemini API. Asisten AI hanya dapat dipakai
+          oleh pengguna yang sudah masuk dan yang masa langganan atau masa
+          percobaannya masih berjalan.
+        </p>
+        <p className={gaya.teks}>
+          <strong>Yang dikirim ke Google.</strong> Pertanyaan yang Anda tulis,
+          riwayat percakapan yang sedang berlangsung, instruksi peran asisten,
+          serta konteks terbatas berupa <strong>berat badan</strong>,{" "}
+          <strong>usia dalam bulan</strong>, dan{" "}
+          <strong>nama halaman yang sedang Anda buka</strong>.
+        </p>
+        <p className={gaya.teks}>
+          <strong>Nama pasien tidak dikirim.</strong> Identitas pasien secara
+          sengaja dikeluarkan dari data konteks yang dikirim ke penyedia model,
+          karena nama tidak diperlukan untuk perhitungan klinis apa pun.
+        </p>
+        <p className={gaya.teks}>
+          Meskipun demikian, <strong>isi pertanyaan Anda dikirim apa adanya</strong>.
+          Bila Anda menuliskan nama, nomor rekam medis, atau keterangan yang
+          dapat mengarah pada identitas pasien di dalam pertanyaan, keterangan
+          itu akan ikut terkirim. Kami menyarankan Anda menuliskan pertanyaan
+          tanpa identitas pasien.
+        </p>
+        <p className={gaya.teks}>
+          <strong>Tempat pemrosesan.</strong> Google dapat memproses data
+          tersebut pada pusat data <strong>di luar wilayah Indonesia</strong>,
+          dan tunduk pada kebijakan privasi serta ketentuan layanan Google.
+        </p>
+        <p className={gaya.teks}>
+          <strong>Penyimpanan.</strong> Tinyverse tidak menyimpan isi percakapan
+          Asisten AI ke dalam basis datanya. Riwayat percakapan hanya berada di
+          peramban Anda selama percakapan berlangsung. Kebijakan penyimpanan di
+          sisi Google mengikuti ketentuan layanan Google sebagai penyedia model.
+        </p>
+        <p className={gaya.teks}>
+          <strong>Batasan.</strong> Jawaban Asisten AI dapat keliru atau tidak
+          lengkap. Asisten AI bukan alat diagnosis dan bukan pengganti penilaian
+          klinis. Seluruh jawaban, terutama yang menyangkut dosis obat, wajib
+          Anda periksa ulang terhadap sumber resmi sebelum dipakai dalam
+          keputusan perawatan pasien.
+        </p>
+      </section>
+
+      <section className={gaya.bagian}>
+        <h2 className={gaya.kepala}>7. Tanggung jawab Anda atas data pasien</h2>
         <p className={gaya.teks}>
           Data pasien dimasukkan atas kehendak dan tanggung jawab Anda sebagai
           tenaga kesehatan. Anda yang menentukan data apa yang dicatat dan
@@ -151,7 +213,7 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>7. Lama penyimpanan</h2>
+        <h2 className={gaya.kepala}>8. Lama penyimpanan</h2>
         <ul className={gaya.daftar}>
           <li>
             Data akun dan data pasien disimpan selama akun Anda masih ada.
@@ -169,7 +231,7 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>8. Hak Anda</h2>
+        <h2 className={gaya.kepala}>9. Hak Anda</h2>
         <p className={gaya.teks}>
           Sesuai Undang-Undang No. 27 Tahun 2022 tentang Pelindungan Data
           Pribadi, Anda berhak meminta akses atas data Anda, meminta perbaikan
@@ -185,7 +247,7 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>9. Keamanan</h2>
+        <h2 className={gaya.kepala}>10. Keamanan</h2>
         <p className={gaya.teks}>
           Sambungan ke Tinyverse dienkripsi. Akses ke data dibatasi aturan
           keamanan basis data yang memisahkan data setiap akun, sehingga satu
@@ -200,7 +262,7 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>10. Cookie</h2>
+        <h2 className={gaya.kepala}>11. Cookie</h2>
         <p className={gaya.teks}>
           Tinyverse hanya memakai cookie yang diperlukan agar layanan berfungsi,
           yaitu untuk menjaga sesi Anda tetap masuk. Kami tidak memakai cookie
@@ -209,7 +271,7 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>11. Perubahan kebijakan</h2>
+        <h2 className={gaya.kepala}>12. Perubahan kebijakan</h2>
         <p className={gaya.teks}>
           Kebijakan ini dapat diperbarui bila layanan berubah. Tanggal berlaku di
           bagian atas halaman selalu menunjukkan versi terkini. Perubahan yang
@@ -218,17 +280,17 @@ export default function HalamanKebijakanPrivasi() {
       </section>
 
       <section className={gaya.bagian}>
-        <h2 className={gaya.kepala}>12. Kontak</h2>
+        <h2 className={gaya.kepala}>13. Kontak</h2>
         <p className={gaya.teks}>
           Pertanyaan, permintaan hak, atau keberatan dapat disampaikan melalui
           halaman <Link href="/kontak">Kontak</Link>. Ketentuan penggunaan layanan
           diatur terpisah pada halaman{" "}
-          <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>.
+          <Link href="/syarat-ketentuan">Syarat & Ketentuan</Link>.
         </p>
       </section>
 
       <Link href="/langganan" className={gaya.kembali}>
-        &larr; Kembali ke halaman langganan
+        ← Kembali ke halaman langganan
       </Link>
     </div>
   );
