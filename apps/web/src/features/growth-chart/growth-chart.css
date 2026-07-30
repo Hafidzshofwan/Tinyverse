@@ -511,6 +511,9 @@
 .tk-island-wrap .tk-chart-stage {
     position: relative;
     width: 100%;
+    /* Jangan tambahkan padding di sini: lihat catatan pada aturan tema gelap.
+       Padding akan merusak presisi plotting di kedelapan growth chart. */
+    padding: 0;
     border-radius: 18px;
     overflow: hidden;
     background: var(--krem);
@@ -1524,12 +1527,21 @@ html.dark .tk-island-wrap .tk-chart-usia {
   color: #38BDF8 !important;
 }
 
+/* PENTING: .tk-chart-stage adalah containing block bagi seluruh overlay
+   (.tk-titik-pasien, .tk-garis-bantu, .tk-label-pasien, penanda kalibrasi),
+   sedangkan plotting.ts menghasilkan persen relatif terhadap kotak GAMBAR.
+   Persen posisi absolut diukur terhadap PADDING BOX, sehingga padding apa pun
+   di sini akan menggeser titik nol overlay sekaligus melebarkan acuannya --
+   galatnya nol di tengah chart lalu membesar ke kedua tepi.
+   Karena itu padding WAJIB 0. Inset putih dibuat dari border (di luar padding
+   box, jadi tidak memengaruhi geometri) dan cincin gelap dari box-shadow. */
 [data-theme="dark"] .tk-island-wrap .tk-chart-stage,
 html.dark .tk-island-wrap .tk-chart-stage {
   background: #FFFFFF !important;
-  border: 2px solid #374151 !important;
+  border: 4px solid #FFFFFF !important;
   border-radius: 18px !important;
-  padding: 4px;
+  box-shadow: 0 0 0 2px #374151;
+  padding: 0 !important;
 }
 
 [data-theme="dark"] .tk-island-wrap .tk-label-pasien,
