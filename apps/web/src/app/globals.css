@@ -2112,6 +2112,10 @@ body {
   box-shadow: var(--tv-chunky-sm);
 }
 .tv-search-ico {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
   font-size: 14px;
   opacity: 0.7;
 }
