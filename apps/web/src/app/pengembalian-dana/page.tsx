@@ -8,6 +8,10 @@
  * yang bisa dikembalikan, pengembalian dana dibatasi pada keadaan yang memang
  * merupakan kesalahan kami. Yang dituntut Midtrans bukan kebijakan yang
  * longgar, melainkan kebijakan yang JELAS dan dapat dibaca sebelum membayar.
+ *
+ * Masa percobaan 2 hari memperkuat dasar kebijakan ini: pembeli sudah dapat
+ * menilai seluruh alat klinis tanpa mengeluarkan uang sepeser pun, sehingga
+ * "berubah pikiran setelah membayar" bukan lagi keadaan yang tak terhindarkan.
  */
 import Link from "next/link";
 
@@ -23,7 +27,7 @@ export default function HalamanPengembalianDana() {
   return (
     <div className={gaya.wrap}>
       <h1 className={gaya.judul}>Kebijakan Pengembalian Dana</h1>
-      <p className={gaya.berlaku}>Berlaku sejak 29 Juli 2026</p>
+      <p className={gaya.berlaku}>Berlaku sejak 30 Juli 2026</p>
 
       <section className={gaya.bagian}>
         <h2 className={gaya.kepala}>Sifat produk</h2>
@@ -36,6 +40,13 @@ export default function HalamanPengembalianDana() {
           Langganan bersifat sekali bayar. Tidak ada perpanjangan otomatis dan
           tidak ada penarikan dana berulang, sehingga tidak akan pernah ada
           tagihan yang muncul tanpa Anda kehendaki.
+        </p>
+        <p className={gaya.teks}>
+          Setiap akun baru memperoleh <strong>masa percobaan 2 hari</strong>
+          {" "}dengan akses penuh dan tanpa biaya. Anda dianjurkan menilai
+          seluruh alat klinis pada masa itu sebelum memutuskan membeli. Masa
+          percobaan tidak melibatkan pembayaran, sehingga tidak ada dana yang
+          perlu dikembalikan ketika masa percobaan berakhir.
         </p>
       </section>
 
@@ -66,12 +77,19 @@ export default function HalamanPengembalianDana() {
       <section className={gaya.bagian}>
         <h2 className={gaya.kepala}>Kapan dana tidak dikembalikan</h2>
         <ul className={gaya.daftar}>
-          <li>Berubah pikiran setelah pembayaran berhasil.</li>
+          <li>
+            Berubah pikiran setelah pembayaran berhasil, sementara masa
+            percobaan gratis sudah tersedia untuk menilai layanan lebih dahulu.
+          </li>
           <li>Salah memilih paket, sementara akses sudah terbuka.</li>
           <li>Tidak sempat memakai layanan selama masa aktif berjalan.</li>
           <li>
+            Berakhirnya masa percobaan gratis, karena tidak ada pembayaran yang
+            terjadi pada masa tersebut.
+          </li>
+          <li>
             Akun dinonaktifkan karena pelanggaran{" "}
-            <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>.
+            <Link href="/syarat-ketentuan">Syarat & Ketentuan</Link>.
           </li>
           <li>
             Kendala dari sisi perangkat atau jaringan Anda sendiri, selama
@@ -114,7 +132,7 @@ export default function HalamanPengembalianDana() {
       </section>
 
       <Link href="/langganan" className={gaya.kembali}>
-        &larr; Kembali ke halaman langganan
+        ← Kembali ke halaman langganan
       </Link>
     </div>
   );
