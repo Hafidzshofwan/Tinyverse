@@ -280,7 +280,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       // memblokir komunikasi popup lintas-origin di browser modern.
       // Halaman akan navigasi keluar; hasil login ditangani setelah kembali
       // lewat getRedirectResult() di useEffect inisialisasi di bawah.
-      await auth.signInWithRedirect(provider);
+      await auth.signInWithPopup(provider);
     } catch (e) {
       throw new Error(petaError(e));
     }
