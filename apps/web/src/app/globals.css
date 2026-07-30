@@ -298,6 +298,18 @@ html.dark .tv-greeting-hand-icon {
   color: #F8FAFC;
 }
 
+[data-theme="dark"] .tv-drop-info .peran {
+  background: #334155;
+  color: #CBD5E1;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .tv-drop-info .peran.admin {
+  background: linear-gradient(135deg, #EC4899, #38BDF8);
+  color: #FFFFFF;
+  border: none;
+}
+
 [data-theme="dark"] .tv-drop-item {
   color: #CBD5E1;
 }
@@ -1085,14 +1097,6 @@ body {
   gap: 11px;
   width: 100%;
   padding: 12px 10px 12px 14px;
-  /* Border transparan WAJIB ada di mode terang.
-     Mode gelap menambahkan `border: 1px solid #334155`. Karena box-sizing
-     border-box hanya mengunci LEBAR (width: 100%), sedangkan TINGGI item
-     ditentukan isinya, border 1px membuat tiap item bertambah 2px lebih
-     tinggi di mode gelap. Dengan ~13 item, sidebar bergeser ~26px saat mode
-     diganti. Border transparan ini menyamakan kotak kedua mode; mode gelap
-     cukup mengganti WARNA-nya lewat border-color, bukan menambah border. */
-  border: 1px solid transparent;
   border-radius: 18px;
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
