@@ -57,6 +57,22 @@ function tanggal(iso: string): string {
 }
 
 /**
+ * Kalimat pada lencana status.
+ *
+ * Masa percobaan memakai kalimatnya sendiri: menuliskan "Aktif" kepada orang
+ * yang belum pernah membayar membuat ia menyangka sudah berlangganan, dan
+ * kekagetan itu datang tepat pada hari ketiga saat aksesnya tertutup. Warna
+ * lencananya sengaja TIDAK diubah, supaya bahasa warna yang sudah dikenal
+ * pengguna (hijau berjalan, merah berhenti) tetap berlaku.
+ */
+function labelLencana(status: StatusLangganan, percobaan: boolean): string {
+  if (!percobaan) return LABEL_STATUS[status];
+  if (status === "aktif") return "Masa percobaan";
+  if (status === "kedaluwarsa") return "Masa percobaan berakhir";
+  return LABEL_STATUS[status];
+}
+
+/**
  * Konfigurasi jendela pembayaran.
  *
  * Dibungkus try/catch dengan sengaja: halaman ini kini terbuka untuk umum, dan
@@ -77,9 +93,13 @@ export default async function HalamanLangganan() {
   const status = await statusAksesSaatIni();
   const masuk = status.masuk;
   const e = status.entitlement;
+  const percobaan = status.percobaan;
 
   const { clientKey, urlSnapJs } = konfigPembayaran();
-  const labelTombol = masuk && e.status === "aktif" ? "Perpanjang" : "Beli";
+  /* "Perpanjang" hanya benar bagi orang yang pernah membayar. Pengguna masa
+     percobaan tetap membaca "Beli", karena itulah yang sesungguhnya ia lakukan. */
+  const labelTombol =
+    masuk && e.status === "aktif" && !percobaan ? "Perpanjang" : "Beli";
 
   return (
     <div className={gaya.wrap}>
@@ -92,7 +112,7 @@ export default async function HalamanLangganan() {
             <span className={gaya.label}>Status</span>
             <span className={gaya.nilai}>
               <span className={`${gaya.lencana} ${KELAS_STATUS[e.status]}`}>
-                {LABEL_STATUS[e.status]}
+                {labelLencana(e.status, percobaan)}
               </span>
             </span>
           </div>
@@ -107,6 +127,12 @@ export default async function HalamanLangganan() {
               <span className={gaya.label}>Sisa</span>
               <span className={gaya.nilai}>{e.sisaHari} hari</span>
             </div>
+          ) : null}
+          {percobaan && e.status === "aktif" ? (
+            <p className={gaya.catatan}>
+              Anda sedang mencoba Tinyverse secara gratis. Pilih paket di bawah
+              untuk melanjutkan setelah masa percobaan berakhir.
+            </p>
           ) : null}
         </div>
       ) : null}
@@ -161,7 +187,7 @@ export default async function HalamanLangganan() {
       </div>
 
       <p className={gaya.tautanLegal}>
-        <Link href="/syarat-ketentuan">Syarat &amp; Ketentuan</Link>
+        <Link href="/syarat-ketentuan">Syarat & Ketentuan</Link>
         <span aria-hidden>{" \u00B7 "}</span>
         <Link href="/pengembalian-dana">Kebijakan Pengembalian Dana</Link>
         <span aria-hidden>{" \u00B7 "}</span>

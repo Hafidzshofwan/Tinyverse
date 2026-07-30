@@ -30,6 +30,13 @@ export const viewport = {
  * Untuk aplikasi yang memang menuntut masuk pada hampir semua halamannya, ini
  * pertukaran yang wajar.
  *
+ * Sumber spanduk dirakit di sini secara EKSPLISIT, tidak lagi dengan menyuapkan
+ * objek entitlement apa adanya. Sebelumnya itu bekerja karena bentuk kedua tipe
+ * kebetulan cocok, dan kecocokan yang kebetulan akan patah tanpa peringatan
+ * begitu salah satu tipe berubah. Sekarang terlihat jelas data apa saja yang
+ * dipakai spanduk -- termasuk keterangan masa percobaan, yang sengaja TIDAK
+ * dititipkan di dalam entitlement agar penentu hak akses tetap tidak tersentuh.
+ *
  * Seluruh badan fungsi dibungkus try/catch dengan sengaja. Layout akar
  * membungkus SETIAP halaman, termasuk halaman publik yang harus tetap terbuka
  * bagi calon pelanggan dan peninjau merchant. Satu galat di sini -- kredensial
@@ -41,7 +48,14 @@ async function ambilPengingat(): Promise<Pengingat | null> {
   try {
     const status = await statusAksesSaatIni();
     if (!status.masuk) return null;
-    return hitungPengingat(status.entitlement, new Date().toISOString());
+    return hitungPengingat(
+      {
+        status: status.entitlement.status,
+        berakhirPada: status.entitlement.berakhirPada,
+        percobaan: status.percobaan,
+      },
+      new Date().toISOString(),
+    );
   } catch {
     return null;
   }

@@ -38,6 +38,13 @@ export type Pengingat = {
 export type SumberPengingat = {
   status: "belum" | "aktif" | "kedaluwarsa";
   berakhirPada: string | null;
+  /**
+   * True bila masa akses ini berasal dari masa percobaan gratis.
+   *
+   * Opsional dengan sengaja: seluruh pemanggil lama yang belum mengisinya tetap
+   * mendapat perilaku yang sama seperti sebelumnya.
+   */
+  percobaan?: boolean;
 };
 
 /** Pengingat mulai tampil ketika sisa masa aktif tinggal sekian hari. */
@@ -75,6 +82,19 @@ function kunciTutup(nada: NadaPengingat, sekarang: string): string {
  * Pengguna yang belum pernah berlangganan sengaja TIDAK diberi spanduk. Mereka
  * sudah bertemu halaman penawaran setiap kali membuka alat klinis; menambah
  * pita di setiap halaman hanya akan terasa seperti iklan.
+ *
+ * MASA PERCOBAAN diperlakukan berbeda pada dua titik:
+ *
+ * 1. Selama masih berjalan, spanduk DISEMBUNYIKAN. Masa percobaan hanya 2 hari,
+ *    sementara batas kemunculan spanduk 7 hari, sehingga pita amber akan
+ *    menempel sejak menit pertama. Menagih orang yang baru saja mencoba,
+ *    sebelum ia sempat menilai produknya, adalah cara tercepat kehilangan dia.
+ *
+ * 2. Setelah berakhir, spanduk TETAP DITAMPILKAN, tetapi dengan kalimatnya
+ *    sendiri. Menghilangkannya berarti akses tertutup tanpa penjelasan apa pun,
+ *    dan itu lebih buruk daripada pita yang mengganggu. Kalimat "masa langganan
+ *    berakhir" juga tidak dipakai di sini, karena orang ini memang belum pernah
+ *    berlangganan.
  */
 export function hitungPengingat(
   sumber: SumberPengingat,
@@ -83,6 +103,17 @@ export function hitungPengingat(
   if (sumber.status === "belum") return null;
 
   if (sumber.status === "kedaluwarsa") {
+    if (sumber.percobaan) {
+      return {
+        nada: "berakhir",
+        judul: "Masa percobaan Anda telah berakhir",
+        pesan:
+          "Berlangganan untuk membuka kembali seluruh alat klinis. Data pasien yang sudah Anda simpan tetap utuh.",
+        sisaHari: 0,
+        kunci: kunciTutup("berakhir", sekarang),
+      };
+    }
+
     return {
       nada: "berakhir",
       judul: "Masa langganan Anda telah berakhir",
@@ -92,6 +123,10 @@ export function hitungPengingat(
       kunci: kunciTutup("berakhir", sekarang),
     };
   }
+
+  /* Masa percobaan yang masih berjalan: diam. Ditaruh SETELAH cabang
+     kedaluwarsa, supaya pemberitahuan berakhirnya percobaan tetap sampai. */
+  if (sumber.percobaan) return null;
 
   if (!sumber.berakhirPada) return null;
 

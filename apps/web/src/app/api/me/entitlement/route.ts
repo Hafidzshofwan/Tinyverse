@@ -16,7 +16,7 @@ export async function GET() {
 
   if (!status.masuk) {
     return NextResponse.json(
-      { masuk: false, bolehAkses: false, status: "belum" },
+      { masuk: false, bolehAkses: false, status: "belum", percobaan: false },
       { status: 401 },
     );
   }
@@ -27,5 +27,8 @@ export async function GET() {
     bolehAkses: status.entitlement.bolehAkses,
     berakhirPada: status.entitlement.berakhirPada,
     sisaHari: status.entitlement.sisaHari,
+    /* Hanya untuk kalimat dan label di tampilan. Yang membuka atau menutup
+       fitur tetap `bolehAkses`, dan itu diputuskan di server. */
+    percobaan: status.percobaan,
   });
 }
