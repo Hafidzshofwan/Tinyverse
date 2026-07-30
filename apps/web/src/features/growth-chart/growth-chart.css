@@ -379,6 +379,45 @@
 
 .tk-island-wrap .tk-chart-usia { font-size: 0.82rem; font-weight: 600; color: #1565C0; background: #E8F1FB; border-radius: 999px; padding: 3px 10px; }
 
+/* Tombol unduh chart resolusi penuh -- lihat unduhChart.ts. */
+.tk-island-wrap .tk-btn-unduh {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Fredoka', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    color: #0B4F6C;
+    background: #E8F7EF;
+    border: 2px solid #BFE8D4;
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+
+.tk-island-wrap .tk-btn-unduh:hover:not(:disabled) {
+    background: #D3F0E1;
+    transform: translateY(-1px);
+  }
+
+.tk-island-wrap .tk-btn-unduh:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+.tk-island-wrap .tk-unduh-galat {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #B42318;
+    background: #FEF3F2;
+    border: 1px solid #FDA29B;
+    border-radius: 10px;
+    padding: 6px 10px;
+  }
+
 .tk-island-wrap .tk-ringkasan {
     display: flex;
     flex-wrap: wrap;
@@ -1857,4 +1896,21 @@ html.dark .tk-island-wrap .tk-btn-ringkasan:hover {
   box-shadow: 0 6px 18px rgba(10, 11, 95, 0.6) !important;
 }
 
+[data-theme="dark"] .tk-island-wrap .tk-btn-unduh,
+html.dark .tk-island-wrap .tk-btn-unduh {
+  color: #D1FAE5 !important;
+  background: #064E3B !important;
+  border-color: #10B981 !important;
+}
 
+[data-theme="dark"] .tk-island-wrap .tk-btn-unduh:hover:not(:disabled),
+html.dark .tk-island-wrap .tk-btn-unduh:hover:not(:disabled) {
+  background: #065F46 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-unduh-galat,
+html.dark .tk-island-wrap .tk-unduh-galat {
+  color: #FECACA !important;
+  background: #4C1D1D !important;
+  border-color: #B91C1C !important;
+}

@@ -12,6 +12,7 @@ import {
   type Standar,
 } from "./chartConfig";
 import { tkHitungKoordinatTitik, tkKalibrasiValid, tkTargetGarisHorizontal, type TitikPlot } from "./plotting";
+import { amanNamaBerkas, unduhChartPNG } from "./unduhChart";
 import {
   hitungMPH,
   tkInterpretasiCdcBbtb,
@@ -123,6 +124,8 @@ export function GrowthChartTool() {
   const auto = useRef({ x: true, berat: true, tinggi: true });
 
   const [hasil, setHasil] = useState<HasilPlot | null>(null);
+  const [unduhSibuk, setUnduhSibuk] = useState<string | null>(null);
+  const [unduhGagal, setUnduhGagal] = useState<string | null>(null);
   const [gambarGagal, setGambarGagal] = useState<Record<string, boolean>>({});
 
   const indikator: Indikator | null = useMemo(() => {
@@ -624,6 +627,58 @@ export function GrowthChartTool() {
   const labelStandar = standar ? GROWTH_CHART_CONFIG[standar]?.label : "";
   const labelKelamin = standar && kelamin ? GROWTH_CHART_CONFIG[standar]?.genders[kelamin]?.label : "";
 
+  /**
+   * Unduh satu chart sebagai PNG pada resolusi ASLI gambarnya.
+   *
+   * WHY: chart ini dipakai koas untuk presentasi. Tangkapan layar hanya
+   * merekam sebesar yang tampil (sekitar 900 px) sehingga pecah begitu
+   * diproyeksikan. unduhChart.ts menggambar ulang overlay di atas gambar
+   * berukuran penuh, memakai persen yang sama dari plotting.ts.
+   */
+  async function unduhChart(c: Chart) {
+    const daftar = hasil?.titikPerChart?.[c.id] ?? [];
+    if (daftar.length === 0) return;
+
+    const stage = document.getElementById(`tkChartStage_${c.id}`);
+    const img = stage?.querySelector("img") ?? null;
+    if (!img) {
+      setUnduhGagal("Gambar chart belum tersedia.");
+      return;
+    }
+
+    setUnduhGagal(null);
+    setUnduhSibuk(c.id);
+    try {
+      const namaChart = c.title || indikator?.label || c.id;
+      const keterangan = (hasil?.baris ?? []).map(
+        (b) => `${b.yLabel}: ${f(b.nilai, 1)} ${b.yUnit}`,
+      );
+      if (hasil?.nilaiX != null && indikator) {
+        keterangan.unshift(`${indikator.xLabel}: ${f(hasil.nilaiX, 1)}`);
+      }
+
+      await unduhChartPNG({
+        img,
+        titik: daftar.map((t) => ({
+          titik: t.titik,
+          targetX: tkTargetGarisHorizontal(t.titik, t.yLabel, t.yUnit, t.nilai, c.id),
+          warna: t.warna,
+          yLabel: t.yLabel,
+          yUnit: t.yUnit,
+          nilai: t.nilai,
+        })),
+        namaBerkas: amanNamaBerkas(`${labelStandar}-${namaChart}-${labelKelamin}`),
+        judul: `${namaChart} — ${labelStandar} ${labelKelamin}`,
+        subjudul: `Usia ${c.ageLabel || "-"}`,
+        keterangan,
+      });
+    } catch (err) {
+      setUnduhGagal(err instanceof Error ? err.message : "Gagal mengunduh chart.");
+    } finally {
+      setUnduhSibuk(null);
+    }
+  }
+
   return (
     <div className="tk-island-wrap">
       <div className="judul-section" style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
@@ -804,6 +859,11 @@ export function GrowthChartTool() {
                   Isi data anak satu kali, lalu tekan PLOT untuk menampilkan titik pada{" "}
                   {indikator.charts.length > 1 ? "semua chart" : "chart"} di bawah.
                 </div>
+                {unduhGagal ? (
+                  <div className="tk-unduh-galat" role="alert">
+                    ⚠️ {unduhGagal}
+                  </div>
+                ) : null}
               </>
             ) : null}
           </div>
@@ -816,6 +876,15 @@ export function GrowthChartTool() {
                   <span className="tk-chart-usia" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                     <IkonCalendar /> Usia {c.ageLabel || ""}
                   </span>
+                  <button
+                    type="button"
+                    className="tk-btn-unduh"
+                    onClick={() => void unduhChart(c)}
+                    disabled={unduhSibuk !== null || (hasil?.titikPerChart?.[c.id]?.length ?? 0) === 0}
+                    title="Unduh chart ini sebagai PNG resolusi penuh untuk presentasi"
+                  >
+                    {unduhSibuk === c.id ? "Menyiapkan…" : "⬇️ Unduh HD"}
+                  </button>
                 </div>
                 <div
                   className={`tk-chart-stage${
