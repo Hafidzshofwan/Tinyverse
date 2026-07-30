@@ -193,7 +193,7 @@ export function AbgForm() {
           step={0.01}
         />
         <NumberField
-          label="pCO₂"
+          label="PaCO₂"
           value={pco2}
           onValueChange={bind(setPco2)}
           placeholder="cth: 40"
@@ -310,7 +310,7 @@ export function AbgForm() {
                 if (!outcome.view) return;
                 const v = outcome.view;
                 const bodyText = [
-                  `Sampel: ${sample.toUpperCase()} | pH: ${ph}, pCO₂: ${pco2} mmHg, HCO₃⁻: ${hco3} mmol/L`,
+                  `Sampel: ${sample.toUpperCase()} | pH: ${ph}, PaCO₂: ${pco2} mmHg, HCO₃⁻: ${hco3} mmol/L`,
                   `Kesimpulan: ${v.conclusion}`,
                   ...v.steps.map((s) => `• ${s.label}: ${s.text}`),
                 ].join("\n");

@@ -1,7 +1,7 @@
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, ReactNode } from "react";
 
 export interface NumberFieldProps {
-  label: string;
+  label: ReactNode;
   value: string;
   onValueChange: (value: string) => void;
   placeholder?: string;
