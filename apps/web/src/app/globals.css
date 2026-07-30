@@ -2671,10 +2671,39 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   transform: none;
 }
 .tv-btn.sekunder {
-  background: #ffffff;
-  color: var(--tv-navy);
+  background: var(--tv-card);
+  color: var(--tv-teks);
   border: 1.5px solid var(--tv-line);
   box-shadow: none;
+}
+[data-theme="dark"] .tv-btn.sekunder {
+  background: var(--tv-hover, #273449);
+  color: var(--tv-text-primary, #F8FAFC);
+  border-color: var(--tv-border, #334155);
+}
+[data-theme="dark"] .tv-btn.sekunder:hover {
+  background: var(--tv-border, #334155);
+}
+.tv-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--tv-soft-teks);
+  font-size: 13px;
+  margin: 14px 0;
+}
+.tv-divider::before,
+.tv-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--tv-line);
+}
+.tv-divider::before {
+  margin-right: 10px;
+}
+.tv-divider::after {
+  margin-left: 10px;
 }
 .tv-cek {
   display: flex;
