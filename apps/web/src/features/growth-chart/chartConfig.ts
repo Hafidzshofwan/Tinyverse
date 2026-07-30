@@ -1,11 +1,18 @@
 /**
- * Konfigurasi chart pertumbuhan + ANGKA KALIBRASI — DISALIN PERSIS dari
- * public/growth-tool.html (mesin v17).
+ * Konfigurasi chart pertumbuhan + ANGKA KALIBRASI.
  *
  * PERINGATAN: angka pada `calibration` (imgWidth, imgHeight, plot.x0/x1/y0/y1,
  * xRange, yRange, usiaLineY) memetakan nilai klinis ke piksel gambar chart.
- * Mengubah satu angka saja akan menggeser titik plot pasien. Angka-angka ini
- * hanya boleh diubah lewat "Mode Kalibrasi Chart" saat gambar chart diganti.
+ * Mengubah satu angka saja akan menggeser titik plot pasien.
+ *
+ * Angka WHO diperoleh dengan MENGUKUR gridline gambar chart secara terprogram,
+ * bukan dengan mengklik lewat "Mode Kalibrasi Chart". Sumbu X dicocokkan pada
+ * 61 tick bulan dan sumbu Y pada seluruh gridline (BB/U tiap 1 kg, TB/U tiap
+ * 1 cm, IMT/U tiap 0,2 kg/m²); sisa galat pencocokan < 1 piksel. `plot` selalu
+ * menunjuk TEPI BINGKAI area kurva, dan `yRange` adalah nilai pada tepi itu —
+ * bukan pada garis berlabel terdekat. Mode Kalibrasi Chart tetap berguna untuk
+ * gambar chart baru, tetapi ketelitiannya dibatasi oleh ukuran tampilan layar,
+ * jadi hasilnya sebaiknya diperiksa ulang dengan pengukuran gambar aslinya.
  *
  * Satu-satunya perbedaan dari v17: path gambar diberi garis miring di depan
  * ("assets/..." → "/assets/...") karena komponen React dapat dirender dari rute
@@ -96,15 +103,15 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
               { id: "bbu", title: "BB/U \u2014 Berat Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_bbu,
                 series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbu", warna: "#E63946" } ],
-                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:229,x1:1488,y0:247,y1:1055},xRange:[0,60],yRange:[1,29]} } },
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.59,x1:1489.87,y0:249.63,y1:1055.74},xRange:[0,60],yRange:[1,29]} } },
               { id: "tbu", title: "TB/U \u2014 Tinggi/Panjang Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_tbu,
                 series: [ { key: "tinggi", yField: "tinggi", yLabel: "Tinggi/Panjang Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" } ],
-                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:230,x1:1491,y0:246,y1:1055},xRange:[0,60],yRange:[40,125]} } },
+                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:230.59,x1:1489.87,y0:249.03,y1:1055.79},xRange:[0,60],yRange:[40,125]} } },
               { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_imtu,
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
-                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2105},xRange:[0,60],yRange:[9.24,22]} } }
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:461.43,x1:2980.29,y0:499.31,y1:2110.68},xRange:[0,60],yRange:[9.2,22.8]} } }
             ]
           }
         }
@@ -119,15 +126,15 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
               { id: "bbu", title: "BB/U \u2014 Berat Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_bbu,
                 series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbu", warna: "#E63946" } ],
-                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:229,x1:1490,y0:247,y1:1050},xRange:[0,60],yRange:[1,31]} } },
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.57,x1:1489.88,y0:249.69,y1:1055.72},xRange:[0,60],yRange:[1,31]} } },
               { id: "tbu", title: "TB/U \u2014 Tinggi/Panjang Badan menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_tbu,
                 series: [ { key: "tinggi", yField: "tinggi", yLabel: "Tinggi/Panjang Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" } ],
-                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:229,x1:1490,y0:248,y1:1055},xRange:[0,60],yRange:[40,125]} } },
+                calibration: { tinggi: {imgWidth:1754,imgHeight:1241,plot:{x0:230.53,x1:1489.87,y0:249.05,y1:1055.79},xRange:[0,60],yRange:[40,125]} } },
               { id: "imtu", title: "IMT/U \u2014 Indeks Massa Tubuh menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_imtu,
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
-                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:462,x1:2982,y0:594,y1:2105},xRange:[0,60],yRange:[9.24,22]} } }
+                calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:461.43,x1:2980.29,y0:499.31,y1:2110.68},xRange:[0,60],yRange:[9.2,22.8]} } }
             ]
           }
         }
@@ -153,8 +160,8 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                   { key: "tinggi", yField: "tinggi", yLabel: "Tinggi Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" }
                 ],
                 calibration: {
-                  tinggi: {imgWidth:1275,imgHeight:1650,plot:{x0:226,x1:1031,y0:205,y1:1214},xRange:[24,240],yRange:[75,195],usiaLineY:1467},
-                  berat:  {imgWidth:1275,imgHeight:1650,plot:{x0:226,x1:1031,y0:627,y1:1467},xRange:[24,240],yRange:[10,110],usiaLineY:1467}
+                  tinggi: {imgWidth:1275,imgHeight:1650,plot:{x0:226.98,x1:1032,y0:205.5,y1:1214.79},xRange:[24,240],yRange:[75,195],usiaLineY:1467.11},
+                  berat:  {imgWidth:1275,imgHeight:1650,plot:{x0:226.98,x1:1032,y0:626.04,y1:1467.11},xRange:[24,240],yRange:[10,110],usiaLineY:1467.11}
                 } }
             ]
           }
@@ -174,8 +181,8 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                   { key: "tinggi", yField: "tinggi", yLabel: "Tinggi Badan (cm)", yUnit: "cm", emoji: "\u{1F4CF}", zKey: "tbu", warna: "#1565C0" }
                 ],
                 calibration: {
-                  tinggi: {imgWidth:1275,imgHeight:1650,plot:{x0:225,x1:1032,y0:204,y1:1212},xRange:[24,240],yRange:[75,195],usiaLineY:1466},
-                  berat:  {imgWidth:1275,imgHeight:1650,plot:{x0:226,x1:1032,y0:624,y1:1466},xRange:[24,240],yRange:[10,110],usiaLineY:1466}
+                  tinggi: {imgWidth:1275,imgHeight:1650,plot:{x0:227.03,x1:1032.01,y0:205.53,y1:1214.8},xRange:[24,240],yRange:[75,195],usiaLineY:1467.11},
+                  berat:  {imgWidth:1275,imgHeight:1650,plot:{x0:227.03,x1:1032.01,y0:626.06,y1:1467.11},xRange:[24,240],yRange:[10,110],usiaLineY:1467.11}
                 } }
             ]
           }

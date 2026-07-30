@@ -5,8 +5,9 @@ import { tkHitungKoordinatTitik, tkKalibrasiValid, tkTargetGarisHorizontal } fro
 /**
  * Uji "golden" posisi titik plotting.
  *
- * WHY: berkas ini adalah jaring pengaman migrasi iframe → React. Angka yang
- * diharapkan dihitung langsung dari angka kalibrasi v17 (mis. 229/1754 × 100).
+ * WHY: berkas ini adalah jaring pengaman posisi titik. Angka yang diharapkan
+ * dihitung langsung dari angka kalibrasi terkini (mis. 230.59/1754 × 100),
+ * hasil pengukuran gridline gambar chart WHO.
  * Bila suatu saat ada yang mengubah kalibrasi, gambar chart, atau rumus
  * pemetaan, uji ini gagal — sehingga pergeseran titik pasien ketahuan sebelum
  * sampai ke pengguna.
@@ -25,7 +26,7 @@ describe("angka kalibrasi WHO laki-laki BB/U tidak berubah", () => {
     expect(kalibrasiBbu()).toEqual({
       imgWidth: 1754,
       imgHeight: 1241,
-      plot: { x0: 229, x1: 1488, y0: 247, y1: 1055 },
+      plot: { x0: 230.59, x1: 1489.87, y0: 249.63, y1: 1055.74 },
       xRange: [0, 60],
       yRange: [1, 29],
     });
@@ -35,28 +36,28 @@ describe("angka kalibrasi WHO laki-laki BB/U tidak berubah", () => {
 describe("tkHitungKoordinatTitik", () => {
   it("menempatkan nilai minimum tepat di sudut kiri-bawah area kurva", () => {
     const t = tkHitungKoordinatTitik(kalibrasiBbu(), 0, 1);
-    expect(t.leftPercent).toBeCloseTo(13.0559, 3); // 229 / 1754
-    expect(t.topPercent).toBeCloseTo(85.0121, 3); // 1055 / 1241
+    expect(t.leftPercent).toBeCloseTo(13.1465, 3); // 230.59 / 1754
+    expect(t.topPercent).toBeCloseTo(85.0717, 3); // 1055.74 / 1241
   });
 
   it("menempatkan nilai maksimum tepat di sudut kanan-atas area kurva", () => {
     const t = tkHitungKoordinatTitik(kalibrasiBbu(), 60, 29);
-    expect(t.leftPercent).toBeCloseTo(84.8347, 3); // 1488 / 1754
-    expect(t.topPercent).toBeCloseTo(19.9033, 3); // 247 / 1241
+    expect(t.leftPercent).toBeCloseTo(84.9413, 3); // 1489.87 / 1754
+    expect(t.topPercent).toBeCloseTo(20.1152, 3); // 249.63 / 1241
   });
 
   it("menempatkan nilai tengah tepat di tengah area kurva", () => {
     const t = tkHitungKoordinatTitik(kalibrasiBbu(), 30, 15);
-    expect(t.leftPercent).toBeCloseTo(48.9453, 3);
-    expect(t.topPercent).toBeCloseTo(52.4577, 3);
+    expect(t.leftPercent).toBeCloseTo(49.0439, 3);
+    expect(t.topPercent).toBeCloseTo(52.5935, 3);
   });
 
   it("menjepit nilai di luar rentang ke tepi terdekat sambil menandainya", () => {
     const t = tkHitungKoordinatTitik(kalibrasiBbu(), 72, 40);
     expect(t.diLuarBatasX).toBe(true);
     expect(t.diLuarBatasY).toBe(true);
-    expect(t.leftPercent).toBeCloseTo(84.8347, 3);
-    expect(t.topPercent).toBeCloseTo(19.9033, 3);
+    expect(t.leftPercent).toBeCloseTo(84.9413, 3);
+    expect(t.topPercent).toBeCloseTo(20.1152, 3);
   });
 
   it("memakai usiaLineY pada chart CDC untuk pangkal garis bantu vertikal", () => {
@@ -65,11 +66,11 @@ describe("tkHitungKoordinatTitik", () => {
     expect(kal).toBeDefined();
     if (!kal) return;
     const t = tkHitungKoordinatTitik(kal, 120, 40);
-    expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
+    expect(t.sumbuUsiaPersen).toBeCloseTo(88.9158, 3); // 1467.11 / 1650
     // Pada chart BERAT CDC, baris tick bulan memang BERIMPIT dengan tepi bawah
-    // area kurva: kalibrasi v17 memberi plot.y1 = 1467 dan usiaLineY = 1467.
-    // Jadi keduanya wajib sama, bukan berbeda.
-    expect(t.sumbuBawahPersen).toBeCloseTo(88.9091, 3); // 1467 / 1650
+    // area kurva: pengukuran gridline memberi plot.y1 = 1467.11 dan
+    // usiaLineY = 1467.11. Jadi keduanya wajib sama, bukan berbeda.
+    expect(t.sumbuBawahPersen).toBeCloseTo(88.9158, 3); // 1467.11 / 1650
   });
 
   it("membedakan baris tick bulan dari tepi bawah pada chart TINGGI CDC", () => {
@@ -78,8 +79,8 @@ describe("tkHitungKoordinatTitik", () => {
     expect(kal).toBeDefined();
     if (!kal) return;
     const t = tkHitungKoordinatTitik(kal, 120, 150);
-    expect(t.sumbuUsiaPersen).toBeCloseTo(88.9091, 3); // usiaLineY 1467 / 1650
-    expect(t.sumbuBawahPersen).toBeCloseTo(73.5758, 3); // plot.y1 1214 / 1650
+    expect(t.sumbuUsiaPersen).toBeCloseTo(88.9158, 3); // usiaLineY 1467.11 / 1650
+    expect(t.sumbuBawahPersen).toBeCloseTo(73.6236, 3); // plot.y1 1214.79 / 1650
     expect(t.sumbuUsiaPersen).not.toBeCloseTo(t.sumbuBawahPersen, 3);
   });
 });
