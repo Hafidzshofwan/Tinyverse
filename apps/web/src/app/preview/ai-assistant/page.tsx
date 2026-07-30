@@ -257,7 +257,7 @@ export default function AiAssistantPage() {
         body: JSON.stringify({
           message: textToSend,
           history,
-          contextData: patientData,
+          contextData: { ...patientData, nama: undefined, namaPasien: undefined },
         }),
       });
 

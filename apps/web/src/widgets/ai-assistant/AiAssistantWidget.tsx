@@ -192,7 +192,7 @@ export function AiAssistantWidget() {
         const rawPasien = localStorage.getItem("tv_pasien_aktif");
         if (rawPasien) {
           const parsed = JSON.parse(rawPasien) as Record<string, unknown>;
-          contextData = { ...contextData, ...parsed };
+          contextData = { ...contextData, ...parsed }; delete contextData.nama; delete contextData.namaPasien;
         }
       } catch {
         /* abaikan */
@@ -235,7 +235,7 @@ export function AiAssistantWidget() {
 
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err: unknown) {
-      const errText = err instanceof Error ? err.message : "Gagal terhubung ke Asisten AI. Pastikan kunci GEMINI_API_KEY terkonfigurasi di Settings > Secrets.";
+      const errText = err instanceof Error ? err.message : "Gagal terhubung ke Asisten AI. Periksa sambungan internet Anda, lalu coba lagi.";
       const errorMsg: Message = {
         id: `ai-err-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
