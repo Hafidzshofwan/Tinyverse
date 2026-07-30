@@ -2700,7 +2700,8 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   display: flex;
   align-items: center;
   text-align: center;
-  color: var(--tv-soft-teks);
+  color: #334155;
+  font-weight: 600;
   font-size: 13px;
   margin: 14px 0;
 }
@@ -2709,7 +2710,7 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   content: "";
   flex: 1;
   height: 1px;
-  background: var(--tv-line);
+  background: rgba(10, 11, 95, 0.14);
 }
 .tv-divider::before {
   margin-right: 10px;
@@ -2946,13 +2947,42 @@ body.tv-ai-chat-open .tv-ai-fab-container {
 .tv-tukar {
   margin: 14px 0 0;
   font-size: 13px;
-  color: var(--tv-soft-teks);
+  color: #334155;
+  font-weight: 600;
   text-align: center;
 }
 .tv-tukar a {
   color: var(--tv-magenta);
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  margin-left: 2px;
+}
+
+/* Tombol Google dengan paduan palette warna khas Google (#4285F4, #EA4335, #FBBC05, #34A853) */
+.tv-btn-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #1e293b !important;
+  font-weight: 600;
+  border: 1.5px solid #cbd5e1 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+.tv-btn-google:hover {
+  border-color: #4285f4 !important;
+  box-shadow: 0 4px 14px rgba(66, 133, 244, 0.22);
+  transform: translateY(-1px);
+}
+[data-theme="dark"] .tv-btn-google {
+  background: #1e293b;
+  border: 1.5px solid #475569 !important;
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .tv-btn-google:hover {
+  border-color: #38bdf8 !important;
 }
 .tv-muat {
   display: grid;
