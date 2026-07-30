@@ -216,6 +216,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (cancelled) return;
         authRef.current = auth;
         dbRef.current = db;
+        /*
+         * Tangkap hasil signInWithRedirect. Kalau redirect gagal (mis. domain
+         * belum authorized), errornya baru muncul di sini setelah halaman
+         * reload — bukan di titik pemanggilan masukGoogle(). onAuthStateChanged
+         * di bawah tetap yang menangani kasus SUKSES.
+         */
+        auth
+          .getRedirectResult()
+          .catch((e: Any) => {
+            if (cancelled) return;
+            setErrorMsg("Login Google gagal: " + petaError(e));
+          });
         unsub = auth.onAuthStateChanged((user: Any) => {
           if (user) {
             // Data pasien memakai SDK Firebase terpisah, jadi lingkup akunnya
@@ -264,8 +276,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!auth || !fb) throw new Error("Firebase belum siap.");
     try {
       const provider = new fb.auth.GoogleAuthProvider();
-      await auth.signInWithPopup(provider);
-      // onAuthStateChanged otomatis menangani sisanya (buat profil bila baru).
+      // Redirect, bukan popup: menghindari masalah third-party cookie yang
+      // memblokir komunikasi popup lintas-origin di browser modern.
+      // Halaman akan navigasi keluar; hasil login ditangani setelah kembali
+      // lewat getRedirectResult() di useEffect inisialisasi di bawah.
+      await auth.signInWithRedirect(provider);
     } catch (e) {
       throw new Error(petaError(e));
     }
