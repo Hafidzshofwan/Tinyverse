@@ -194,6 +194,33 @@
   gap: 18px;
 }
 
+@media (max-width: 640px) {
+  .dosis-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .dosis-card {
+    padding: 14px 12px 12px 12px;
+    border-radius: 18px;
+  }
+  .dosis-jenis-tag {
+    font-size: 0.6rem;
+    padding: 3px 8px;
+  }
+  .dosis-card-title-text {
+    font-size: 0.95rem;
+  }
+  .dosis-card-subtitle {
+    font-size: 0.72rem;
+  }
+  .dosis-btn-pilih-sediaan {
+    font-size: 0.72rem;
+    padding: 5px 10px;
+    width: 100%;
+    text-align: center;
+  }
+}
+
 .dosis-card {
   position: relative;
   background-color: #ffffff;
