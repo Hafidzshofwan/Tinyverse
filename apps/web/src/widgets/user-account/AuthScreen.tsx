@@ -125,9 +125,111 @@ export function AuthScreen() {
             </p>
           </div>
           <div className="tv-auth-chips">
-            <span className="tv-auth-chip">{"\uD83E\uDDEE"} Kalkulator</span>
-            <span className="tv-auth-chip">{"\uD83E\uDE7A"} Guideline</span>
-            <span className="tv-auth-chip">{"\uD83D\uDCC8"} Tumbuh Kembang</span>
+            <span className="tv-auth-chip">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ flexShrink: 0 }}
+              >
+                <defs>
+                  <linearGradient id="tv-calc-bg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#38BDF8" />
+                    <stop offset="100%" stopColor="#2563EB" />
+                  </linearGradient>
+                  <linearGradient id="tv-calc-screen" x1="6" y1="5" x2="18" y2="9" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#F0F9FF" />
+                    <stop offset="100%" stopColor="#BAE6FD" />
+                  </linearGradient>
+                </defs>
+                <rect x="3.5" y="2" width="17" height="20" rx="3.5" fill="url(#tv-calc-bg)" />
+                <rect x="6" y="4.5" width="12" height="4.5" rx="1.5" fill="url(#tv-calc-screen)" />
+                <rect x="7.5" y="6.2" width="5" height="1" rx="0.5" fill="#0284C7" />
+                <circle cx="8" cy="12" r="1.3" fill="#FFFFFF" />
+                <circle cx="12" cy="12" r="1.3" fill="#FFFFFF" />
+                <circle cx="16" cy="12" r="1.3" fill="#F59E0B" />
+                <circle cx="8" cy="15.5" r="1.3" fill="#FFFFFF" />
+                <circle cx="12" cy="15.5" r="1.3" fill="#FFFFFF" />
+                <circle cx="16" cy="15.5" r="1.3" fill="#34D399" />
+                <circle cx="8" cy="19" r="1.3" fill="#FFFFFF" />
+                <circle cx="12" cy="19" r="1.3" fill="#FFFFFF" />
+                <circle cx="16" cy="19" r="1.3" fill="#F43F5E" />
+              </svg>
+              Kalkulator
+            </span>
+            <span className="tv-auth-chip">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ flexShrink: 0 }}
+              >
+                <defs>
+                  <linearGradient id="tv-guide-bg" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#A855F7" />
+                    <stop offset="100%" stopColor="#6366F1" />
+                  </linearGradient>
+                </defs>
+                <path
+                  d="M4 19.5C4 18.12 5.12 17 6.5 17H20V3H6.5C5.12 3 4 4.12 4 5.5V19.5Z"
+                  fill="url(#tv-guide-bg)"
+                />
+                <path
+                  d="M4 19.5C4 18.12 5.12 17 6.5 17H20V21H6.5C5.12 21 4 19.88 4 19.5Z"
+                  fill="#4C1D95"
+                  fillOpacity="0.4"
+                />
+                <path d="M6.5 3H8V21H6.5C5.12 21 4 19.88 4 19.5V5.5C4 4.12 5.12 3 6.5 3Z" fill="#FFFFFF" fillOpacity="0.2" />
+                <rect x="11.5" y="7" width="4" height="8" rx="1" fill="#FFFFFF" />
+                <rect x="9.5" y="9" width="8" height="4" rx="1" fill="#FFFFFF" />
+                <rect x="12" y="7.5" width="3" height="7" rx="0.5" fill="#34D399" />
+                <rect x="10" y="9.5" width="7" height="3" rx="0.5" fill="#34D399" />
+                <path d="M16 3V8L18 6.5L20 8V3H16Z" fill="#F59E0B" />
+              </svg>
+              Guideline
+            </span>
+            <span className="tv-auth-chip">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ flexShrink: 0 }}
+              >
+                <defs>
+                  <linearGradient id="tv-growth-bg" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#EC4899" />
+                    <stop offset="100%" stopColor="#8B5CF6" />
+                  </linearGradient>
+                  <linearGradient id="tv-growth-area" x1="0" y1="0" x2="0" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stopColor="#F472B6" stopOpacity="0.5" />
+                    <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="20" height="20" rx="4" fill="url(#tv-growth-bg)" />
+                <line x1="5" y1="18" x2="19" y2="18" stroke="#FFFFFF" strokeOpacity="0.25" strokeWidth="1" />
+                <line x1="5" y1="13" x2="19" y2="13" stroke="#FFFFFF" strokeOpacity="0.25" strokeWidth="1" strokeDasharray="2 2" />
+                <line x1="5" y1="8" x2="19" y2="8" stroke="#FFFFFF" strokeOpacity="0.25" strokeWidth="1" strokeDasharray="2 2" />
+                <path d="M5 16L9.5 12.5L13.5 14L19 7.5V18H5V16Z" fill="url(#tv-growth-area)" />
+                <path
+                  d="M5 16L9.5 12.5L13.5 14L19 7.5"
+                  stroke="#38BDF8"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <circle cx="5" cy="16" r="1.5" fill="#38BDF8" />
+                <circle cx="9.5" cy="12.5" r="1.5" fill="#38BDF8" />
+                <circle cx="13.5" cy="14" r="1.5" fill="#38BDF8" />
+                <circle cx="19" cy="7.5" r="2" fill="#F59E0B" stroke="#FFFFFF" strokeWidth="1" />
+              </svg>
+              Tumbuh Kembang
+            </span>
           </div>
         </aside>
         <main className="tv-auth-panel">
