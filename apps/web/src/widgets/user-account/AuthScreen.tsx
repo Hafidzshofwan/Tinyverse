@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
 
-type Mode = "masuk" | "daftar";
+type Mode = "masuk" | "daftar" | "lupa";
 
 /**
  * Layar penuh login/daftar. Karena login wajib, layar ini menutup seluruh
@@ -11,7 +11,8 @@ type Mode = "masuk" | "daftar";
  * brand + form).
  */
 export function AuthScreen() {
-  const { status, errorMsg, masuk, masukGoogle, daftar } = useAuth();
+  const { status, errorMsg, masuk, masukGoogle, kirimResetSandi, daftar } =
+    useAuth();
   const [mode, setMode] = useState<Mode>("masuk");
   const [sibuk, setSibuk] = useState(false);
   const [pesan, setPesan] = useState<{ txt: string; jenis: "galat" | "info" }>(
@@ -21,6 +22,8 @@ export function AuthScreen() {
   // Form masuk
   const [mEmail, setMEmail] = useState("");
   const [mPass, setMPass] = useState("");
+  // Form lupa kata sandi
+  const [lEmail, setLEmail] = useState("");
   // Form daftar
   const [dNama, setDNama] = useState("");
   const [dInst, setDInst] = useState("");
@@ -76,6 +79,29 @@ export function AuthScreen() {
       setPesan({ txt: (e as Error).message, jenis: "galat" });
       setSibuk(false);
     }
+  }
+
+  async function submitLupa() {
+    if (!lEmail.trim()) {
+      setPesan({ txt: "Masukkan email Anda.", jenis: "galat" });
+      return;
+    }
+    setPesan({ txt: "", jenis: "galat" });
+    setSibuk(true);
+    try {
+      await kirimResetSandi(lEmail.trim());
+      /*
+       * Pesan sengaja netral: tidak menyebut apakah email itu terdaftar atau
+       * tidak, supaya halaman ini tidak bisa dipakai memeriksa keberadaan akun.
+       */
+      setPesan({
+        txt: "Bila email tersebut terdaftar, tautan penyetelan ulang kata sandi sudah dikirim. Periksa kotak masuk dan folder spam.",
+        jenis: "info",
+      });
+    } catch (e) {
+      setPesan({ txt: (e as Error).message, jenis: "galat" });
+    }
+    setSibuk(false);
   }
 
   function gantiMode(m: Mode) {
@@ -156,6 +182,9 @@ export function AuthScreen() {
                   }}
                 />
               </div>
+              <p className="tv-tukar">
+                <a onClick={() => gantiMode("lupa")}>Lupa kata sandi?</a>
+              </p>
               <button className="tv-btn" disabled={sibuk} onClick={submitMasuk}>
                 {sibuk ? "Memproses\u2026" : "Masuk ke Tinyverse"}
               </button>
@@ -170,6 +199,37 @@ export function AuthScreen() {
               <p className="tv-tukar">
                 Belum punya akun?{" "}
                 <a onClick={() => gantiMode("daftar")}>Daftar di sini</a>
+              </p>
+            </div>
+          ) : mode === "lupa" ? (
+            <div>
+              <h2>Lupa kata sandi</h2>
+              <p className="tv-auth-sub">
+                Masukkan email akun Anda. Kami kirimkan tautan untuk menyetel
+                ulang kata sandi.
+              </p>
+              {pesan.txt && (
+                <div className={"tv-pesan " + pesan.jenis}>{pesan.txt}</div>
+              )}
+              <div className="tv-field">
+                <label>Email</label>
+                <input
+                  type="email"
+                  autoComplete="username"
+                  placeholder="nama@contoh.com"
+                  value={lEmail}
+                  onChange={(e) => setLEmail(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") submitLupa();
+                  }}
+                />
+              </div>
+              <button className="tv-btn" disabled={sibuk} onClick={submitLupa}>
+                {sibuk ? "Mengirim\u2026" : "Kirim tautan reset"}
+              </button>
+              <p className="tv-tukar">
+                Ingat kata sandi Anda?{" "}
+                <a onClick={() => gantiMode("masuk")}>Kembali ke masuk</a>
               </p>
             </div>
           ) : (

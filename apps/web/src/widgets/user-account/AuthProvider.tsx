@@ -62,6 +62,7 @@ interface AuthContextValue {
   infoMsg: string;
   masuk: (email: string, pass: string) => Promise<void>;
   masukGoogle: () => Promise<void>;
+  kirimResetSandi: (email: string) => Promise<void>;
   daftar: (
     nama: string,
     institusi: string,
@@ -270,6 +271,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  /*
+   * Kirim email penyetelan ulang kata sandi. Isi & pengirim emailnya diatur di
+   * Firebase Console (Authentication > Templates), jadi aplikasi ini tidak
+   * perlu mengirim email sendiri.
+   */
+  const kirimResetSandi = useCallback(async (email: string) => {
+    const auth = authRef.current;
+    if (!auth) throw new Error("Firebase belum siap.");
+    try {
+      await auth.sendPasswordResetEmail(email);
+    } catch (e) {
+      /*
+       * Email tak dikenal sengaja diperlakukan sebagai berhasil. Membedakan
+       * "terdaftar" dari "tidak terdaftar" memberi penyerang cara murah
+       * memetakan siapa saja yang punya akun di sini. Pemanggil menampilkan
+       * pesan netral untuk kedua kasus.
+       */
+      const kode = (e as Any) && (e as Any).code;
+      if (kode === "auth/user-not-found") return;
+      throw new Error(petaError(e));
+    }
+  }, []);
+
   const masukGoogle = useCallback(async () => {
     const auth = authRef.current;
     const fb = (window as unknown as { firebase?: Any }).firebase;
@@ -461,6 +485,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     infoMsg,
     masuk,
     masukGoogle,
+    kirimResetSandi,
     daftar,
     keluar,
     simpanProfil,
