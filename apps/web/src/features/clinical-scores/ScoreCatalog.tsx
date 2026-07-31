@@ -193,7 +193,25 @@ export function ScoreCatalog() {
               className={"tv-ballard-tab" + (ballardTab === "neuromuscular" ? " active" : "")}
               onClick={() => setBallardTab("neuromuscular")}
             >
-              <span className="tv-ballard-tab-title">🧠 Maturitas Neuromuskular</span>
+              <span className="tv-ballard-tab-title">
+                <svg
+                  className="tv-ballard-tab-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5A2.5 2.5 0 0 0 4.5 7A2.5 2.5 0 0 0 2 9.5a2.5 2.5 0 0 0 2.5 2.5A2.5 2.5 0 0 0 2 14.5A2.5 2.5 0 0 0 4.5 17A2.5 2.5 0 0 0 7 19.5a2.5 2.5 0 0 0 2.5 2.5c.2 0 .39-.02.58-.07" />
+                  <path d="M14.5 2a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1-2.5 2.5c-.19 0-.38-.02-.58-.07" />
+                  <path d="M12 2v20" />
+                </svg>
+                <span>Maturitas Neuromuskular</span>
+              </span>
               <span className="tv-ballard-tab-sub">6 Parameter</span>
             </button>
             <button
@@ -201,7 +219,25 @@ export function ScoreCatalog() {
               className={"tv-ballard-tab" + (ballardTab === "physical" ? " active" : "")}
               onClick={() => setBallardTab("physical")}
             >
-              <span className="tv-ballard-tab-title">👶 Maturitas Fisik</span>
+              <span className="tv-ballard-tab-title">
+                <svg
+                  className="tv-ballard-tab-icon"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="8" r="5" />
+                  <path d="M9 13a3 3 0 0 0-3 3v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2a3 3 0 0 0-3-3H9z" />
+                  <path d="M12 6a1 1 0 0 1 1 1" />
+                </svg>
+                <span>Maturitas Fisik</span>
+              </span>
               <span className="tv-ballard-tab-sub">6 Parameter</span>
             </button>
           </div>
