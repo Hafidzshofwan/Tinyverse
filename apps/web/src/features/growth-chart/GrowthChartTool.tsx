@@ -20,6 +20,7 @@ import {
   tkInterpretasiZscore,
 } from "./interpretasi";
 import { hitungIMT } from "./zscore";
+import { caraUkurDariUsia, type CaraUkurPanjang } from "./longitudinal";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { usePatientProfile, usePatientKey } from "@/shared/lib/patient";
 import {
@@ -92,6 +93,19 @@ function num(v: string): number | null {
   return isFinite(n) ? n : null;
 }
 
+/**
+ * Nilai bawaan kolom sumbu X sesuai makna sumbu itu pada indikator terpilih.
+ * xField "tinggi" berarti sumbu X sentimeter (BB/PB & BB/TB), selain itu umur.
+ */
+function nilaiXBawaan(
+  xField: string | undefined,
+  usiaBulan: number | null | undefined,
+  tinggiCm: number | null | undefined,
+): string {
+  if (xField === "tinggi") return tinggiCm != null ? String(tinggiCm) : "";
+  return usiaBulan != null ? String(usiaBulan) : "";
+}
+
 export function GrowthChartTool() {
   const [langkah, setLangkah] = useState<1 | 2 | 3>(1);
   const [standar, setStandar] = useState<Standar | null>(null);
@@ -108,13 +122,64 @@ export function GrowthChartTool() {
   const [unduhGagal, setUnduhGagal] = useState<string | null>(null);
   const [gambarGagal, setGambarGagal] = useState<Record<string, boolean>>({});
 
-  const indikator: Indikator | null = useMemo(() => {
-    if (!standar || !kelamin) return null;
+  /*
+   * WHY: blok ini dulu mengambil Object.keys(inds)[0] alias indikator PERTAMA
+   * saja. Selama tiap standar hanya punya satu indikator, bug itu tak terlihat.
+   * Begitu WHO menerima indikator kedua (BB/PB & BB/TB), indikator itu akan
+   * diabaikan diam-diam: ada di konfigurasi, tidak pernah muncul di layar.
+   * Sekarang seluruh indikator didaftar dan pengguna yang memilih.
+   */
+  const [indikatorKey, setIndikatorKey] = useState<string | null>(null);
+
+  const daftarIndikator = useMemo<Array<{ key: string; ind: Indikator }>>(() => {
+    if (!standar || !kelamin) return [];
     const inds = GROWTH_CHART_CONFIG[standar]?.genders[kelamin]?.indicators;
-    if (!inds) return null;
-    const k = Object.keys(inds)[0];
-    return k ? (inds[k] ?? null) : null;
+    if (!inds) return [];
+    return Object.keys(inds).flatMap((k) => {
+      const ind = inds[k];
+      return ind ? [{ key: k, ind }] : [];
+    });
   }, [standar, kelamin]);
+
+  /** Indikator terpilih, LENGKAP dengan seluruh chart-nya. */
+  const indikatorPenuh: Indikator | null = useMemo(() => {
+    if (daftarIndikator.length === 0) return null;
+    const pilih = daftarIndikator.find((d) => d.key === indikatorKey);
+    return (pilih ?? daftarIndikator[0])?.ind ?? null;
+  }, [daftarIndikator, indikatorKey]);
+
+  // Ganti standar atau jenis kelamin: kembali ke indikator pertama, sebab kunci
+  // indikator milik kombinasi lama belum tentu ada di kombinasi yang baru.
+  useEffect(() => {
+    setIndikatorKey(null);
+  }, [standar, kelamin]);
+
+  /*
+   * Cara ukur panjang/tinggi badan. WHO memakai TABEL BERBEDA untuk panjang
+   * telentang dan tinggi berdiri, dan yang menentukan adalah cara pengukuran,
+   * bukan umur anak. Umur hanya dipakai sebagai tebakan awal; pengguna yang
+   * memutuskan. Selisihnya nyata: anak 90 cm 12 kg menghasilkan -0,74 SD bila
+   * diukur telentang dan -0,9 SD bila diukur berdiri.
+   */
+  const [caraUkur, setCaraUkur] = useState<CaraUkurPanjang>("pb");
+
+  /** Benar bila indikator ini menuntut pilihan PB/TB (dua chart, tak boleh bersamaan). */
+  const perluCaraUkur =
+    indikatorPenuh != null && indikatorPenuh.combined === false && indikatorPenuh.charts.length > 1;
+
+  /*
+   * Indikator yang BENAR-BENAR ditampilkan. Untuk BB/PB & BB/TB hanya satu chart
+   * yang boleh tampil, sesuai cara ukur. Chart dipilih lewat zKey serinya, bukan
+   * lewat c.id, supaya yang tampil selalu chart yang memang memakai tabel z-score
+   * bersangkutan meskipun id-nya kelak berubah.
+   */
+  const indikator: Indikator | null = useMemo(() => {
+    if (!indikatorPenuh) return null;
+    if (!perluCaraUkur) return indikatorPenuh;
+    const zk = caraUkur === "pb" ? "bbpb" : "bbtb";
+    const c = indikatorPenuh.charts.find((x) => (x.series || []).some((s) => s.zKey === zk));
+    return c ? { ...indikatorPenuh, charts: [c] } : indikatorPenuh;
+  }, [indikatorPenuh, perluCaraUkur, caraUkur]);
 
   /* ---------------- Isi otomatis dari profil pasien ---------------- */
 
@@ -137,7 +202,10 @@ export function GrowthChartTool() {
     // dikosongkan bila pasien baru belum punya nilainya. Menahan angka lama
     // berisiko: angka milik pasien lain bisa ikut terplot.
     auto.current = { x: true, berat: true, tinggi: true };
-    setInputX(pasien.usiaBulan != null ? String(pasien.usiaBulan) : "");
+    // Sumbu X tidak selalu umur: pada BB/PB & BB/TB isinya sentimeter.
+    setInputX(nilaiXBawaan(indikatorPenuh?.xField, pasien.usiaBulan, pasien.tb));
+    // Tebakan awal cara ukur dari umur; pengguna tetap bisa menimpanya.
+    if (pasien.usiaBulan != null) setCaraUkur(caraUkurDariUsia(pasien.usiaBulan));
     setInputBerat(pasien.bb != null ? String(pasien.bb) : "");
     setInputTinggi(pasien.tb != null ? String(pasien.tb) : "");
     // Hasil plot milik pasien sebelumnya wajib ikut hilang; bila dibiarkan, ia
@@ -148,6 +216,19 @@ export function GrowthChartTool() {
     // dibuat ulang tanpa isinya berubah, dan itu tidak boleh menghapus ketikan.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [kunciPasien]);
+
+  /*
+   * Berpindah indikator dapat mengubah ARTI kolom X: dari umur (bulan) menjadi
+   * panjang/tinggi (cm). Angka 18 yang tadinya berarti 18 bulan akan terbaca
+   * sebagai 18 cm bila dibiarkan, jauh di luar tabel dan sangat menyesatkan.
+   * Karena itu kolom X diisi ulang dari profil pasien, KECUALI bila pengguna
+   * sudah mengetik sendiri (auto.current.x === false), yang tidak boleh ditimpa.
+   */
+  useEffect(() => {
+    if (!auto.current.x) return;
+    setInputX(nilaiXBawaan(indikatorPenuh?.xField, pasien.usiaBulan, pasien.tb));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [indikatorPenuh?.xField]);
 
   useEffect(() => {
     if (langkah === 3) setHasil(null);
@@ -809,13 +890,88 @@ export function GrowthChartTool() {
             ⬅️ Ganti jenis kelamin
           </button>
 
+          {daftarIndikator.length > 1 ? (
+            <div className="tk-pilihan-besar" style={{ marginBottom: 12 }}>
+              {daftarIndikator.map((d) => {
+                const aktif = d.ind === indikatorPenuh;
+                return (
+                  <div
+                    key={d.key}
+                    className={`tk-kartu-pilihan${aktif ? " tk-pilih-aktif" : ""}`}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={aktif}
+                    onClick={() => setIndikatorKey(d.key)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setIndikatorKey(d.key);
+                      }
+                    }}
+                  >
+                    <span className="tk-emoji-besar">{d.ind.emoji}</span>
+                    <div className="tk-nama-pilihan">{d.ind.label}</div>
+                    <div className="tk-sub-pilihan">Sumbu X: {d.ind.xLabel}</div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+
+          {perluCaraUkur ? (
+            <div className="tk-pilihan-besar" style={{ marginBottom: 12 }}>
+              {(
+                [
+                  {
+                    nilai: "pb" as CaraUkurPanjang,
+                    emoji: "\u{1F6CF}\ufe0f",
+                    nama: "Panjang badan (telentang)",
+                    ket: "Tabel BB/PB \u00b7 lazim usia 0\u20132 tahun",
+                  },
+                  {
+                    nilai: "tb" as CaraUkurPanjang,
+                    emoji: "\u{1F9CD}",
+                    nama: "Tinggi badan (berdiri)",
+                    ket: "Tabel BB/TB \u00b7 lazim usia 2\u20135 tahun",
+                  },
+                ] as const
+              ).map((o) => (
+                <div
+                  key={o.nilai}
+                  className={`tk-kartu-pilihan${caraUkur === o.nilai ? " tk-pilih-aktif" : ""}`}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={caraUkur === o.nilai}
+                  onClick={() => setCaraUkur(o.nilai)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setCaraUkur(o.nilai);
+                    }
+                  }}
+                >
+                  <span className="tk-emoji-besar">{o.emoji}</span>
+                  <div className="tk-nama-pilihan">{o.nama}</div>
+                  <div className="tk-sub-pilihan">{o.ket}</div>
+                </div>
+              ))}
+              <div className="tk-plot-sub" style={{ gridColumn: "1 / -1", marginTop: 2 }}>
+                Pilih sesuai cara anak benar-benar diukur, bukan sesuai umurnya. Umur hanya
+                menentukan pilihan awal. WHO tidak menyetarakan kedua tabel, dan selisih
+                panjang terhadap tinggi (sekitar 0,7 cm) sengaja TIDAK dikoreksi otomatis.
+              </div>
+            </div>
+          ) : null}
+
           <div className="tk-plot-header" id="tkPlotHeader">
             {indikator ? (
               <>
                 <div className="tk-plot-judul" style={{ display: "flex", alignItems: "center", gap: 6 }}>
                   <IkonChart />{" "}
                   <span>
-                    {labelStandar} {standar === "who" ? "BB/U, TB/U, & IMT/U" : "BB/U, TB/U, & BB/TB"} —{" "}
+                    {/* Judul mengikuti indikator terpilih. Dulu dipatok keras per
+                        standar, sehingga indikator kedua tetap berjudul indikator pertama. */}
+                    {labelStandar} {indikator.label} —{" "}
                     {labelKelamin}
                   </span>
                 </div>
@@ -968,9 +1124,9 @@ export function GrowthChartTool() {
                 <input
                   type="number"
                   id="tkInputX"
-                  placeholder="cth: 18"
+                  placeholder={indikator.xUnit === "cm" ? "cth: 82" : "cth: 18"}
                   min="0"
-                  step="0.5"
+                  step={indikator.xUnit === "cm" ? "0.1" : "0.5"}
                   inputMode="decimal"
                   value={inputX}
                   onChange={(e) => {
