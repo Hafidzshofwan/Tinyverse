@@ -1565,11 +1565,25 @@ function MateriWhoZscore() {
             <li>&gt; +3 SD: Obesitas</li>
           </ul>
         </div>
+        <div className="tk-cdc-kriteria-box">
+          <strong>BB/PB &amp; BB/TB — Berat Badan menurut Panjang/Tinggi Badan</strong>
+          <ul>
+            <li>&lt; −3 SD: Gizi buruk (severely wasted)</li>
+            <li>−3 s/d &lt; −2 SD: Gizi kurang (wasted)</li>
+            <li>−2 s/d +1 SD: Gizi baik (normal)</li>
+            <li>&gt; +1 s/d +2 SD: Berisiko gizi lebih</li>
+            <li>&gt; +2 s/d +3 SD: Gizi lebih (overweight)</li>
+            <li>&gt; +3 SD: Obesitas</li>
+          </ul>
+        </div>
       </div>
       <div className="tk-cdc-materi-note">
         *Pada BB/U, anak dengan z &gt; +2 SD sebaiknya dikonfirmasi memakai IMT/U atau BB/TB, karena BB/U saja tidak
-        membedakan proporsi tubuh. Referensi: WHO Child Growth Standards (2006) &amp; Peraturan Menteri Kesehatan RI No.
-        2 Tahun 2020 tentang Standar Antropometri Anak.
+        membedakan proporsi tubuh. Ambang BB/PB dan BB/TB memang sama dengan IMT/U pada standar ini. Pilih
+        <strong> BB/PB</strong> bila anak diukur telentang (lazimnya usia &lt; 24 bulan) dan <strong>BB/TB</strong> bila
+        diukur berdiri (lazimnya ≥ 24 bulan) — yang menentukan adalah cara pengukuran, bukan usianya, karena
+        panjang telentang rata-rata sekitar 0,7 cm lebih besar daripada tinggi berdiri. Referensi: WHO Child Growth
+        Standards (2006) &amp; Peraturan Menteri Kesehatan RI No. 2 Tahun 2020 tentang Standar Antropometri Anak.
       </div>
     </div>
   );

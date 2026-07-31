@@ -300,7 +300,11 @@
 
 .tk-island-wrap .tk-cdc-materi .tk-cdc-grid-kriteria {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* auto-fit, bukan jumlah kolom tetap: kotak kriteria kini ada empat
+       (BB/U, TB/U, IMT/U, BB/PB & BB/TB) dan jumlahnya bisa bertambah lagi.
+       Dengan tiga kolom tetap, kotak terakhir akan melebar sendirian di baris
+       kedua dan terlihat timpang. */
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 8px;
     margin-top: 8px;
   }
