@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
+import { PromoTrial } from "./PromoTrial";
 
 type Mode = "masuk" | "daftar" | "lupa";
 
@@ -256,6 +257,7 @@ export function AuthScreen() {
                 Masuk untuk melanjutkan ke Tinyverse dengan tampilan terbaru
                 yang lebih elegan dan fokus.
               </p>
+              <PromoTrial ringkas />
               {(pesan.txt || errorMsg) && (
                 <div className={"tv-pesan " + (pesan.txt ? pesan.jenis : "galat")}>
                   {pesan.txt || errorMsg}
@@ -346,6 +348,7 @@ export function AuthScreen() {
               <p className="tv-auth-sub">
                 Lengkapi data berikut untuk menyiapkan profil Anda.
               </p>
+              <PromoTrial />
               {pesan.txt && (
                 <div className={"tv-pesan " + pesan.jenis}>{pesan.txt}</div>
               )}

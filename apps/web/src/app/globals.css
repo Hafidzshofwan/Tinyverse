@@ -935,6 +935,22 @@ html.dark .tv-greeting-hand-icon {
   color: #94a3b8;
 }
 
+/* Hanya mengganti WARNA. Lebar border tetap 1px seperti aturan dasar agar
+   tinggi kotak identik di kedua mode dan form tidak bergeser. */
+[data-theme="dark"] .tv-promo-trial {
+  border-color: #10B981;
+  background: linear-gradient(135deg, #064E3B, #06342B);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .tv-promo-teks strong {
+  color: #D1FAE5;
+}
+
+[data-theme="dark"] .tv-promo-sub {
+  color: #6EE7B7;
+}
+
 /* Domain Previews (Darurat, Cairan, Imunisasi, Lab) */
 [data-theme="dark"] .tv-page-imunisasi-wrapper,
 [data-theme="dark"] .tv-page-darurat-wrapper,
@@ -3361,6 +3377,48 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   font-weight: 700;
   color: rgba(10, 11, 95, 0.58);
   line-height: 1.55;
+}
+
+/* ============ SPANDUK PROMO TRIAL (layar login/daftar) ============ */
+/* Border sengaja dideklarasikan di sini, bukan hanya di blok mode gelap.
+   Mode gelap cukup mengganti border-color. Menambahkan border baru khusus
+   mode gelap akan mengubah tinggi kotak dan menggeser form saat tema diganti
+   (kasus yang pernah terjadi pada .tv-nav-item di sidebar). */
+.tv-promo-trial {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  max-width: 430px;
+  margin: 0 0 22px;
+  padding: 12px 14px;
+  border: 1px solid #BFE8D4;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #E8F7EF, #F3FBF7);
+  box-shadow: 0 2px 10px rgba(11, 79, 108, 0.07);
+}
+.tv-promo-ikon {
+  flex: 0 0 auto;
+  font-size: 20px;
+  line-height: 1;
+}
+.tv-promo-teks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.tv-promo-teks strong {
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #0B4F6C;
+  line-height: 1.3;
+}
+.tv-promo-sub {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #3F7A63;
+  line-height: 1.4;
 }
 .tv-tukar {
   margin: 14px 0 0;
