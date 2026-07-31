@@ -12,7 +12,7 @@ import {
   SediaanOption
 } from "./dosisData";
 import { hitungDosisInti, HasilPerhitungan, keteranganDosisAcuan } from "./hitungDosis";
-import { usePatientProfile } from "@/shared/lib/patient";
+import { usePatientProfile, usePatientKey } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   RakObatHeaderIcon,
@@ -40,17 +40,23 @@ export function DosisToolNative() {
   const libraryRef = useRef<HTMLDivElement>(null);
   const kalkulatorRef = useRef<HTMLDivElement>(null);
 
-  // Sync with patient profile if available
+  /*
+   * WHY: syarat "&& !usiaBulan" dulu membuat kolom hanya terisi ketika masih
+   * KOSONG. Untuk pasien pertama itu terlihat benar, tetapi begitu berpindah
+   * ke pasien kedua kolomnya sudah berisi angka pasien pertama sehingga tidak
+   * pernah diperbarui. Inilah sebabnya perlu muat ulang halaman. Pemicunya
+   * kini identitas pasien, bukan kekosongan kolom.
+   */
+  const kunciPasien = usePatientKey();
   useEffect(() => {
-    if (patient) {
-      if (patient.bb !== undefined && patient.bb !== null && !beratBadan) {
-        setBeratBadan(String(patient.bb));
-      }
-      if (patient.usiaBulan !== undefined && patient.usiaBulan !== null && !usiaBulan) {
-        setUsiaBulan(String(patient.usiaBulan));
-      }
-    }
-  }, [patient]);
+    setBeratBadan(patient.bb != null ? String(patient.bb) : "");
+    setUsiaBulan(patient.usiaBulan != null ? String(patient.usiaBulan) : "");
+    // Hasil dosis milik pasien sebelumnya WAJIB dibuang. Membiarkan angka dosis
+    // lama tampil setelah pasien berganti adalah risiko keselamatan, bukan
+    // sekadar tampilan yang basi.
+    setHasil(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kunciPasien]);
 
 
   // Selected drug object

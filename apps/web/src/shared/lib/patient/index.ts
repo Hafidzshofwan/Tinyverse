@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import {
   collection,
   doc,
@@ -680,17 +680,53 @@ export function usePatientList(): PatientProfile[] {
 }
 
 /**
+ * Penanda identitas pasien aktif.
+ *
+ * WHY: menyamakan "pasien berganti" dengan "nilainya berubah" itu keliru. Dua
+ * pasien berbeda bisa punya berat yang sama persis, dan pasien baru bisa sama
+ * sekali tidak punya nilai. Bila kolom hanya ikut berubah saat ANGKA-nya
+ * berbeda, berpindah dari pasien A (yang kolomnya sempat diketik manual) ke
+ * pasien B akan meninggalkan angka pasien A di layar - persis keluhan "harus
+ * refresh dulu". Karena itu identitas dilacak terpisah dari nilai.
+ *
+ * updatedAt ikut disertakan supaya menyunting pasien yang sedang aktif juga
+ * langsung tercermin, bukan hanya saat berpindah pasien.
+ */
+export function kunciProfil(p: PatientProfile): string {
+  return [p.id ?? "", p.updatedAt ?? "", p.nama ?? ""].join("|");
+}
+
+/** Identitas pasien aktif secara reaktif; berubah setiap kali pasien berganti. */
+export function usePatientKey(): string {
+  return kunciProfil(usePatientProfile());
+}
+
+/**
  * Field input yang tersinkron dengan profil pasien terpusat.
+ *
+ * Mengembalikan nilai string siap pakai untuk <input>, dan tetap menghormati
+ * ketikan manual pengguna selama pasiennya masih sama.
  */
 export function useSyncedField(
   profileValue: number | null | undefined,
 ): [string, (v: string) => void] {
   const profStr = profileValue != null ? String(profileValue) : "";
+  const kunci = usePatientKey();
   const [value, setValue] = useState(profStr);
+  const terakhir = useRef({ kunci, profStr });
 
   useEffect(() => {
+    const gantiPasien = terakhir.current.kunci !== kunci;
+    const gantiNilai = terakhir.current.profStr !== profStr;
+    if (!gantiPasien && !gantiNilai) return;
+
+    terakhir.current = { kunci, profStr };
+    // Saat pasien berganti, kolom SELALU mengikuti pasien baru - termasuk
+    // dikosongkan bila pasien baru belum punya nilai. Menahan nilai lama demi
+    // "kenyamanan" justru berbahaya di sini: angka milik pasien lain bisa
+    // terbawa ke perhitungan dosis.
     setValue(profStr);
-  }, [profStr]);
+  }, [kunci, profStr]);
 
   return [value, setValue];
 }

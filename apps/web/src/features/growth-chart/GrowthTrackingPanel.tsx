@@ -11,7 +11,7 @@ import {
   useGrowthRecords,
 } from "./longitudinal";
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
-import { usePatientProfile, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
+import { usePatientProfile, usePatientKey, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { GenderAvatar } from "./PatientProfile";
 import { hitungIMT } from "./zscore";
@@ -40,18 +40,20 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
 
   const gender: Gender = patientProfile.jk === "female" ? "female" : "male";
 
-  // Sinkronkan usia dari profil pasien jika ada
+  /*
+   * WHY: syarat "&& !usiaBulan" dulu membuat kolom hanya terisi ketika masih
+   * KOSONG. Untuk pasien pertama itu terlihat benar, tetapi begitu berpindah
+   * ke pasien kedua kolomnya sudah berisi angka pasien pertama sehingga tidak
+   * pernah diperbarui. Inilah sebabnya perlu muat ulang halaman. Pemicunya
+   * kini identitas pasien, bukan kekosongan kolom.
+   */
+  const kunciPasien = usePatientKey();
   useEffect(() => {
-    if (patientProfile.usiaBulan != null && !usiaBulan) {
-      setUsiaBulan(String(patientProfile.usiaBulan));
-    }
-    if (patientProfile.bb != null && !bb) {
-      setBb(String(patientProfile.bb));
-    }
-    if (patientProfile.tb != null && !tb) {
-      setTb(String(patientProfile.tb));
-    }
-  }, [patientProfile, usiaBulan, bb, tb]);
+    setUsiaBulan(patientProfile.usiaBulan != null ? String(patientProfile.usiaBulan) : "");
+    setBb(patientProfile.bb != null ? String(patientProfile.bb) : "");
+    setTb(patientProfile.tb != null ? String(patientProfile.tb) : "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kunciPasien]);
 
   // Hitung Z-score instant preview untuk form input
   const previewZscores = useMemo(() => {

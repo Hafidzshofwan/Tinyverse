@@ -21,6 +21,7 @@ import {
 } from "./interpretasi";
 import { hitungIMT } from "./zscore";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
+import { usePatientProfile, usePatientKey } from "@/shared/lib/patient";
 import {
   IkonBmi,
   IkonBook,
@@ -79,27 +80,6 @@ interface HasilPlot {
   zTextSummary?: string[];
 }
 
-interface PasienAktif {
-  jk?: string | null;
-  usiaBulan?: number | null;
-  bb?: number | null;
-  tb?: number | null;
-}
-
-/** Baca profil pasien aktif dari penyimpanan lokal (kunci sama seperti v17). */
-function bacaPasien(): PasienAktif {
-  try {
-    const raw = localStorage.getItem("tv_pasien_aktif");
-    if (raw) {
-      const j = JSON.parse(raw) as unknown;
-      if (j && typeof j === "object") return j as PasienAktif;
-    }
-  } catch {
-    /* localStorage bisa diblokir; abaikan seperti v17 */
-  }
-  return {};
-}
-
 /** Format angka gaya v17: 1 desimal, koma sebagai pemisah desimal. */
 function f(n: number | null | undefined, d: number): string {
   if (n == null || !isFinite(n)) return "\u2013";
@@ -138,56 +118,40 @@ export function GrowthChartTool() {
 
   /* ---------------- Isi otomatis dari profil pasien ---------------- */
 
-  const isiOtomatisPasien = useCallback(() => {
-    const p = bacaPasien();
-    if (typeof p.usiaBulan === "number" && isFinite(p.usiaBulan)) {
-      setInputX((lama) => (lama === "" || auto.current.x ? String(p.usiaBulan) : lama));
-    }
-    if (typeof p.bb === "number" && isFinite(p.bb)) {
-      setInputBerat((lama) => (lama === "" || auto.current.berat ? String(p.bb) : lama));
-    }
-    if (typeof p.tb === "number" && isFinite(p.tb)) {
-      setInputTinggi((lama) => (lama === "" || auto.current.tinggi ? String(p.tb) : lama));
-    }
-  }, []);
+  const pasien = usePatientProfile();
+  const kunciPasien = usePatientKey();
 
   const [mphKelamin, setMphKelamin] = useState<Kelamin>("male");
-  const isiKelaminMph = useCallback(() => {
-    const jk = bacaPasien().jk;
-    if (jk === "male" || jk === "female") setMphKelamin(jk);
-  }, []);
+
+  /*
+   * WHY: komponen ini dulu membaca localStorage sendiri lalu hanya menunggu
+   * event "message" dan "storage". Keduanya TIDAK pernah menyala di tab yang
+   * sama: postMessage hanya dikirim ke iframe, sedangkan event storage menurut
+   * spesifikasi hanya sampai ke tab LAIN. Jadi mengganti pasien di tab ini
+   * tidak membangunkan siapa pun, dan angkanya baru ikut berubah setelah
+   * halaman dimuat ulang. Sekarang ia berlangganan ke profil pasien terpusat,
+   * yang juga menyiarkan perubahan di dalam tab yang sama.
+   */
+  useEffect(() => {
+    // Pasien berganti: kolom dikembalikan ke milik pasien baru - termasuk
+    // dikosongkan bila pasien baru belum punya nilainya. Menahan angka lama
+    // berisiko: angka milik pasien lain bisa ikut terplot.
+    auto.current = { x: true, berat: true, tinggi: true };
+    setInputX(pasien.usiaBulan != null ? String(pasien.usiaBulan) : "");
+    setInputBerat(pasien.bb != null ? String(pasien.bb) : "");
+    setInputTinggi(pasien.tb != null ? String(pasien.tb) : "");
+    // Hasil plot milik pasien sebelumnya wajib ikut hilang; bila dibiarkan, ia
+    // terbaca seolah-olah hasil pasien yang baru saja dipilih.
+    setHasil(null);
+    if (pasien.jk === "male" || pasien.jk === "female") setMphKelamin(pasien.jk);
+    // Sengaja hanya bergantung pada identitas pasien: objek profil bisa saja
+    // dibuat ulang tanpa isinya berubah, dan itu tidak boleh menghapus ketikan.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kunciPasien]);
 
   useEffect(() => {
-    isiKelaminMph();
-    // WHY: profil pasien dapat berubah dari panel lain (postMessage) atau dari
-    // tab lain (event storage) — perilaku ini disalin dari island v17.
-    function onPesan(e: MessageEvent) {
-      const data = e.data as { __tvPasien?: boolean } | null;
-      if (data && data.__tvPasien) {
-        isiOtomatisPasien();
-        isiKelaminMph();
-      }
-    }
-    function onStorage(e: StorageEvent) {
-      if (!e.key || e.key === "tv_pasien_aktif") {
-        isiOtomatisPasien();
-        isiKelaminMph();
-      }
-    }
-    window.addEventListener("message", onPesan);
-    window.addEventListener("storage", onStorage);
-    return () => {
-      window.removeEventListener("message", onPesan);
-      window.removeEventListener("storage", onStorage);
-    };
-  }, [isiOtomatisPasien, isiKelaminMph]);
-
-  useEffect(() => {
-    if (langkah === 3) {
-      isiOtomatisPasien();
-      setHasil(null);
-    }
-  }, [langkah, indikator, isiOtomatisPasien]);
+    if (langkah === 3) setHasil(null);
+  }, [langkah, indikator]);
 
   /* ---------------- Mode kalibrasi chart ---------------- */
 
