@@ -5,17 +5,26 @@
  * angka trial tidak pernah ditulis ulang sebagai teks literal di komponen mana
  * pun. Setiap kali durasi berubah, cukup satu baris di bawah yang disunting.
  *
- * CATATAN PENTING
- * Konstanta ini hanya mengatur ANGKA YANG DITAMPILKAN. Durasi trial yang
- * sesungguhnya diberikan kepada pengguna ditentukan oleh logika langganan di
- * sisi server (paket @tinyverse/billing). Selama keduanya masih terpisah, ada
- * risiko teks promo dan durasi asli tidak sinkron.
+ * WHY BUKAN RE-EXPORT LANGSUNG DARI @tinyverse/billing
  *
- * Begitu konstanta resmi di @tinyverse/billing diketahui namanya, ganti isi
- * berkas ini menjadi satu baris re-export, misalnya:
+ * Cara paling ringkas memang `export { HARI_PERCOBAAN as HARI_TRIAL } from
+ * "@tinyverse/billing"`, dan itu sempat direncanakan. Tetapi berkas ini dipakai
+ * oleh PromoTrial.tsx yang ikut terkirim ke peramban lewat AuthScreen. Menarik
+ * seluruh indeks paket billing ke dalam bundel klien berarti ikut menyeret
+ * modul pesanan dan Midtrans - kode yang tidak pernah dibutuhkan layar login,
+ * memperbesar berkas yang harus diunduh sebelum halaman masuk bisa dipakai, dan
+ * berisiko gagal build bila salah satu modul itu bergantung pada API Node.
  *
- *   export { HARI_TRIAL } from "@tinyverse/billing";
+ * Satu angka demi satu paket server di bundel klien bukan pertukaran yang adil.
  *
- * sehingga hanya ada satu angka di seluruh repositori.
+ * Sebagai gantinya, kesetaraan angka ini dengan HARI_PERCOBAAN dijaga oleh
+ * promoTrial.test.ts. Menaikkan durasi trial tanpa memperbarui berkas ini akan
+ * membuat CI merah, bukan membuat spanduk login diam-diam berbohong kepada
+ * calon pengguna.
+ *
+ * MASIH HARUS DIPERIKSA MANUAL saat durasi berubah, karena angkanya tertulis
+ * sebagai kalimat di dokumen yang mengikat secara hukum:
+ *   - apps/web/src/app/syarat-ketentuan/page.tsx  (bagian 3)
+ *   - apps/web/src/app/pengembalian-dana/page.tsx
  */
 export const HARI_TRIAL = 7;

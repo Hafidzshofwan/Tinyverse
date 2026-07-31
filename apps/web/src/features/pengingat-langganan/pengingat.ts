@@ -50,6 +50,22 @@ export type SumberPengingat = {
 /** Pengingat mulai tampil ketika sisa masa aktif tinggal sekian hari. */
 export const BATAS_HARI_PENGINGAT = 7;
 
+/**
+ * Batas terpisah untuk masa percobaan, sengaja lebih pendek.
+ *
+ * WHY dua angka, bukan satu: batas 7 hari dirancang untuk langganan berbulan.
+ * Memakainya pada masa percobaan yang panjangnya juga 7 hari membuat pita amber
+ * menempel sejak menit pertama - menagih orang sebelum ia sempat menilai
+ * produknya adalah cara tercepat kehilangan dia.
+ *
+ * Dua hari dipilih supaya peringatan datang saat pengguna sudah cukup memakai
+ * aplikasi untuk menilainya, tetapi masih punya waktu memutuskan sebelum akses
+ * berhenti. Angka ini TIDAK boleh menyamai atau melampaui HARI_PERCOBAAN di
+ * @tinyverse/billing; bila sampai sama, spanduk kembali muncul sejak hari
+ * pertama dan tujuan pemisahan ini hilang.
+ */
+export const BATAS_HARI_PENGINGAT_PERCOBAAN = 2;
+
 const MS_PER_HARI = 86_400_000;
 
 /**
@@ -85,16 +101,22 @@ function kunciTutup(nada: NadaPengingat, sekarang: string): string {
  *
  * MASA PERCOBAAN diperlakukan berbeda pada dua titik:
  *
- * 1. Selama masih berjalan, spanduk DISEMBUNYIKAN. Masa percobaan hanya 2 hari,
- *    sementara batas kemunculan spanduk 7 hari, sehingga pita amber akan
- *    menempel sejak menit pertama. Menagih orang yang baru saja mencoba,
- *    sebelum ia sempat menilai produknya, adalah cara tercepat kehilangan dia.
+ * 1. Selama masih berjalan, spanduk DIAM sampai dua hari terakhir, lalu muncul
+ *    dengan kalimatnya sendiri. Sebelumnya spanduk disembunyikan sepanjang masa
+ *    percobaan, karena panjangnya hanya 2 hari sehingga peringatan apa pun pasti
+ *    terasa seperti menagih. Setelah masa percobaan menjadi 7 hari, diam total
+ *    justru berbahaya: pengguna memakai aplikasi seminggu penuh tanpa satu pun
+ *    tanda, lalu tiba-tiba terkunci. Dua hari terakhir adalah kompromi antara
+ *    tidak mengganggu dan tidak menjebak.
  *
  * 2. Setelah berakhir, spanduk TETAP DITAMPILKAN, tetapi dengan kalimatnya
  *    sendiri. Menghilangkannya berarti akses tertutup tanpa penjelasan apa pun,
  *    dan itu lebih buruk daripada pita yang mengganggu. Kalimat "masa langganan
  *    berakhir" juga tidak dipakai di sini, karena orang ini memang belum pernah
  *    berlangganan.
+ *
+ * Kalimat pada kedua titik itu mengajak BERLANGGANAN, bukan MEMPERPANJANG.
+ * Orang yang sedang mencoba belum pernah membayar apa pun.
  */
 export function hitungPengingat(
   sumber: SumberPengingat,
@@ -124,11 +146,32 @@ export function hitungPengingat(
     };
   }
 
-  /* Masa percobaan yang masih berjalan: diam. Ditaruh SETELAH cabang
-     kedaluwarsa, supaya pemberitahuan berakhirnya percobaan tetap sampai. */
-  if (sumber.percobaan) return null;
-
   if (!sumber.berakhirPada) return null;
+
+  /* Masa percobaan yang masih berjalan. Ditaruh SETELAH cabang kedaluwarsa,
+     supaya pemberitahuan berakhirnya percobaan tetap sampai. */
+  if (sumber.percobaan) {
+    const hariPercobaan = sisaHariSampai(sekarang, sumber.berakhirPada);
+    if (hariPercobaan === null) return null;
+    if (hariPercobaan > BATAS_HARI_PENGINGAT_PERCOBAAN) return null;
+
+    /* Ditahan di angka 1 dengan alasan yang sama seperti pelanggan berbayar:
+       selisih jam antara server dan penyimpanan tidak boleh menghasilkan
+       kalimat "berakhir 0 hari lagi" pada akses yang masih aktif. */
+    const sisaPercobaan = Math.max(1, hariPercobaan);
+
+    return {
+      nada: "peringatan",
+      judul:
+        sisaPercobaan === 1
+          ? "Masa percobaan berakhir kurang dari 24 jam lagi"
+          : `Masa percobaan berakhir ${sisaPercobaan} hari lagi`,
+      pesan:
+        "Berlangganan sekarang agar akses ke alat klinis tidak terputus saat Anda sedang membutuhkannya.",
+      sisaHari: sisaPercobaan,
+      kunci: kunciTutup("peringatan", sekarang),
+    };
+  }
 
   const hari = sisaHariSampai(sekarang, sumber.berakhirPada);
   if (hari === null) return null;

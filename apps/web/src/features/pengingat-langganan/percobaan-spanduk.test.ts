@@ -1,13 +1,63 @@
 import { describe, expect, it } from "vitest";
 
-import { hitungPengingat } from "./pengingat";
+import { HARI_PERCOBAAN } from "@tinyverse/billing";
+
+import { BATAS_HARI_PENGINGAT_PERCOBAAN, hitungPengingat } from "./pengingat";
 
 /* Waktu selalu dititipkan sebagai teks, sama seperti pengingat.test.ts, supaya
    uji ini tidak berubah hasilnya bulan depan. */
 const KINI = "2026-07-29T00:00:00.000Z";
 
+describe("batas pengingat masa percobaan", () => {
+  it("muncul pada dua hari terakhir", () => {
+    expect(BATAS_HARI_PENGINGAT_PERCOBAAN).toBe(2);
+  });
+
+  /*
+   * PAGAR TERPENTING di berkas ini.
+   *
+   * Bila batas pengingat menyamai atau melampaui panjang masa percobaan,
+   * spanduk akan muncul sejak menit pertama pengguna mendaftar - persis
+   * keadaan yang dulu membuat spanduk sengaja dibungkam total. Uji ini
+   * mengunci hubungan antara dua angka itu, bukan nilainya masing-masing,
+   * sehingga durasi trial boleh diubah tanpa diam-diam merusak perilakunya.
+   */
+  it("selalu lebih pendek daripada masa percobaan itu sendiri", () => {
+    expect(BATAS_HARI_PENGINGAT_PERCOBAAN).toBeLessThan(HARI_PERCOBAAN);
+  });
+});
+
 describe("spanduk selama masa percobaan berjalan", () => {
   it("diam pada hari pertama masa percobaan", () => {
+    const p = hitungPengingat(
+      {
+        status: "aktif",
+        berakhirPada: "2026-08-05T00:00:00.000Z",
+        percobaan: true,
+      },
+      KINI
+    );
+    expect(p).toBeNull();
+  });
+
+  it("masih diam saat sisa tiga hari", () => {
+    const p = hitungPengingat(
+      {
+        status: "aktif",
+        berakhirPada: "2026-08-01T00:00:00.000Z",
+        percobaan: true,
+      },
+      KINI
+    );
+    expect(p).toBeNull();
+  });
+
+  /*
+   * Perubahan kebijakan yang disengaja. Sebelum masa percobaan menjadi 7 hari,
+   * uji di titik ini berbunyi "tetap diam pada jam-jam terakhir". Diam selama
+   * seminggu penuh berarti pengguna kehilangan akses tanpa satu pun peringatan.
+   */
+  it("muncul tepat saat sisa dua hari", () => {
     const p = hitungPengingat(
       {
         status: "aktif",
@@ -16,16 +66,47 @@ describe("spanduk selama masa percobaan berjalan", () => {
       },
       KINI
     );
-    expect(p).toBeNull();
+    expect(p?.nada).toBe("peringatan");
+    expect(p?.sisaHari).toBe(2);
+    expect(p?.judul).toContain("Masa percobaan berakhir 2 hari lagi");
   });
 
-  it("tetap diam pada jam-jam terakhir masa percobaan", () => {
+  it("memakai kalimat khusus pada jam-jam terakhir masa percobaan", () => {
     const p = hitungPengingat(
       {
         status: "aktif",
         berakhirPada: "2026-07-29T06:00:00.000Z",
         percobaan: true,
       },
+      KINI
+    );
+    expect(p?.nada).toBe("peringatan");
+    expect(p?.sisaHari).toBe(1);
+    expect(p?.judul).toContain("kurang dari 24 jam");
+  });
+
+  /*
+   * Orang yang sedang mencoba belum pernah membayar apa pun, sehingga kata
+   * "perpanjang" tidak masuk akal baginya - dan kata "langganan" saja mudah
+   * terbaca seolah ia sudah punya langganan yang berjalan.
+   */
+  it("mengajak berlangganan, bukan memperpanjang", () => {
+    const p = hitungPengingat(
+      {
+        status: "aktif",
+        berakhirPada: "2026-07-31T00:00:00.000Z",
+        percobaan: true,
+      },
+      KINI
+    );
+    expect(p?.pesan).toContain("Berlangganan");
+    expect(p?.pesan).not.toContain("Perpanjang");
+    expect(p?.judul).not.toContain("Langganan berakhir");
+  });
+
+  it("diam bila tanggal berakhir masa percobaan tidak tercatat", () => {
+    const p = hitungPengingat(
+      { status: "aktif", berakhirPada: null, percobaan: true },
       KINI
     );
     expect(p).toBeNull();

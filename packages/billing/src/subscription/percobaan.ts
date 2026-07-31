@@ -13,7 +13,7 @@ import type { Langganan } from "./types"
  * jawaban untuk satu pertanyaan "boleh masuk atau tidak", dan dua jawaban itu
  * pasti akan berbeda pada kasus pinggir - berupa pelanggan membayar yang
  * tertolak, atau akses gratis yang tidak pernah tertutup. Karena itu masa
- * percobaan hanyalah langganan 2 hari yang tidak dibayar.
+ * percobaan hanyalah langganan 7 hari yang tidak dibayar.
  */
 
 /**
@@ -24,8 +24,21 @@ import type { Langganan } from "./types"
  */
 export const PERCOBAAN_PLAN_ID = "percobaan"
 
-/** Lama masa percobaan dalam hari. */
-export const HARI_PERCOBAAN = 2
+/**
+ * Lama masa percobaan dalam hari.
+ *
+ * SATU-SATUNYA sumber kebenaran durasi trial. Bila diubah, tiga hal WAJIB ikut
+ * diperiksa karena angkanya tertulis sebagai kalimat, bukan sebagai impor:
+ *
+ * 1. apps/web/src/app/syarat-ketentuan/page.tsx  (bagian 3)
+ * 2. apps/web/src/app/pengembalian-dana/page.tsx
+ * 3. apps/web/src/widgets/user-account/promoTrial.ts (spanduk layar login)
+ *
+ * Nomor 3 dijaga otomatis oleh promoTrial.test.ts, tetapi dua dokumen hukum di
+ * atas tidak bisa diuji mesin - keduanya mengikat secara hukum, jadi selisih
+ * angka di sana bukan sekadar salah tulis.
+ */
+export const HARI_PERCOBAAN = 7
 
 /**
  * Susun langganan masa percobaan untuk sebuah akun.
