@@ -92,6 +92,22 @@ function batas(i: number, maks: number): number {
   return i > maks ? maks : i;
 }
 
+/**
+ * Mengambil satu entri larik memakai indeks yang sudah dibatasi.
+ *
+ * WHY: tsconfig repo menyalakan noUncheckedIndexedAccess, sehingga SETIAP
+ * pembacaan `larik[i]` bertipe `T | undefined` dan menggagalkan build. Menabur
+ * tanda `!` ke seluruh berkas memang membuat build lolos, tetapi itu hanya
+ * membungkam pemeriksa tipe tanpa membuktikan apa pun. Helper ini membatasi
+ * indeks lebih dulu lalu mengembalikan nilai yang dijamin ada, jadi tipenya
+ * jujur dan gambar tetap muncul walau indeks di luar dugaan.
+ */
+function pilih<T>(daftar: readonly T[], i: number, cadangan: T): T {
+  if (daftar.length === 0) return cadangan;
+  const n = batas(Math.floor(i), daftar.length - 1);
+  return daftar[n] ?? cadangan;
+}
+
 export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
   scoreId,
   paramIndex,
@@ -317,44 +333,45 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     if (paramIndex === 0) {
       // Makin matur, lengan dan tungkai makin menekuk sehingga jangkauannya
       // makin pendek. Itulah isyarat visual utama pada baris ini.
-      const bentuk = [
-        { lengan: "M30 16 L54 12", tungkai: "M35 28 L58 32" },
+      const AWAL = { lengan: "M30 16 L54 12", tungkai: "M35 28 L58 32" };
+      const SIKAP = [
+        AWAL,
         { lengan: "M30 16 L45 11 L55 17", tungkai: "M35 28 L50 33 L58 27" },
         { lengan: "M30 16 L43 10 L52 18", tungkai: "M35 28 L48 34 L56 25" },
         { lengan: "M30 16 L41 9 L48 18", tungkai: "M35 28 L45 35 L52 24" },
         { lengan: "M30 16 L38 9 L44 17", tungkai: "M35 28 L42 34 L48 23" },
       ];
-      const b = bentuk[batas(optionIndex, 4)];
+      const s = pilih(SIKAP, optionIndex, AWAL);
       return (
         <Kanvas>
           <Kepala x={13} y={22} />
           <rect x={18} y={16} width={18} height={12} rx={6} />
-          <path d={b.lengan} stroke={AKSEN} strokeWidth={2} />
-          <path d={b.tungkai} stroke={AKSEN} strokeWidth={2} />
+          <path d={s.lengan} stroke={AKSEN} strokeWidth={2} />
+          <path d={s.tungkai} stroke={AKSEN} strokeWidth={2} />
         </Kanvas>
       );
     }
 
     // 1. Square Window (Pergelangan Tangan) - 6 pilihan
     if (paramIndex === 1) {
-      const derajat = [120, 90, 60, 45, 30, 0];
-      const label = [
-        "> 90\u00B0",
-        "90\u00B0",
-        "60\u00B0",
-        "45\u00B0",
-        "30\u00B0",
-        "0\u00B0",
+      const AWAL = { d: 120, teks: "> 90\u00B0" };
+      const JENDELA = [
+        AWAL,
+        { d: 90, teks: "90\u00B0" },
+        { d: 60, teks: "60\u00B0" },
+        { d: 45, teks: "45\u00B0" },
+        { d: 30, teks: "30\u00B0" },
+        { d: 0, teks: "0\u00B0" },
       ];
-      const i = batas(optionIndex, 5);
+      const s = pilih(JENDELA, optionIndex, AWAL);
       // Sudut diukur dari sumbu lengan bawah. 0 derajat berarti telapak tangan
       // benar-benar menempel pada lengan - kondisi paling matur.
-      const t = (derajat[i] * Math.PI) / 180;
+      const t = (s.d * Math.PI) / 180;
       const px = 26 + 15 * Math.sin(t);
       const py = 16 - 15 * Math.cos(t);
       const jx = 3.5 * Math.cos(t);
       const jy = 3.5 * Math.sin(t);
-      const warna = derajat[i] === 0 ? AKSEN_KUAT : AKSEN;
+      const warna = s.d === 0 ? AKSEN_KUAT : AKSEN;
       return (
         <Kanvas>
           {/* Lengan bawah, selalu tegak sebagai acuan sudut */}
@@ -371,60 +388,54 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
             stroke={warna}
             strokeWidth={2}
           />
-          <Label x={48} y={41} teks={label[i]} warna={warna} />
+          <Label x={48} y={41} teks={s.teks} warna={warna} />
         </Kanvas>
       );
     }
 
     // 2. Arm Recoil (Rekoil Lengan) - 5 pilihan
     if (paramIndex === 2) {
-      const label = [
-        "180\u00B0",
-        "140\u2013180\u00B0",
-        "110\u2013140\u00B0",
-        "90\u2013110\u00B0",
-        "< 90\u00B0",
+      const AWAL = { garis: "M26 18 L24 38", teks: "180\u00B0", kuat: false };
+      const REKOIL = [
+        AWAL,
+        { garis: "M26 18 L20 30 L26 38", teks: "140\u2013180\u00B0", kuat: false },
+        { garis: "M26 18 L17 27 L26 34", teks: "110\u2013140\u00B0", kuat: false },
+        { garis: "M26 18 L16 24 L26 29", teks: "90\u2013110\u00B0", kuat: true },
+        { garis: "M26 18 L16 21 L27 23", teks: "< 90\u00B0", kuat: true },
       ];
-      const lengan = [
-        "M26 18 L24 38",
-        "M26 18 L20 30 L26 38",
-        "M26 18 L17 27 L26 34",
-        "M26 18 L16 24 L26 29",
-        "M26 18 L16 21 L27 23",
-      ];
-      const i = batas(optionIndex, 4);
-      const warna = i >= 3 ? AKSEN_KUAT : AKSEN;
+      const s = pilih(REKOIL, optionIndex, AWAL);
+      const warna = s.kuat ? AKSEN_KUAT : AKSEN;
       return (
         <Kanvas>
           <Kepala x={32} y={9} r={4.5} />
           <rect x={26} y={14} width={12} height={22} rx={5} />
-          <path d={lengan[i]} stroke={warna} strokeWidth={2.2} />
-          <Label x={49} y={41} teks={label[i]} warna={warna} />
+          <path d={s.garis} stroke={warna} strokeWidth={2.2} />
+          <Label x={49} y={41} teks={s.teks} warna={warna} />
         </Kanvas>
       );
     }
 
     // 3. Popliteal Angle (Sudut Popliteal) - 7 pilihan
     if (paramIndex === 3) {
-      const derajat = [180, 160, 140, 120, 100, 90, 70];
-      const label = [
-        "180\u00B0",
-        "160\u00B0",
-        "140\u00B0",
-        "120\u00B0",
-        "100\u00B0",
-        "90\u00B0",
-        "< 90\u00B0",
+      const AWAL = { d: 180, teks: "180\u00B0" };
+      const POPLITEAL = [
+        AWAL,
+        { d: 160, teks: "160\u00B0" },
+        { d: 140, teks: "140\u00B0" },
+        { d: 120, teks: "120\u00B0" },
+        { d: 100, teks: "100\u00B0" },
+        { d: 90, teks: "90\u00B0" },
+        { d: 70, teks: "< 90\u00B0" },
       ];
-      const i = batas(optionIndex, 6);
+      const s = pilih(POPLITEAL, optionIndex, AWAL);
       // Sudut popliteal diukur di lutut, antara paha dan betis. 180 derajat
       // berarti tungkai lurus sempurna; simpangan betis dihitung dari situ.
-      const d = ((180 - derajat[i]) * Math.PI) / 180;
+      const r = ((180 - s.d) * Math.PI) / 180;
       const kx = 26;
       const ky = 17;
-      const bx = kx + 15 * Math.sin(d);
-      const by = ky - 15 * Math.cos(d);
-      const warna = derajat[i] <= 90 ? AKSEN_KUAT : AKSEN;
+      const bx = kx + 15 * Math.sin(r);
+      const by = ky - 15 * Math.cos(r);
+      const warna = s.d <= 90 ? AKSEN_KUAT : AKSEN;
       return (
         <Kanvas>
           <Kepala x={11} y={31} r={4.5} />
@@ -438,7 +449,7 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
             strokeWidth={2}
           />
           <circle cx={kx} cy={ky} r={1.8} fill={warna} stroke="none" />
-          <Label x={49} y={41} teks={label[i]} warna={warna} />
+          <Label x={49} y={41} teks={s.teks} warna={warna} />
         </Kanvas>
       );
     }
@@ -448,9 +459,9 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
       // Siku ditarik melintasi dada. Patokannya garis tengah (x=32) dan garis
       // puting (x=25 dan x=39); teks pilihan menyebut patokan itu secara
       // eksplisit, jadi keduanya ikut digambar sebagai penanda.
-      const sikuX = [16, 21, 25, 32, 38, 43];
+      const SIKU_X = [16, 21, 25, 32, 38, 43];
       const i = batas(optionIndex, 5);
-      const sx = sikuX[i];
+      const sx = pilih(SIKU_X, optionIndex, 16);
       const warna = i >= 4 ? AKSEN_KUAT : AKSEN;
       return (
         <Kanvas>
@@ -476,29 +487,21 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
 
     // 5. Heel to Ear (Tumit ke Telinga) - 6 pilihan
     if (paramIndex === 5) {
-      const tumit = [
-        [17, 13],
-        [21, 15],
-        [26, 18],
-        [31, 22],
-        [36, 26],
-        [40, 30],
+      const AWAL = { x: 17, y: 13, teks: "180\u00B0" };
+      const TUMIT = [
+        AWAL,
+        { x: 21, y: 15, teks: "160\u00B0" },
+        { x: 26, y: 18, teks: "140\u00B0" },
+        { x: 31, y: 22, teks: "120\u00B0" },
+        { x: 36, y: 26, teks: "100\u00B0" },
+        { x: 40, y: 30, teks: "< 90\u00B0" },
       ];
-      const label = [
-        "180\u00B0",
-        "160\u00B0",
-        "140\u00B0",
-        "120\u00B0",
-        "100\u00B0",
-        "< 90\u00B0",
-      ];
+      const s = pilih(TUMIT, optionIndex, AWAL);
       const i = batas(optionIndex, 5);
-      const hx = tumit[i][0];
-      const hy = tumit[i][1];
       // Lutut ditempatkan di atas garis pinggul-tumit agar tungkai terbaca
       // menekuk, bukan sekadar patah.
-      const lx = (44 + hx) / 2 + 3;
-      const ly = (30 + hy) / 2 - 10;
+      const lx = (44 + s.x) / 2 + 3;
+      const ly = (30 + s.y) / 2 - 10;
       const warna = i >= 4 ? AKSEN_KUAT : AKSEN;
       return (
         <Kanvas>
@@ -507,12 +510,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
           <path d="M16.5 17 Q19.5 20 16.5 23" strokeWidth={1.2} />
           <rect x={18} y={26} width={28} height={10} rx={5} />
           <path
-            d={`M44 30 L${lx.toFixed(1)} ${ly.toFixed(1)} L${hx} ${hy}`}
+            d={`M44 30 L${lx.toFixed(1)} ${ly.toFixed(1)} L${s.x} ${s.y}`}
             stroke={warna}
             strokeWidth={2}
           />
-          <circle cx={hx} cy={hy} r={2.2} fill={warna} stroke="none" />
-          <Label x={52} y={41} teks={label[i]} warna={warna} />
+          <circle cx={s.x} cy={s.y} r={2.2} fill={warna} stroke="none" />
+          <Label x={52} y={41} teks={s.teks} warna={warna} />
         </Kanvas>
       );
     }
@@ -531,16 +534,18 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
 
     // 6. Kulit (Skin) - 7 pilihan
     if (paramIndex === 6) {
-      const i = batas(optionIndex, 6);
-      const isi = [
-        "#F0F9FF",
-        "#FCA5A5",
-        "#FBCFE8",
-        "#FBCFE8",
-        "#FEE2E2",
-        "#F1EADB",
-        "#E3D5BE",
+      const AWAL = { isi: "#F0F9FF", vena: 0, retak: 0 };
+      const KULIT = [
+        AWAL,
+        { isi: "#FCA5A5", vena: 0, retak: 0 },
+        { isi: "#FBCFE8", vena: 4, retak: 0 },
+        { isi: "#FBCFE8", vena: 2, retak: 0 },
+        { isi: "#FEE2E2", vena: 1, retak: 2 },
+        { isi: "#F1EADB", vena: 0, retak: 4 },
+        { isi: "#E3D5BE", vena: 0, retak: 6 },
       ];
+      const s = pilih(KULIT, optionIndex, AWAL);
+      const i = batas(optionIndex, 6);
       const VENA = [
         "M14 18 L20 21 L26 19",
         "M16 26 L23 24 L30 27",
@@ -555,8 +560,6 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
         "M19 31 L27 30",
         "M33 31 L42 30",
       ];
-      const jmlVena = [0, 0, 4, 2, 1, 0, 0][i];
-      const jmlRetak = [0, 0, 0, 0, 2, 4, 6][i];
       return (
         <Kanvas vb="0 0 56 44" lebar={50}>
           <rect
@@ -565,16 +568,16 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
             width={38}
             height={24}
             rx={6}
-            fill={isi[i]}
+            fill={s.isi}
             strokeDasharray={i === 0 ? "3 2" : undefined}
             opacity={i === 0 ? 0.75 : 1}
           />
           {/* Vena yang masih tembus pandang pada kulit belum matur */}
-          {VENA.slice(0, jmlVena).map((d) => (
+          {VENA.slice(0, s.vena).map((d) => (
             <path key={d} d={d} stroke="#3B82F6" strokeWidth={1} opacity={0.85} />
           ))}
           {/* Retakan bertambah banyak dan dalam seiring maturitas */}
-          {RETAK.slice(0, jmlRetak).map((d) => (
+          {RETAK.slice(0, s.retak).map((d) => (
             <path key={d} d={d} strokeWidth={i >= 5 ? 1.4 : 1} opacity={0.8} />
           ))}
           {/* Pengelupasan superfisial */}
@@ -616,7 +619,7 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
       ];
       // Pola dipilih eksplisit, bukan diambil N pertama, supaya "jarang"
       // benar-benar tersebar merata dan tidak menggerombol di satu sisi.
-      const pola = [
+      const POLA: number[][] = [
         [],
         [0, 4, 8, 12],
         [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
@@ -624,14 +627,17 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
         [2, 7, 11],
         [6],
       ];
+      const dipilih = pilih(POLA, optionIndex, []);
+      // filter, bukan map berindeks, supaya tidak ada pembacaan larik mentah
+      const dipakai = RAMBUT.filter((_, k) => dipilih.includes(k));
       return (
         <Kanvas vb="0 0 56 44" lebar={50}>
           {/* Punggung bayi */}
           <rect x={9} y={12} width={38} height={22} rx={8} fill="#FDE8D7" />
-          {pola[i].map((k) => (
-            <path key={k} d={RAMBUT[k]} strokeWidth={0.9} opacity={0.9} stroke="#B45309" />
+          {dipakai.map((d) => (
+            <path key={d} d={d} strokeWidth={0.9} opacity={0.9} stroke="#B45309" />
           ))}
-          {i === 0 && <Label x={28} y={26} teks="\u2014" warna="#B45309" />}
+          {i === 0 && <Label x={28} y={26} teks={"\u2014"} warna="#B45309" />}
         </Kanvas>
       );
     }
@@ -649,7 +655,7 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
         "M18.5 25 q6 2.5 13 0",
         "M19.5 29 q5 2 11 0",
       ];
-      const jml = [0, 0, 0, 1, 3, 5, 5][i];
+      const jml = pilih([0, 0, 0, 1, 3, 5, 5], optionIndex, 0);
       return (
         <Kanvas vb="0 0 56 44" lebar={48}>
           <path d={SOL} fill="#FDE68A" />
@@ -674,9 +680,17 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
 
     // 9. Payudara / Areola - 6 pilihan
     if (paramIndex === 9) {
+      const AWAL = { areola: 6, nodul: 0 };
+      const DADA = [
+        AWAL,
+        { areola: 6.5, nodul: 0.9 },
+        { areola: 8, nodul: 0 },
+        { areola: 8.5, nodul: 1.9 },
+        { areola: 9, nodul: 2.7 },
+        { areola: 10, nodul: 3.6 },
+      ];
+      const s = pilih(DADA, optionIndex, AWAL);
       const i = batas(optionIndex, 5);
-      const rAreola = [6, 6.5, 8, 8.5, 9, 10][i];
-      const rNodul = [0, 0.9, 0, 1.9, 2.7, 3.6][i];
       const samar = i <= 1;
       return (
         <Kanvas vb="0 0 56 44" lebar={48}>
@@ -685,7 +699,7 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
           <circle
             cx={28}
             cy={22}
-            r={rAreola}
+            r={s.areola}
             stroke="#BE185D"
             strokeWidth={i >= 4 ? 1.8 : 1.2}
             strokeDasharray={samar ? "2 2" : undefined}
@@ -703,10 +717,10 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
           )}
           {/* Areola terangkat: cincin luar tambahan */}
           {i >= 4 && (
-            <circle cx={28} cy={22} r={rAreola + 1.8} stroke="#BE185D" strokeWidth={0.9} opacity={0.55} />
+            <circle cx={28} cy={22} r={s.areola + 1.8} stroke="#BE185D" strokeWidth={0.9} opacity={0.55} />
           )}
-          {rNodul > 0 && (
-            <circle cx={28} cy={22} r={rNodul} fill="#BE185D" stroke="none" />
+          {s.nodul > 0 && (
+            <circle cx={28} cy={22} r={s.nodul} fill="#BE185D" stroke="none" />
           )}
         </Kanvas>
       );
@@ -726,18 +740,22 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
           </Kanvas>
         );
       }
-      const daun = [
-        "M36 12 Q28 12 28 22 Q28 32 36 32",
-        "M37 11 Q25 12 25 22 Q25 32 37 33",
-        "M38 10 Q22 11 22 22 Q22 33 38 34",
-        "M38 10 Q20 10 20 22 Q20 34 38 34",
-        "M39 9 Q18 9 18 22 Q18 35 39 35",
+      const AWAL = {
+        d: "M36 12 Q28 12 28 22 Q28 32 36 32",
+        tebal: 1.4,
+        teks: "terlipat",
+      };
+      const TELINGA = [
+        AWAL,
+        { d: "M37 11 Q25 12 25 22 Q25 32 37 33", tebal: 1.6, teks: "lambat" },
+        { d: "M38 10 Q22 11 22 22 Q22 33 38 34", tebal: 1.9, teks: "cepat" },
+        { d: "M38 10 Q20 10 20 22 Q20 34 38 34", tebal: 2.3, teks: "instan" },
+        { d: "M39 9 Q18 9 18 22 Q18 35 39 35", tebal: 2.8, teks: "kaku" },
       ];
-      const tebal = [1.4, 1.6, 1.9, 2.3, 2.8][i - 1];
-      const rekoil = ["terlipat", "lambat", "cepat", "instan", "kaku"][i - 1];
+      const s = pilih(TELINGA, i - 1, AWAL);
       return (
         <Kanvas vb="0 0 56 44" lebar={48}>
-          <path d={daun[i - 1]} strokeWidth={tebal} />
+          <path d={s.d} strokeWidth={s.tebal} />
           {/* Antiheliks: lekukan dalam yang menegas seiring maturitas */}
           {i >= 3 && (
             <path
@@ -755,16 +773,25 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
               strokeDasharray={i === 2 ? "2 2" : undefined}
             />
           )}
-          <Label x={28} y={42} teks={rekoil} warna={i >= 4 ? AKSEN_KUAT : AKSEN} />
+          <Label x={28} y={42} teks={s.teks} warna={i >= 4 ? AKSEN_KUAT : AKSEN} />
         </Kanvas>
       );
     }
 
     // 11. Genitalia - 6 pilihan
     if (paramIndex === 11) {
-      const i = batas(optionIndex, 5);
       // Teks pilihan menyebut laki-laki DAN perempuan dalam satu baris, jadi
       // keduanya digambar berdampingan pada kanvas yang sedikit lebih lebar.
+      const AWAL = { rugae: 0, testis: 10, majora: 4, klitoris: 2.6 };
+      const GENITAL = [
+        AWAL,
+        { rugae: 1, testis: 13, majora: 4.8, klitoris: 2.3 },
+        { rugae: 2, testis: 17, majora: 5.6, klitoris: 2 },
+        { rugae: 3, testis: 22, majora: 6.4, klitoris: 1.7 },
+        { rugae: 4, testis: 27, majora: 7.2, klitoris: 1.4 },
+        { rugae: 5, testis: 30, majora: 8, klitoris: 1.1 },
+      ];
+      const s = pilih(GENITAL, optionIndex, AWAL);
       const RUGAE = [
         "M17 22 q7 2 13 0",
         "M17 26 q7 2 13 0",
@@ -772,17 +799,13 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
         "M18 30 q6 2 11 0",
         "M19 14 q5 2 9 0",
       ];
-      const jmlRugae = [0, 1, 2, 3, 4, 5][i];
-      const testisY = [10, 13, 17, 22, 27, 30][i];
-      const rMajora = [4, 4.8, 5.6, 6.4, 7.2, 8][i];
-      const rKlitoris = [2.6, 2.3, 2, 1.7, 1.4, 1.1][i];
       return (
         <Kanvas vb="0 0 78 44" lebar={66}>
           {/* Laki-laki: skrotum + testis yang turun + rugae */}
           <path d="M23.5 12 Q14 20 16 30 Q19 38 23.5 38 Q28 38 31 30 Q33 20 23.5 12 Z" fill="#FEF3C7" />
-          <circle cx={20.5} cy={testisY} r={2.2} fill="#D97706" stroke="none" />
-          <circle cx={26.5} cy={testisY} r={2.2} fill="#D97706" stroke="none" />
-          {RUGAE.slice(0, jmlRugae).map((d) => (
+          <circle cx={20.5} cy={s.testis} r={2.2} fill="#D97706" stroke="none" />
+          <circle cx={26.5} cy={s.testis} r={2.2} fill="#D97706" stroke="none" />
+          {RUGAE.slice(0, s.rugae).map((d) => (
             <path key={d} d={d} strokeWidth={0.9} opacity={0.75} />
           ))}
           <text x={23.5} y={7} fontSize={8} fill="currentColor" stroke="none" textAnchor="middle">
@@ -790,9 +813,9 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
           </text>
 
           {/* Perempuan: majora membesar sampai menutupi klitoris & minora */}
-          <ellipse cx={56} cy={25} rx={rMajora} ry={12} fill="#FCE7F3" strokeWidth={1.3} />
+          <ellipse cx={56} cy={25} rx={s.majora} ry={12} fill="#FCE7F3" strokeWidth={1.3} />
           <path d="M56 15 L56 35" strokeWidth={0.9} opacity={0.6} />
-          <circle cx={56} cy={16} r={rKlitoris} fill="#BE185D" stroke="none" />
+          <circle cx={56} cy={16} r={s.klitoris} fill="#BE185D" stroke="none" />
           <text x={56} y={7} fontSize={8} fill="currentColor" stroke="none" textAnchor="middle">
             {"\u2640"}
           </text>
