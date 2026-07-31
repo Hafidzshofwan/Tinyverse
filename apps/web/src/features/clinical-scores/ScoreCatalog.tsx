@@ -13,6 +13,92 @@ function tandaPoin(n: number): string {
   return (n >= 0 ? "+" : "") + n;
 }
 
+function NeuromuscularTabIcon({ active }: { active: boolean }) {
+  return (
+    <svg
+      className="tv-ballard-tab-icon"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="tvNeuroGradInactive" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#0A0B5F" />
+          <stop offset="100%" stopColor="#D936A6" />
+        </linearGradient>
+      </defs>
+      <path
+        d="M9.5 2A2.5 2.5 0 0 0 7 4.5A2.5 2.5 0 0 0 4.5 7A2.5 2.5 0 0 0 2 9.5a2.5 2.5 0 0 0 2.5 2.5A2.5 2.5 0 0 0 2 14.5A2.5 2.5 0 0 0 4.5 17A2.5 2.5 0 0 0 7 19.5a2.5 2.5 0 0 0 2.5 2.5c.2 0 .39-.02.58-.07"
+        stroke={active ? "#FFFFFF" : "url(#tvNeuroGradInactive)"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill={active ? "rgba(255, 255, 255, 0.2)" : "rgba(10, 11, 95, 0.08)"}
+      />
+      <path
+        d="M14.5 2a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1-2.5 2.5c-.19 0-.38-.02-.58-.07"
+        stroke={active ? "#FFFFFF" : "url(#tvNeuroGradInactive)"}
+        strokeWidth="2"
+        strokeLinecap="round"
+        fill={active ? "rgba(255, 255, 255, 0.2)" : "rgba(217, 54, 166, 0.08)"}
+      />
+      <path
+        d="M12 2v20"
+        stroke={active ? "#FDE047" : "#D936A6"}
+        strokeWidth="2.2"
+        strokeLinecap="round"
+      />
+      <circle cx="12" cy="7" r="1.5" fill={active ? "#FFFFFF" : "#0A0B5F"} />
+      <circle cx="12" cy="12" r="1.5" fill={active ? "#FFFFFF" : "#D936A6"} />
+      <circle cx="12" cy="17" r="1.5" fill={active ? "#FFFFFF" : "#0A0B5F"} />
+    </svg>
+  );
+}
+
+function PhysicalTabIcon({ active }: { active: boolean }) {
+  return (
+    <svg
+      className="tv-ballard-tab-icon"
+      width="22"
+      height="22"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="tvPhysGradInactive" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#D936A6" />
+          <stop offset="100%" stopColor="#0A0B5F" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx="12"
+        cy="8"
+        r="4.5"
+        stroke={active ? "#FFFFFF" : "url(#tvPhysGradInactive)"}
+        strokeWidth="2"
+        fill={active ? "rgba(255, 255, 255, 0.25)" : "rgba(217, 54, 166, 0.1)"}
+      />
+      <path
+        d="M9 13a3 3 0 0 0-3 3v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2a3 3 0 0 0-3-3H9z"
+        stroke={active ? "#FFFFFF" : "url(#tvPhysGradInactive)"}
+        strokeWidth="2"
+        fill={active ? "rgba(255, 255, 255, 0.2)" : "rgba(10, 11, 95, 0.08)"}
+      />
+      <path
+        d="M12 6a1 1 0 0 1 1 1"
+        stroke={active ? "#FDE047" : "#D936A6"}
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <circle cx="18" cy="6" r="1.5" fill={active ? "#FDE047" : "#D936A6"} />
+    </svg>
+  );
+}
+
 function usiaTeks(bulan: number): string {
   if (bulan < 24) return bulan + " bulan";
   const th = Math.floor(bulan / 12);
@@ -206,22 +292,7 @@ export function ScoreCatalog() {
               onClick={() => setBallardTab("neuromuscular")}
             >
               <span className="tv-ballard-tab-title">
-                <svg
-                  className="tv-ballard-tab-icon"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M9.5 2A2.5 2.5 0 0 0 7 4.5A2.5 2.5 0 0 0 4.5 7A2.5 2.5 0 0 0 2 9.5a2.5 2.5 0 0 0 2.5 2.5A2.5 2.5 0 0 0 2 14.5A2.5 2.5 0 0 0 4.5 17A2.5 2.5 0 0 0 7 19.5a2.5 2.5 0 0 0 2.5 2.5c.2 0 .39-.02.58-.07" />
-                  <path d="M14.5 2a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1 2.5 2.5a2.5 2.5 0 0 1-2.5 2.5a2.5 2.5 0 0 1-2.5 2.5c-.19 0-.38-.02-.58-.07" />
-                  <path d="M12 2v20" />
-                </svg>
+                <NeuromuscularTabIcon active={ballardTab === "neuromuscular"} />
                 <span>Maturitas Neuromuskular</span>
               </span>
               <span className="tv-ballard-tab-sub">6 Parameter</span>
@@ -232,22 +303,7 @@ export function ScoreCatalog() {
               onClick={() => setBallardTab("physical")}
             >
               <span className="tv-ballard-tab-title">
-                <svg
-                  className="tv-ballard-tab-icon"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <circle cx="12" cy="8" r="5" />
-                  <path d="M9 13a3 3 0 0 0-3 3v2a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2a3 3 0 0 0-3-3H9z" />
-                  <path d="M12 6a1 1 0 0 1 1 1" />
-                </svg>
+                <PhysicalTabIcon active={ballardTab === "physical"} />
                 <span>Maturitas Fisik</span>
               </span>
               <span className="tv-ballard-tab-sub">6 Parameter</span>
@@ -304,16 +360,7 @@ export function ScoreCatalog() {
           {ballardTab === "neuromuscular" ? (
             <button
               type="button"
-              className="tv-btn"
-              style={{
-                width: "100%",
-                justifyContent: "center",
-                padding: "12px",
-                background: "#0284C7",
-                color: "#FFFFFF",
-                fontWeight: 700,
-                borderRadius: "12px",
-              }}
+              className="tv-btn tv-ballard-nav-next"
               onClick={() => setBallardTab("physical")}
             >
               Lanjut ke Maturitas Fisik (6 Parameter) →
@@ -321,16 +368,7 @@ export function ScoreCatalog() {
           ) : (
             <button
               type="button"
-              className="tv-btn"
-              style={{
-                width: "100%",
-                justifyContent: "center",
-                padding: "12px",
-                background: "#F1F5F9",
-                color: "#334155",
-                fontWeight: 700,
-                borderRadius: "12px",
-              }}
+              className="tv-btn tv-ballard-nav-prev"
               onClick={() => setBallardTab("neuromuscular")}
             >
               ← Kembali ke Maturitas Neuromuskular
