@@ -223,10 +223,13 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
         <ThemeToggle />
         <UserMenu />
       </header>
+      {/* Tanpa prop variant: animasi perpindahan halaman harus memakai animasi
+          yang dipilih pengguna, sama seperti layar pemuatan sesi. Sebelumnya
+          baris ini memaksa satu varian, sehingga satu sesi bisa menampilkan dua
+          animasi yang berbeda. */}
       {isNavigating && (
         <LoadingAnimation
           fullScreen
-          variant="orbiting"
           message={`Memuat ${LABEL_BY_HREF[pathname] || "modul Tinyverse"}...`}
         />
       )}

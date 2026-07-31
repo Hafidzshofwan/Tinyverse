@@ -18,7 +18,12 @@ export function LoadingSelectorModal({
   isOpen,
   onClose,
 }: LoadingSelectorModalProps) {
-  const [activeVariant, setActiveVariant] = useState<LoadingVariant>("pulse");
+  // Jangan mengawali dengan varian tertentu: kartu itu akan tampak terpilih
+  // sekejap walau bukan pilihan pengguna. Dibaca lewat inisialisasi malas,
+  // yang aman di server karena pembacanya sendiri memeriksa keberadaan window.
+  const [activeVariant, setActiveVariant] = useState<LoadingVariant>(() =>
+    getSavedLoadingVariant(),
+  );
   const [fullscreenDemoVariant, setFullscreenDemoVariant] =
     useState<LoadingVariant | null>(null);
 

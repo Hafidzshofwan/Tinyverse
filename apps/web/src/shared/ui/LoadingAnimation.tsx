@@ -40,10 +40,22 @@ export const LOADING_VARIANTS: {
   },
 ];
 
-const STORAGE_KEY = "tv-loading-variant";
+/*
+ * Kunci sengaja dinaikkan ke v2 dan nilai v1 TIDAK dimigrasi.
+ *
+ * WHY: selama masa coba-coba, kunci v1 sempat terisi varian yang dipilih
+ * asal-asalan, dan nilai itu terus menang atas bawaan baru sehingga pengguna
+ * melihat animasi yang tidak pernah ia pilih secara sadar. Menaikkan versi
+ * mengembalikan semua orang ke bawaan sekali saja; pilihan berikutnya tetap
+ * dihormati selamanya.
+ */
+const STORAGE_KEY = "tv-loading-variant-v2";
+
+/** Bawaan produk bila pengguna belum pernah memilih. */
+const VARIAN_BAWAAN: LoadingVariant = "orbiting";
 
 export function getSavedLoadingVariant(): LoadingVariant {
-  if (typeof window === "undefined") return "orbiting";
+  if (typeof window === "undefined") return VARIAN_BAWAAN;
   const saved = localStorage.getItem(STORAGE_KEY) as LoadingVariant;
   if (
     saved === "pulse" ||
@@ -53,15 +65,32 @@ export function getSavedLoadingVariant(): LoadingVariant {
   ) {
     return saved;
   }
-  return "orbiting";
+  return VARIAN_BAWAAN;
 }
+
+/** Kabar perubahan pilihan animasi untuk komponen yang sedang hidup. */
+export const LOADING_VARIANT_EVENT = "tv-loading-variant-change";
 
 export function setSavedLoadingVariant(variant: LoadingVariant): void {
   if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, variant);
+  /*
+   * Peristiwa 'storage' bawaan browser hanya menyala di tab LAIN, tidak di
+   * tab yang menyimpan. Tanpa kabar buatan sendiri ini, animasi yang sedang
+   * tampil baru ikut berubah setelah halaman dimuat ulang.
+   */
+  window.dispatchEvent(new CustomEvent(LOADING_VARIANT_EVENT, { detail: variant }));
 }
 
 interface LoadingAnimationProps {
+  /**
+   * Memaksa satu varian tertentu, mengabaikan pilihan pengguna.
+   *
+   * Hanya untuk PRATINJAU di dalam pemilih animasi. Layar produk jangan
+   * mengisinya: begitu diisi, pengguna melihat animasi yang berbeda dari
+   * yang ia pilih, dan bila hanya sebagian layar yang mengisinya, satu sesi
+   * bisa menampilkan dua animasi berlainan.
+   */
   variant?: LoadingVariant;
   message?: string;
   fullScreen?: boolean;
@@ -74,14 +103,32 @@ export function LoadingAnimation({
   fullScreen = false,
   inlineHeight = 280,
 }: LoadingAnimationProps) {
-  const [activeVariant, setActiveVariant] = useState<LoadingVariant>("orbiting");
+  // Nilai awal memakai bawaan, bukan hasil baca localStorage, supaya hasil
+  // render di server dan di browser tetap sama dan hidrasi tidak berbeda.
+  const [activeVariant, setActiveVariant] = useState<LoadingVariant>(
+    variant ?? VARIAN_BAWAAN,
+  );
 
   useEffect(() => {
     if (variant) {
       setActiveVariant(variant);
-    } else {
-      setActiveVariant(getSavedLoadingVariant());
+      return;
     }
+
+    setActiveVariant(getSavedLoadingVariant());
+
+    /*
+     * Ikut berubah seketika saat pengguna memilih di pemilih animasi, tanpa
+     * perlu memuat ulang halaman. LOADING_VARIANT_EVENT menangani tab ini
+     * sendiri, sedangkan 'storage' menangani tab lain yang sedang terbuka.
+     */
+    const perbarui = () => setActiveVariant(getSavedLoadingVariant());
+    window.addEventListener(LOADING_VARIANT_EVENT, perbarui);
+    window.addEventListener("storage", perbarui);
+    return () => {
+      window.removeEventListener(LOADING_VARIANT_EVENT, perbarui);
+      window.removeEventListener("storage", perbarui);
+    };
   }, [variant]);
 
   const defaultMessages: Record<LoadingVariant, string> = {
