@@ -14,7 +14,7 @@ import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-acco
 import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
-import { LoadingAnimation, LoadingSelectorModal } from "@/shared/ui";
+import { LoadingAnimation } from "@/shared/ui";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
@@ -80,9 +80,22 @@ export function AppShell({ children, pengingat }: AppShellProps) {
 function AppShellInner({ children, pengingat }: AppShellProps) {
   const { status, catatRiwayat } = useAuth();
   const [open, setOpen] = useState(true);
-  const [modalLoadingOpen, setModalLoadingOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
   const riwayatTerakhir = useRef<string>("");
+  const prevPathname = useRef<string>(pathname);
+
+  // Efek transisi loading saat pengguna berpindah menu/halaman
+  useEffect(() => {
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      setIsNavigating(true);
+      const timer = setTimeout(() => {
+        setIsNavigating(false);
+      }, 450);
+      return () => clearTimeout(timer);
+    }
+  }, [pathname]);
 
   // Ingat kondisi buka/tutup sidebar antar kunjungan (di browser).
   useEffect(() => {
@@ -207,31 +220,16 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
         <GlobalSearch />
-        <button
-          type="button"
-          onClick={() => setModalLoadingOpen(true)}
-          title="Pilih & Pratinjau Animasi Loading"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            padding: "6px 12px",
-            borderRadius: "20px",
-            background: "rgba(236, 72, 153, 0.12)",
-            border: "1px solid rgba(236, 72, 153, 0.28)",
-            color: "var(--tv-magenta, #EC4899)",
-            fontSize: "13px",
-            fontWeight: 700,
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-          }}
-        >
-          <span style={{ fontSize: "14px" }}>⚡</span>
-          <span className="tv-hide-mobile">Loading Animasi</span>
-        </button>
         <ThemeToggle />
         <UserMenu />
       </header>
+      {isNavigating && (
+        <LoadingAnimation
+          fullScreen
+          variant="orbiting"
+          message={`Memuat ${LABEL_BY_HREF[pathname] || "modul Tinyverse"}...`}
+        />
+      )}
       <div className="tv-body">
         <div
           className="tv-backdrop"
@@ -272,10 +270,6 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
       </footer>
       <PatientProfile />
       <AiAssistantWidget />
-      <LoadingSelectorModal
-        isOpen={modalLoadingOpen}
-        onClose={() => setModalLoadingOpen(false)}
-      />
     </div>
   );
 }
