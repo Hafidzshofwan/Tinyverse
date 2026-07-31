@@ -498,6 +498,114 @@
 
 .tk-island-wrap .tk-kartu-pilihan .tk-sub-pilihan { font-size: 0.72rem; color: var(--teks-lembut); font-weight: 600; margin-top: 2px; }
 
+/*
+ * Pemilih ringkas (segmented control).
+ *
+ * WHY: kartu .tk-kartu-pilihan dirancang untuk pilihan pembuka yang berdiri
+ * sendiri di tengah layar, sehingga terlalu besar dan tidak simetris ketika
+ * dipakai sebagai pengatur di atas kurva. Penanda aktifnya pun hanya berupa
+ * pergeseran warna latar yang sangat halus, nyaris tak terbaca di mode terang.
+ * Di sini status terpilih ditegaskan lewat tiga isyarat sekaligus — warna
+ * penuh, teks putih, dan bayangan — agar tidak bergantung pada satu isyarat
+ * saja, termasuk bagi pengguna dengan gangguan persepsi warna.
+ */
+.tk-island-wrap .tk-seg {
+    display: flex;
+    gap: 6px;
+    background: #F3F8FD;
+    border: 1px solid #E4EEF8;
+    border-radius: 14px;
+    padding: 5px;
+    margin-bottom: 12px;
+  }
+
+/* flex: 1 1 0 dengan min-width: 0 membuat setiap tombol berbagi lebar sama
+   persis, berapa pun panjang teksnya, sehingga baris selalu simetris. */
+.tk-island-wrap .tk-seg-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: var(--teks-lembut);
+    font-family: inherit;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease,
+      transform 0.18s ease;
+  }
+
+.tk-island-wrap .tk-seg-btn:hover:not(.tk-seg-aktif) {
+    background: var(--putih);
+    color: var(--teks);
+    border-color: #DCEAF7;
+  }
+
+.tk-island-wrap .tk-seg-btn:focus-visible {
+    outline: 2px solid var(--biru-tua);
+    outline-offset: 2px;
+  }
+
+.tk-island-wrap .tk-seg-btn.tk-seg-aktif {
+    background: linear-gradient(135deg, var(--biru), var(--biru-tua));
+    border-color: var(--biru-tua);
+    color: var(--putih);
+    box-shadow: 0 4px 12px rgba(43, 169, 214, 0.32);
+    transform: translateY(-1px);
+  }
+
+.tk-island-wrap .tk-seg-btn:active { transform: translateY(0); }
+
+.tk-island-wrap .tk-seg-emoji { font-size: 1rem; line-height: 1; flex-shrink: 0; }
+
+.tk-island-wrap .tk-seg-teks { display: flex; flex-direction: column; min-width: 0; }
+
+/* Teks dipangkas dengan elipsis, bukan dibungkus ke baris kedua, supaya tinggi
+   seluruh tombol tetap sama dan barisnya tidak bergoyang. */
+.tk-island-wrap .tk-seg-nama {
+    font-weight: 700;
+    font-size: 0.8rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+.tk-island-wrap .tk-seg-ket {
+    font-size: 0.67rem;
+    font-weight: 600;
+    line-height: 1.25;
+    opacity: 0.72;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+.tk-island-wrap .tk-seg-aktif .tk-seg-ket { opacity: 0.92; }
+
+.tk-island-wrap .tk-seg-nota {
+    margin: -6px 0 12px 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--teks-lembut);
+  }
+
+/* Di layar sempit tombol menumpuk agar teksnya tidak terpangkas habis. */
+@media (max-width: 560px) {
+    .tk-island-wrap .tk-seg { flex-wrap: wrap; }
+    .tk-island-wrap .tk-seg-btn { flex: 1 1 100%; }
+  }
+
+@media (prefers-reduced-motion: reduce) {
+    .tk-island-wrap .tk-seg-btn { transition: none; transform: none; }
+    .tk-island-wrap .tk-seg-btn.tk-seg-aktif { transform: none; }
+  }
+
 .tk-island-wrap .tk-kartu-usia {
     background: var(--putih);
     border: 2px solid #EAF6FB;
@@ -1526,6 +1634,44 @@ html.dark .tk-island-wrap .tk-kartu-pilihan .tk-sub-pilihan {
 html.dark .tk-island-wrap .tk-kartu-pilihan.tk-pilih-aktif .tk-sub-pilihan {
   color: #E0F2FE !important;
   font-weight: 600 !important;
+}
+
+/* Pemilih ringkas — mode gelap. Kontras tombol terpilih dinaikkan, sebab
+   gradien biru muda mode terang menjadi menyilaukan di atas latar gelap. */
+[data-theme="dark"] .tk-island-wrap .tk-seg,
+html.dark .tk-island-wrap .tk-seg {
+  background: #111827 !important;
+  border-color: #1F2937 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-seg-btn,
+html.dark .tk-island-wrap .tk-seg-btn {
+  color: #9CA3AF !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-seg-btn:hover:not(.tk-seg-aktif),
+html.dark .tk-island-wrap .tk-seg-btn:hover:not(.tk-seg-aktif) {
+  background: #1F2937 !important;
+  border-color: #374151 !important;
+  color: #F9FAFB !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-seg-btn.tk-seg-aktif,
+html.dark .tk-island-wrap .tk-seg-btn.tk-seg-aktif {
+  background: linear-gradient(135deg, #0EA5E9, #0284C7) !important;
+  border-color: #38BDF8 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 18px rgba(56, 189, 248, 0.35) !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-seg-btn:focus-visible,
+html.dark .tk-island-wrap .tk-seg-btn:focus-visible {
+  outline-color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tk-island-wrap .tk-seg-nota,
+html.dark .tk-island-wrap .tk-seg-nota {
+  color: #9CA3AF !important;
 }
 
 /* Back Button Mini */

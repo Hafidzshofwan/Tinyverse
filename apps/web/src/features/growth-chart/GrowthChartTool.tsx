@@ -890,79 +890,81 @@ export function GrowthChartTool() {
             ⬅️ Ganti jenis kelamin
           </button>
 
+          {/*
+            Pemilih dibuat sebagai <button> sungguhan, bukan <div role="button">.
+            Tombol asli sudah membawa fokus keyboard, Enter/Spasi, dan status
+            tertekan tanpa satu pun penangan tambahan yang harus dirawat.
+          */}
           {daftarIndikator.length > 1 ? (
-            <div className="tk-pilihan-besar" style={{ marginBottom: 12 }}>
+            <div className="tk-seg" role="group" aria-label="Jenis kurva">
               {daftarIndikator.map((d) => {
                 const aktif = d.ind === indikatorPenuh;
                 return (
-                  <div
+                  <button
                     key={d.key}
-                    className={`tk-kartu-pilihan${aktif ? " tk-pilih-aktif" : ""}`}
-                    role="button"
-                    tabIndex={0}
+                    type="button"
+                    className={`tk-seg-btn${aktif ? " tk-seg-aktif" : ""}`}
                     aria-pressed={aktif}
                     onClick={() => setIndikatorKey(d.key)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setIndikatorKey(d.key);
-                      }
-                    }}
                   >
-                    <span className="tk-emoji-besar">{d.ind.emoji}</span>
-                    <div className="tk-nama-pilihan">{d.ind.label}</div>
-                    <div className="tk-sub-pilihan">Sumbu X: {d.ind.xLabel}</div>
-                  </div>
+                    <span className="tk-seg-emoji" aria-hidden="true">
+                      {d.ind.emoji}
+                    </span>
+                    <span className="tk-seg-teks">
+                      <span className="tk-seg-nama">{d.ind.label}</span>
+                      <span className="tk-seg-ket">{d.ind.xLabel}</span>
+                    </span>
+                  </button>
                 );
               })}
             </div>
           ) : null}
 
           {perluCaraUkur ? (
-            <div className="tk-pilihan-besar" style={{ marginBottom: 12 }}>
-              {(
-                [
-                  {
-                    nilai: "pb" as CaraUkurPanjang,
-                    emoji: "\u{1F6CF}\ufe0f",
-                    nama: "Panjang badan (telentang)",
-                    ket: "Tabel BB/PB \u00b7 lazim usia 0\u20132 tahun",
-                  },
-                  {
-                    nilai: "tb" as CaraUkurPanjang,
-                    emoji: "\u{1F9CD}",
-                    nama: "Tinggi badan (berdiri)",
-                    ket: "Tabel BB/TB \u00b7 lazim usia 2\u20135 tahun",
-                  },
-                ] as const
-              ).map((o) => (
-                <div
-                  key={o.nilai}
-                  className={`tk-kartu-pilihan${caraUkur === o.nilai ? " tk-pilih-aktif" : ""}`}
-                  role="button"
-                  tabIndex={0}
-                  aria-pressed={caraUkur === o.nilai}
-                  onClick={() => setCaraUkur(o.nilai)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      setCaraUkur(o.nilai);
-                    }
-                  }}
-                >
-                  <span className="tk-emoji-besar">{o.emoji}</span>
-                  <div className="tk-nama-pilihan">{o.nama}</div>
-                  <div className="tk-sub-pilihan">{o.ket}</div>
-                </div>
-              ))}
-              <div className="tk-plot-sub" style={{ gridColumn: "1 / -1", marginTop: 2 }}>
-                Pilih sesuai cara anak benar-benar diukur, bukan sesuai umurnya. Umur hanya
-                menentukan pilihan awal. WHO tidak menyetarakan kedua tabel, dan selisih
-                panjang terhadap tinggi (sekitar 0,7 cm) sengaja TIDAK dikoreksi otomatis.
+            <>
+              <div className="tk-seg" role="group" aria-label="Cara pengukuran">
+                {(
+                  [
+                    {
+                      nilai: "pb" as CaraUkurPanjang,
+                      emoji: "\u{1F6CF}\ufe0f",
+                      nama: "Panjang badan (telentang)",
+                      ket: "0\u20132 tahun",
+                    },
+                    {
+                      nilai: "tb" as CaraUkurPanjang,
+                      emoji: "\u{1F9CD}",
+                      nama: "Tinggi badan (berdiri)",
+                      ket: "2\u20135 tahun",
+                    },
+                  ] as const
+                ).map((o) => (
+                  <button
+                    key={o.nilai}
+                    type="button"
+                    className={`tk-seg-btn${caraUkur === o.nilai ? " tk-seg-aktif" : ""}`}
+                    aria-pressed={caraUkur === o.nilai}
+                    onClick={() => setCaraUkur(o.nilai)}
+                  >
+                    <span className="tk-seg-emoji" aria-hidden="true">
+                      {o.emoji}
+                    </span>
+                    <span className="tk-seg-teks">
+                      <span className="tk-seg-nama">{o.nama}</span>
+                      <span className="tk-seg-ket">{o.ket}</span>
+                    </span>
+                  </button>
+                ))}
               </div>
-            </div>
+              {/*
+                Catatan ini ringkas tetapi tidak boleh hilang: WHO memakai tabel
+                berbeda untuk panjang telentang dan tinggi berdiri, dan penentunya
+                adalah cara pengukuran, bukan umur anak. Rentang usia di atas hanya
+                keterangan tabel.
+              */}
+              <p className="tk-seg-nota">Pilih sesuai cara anak diukur, bukan sesuai usianya.</p>
+            </>
           ) : null}
-
           <div className="tk-plot-header" id="tkPlotHeader">
             {indikator ? (
               <>
