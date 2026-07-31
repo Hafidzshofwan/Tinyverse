@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 
-export type LoadingVariant = "pulse" | "pediatric" | "fluid";
+export type LoadingVariant = "pulse" | "pediatric" | "fluid" | "orbiting";
 
 export const LOADING_VARIANTS: {
   id: LoadingVariant;
@@ -31,17 +31,29 @@ export const LOADING_VARIANTS: {
     description:
       "Kapsul/puyer transparan berisi efek gelombang cairan dinamis dan gelembung udara yang naik perlahan. Sangat cocok dengan jiwa kalkulator dosis dan terapi cairan.",
   },
+  {
+    id: "orbiting",
+    name: "Minimalist Orbiting Brand & Glow (Tinyverse Orbit)",
+    tagline: "Elegan, Ringan & Fungsional",
+    description:
+      "Logo Tinyverse mengambang halus (floating bounce) dengan partikel cahaya & ring berpendar yang mengorbit sekeliling logo secara 3D perspective. Sangat bersih, tanpa kotak latar, dan nyaman di mata.",
+  },
 ];
 
 const STORAGE_KEY = "tv-loading-variant";
 
 export function getSavedLoadingVariant(): LoadingVariant {
-  if (typeof window === "undefined") return "pulse";
+  if (typeof window === "undefined") return "orbiting";
   const saved = localStorage.getItem(STORAGE_KEY) as LoadingVariant;
-  if (saved === "pulse" || saved === "pediatric" || saved === "fluid") {
+  if (
+    saved === "pulse" ||
+    saved === "pediatric" ||
+    saved === "fluid" ||
+    saved === "orbiting"
+  ) {
     return saved;
   }
-  return "pulse";
+  return "orbiting";
 }
 
 export function setSavedLoadingVariant(variant: LoadingVariant): void {
@@ -62,7 +74,7 @@ export function LoadingAnimation({
   fullScreen = false,
   inlineHeight = 280,
 }: LoadingAnimationProps) {
-  const [activeVariant, setActiveVariant] = useState<LoadingVariant>("pulse");
+  const [activeVariant, setActiveVariant] = useState<LoadingVariant>("orbiting");
 
   useEffect(() => {
     if (variant) {
@@ -76,6 +88,7 @@ export function LoadingAnimation({
     pulse: "Menghubungkan sinyal klinis pediatri...",
     pediatric: "Menyiapkan ruang perawatan Tinyverse...",
     fluid: "Menghitung parameter rehidrasi & dosis...",
+    orbiting: "Memuat modul Tinyverse...",
   };
 
   const currentMessage = message || defaultMessages[activeVariant];
@@ -87,8 +100,9 @@ export function LoadingAnimation({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "rgba(10, 11, 40, 0.75)",
-    backdropFilter: "blur(12px)",
+    background: "var(--tv-loading-backdrop, rgba(10, 15, 30, 0.45))",
+    backdropFilter: "blur(18px) saturate(180%)",
+    WebkitBackdropFilter: "blur(18px) saturate(180%)",
     color: "#F8FAFC",
     padding: "20px",
   };
@@ -96,17 +110,15 @@ export function LoadingAnimation({
   const cardStyle: React.CSSProperties = fullScreen
     ? {
         width: "100%",
-        maxWidth: "380px",
+        maxWidth: "400px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "32px 24px",
-        borderRadius: "26px",
-        background: "var(--tv-card, #1E293B)",
-        border: "1px solid var(--tv-line, rgba(255, 255, 255, 0.15))",
-        boxShadow:
-          "0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.2)",
+        padding: "24px",
+        background: "transparent",
+        border: "none",
+        boxShadow: "none",
       }
     : {
         width: "100%",
@@ -116,9 +128,9 @@ export function LoadingAnimation({
         alignItems: "center",
         justifyContent: "center",
         padding: "20px",
-        borderRadius: "20px",
-        background: "var(--tv-card, #1E293B)",
-        border: "1px solid var(--tv-line, rgba(255, 255, 255, 0.1))",
+        background: "transparent",
+        border: "none",
+        boxShadow: "none",
       };
 
   const content = (
@@ -127,21 +139,29 @@ export function LoadingAnimation({
       {activeVariant === "pulse" && <PulseAnimation />}
       {activeVariant === "pediatric" && <PediatricAnimation />}
       {activeVariant === "fluid" && <FluidAnimation />}
+      {activeVariant === "orbiting" && <OrbitingBrandAnimation />}
 
       {/* CAPTION MESSAGE */}
       <div
         style={{
           marginTop: "18px",
+          padding: "10px 22px",
+          borderRadius: "24px",
+          background: "rgba(15, 23, 42, 0.55)",
+          border: "1px solid rgba(255, 255, 255, 0.18)",
+          backdropFilter: "blur(10px)",
+          WebkitBackdropFilter: "blur(10px)",
           textAlign: "center",
+          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.25)",
           fontFamily: "var(--font-sans, system-ui, sans-serif)",
         }}
       >
         <p
           style={{
-            fontSize: "15px",
+            fontSize: "14px",
             fontWeight: 600,
-            color: "var(--tv-teks, #F8FAFC)",
-            margin: "0 0 4px 0",
+            color: "#F8FAFC",
+            margin: "0 0 2px 0",
             letterSpacing: "0.2px",
           }}
         >
@@ -151,9 +171,10 @@ export function LoadingAnimation({
           style={{
             display: "inline-flex",
             alignItems: "center",
+            justifyContent: "center",
             gap: "6px",
-            fontSize: "12px",
-            color: "var(--tv-soft-teks, #94A3B8)",
+            fontSize: "11px",
+            color: "#94A3B8",
           }}
         >
           <span
@@ -584,3 +605,140 @@ function FluidAnimation() {
     </div>
   );
 }
+
+/* --------------------------------------------------------------------------
+   OPTI 4: MINIMALIST ORBITING BRAND & GLOW (ORBITING)
+   -------------------------------------------------------------------------- */
+function OrbitingBrandAnimation() {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <div
+      style={{
+        position: "relative",
+        width: "160px",
+        height: "140px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        perspective: "600px",
+      }}
+    >
+      {/* Background Radial Glow Aura */}
+      <div
+        style={{
+          position: "absolute",
+          width: "110px",
+          height: "110px",
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(56, 189, 248, 0.45) 0%, rgba(236, 72, 153, 0.3) 45%, transparent 75%)",
+          filter: "blur(14px)",
+          animation: "tvAuraGlowPulse 2.8s ease-in-out infinite",
+        }}
+      />
+
+      {/* 3D Orbit Ring 1 (Cyan) */}
+      <div
+        style={{
+          position: "absolute",
+          width: "130px",
+          height: "130px",
+          borderRadius: "50%",
+          border: "1.5px dashed rgba(56, 189, 248, 0.5)",
+          boxShadow: "0 0 12px rgba(56, 189, 248, 0.2)",
+          transformStyle: "preserve-3d",
+          animation: "tvOrbit3D1 5s linear infinite",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            top: "-5px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "10px",
+            height: "10px",
+            borderRadius: "50%",
+            background: "#38BDF8",
+            boxShadow: "0 0 12px #38BDF8, 0 0 20px #38BDF8",
+          }}
+        />
+      </div>
+
+      {/* 3D Orbit Ring 2 (Magenta) */}
+      <div
+        style={{
+          position: "absolute",
+          width: "100px",
+          height: "100px",
+          borderRadius: "50%",
+          border: "1.5px solid rgba(236, 72, 153, 0.4)",
+          transformStyle: "preserve-3d",
+          animation: "tvOrbit3D2 7s linear infinite",
+        }}
+      >
+        <span
+          style={{
+            position: "absolute",
+            bottom: "-4px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: "8px",
+            height: "8px",
+            borderRadius: "50%",
+            background: "#EC4899",
+            boxShadow: "0 0 10px #EC4899, 0 0 18px #EC4899",
+          }}
+        />
+      </div>
+
+      {/* Center Floating Tinyverse Brand Logo */}
+      <div
+        style={{
+          position: "relative",
+          zIndex: 5,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          animation: "tvLogoFloatBounce 2.8s ease-in-out infinite",
+        }}
+      >
+        {!imgError ? (
+          <img
+            src="/brand/logo.png"
+            alt="Tinyverse Logo"
+            onError={() => setImgError(true)}
+            style={{
+              width: "56px",
+              height: "56px",
+              objectFit: "contain",
+              filter: "drop-shadow(0 6px 12px rgba(10, 11, 95, 0.4))",
+            }}
+            draggable={false}
+          />
+        ) : (
+          <div
+            style={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "18px",
+              background: "linear-gradient(135deg, #0A0B5F 0%, #17186F 100%)",
+              border: "1.5px solid rgba(56, 189, 248, 0.6)",
+              boxShadow: "0 8px 20px rgba(10, 11, 95, 0.5)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#38BDF8",
+              fontWeight: 800,
+              fontSize: "22px",
+            }}
+          >
+            TV
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+

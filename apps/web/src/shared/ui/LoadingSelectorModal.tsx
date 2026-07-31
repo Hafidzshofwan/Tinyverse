@@ -157,7 +157,7 @@ export function LoadingSelectorModal({
                   lineHeight: 1.5,
                 }}
               >
-                Di bawah ini adalah 3 opsi animasi loading yang telah dirancang.
+                Di bawah ini adalah 4 opsi animasi loading yang telah dirancang.
                 Anda dapat mencoba pratinjau animasi secara langsung dan menguji
                 tampilan layar penuh sebelum memutuskannya!
               </p>
