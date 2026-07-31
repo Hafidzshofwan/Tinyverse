@@ -82,6 +82,10 @@ const TKIMG = {
   who_m_tbu: "/assets/images/who-male-tbu.jpg",
   who_f_bbu: "/assets/images/who-female-bbu.jpg",
   who_f_tbu: "/assets/images/who-female-tbu.jpg",
+  who_m_bbpb: "/assets/images/who-male-bbpb.jpg",
+  who_m_bbtb: "/assets/images/who-male-bbtb.jpg",
+  who_f_bbpb: "/assets/images/who-female-bbpb.jpg",
+  who_f_bbtb: "/assets/images/who-female-bbtb.jpg",
   who_m_imtu: "/assets/images/who-male-imtu.jpg",
   who_f_imtu: "/assets/images/who-female-imtu.jpg",
   cdc_m: "/assets/images/cdc-male.jpg",
@@ -113,6 +117,37 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
                 calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:461.43,x1:2980.29,y0:499.31,y1:2110.68},xRange:[0,60],yRange:[9.2,22.8]} } }
             ]
+          },
+          /*
+           * BB/PB & BB/TB memakai sumbu X SENTIMETER, bukan bulan. Karena itu ia
+           * indikator tersendiri, bukan chart tambahan di dalam bbtbu.
+           *
+           * combined: false karena kedua chart TIDAK boleh tampil bersamaan.
+           * Yang dipakai ditentukan oleh pilihan cara ukur pengguna:
+           * panjang telentang -> bbpb, tinggi berdiri -> bbtb.
+           *
+           * Kalibrasi diukur ulang dari PDF resmi WHO pada 150 dpi (1754x1241,
+           * sama persis dengan aset WHO lain di sini). yRange adalah nilai pada
+           * TEPI BINGKAI, bukan garis berlabel terdekat.
+           *
+           * JANGAN membulatkan yRange chart perempuan 2-5 menjadi [4, 32]. Tepi
+           * bawah bingkainya tidak berimpit gridline; pembulatan itu menggeser
+           * berat 8 kg sejauh 0,398 kg -- cukup untuk memindahkan anak melewati
+           * ambang -2 SD.
+           */
+          bbpbtb: {
+            label: "BB/PB & BB/TB", emoji: "\u2696\ufe0f", combined: false,
+            xField: "tinggi", xLabel: "Panjang/Tinggi Badan (cm)", xUnit: "cm",
+            charts: [
+              { id: "bbpb", title: "BB/PB \u2014 Berat Badan menurut Panjang Badan", ageLabel: "0\u20132 tahun \u00b7 ukur telentang", zAge: "0-2",
+                image: TKIMG.who_m_bbpb,
+                series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbpb", warna: "#E63946" } ],
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:231.00,x1:1490.00,y0:249.49,y1:1055.00},xRange:[45,110],yRange:[0.98,24.96]} } },
+              { id: "bbtb", title: "BB/TB \u2014 Berat Badan menurut Tinggi Badan", ageLabel: "2\u20135 tahun \u00b7 ukur berdiri", zAge: "2-5",
+                image: TKIMG.who_m_bbtb,
+                series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbtb", warna: "#E63946" } ],
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.49,x1:1490.00,y0:249.49,y1:1055.00},xRange:[65,120],yRange:[4.99,30.98]} } }
+            ]
           }
         }
       },
@@ -135,6 +170,37 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                 image: TKIMG.who_f_imtu,
                 series: [ { key: "imt", yField: "imt", yLabel: "IMT (kg/m\u00b2)", yUnit: "kg/m\u00b2", emoji: "\u{1F9EE}", zKey: "imtu", warna: "#7B1FA2", computed: true } ],
                 calibration: { imt: {imgWidth:3508,imgHeight:2481,plot:{x0:461.43,x1:2980.29,y0:499.31,y1:2110.68},xRange:[0,60],yRange:[9.2,22.8]} } }
+            ]
+          },
+          /*
+           * BB/PB & BB/TB memakai sumbu X SENTIMETER, bukan bulan. Karena itu ia
+           * indikator tersendiri, bukan chart tambahan di dalam bbtbu.
+           *
+           * combined: false karena kedua chart TIDAK boleh tampil bersamaan.
+           * Yang dipakai ditentukan oleh pilihan cara ukur pengguna:
+           * panjang telentang -> bbpb, tinggi berdiri -> bbtb.
+           *
+           * Kalibrasi diukur ulang dari PDF resmi WHO pada 150 dpi (1754x1241,
+           * sama persis dengan aset WHO lain di sini). yRange adalah nilai pada
+           * TEPI BINGKAI, bukan garis berlabel terdekat.
+           *
+           * JANGAN membulatkan yRange chart perempuan 2-5 menjadi [4, 32]. Tepi
+           * bawah bingkainya tidak berimpit gridline; pembulatan itu menggeser
+           * berat 8 kg sejauh 0,398 kg -- cukup untuk memindahkan anak melewati
+           * ambang -2 SD.
+           */
+          bbpbtb: {
+            label: "BB/PB & BB/TB", emoji: "\u2696\ufe0f", combined: false,
+            xField: "tinggi", xLabel: "Panjang/Tinggi Badan (cm)", xUnit: "cm",
+            charts: [
+              { id: "bbpb", title: "BB/PB \u2014 Berat Badan menurut Panjang Badan", ageLabel: "0\u20132 tahun \u00b7 ukur telentang", zAge: "0-2",
+                image: TKIMG.who_f_bbpb,
+                series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbpb", warna: "#E63946" } ],
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.50,x1:1490.00,y0:249.49,y1:1055.00},xRange:[45,110],yRange:[0.98,24.96]} } },
+              { id: "bbtb", title: "BB/TB \u2014 Berat Badan menurut Tinggi Badan", ageLabel: "2\u20135 tahun \u00b7 ukur berdiri", zAge: "2-5",
+                image: TKIMG.who_f_bbtb,
+                series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbtb", warna: "#E63946" } ],
+                calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.49,x1:1490.00,y0:249.49,y1:1055.00},xRange:[65,120],yRange:[4.47,31.97]} } }
             ]
           }
         }
