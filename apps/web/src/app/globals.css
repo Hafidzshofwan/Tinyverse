@@ -4427,13 +4427,15 @@ body.tv-tanpa-dekorasi .bg-decor {
 }
 
 /* === Tumbuh Kembang Tab Switcher & Segmented Toggles (Light & Dark Theme) === */
+/* bentuk pil: 999px dipakai agar ujung selalu setengah lingkaran
+   berapa pun tinggi tab, tidak perlu disetel ulang bila font berubah. */
 .tv-growth-tabs {
   display: flex;
   gap: 8px;
   margin-bottom: 16px;
   background: #F1F5F9;
   padding: 6px;
-  border-radius: 14px;
+  border-radius: 999px;
   border: 1px solid #E2E8F0;
   flex-wrap: wrap;
   transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
@@ -4442,8 +4444,8 @@ body.tv-tanpa-dekorasi .bg-decor {
 .tv-growth-tab-btn {
   flex: 1;
   min-width: 160px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 999px;
   border: none;
   font-weight: 700;
   font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
@@ -4776,6 +4778,7 @@ html.dark .recharts-default-tooltip {
 .tv-growth-tabs-switcher {
   background: #F1F5F9;
   border: 1px solid #E2E8F0;
+  border-radius: 999px;
 }
 
 [data-theme="dark"] .tv-growth-tabs-switcher,
@@ -4784,11 +4787,14 @@ html.dark .tv-growth-tabs-switcher {
   border-color: #334155 !important;
 }
 
+/* Duplikat aturan di atas; karena berada lebih bawah, blok inilah yang
+   sebenarnya menang. Keduanya sengaja disamakan agar bentuk pil tidak
+   hilang bila salah satu blok kelak dihapus. */
 .tv-growth-tab-btn {
   flex: 1;
   min-width: 160px;
-  padding: 10px 12px;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 999px;
   border: none;
   font-weight: 700;
   font-family: Fredoka, Quicksand, system-ui, sans-serif;
