@@ -93,6 +93,91 @@ function num(v: string): number | null {
   return isFinite(n) ? n : null;
 }
 
+/*
+ * Ikon pemilih kurva.
+ *
+ * WHY: emoji dipakai lebih dulu karena cepat, tetapi bentuknya ditentukan
+ * sistem operasi — lambang timbangan dan orang berdiri tampil berbeda di
+ * Windows, macOS, dan Android, sebagiannya berwarna cerah dan bertabrakan
+ * dengan tombol biru. SVG di bawah mewarisi currentColor, sehingga otomatis
+ * ikut putih saat tombol terpilih dan abu-abu saat tidak, di terang maupun
+ * gelap, tanpa satu pun aturan warna tambahan.
+ *
+ * Ikon sengaja tidak ditaruh di GrowthChartIcons.tsx: bentuknya khusus untuk
+ * pemilih ini dan tidak dipakai layar lain.
+ */
+type PropsIkonSeg = { readonly ukuran?: number };
+
+const dasarSvg = {
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 1.7,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+};
+
+/** Kurva pertumbuhan menaik pada sepasang sumbu: BB/U, TB/U, & IMT/U. */
+function IkonSegKurva({ ukuran = 18 }: PropsIkonSeg) {
+  return (
+    <svg width={ukuran} height={ukuran} viewBox="0 0 24 24" {...dasarSvg}>
+      <path d="M4 3v15.5A1.5 1.5 0 0 0 5.5 20H21" />
+      <path d="M7.5 16.5 11 12l2.6 2.2L19 7" />
+      <circle cx="11" cy="12" r="1.4" fill="currentColor" stroke="none" />
+      <circle cx="19" cy="7" r="1.4" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+/** Berat di atas mistar: berat badan terhadap panjang/tinggi. */
+function IkonSegBbTb({ ukuran = 18 }: PropsIkonSeg) {
+  return (
+    <svg width={ukuran} height={ukuran} viewBox="0 0 24 24" {...dasarSvg}>
+      <path d="M8.2 9.5h7.6a2 2 0 0 1 2 2.2l-.5 4.6a2 2 0 0 1-2 1.8H8.7a2 2 0 0 1-2-1.8l-.5-4.6a2 2 0 0 1 2-2.2Z" />
+      <path d="M12 9.5V7" />
+      <circle cx="12" cy="5.4" r="1.6" />
+      <path d="M3 21h18" />
+      <path d="M5.5 21v-2M9 21v-1.2M15 21v-1.2M18.5 21v-2" />
+    </svg>
+  );
+}
+
+/** Anak berbaring dengan panah ukur mendatar: panjang badan telentang. */
+function IkonSegTelentang({ ukuran = 18 }: PropsIkonSeg) {
+  return (
+    <svg width={ukuran} height={ukuran} viewBox="0 0 24 24" {...dasarSvg}>
+      <circle cx="6.6" cy="9.5" r="2.1" />
+      <path d="M9 11.4h5.2l2.2 2.4h2.6" />
+      <path d="M3 15.5h18" />
+      <path d="M4.6 19.4h14.8" />
+      <path d="m6.4 17.9-1.8 1.5 1.8 1.5M17.6 17.9l1.8 1.5-1.8 1.5" />
+    </svg>
+  );
+}
+
+/** Anak berdiri menempel dinding ukur: tinggi badan berdiri. */
+function IkonSegBerdiri({ ukuran = 18 }: PropsIkonSeg) {
+  return (
+    <svg width={ukuran} height={ukuran} viewBox="0 0 24 24" {...dasarSvg}>
+      <path d="M4 3v18" />
+      <path d="M4 6.5h2.2M4 10h2.2M4 13.5h2.2M4 17h2.2" />
+      <circle cx="14" cy="6.2" r="2.2" />
+      <path d="M14 8.6v6.2" />
+      <path d="M11.2 11h5.6" />
+      <path d="m14 14.8-2 6.2M14 14.8l2 6.2" />
+    </svg>
+  );
+}
+
+/**
+ * Ikon untuk sebuah indikator. Dipetakan lewat kunci indikator, dengan kurva
+ * sebagai cadangan supaya indikator baru tetap tampil wajar walau ikonnya
+ * belum sempat dibuatkan.
+ */
+function ikonIndikator(key: string) {
+  if (key === "bbpbtb") return <IkonSegBbTb />;
+  return <IkonSegKurva />;
+}
+
 /**
  * Nilai bawaan kolom sumbu X sesuai makna sumbu itu pada indikator terpilih.
  * xField "tinggi" berarti sumbu X sentimeter (BB/PB & BB/TB), selain itu umur.
@@ -907,13 +992,12 @@ export function GrowthChartTool() {
                     aria-pressed={aktif}
                     onClick={() => setIndikatorKey(d.key)}
                   >
-                    <span className="tk-seg-emoji" aria-hidden="true">
-                      {d.ind.emoji}
+                    <span className="tk-seg-ikon" aria-hidden="true">
+                      {ikonIndikator(d.key)}
                     </span>
-                    <span className="tk-seg-teks">
-                      <span className="tk-seg-nama">{d.ind.label}</span>
-                      <span className="tk-seg-ket">{d.ind.xLabel}</span>
-                    </span>
+                    {/* Satuan sumbu X sengaja tidak diulang di sini: satuan itu
+                        sudah tercetak pada label kolom masukan tepat di bawahnya. */}
+                    <span className="tk-seg-nama">{d.ind.label}</span>
                   </button>
                 );
               })}
@@ -927,13 +1011,13 @@ export function GrowthChartTool() {
                   [
                     {
                       nilai: "pb" as CaraUkurPanjang,
-                      emoji: "\u{1F6CF}\ufe0f",
+                      Ikon: IkonSegTelentang,
                       nama: "Panjang badan (telentang)",
                       ket: "0\u20132 tahun",
                     },
                     {
                       nilai: "tb" as CaraUkurPanjang,
-                      emoji: "\u{1F9CD}",
+                      Ikon: IkonSegBerdiri,
                       nama: "Tinggi badan (berdiri)",
                       ket: "2\u20135 tahun",
                     },
@@ -946,8 +1030,8 @@ export function GrowthChartTool() {
                     aria-pressed={caraUkur === o.nilai}
                     onClick={() => setCaraUkur(o.nilai)}
                   >
-                    <span className="tk-seg-emoji" aria-hidden="true">
-                      {o.emoji}
+                    <span className="tk-seg-ikon" aria-hidden="true">
+                      <o.Ikon />
                     </span>
                     <span className="tk-seg-teks">
                       <span className="tk-seg-nama">{o.nama}</span>
