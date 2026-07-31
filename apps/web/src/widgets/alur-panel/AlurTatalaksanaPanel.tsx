@@ -254,9 +254,25 @@ export function AlurTatalaksanaPanel() {
       const d = e.data as { __tvPasien?: boolean } | null;
       if (d && d.__tvPasien) muat();
     };
+    /*
+     * WHY "tv-pasien-change" wajib ada di sini:
+     *
+     * Dua pendengar di bawah TIDAK PERNAH menyala di tab yang sama.
+     * - "storage" menurut spesifikasi hanya dikirim ke tab LAIN, bukan ke tab
+     *   yang melakukan penulisan.
+     * - "message" hanya sampai bila pengirimnya iframe; penyiaran pusat
+     *   mengirim postMessage khusus ke iframe.
+     *
+     * Akibatnya panel ini hanya ikut berubah setelah halaman dimuat ulang.
+     * "tv-pasien-change" adalah satu-satunya sinyal intra-tab dari sumber
+     * pusat, jadi tanpa baris ini dosis pada alur tatalaksana masih memakai
+     * berat pasien SEBELUMNYA.
+     */
+    window.addEventListener("tv-pasien-change", muat);
     window.addEventListener("storage", onStorage);
     window.addEventListener("message", onMsg);
     return () => {
+      window.removeEventListener("tv-pasien-change", muat);
       window.removeEventListener("storage", onStorage);
       window.removeEventListener("message", onMsg);
     };
