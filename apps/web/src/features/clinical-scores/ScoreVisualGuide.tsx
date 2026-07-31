@@ -421,8 +421,11 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 6. Skin (Kulit)
     if (paramIndex === 6) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          🧼
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <rect x="10" y="10" width="30" height="22" rx="4" fill="#FFE4E6" stroke="#F43F5E" strokeWidth="1.5" />
+            <path d="M14 17h22M14 22h22M14 27h16" stroke="#FB7185" strokeWidth="1.2" strokeLinecap="round" />
+          </svg>
         </div>
       );
     }
@@ -430,8 +433,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 7. Lanugo
     if (paramIndex === 7) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          🪶
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <path d="M15 32 Q22 18 35 10" stroke="#D97706" strokeWidth="2" fill="none" strokeLinecap="round" />
+            <path d="M12 28 Q20 20 28 14" stroke="#F59E0B" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+            <path d="M22 34 Q28 26 38 18" stroke="#F59E0B" strokeWidth="1.2" fill="none" strokeLinecap="round" />
+          </svg>
         </div>
       );
     }
@@ -439,8 +446,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 8. Plantar
     if (paramIndex === 8) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          🦶
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <path d="M20 8 C14 8 14 16 16 22 C18 28 22 34 26 34 C30 34 32 30 30 22 C28 16 26 8 20 8 Z" fill="#FDE68A" stroke="#D97706" strokeWidth="1.5" />
+            <line x1="18" y1="18" x2="28" y2="18" stroke="#D97706" strokeWidth="1.2" />
+            <line x1="19" y1="24" x2="27" y2="24" stroke="#D97706" strokeWidth="1.2" />
+          </svg>
         </div>
       );
     }
@@ -448,8 +459,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 9. Breast
     if (paramIndex === 9) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          🍒
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <circle cx="25" cy="21" r="14" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="1.5" />
+            <circle cx="25" cy="21" r="6" fill="#F59E0B" />
+            <circle cx="25" cy="21" r="2" fill="#B45309" />
+          </svg>
         </div>
       );
     }
@@ -457,8 +472,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 10. Eye / Ear
     if (paramIndex === 10) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          👂
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <path d="M18 10 C12 10 10 16 10 21 C10 28 16 32 22 32 C26 32 28 28 26 24 C24 20 20 20 18 22" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
+            <circle cx="36" cy="21" r="7" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
+            <circle cx="36" cy="21" r="3" fill="#0284C7" />
+          </svg>
         </div>
       );
     }
@@ -466,8 +485,12 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
     // 11. Genitalia
     if (paramIndex === 11) {
       return (
-        <div className="tv-opt-svg-wrapper" style={{ fontSize: "20px" }}>
-          🚼
+        <div className="tv-opt-svg-wrapper">
+          <svg viewBox="0 0 50 42" width="44" height="36">
+            <rect x="12" y="10" width="26" height="22" rx="6" fill="#F1F5F9" stroke="#64748B" strokeWidth="1.5" />
+            <circle cx="25" cy="18" r="4" fill="#94A3B8" />
+            <path d="M20 28 Q25 24 30 28" stroke="#64748B" strokeWidth="1.5" fill="none" />
+          </svg>
         </div>
       );
     }

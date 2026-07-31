@@ -7,6 +7,7 @@ import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { DAFTAR_SKOR } from "./data";
 import { hitungSkor } from "./hitungSkor";
 import { OptionIllustration } from "./ScoreVisualGuide";
+import { ClinicalScoreIcon, ClinicalScoreIconId } from "./ClinicalScoreIcon";
 
 function tandaPoin(n: number): string {
   return (n >= 0 ? "+" : "") + n;
@@ -155,7 +156,11 @@ export function ScoreCatalog() {
               onClick={() => buka(s.id)}
             >
               <span className="tv-skor-card-ic" aria-hidden>
-                {s.emoji}
+                <ClinicalScoreIcon
+                  id={s.id as ClinicalScoreIconId}
+                  size={28}
+                  fallbackEmoji={s.emoji}
+                />
               </span>
               <span className="tv-skor-card-tx">
                 <span className="tv-skor-card-nama">{s.nama}</span>
@@ -179,8 +184,15 @@ export function ScoreCatalog() {
         {"\u2190"} Kembali ke daftar skoring
       </button>
       <div className="tv-skor-detail-head">
-        <h2 className="tv-skor-detail-nama">
-          <span aria-hidden>{def.emoji}</span> {def.nama}
+        <h2 className="tv-skor-detail-nama" style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span aria-hidden style={{ display: "inline-flex", alignItems: "center" }}>
+            <ClinicalScoreIcon
+              id={def.id as ClinicalScoreIconId}
+              size={32}
+              fallbackEmoji={def.emoji}
+            />
+          </span>
+          <span>{def.nama}</span>
         </h2>
         <p className="tv-skor-detail-ket">{def.ket}</p>
       </div>
