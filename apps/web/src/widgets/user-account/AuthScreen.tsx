@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { PromoTrial } from "./PromoTrial";
+import { LoadingAnimation } from "@/shared/ui";
 
 type Mode = "masuk" | "daftar" | "lupa";
 
@@ -108,6 +109,21 @@ export function AuthScreen() {
   function gantiMode(m: Mode) {
     setMode(m);
     setPesan({ txt: "", jenis: "galat" });
+  }
+
+  if (sibuk || memuat) {
+    return (
+      <LoadingAnimation
+        fullScreen
+        message={
+          mode === "masuk"
+            ? "Menghubungkan ke akun Tinyverse..."
+            : mode === "daftar"
+            ? "Mendaftarkan akun Tinyverse..."
+            : "Mengirimkan permintaan reset sandi..."
+        }
+      />
+    );
   }
 
   return (
@@ -234,12 +250,7 @@ export function AuthScreen() {
           </div>
         </aside>
         <main className="tv-auth-panel">
-          {memuat ? (
-            <div className="tv-muat">
-              <div className="tv-spinner" />
-              <div>{"Memuat\u2026"}</div>
-            </div>
-          ) : status === "error" ? (
+          {status === "error" ? (
             <div>
               <h2>Tidak dapat memuat</h2>
               <p className="tv-auth-sub">{errorMsg}</p>

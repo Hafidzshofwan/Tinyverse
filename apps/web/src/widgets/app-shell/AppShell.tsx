@@ -14,6 +14,7 @@ import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-acco
 import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
+import { LoadingAnimation, LoadingSelectorModal } from "@/shared/ui";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
@@ -79,6 +80,7 @@ export function AppShell({ children, pengingat }: AppShellProps) {
 function AppShellInner({ children, pengingat }: AppShellProps) {
   const { status, catatRiwayat } = useAuth();
   const [open, setOpen] = useState(true);
+  const [modalLoadingOpen, setModalLoadingOpen] = useState(false);
   const pathname = usePathname();
   const riwayatTerakhir = useRef<string>("");
 
@@ -177,6 +179,14 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
 
   // Wajib login: sebelum berhasil masuk, tampilkan layar login/daftar penuh.
   if (status !== "signedIn") {
+    if (status === "loading") {
+      return (
+        <LoadingAnimation
+          fullScreen
+          message="Memuat modul & sesi Tinyverse..."
+        />
+      );
+    }
     return <AuthScreen />;
   }
 
@@ -197,6 +207,28 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
         <GlobalSearch />
+        <button
+          type="button"
+          onClick={() => setModalLoadingOpen(true)}
+          title="Pilih & Pratinjau Animasi Loading"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            padding: "6px 12px",
+            borderRadius: "20px",
+            background: "rgba(236, 72, 153, 0.12)",
+            border: "1px solid rgba(236, 72, 153, 0.28)",
+            color: "var(--tv-magenta, #EC4899)",
+            fontSize: "13px",
+            fontWeight: 700,
+            cursor: "pointer",
+            transition: "all 0.2s ease",
+          }}
+        >
+          <span style={{ fontSize: "14px" }}>⚡</span>
+          <span className="tv-hide-mobile">Loading Animasi</span>
+        </button>
         <ThemeToggle />
         <UserMenu />
       </header>
@@ -240,6 +272,10 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
       </footer>
       <PatientProfile />
       <AiAssistantWidget />
+      <LoadingSelectorModal
+        isOpen={modalLoadingOpen}
+        onClose={() => setModalLoadingOpen(false)}
+      />
     </div>
   );
 }

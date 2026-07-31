@@ -26,7 +26,9 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
   const patientId = patientProfile.id || "";
   const belumPilihPasien = !patientId;
 
-  const records = useGrowthRecords(patientId);
+  // Jenis kelamin wajib diteruskan: tanpa itu, rekam lama yang masih membawa
+  // bbtbZ hasil rumus karangan hanya bisa dikosongkan, tidak bisa dihitung ulang.
+  const records = useGrowthRecords(patientId, patientProfile.jk ?? undefined);
   const [showAddForm, setShowAddForm] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [copiedNote, setCopiedNote] = useState<boolean>(false);
@@ -52,6 +54,23 @@ export function GrowthTrackingPanel({ iconVariant = "svg-v1" }: GrowthTrackingPa
     setUsiaBulan(patientProfile.usiaBulan != null ? String(patientProfile.usiaBulan) : "");
     setBb(patientProfile.bb != null ? String(patientProfile.bb) : "");
     setTb(patientProfile.tb != null ? String(patientProfile.tb) : "");
+    /*
+     * WHY catatan WAJIB ikut dikosongkan:
+     *
+     * Isi "catatan" disalin apa adanya ke rekam pertumbuhan yang baru
+     * (catatan: catatan.trim()) memakai patientId yang sedang aktif. Bila
+     * teks milik pasien sebelumnya dibiarkan tertinggal di formulir, catatan
+     * itu akan tersimpan ke rekam pasien yang BARU tanpa disadari siapa pun.
+     * Ini bukan sekadar tampilan basi, melainkan pencemaran rekam medis.
+     *
+     * Tanggal dikembalikan ke hari ini karena tanggal yang sempat diubah untuk
+     * pasien lama tidak ada hubungannya dengan pemeriksaan pasien baru.
+     */
+    setCatatan("");
+    setTanggal(new Date().toISOString().split("T")[0]!);
+    setShowAddForm(false);
+    setCopiedNote(false);
+    setDitambahkanRingkasan(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [kunciPasien]);
 
