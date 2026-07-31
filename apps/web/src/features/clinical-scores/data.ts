@@ -78,7 +78,7 @@ export const DAFTAR_SKOR: DefinisiSkor[] = [
     id: "pas",
     emoji: "\uD83E\uDE79",
     nama: "Pediatric Appendicitis Score (PAS)",
-    ringkas: "Kemungkinan apendisitis",
+    ringkas: "Suspect apendisitis",
     ket: "Menilai kemungkinan apendisitis akut pada anak dengan nyeri perut.",
     sumber: "Samuel M. Pediatric appendicitis score. J Pediatr Surg 2002.",
     maxTotal: 10,
@@ -215,7 +215,7 @@ export const DAFTAR_SKOR: DefinisiSkor[] = [
   {
     id: "apgar",
     emoji: "👶",
-    nama: "Skor APGAR Neonatus",
+    nama: "APGAR Score",
     ringkas: "Evaluasi adaptasi awal bayi baru lahir",
     ket: "Pemeriksaan kondisi fisik bayi baru lahir pada menit ke-1 dan menit ke-5 (serta menit ke-10 jika skor <7) untuk menilai kebutuhan resusitasi.",
     sumber: "Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953;32(4):260-267. AAP & ACOG Committee Opinion No. 644 (2015).",
@@ -287,8 +287,8 @@ export const DAFTAR_SKOR: DefinisiSkor[] = [
   {
     id: "ballard",
     emoji: "📏",
-    nama: "New Ballard Score (Maturitas Gestasi)",
-    ringkas: "Estimasi usia kehamilan & maturitas fisik/neuromuskular neonatus",
+    nama: "New Ballard Score",
+    ringkas: "Estimasi usia kehamilan & maturitas gestasi",
     ket: "Penilaian maturitas neuromuskular (6 kriteria) dan fisik (6 kriteria) untuk memperkirakan usia gestasi bayi prematur dan aterm (20–44 minggu).",
     sumber: "Ballard JL, Khoury JC, Wedig K, et al. New Ballard Score, expanded to include extremely premature infants. J Pediatr. 1991;119(3):417-423.",
     maxTotal: 50,
