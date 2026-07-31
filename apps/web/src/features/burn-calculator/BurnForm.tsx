@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { BurnArea } from "@tinyverse/clinical-core";
 import { NumberField, RedFlagCrossLink } from "@/shared/ui";
-import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { usePatientProfile, usePatientKey, useSyncedField } from "@/shared/lib/patient";
 import { viewBurn } from "@/entities/burn";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { BurnSvgMap } from "./BurnSvgMap";
@@ -22,6 +22,19 @@ export function BurnForm() {
   const [berat, setBerat] = useSyncedField(profile.bb);
   const [selected, setSelected] = useState<ReadonlyArray<BurnArea>>([]);
   const [ditambahkan, setDitambahkan] = useState(false);
+
+  /*
+   * WHY: berat dan usia kini sudah ikut berganti pasien, tetapi PILIHAN AREA
+   * LUKA BAKAR tidak. Bila hanya kolom angka yang direset, luas luka milik
+   * pasien sebelumnya akan terhitung memakai berat pasien baru - kombinasi yang
+   * tidak pernah ada pada pasien mana pun, dan justru dipakai untuk menghitung
+   * resusitasi cairan. Karena itu peta luka ikut dikosongkan.
+   */
+  const kunciPasien = usePatientKey();
+  useEffect(() => {
+    setSelected([]);
+    setDitambahkan(false);
+  }, [kunciPasien]);
 
   function toggle(area: BurnArea) {
     setSelected((prev) =>

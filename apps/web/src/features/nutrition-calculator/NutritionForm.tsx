@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import { NumberField } from "@/shared/ui";
-import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
+import { usePatientProfile, usePatientKey, useSyncedField } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   computeCalorieProtein,
@@ -66,6 +66,23 @@ export function NutritionForm() {
     result: ReturnType<typeof computeFormula>["result"];
   }>({ error: null, result: null });
   const [ditambahkan, setDitambahkan] = useState(false);
+
+  /*
+   * WHY: hasil kalori/protein dan formula dihitung dari berat pasien SEBELUMNYA.
+   * Kolom beratnya kini berganti otomatis, jadi membiarkan hasil lama tetap di
+   * layar membuat angka itu terbaca seolah-olah milik pasien yang baru dipilih.
+   * Nilai konsentrasi formula sengaja TIDAK direset karena itu properti sediaan
+   * susu, bukan properti pasien.
+   */
+  const kunciPasien = usePatientKey();
+  useEffect(() => {
+    setVol("");
+    setFeeds("");
+    setKResult({ error: null, result: null });
+    setFResult({ error: null, result: null });
+    setDitambahkan(false);
+  }, [kunciPasien]);
+
   const bbNum = parseNum(bb);
 
   return (
