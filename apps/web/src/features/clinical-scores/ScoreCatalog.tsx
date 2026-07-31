@@ -6,6 +6,7 @@ import { RedFlagCrossLink } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { DAFTAR_SKOR } from "./data";
 import { hitungSkor } from "./hitungSkor";
+import { OptionIllustration } from "./ScoreVisualGuide";
 
 function tandaPoin(n: number): string {
   return (n >= 0 ? "+" : "") + n;
@@ -39,6 +40,7 @@ export function ScoreCatalog() {
   const [pilihan, setPilihan] = useState<number[]>([]);
   const [usiaAutoDariProfil, setUsiaAutoDariProfil] = useState(false);
   const [ditambahkan, setDitambahkan] = useState(false);
+  const [ballardTab, setBallardTab] = useState<"neuromuscular" | "physical">("neuromuscular");
 
   const def = useMemo(
     () => DAFTAR_SKOR.find((s) => s.id === aktifId) ?? null,
@@ -182,32 +184,112 @@ export function ScoreCatalog() {
         </h2>
         <p className="tv-skor-detail-ket">{def.ket}</p>
       </div>
-      {def.items.map((p, i) => (
-        <div key={p.label} className="tv-skor-param">
-          <div className="tv-skor-label">
-            {p.label}
-            {def.id === "centor" && i === 0 && usiaAutoDariProfil && (
-              <span className="tv-skor-auto-tag">
-                otomatis dari profil pasien
-              </span>
-            )}
-          </div>
-          <div className="tv-skor-opsi">
-            {p.opsi.map((o, oi) => (
-              <button
-                key={o.teks}
-                type="button"
-                className={"tv-skor-opt" + (pilihan[i] === oi ? " aktif" : "")}
-                aria-pressed={pilihan[i] === oi}
-                onClick={() => pilih(i, oi)}
-              >
-                <span>{o.teks}</span>
-                <span className="tv-skor-poin">{tandaPoin(o.nilai)}</span>
-              </button>
-            ))}
+
+      {def.id === "ballard" && (
+        <div className="tv-ballard-tab-container">
+          <div className="tv-ballard-tabs">
+            <button
+              type="button"
+              className={"tv-ballard-tab" + (ballardTab === "neuromuscular" ? " active" : "")}
+              onClick={() => setBallardTab("neuromuscular")}
+            >
+              <span className="tv-ballard-tab-title">🧠 Maturitas Neuromuskular</span>
+              <span className="tv-ballard-tab-sub">6 Parameter</span>
+            </button>
+            <button
+              type="button"
+              className={"tv-ballard-tab" + (ballardTab === "physical" ? " active" : "")}
+              onClick={() => setBallardTab("physical")}
+            >
+              <span className="tv-ballard-tab-title">👶 Maturitas Fisik</span>
+              <span className="tv-ballard-tab-sub">6 Parameter</span>
+            </button>
           </div>
         </div>
-      ))}
+      )}
+
+      {def.items
+        .map((p, i) => ({ p, i }))
+        .filter(({ i }) =>
+          def.id === "ballard"
+            ? ballardTab === "neuromuscular"
+              ? i < 6
+              : i >= 6
+            : true
+        )
+        .map(({ p, i }) => (
+          <div key={p.label} className="tv-skor-param">
+            <div className="tv-skor-label">
+              {p.label}
+              {def.id === "centor" && i === 0 && usiaAutoDariProfil && (
+                <span className="tv-skor-auto-tag">
+                  otomatis dari profil pasien
+                </span>
+              )}
+            </div>
+            <div className="tv-skor-opsi">
+              {p.opsi.map((o, oi) => (
+                <button
+                  key={o.teks}
+                  type="button"
+                  className={"tv-skor-opt" + (pilihan[i] === oi ? " aktif" : "")}
+                  aria-pressed={pilihan[i] === oi}
+                  onClick={() => pilih(i, oi)}
+                >
+                  <OptionIllustration
+                    scoreId={def.id}
+                    paramIndex={i}
+                    optionIndex={oi}
+                  />
+                  <div className="tv-skor-opt-body">
+                    <span className="tv-skor-opt-teks">{o.teks}</span>
+                    <span className="tv-skor-poin">{tandaPoin(o.nilai)}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+
+      {def.id === "ballard" && (
+        <div className="tv-ballard-nav">
+          {ballardTab === "neuromuscular" ? (
+            <button
+              type="button"
+              className="tv-btn"
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                padding: "12px",
+                background: "#0284C7",
+                color: "#FFFFFF",
+                fontWeight: 700,
+                borderRadius: "12px",
+              }}
+              onClick={() => setBallardTab("physical")}
+            >
+              Lanjut ke Maturitas Fisik (6 Parameter) →
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="tv-btn"
+              style={{
+                width: "100%",
+                justifyContent: "center",
+                padding: "12px",
+                background: "#F1F5F9",
+                color: "#334155",
+                fontWeight: 700,
+                borderRadius: "12px",
+              }}
+              onClick={() => setBallardTab("neuromuscular")}
+            >
+              ← Kembali ke Maturitas Neuromuskular
+            </button>
+          )}
+        </div>
+      )}
       <div className={"tv-skor-hasil " + hasil.level}>
         {!def.hideTotal && (
           <div className="tv-skor-total">
@@ -385,9 +467,63 @@ export function ScoreCatalog() {
         />
       )}
 
-      <p className="tv-skor-sumber">
-        Sumber: {def.sumber} Alat bantu, bukan pengganti penilaian klinis.
-      </p>
+      {def.id === "apgar" && hasil.total <= 6 && (
+        <RedFlagCrossLink
+          badge="RED-FLAG ASFIKSIA NEONATUS"
+          title="Resusitasi Bayi Baru Lahir (NRP / PALS)"
+          description="Skor APGAR ≤6 mengindikasikan asfiksia neonatus. Segera lakukan langkah awal resusitasi: hangatkan, atur posisi, bersihkan jalan napas, rangsang taktil, dan Ventilasi Tekanan Positif (VTP) bila perlu."
+          actions={[
+            {
+              label: "Alur Darurat Resusitasi PALS",
+              href: "/preview/darurat",
+              primary: true,
+              icon: "⚡",
+            },
+            {
+              label: "Hitung Dosis Obat Resusitasi (Epinefrin)",
+              href: "/preview/dosing",
+              icon: "💊",
+            },
+          ]}
+        />
+      )}
+
+      {def.id === "ballard" && (hasil.level === "crit" || hasil.level === "warn") && (
+        <RedFlagCrossLink
+          badge="TATALAKSANA BAYI PREMATUR"
+          title="Perawatan Khusus Neonatus (NICU / Perinatologi)"
+          description="Penilaian Ballard menunjukkan kondisi prematuritas / usia gestasi &lt;37 minggu. Diperlukan pemantauan suhu (inkubator/KMC), bantuan napas CPAP, dan nutrisi enteral/parenteral."
+          actions={[
+            {
+              label: "Cek Dosis Antibiotik & Surfaktan Neonatus",
+              href: "/preview/dosing",
+              primary: true,
+              icon: "💊",
+            },
+          ]}
+        />
+      )}
+
+      <div className="tv-skor-sumber-box" style={{
+        marginTop: 16,
+        padding: "12px 14px",
+        borderRadius: "12px",
+        background: "var(--tv-soft, #f8fafc)",
+        border: "1px solid var(--tv-line, #e2e8f0)",
+        display: "flex",
+        alignItems: "flex-start",
+        gap: "10px",
+      }}>
+        <span style={{ fontSize: "18px", lineHeight: 1 }}>📚</span>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <strong style={{ fontSize: "12px", color: "var(--tv-teks, #0f172a)" }}>
+            Referensi Ilmiah &amp; Landasan Medis:
+          </strong>
+          <p className="tv-skor-sumber" style={{ margin: 0 }}>
+            {def.sumber} — <em>(Alat bantu keputusan klinis; keputusan akhir tetap berdasarkan pertimbangan medis DPJP).</em>
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

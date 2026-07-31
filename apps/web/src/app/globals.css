@@ -2361,14 +2361,17 @@ body {
 }
 
 /* ===== Skoring TB Anak (feature: tb-score) ===== */
-.tv-skor-param { display: flex; flex-direction: column; gap: 8px; padding-bottom: 14px; border-bottom: 1px solid var(--tv-line); }
-.tv-skor-label { font-weight: 600; font-size: 14px; color: var(--tv-teks); }
-.tv-skor-opsi { display: flex; flex-wrap: wrap; gap: 8px; }
-.tv-skor-opt { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; border: 1px solid var(--tv-line); background: #fff; border-radius: 12px; padding: 8px 12px; font: inherit; font-size: 13px; color: var(--tv-teks); text-align: left; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
-.tv-skor-opt:hover { transform: translateY(-1px); box-shadow: var(--tv-chunky-sm); }
-.tv-skor-opt.aktif { background: #0F172A; color: #FFFFFF; border-color: #0F172A; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.15); }
-.tv-skor-poin { font-weight: 700; font-size: 12px; opacity: .6; }
-.tv-skor-opt.aktif .tv-skor-poin { opacity: .95; color: #38BDF8; }
+.tv-skor-param { display: flex; flex-direction: column; gap: 10px; padding-bottom: 16px; border-bottom: 1px solid var(--tv-line); }
+.tv-skor-label { font-weight: 700; font-size: 14px; color: var(--tv-teks); }
+.tv-skor-opsi { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.tv-skor-opt { display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 8px; cursor: pointer; border: 1px solid var(--tv-line); background: var(--tv-card, #ffffff); border-radius: 14px; padding: 12px 10px; font: inherit; font-size: 13px; color: var(--tv-teks); text-align: center; transition: all 0.15s ease; position: relative; }
+.tv-skor-opt:hover { transform: translateY(-2px); border-color: #38bdf8; box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15); }
+.tv-skor-opt.aktif { background: rgba(14, 165, 233, 0.08); color: var(--tv-teks, #0f172a); border-color: #0ea5e9; box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3); }
+.tv-skor-opt-body { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; }
+.tv-skor-opt-teks { font-weight: 600; font-size: 12.5px; line-height: 1.35; color: var(--tv-teks, #1e293b); }
+.tv-skor-poin { display: inline-block; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--tv-soft, #f1f5f9); color: var(--tv-soft-teks, #475569); }
+.tv-skor-opt.aktif .tv-skor-poin { background: #0ea5e9; color: #ffffff; }
+.tv-opt-svg-wrapper { display: flex; align-items: center; justify-content: center; min-height: 40px; }
 .tv-skor-hasil { display: flex; flex-direction: column; gap: 6px; border-radius: 16px; padding: 14px 16px; margin-top: 4px; }
 .tv-skor-hasil.warn { background: rgba(245, 158, 11, .1); }
 .tv-skor-hasil.crit { background: rgba(226, 58, 94, .1); }
@@ -2378,6 +2381,264 @@ body {
 .tv-skor-hasil.crit .tv-skor-kat { color: #c01643; }
 .tv-skor-saran { margin: 0; font-size: 13px; line-height: 1.55; color: var(--tv-soft-teks); }
 .tv-skor-sumber { margin: 0; font-size: 11.5px; line-height: 1.5; color: var(--tv-soft-teks); opacity: .85; }
+
+/* ===== Ballard Score Sub-Tabs ===== */
+.tv-ballard-tab-container { margin-bottom: 12px; }
+.tv-ballard-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--tv-soft, #f1f5f9); padding: 6px; border-radius: 14px; }
+.tv-ballard-tab { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 12px; border-radius: 10px; border: none; background: transparent; color: var(--tv-soft-teks, #475569); cursor: pointer; font: inherit; transition: all 0.15s ease; }
+.tv-ballard-tab:hover { color: var(--tv-teks, #0f172a); }
+.tv-ballard-tab.active { background: var(--tv-card, #ffffff); color: #0284c7; font-weight: 700; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); }
+.tv-ballard-tab-title { font-size: 13.5px; font-weight: 600; }
+.tv-ballard-tab.active .tv-ballard-tab-title { font-weight: 700; }
+.tv-ballard-tab-sub { font-size: 11px; opacity: 0.8; }
+.tv-ballard-nav { margin-top: 6px; margin-bottom: 12px; }
+
+/* ===== Panduan Visual Skoring (APGAR & New Ballard) ===== */
+.tv-visual-guide-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--tv-card, #ffffff);
+  border: 1px solid var(--tv-line, #e2e8f0);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+.tv-vg-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--tv-line, #e2e8f0);
+}
+.tv-vg-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--tv-teks, #0f172a);
+}
+.tv-vg-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+}
+.tv-vg-toggle-btn {
+  background: var(--tv-soft, #f1f5f9);
+  border: 1px solid var(--tv-line, #cbd5e1);
+  color: var(--tv-teks, #334155);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tv-vg-toggle-btn:hover {
+  background: var(--tv-line, #e2e8f0);
+}
+.tv-vg-matrix-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.tv-vg-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tv-vg-row-label {
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--tv-teks, #1e293b);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.tv-vg-row-label small {
+  font-weight: 500;
+  color: var(--tv-soft-teks, #64748b);
+  font-size: 12px;
+}
+.tv-vg-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+.tv-vg-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border: 1px solid var(--tv-line, #e2e8f0);
+  background: var(--tv-soft, #f8fafc);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tv-vg-item:hover {
+  border-color: #38bdf8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
+}
+.tv-vg-item.selected {
+  border-color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.08);
+  box-shadow: 0 0 0 2px rgba(14, 165, 233, 0.3);
+}
+.tv-vg-thumb {
+  display: grid;
+  place-items: center;
+  height: 44px;
+}
+.tv-vg-score-tag {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+.tv-vg-score-tag.score-0 { background: #e2e8f0; color: #475569; }
+.tv-vg-score-tag.score-1 { background: #fef3c7; color: #b45309; }
+.tv-vg-score-tag.score-2 { background: #d1fae5; color: #047857; }
+
+.tv-vg-text {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--tv-teks, #334155);
+  font-weight: 500;
+}
+
+/* Ballard Visual Guide Styles */
+.tv-vg-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tv-vg-tab-btn {
+  background: var(--tv-soft, #f1f5f9);
+  border: 1px solid var(--tv-line, #cbd5e1);
+  color: var(--tv-teks, #475569);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.tv-vg-tab-btn.active {
+  background: #0ea5e9;
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.25);
+}
+.tv-ballard-diagram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+.tv-bd-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--tv-line, #e2e8f0);
+  background: var(--tv-soft, #f8fafc);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+.tv-bd-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--tv-teks, #1e293b);
+}
+.tv-bd-diagrams {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 6px;
+}
+.tv-bd-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+.tv-bd-score {
+  font-size: 10px;
+  font-weight: 700;
+  color: #0284c7;
+}
+.tv-bd-desc {
+  font-size: 10px;
+  color: var(--tv-soft-teks, #64748b);
+  max-width: 75px;
+  line-height: 1.2;
+}
+
+.tv-ballard-physical-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+.tv-bp-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--tv-line, #e2e8f0);
+  background: var(--tv-soft, #f8fafc);
+  border-radius: 12px;
+  padding: 10px;
+}
+.tv-bp-icon { font-size: 20px; }
+.tv-bp-title { font-size: 13px; font-weight: 700; color: var(--tv-teks, #1e293b); }
+.tv-bp-desc { font-size: 11px; line-height: 1.35; color: var(--tv-soft-teks, #475569); }
+
+.tv-ballard-table-container {
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--tv-line, #e2e8f0);
+}
+.tv-ballard-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  text-align: left;
+}
+.tv-ballard-table th {
+  background: var(--tv-soft, #f1f5f9);
+  padding: 8px 12px;
+  font-weight: 700;
+  color: var(--tv-teks, #1e293b);
+  border-bottom: 1px solid var(--tv-line, #cbd5e1);
+}
+.tv-ballard-table td {
+  padding: 7px 12px;
+  border-bottom: 1px solid var(--tv-line, #e2e8f0);
+  color: var(--tv-teks, #334155);
+}
+.tv-ballard-table tr.highlight-row {
+  background: rgba(16, 185, 129, 0.08);
+}
+.tv-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+.tv-tag.tag-crit { background: #ffe4e6; color: #be123c; }
+.tv-tag.tag-warn { background: #fef3c7; color: #b45309; }
+.tv-tag.tag-ok { background: #d1fae5; color: #047857; }
 
 /* ===== Katalog Skoring Klinis (feature: clinical-scores) ===== */
 .tv-skor-galeri { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }

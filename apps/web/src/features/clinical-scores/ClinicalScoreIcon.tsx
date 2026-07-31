@@ -9,7 +9,9 @@ export type ClinicalScoreIconId =
   | "pass"
   | "kawasaki"
   | "centor"
-  | "tbanak";
+  | "tbanak"
+  | "apgar"
+  | "ballard";
 
 interface ClinicalScoreIconProps {
   id: ClinicalScoreIconId;
@@ -203,6 +205,48 @@ export const ClinicalScoreIcon: React.FC<ClinicalScoreIconProps> = ({
         <rect width="36" height="36" rx="8" fill="#F8FAFC" />
         <path d="M18 5L28 9V17C28 23.5 23.2 29.5 18 31C12.8 29.5 8 23.5 8 17V9L18 5Z" fill="#334155" fillOpacity="0.1" stroke="#475569" strokeWidth="2" />
         <path d="M14 17L17 20L23 13" stroke="#0EA5E9" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  if (id === "apgar") {
+    // APGAR Score Icon: Baby & Heartbeat Pulse
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 36 36"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+      >
+        <rect width="36" height="36" rx="8" fill="#FFF1F2" />
+        <circle cx="18" cy="13" r="5" fill="#F43F5E" />
+        <path d="M18 20C13 20 10 24 10 28H26C26 24 23 20 18 20Z" fill="#F43F5E" />
+        <path d="M9 25H14L16 21L18 29L20 23L22 25H27" stroke="#38BDF8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  if (id === "ballard") {
+    // New Ballard Score Icon: Ruler & Flexed Limb Assessment
+    return (
+      <svg
+        width={size}
+        height={size}
+        viewBox="0 0 36 36"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className={className}
+      >
+        <rect width="36" height="36" rx="8" fill="#F0F9FF" />
+        <rect x="7" y="22" width="22" height="7" rx="2" fill="#0284C7" />
+        <line x1="11" y1="22" x2="11" y2="25" stroke="#FFFFFF" strokeWidth="1.5" />
+        <line x1="15" y1="22" x2="15" y2="26" stroke="#FFFFFF" strokeWidth="1.5" />
+        <line x1="19" y1="22" x2="19" y2="25" stroke="#FFFFFF" strokeWidth="1.5" />
+        <line x1="23" y1="22" x2="23" y2="26" stroke="#FFFFFF" strokeWidth="1.5" />
+        <path d="M12 16L19 9L25 15" stroke="#38BDF8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+        <circle cx="19" cy="9" r="2.5" fill="#38BDF8" />
       </svg>
     );
   }

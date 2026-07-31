@@ -212,4 +212,257 @@ export const DAFTAR_SKOR: DefinisiSkor[] = [
       return { kategori: "Belum dapat didiagnosis TB", level: "warn", saran: "Skor <6 tanpa uji tuberkulin (+)/kontak TB paru \u2192 observasi gejala selama 2 minggu. Bila gejala menetap, evaluasi ulang; bila menghilang, kemungkinan bukan TB." };
     },
   },
+  {
+    id: "apgar",
+    emoji: "👶",
+    nama: "Skor APGAR Neonatus",
+    ringkas: "Evaluasi adaptasi awal bayi baru lahir",
+    ket: "Pemeriksaan kondisi fisik bayi baru lahir pada menit ke-1 dan menit ke-5 (serta menit ke-10 jika skor <7) untuk menilai kebutuhan resusitasi.",
+    sumber: "Apgar V. A proposal for a new method of evaluation of the newborn infant. Curr Res Anesth Analg. 1953;32(4):260-267. AAP & ACOG Committee Opinion No. 644 (2015).",
+    maxTotal: 10,
+    items: [
+      {
+        label: "A - Appearance (Warna kulit)",
+        opsi: [
+          { teks: "Pucat / biru seluruh tubuh", nilai: 0 },
+          { teks: "Tubuh merah muda, ekstremitas biru (akrosianosis)", nilai: 1 },
+          { teks: "Seluruh tubuh merah muda (pink)", nilai: 2 },
+        ],
+      },
+      {
+        label: "P - Pulse (Frekuensi jantung)",
+        opsi: [
+          { teks: "Tidak ada (0 bpm)", nilai: 0 },
+          { teks: "Lambat (< 100 kali/menit)", nilai: 1 },
+          { teks: "Normal (≥ 100 kali/menit)", nilai: 2 },
+        ],
+      },
+      {
+        label: "G - Grimace (Refleks / respons stimulasi)",
+        opsi: [
+          { teks: "Tidak ada respon / flaksid", nilai: 0 },
+          { teks: "Meringis / gerakan sedikit saat stimulasi", nilai: 1 },
+          { teks: "Menangis kuat, batuk, bersin, atau menarik kaki", nilai: 2 },
+        ],
+      },
+      {
+        label: "A - Activity (Tonus otot)",
+        opsi: [
+          { teks: "Lumpuh / lemas / tidak ada gerakan", nilai: 0 },
+          { teks: "Fleksi ringan pada ekstremitas (lengan/kaki)", nilai: 1 },
+          { teks: "Gerakan aktif, fleksi kuat pada semua ekstremitas", nilai: 2 },
+        ],
+      },
+      {
+        label: "R - Respiration (Usaha napas)",
+        opsi: [
+          { teks: "Tidak bernapas (apnea)", nilai: 0 },
+          { teks: "Napas lambat, tidak teratur, menangis lemah", nilai: 1 },
+          { teks: "Napas baik/teratur, menangis kuat", nilai: 2 },
+        ],
+      },
+    ],
+    interpret: (t) => {
+      if (t >= 7) {
+        return {
+          kategori: "Normal / Adaptasi Baik (Skor 7–10)",
+          level: "ok",
+          saran: "Bayi dalam kondisi adaptasi baik. Lanjutkan perawatan rutin neonatus, pengeringan, hangat, Inisiasi Menyusu Dini (IMD), dan observasi berkala.",
+        };
+      }
+      if (t >= 4) {
+        return {
+          kategori: "Asfiksia Sedang (Skor 4–6)",
+          level: "warn",
+          saran: "Bayi mengalami depresi sedang / asfiksia ringan–sedang. Berikan pembersihan jalan napas, rangsang taktil, oksigenasi/ventilasi tekanan positif (VTP) jika belum bernapas adekuat. Evaluasi ulang APGAR menit ke-5 dan ke-10.",
+        };
+      }
+      return {
+        kategori: "Asfiksia Berat / Depresi Berat (Skor 0–3)",
+        level: "crit",
+        saran: "Bayi mengalami asfiksia berat. Lakukan protokol resusitasi neonatus (NRP/PALS) segera: bersihkan jalan napas, VTP dengan balon & sungkup, kompresi dada bila denyut jantung <60 x/menit, dan persiapkan epinefrin/jalur IV.",
+      };
+    },
+  },
+  {
+    id: "ballard",
+    emoji: "📏",
+    nama: "New Ballard Score (Maturitas Gestasi)",
+    ringkas: "Estimasi usia kehamilan & maturitas fisik/neuromuskular neonatus",
+    ket: "Penilaian maturitas neuromuskular (6 kriteria) dan fisik (6 kriteria) untuk memperkirakan usia gestasi bayi prematur dan aterm (20–44 minggu).",
+    sumber: "Ballard JL, Khoury JC, Wedig K, et al. New Ballard Score, expanded to include extremely premature infants. J Pediatr. 1991;119(3):417-423.",
+    maxTotal: 50,
+    items: [
+      {
+        label: "1. Posture (Sikap Tubuh)",
+        opsi: [
+          { teks: "Ekstensi penuh (0°)", nilai: 0 },
+          { teks: "Fleksi ringan pada panggul & lutut", nilai: 1 },
+          { teks: "Fleksi sedang pada panggul & lutut", nilai: 2 },
+          { teks: "Lengan fleksi, kaki fleksi kuat", nilai: 3 },
+          { teks: "Fleksi penuh / hiperfleksi 4 ekstremitas", nilai: 4 },
+        ],
+      },
+      {
+        label: "2. Square Window (Pergelangan Tangan)",
+        opsi: [
+          { teks: "> 90° (fleksi minimal)", nilai: -1 },
+          { teks: "90°", nilai: 0 },
+          { teks: "60°", nilai: 1 },
+          { teks: "45°", nilai: 2 },
+          { teks: "30°", nilai: 3 },
+          { teks: "0° (telapak tangan menempel)", nilai: 4 },
+        ],
+      },
+      {
+        label: "3. Arm Recoil (Rekoil Lengan)",
+        opsi: [
+          { teks: "180° (tidak ada recoil/tetap lurus)", nilai: 0 },
+          { teks: "140° – 180° (recoil lambat/parsial)", nilai: 1 },
+          { teks: "110° – 140° (recoil moderat)", nilai: 2 },
+          { teks: "90° – 110° (recoil cepat)", nilai: 3 },
+          { teks: "< 90° (recoil seketika/fleksi kuat)", nilai: 4 },
+        ],
+      },
+      {
+        label: "4. Popliteal Angle (Sudut Popliteal)",
+        opsi: [
+          { teks: "180° (lutut lurus tanpa hambatan)", nilai: -1 },
+          { teks: "160°", nilai: 0 },
+          { teks: "140°", nilai: 1 },
+          { teks: "120°", nilai: 2 },
+          { teks: "100°", nilai: 3 },
+          { teks: "90°", nilai: 4 },
+          { teks: "< 90°", nilai: 5 },
+        ],
+      },
+      {
+        label: "5. Scarf Sign (Tanda Selendang)",
+        opsi: [
+          { teks: "Siku melewati garis aksila kontralateral", nilai: -1 },
+          { teks: "Siku mencapai garis aksila anterior kontralateral", nilai: 0 },
+          { teks: "Siku mencapai garis puting kontralateral", nilai: 1 },
+          { teks: "Siku mencapai prosesus xifoideus (garis tengah)", nilai: 2 },
+          { teks: "Siku di antara garis tengah dan puting ipsilateral", nilai: 3 },
+          { teks: "Siku tidak mencapai garis tengah", nilai: 4 },
+        ],
+      },
+      {
+        label: "6. Heel to Ear (Tumit ke Telinga)",
+        opsi: [
+          { teks: "Tumit mudah menyentuh telinga (180°)", nilai: -1 },
+          { teks: "Tumit mendekati telinga (160°)", nilai: 0 },
+          { teks: "Tumit setinggi dada atas (140°)", nilai: 1 },
+          { teks: "Tumit setinggi dada bawah (120°)", nilai: 2 },
+          { teks: "Tumit setinggi umbilikus (100°)", nilai: 3 },
+          { teks: "Tumit di lipat paha / tahanan kuat (<90°)", nilai: 4 },
+        ],
+      },
+      {
+        label: "7. Kulit (Skin)",
+        opsi: [
+          { teks: "Lengket, rapuh, transparan", nilai: -1 },
+          { teks: "Gelatinus, merah, translusen", nilai: 0 },
+          { teks: "Halus, merah muda, vena terlihat jelas", nilai: 1 },
+          { teks: "Pengelupasan superfisial/ruam, sedikit vena", nilai: 2 },
+          { teks: "Area pucat & retak, pembuluh jarang", nilai: 3 },
+          { teks: "Seperti perkamen, retak dalam, tak ada pembuluh", nilai: 4 },
+          { teks: "Seperti kulit penyamak, retak-retak, keriput", nilai: 5 },
+        ],
+      },
+      {
+        label: "8. Lanugo",
+        opsi: [
+          { teks: "Tidak ada lanugo", nilai: -1 },
+          { teks: "Jarang (sparse)", nilai: 0 },
+          { teks: "Banyak / lebat (abundant)", nilai: 1 },
+          { teks: "Mulai menipis", nilai: 2 },
+          { teks: "Sebagian besar botak / hilang", nilai: 3 },
+          { teks: "Hampir seluruhnya botak", nilai: 4 },
+        ],
+      },
+      {
+        label: "9. Permukaan Plantar Telapak Kaki (Plantar Surface)",
+        opsi: [
+          { teks: "Tumit-ibu jari 40–50 mm (-1) / <40 mm (-2)", nilai: -2 },
+          { teks: ">50 mm, tanpa garis lipatan (no crease)", nilai: -1 },
+          { teks: "Bercak/garis merah samar di anterior", nilai: 0 },
+          { teks: "Garis lipatan melintang anterior saja", nilai: 1 },
+          { teks: "Garis lipatan 2/3 anterior telapak", nilai: 2 },
+          { teks: "Garis lipatan di seluruh telapak kaki", nilai: 3 },
+          { teks: "Lipatan dalam & menonjol di seluruh telapak", nilai: 4 },
+        ],
+      },
+      {
+        label: "10. Payudara / Areola (Breast)",
+        opsi: [
+          { teks: "Tidak teraba / imperceptible", nilai: -1 },
+          { teks: "Hampir tidak teraba", nilai: 0 },
+          { teks: "Areola datar, tanpa nodul payudara", nilai: 1 },
+          { teks: "Areola berbintik, nodul 1–2 mm", nilai: 2 },
+          { teks: "Areola terangkat, nodul 3–4 mm", nilai: 3 },
+          { teks: "Areola penuh, nodul 5–10 mm", nilai: 4 },
+        ],
+      },
+      {
+        label: "11. Mata & Telinga (Eye & Ear)",
+        opsi: [
+          { teks: "Kelopak mata menyatu rapat (-2) / longgar (-1)", nilai: -1 },
+          { teks: "Kelopak terbuka; daun telinga datar & tetap terlipat", nilai: 0 },
+          { teks: "Daun telinga sedikit melengkung, lunak, recoil lambat", nilai: 1 },
+          { teks: "Daun telinga melengkung baik, lunak tapi cepat recoil", nilai: 2 },
+          { teks: "Telinga terbentuk & kaku, instant recoil", nilai: 3 },
+          { teks: "Kartilago tebal, telinga sangat kaku", nilai: 4 },
+        ],
+      },
+      {
+        label: "12. Genitalia Laki-laki / Perempuan (Genitals)",
+        opsi: [
+          { teks: "Skrotum datar & halus / Klitoris menonjol & labia datar", nilai: -1 },
+          { teks: "Skrotum kosong, rugae samar / Klitoris menonjol, labia minora kecil", nilai: 0 },
+          { teks: "Testis di kanalis atas, rugae jarang / Klitoris & labia minora menonjol", nilai: 1 },
+          { teks: "Testis mulai turun, rugae sedikit / Majora & minora sama menonjol", nilai: 2 },
+          { teks: "Testis sudah di bawah, rugae baik / Majora besar, minora kecil", nilai: 3 },
+          { teks: "Testis pendulans, rugae dalam / Majora menutupi penuh klitoris & minora", nilai: 4 },
+        ],
+      },
+    ],
+    interpret: (t) => {
+      // Linear conversion: 24 + (t / 5) * 2
+      const gestasiMinggu = Math.max(20, Math.min(44, Math.round(24 + (t / 5) * 2)));
+      if (gestasiMinggu < 28) {
+        return {
+          kategori: `Preterm Sangat Ekstrem (${gestasiMinggu} Minggu Gestasi)`,
+          level: "crit",
+          saran: `Total skor ${t} setara dengan estimasi usia gestasi ${gestasiMinggu} minggu. Bayi sangat prematur: memerlukan NICU intensif, termoregulasi ketat, surfaktan/CPAP, nutrisi parenteral, dan pencegahan IVH.`,
+        };
+      }
+      if (gestasiMinggu <= 31) {
+        return {
+          kategori: `Preterm Sangat / Very Preterm (${gestasiMinggu} Minggu Gestasi)`,
+          level: "warn",
+          saran: `Total skor ${t} setara dengan estimasi usia gestasi ${gestasiMinggu} minggu. Perawatan NICU/HNC, bantuan respirasi (CPAP), pencegahan hipotermi, dan nutrisi enteral bertahap.`,
+        };
+      }
+      if (gestasiMinggu <= 36) {
+        return {
+          kategori: `Preterm Moderat / Late Preterm (${gestasiMinggu} Minggu Gestasi)`,
+          level: "warn",
+          saran: `Total skor ${t} setara dengan estimasi usia gestasi ${gestasiMinggu} minggu. Monitor ketat refleks hisap/minum, suhunya, kadar bilirubin, dan gula darah.`,
+        };
+      }
+      if (gestasiMinggu <= 41) {
+        return {
+          kategori: `Cukup Bulan / Aterm (${gestasiMinggu} Minggu Gestasi)`,
+          level: "ok",
+          saran: `Total skor ${t} setara dengan estimasi usia gestasi ${gestasiMinggu} minggu (Aterm). Lanjutkan perawatan rutin neonatus cukup bulan, rawat gabung, dan ASI eksklusif.`,
+        };
+      }
+      return {
+        kategori: `Lewat Bulan / Post-term (${gestasiMinggu} Minggu Gestasi)`,
+        level: "warn",
+        saran: `Total skor ${t} setara dengan estimasi usia gestasi ${gestasiMinggu} minggu. Evaluasi dismaturitas (kulit terkelupas), hipoglikemia, dan sindrom aspirasi mekonium.`,
+      };
+    },
+  },
 ];

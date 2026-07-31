@@ -69,6 +69,28 @@ describe("hitungSkor - katalog skor klinis (mirror v17)", () => {
     expect(r.kategori).toContain("Diagnosis TB");
   });
 
+  it("APGAR: semua normal (skor 2) -> total 10 (ok)", () => {
+    const r = hitungSkor("apgar", maxUntuk("apgar"));
+    expect(r.total).toBe(10);
+    expect(r.level).toBe("ok");
+    expect(r.kategori).toContain("Normal");
+  });
+
+  it("APGAR: semua 0 -> total 0, asfiksia berat (crit)", () => {
+    const r = hitungSkor("apgar", nolUntuk("apgar"));
+    expect(r.total).toBe(0);
+    expect(r.level).toBe("crit");
+    expect(r.kategori).toContain("Asfiksia Berat");
+  });
+
+  it("Ballard: maturitas aterm (misal skor 40) -> 40 minggu (ok)", () => {
+    // Skor 40 -> 40 minggu
+    const r = hitungSkor("ballard", [4, 4, 3, 4, 3, 3, 4, 3, 3, 4, 4, 4]);
+    expect(r.total).toBe(40);
+    expect(r.level).toBe("ok");
+    expect(r.kategori).toContain("40 Minggu");
+  });
+
   it("menolak id skor yang tidak dikenal", () => {
     expect(() => hitungSkor("ngawur", [])).toThrow();
   });
