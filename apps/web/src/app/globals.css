@@ -2390,7 +2390,12 @@ body {
 .tv-skor-opt-teks { font-weight: 600; font-size: 12.5px; line-height: 1.35; color: var(--tv-teks, #1e293b); }
 .tv-skor-poin { display: inline-block; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 6px; background: var(--tv-soft, #f1f5f9); color: var(--tv-soft-teks, #475569); }
 .tv-skor-opt.aktif .tv-skor-poin { background: #0ea5e9; color: #ffffff; }
-.tv-opt-svg-wrapper { display: flex; align-items: center; justify-content: center; min-height: 40px; }
+/* color WAJIB ditetapkan di sini. Ilustrasi Ballard digambar dengan
+   stroke="currentColor" mengikuti bagan asli yang hitam-putih, sehingga garis
+   ikut berganti warna di mode gelap tanpa aturan CSS tambahan. Tanpa baris
+   ini, warna diwarisi dari leluhur yang tidak menentu dan garis bisa lenyap
+   di latar gelap. Token yang dipakai sengaja sama dengan .tv-skor-opt-teks. */
+.tv-opt-svg-wrapper { display: flex; align-items: center; justify-content: center; min-height: 40px; color: var(--tv-teks, #1e293b); }
 .tv-skor-hasil { display: flex; flex-direction: column; gap: 6px; border-radius: 16px; padding: 14px 16px; margin-top: 4px; }
 .tv-skor-hasil.warn { background: rgba(245, 158, 11, .1); }
 .tv-skor-hasil.crit { background: rgba(226, 58, 94, .1); }

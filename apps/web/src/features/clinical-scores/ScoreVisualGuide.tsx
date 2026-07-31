@@ -8,6 +8,90 @@ interface OptionIllustrationProps {
   optionIndex: number;
 }
 
+/* ==========================================================================
+   Primitif gambar bersama untuk New Ballard Score
+   ==========================================================================
+   Ilustrasi Ballard digambar ulang mengikuti bagan asli Ballard JL, Khoury JC,
+   Wedig K, et al. J Pediatr 1991;119:417-423 - garis tunggal tanpa arsiran,
+   kepala berupa lingkaran bertitik, badan berupa kapsul memanjang.
+
+   WHY currentColor: bagan aslinya hitam-putih. Dengan mewarisi warna teks,
+   garis ikut menyesuaikan mode terang dan gelap tanpa perlu satu pun aturan
+   CSS tambahan. Warna aksen HANYA dipakai pada bagian yang sedang diukur,
+   supaya mata pengguna langsung tertuju ke sana - itulah yang membedakan
+   satu pilihan dari pilihan lain di kolom yang sama.
+
+   WHY sudut dihitung dengan trigonometri, bukan koordinat tangan: Square
+   Window dan Popliteal Angle adalah pengukuran sudut. Menuliskan koordinat
+   secara manual membuat gambar 45 derajat tidak benar-benar 45 derajat, dan
+   perawat yang membandingkan gambar dengan bayinya akan tersesat.
+========================================================================== */
+
+const AKSEN = "#0EA5E9";
+const AKSEN_KUAT = "#10B981";
+
+/** Bingkai SVG seragam untuk seluruh ilustrasi Ballard. */
+const Kanvas: React.FC<{
+  vb?: string;
+  lebar?: number;
+  children: React.ReactNode;
+}> = ({ vb = "0 0 64 44", lebar = 56, children }) => (
+  <div className="tv-opt-svg-wrapper">
+    <svg
+      viewBox={vb}
+      width={lebar}
+      height={38}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      {children}
+    </svg>
+  </div>
+);
+
+/** Kepala bayi: lingkaran bertitik, konvensi bagan Ballard asli. */
+const Kepala: React.FC<{ x: number; y: number; r?: number }> = ({
+  x,
+  y,
+  r = 5,
+}) => (
+  <>
+    <circle cx={x} cy={y} r={r} />
+    <circle cx={x} cy={y} r={1.2} fill="currentColor" stroke="none" />
+  </>
+);
+
+/** Label sudut atau ukuran. */
+const Label: React.FC<{
+  x: number;
+  y: number;
+  teks: string;
+  warna?: string;
+}> = ({ x, y, teks, warna = AKSEN }) => (
+  <text
+    x={x}
+    y={y}
+    fontSize={8.5}
+    fontWeight={700}
+    fill={warna}
+    stroke="none"
+    textAnchor="middle"
+  >
+    {teks}
+  </text>
+);
+
+/** Membatasi indeks pilihan agar tidak pernah keluar dari larik gambar. */
+function batas(i: number, maks: number): number {
+  if (!Number.isFinite(i) || i < 0) return 0;
+  return i > maks ? maks : i;
+}
+
 export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
   scoreId,
   paramIndex,
@@ -227,271 +311,492 @@ export const OptionIllustration: React.FC<OptionIllustrationProps> = ({
   }
 
   if (scoreId === "ballard") {
-    // 0. Posture (Sikap Tubuh)
+    /* ================= MATURITAS NEUROMUSKULAR ================= */
+
+    // 0. Posture (Sikap Tubuh) - 5 pilihan, skor 0..4
     if (paramIndex === 0) {
-      // 0: Ekstensi 0° (0)
-      if (optionIndex === 0) {
-        return (
-          <div className="tv-opt-svg-wrapper">
-            <svg viewBox="0 0 64 42" width="54" height="36">
-              {/* Kepala dengan mata dot */}
-              <circle cx="16" cy="21" r="5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.5" />
-              <circle cx="15" cy="20" r="0.8" fill="#334155" />
-              <circle cx="17" cy="20" r="0.8" fill="#334155" />
-              {/* Badan & Ekstremitas Lurus Flat */}
-              <line x1="21" y1="21" x2="46" y2="21" stroke="#334155" strokeWidth="2" />
-              <line x1="27" y1="21" x2="27" y2="32" stroke="#334155" strokeWidth="1.5" />
-              <line x1="27" y1="21" x2="27" y2="10" stroke="#334155" strokeWidth="1.5" />
-              <line x1="46" y1="21" x2="58" y2="21" stroke="#334155" strokeWidth="1.5" />
-            </svg>
-          </div>
-        );
-      }
-      // 1: Fleksi ringan panggul & lutut (1)
-      if (optionIndex === 1) {
-        return (
-          <div className="tv-opt-svg-wrapper">
-            <svg viewBox="0 0 64 42" width="54" height="36">
-              <circle cx="16" cy="21" r="5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.5" />
-              <circle cx="15" cy="20" r="0.8" fill="#334155" />
-              <circle cx="17" cy="20" r="0.8" fill="#334155" />
-              <line x1="21" y1="21" x2="44" y2="21" stroke="#334155" strokeWidth="2" />
-              <line x1="27" y1="21" x2="27" y2="30" stroke="#334155" strokeWidth="1.5" />
-              <line x1="27" y1="21" x2="27" y2="12" stroke="#334155" strokeWidth="1.5" />
-              <path d="M44 21 L50 15 L56 21" stroke="#0284C7" strokeWidth="1.8" fill="none" />
-            </svg>
-          </div>
-        );
-      }
-      // 2: Fleksi sedang panggul & lutut (2)
-      if (optionIndex === 2) {
-        return (
-          <div className="tv-opt-svg-wrapper">
-            <svg viewBox="0 0 64 42" width="54" height="36">
-              <circle cx="16" cy="21" r="5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.5" />
-              <circle cx="15" cy="20" r="0.8" fill="#334155" />
-              <circle cx="17" cy="20" r="0.8" fill="#334155" />
-              <line x1="21" y1="21" x2="42" y2="21" stroke="#334155" strokeWidth="2" />
-              <path d="M27 21 L23 14 L27 8" stroke="#0284C7" strokeWidth="1.8" fill="none" />
-              <path d="M42 21 L48 11 L54 21" stroke="#0284C7" strokeWidth="1.8" fill="none" />
-            </svg>
-          </div>
-        );
-      }
-      // 3: Lengan fleksi, kaki fleksi kuat (3)
-      if (optionIndex === 3) {
-        return (
-          <div className="tv-opt-svg-wrapper">
-            <svg viewBox="0 0 64 42" width="54" height="36">
-              <circle cx="16" cy="21" r="5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.5" />
-              <circle cx="15" cy="20" r="0.8" fill="#334155" />
-              <circle cx="17" cy="20" r="0.8" fill="#334155" />
-              <line x1="21" y1="21" x2="40" y2="21" stroke="#334155" strokeWidth="2" />
-              <path d="M27 21 L21 14 L27 10" stroke="#059669" strokeWidth="1.8" fill="none" />
-              <path d="M40 21 L46 9 L52 21 M40 21 L44 31 L50 21" stroke="#059669" strokeWidth="1.8" fill="none" />
-            </svg>
-          </div>
-        );
-      }
-      // 4: Fleksi penuh 4 ekstremitas (4)
-      if (optionIndex === 4) {
-        return (
-          <div className="tv-opt-svg-wrapper">
-            <svg viewBox="0 0 64 42" width="54" height="36">
-              <circle cx="16" cy="21" r="5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.5" />
-              <circle cx="15" cy="20" r="0.8" fill="#334155" />
-              <circle cx="17" cy="20" r="0.8" fill="#334155" />
-              <line x1="21" y1="21" x2="38" y2="21" stroke="#334155" strokeWidth="2" />
-              <path d="M25 21 L19 12 L25 12" stroke="#059669" strokeWidth="2" fill="none" />
-              <path d="M38 21 L42 10 L34 10" stroke="#059669" strokeWidth="2" fill="none" />
-              <path d="M38 21 L42 32 L34 32" stroke="#059669" strokeWidth="2" fill="none" />
-            </svg>
-          </div>
-        );
-      }
+      // Makin matur, lengan dan tungkai makin menekuk sehingga jangkauannya
+      // makin pendek. Itulah isyarat visual utama pada baris ini.
+      const bentuk = [
+        { lengan: "M30 16 L54 12", tungkai: "M35 28 L58 32" },
+        { lengan: "M30 16 L45 11 L55 17", tungkai: "M35 28 L50 33 L58 27" },
+        { lengan: "M30 16 L43 10 L52 18", tungkai: "M35 28 L48 34 L56 25" },
+        { lengan: "M30 16 L41 9 L48 18", tungkai: "M35 28 L45 35 L52 24" },
+        { lengan: "M30 16 L38 9 L44 17", tungkai: "M35 28 L42 34 L48 23" },
+      ];
+      const b = bentuk[batas(optionIndex, 4)];
+      return (
+        <Kanvas>
+          <Kepala x={13} y={22} />
+          <rect x={18} y={16} width={18} height={12} rx={6} />
+          <path d={b.lengan} stroke={AKSEN} strokeWidth={2} />
+          <path d={b.tungkai} stroke={AKSEN} strokeWidth={2} />
+        </Kanvas>
+      );
     }
 
-    // 1. Square Window (Pergelangan Tangan)
+    // 1. Square Window (Pergelangan Tangan) - 6 pilihan
     if (paramIndex === 1) {
-      const texts = [">90°", "90°", "60°", "45°", "30°", "0°"];
-      const text = texts[optionIndex] || "0°";
+      const derajat = [120, 90, 60, 45, 30, 0];
+      const label = [
+        "> 90\u00B0",
+        "90\u00B0",
+        "60\u00B0",
+        "45\u00B0",
+        "30\u00B0",
+        "0\u00B0",
+      ];
+      const i = batas(optionIndex, 5);
+      // Sudut diukur dari sumbu lengan bawah. 0 derajat berarti telapak tangan
+      // benar-benar menempel pada lengan - kondisi paling matur.
+      const t = (derajat[i] * Math.PI) / 180;
+      const px = 26 + 15 * Math.sin(t);
+      const py = 16 - 15 * Math.cos(t);
+      const jx = 3.5 * Math.cos(t);
+      const jy = 3.5 * Math.sin(t);
+      const warna = derajat[i] === 0 ? AKSEN_KUAT : AKSEN;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 60 42" width="50" height="36">
-            {/* Lengan bawah vertikal */}
-            <line x1="24" y1="36" x2="24" y2="14" stroke="#334155" strokeWidth="2.5" strokeLinecap="round" />
-            {optionIndex === 0 && <line x1="24" y1="14" x2="42" y2="6" stroke="#0284C7" strokeWidth="2.5" strokeLinecap="round" />}
-            {optionIndex === 1 && <line x1="24" y1="14" x2="46" y2="14" stroke="#0284C7" strokeWidth="2.5" strokeLinecap="round" />}
-            {optionIndex === 2 && <line x1="24" y1="14" x2="42" y2="23" stroke="#0284C7" strokeWidth="2.5" strokeLinecap="round" />}
-            {optionIndex === 3 && <line x1="24" y1="14" x2="38" y2="28" stroke="#0284C7" strokeWidth="2.5" strokeLinecap="round" />}
-            {optionIndex === 4 && <line x1="24" y1="14" x2="32" y2="31" stroke="#0284C7" strokeWidth="2.5" strokeLinecap="round" />}
-            {optionIndex === 5 && <line x1="28" y1="14" x2="28" y2="36" stroke="#059669" strokeWidth="2.5" strokeLinecap="round" />}
-            <text x="44" y="36" fontSize="10" fill="#0284C7" fontWeight="bold" textAnchor="end">{text}</text>
-          </svg>
-        </div>
+        <Kanvas>
+          {/* Lengan bawah, selalu tegak sebagai acuan sudut */}
+          <path d="M26 40 L26 16" strokeWidth={2} />
+          {/* Telapak tangan */}
+          <path
+            d={`M26 16 L${px.toFixed(1)} ${py.toFixed(1)}`}
+            stroke={warna}
+            strokeWidth={2.4}
+          />
+          {/* Lebar telapak, supaya arah tangan terbaca meski sudutnya 0 */}
+          <path
+            d={`M${(px - jx).toFixed(1)} ${(py - jy).toFixed(1)} L${(px + jx).toFixed(1)} ${(py + jy).toFixed(1)}`}
+            stroke={warna}
+            strokeWidth={2}
+          />
+          <Label x={48} y={41} teks={label[i]} warna={warna} />
+        </Kanvas>
       );
     }
 
-    // 2. Arm Recoil (Rekoil Lengan)
+    // 2. Arm Recoil (Rekoil Lengan) - 5 pilihan
     if (paramIndex === 2) {
-      const recoilLabels = ["180°", "140–180°", "110–140°", "90–110°", "<90°"];
-      const text = recoilLabels[optionIndex] || "180°";
+      const label = [
+        "180\u00B0",
+        "140\u2013180\u00B0",
+        "110\u2013140\u00B0",
+        "90\u2013110\u00B0",
+        "< 90\u00B0",
+      ];
+      const lengan = [
+        "M26 18 L24 38",
+        "M26 18 L20 30 L26 38",
+        "M26 18 L17 27 L26 34",
+        "M26 18 L16 24 L26 29",
+        "M26 18 L16 21 L27 23",
+      ];
+      const i = batas(optionIndex, 4);
+      const warna = i >= 3 ? AKSEN_KUAT : AKSEN;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 60 42" width="50" height="36">
-            <circle cx="30" cy="10" r="4.5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.2" />
-            <rect x="27" y="15" width="6" height="12" rx="2" fill="#334155" />
-            {optionIndex === 0 && <line x1="27" y1="16" x2="27" y2="34" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 1 && <path d="M27 16 L22 26 L26 34" stroke="#0284C7" strokeWidth="2" fill="none" strokeLinecap="round" />}
-            {optionIndex === 2 && <path d="M27 16 L18 24 L24 32" stroke="#0284C7" strokeWidth="2" fill="none" strokeLinecap="round" />}
-            {optionIndex === 3 && <path d="M27 16 L16 22 L20 16" stroke="#059669" strokeWidth="2" fill="none" strokeLinecap="round" />}
-            {optionIndex === 4 && <path d="M27 16 L16 18 L24 10" stroke="#059669" strokeWidth="2" fill="none" strokeLinecap="round" />}
-            <text x="30" y="40" fontSize="9" fill="#0284C7" fontWeight="bold" textAnchor="middle">{text}</text>
-          </svg>
-        </div>
+        <Kanvas>
+          <Kepala x={32} y={9} r={4.5} />
+          <rect x={26} y={14} width={12} height={22} rx={5} />
+          <path d={lengan[i]} stroke={warna} strokeWidth={2.2} />
+          <Label x={49} y={41} teks={label[i]} warna={warna} />
+        </Kanvas>
       );
     }
 
-    // 3. Popliteal Angle (Sudut Popliteal)
+    // 3. Popliteal Angle (Sudut Popliteal) - 7 pilihan
     if (paramIndex === 3) {
-      const popLabels = ["180°", "160°", "140°", "120°", "100°", "90°", "<90°"];
-      const text = popLabels[optionIndex] || "180°";
+      const derajat = [180, 160, 140, 120, 100, 90, 70];
+      const label = [
+        "180\u00B0",
+        "160\u00B0",
+        "140\u00B0",
+        "120\u00B0",
+        "100\u00B0",
+        "90\u00B0",
+        "< 90\u00B0",
+      ];
+      const i = batas(optionIndex, 6);
+      // Sudut popliteal diukur di lutut, antara paha dan betis. 180 derajat
+      // berarti tungkai lurus sempurna; simpangan betis dihitung dari situ.
+      const d = ((180 - derajat[i]) * Math.PI) / 180;
+      const kx = 26;
+      const ky = 17;
+      const bx = kx + 15 * Math.sin(d);
+      const by = ky - 15 * Math.cos(d);
+      const warna = derajat[i] <= 90 ? AKSEN_KUAT : AKSEN;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 60 42" width="50" height="36">
-            {/* Bayi terlentang */}
-            <circle cx="12" cy="24" r="4" fill="#E2E8F0" stroke="#334155" strokeWidth="1.2" />
-            <line x1="16" y1="24" x2="30" y2="24" stroke="#334155" strokeWidth="2" />
-            {/* Paha vertikal */}
-            <line x1="30" y1="24" x2="30" y2="10" stroke="#0284C7" strokeWidth="2" />
-            {/* Betis sesuai sudut */}
-            {optionIndex === 0 && <line x1="30" y1="10" x2="50" y2="10" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 1 && <line x1="30" y1="10" x2="48" y2="15" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 2 && <line x1="30" y1="10" x2="44" y2="21" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 3 && <line x1="30" y1="10" x2="40" y2="25" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 4 && <line x1="30" y1="10" x2="36" y2="28" stroke="#D97706" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 5 && <line x1="30" y1="10" x2="16" y2="10" stroke="#059669" strokeWidth="2" strokeLinecap="round" />}
-            {optionIndex === 6 && <line x1="30" y1="10" x2="18" y2="16" stroke="#059669" strokeWidth="2" strokeLinecap="round" />}
-            <text x="44" y="38" fontSize="9" fill="#D97706" fontWeight="bold" textAnchor="middle">{text}</text>
-          </svg>
-        </div>
+        <Kanvas>
+          <Kepala x={11} y={31} r={4.5} />
+          <rect x={15} y={27} width={15} height={9} rx={4.5} />
+          {/* Paha ditahan tegak ke arah perut */}
+          <path d={`M26 31 L${kx} ${ky}`} stroke={AKSEN} strokeWidth={2} />
+          {/* Betis dibuka sampai terasa tahanan */}
+          <path
+            d={`M${kx} ${ky} L${bx.toFixed(1)} ${by.toFixed(1)}`}
+            stroke={warna}
+            strokeWidth={2}
+          />
+          <circle cx={kx} cy={ky} r={1.8} fill={warna} stroke="none" />
+          <Label x={49} y={41} teks={label[i]} warna={warna} />
+        </Kanvas>
       );
     }
 
-    // 4. Scarf Sign (Tanda Selendang)
+    // 4. Scarf Sign (Tanda Selendang) - 6 pilihan
     if (paramIndex === 4) {
-      // Posisi siku berpindah dari kiri melewati garis tengah
-      const elbowX = [12, 17, 23, 30, 37, 44][optionIndex] ?? 30;
+      // Siku ditarik melintasi dada. Patokannya garis tengah (x=32) dan garis
+      // puting (x=25 dan x=39); teks pilihan menyebut patokan itu secara
+      // eksplisit, jadi keduanya ikut digambar sebagai penanda.
+      const sikuX = [16, 21, 25, 32, 38, 43];
+      const i = batas(optionIndex, 5);
+      const sx = sikuX[i];
+      const warna = i >= 4 ? AKSEN_KUAT : AKSEN;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 60 42" width="50" height="36">
-            {/* Torso & Garis Tengah */}
-            <circle cx="30" cy="9" r="4" fill="#E2E8F0" stroke="#334155" strokeWidth="1.2" />
-            <rect x="20" y="15" width="20" height="22" rx="3" fill="#F8FAFC" stroke="#64748B" strokeWidth="1.5" />
-            <line x1="30" y1="15" x2="30" y2="37" stroke="#CBD5E1" strokeWidth="1" strokeDasharray="2 2" />
-            {/* Lengan ditarik menyilang */}
-            <path d={`M 44 20 Q 34 18 ${elbowX} 22`} stroke="#EF4444" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-            <circle cx={elbowX} cy="22" r="2.5" fill="#EF4444" />
-            <path d={`M ${elbowX} 22 L ${elbowX - 4} 19 M ${elbowX} 22 L ${elbowX - 4} 25`} stroke="#EF4444" strokeWidth="1.2" />
-          </svg>
-        </div>
+        <Kanvas>
+          <Kepala x={32} y={8} r={4.5} />
+          <rect x={18} y={14} width={28} height={24} rx={5} />
+          <path
+            d="M32 14 L32 38"
+            strokeWidth={1}
+            strokeDasharray="2 2"
+            opacity={0.55}
+          />
+          <circle cx={25} cy={23} r={1.1} fill="currentColor" stroke="none" />
+          <circle cx={39} cy={23} r={1.1} fill="currentColor" stroke="none" />
+          <path
+            d={`M46 18 Q ${((46 + sx) / 2).toFixed(1)} 15 ${sx} 24`}
+            stroke={warna}
+            strokeWidth={2.2}
+          />
+          <circle cx={sx} cy={24} r={2.4} fill={warna} stroke="none" />
+        </Kanvas>
       );
     }
 
-    // 5. Heel to Ear (Tumit ke Telinga)
+    // 5. Heel to Ear (Tumit ke Telinga) - 6 pilihan
     if (paramIndex === 5) {
-      // Posisi tumit makin dekat ke telinga (kiri)
-      const heelX = [16, 20, 24, 28, 32, 36][optionIndex] ?? 20;
-      const heelY = [12, 14, 18, 22, 25, 28][optionIndex] ?? 16;
+      const tumit = [
+        [17, 13],
+        [21, 15],
+        [26, 18],
+        [31, 22],
+        [36, 26],
+        [40, 30],
+      ];
+      const label = [
+        "180\u00B0",
+        "160\u00B0",
+        "140\u00B0",
+        "120\u00B0",
+        "100\u00B0",
+        "< 90\u00B0",
+      ];
+      const i = batas(optionIndex, 5);
+      const hx = tumit[i][0];
+      const hy = tumit[i][1];
+      // Lutut ditempatkan di atas garis pinggul-tumit agar tungkai terbaca
+      // menekuk, bukan sekadar patah.
+      const lx = (44 + hx) / 2 + 3;
+      const ly = (30 + hy) / 2 - 10;
+      const warna = i >= 4 ? AKSEN_KUAT : AKSEN;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 60 42" width="50" height="36">
-            {/* Bayi terlentang, telinga di (14, 12) */}
-            <circle cx="14" cy="20" r="4.5" fill="#E2E8F0" stroke="#334155" strokeWidth="1.2" />
-            <line x1="18" y1="20" x2="36" y2="20" stroke="#334155" strokeWidth="2" />
-            {/* Kaki ditarik ke arah telinga */}
-            <path d={`M 36 20 L ${heelX} ${heelY}`} stroke="#0284C7" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <circle cx={heelX} cy={heelY} r="2" fill="#0284C7" />
-            <path d={`M 36 20 Q 26 12 ${heelX} ${heelY}`} stroke="#38BDF8" strokeWidth="1" strokeDasharray="2 2" fill="none" />
-          </svg>
-        </div>
+        <Kanvas>
+          <Kepala x={12} y={20} r={5} />
+          {/* Daun telinga: sasaran yang dituju tumit */}
+          <path d="M16.5 17 Q19.5 20 16.5 23" strokeWidth={1.2} />
+          <rect x={18} y={26} width={28} height={10} rx={5} />
+          <path
+            d={`M44 30 L${lx.toFixed(1)} ${ly.toFixed(1)} L${hx} ${hy}`}
+            stroke={warna}
+            strokeWidth={2}
+          />
+          <circle cx={hx} cy={hy} r={2.2} fill={warna} stroke="none" />
+          <Label x={52} y={41} teks={label[i]} warna={warna} />
+        </Kanvas>
       );
     }
 
-    // 6. Skin (Kulit)
+    /* ==================== MATURITAS FISIK ====================
+       Baris-baris ini sebelumnya mengabaikan optionIndex sehingga SATU gambar
+       dipakai untuk seluruh pilihan di kolomnya. Akibatnya ilustrasi tidak
+       membantu sama sekali: pengguna melihat gambar yang sama persis apa pun
+       yang ia pilih. Setiap pilihan sekarang punya gambarnya sendiri.
+
+       Bagan Ballard asli tidak memuat gambar untuk maturitas fisik - hanya
+       teks. Ilustrasi di bawah karena itu dirancang dari deskripsi klinis
+       tiap pilihan, dan sengaja dibuat skematis, bukan realistis, supaya
+       terbaca pada ukuran 56 piksel.
+    ========================================================== */
+
+    // 6. Kulit (Skin) - 7 pilihan
     if (paramIndex === 6) {
+      const i = batas(optionIndex, 6);
+      const isi = [
+        "#F0F9FF",
+        "#FCA5A5",
+        "#FBCFE8",
+        "#FBCFE8",
+        "#FEE2E2",
+        "#F1EADB",
+        "#E3D5BE",
+      ];
+      const VENA = [
+        "M14 18 L20 21 L26 19",
+        "M16 26 L23 24 L30 27",
+        "M30 15 L36 18 L42 16",
+        "M32 29 L38 26 L44 29",
+      ];
+      const RETAK = [
+        "M16 14 L19 20 L17 27",
+        "M24 13 L26 20 L24 29",
+        "M32 14 L35 21 L33 28",
+        "M40 15 L42 21 L40 28",
+        "M19 31 L27 30",
+        "M33 31 L42 30",
+      ];
+      const jmlVena = [0, 0, 4, 2, 1, 0, 0][i];
+      const jmlRetak = [0, 0, 0, 0, 2, 4, 6][i];
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <rect x="10" y="10" width="30" height="22" rx="4" fill="#FFE4E6" stroke="#F43F5E" strokeWidth="1.5" />
-            <path d="M14 17h22M14 22h22M14 27h16" stroke="#FB7185" strokeWidth="1.2" strokeLinecap="round" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 56 44" lebar={50}>
+          <rect
+            x={9}
+            y={10}
+            width={38}
+            height={24}
+            rx={6}
+            fill={isi[i]}
+            strokeDasharray={i === 0 ? "3 2" : undefined}
+            opacity={i === 0 ? 0.75 : 1}
+          />
+          {/* Vena yang masih tembus pandang pada kulit belum matur */}
+          {VENA.slice(0, jmlVena).map((d) => (
+            <path key={d} d={d} stroke="#3B82F6" strokeWidth={1} opacity={0.85} />
+          ))}
+          {/* Retakan bertambah banyak dan dalam seiring maturitas */}
+          {RETAK.slice(0, jmlRetak).map((d) => (
+            <path key={d} d={d} strokeWidth={i >= 5 ? 1.4 : 1} opacity={0.8} />
+          ))}
+          {/* Pengelupasan superfisial */}
+          {i === 3 && (
+            <>
+              <path d="M15 16 q4 -3 8 0 q-4 3 -8 0 Z" fill="#FFFFFF" opacity={0.9} strokeWidth={0.9} />
+              <path d="M30 25 q5 -3 9 0 q-5 3 -9 0 Z" fill="#FFFFFF" opacity={0.9} strokeWidth={0.9} />
+            </>
+          )}
+          {/* Keriput pada kulit paling matur */}
+          {i === 6 && (
+            <>
+              <path d="M12 20 q9 -3 17 0 q9 3 15 0" strokeWidth={0.9} opacity={0.65} />
+              <path d="M12 25 q9 3 17 0 q9 -3 15 0" strokeWidth={0.9} opacity={0.65} />
+            </>
+          )}
+        </Kanvas>
       );
     }
 
-    // 7. Lanugo
+    // 7. Lanugo - 6 pilihan
     if (paramIndex === 7) {
+      const i = batas(optionIndex, 5);
+      const RAMBUT = [
+        "M13 31 L15 21",
+        "M17 32 L19 22",
+        "M21 31 L23 20",
+        "M25 32 L27 21",
+        "M29 31 L31 20",
+        "M33 32 L35 22",
+        "M37 31 L39 21",
+        "M41 31 L43 22",
+        "M15 27 L17 17",
+        "M23 28 L25 18",
+        "M31 27 L33 17",
+        "M39 28 L41 18",
+        "M19 25 L21 16",
+        "M35 25 L37 16",
+      ];
+      // Pola dipilih eksplisit, bukan diambil N pertama, supaya "jarang"
+      // benar-benar tersebar merata dan tidak menggerombol di satu sisi.
+      const pola = [
+        [],
+        [0, 4, 8, 12],
+        [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+        [0, 2, 5, 7, 9, 11, 13],
+        [2, 7, 11],
+        [6],
+      ];
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <path d="M15 32 Q22 18 35 10" stroke="#D97706" strokeWidth="2" fill="none" strokeLinecap="round" />
-            <path d="M12 28 Q20 20 28 14" stroke="#F59E0B" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-            <path d="M22 34 Q28 26 38 18" stroke="#F59E0B" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 56 44" lebar={50}>
+          {/* Punggung bayi */}
+          <rect x={9} y={12} width={38} height={22} rx={8} fill="#FDE8D7" />
+          {pola[i].map((k) => (
+            <path key={k} d={RAMBUT[k]} strokeWidth={0.9} opacity={0.9} stroke="#B45309" />
+          ))}
+          {i === 0 && <Label x={28} y={26} teks="\u2014" warna="#B45309" />}
+        </Kanvas>
       );
     }
 
-    // 8. Plantar
+    // 8. Permukaan Plantar - 7 pilihan
     if (paramIndex === 8) {
+      const i = batas(optionIndex, 6);
+      const SOL =
+        "M25 5 C18 5 15 11 16 18 C17 25 19 30 20 34 C21 37 29 37 30 34 C31 30 33 25 34 18 C35 11 32 5 25 5 Z";
+      // Lipatan tumbuh dari anterior (dekat jari, y kecil) ke arah tumit.
+      const LIPAT = [
+        "M18.5 13 q6 2.5 13 0",
+        "M18 17 q6.5 2.5 14 0",
+        "M18 21 q6.5 2.5 14 0",
+        "M18.5 25 q6 2.5 13 0",
+        "M19.5 29 q5 2 11 0",
+      ];
+      const jml = [0, 0, 0, 1, 3, 5, 5][i];
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <path d="M20 8 C14 8 14 16 16 22 C18 28 22 34 26 34 C30 34 32 30 30 22 C28 16 26 8 20 8 Z" fill="#FDE68A" stroke="#D97706" strokeWidth="1.5" />
-            <line x1="18" y1="18" x2="28" y2="18" stroke="#D97706" strokeWidth="1.2" />
-            <line x1="19" y1="24" x2="27" y2="24" stroke="#D97706" strokeWidth="1.2" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 56 44" lebar={48}>
+          <path d={SOL} fill="#FDE68A" />
+          {/* Bercak merah samar: belum menjadi lipatan sejati */}
+          {i === 2 && (
+            <path d="M19 13 q6 2.5 13 0" stroke="#F87171" strokeWidth={1.2} strokeDasharray="1.5 2" />
+          )}
+          {LIPAT.slice(0, jml).map((d) => (
+            <path key={d} d={d} strokeWidth={i === 6 ? 1.8 : 1.2} />
+          ))}
+          {/* Dua pilihan pertama dinilai dari PANJANG kaki, bukan lipatan */}
+          {i <= 1 && (
+            <>
+              <path d="M40 6 L40 36" strokeWidth={1} stroke={AKSEN} />
+              <path d="M37.5 6 L42.5 6 M37.5 36 L42.5 36" strokeWidth={1} stroke={AKSEN} />
+              <Label x={30} y={42} teks={i === 0 ? "40\u201350 mm" : "> 50 mm"} />
+            </>
+          )}
+        </Kanvas>
       );
     }
 
-    // 9. Breast
+    // 9. Payudara / Areola - 6 pilihan
     if (paramIndex === 9) {
+      const i = batas(optionIndex, 5);
+      const rAreola = [6, 6.5, 8, 8.5, 9, 10][i];
+      const rNodul = [0, 0.9, 0, 1.9, 2.7, 3.6][i];
+      const samar = i <= 1;
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <circle cx="25" cy="21" r="14" fill="#FEF3C7" stroke="#F59E0B" strokeWidth="1.5" />
-            <circle cx="25" cy="21" r="6" fill="#F59E0B" />
-            <circle cx="25" cy="21" r="2" fill="#B45309" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 56 44" lebar={48}>
+          {/* Bidang dada */}
+          <rect x={8} y={9} width={40} height={26} rx={8} fill="#FFF1F2" opacity={0.85} />
+          <circle
+            cx={28}
+            cy={22}
+            r={rAreola}
+            stroke="#BE185D"
+            strokeWidth={i >= 4 ? 1.8 : 1.2}
+            strokeDasharray={samar ? "2 2" : undefined}
+            opacity={samar ? 0.7 : 1}
+            fill={i >= 4 ? "#FBCFE8" : "none"}
+          />
+          {/* Areola berbintik */}
+          {i === 3 && (
+            <>
+              <circle cx={24} cy={19} r={0.7} fill="#BE185D" stroke="none" />
+              <circle cx={32} cy={20} r={0.7} fill="#BE185D" stroke="none" />
+              <circle cx={25} cy={26} r={0.7} fill="#BE185D" stroke="none" />
+              <circle cx={31} cy={26} r={0.7} fill="#BE185D" stroke="none" />
+            </>
+          )}
+          {/* Areola terangkat: cincin luar tambahan */}
+          {i >= 4 && (
+            <circle cx={28} cy={22} r={rAreola + 1.8} stroke="#BE185D" strokeWidth={0.9} opacity={0.55} />
+          )}
+          {rNodul > 0 && (
+            <circle cx={28} cy={22} r={rNodul} fill="#BE185D" stroke="none" />
+          )}
+        </Kanvas>
       );
     }
 
-    // 10. Eye / Ear
+    // 10. Mata & Telinga - 6 pilihan
     if (paramIndex === 10) {
+      const i = batas(optionIndex, 5);
+      // Pilihan pertama dinilai dari KELOPAK MATA, sisanya dari daun telinga.
+      if (i === 0) {
+        return (
+          <Kanvas vb="0 0 56 44" lebar={48}>
+            <ellipse cx={28} cy={22} rx={15} ry={7} fill="#E0F2FE" />
+            {/* Kelopak menyatu: garis tegas tanpa iris */}
+            <path d="M14 22 L42 22" strokeWidth={2.2} />
+            <path d="M18 26 L16 29 M24 27 L23 30 M32 27 L33 30 M38 26 L40 29" strokeWidth={1} />
+          </Kanvas>
+        );
+      }
+      const daun = [
+        "M36 12 Q28 12 28 22 Q28 32 36 32",
+        "M37 11 Q25 12 25 22 Q25 32 37 33",
+        "M38 10 Q22 11 22 22 Q22 33 38 34",
+        "M38 10 Q20 10 20 22 Q20 34 38 34",
+        "M39 9 Q18 9 18 22 Q18 35 39 35",
+      ];
+      const tebal = [1.4, 1.6, 1.9, 2.3, 2.8][i - 1];
+      const rekoil = ["terlipat", "lambat", "cepat", "instan", "kaku"][i - 1];
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <path d="M18 10 C12 10 10 16 10 21 C10 28 16 32 22 32 C26 32 28 28 26 24 C24 20 20 20 18 22" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
-            <circle cx="36" cy="21" r="7" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
-            <circle cx="36" cy="21" r="3" fill="#0284C7" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 56 44" lebar={48}>
+          <path d={daun[i - 1]} strokeWidth={tebal} />
+          {/* Antiheliks: lekukan dalam yang menegas seiring maturitas */}
+          {i >= 3 && (
+            <path
+              d={`M34 15 Q${28 - i} 17 ${28 - i} 22 Q${28 - i} 27 34 29`}
+              strokeWidth={1}
+              opacity={0.6}
+            />
+          )}
+          {/* Panah rekoil: makin matur makin cepat kembali */}
+          {i >= 2 && (
+            <path
+              d="M43 19 q4 3 0 6"
+              stroke={i >= 4 ? AKSEN_KUAT : AKSEN}
+              strokeWidth={i >= 4 ? 1.8 : 1.1}
+              strokeDasharray={i === 2 ? "2 2" : undefined}
+            />
+          )}
+          <Label x={28} y={42} teks={rekoil} warna={i >= 4 ? AKSEN_KUAT : AKSEN} />
+        </Kanvas>
       );
     }
 
-    // 11. Genitalia
+    // 11. Genitalia - 6 pilihan
     if (paramIndex === 11) {
+      const i = batas(optionIndex, 5);
+      // Teks pilihan menyebut laki-laki DAN perempuan dalam satu baris, jadi
+      // keduanya digambar berdampingan pada kanvas yang sedikit lebih lebar.
+      const RUGAE = [
+        "M17 22 q7 2 13 0",
+        "M17 26 q7 2 13 0",
+        "M18 18 q6 2 11 0",
+        "M18 30 q6 2 11 0",
+        "M19 14 q5 2 9 0",
+      ];
+      const jmlRugae = [0, 1, 2, 3, 4, 5][i];
+      const testisY = [10, 13, 17, 22, 27, 30][i];
+      const rMajora = [4, 4.8, 5.6, 6.4, 7.2, 8][i];
+      const rKlitoris = [2.6, 2.3, 2, 1.7, 1.4, 1.1][i];
       return (
-        <div className="tv-opt-svg-wrapper">
-          <svg viewBox="0 0 50 42" width="44" height="36">
-            <rect x="12" y="10" width="26" height="22" rx="6" fill="#F1F5F9" stroke="#64748B" strokeWidth="1.5" />
-            <circle cx="25" cy="18" r="4" fill="#94A3B8" />
-            <path d="M20 28 Q25 24 30 28" stroke="#64748B" strokeWidth="1.5" fill="none" />
-          </svg>
-        </div>
+        <Kanvas vb="0 0 78 44" lebar={66}>
+          {/* Laki-laki: skrotum + testis yang turun + rugae */}
+          <path d="M23.5 12 Q14 20 16 30 Q19 38 23.5 38 Q28 38 31 30 Q33 20 23.5 12 Z" fill="#FEF3C7" />
+          <circle cx={20.5} cy={testisY} r={2.2} fill="#D97706" stroke="none" />
+          <circle cx={26.5} cy={testisY} r={2.2} fill="#D97706" stroke="none" />
+          {RUGAE.slice(0, jmlRugae).map((d) => (
+            <path key={d} d={d} strokeWidth={0.9} opacity={0.75} />
+          ))}
+          <text x={23.5} y={7} fontSize={8} fill="currentColor" stroke="none" textAnchor="middle">
+            {"\u2642"}
+          </text>
+
+          {/* Perempuan: majora membesar sampai menutupi klitoris & minora */}
+          <ellipse cx={56} cy={25} rx={rMajora} ry={12} fill="#FCE7F3" strokeWidth={1.3} />
+          <path d="M56 15 L56 35" strokeWidth={0.9} opacity={0.6} />
+          <circle cx={56} cy={16} r={rKlitoris} fill="#BE185D" stroke="none" />
+          <text x={56} y={7} fontSize={8} fill="currentColor" stroke="none" textAnchor="middle">
+            {"\u2640"}
+          </text>
+        </Kanvas>
       );
     }
   }
