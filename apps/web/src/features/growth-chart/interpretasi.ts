@@ -12,7 +12,36 @@
  */
 import { TK_CDC_P50 } from "./chartConfig";
 import { TK_ZSCORE_TABLES } from "./zscoreTables";
-import { tkHitungZscoreNumerik, tkInterpolasiZscoreRow, tkUsiaDiLuarTabel } from "./zscore";
+import {
+  tkHitungZscoreNumerik,
+  tkInterpolasiZscoreRow,
+  tkUsiaDiLuarTabel,
+  ZscoreTable,
+} from "./zscore";
+import {
+  WHO_BBPB_MALE_45_110,
+  WHO_BBPB_FEMALE_45_110,
+  WHO_BBTB_MALE_65_120,
+  WHO_BBTB_FEMALE_65_120,
+} from "./bbpbTabel";
+
+/**
+ * Tabel BB/PB & BB/TB. Sumbu X-nya SENTIMETER, bukan bulan, sehingga tidak
+ * ikut ke dalam TK_ZSCORE_TABLES yang seluruhnya berbasis umur. Kuncinya pun
+ * tanpa kelompok umur: yang menentukan tabel adalah CARA UKUR, bukan umur.
+ * Angkanya diimpor dari ./bbpbTabel, sumber yang sama dengan longitudinal.ts.
+ */
+const TK_TABEL_BBPBTB: Record<string, ZscoreTable> = {
+  who_male_bbpb: WHO_BBPB_MALE_45_110,
+  who_female_bbpb: WHO_BBPB_FEMALE_45_110,
+  who_male_bbtb: WHO_BBTB_MALE_65_120,
+  who_female_bbtb: WHO_BBTB_FEMALE_65_120,
+};
+
+/** Benar untuk indikator yang sumbu X-nya sentimeter. */
+function tkIndikatorPanjang(indikator: string): boolean {
+  return indikator === "bbpb" || indikator === "bbtb";
+}
 
 export interface HasilZscore {
   z: number;
@@ -38,8 +67,11 @@ export function tkInterpretasiZscore(
   nilaiX: number,
   nilaiY: number,
 ): HasilZscore | null {
-  const key = `${standar}_${kelamin}_${indikator}_${usiaGroupId}`;
-  const table = TK_ZSCORE_TABLES[key];
+  // BB/PB & BB/TB memakai peta tersendiri karena nilaiX-nya sentimeter dan
+  // pemilihan tabelnya tidak bergantung pada kelompok umur.
+  const table = tkIndikatorPanjang(indikator)
+    ? TK_TABEL_BBPBTB[`${standar}_${kelamin}_${indikator}`]
+    : TK_ZSCORE_TABLES[`${standar}_${kelamin}_${indikator}_${usiaGroupId}`];
   if (!table) return null;
 
   const row = tkInterpolasiZscoreRow(table, nilaiX);
@@ -95,8 +127,10 @@ export function tkInterpretasiZscore(
       statusGizi = "Tinggi";
       statusColor = "#1565C0";
     }
-  } else if (indikator === "imtu") {
-    // Permenkes RI No. 2 Tahun 2020 (WHO BMI-for-age)
+  } else if (indikator === "imtu" || tkIndikatorPanjang(indikator)) {
+    // Permenkes RI No. 2 Tahun 2020. Ambang BB/PB dan BB/TB memang identik
+    // dengan IMT/U pada standar ini, jadi sengaja memakai satu cabang yang
+    // sama agar tidak ada dua daftar ambang yang bisa berbeda diam-diam.
     if (z < -3) {
       statusGizi = "Gizi Buruk (Severely Wasted)";
       statusColor = "#B22222";
@@ -129,7 +163,7 @@ export function tkInterpretasiZscore(
     else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
     else if (z <= 3) rentang = "\u22122 SD s/d +3 SD";
     else rentang = "> +3 SD";
-  } else if (indikator === "imtu") {
+  } else if (indikator === "imtu" || tkIndikatorPanjang(indikator)) {
     if (z < -3) rentang = "< \u22123 SD";
     else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
     else if (z <= 1) rentang = "\u22122 SD s/d +1 SD";
