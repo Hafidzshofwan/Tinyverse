@@ -71,7 +71,20 @@ function jalurKotakBulat(
   ctx.closePath();
 }
 
-function garisPutus(
+/**
+ * Garis bantu hasil unduhan: UTUH, bukan putus-putus.
+ *
+ * Di layar, .tk-garis-bantu memang putus-putus 4px/4px dan itu terbaca
+ * karena pengguna bisa memperbesar tampilan. Pada berkas unduhan yang
+ * dicetak atau dilampirkan ke rekam medis, strip sependek itu pecah di
+ * atas kurva WHO yang sudah padat garis dan justru hilang terbaca.
+ * Keterbacaan sengaja dimenangkan atas kemiripan dengan layar.
+ *
+ * Digambar dua lapis: alas putih sedikit lebih tebal sebagai pemisah,
+ * lalu garis berwarna di atasnya, supaya tetap kontras saat melintasi
+ * garis kurva rujukan yang warnanya mirip.
+ */
+function garisBantu(
   ctx: CanvasRenderingContext2D,
   x1: number,
   y1: number,
@@ -81,11 +94,22 @@ function garisPutus(
   tebal: number,
 ): void {
   ctx.save();
+  ctx.lineCap = "round";
+  ctx.setLineDash([]);
+
+  // Alas putih semi-tembus sebagai pemisah dari garis kurva di bawahnya.
+  ctx.strokeStyle = "#FFFFFF";
+  ctx.lineWidth = tebal + 2;
+  ctx.globalAlpha = 0.75;
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x2, y2);
+  ctx.stroke();
+
+  // Garis utama, tanpa transparansi supaya warnanya penuh saat dicetak.
   ctx.strokeStyle = warna;
   ctx.lineWidth = tebal;
-  ctx.lineCap = "butt";
-  ctx.globalAlpha = 0.9;
-  ctx.setLineDash([tebal * 2, tebal * 2]);
+  ctx.globalAlpha = 1;
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
@@ -105,7 +129,9 @@ function gambarTitik(
   H: number,
 ): void {
   const unit = W / 900; // 1 unit = 1 px pada tampilan layar biasa
-  const tebalGaris = Math.max(1, 2 * unit);
+  // Sedikit lebih tebal daripada 2px di layar: berkas unduhan berukuran
+  // jauh lebih besar dan kerap diperkecil saat dicetak.
+  const tebalGaris = Math.max(1.5, 2.6 * unit);
 
   const px = (t.titik.leftPercent / 100) * W;
   const py = (t.titik.topPercent / 100) * H;
@@ -117,8 +143,8 @@ function gambarTitik(
   const pxTarget = (t.targetX / 100) * W;
 
   // Garis bantu: vertikal ke sumbu usia, horizontal ke sumbu nilai.
-  garisPutus(ctx, px, py, px, pyBase, t.warna, tebalGaris);
-  garisPutus(ctx, px, py, pxTarget, py, t.warna, tebalGaris);
+  garisBantu(ctx, px, py, px, pyBase, t.warna, tebalGaris);
+  garisBantu(ctx, px, py, pxTarget, py, t.warna, tebalGaris);
 
   // Titik pasien: lingkaran berwarna, cincin putih, halo lembut.
   const r = 4.5 * unit;
