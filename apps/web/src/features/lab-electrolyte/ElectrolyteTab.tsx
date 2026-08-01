@@ -1,188 +1,591 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { NumberField } from "@/shared/ui";
-import { correctCalcium, correctPotassium, correctSodium } from "@/entities/lab";
-import type { DxLine } from "@/entities/lab";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
+import {
+  KATALOG_ELEKTROLIT,
+  derajatElektrolit,
+  gangguanById,
+  hitungLajuKoreksi,
+  kalsiumTerkoreksi,
+  perluAlbumin,
+  perluDigoksin,
+  perluJalurOral,
+  perluPelacakLaju,
+  perluStatusCairan,
+  rencanaElektrolit,
+  ringkasRencanaTeks,
+} from "@/entities/lab";
+import type {
+  Baris,
+  Derajat,
+  GangguanId,
+  JalurOral,
+  JawabanAlur,
+  Kronisitas,
+  NadaBaris,
+  Rencana,
+  StatusCairan,
+} from "@/entities/lab";
 
 function num(s: string): number | null {
   const n = parseFloat(s.replace(",", "."));
   return isFinite(n) ? n : null;
 }
 
-function stripTags(html: string): string {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
-}
+// --- gaya -------------------------------------------------------------------
 
-function Hasil({ r, title }: { r: DxLine | null; title: string }) {
-  const [ditambahkan, setDitambahkan] = useState(false);
-  if (!r) return null;
+const WARNA: Record<NadaBaris, { garis: string; latar: string; teks: string; nama: string }> = {
+  aksi: { garis: "#2563EB", latar: "rgba(37,99,235,0.06)", teks: "#1E3A8A", nama: "Tindakan" },
+  info: { garis: "#64748B", latar: "rgba(100,116,139,0.06)", teks: "#334155", nama: "Penjelasan" },
+  bahaya: { garis: "#D97706", latar: "rgba(217,119,6,0.07)", teks: "#92400E", nama: "Pagar" },
+  blokir: { garis: "#B91C1C", latar: "rgba(185,28,28,0.07)", teks: "#991B1B", nama: "Jangan" },
+};
+
+const gayaChip: CSSProperties = {
+  display: "inline-block",
+  fontSize: "10.5px",
+  lineHeight: 1.35,
+  padding: "3px 8px",
+  marginRight: "5px",
+  marginTop: "5px",
+  borderRadius: "999px",
+  border: "1px solid var(--tv-line, rgba(10,11,95,0.09))",
+  color: "var(--tv-soft-teks, #667085)",
+  textDecoration: "none",
+};
+
+const gayaPilihan = (aktif: boolean): CSSProperties => ({
+  display: "block",
+  width: "100%",
+  textAlign: "left",
+  padding: "11px 13px",
+  marginTop: "7px",
+  borderRadius: "14px",
+  cursor: "pointer",
+  fontSize: "13px",
+  fontWeight: aktif ? 700 : 500,
+  border: aktif ? "2px solid #0A0B5F" : "1px solid var(--tv-line, rgba(10,11,95,0.09))",
+  background: aktif ? "rgba(10,11,95,0.05)" : "var(--tv-card, #FFFFFF)",
+  color: "var(--tv-teks, #0a0b4f)",
+});
+
+const gayaTanya: CSSProperties = {
+  fontSize: "14.5px",
+  fontWeight: 700,
+  lineHeight: 1.4,
+  color: "var(--tv-teks, #0a0b4f)",
+};
+
+const gayaBantu: CSSProperties = {
+  fontSize: "11.5px",
+  lineHeight: 1.5,
+  marginTop: "4px",
+  color: "var(--tv-soft-teks, #667085)",
+};
+
+// --- potongan tampilan ------------------------------------------------------
+
+function Sumber({ daftar }: { daftar: Baris["sumber"] }) {
+  if (daftar.length === 0) return null;
   return (
-    <>
-      <div
-        className={"dx-res " + r.cls}
-        dangerouslySetInnerHTML={{ __html: r.html }}
-      />
-      <div style={{ marginTop: 10 }}>
-        <button
-          type="button"
-          className="tv-btn"
-          style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
-          onClick={() => {
-            addRingkasanItem({
-              title,
-              source: "Koreksi Elektrolit",
-              body: stripTags(r.html),
-            });
-            setDitambahkan(true);
-            setTimeout(() => setDitambahkan(false), 2200);
-          }}
-        >
-          {ditambahkan ? (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px" }}>
-                <polyline points="20 6 9 17 4 12"/>
-              </svg>
-              Ditambahkan ke Ringkasan!
-            </>
-          ) : (
-            <>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "5px" }}>
-                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              Tambahkan ke Ringkasan
-            </>
-          )}
-        </button>
-      </div>
-    </>
+    <div>
+      {daftar.map((s) => (
+        <a key={s.url} href={s.url} target="_blank" rel="noreferrer" style={gayaChip}>
+          {s.label}
+        </a>
+      ))}
+    </div>
   );
 }
 
+function KartuBaris({ x }: { x: Baris }) {
+  const w = WARNA[x.nada];
+  return (
+    <div
+      style={{
+        borderLeft: "3px solid " + w.garis,
+        background: w.latar,
+        borderRadius: "12px",
+        padding: "11px 13px",
+        marginTop: "9px",
+      }}
+    >
+      <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "0.06em", color: w.garis, textTransform: "uppercase" }}>
+        {w.nama}
+      </div>
+      <div style={{ fontSize: "13.5px", fontWeight: 700, marginTop: "3px", color: w.teks, lineHeight: 1.4 }}>{x.judul}</div>
+      <div style={{ fontSize: "12.5px", marginTop: "4px", lineHeight: 1.6, color: "var(--tv-teks, #0a0b4f)" }}>{x.isi}</div>
+      <Sumber daftar={x.sumber} />
+    </div>
+  );
+}
+
+function KartuDerajat({ d }: { d: Derajat | null }) {
+  if (d == null) return null;
+  const w = WARNA[d.nada];
+  return (
+    <div
+      style={{
+        border: "1.5px solid " + w.garis,
+        background: w.latar,
+        borderRadius: "14px",
+        padding: "12px 14px",
+        marginTop: "12px",
+      }}
+    >
+      <div style={{ fontSize: "14.5px", fontWeight: 800, color: w.teks }}>{d.label}</div>
+      <div style={{ fontSize: "12px", marginTop: "3px", color: "var(--tv-soft-teks, #667085)" }}>Rentang: {d.rentang}</div>
+      {d.catatan != null && (
+        <div style={{ fontSize: "12.5px", marginTop: "6px", lineHeight: 1.6, color: "var(--tv-teks, #0a0b4f)" }}>{d.catatan}</div>
+      )}
+      <Sumber daftar={d.sumber} />
+    </div>
+  );
+}
+
+function Bagian({ judul, daftar }: { judul: string; daftar: Baris[] }) {
+  if (daftar.length === 0) return null;
+  return (
+    <div style={{ marginTop: "16px" }}>
+      <div className="dx-sub-h">{judul}</div>
+      {daftar.map((x, i) => (
+        <KartuBaris key={judul + "-" + String(i)} x={x} />
+      ))}
+    </div>
+  );
+}
+
+function Tanya({
+  teks,
+  bantu,
+  anak,
+}: {
+  teks: string;
+  bantu?: string;
+  anak: ReactNode;
+}) {
+  return (
+    <div>
+      <div style={gayaTanya}>{teks}</div>
+      {bantu != null && <div style={gayaBantu}>{bantu}</div>}
+      <div style={{ marginTop: "10px" }}>{anak}</div>
+    </div>
+  );
+}
+
+function TombolRingkasan({ judul, teks }: { judul: string; teks: string }) {
+  const [ditambahkan, setDitambahkan] = useState(false);
+  return (
+    <button
+      type="button"
+      className="tv-btn"
+      style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700, marginTop: "14px" }}
+      onClick={() => {
+        addRingkasanItem({ title: judul, source: "Koreksi Elektrolit", body: teks });
+        setDitambahkan(true);
+        setTimeout(() => setDitambahkan(false), 2200);
+      }}
+    >
+      {ditambahkan ? "Ditambahkan ke Ringkasan!" : "Tambahkan rencana ke Ringkasan"}
+    </button>
+  );
+}
+
+// --- alur -------------------------------------------------------------------
+
+type LangkahId = "gangguan" | "angka" | "darurat" | "kronis" | "jalur" | "rencana" | "laju" | "pantau";
+
+const JUDUL_LANGKAH: Record<LangkahId, string> = {
+  gangguan: "Gangguan",
+  angka: "Angka lab",
+  darurat: "Kegawatan",
+  kronis: "Kronisitas",
+  jalur: "Jalur pemberian",
+  rencana: "Rencana",
+  laju: "Laju koreksi",
+  pantau: "Pemantauan",
+};
+
 export function ElectrolyteTab() {
   const profile = usePatientProfile();
-  const [naBB, setNaBB] = useSyncedField(profile.bb);
-  const [kBB, setKBB] = useSyncedField(profile.bb);
-  const [caBB, setCaBB] = useSyncedField(profile.bb);
+  const [bb, setBb] = useSyncedField(profile.bb);
 
-  const [na, setNa] = useState("");
-  const [naTg, setNaTg] = useState("");
-  const [k, setK] = useState("");
-  const [ca, setCa] = useState("");
-  const [alb, setAlb] = useState("");
+  const [gangguan, setGangguan] = useState<GangguanId | null>(null);
+  const [nilai, setNilai] = useState("");
+  const [albumin, setAlbumin] = useState("");
+  const [gejalaBerat, setGejalaBerat] = useState<boolean | null>(null);
+  const [ekgAtauInstabil, setEkg] = useState<boolean | null>(null);
+  const [digoksin, setDigoksin] = useState<boolean | null>(null);
+  const [kronisitas, setKronisitas] = useState<Kronisitas | null>(null);
+  const [statusCairan, setStatusCairan] = useState<StatusCairan | null>(null);
+  const [oral, setOral] = useState<JalurOral | null>(null);
+  const [posisi, setPosisi] = useState(0);
 
-  const [rNa, setRNa] = useState<DxLine | null>(null);
-  const [rK, setRK] = useState<DxLine | null>(null);
-  const [rCa, setRCa] = useState<DxLine | null>(null);
+  const [lajuAwal, setLajuAwal] = useState("");
+  const [lajuSekarang, setLajuSekarang] = useState("");
+  const [lajuJam, setLajuJam] = useState("");
+
+  const usiaBulan = profile.usiaBulan ?? null;
+  const info = gangguanById(gangguan);
+
+  const langkahAlur = useMemo<LangkahId[]>(() => {
+    const s: LangkahId[] = ["gangguan", "angka", "darurat"];
+    if (gangguan != null && perluStatusCairan(gangguan)) s.push("kronis");
+    if (gangguan != null && perluJalurOral(gangguan)) s.push("jalur");
+    s.push("rencana");
+    if (gangguan != null && perluPelacakLaju(gangguan)) s.push("laju");
+    s.push("pantau");
+    return s;
+  }, [gangguan]);
+
+  const kini: LangkahId = langkahAlur[Math.min(posisi, langkahAlur.length - 1)] ?? "gangguan";
+
+  const jawaban: JawabanAlur = {
+    gangguan,
+    bbKg: num(bb),
+    nilai: num(nilai),
+    usiaBulan,
+    albuminGdl: num(albumin),
+    gejalaBerat,
+    ekgAtauInstabil,
+    digoksin,
+    kronisitas,
+    statusCairan,
+    oral,
+  };
+
+  const rencana: Rencana | null = useMemo(() => {
+    if (kini === "gangguan" || kini === "angka" || kini === "darurat") return null;
+    return rencanaElektrolit(jawaban);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [kini, gangguan, bb, nilai, albumin, gejalaBerat, ekgAtauInstabil, digoksin, kronisitas, statusCairan, oral, usiaBulan]);
+
+  const nilaiDinilai =
+    gangguan === "hipoCa" && num(nilai) != null ? kalsiumTerkoreksi(num(nilai) as number, num(albumin)) : num(nilai);
+  const derajat = gangguan != null ? derajatElektrolit(gangguan, nilaiDinilai, usiaBulan) : null;
+
+  function bisaLanjut(): boolean {
+    if (kini === "gangguan") return gangguan != null;
+    if (kini === "angka") return num(bb) != null && num(bb)! > 0 && num(nilai) != null;
+    if (kini === "darurat") {
+      if (gejalaBerat == null || ekgAtauInstabil == null) return false;
+      if (gangguan != null && perluDigoksin(gangguan) && digoksin == null) return false;
+      return true;
+    }
+    if (kini === "kronis") return kronisitas != null && statusCairan != null;
+    if (kini === "jalur") return oral != null;
+    return true;
+  }
+
+  function ulangi() {
+    setGangguan(null);
+    setNilai("");
+    setAlbumin("");
+    setGejalaBerat(null);
+    setEkg(null);
+    setDigoksin(null);
+    setKronisitas(null);
+    setStatusCairan(null);
+    setOral(null);
+    setLajuAwal("");
+    setLajuSekarang("");
+    setLajuJam("");
+    setPosisi(0);
+  }
+
+  const hasilLaju =
+    gangguan != null && perluPelacakLaju(gangguan)
+      ? hitungLajuKoreksi({
+          gangguan,
+          awal: num(lajuAwal),
+          sekarang: num(lajuSekarang),
+          jam: num(lajuJam),
+          kejang: gejalaBerat === true,
+        })
+      : null;
 
   return (
-    <>
-      <div className="kartu">
-        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#2563EB" }}>
-            <circle cx="12" cy="12" r="9"/>
-            <path d="M8 12h8"/>
-            <path d="M12 8v8"/>
-          </svg>
-          Koreksi Natrium
-        </div>
-        <NumberField
-          label="Berat badan (kg)"
-          value={naBB}
-          onValueChange={setNaBB}
-          placeholder="mis. 12"
-        />
-        <NumberField
-          label="Natrium aktual (mmol/L)"
-          value={na}
-          onValueChange={setNa}
-          placeholder="mis. 128"
-          step={1}
-        />
-        <NumberField
-          label="Target Na (mmol/L, opsional)"
-          value={naTg}
-          onValueChange={setNaTg}
-          placeholder="default 135"
-          step={1}
-        />
-        <button
-          type="button"
-          className="btn-hitung"
-          onClick={() => setRNa(correctSodium(num(naBB), num(na), num(naTg)))}
-        >
-          Hitung Koreksi Na
-        </button>
-        <Hasil r={rNa} title={`Koreksi Natrium (Na ${na} mmol/L)`} />
+    <div className="kartu">
+      {/* penanda langkah */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "14px" }}>
+        {langkahAlur.map((id, i) => {
+          const lewat = i < posisi;
+          const aktif = i === posisi;
+          return (
+            <div
+              key={id}
+              style={{
+                fontSize: "10.5px",
+                fontWeight: aktif ? 800 : 600,
+                padding: "4px 9px",
+                borderRadius: "999px",
+                background: aktif ? "#0A0B5F" : lewat ? "rgba(10,11,95,0.09)" : "transparent",
+                color: aktif ? "#FFFFFF" : "var(--tv-soft-teks, #667085)",
+                border: aktif ? "none" : "1px solid var(--tv-line, rgba(10,11,95,0.09))",
+              }}
+            >
+              {String(i + 1)}. {JUDUL_LANGKAH[id]}
+            </div>
+          );
+        })}
       </div>
 
-      <div className="kartu">
-        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#EAB308" }}>
-            <path d="M12 2v20"/>
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-          </svg>
-          Koreksi Kalium
+      {kini === "gangguan" && (
+        <Tanya
+          teks="Gangguan elektrolit apa yang sedang dihadapi?"
+          bantu="Pilih satu. Pertanyaan berikutnya menyesuaikan pilihan ini."
+          anak={
+            <div>
+              {KATALOG_ELEKTROLIT.map((g) => (
+                <button
+                  key={g.id}
+                  type="button"
+                  style={gayaPilihan(gangguan === g.id)}
+                  onClick={() => setGangguan(g.id)}
+                >
+                  {g.label}
+                  <span style={{ fontWeight: 500, color: "var(--tv-soft-teks, #667085)" }}> &middot; {g.parameter}</span>
+                </button>
+              ))}
+            </div>
+          }
+        />
+      )}
+
+      {kini === "angka" && info != null && (
+        <Tanya
+          teks={"Berapa " + info.parameter.toLowerCase() + " dan berat badannya?"}
+          bantu="Berat badan diambil dari profil pasien aktif dan dipakai untuk seluruh perhitungan di alur ini."
+          anak={
+            <div>
+              <NumberField label="Berat badan (kg)" value={bb} onValueChange={setBb} placeholder="mis. 12" />
+              <NumberField
+                label={info.parameter + " (" + info.satuan + ")"}
+                value={nilai}
+                onValueChange={setNilai}
+                placeholder={info.contoh}
+              />
+              {perluAlbumin(info.id) && (
+                <NumberField
+                  label="Albumin (g/dL, opsional)"
+                  value={albumin}
+                  onValueChange={setAlbumin}
+                  placeholder="untuk koreksi"
+                />
+              )}
+              {usiaBulan == null && (
+                <div style={{ ...gayaBantu, marginTop: "8px" }}>
+                  Usia pasien belum terisi di profil. Beberapa penilaian yang bergantung usia akan ditampilkan seadanya.
+                </div>
+              )}
+              <KartuDerajat d={derajat} />
+            </div>
+          }
+        />
+      )}
+
+      {kini === "darurat" && (
+        <div>
+          <Tanya
+            teks="Apakah ada kejang atau penurunan kesadaran?"
+            bantu="Jawaban ini menentukan apakah alur masuk ke jalur kegawatan atau jalur bertahap."
+            anak={
+              <div>
+                <button type="button" style={gayaPilihan(gejalaBerat === true)} onClick={() => setGejalaBerat(true)}>
+                  Ya, ada kejang atau kesadaran menurun
+                </button>
+                <button type="button" style={gayaPilihan(gejalaBerat === false)} onClick={() => setGejalaBerat(false)}>
+                  Tidak ada
+                </button>
+              </div>
+            }
+          />
+          <div style={{ marginTop: "18px" }}>
+            <Tanya
+              teks="Ada perubahan EKG atau hemodinamik tidak stabil?"
+              anak={
+                <div>
+                  <button type="button" style={gayaPilihan(ekgAtauInstabil === true)} onClick={() => setEkg(true)}>
+                    Ya
+                  </button>
+                  <button type="button" style={gayaPilihan(ekgAtauInstabil === false)} onClick={() => setEkg(false)}>
+                    Tidak
+                  </button>
+                </div>
+              }
+            />
+          </div>
+          {gangguan != null && perluDigoksin(gangguan) && (
+            <div style={{ marginTop: "18px" }}>
+              <Tanya
+                teks="Apakah pasien memakai digoksin atau dicurigai keracunan digoksin?"
+                bantu="Pertanyaan ini memblokir pemberian kalsium bila jawabannya ya."
+                anak={
+                  <div>
+                    <button type="button" style={gayaPilihan(digoksin === true)} onClick={() => setDigoksin(true)}>
+                      Ya, atau dicurigai
+                    </button>
+                    <button type="button" style={gayaPilihan(digoksin === false)} onClick={() => setDigoksin(false)}>
+                      Tidak
+                    </button>
+                  </div>
+                }
+              />
+            </div>
+          )}
         </div>
-        <NumberField
-          label="Berat badan (kg)"
-          value={kBB}
-          onValueChange={setKBB}
-          placeholder="mis. 12"
+      )}
+
+      {kini === "kronis" && (
+        <div>
+          <Tanya
+            teks="Sudah berapa lama gangguan ini berlangsung?"
+            bantu="Batas 48 jam memisahkan gangguan akut dari kronis, dan menentukan seberapa ketat pagar laju koreksinya."
+            anak={
+              <div>
+                <button type="button" style={gayaPilihan(kronisitas === "akut")} onClick={() => setKronisitas("akut")}>
+                  Akut, jelas kurang dari 48 jam
+                </button>
+                <button type="button" style={gayaPilihan(kronisitas === "kronis")} onClick={() => setKronisitas("kronis")}>
+                  Kronis, lebih dari 48 jam
+                </button>
+                <button type="button" style={gayaPilihan(kronisitas === "takTahu")} onClick={() => setKronisitas("takTahu")}>
+                  Tidak diketahui
+                </button>
+              </div>
+            }
+          />
+          <div style={{ marginTop: "18px" }}>
+            <Tanya
+              teks="Bagaimana status cairan pasien?"
+              bantu="Status cairan adalah kunci penentu penyebab sekaligus terapinya."
+              anak={
+                <div>
+                  <button type="button" style={gayaPilihan(statusCairan === "hipovolemik")} onClick={() => setStatusCairan("hipovolemik")}>
+                    Hipovolemik
+                  </button>
+                  <button type="button" style={gayaPilihan(statusCairan === "euvolemik")} onClick={() => setStatusCairan("euvolemik")}>
+                    Euvolemik
+                  </button>
+                  <button type="button" style={gayaPilihan(statusCairan === "hipervolemik")} onClick={() => setStatusCairan("hipervolemik")}>
+                    Hipervolemik
+                  </button>
+                </div>
+              }
+            />
+          </div>
+        </div>
+      )}
+
+      {kini === "jalur" && (
+        <Tanya
+          teks="Apakah jalur oral atau enteral bisa dipakai?"
+          bantu="Jalur oral diutamakan. Jalur intravena hanya muncul bila jalur oral memang tidak bisa dipakai."
+          anak={
+            <div>
+              <button type="button" style={gayaPilihan(oral === "bisa")} onClick={() => setOral("bisa")}>
+                Bisa, pasien toleran jalur enteral
+              </button>
+              <button type="button" style={gayaPilihan(oral === "tidak")} onClick={() => setOral("tidak")}>
+                Tidak bisa, atau kondisi menuntut jalur intravena
+              </button>
+            </div>
+          }
         />
-        <NumberField
-          label="Kalium aktual (mmol/L)"
-          value={k}
-          onValueChange={setK}
-          placeholder="mis. 3.0"
+      )}
+
+      {kini === "rencana" && rencana != null && info != null && (
+        <div>
+          <div style={gayaTanya}>Rencana untuk {info.label.toLowerCase()}</div>
+          <KartuDerajat d={rencana.derajat} />
+          <Bagian judul="Langkah tindakan" daftar={rencana.langkah} />
+          <Bagian judul="Pagar keselamatan" daftar={rencana.pagar} />
+        </div>
+      )}
+
+      {kini === "laju" && (
+        <Tanya
+          teks="Pelacak laju koreksi"
+          bantu="Masukkan natrium pada dua titik waktu untuk melihat laju yang benar-benar terjadi dan proyeksinya dalam 24 jam."
+          anak={
+            <div>
+              <NumberField label="Natrium awal (mmol/L)" value={lajuAwal} onValueChange={setLajuAwal} placeholder="mis. 118" />
+              <NumberField
+                label="Natrium sekarang (mmol/L)"
+                value={lajuSekarang}
+                onValueChange={setLajuSekarang}
+                placeholder="mis. 124"
+              />
+              <NumberField label="Selang waktu (jam)" value={lajuJam} onValueChange={setLajuJam} placeholder="mis. 6" />
+              {hasilLaju != null && (
+                <div>
+                  <KartuBaris
+                    x={{
+                      nada: hasilLaju.nada,
+                      judul:
+                        "Laju " +
+                        (Math.round(Math.abs(hasilLaju.perJam) * 100) / 100).toString() +
+                        " mmol/L per jam, proyeksi 24 jam " +
+                        (Math.round(Math.abs(hasilLaju.proyeksi24) * 10) / 10).toString() +
+                        " mmol/L",
+                      isi: hasilLaju.pesan,
+                      sumber: hasilLaju.sumber,
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          }
         />
-        <button
-          type="button"
-          className="btn-hitung"
-          onClick={() => setRK(correctPotassium(num(kBB), num(k)))}
-        >
-          Hitung Koreksi K
-        </button>
-        <Hasil r={rK} title={`Koreksi Kalium (K ${k} mmol/L)`} />
+      )}
+
+      {kini === "pantau" && rencana != null && info != null && (
+        <div>
+          <div style={gayaTanya}>Pemantauan dan titik rujukan</div>
+          <Bagian judul="Pemantauan" daftar={rencana.pemantauan} />
+          <Bagian judul="Titik rujukan" daftar={rencana.rujuk} />
+          <TombolRingkasan
+            judul={info.label + " (" + info.parameter + " " + nilai + " " + info.satuan + ")"}
+            teks={ringkasRencanaTeks(info.label, rencana)}
+          />
+        </div>
+      )}
+
+      {/* navigasi */}
+      <div style={{ display: "flex", gap: "8px", marginTop: "20px", flexWrap: "wrap" }}>
+        {posisi > 0 && (
+          <button type="button" className="tv-btn" onClick={() => setPosisi(posisi - 1)}>
+            Kembali
+          </button>
+        )}
+        {posisi < langkahAlur.length - 1 && (
+          <button
+            type="button"
+            className="btn-hitung"
+            disabled={!bisaLanjut()}
+            style={{ opacity: bisaLanjut() ? 1 : 0.45, cursor: bisaLanjut() ? "pointer" : "not-allowed" }}
+            onClick={() => {
+              if (bisaLanjut()) setPosisi(posisi + 1);
+            }}
+          >
+            Lanjut
+          </button>
+        )}
+        {posisi > 0 && (
+          <button type="button" className="tv-btn" onClick={ulangi}>
+            Ulangi dari awal
+          </button>
+        )}
       </div>
 
-      <div className="kartu">
-        <div className="dx-sub-h" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: "#6366F1" }}>
-            <path d="M17 10c.7-.7 1.69-1 2.5-1a2.5 2.5 0 1 1 0 5c-.81 0-1.8-.3-2.5-1l-10 0c-.7.7-1.69 1-2.5 1a2.5 2.5 0 1 1 0-5c.81 0 1.8.3 2.5 1z"/>
-          </svg>
-          Koreksi Kalsium
-        </div>
-        <NumberField
-          label="Berat badan (kg, opsional)"
-          value={caBB}
-          onValueChange={setCaBB}
-          placeholder="mis. 12"
-        />
-        <NumberField
-          label="Kalsium total (mg/dL)"
-          value={ca}
-          onValueChange={setCa}
-          placeholder="mis. 7.8"
-        />
-        <NumberField
-          label="Albumin (g/dL, opsional)"
-          value={alb}
-          onValueChange={setAlb}
-          placeholder="untuk koreksi"
-        />
-        <button
-          type="button"
-          className="btn-hitung"
-          onClick={() => setRCa(correctCalcium(num(ca), num(alb), num(caBB)))}
-        >
-          Hitung Koreksi Ca
-        </button>
-        <Hasil r={rCa} title={`Koreksi Kalsium (Ca ${ca} mg/dL)`} />
+      <div style={{ ...gayaBantu, marginTop: "14px" }}>
+        Setiap angka pada alur ini membawa sumbernya sendiri. Alur ini adalah alat bantu hitung dan pengingat urutan, bukan
+        pengganti penilaian klinis.
       </div>
-    </>
+    </div>
   );
 }
