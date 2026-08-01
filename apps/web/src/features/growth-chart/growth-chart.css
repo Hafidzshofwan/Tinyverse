@@ -2079,3 +2079,23 @@ html.dark .tk-island-wrap .tk-unduh-galat {
   background: #4C1D1D !important;
   border-color: #B91C1C !important;
 }
+
+/* ============================================================
+   Susunan chip & panel mengikuti mode gelap di semua tema.
+   Sebelumnya .tk-ringkasan dan .tk-panel ikut terjaring selektor
+   kartu (latar putih, radius 34px, bayangan, padding 20-32px),
+   sehingga di mode terang chip terbungkus kartu besar sedangkan di
+   mode gelap tidak. Selektor di bawah sengaja memakai bentuk
+   .tk-island-wrap html body agar kekuatannya menyamai aturan kartu
+   yang paling kuat, dan diletakkan paling akhir agar menang.
+   ============================================================ */
+.tk-island-wrap .tk-ringkasan,
+.tk-island-wrap .tk-panel,
+.tk-island-wrap html body .tk-ringkasan,
+.tk-island-wrap html body .tk-panel {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
