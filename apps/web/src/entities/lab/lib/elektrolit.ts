@@ -322,7 +322,7 @@ function rencanaHipoNa(j: JawabanAlur, bb: number, na: number): Rencana {
     );
 
   const pagar: Baris[] = [
-    b("blokir", "Kenaikan tidak melampaui 8 mmol/L dalam 24 jam pada anak yang tidak kejang", "Ini adalah pagar utama pada hiponatremia anak.", SUMBER.rchHipoNa),
+    b("blokir", "Kenaikan tidak melampaui 8 mmol/L dalam 24 jam pada anak yang tidak kejang", "Ini adalah batas keselamatan utama pada hiponatremia anak.", SUMBER.rchHipoNa),
     b("bahaya", "Batas mutlak: 10 mmol/L pada 24 jam pertama dan 18 mmol/L pada 48 jam pertama", "Koreksi natrium yang terlalu cepat berkaitan dengan sindrom demielinasi osmotik dan kematian.", SUMBER.chq),
     b("bahaya", "Batas menurut usia: neonatus 10 mmol/L per hari, bayi hingga remaja 12 mmol/L per hari", "Sindrom demielinasi osmotik ditentukan oleh kecepatan dan besarnya koreksi.", SUMBER.bcehs),
     b(
@@ -864,7 +864,7 @@ export function rencanaElektrolit(j: JawabanAlur): Rencana | null {
 // ---------------------------------------------------------------------------
 
 /**
- * Bandingkan laju koreksi yang benar-benar terjadi dengan pagarnya.
+ * Bandingkan laju koreksi yang benar-benar terjadi dengan batas amannya.
  * Dipakai pada hiponatremia dan hipernatremia.
  */
 export function hitungLajuKoreksi(a: {
@@ -901,7 +901,7 @@ export function hitungLajuKoreksi(a: {
       fmt(Math.abs(delta), 1) +
       " mmol/L dalam " +
       fmt(jam, 1) +
-      " jam sudah melampaui pagar " +
+      " jam sudah melampaui batas aman " +
       batas24 +
       " mmol/L per 24 jam. Hentikan koreksi aktif dan konsultasikan; penurunan kembali kadar natrium hanya boleh dilakukan atas arahan tim spesialis.";
   } else if (lampau) {
@@ -909,15 +909,15 @@ export function hitungLajuKoreksi(a: {
     pesan =
       "Dengan laju sekarang, proyeksi 24 jam mencapai " +
       fmt(Math.abs(proyeksi24), 1) +
-      " mmol/L, melampaui pagar " +
+      " mmol/L, melampaui batas aman " +
       batas24 +
-      " mmol/L. Perlambat sekarang juga sebelum pagar benar-benar terlampaui.";
+      " mmol/L. Perlambat sekarang juga sebelum batas aman benar-benar terlampaui.";
   } else if (!naik && Math.abs(perJam) > 0.5) {
     nada = "bahaya";
     pesan =
       "Laju " +
       fmt(Math.abs(perJam), 2) +
-      " mmol/L per jam melampaui batas 0,5 mmol/L per jam pada hipernatremia, meskipun proyeksi 24 jamnya masih di bawah pagar. Perlambat.";
+      " mmol/L per jam melampaui batas 0,5 mmol/L per jam pada hipernatremia, meskipun proyeksi 24 jamnya masih di bawah batas aman. Perlambat.";
   } else {
     nada = "aksi";
     pesan =
@@ -925,7 +925,7 @@ export function hitungLajuKoreksi(a: {
       fmt(Math.abs(perJam), 2) +
       " mmol/L per jam, proyeksi 24 jam " +
       fmt(Math.abs(proyeksi24), 1) +
-      " mmol/L, masih di dalam pagar " +
+      " mmol/L, masih di dalam batas aman " +
       batas24 +
       " mmol/L. Lanjutkan sambil tetap memantau.";
   }
@@ -953,9 +953,9 @@ export function ringkasRencanaTeks(judul: string, r: Rencana): string {
         ")" +
         (r.derajat.catatan != null ? ". " + r.derajat.catatan : ""),
     );
-  if (r.langkah.length > 0) bagian.push("Rencana tindakan:\n" + r.langkah.map(barisKeTeks).join("\n"));
-  if (r.pagar.length > 0) bagian.push("Pagar keselamatan:\n" + r.pagar.map(barisKeTeks).join("\n"));
-  if (r.pemantauan.length > 0) bagian.push("Pemantauan:\n" + r.pemantauan.map(barisKeTeks).join("\n"));
-  if (r.rujuk.length > 0) bagian.push("Titik rujukan:\n" + r.rujuk.map(barisKeTeks).join("\n"));
+  if (r.langkah.length > 0) bagian.push("Tatalaksana:\n" + r.langkah.map(barisKeTeks).join("\n"));
+  if (r.pagar.length > 0) bagian.push("Batas aman dan kewaspadaan:\n" + r.pagar.map(barisKeTeks).join("\n"));
+  if (r.pemantauan.length > 0) bagian.push("Monitoring:\n" + r.pemantauan.map(barisKeTeks).join("\n"));
+  if (r.rujuk.length > 0) bagian.push("Indikasi rujukan:\n" + r.rujuk.map(barisKeTeks).join("\n"));
   return bagian.join("\n\n");
 }

@@ -135,7 +135,7 @@ export type Gangguan = {
  * Nada sebuah baris rencana.
  * - aksi   : tindakan yang dikerjakan
  * - info   : penjelasan atau rumus
- * - bahaya : pagar yang bisa mencederai bila dilanggar
+ * - bahaya : batas keselamatan yang bisa mencederai bila dilanggar
  * - blokir : hal yang secara tegas tidak boleh dilakukan di jalur ini
  */
 export type NadaBaris = "aksi" | "info" | "bahaya" | "blokir";

@@ -38,11 +38,15 @@ function num(s: string): number | null {
 
 // --- gaya -------------------------------------------------------------------
 
-const WARNA: Record<NadaBaris, { garis: string; latar: string; teks: string; nama: string }> = {
-  aksi: { garis: "#2563EB", latar: "rgba(37,99,235,0.06)", teks: "#1E3A8A", nama: "Tindakan" },
-  info: { garis: "#64748B", latar: "rgba(100,116,139,0.06)", teks: "#334155", nama: "Penjelasan" },
-  bahaya: { garis: "#D97706", latar: "rgba(217,119,6,0.07)", teks: "#92400E", nama: "Pagar" },
-  blokir: { garis: "#B91C1C", latar: "rgba(185,28,28,0.07)", teks: "#991B1B", nama: "Jangan" },
+const TEKS_UTAMA = "var(--tv-text-primary, var(--tv-teks, #0a0b4f))";
+const TEKS_LEMBUT = "var(--tv-text-secondary, var(--tv-soft-teks, #667085))";
+const GARIS = "var(--tv-border, var(--tv-line, rgba(10,11,95,0.09)))";
+
+const WARNA: Record<NadaBaris, { garis: string; latar: string; nama: string }> = {
+  aksi: { garis: "#3B82F6", latar: "rgba(59,130,246,0.10)", nama: "Tatalaksana" },
+  info: { garis: "#8497B0", latar: "rgba(132,151,176,0.10)", nama: "Catatan klinis" },
+  bahaya: { garis: "#E08A0B", latar: "rgba(224,138,11,0.12)", nama: "Perhatian" },
+  blokir: { garis: "#EF4444", latar: "rgba(239,68,68,0.12)", nama: "Kontraindikasi" },
 };
 
 const gayaChip: CSSProperties = {
@@ -53,8 +57,8 @@ const gayaChip: CSSProperties = {
   marginRight: "5px",
   marginTop: "5px",
   borderRadius: "999px",
-  border: "1px solid var(--tv-line, rgba(10,11,95,0.09))",
-  color: "var(--tv-soft-teks, #667085)",
+  border: "1px solid " + GARIS,
+  color: TEKS_LEMBUT,
   textDecoration: "none",
 };
 
@@ -68,23 +72,23 @@ const gayaPilihan = (aktif: boolean): CSSProperties => ({
   cursor: "pointer",
   fontSize: "13px",
   fontWeight: aktif ? 700 : 500,
-  border: aktif ? "2px solid #0A0B5F" : "1px solid var(--tv-line, rgba(10,11,95,0.09))",
-  background: aktif ? "rgba(10,11,95,0.05)" : "var(--tv-card, #FFFFFF)",
-  color: "var(--tv-teks, #0a0b4f)",
+  border: aktif ? "2px solid var(--tv-navy-2, #0A0B5F)" : "1px solid " + GARIS,
+  background: aktif ? "var(--tv-hover, rgba(10,11,95,0.05))" : "var(--tv-card, #FFFFFF)",
+  color: TEKS_UTAMA,
 });
 
 const gayaTanya: CSSProperties = {
   fontSize: "14.5px",
   fontWeight: 700,
   lineHeight: 1.4,
-  color: "var(--tv-teks, #0a0b4f)",
+  color: TEKS_UTAMA,
 };
 
 const gayaBantu: CSSProperties = {
   fontSize: "11.5px",
   lineHeight: 1.5,
   marginTop: "4px",
-  color: "var(--tv-soft-teks, #667085)",
+  color: TEKS_LEMBUT,
 };
 
 // --- potongan tampilan ------------------------------------------------------
@@ -117,8 +121,8 @@ function KartuBaris({ x }: { x: Baris }) {
       <div style={{ fontSize: "10px", fontWeight: 800, letterSpacing: "0.06em", color: w.garis, textTransform: "uppercase" }}>
         {w.nama}
       </div>
-      <div style={{ fontSize: "13.5px", fontWeight: 700, marginTop: "3px", color: w.teks, lineHeight: 1.4 }}>{x.judul}</div>
-      <div style={{ fontSize: "12.5px", marginTop: "4px", lineHeight: 1.6, color: "var(--tv-teks, #0a0b4f)" }}>{x.isi}</div>
+      <div style={{ fontSize: "13.5px", fontWeight: 700, marginTop: "3px", color: TEKS_UTAMA, lineHeight: 1.4 }}>{x.judul}</div>
+      <div style={{ fontSize: "12.5px", marginTop: "4px", lineHeight: 1.6, color: TEKS_UTAMA }}>{x.isi}</div>
       <Sumber daftar={x.sumber} />
     </div>
   );
@@ -137,10 +141,10 @@ function KartuDerajat({ d }: { d: Derajat | null }) {
         marginTop: "12px",
       }}
     >
-      <div style={{ fontSize: "14.5px", fontWeight: 800, color: w.teks }}>{d.label}</div>
-      <div style={{ fontSize: "12px", marginTop: "3px", color: "var(--tv-soft-teks, #667085)" }}>Rentang: {d.rentang}</div>
+      <div style={{ fontSize: "14.5px", fontWeight: 800, color: TEKS_UTAMA }}>{d.label}</div>
+      <div style={{ fontSize: "12px", marginTop: "3px", color: TEKS_LEMBUT }}>Rentang: {d.rentang}</div>
       {d.catatan != null && (
-        <div style={{ fontSize: "12.5px", marginTop: "6px", lineHeight: 1.6, color: "var(--tv-teks, #0a0b4f)" }}>{d.catatan}</div>
+        <div style={{ fontSize: "12.5px", marginTop: "6px", lineHeight: 1.6, color: TEKS_UTAMA }}>{d.catatan}</div>
       )}
       <Sumber daftar={d.sumber} />
     </div>
@@ -151,7 +155,7 @@ function Bagian({ judul, daftar }: { judul: string; daftar: Baris[] }) {
   if (daftar.length === 0) return null;
   return (
     <div style={{ marginTop: "16px" }}>
-      <div className="dx-sub-h">{judul}</div>
+      <div className="dx-sub-h" style={{ color: TEKS_UTAMA }}>{judul}</div>
       {daftar.map((x, i) => (
         <KartuBaris key={judul + "-" + String(i)} x={x} />
       ))}
@@ -183,7 +187,7 @@ function TombolRingkasan({ judul, teks }: { judul: string; teks: string }) {
     <button
       type="button"
       className="tv-btn"
-      style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700, marginTop: "14px" }}
+      style={{ background: "var(--tv-navy-2, #0A0B5F)", color: "var(--tv-card, #FFFFFF)", fontWeight: 700, marginTop: "14px" }}
       onClick={() => {
         addRingkasanItem({ title: judul, source: "Koreksi Elektrolit", body: teks });
         setDitambahkan(true);
@@ -205,9 +209,9 @@ const JUDUL_LANGKAH: Record<LangkahId, string> = {
   darurat: "Kegawatan",
   kronis: "Kronisitas",
   jalur: "Jalur pemberian",
-  rencana: "Rencana",
+  rencana: "Tatalaksana",
   laju: "Laju koreksi",
-  pantau: "Pemantauan",
+  pantau: "Monitoring",
 };
 
 export function ElectrolyteTab() {
@@ -323,9 +327,9 @@ export function ElectrolyteTab() {
                 fontWeight: aktif ? 800 : 600,
                 padding: "4px 9px",
                 borderRadius: "999px",
-                background: aktif ? "#0A0B5F" : lewat ? "rgba(10,11,95,0.09)" : "transparent",
-                color: aktif ? "#FFFFFF" : "var(--tv-soft-teks, #667085)",
-                border: aktif ? "none" : "1px solid var(--tv-line, rgba(10,11,95,0.09))",
+                background: aktif ? "var(--tv-navy-2, #0A0B5F)" : lewat ? "var(--tv-hover, rgba(10,11,95,0.09))" : "transparent",
+                color: aktif ? "var(--tv-card, #FFFFFF)" : lewat ? TEKS_UTAMA : TEKS_LEMBUT,
+                border: aktif ? "none" : "1px solid " + GARIS,
               }}
             >
               {String(i + 1)}. {JUDUL_LANGKAH[id]}
@@ -348,7 +352,7 @@ export function ElectrolyteTab() {
                   onClick={() => setGangguan(g.id)}
                 >
                   {g.label}
-                  <span style={{ fontWeight: 500, color: "var(--tv-soft-teks, #667085)" }}> &middot; {g.parameter}</span>
+                  <span style={{ fontWeight: 500, color: TEKS_LEMBUT }}> &middot; {g.parameter}</span>
                 </button>
               ))}
             </div>
@@ -444,7 +448,7 @@ export function ElectrolyteTab() {
         <div>
           <Tanya
             teks="Sudah berapa lama gangguan ini berlangsung?"
-            bantu="Batas 48 jam memisahkan gangguan akut dari kronis, dan menentukan seberapa ketat pagar laju koreksinya."
+            bantu="Batas 48 jam memisahkan gangguan akut dari kronis, dan menentukan seberapa ketat batas aman laju koreksinya."
             anak={
               <div>
                 <button type="button" style={gayaPilihan(kronisitas === "akut")} onClick={() => setKronisitas("akut")}>
@@ -502,8 +506,8 @@ export function ElectrolyteTab() {
         <div>
           <div style={gayaTanya}>Rencana untuk {info.label.toLowerCase()}</div>
           <KartuDerajat d={rencana.derajat} />
-          <Bagian judul="Langkah tindakan" daftar={rencana.langkah} />
-          <Bagian judul="Pagar keselamatan" daftar={rencana.pagar} />
+          <Bagian judul="Tatalaksana" daftar={rencana.langkah} />
+          <Bagian judul="Batas aman & kewaspadaan" daftar={rencana.pagar} />
         </div>
       )}
 
@@ -546,8 +550,8 @@ export function ElectrolyteTab() {
       {kini === "pantau" && rencana != null && info != null && (
         <div>
           <div style={gayaTanya}>Pemantauan dan titik rujukan</div>
-          <Bagian judul="Pemantauan" daftar={rencana.pemantauan} />
-          <Bagian judul="Titik rujukan" daftar={rencana.rujuk} />
+          <Bagian judul="Monitoring" daftar={rencana.pemantauan} />
+          <Bagian judul="Indikasi rujukan" daftar={rencana.rujuk} />
           <TombolRingkasan
             judul={info.label + " (" + info.parameter + " " + nilai + " " + info.satuan + ")"}
             teks={ringkasRencanaTeks(info.label, rencana)}
