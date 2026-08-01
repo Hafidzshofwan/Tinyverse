@@ -436,16 +436,31 @@ export function ElectrolyteTab() {
     gangguan === "hipoCa" && num(nilai) != null ? kalsiumTerkoreksi(num(nilai) as number, num(albumin)) : num(nilai);
   const derajat = gangguan != null ? derajatElektrolit(gangguan, nilaiDinilai, usiaBulan) : null;
 
-  function bisaLanjut(): boolean {
-    if (kini === "gangguan") return gangguan != null;
-    if (kini === "angka") return num(bb) != null && num(bb)! > 0 && num(nilai) != null;
-    if (kini === "darurat") {
+  function langkahLengkap(id: LangkahId): boolean {
+    if (id === "gangguan") return gangguan != null;
+    if (id === "angka") return num(bb) != null && num(bb)! > 0 && num(nilai) != null;
+    if (id === "darurat") {
       if (gejalaBerat == null || ekgAtauInstabil == null) return false;
       if (gangguan != null && perluDigoksin(gangguan) && digoksin == null) return false;
       return true;
     }
-    if (kini === "kronis") return kronisitas != null && statusCairan != null;
-    if (kini === "jalur") return oral != null;
+    if (id === "kronis") return kronisitas != null && statusCairan != null;
+    if (id === "jalur") return oral != null;
+    return true;
+  }
+
+  function bisaLanjut(): boolean {
+    return langkahLengkap(kini);
+  }
+
+  // langkah sebelumnya selalu boleh dibuka; melompat ke depan hanya bila semua
+  // langkah di antaranya sudah terisi lengkap.
+  function bolehKe(tujuan: number): boolean {
+    if (tujuan <= posisi) return true;
+    for (let k = posisi; k < tujuan; k++) {
+      const s = langkahAlur[k];
+      if (s == null || !langkahLengkap(s)) return false;
+    }
     return true;
   }
 
@@ -483,21 +498,31 @@ export function ElectrolyteTab() {
         {langkahAlur.map((id, i) => {
           const lewat = i < posisi;
           const aktif = i === posisi;
+          const boleh = bolehKe(i);
           return (
-            <div
+            <button
               key={id}
+              type="button"
+              disabled={!boleh}
+              title={boleh ? "Buka langkah " + JUDUL_LANGKAH[id] : "Lengkapi dulu langkah sebelumnya"}
+              onClick={() => {
+                if (boleh) setPosisi(i);
+              }}
               style={{
                 fontSize: "10.5px",
                 fontWeight: aktif ? 800 : 600,
-                padding: "4px 9px",
+                padding: "4px 10px",
                 borderRadius: "999px",
                 background: aktif ? "var(--tv-navy-2, #0A0B5F)" : lewat ? "var(--tv-hover, rgba(10,11,95,0.09))" : "transparent",
                 color: aktif ? "var(--tv-card, #FFFFFF)" : lewat ? TEKS_UTAMA : TEKS_LEMBUT,
-                border: aktif ? "none" : "1px solid " + GARIS,
+                border: aktif ? "1px solid transparent" : "1px solid " + GARIS,
+                cursor: boleh ? "pointer" : "not-allowed",
+                opacity: boleh ? 1 : 0.5,
+                transition: "background .16s ease, color .16s ease, opacity .16s ease",
               }}
             >
               {String(i + 1)}. {JUDUL_LANGKAH[id]}
-            </div>
+            </button>
           );
         })}
       </div>
