@@ -6,7 +6,6 @@ import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { NumberField } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
-  GangguanId,
   KATALOG_ELEKTROLIT,
   derajatElektrolit,
   gangguanById,
