@@ -18,9 +18,9 @@ export const metadata = {
   description: "Cara menghubungi pengelola Tinyverse.",
 };
 
-const SUREL = "m.hafidzuddin.s@gmail.com";
-const WA_TAMPIL = "0895 7051 05556";
-const WA_TAUTAN = "https://wa.me/62895705105556";
+const SUREL = "tinyverse.app@gmail.com";
+const IG_TAMPIL = "@tinyverse.app";
+const IG_TAUTAN = "https://www.instagram.com/tinyverse.app";
 
 export default function HalamanKontak() {
   return (
@@ -43,10 +43,10 @@ export default function HalamanKontak() {
           </span>
         </div>
         <div className={gaya.baris}>
-          <span className={gaya.label}>WhatsApp</span>
+          <span className={gaya.label}>Instagram</span>
           <span className={gaya.nilai}>
-            <a href={WA_TAUTAN} target="_blank" rel="noopener noreferrer">
-              {WA_TAMPIL}
+            <a href={IG_TAUTAN} target="_blank" rel="noopener noreferrer">
+              {IG_TAMPIL}
             </a>
           </span>
         </div>
