@@ -250,8 +250,10 @@ function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; p
     <div
       style={{
         borderRadius: "14px",
-        padding: "12px 12px 10px",
+        padding: "12px 12px 10px 11px",
         border: "1px solid " + (aktif ? kabut(w.utama, 0.5) : GARIS),
+        // Garis tepi kiri: penanda warna zat, satu-satunya aksen tegas pada kartu.
+        borderLeft: "3px solid " + (aktif ? w.utama : kabut(w.utama, 0.55)),
         background: aktif ? kabut(w.utama, 0.05) : "var(--tv-card, #FFFFFF)",
         transition: "border-color .16s ease, background .16s ease",
       }}
