@@ -3173,6 +3173,16 @@ body.tv-ai-chat-open .tv-ai-fab-container {
 .tv-divider::after {
   margin-left: 10px;
 }
+
+/* Mode gelap: "atau" nyaris tak terbaca karena mewarisi #334155 dari mode
+   terang, dan garis pemisahnya memakai rgba navy yang hilang di latar gelap. */
+[data-theme="dark"] .tv-divider {
+  color: var(--tv-text-secondary, #CBD5E1);
+}
+[data-theme="dark"] .tv-divider::before,
+[data-theme="dark"] .tv-divider::after {
+  background: rgba(203, 213, 225, 0.22);
+}
 .tv-cek {
   display: flex;
   align-items: center;
