@@ -1,0 +1,104 @@
+/*
+ * Penanda status langganan pada tabel Kelola Pengguna.
+ *
+ * Ditaruh sebagai CSS Module, bukan ditambahkan ke globals.css, supaya berkas
+ * global sepanjang 150 KB itu tidak perlu disentuh untuk satu tabel.
+ *
+ * Pola visual mengikuti kesepakatan kartu: garis tepi kiri 3px sebagai penanda
+ * kategori, latar warna tipis, sisanya tenang. Tanpa gradien dan tanpa lencana
+ * bulat.
+ *
+ * Warna teks dibedakan untuk mode terang dan gelap karena satu warna aksen
+ * mustahil terbaca nyaman di atas kedua latar sekaligus.
+ */
+
+.lang {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 148px;
+  padding: 5px 10px 5px 9px;
+  border-left: 3px solid var(--tv-line, #E2E8F0);
+  border-radius: 0 8px 8px 0;
+}
+
+.status {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.catatan {
+  font-size: 12px;
+  line-height: 1.3;
+  color: var(--tv-text-secondary, #64748B);
+}
+
+/* Aktif berbayar */
+.aktif {
+  border-left-color: #10B981;
+  background: rgba(16, 185, 129, 0.08);
+}
+.aktif .status {
+  color: #047857;
+}
+:global([data-theme="dark"]) .aktif .status {
+  color: #34D399;
+}
+
+/* Masa percobaan yang masih berjalan */
+.trial {
+  border-left-color: #2563EB;
+  background: rgba(37, 99, 235, 0.08);
+}
+.trial .status {
+  color: #1D4ED8;
+}
+:global([data-theme="dark"]) .trial .status {
+  color: #60A5FA;
+}
+
+/* Sudah lewat masa berlakunya */
+.habis {
+  border-left-color: #DC2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+.habis .status {
+  color: #B91C1C;
+}
+:global([data-theme="dark"]) .habis .status {
+  color: #F87171;
+}
+
+/* Belum pernah punya langganan sama sekali */
+.belum {
+  border-left-color: var(--tv-line, #CBD5E1);
+  background: transparent;
+}
+.belum .status {
+  color: var(--tv-text-secondary, #64748B);
+  font-weight: 500;
+}
+
+.segar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 10px;
+  font-size: 12px;
+  color: var(--tv-text-secondary, #64748B);
+}
+
+.tombolSegar {
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: transparent;
+  color: inherit;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.tombolSegar:hover {
+  background: var(--tv-hover, rgba(148, 163, 184, 0.14));
+}
