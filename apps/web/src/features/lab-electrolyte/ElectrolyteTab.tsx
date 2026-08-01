@@ -244,82 +244,26 @@ const KELOMPOK_ZAT: Zat[] = (() => {
 
 function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; pilih: (id: GangguanId) => void }) {
   const [sorot, setSorot] = useState<string | null>(null);
-  const [atas, setAtas] = useState(false);
   const aktif = z.arah.some((a) => a.id === dipilih);
   const w = z.w;
   return (
     <div
-      onMouseEnter={() => setAtas(true)}
-      onMouseLeave={() => setAtas(false)}
       style={{
-        position: "relative",
-        overflow: "hidden",
-        borderRadius: "18px",
-        padding: "14px 13px 13px",
-        border: aktif ? "2px solid " + w.utama : "1px solid " + kabut(w.utama, 0.22),
-        background:
-          "linear-gradient(180deg, " + kabut(w.utama, aktif ? 0.16 : 0.08) + " 0%, " + kabut(w.utama, 0) + " 68%), var(--tv-card, #FFFFFF)",
-        boxShadow: aktif
-          ? "0 10px 24px " + kabut(w.utama, 0.28)
-          : atas
-            ? "0 8px 18px " + kabut(w.utama, 0.18)
-            : "0 1px 3px rgba(10,11,95,0.06)",
-        transform: aktif || atas ? "translateY(-2px)" : "none",
-        transition: "transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease",
+        borderRadius: "14px",
+        padding: "12px 12px 10px",
+        border: "1px solid " + (aktif ? kabut(w.utama, 0.5) : GARIS),
+        background: aktif ? kabut(w.utama, 0.05) : "var(--tv-card, #FFFFFF)",
+        transition: "border-color .16s ease, background .16s ease",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          height: "4px",
-          background: "linear-gradient(90deg, " + w.utama + ", " + w.muda + ")",
-        }}
-      />
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <div
-          style={{
-            width: "38px",
-            height: "38px",
-            flex: "0 0 auto",
-            borderRadius: "13px",
-            background: "linear-gradient(135deg, " + w.utama + ", " + w.muda + ")",
-            boxShadow: "0 5px 12px " + kabut(w.utama, 0.38),
-            color: "#FFFFFF",
-            fontSize: "13.5px",
-            fontWeight: 800,
-            letterSpacing: "0.01em",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {w.lambang}
-        </div>
-        <div>
-          <div style={{ fontSize: "14px", fontWeight: 800, color: TEKS_UTAMA, lineHeight: 1.25 }}>
-            {z.nama.replace(" total", "")}
-          </div>
-          <div
-            style={{
-              display: "inline-block",
-              marginTop: "3px",
-              padding: "1px 7px",
-              borderRadius: "999px",
-              fontSize: "10px",
-              fontWeight: 700,
-              letterSpacing: "0.02em",
-              background: kabut(w.utama, 0.14),
-              color: w.utama,
-            }}
-          >
-            {z.satuan}
-          </div>
-        </div>
+      <div style={{ display: "flex", alignItems: "baseline", gap: "7px" }}>
+        <span style={{ fontSize: "11px", fontWeight: 700, color: w.utama, letterSpacing: "0.03em" }}>{w.lambang}</span>
+        <span style={{ fontSize: "13.5px", fontWeight: 700, color: TEKS_UTAMA, letterSpacing: "-0.01em" }}>
+          {z.nama.replace(" total", "")}
+        </span>
+        <span style={{ marginLeft: "auto", fontSize: "10.5px", fontWeight: 500, color: TEKS_LEMBUT }}>{z.satuan}</span>
       </div>
-      <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+      <div style={{ display: "flex", gap: "6px", marginTop: "10px" }}>
         {z.arah.map((a) => {
           const on = a.id === dipilih;
           const hover = sorot === a.id;
@@ -332,31 +276,21 @@ function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; p
               onMouseLeave={() => setSorot(null)}
               style={{
                 flex: 1,
-                padding: "9px 8px",
-                borderRadius: "13px",
+                padding: "7px 9px",
+                borderRadius: "10px",
                 cursor: "pointer",
-                textAlign: "center",
-                border: on ? "1px solid transparent" : "1px solid " + kabut(w.utama, 0.28),
-                background: on
-                  ? "linear-gradient(135deg, " + w.utama + ", " + w.muda + ")"
-                  : kabut(w.utama, hover ? 0.16 : 0.07),
-                boxShadow: on ? "0 5px 14px " + kabut(w.utama, 0.32) : "none",
-                color: on ? "#FFFFFF" : TEKS_UTAMA,
-                transition: "background .16s ease, box-shadow .16s ease",
+                textAlign: "left",
+                border: "1px solid " + (on ? kabut(w.utama, 0.5) : GARIS),
+                background: on ? kabut(w.utama, 0.1) : hover ? "var(--tv-hover, rgba(10,11,95,0.035))" : "transparent",
+                color: on ? w.utama : TEKS_UTAMA,
+                transition: "background .16s ease, border-color .16s ease",
               }}
             >
-              <div style={{ fontSize: "12.5px", fontWeight: 800 }}>
-                <span style={{ marginRight: "3px", color: on ? "#FFFFFF" : w.utama }}>{a.panah}</span>
+              <div style={{ fontSize: "11.5px", fontWeight: 700, lineHeight: 1.2 }}>
+                <span style={{ marginRight: "3px", opacity: 0.75 }}>{a.panah}</span>
                 {a.tanda}
               </div>
-              <div
-                style={{
-                  fontSize: "10.5px",
-                  fontWeight: 600,
-                  marginTop: "2px",
-                  color: on ? "rgba(255,255,255,0.88)" : TEKS_LEMBUT,
-                }}
-              >
+              <div style={{ fontSize: "10px", fontWeight: 500, marginTop: "2px", lineHeight: 1.2, color: on ? w.utama : TEKS_LEMBUT, opacity: on ? 0.85 : 1 }}>
                 {a.label}
               </div>
             </button>
@@ -366,7 +300,6 @@ function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; p
     </div>
   );
 }
-
 const JUDUL_LANGKAH: Record<LangkahId, string> = {
   gangguan: "Gangguan",
   angka: "Angka lab",
@@ -535,8 +468,8 @@ export function ElectrolyteTab() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(215px, 1fr))",
-                gap: "10px",
+                gridTemplateColumns: "repeat(auto-fit, minmax(196px, 1fr))",
+                gap: "8px",
                 marginTop: "10px",
               }}
             >
