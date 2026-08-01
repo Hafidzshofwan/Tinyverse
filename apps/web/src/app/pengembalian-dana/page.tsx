@@ -102,7 +102,7 @@ export default function HalamanPengembalianDana() {
         <h2 className={gaya.kepala}>Cara mengajukan</h2>
         <p className={gaya.teks}>
           Ajukan paling lambat <strong>7 hari kalender</strong> sejak tanggal
-          pembayaran, melalui surel atau WhatsApp yang tercantum di halaman{" "}
+          pembayaran, melalui surel atau Instagram yang tercantum di halaman{" "}
           <Link href="/kontak">Kontak</Link>. Sertakan:
         </p>
         <ul className={gaya.daftar}>
