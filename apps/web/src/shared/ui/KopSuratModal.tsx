@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { createPortal } from "react-dom";
 import {
   getKopSuratConfig,
   saveKopSuratConfig,
@@ -18,7 +19,20 @@ export function KopSuratModal({ isOpen, onClose, onSaved }: KopSuratModalProps) 
   const [config, setConfig] = useState<KopSuratConfig>(() => getKopSuratConfig());
   const [isSaved, setIsSaved] = useState(false);
 
-  if (!isOpen) return null;
+  /*
+   * WHY portal: .tv-topbar memakai backdrop-filter, dan properti itu
+   * menjadikan elemen sebagai containing block bagi keturunan
+   * position: fixed. Modal ini dirender di dalam menu pengguna yang
+   * berada di dalam topbar, sehingga lapisan latarnya terkurung di kotak
+   * topbar dan panel muncul melayang tanpa latar gelap. Merender ke
+   * document.body memutus rantai itu. Jangan kembalikan ke render biasa.
+   */
+  const [terpasang, setTerpasang] = useState(false);
+  useEffect(() => {
+    setTerpasang(true);
+  }, []);
+
+  if (!isOpen || !terpasang) return null;
 
   const handleChange = (key: keyof KopSuratConfig, val: string) => {
     setConfig((prev) => ({ ...prev, [key]: val }));
@@ -62,7 +76,7 @@ export function KopSuratModal({ isOpen, onClose, onSaved }: KopSuratModalProps) 
     animation: "fadeIn 0.2s ease-out",
   };
 
-  return (
+  return createPortal(
     <div style={backdropStyle} onClick={onClose}>
       <div style={cardStyle} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
@@ -231,6 +245,7 @@ export function KopSuratModal({ isOpen, onClose, onSaved }: KopSuratModalProps) 
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
