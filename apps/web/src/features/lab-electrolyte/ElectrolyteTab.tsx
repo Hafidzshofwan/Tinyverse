@@ -205,87 +205,160 @@ type LangkahId = "gangguan" | "angka" | "darurat" | "kronis" | "jalur" | "rencan
 
 // --- pemilih gangguan: satu kartu per elektrolit, dua arah di dalamnya ------
 
-const LAMBANG: Record<string, string> = {
-  Natrium: "Na",
-  Kalium: "K",
-  "Kalsium total": "Ca",
-  Magnesium: "Mg",
-  Fosfat: "PO₄",
+type WarnaZat = { utama: string; muda: string; lambang: string };
+
+const ZAT: Record<string, WarnaZat> = {
+  Natrium: { utama: "#2563EB", muda: "#60A5FA", lambang: "Na" },
+  Kalium: { utama: "#7C3AED", muda: "#A78BFA", lambang: "K" },
+  "Kalsium total": { utama: "#0D9488", muda: "#2DD4BF", lambang: "Ca" },
+  Magnesium: { utama: "#D97706", muda: "#FBBF24", lambang: "Mg" },
+  Fosfat: { utama: "#DB2777", muda: "#F472B6", lambang: "PO₄" },
 };
 
-type ArahZat = { id: GangguanId; label: string; tanda: string };
-type Zat = { nama: string; lambang: string; satuan: string; arah: ArahZat[] };
+const ZAT_BAKU: WarnaZat = { utama: "#475569", muda: "#94A3B8", lambang: "?" };
+
+function kabut(hex: string, alpha: number): string {
+  const h = hex.replace("#", "");
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+}
+
+type ArahZat = { id: GangguanId; label: string; tanda: string; panah: string };
+type Zat = { nama: string; satuan: string; w: WarnaZat; arah: ArahZat[] };
 
 const KELOMPOK_ZAT: Zat[] = (() => {
   const keluar: Zat[] = [];
   for (const g of KATALOG_ELEKTROLIT) {
     let z = keluar.find((x) => x.nama === g.parameter);
     if (z == null) {
-      z = { nama: g.parameter, lambang: LAMBANG[g.parameter] ?? g.parameter.slice(0, 2), satuan: g.satuan, arah: [] };
+      z = { nama: g.parameter, satuan: g.satuan, w: ZAT[g.parameter] ?? ZAT_BAKU, arah: [] };
       keluar.push(z);
     }
-    z.arah.push({ id: g.id, label: g.label, tanda: g.id.startsWith("hipo") ? "↓ Rendah" : "↑ Tinggi" });
+    const turun = g.id.startsWith("hipo");
+    z.arah.push({ id: g.id, label: g.label, tanda: turun ? "Rendah" : "Tinggi", panah: turun ? "↓" : "↑" });
   }
   return keluar;
 })();
 
 function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; pilih: (id: GangguanId) => void }) {
+  const [sorot, setSorot] = useState<string | null>(null);
+  const [atas, setAtas] = useState(false);
   const aktif = z.arah.some((a) => a.id === dipilih);
+  const w = z.w;
   return (
     <div
+      onMouseEnter={() => setAtas(true)}
+      onMouseLeave={() => setAtas(false)}
       style={{
-        border: aktif ? "2px solid var(--tv-navy-2, #0A0B5F)" : "1px solid " + GARIS,
-        borderRadius: "16px",
-        padding: "12px",
-        background: "var(--tv-card, #FFFFFF)",
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: "18px",
+        padding: "14px 13px 13px",
+        border: aktif ? "2px solid " + w.utama : "1px solid " + kabut(w.utama, 0.22),
+        background:
+          "linear-gradient(180deg, " + kabut(w.utama, aktif ? 0.16 : 0.08) + " 0%, " + kabut(w.utama, 0) + " 68%), var(--tv-card, #FFFFFF)",
+        boxShadow: aktif
+          ? "0 10px 24px " + kabut(w.utama, 0.28)
+          : atas
+            ? "0 8px 18px " + kabut(w.utama, 0.18)
+            : "0 1px 3px rgba(10,11,95,0.06)",
+        transform: aktif || atas ? "translateY(-2px)" : "none",
+        transition: "transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "4px",
+          background: "linear-gradient(90deg, " + w.utama + ", " + w.muda + ")",
+        }}
+      />
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
         <div
           style={{
-            width: "34px",
-            height: "34px",
+            width: "38px",
+            height: "38px",
             flex: "0 0 auto",
-            borderRadius: "11px",
-            background: "var(--tv-hover, rgba(10,11,95,0.06))",
-            color: "var(--tv-navy-2, #0A0B5F)",
-            fontSize: "13px",
+            borderRadius: "13px",
+            background: "linear-gradient(135deg, " + w.utama + ", " + w.muda + ")",
+            boxShadow: "0 5px 12px " + kabut(w.utama, 0.38),
+            color: "#FFFFFF",
+            fontSize: "13.5px",
             fontWeight: 800,
+            letterSpacing: "0.01em",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          {z.lambang}
+          {w.lambang}
         </div>
         <div>
-          <div style={{ fontSize: "13.5px", fontWeight: 700, color: TEKS_UTAMA, lineHeight: 1.3 }}>
+          <div style={{ fontSize: "14px", fontWeight: 800, color: TEKS_UTAMA, lineHeight: 1.25 }}>
             {z.nama.replace(" total", "")}
           </div>
-          <div style={{ fontSize: "10.5px", color: TEKS_LEMBUT, marginTop: "1px" }}>{z.satuan}</div>
+          <div
+            style={{
+              display: "inline-block",
+              marginTop: "3px",
+              padding: "1px 7px",
+              borderRadius: "999px",
+              fontSize: "10px",
+              fontWeight: 700,
+              letterSpacing: "0.02em",
+              background: kabut(w.utama, 0.14),
+              color: w.utama,
+            }}
+          >
+            {z.satuan}
+          </div>
         </div>
       </div>
-      <div style={{ display: "flex", gap: "7px", marginTop: "10px" }}>
+      <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
         {z.arah.map((a) => {
           const on = a.id === dipilih;
+          const hover = sorot === a.id;
           return (
             <button
               key={a.id}
               type="button"
               onClick={() => pilih(a.id)}
+              onMouseEnter={() => setSorot(a.id)}
+              onMouseLeave={() => setSorot(null)}
               style={{
                 flex: 1,
                 padding: "9px 8px",
-                borderRadius: "12px",
+                borderRadius: "13px",
                 cursor: "pointer",
                 textAlign: "center",
-                border: on ? "2px solid var(--tv-navy-2, #0A0B5F)" : "1px solid " + GARIS,
-                background: on ? "var(--tv-hover, rgba(10,11,95,0.05))" : "transparent",
-                color: TEKS_UTAMA,
+                border: on ? "1px solid transparent" : "1px solid " + kabut(w.utama, 0.28),
+                background: on
+                  ? "linear-gradient(135deg, " + w.utama + ", " + w.muda + ")"
+                  : kabut(w.utama, hover ? 0.16 : 0.07),
+                boxShadow: on ? "0 5px 14px " + kabut(w.utama, 0.32) : "none",
+                color: on ? "#FFFFFF" : TEKS_UTAMA,
+                transition: "background .16s ease, box-shadow .16s ease",
               }}
             >
-              <div style={{ fontSize: "12.5px", fontWeight: on ? 800 : 600 }}>{a.tanda}</div>
-              <div style={{ fontSize: "10.5px", fontWeight: 500, color: TEKS_LEMBUT, marginTop: "2px" }}>{a.label}</div>
+              <div style={{ fontSize: "12.5px", fontWeight: 800 }}>
+                <span style={{ marginRight: "3px", color: on ? "#FFFFFF" : w.utama }}>{a.panah}</span>
+                {a.tanda}
+              </div>
+              <div
+                style={{
+                  fontSize: "10.5px",
+                  fontWeight: 600,
+                  marginTop: "2px",
+                  color: on ? "rgba(255,255,255,0.88)" : TEKS_LEMBUT,
+                }}
+              >
+                {a.label}
+              </div>
             </button>
           );
         })}
