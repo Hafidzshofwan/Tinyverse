@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { viewDrip } from "@/entities/fluid";
+import { DRIP_OPTIONS, viewDrip } from "@/entities/fluid";
 import type { DripType } from "@/entities/fluid";
 import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
@@ -16,6 +16,12 @@ export function DripForm() {
   const [error, setError] = useState<string | null>(null);
   const [calculated, setCalculated] = useState(false);
   const [ditambahkan, setDitambahkan] = useState(false);
+
+  // Label & faktor tetes selalu diambil dari tabel domain, tidak ditulis ulang di UI.
+  const setTerpilih = DRIP_OPTIONS.find((o) => o.id === factor);
+  const teksSetTerpilih = setTerpilih
+    ? `${setTerpilih.label} (${setTerpilih.dropFactor} tpm/mL)`
+    : factor;
 
   function hitung() {
     const result = viewDrip(
@@ -33,7 +39,7 @@ export function DripForm() {
     if (error || !rows.length) return;
     const bodyText = [
       `Volume Cairan: ${volume} mL | Durasi: ${hours} jam`,
-      `Set Drip: ${factor === "makro" ? "Makro (20 tpm/mL)" : "Mikro (60 tpm/mL)"}`,
+      `Set Drip: ${teksSetTerpilih}`,
       ...rows.map((r) => `${r.label}: ${r.value}`),
     ].join("\n");
 
@@ -73,24 +79,18 @@ export function DripForm() {
           </label>
         </div>
         <div className="segmented-toggle" style={{ marginBottom: 18 }}>
-          <button
-            type="button"
-            className={`segmented-btn ${factor === "makro" ? "aktif" : ""}`}
-            onClick={() => setFactor("makro")}
-          >
-            Makro drip
-            <br />
-            <small style={{ fontSize: "0.72rem" }}>20 tpm/mL</small>
-          </button>
-          <button
-            type="button"
-            className={`segmented-btn ${factor === "mikro" ? "aktif" : ""}`}
-            onClick={() => setFactor("mikro")}
-          >
-            Mikro drip
-            <br />
-            <small style={{ fontSize: "0.72rem" }}>60 tpm/mL</small>
-          </button>
+          {DRIP_OPTIONS.map((opsi) => (
+            <button
+              key={opsi.id}
+              type="button"
+              className={`segmented-btn ${factor === opsi.id ? "aktif" : ""}`}
+              onClick={() => setFactor(opsi.id)}
+            >
+              {opsi.label}
+              <br />
+              <small style={{ fontSize: "0.72rem" }}>{opsi.dropFactor} tpm/mL</small>
+            </button>
+          ))}
         </div>
         <button type="button" className="btn-hitung" onClick={hitung} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -144,6 +144,7 @@ export function DripForm() {
           <li>
             Tetes/menit = volume cairan (mL) × faktor tetes ÷ waktu (menit)
           </li>
+          <li>Blood set: 15 tetes/mL</li>
           <li>Makro drip umum: 20 tetes/mL</li>
           <li>Mikro drip umum: 60 tetes/mL</li>
         </ul>
