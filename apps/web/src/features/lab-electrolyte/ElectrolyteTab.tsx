@@ -6,6 +6,7 @@ import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { NumberField } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
+  GangguanId,
   KATALOG_ELEKTROLIT,
   derajatElektrolit,
   gangguanById,
@@ -203,6 +204,97 @@ function TombolRingkasan({ judul, teks }: { judul: string; teks: string }) {
 
 type LangkahId = "gangguan" | "angka" | "darurat" | "kronis" | "jalur" | "rencana" | "laju" | "pantau";
 
+// --- pemilih gangguan: satu kartu per elektrolit, dua arah di dalamnya ------
+
+const LAMBANG: Record<string, string> = {
+  Natrium: "Na",
+  Kalium: "K",
+  "Kalsium total": "Ca",
+  Magnesium: "Mg",
+  Fosfat: "PO₄",
+};
+
+type ArahZat = { id: GangguanId; label: string; tanda: string };
+type Zat = { nama: string; lambang: string; satuan: string; arah: ArahZat[] };
+
+const KELOMPOK_ZAT: Zat[] = (() => {
+  const keluar: Zat[] = [];
+  for (const g of KATALOG_ELEKTROLIT) {
+    let z = keluar.find((x) => x.nama === g.parameter);
+    if (z == null) {
+      z = { nama: g.parameter, lambang: LAMBANG[g.parameter] ?? g.parameter.slice(0, 2), satuan: g.satuan, arah: [] };
+      keluar.push(z);
+    }
+    z.arah.push({ id: g.id, label: g.label, tanda: g.id.startsWith("hipo") ? "↓ Rendah" : "↑ Tinggi" });
+  }
+  return keluar;
+})();
+
+function KartuZat({ z, dipilih, pilih }: { z: Zat; dipilih: GangguanId | null; pilih: (id: GangguanId) => void }) {
+  const aktif = z.arah.some((a) => a.id === dipilih);
+  return (
+    <div
+      style={{
+        border: aktif ? "2px solid var(--tv-navy-2, #0A0B5F)" : "1px solid " + GARIS,
+        borderRadius: "16px",
+        padding: "12px",
+        background: "var(--tv-card, #FFFFFF)",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "9px" }}>
+        <div
+          style={{
+            width: "34px",
+            height: "34px",
+            flex: "0 0 auto",
+            borderRadius: "11px",
+            background: "var(--tv-hover, rgba(10,11,95,0.06))",
+            color: "var(--tv-navy-2, #0A0B5F)",
+            fontSize: "13px",
+            fontWeight: 800,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          {z.lambang}
+        </div>
+        <div>
+          <div style={{ fontSize: "13.5px", fontWeight: 700, color: TEKS_UTAMA, lineHeight: 1.3 }}>
+            {z.nama.replace(" total", "")}
+          </div>
+          <div style={{ fontSize: "10.5px", color: TEKS_LEMBUT, marginTop: "1px" }}>{z.satuan}</div>
+        </div>
+      </div>
+      <div style={{ display: "flex", gap: "7px", marginTop: "10px" }}>
+        {z.arah.map((a) => {
+          const on = a.id === dipilih;
+          return (
+            <button
+              key={a.id}
+              type="button"
+              onClick={() => pilih(a.id)}
+              style={{
+                flex: 1,
+                padding: "9px 8px",
+                borderRadius: "12px",
+                cursor: "pointer",
+                textAlign: "center",
+                border: on ? "2px solid var(--tv-navy-2, #0A0B5F)" : "1px solid " + GARIS,
+                background: on ? "var(--tv-hover, rgba(10,11,95,0.05))" : "transparent",
+                color: TEKS_UTAMA,
+              }}
+            >
+              <div style={{ fontSize: "12.5px", fontWeight: on ? 800 : 600 }}>{a.tanda}</div>
+              <div style={{ fontSize: "10.5px", fontWeight: 500, color: TEKS_LEMBUT, marginTop: "2px" }}>{a.label}</div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 const JUDUL_LANGKAH: Record<LangkahId, string> = {
   gangguan: "Gangguan",
   angka: "Angka lab",
@@ -341,19 +433,18 @@ export function ElectrolyteTab() {
       {kini === "gangguan" && (
         <Tanya
           teks="Gangguan elektrolit apa yang sedang dihadapi?"
-          bantu="Pilih satu. Pertanyaan berikutnya menyesuaikan pilihan ini."
+          bantu="Pilih elektrolitnya lebih dulu, lalu arah gangguannya. Pertanyaan berikutnya menyesuaikan pilihan ini."
           anak={
-            <div>
-              {KATALOG_ELEKTROLIT.map((g) => (
-                <button
-                  key={g.id}
-                  type="button"
-                  style={gayaPilihan(gangguan === g.id)}
-                  onClick={() => setGangguan(g.id)}
-                >
-                  {g.label}
-                  <span style={{ fontWeight: 500, color: TEKS_LEMBUT }}> &middot; {g.parameter}</span>
-                </button>
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(215px, 1fr))",
+                gap: "10px",
+                marginTop: "10px",
+              }}
+            >
+              {KELOMPOK_ZAT.map((z) => (
+                <KartuZat key={z.nama} z={z} dipilih={gangguan} pilih={setGangguan} />
               ))}
             </div>
           }
