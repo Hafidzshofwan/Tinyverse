@@ -1,7 +1,14 @@
 // Fluids bounded context — tipe domain (pure, no React/DOM).
 
-export type DripType = "makro" | "mikro"
+export type DripType = "bloodSet" | "makro" | "mikro"
 export type PlanCAgeCategory = "bayi" | "anak"
+
+/** Satu pilihan drip set siap tampil (id domain, nama, dan faktor tetesnya). */
+export interface DripOption {
+	id: DripType
+	label: string
+	dropFactor: number
+}
 
 export interface MaintenanceFluidResult {
 	weightKg: number

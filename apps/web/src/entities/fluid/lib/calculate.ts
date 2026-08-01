@@ -1,15 +1,20 @@
 import {
+  DRIP_LABEL,
+  DRIP_OPTIONS,
   dripRate,
   maintenanceFluids,
   rehydrationPlanB,
   rehydrationPlanC,
+  type DripOption,
   type DripType,
   type PlanCAgeCategory,
 } from "@tinyverse/clinical-core";
 import type { DisplayRow, FluidView } from "../model/types";
 
 // Re-export tipe domain agar layer di atas (features) tidak mengimpor langsung dari package.
-export type { DripType, PlanCAgeCategory };
+export type { DripOption, DripType, PlanCAgeCategory };
+// Re-export tabel drip set agar UI memakai label & faktor tetes yang sama dengan domain.
+export { DRIP_LABEL, DRIP_OPTIONS };
 
 function displayRows(rows: DisplayRow[], rincian?: DisplayRow[]): FluidView {
   return { rows, rincian, error: null };
@@ -82,7 +87,7 @@ export function viewDrip(
   try {
     const r = dripRate(volumeMl, hours, dripType);
     const minutes = hours * 60;
-    const dripLabel = dripType === "makro" ? "Makro drip" : "Mikro drip";
+    const dripLabel = DRIP_LABEL[dripType];
     const rincian: DisplayRow[] = [
       { label: "Volume cairan", value: `${volumeMl.toFixed(0)} mL` },
       {
