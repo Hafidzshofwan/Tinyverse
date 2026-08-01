@@ -17,9 +17,9 @@ const loadBtn: CSSProperties = {
   marginBottom: 16,
   padding: "8px 14px",
   borderRadius: 10,
-  border: "1px solid var(--etail-line)",
-  background: "#EDE7FB",
-  color: "#5B37C9",
+  border: "1px solid var(--tv-line, rgba(10, 11, 95, 0.09))",
+  background: "var(--tv-agd-contoh-bg, #EDE7FB)",
+  color: "var(--tv-agd-contoh-teks, #5B37C9)",
   fontWeight: 700,
   cursor: "pointer",
 };
@@ -27,7 +27,7 @@ const loadBtn: CSSProperties = {
 const captionStyle: CSSProperties = {
   fontSize: 13,
   fontWeight: 600,
-  color: "var(--teks)",
+  color: "var(--tv-teks, #0a0b4f)",
 };
 
 const selectLabel: CSSProperties = {
@@ -39,9 +39,9 @@ const selectLabel: CSSProperties = {
 const selectStyle: CSSProperties = {
   padding: "10px 12px",
   fontSize: 15,
-  color: "var(--teks)",
-  background: "var(--putih)",
-  border: "1px solid var(--etail-line)",
+  color: "var(--tv-teks, #0a0b4f)",
+  background: "var(--tv-card, #ffffff)",
+  border: "1px solid var(--tv-line, rgba(10, 11, 95, 0.09))",
   borderRadius: 10,
   outline: "none",
 };
@@ -50,7 +50,7 @@ const optWrap: CSSProperties = { marginTop: 16 };
 const optSummary: CSSProperties = {
   cursor: "pointer",
   fontWeight: 700,
-  color: "var(--teks-lembut)",
+  color: "var(--tv-soft-teks, #667085)",
   marginBottom: 12,
 };
 
@@ -58,16 +58,16 @@ const neutralCard: CSSProperties = {
   marginTop: 18,
   padding: "14px 16px",
   borderRadius: 14,
-  background: "var(--etail-soft)",
-  color: "var(--teks-lembut)",
+  background: "var(--tv-soft, #f4f5fa)",
+  color: "var(--tv-soft-teks, #667085)",
 };
 
 const okCard: CSSProperties = {
   marginTop: 18,
   padding: "16px 18px",
   borderRadius: 14,
-  background: "#E7F8DA",
-  border: "1px solid #BFE6A3",
+  background: "var(--tv-agd-ok-bg, #E7F8DA)",
+  border: "1px solid var(--tv-agd-ok-line, #BFE6A3)",
   lineHeight: 1.55,
 };
 
@@ -75,22 +75,22 @@ const warnCard: CSSProperties = {
   marginTop: 18,
   padding: "16px 18px",
   borderRadius: 14,
-  background: "#FFF4E5",
-  border: "1px solid #F3D9A6",
+  background: "var(--tv-agd-warn-bg, #FFF4E5)",
+  border: "1px solid var(--tv-agd-warn-line, #F3D9A6)",
   lineHeight: 1.55,
 };
 
 const exampleTag: CSSProperties = {
   fontSize: ".8rem",
   fontWeight: 700,
-  color: "#5B37C9",
+  color: "var(--tv-agd-contoh-teks, #5B37C9)",
   marginBottom: 6,
 };
 
 const conclusionStyle: CSSProperties = {
   fontSize: "1.05rem",
   fontWeight: 800,
-  color: "var(--teks)",
+  color: "var(--tv-teks, #0a0b4f)",
   marginBottom: 10,
 };
 
@@ -103,21 +103,21 @@ const olStyle: CSSProperties = {
 
 const warnBlock: CSSProperties = {
   marginTop: 10,
-  color: "#a3341c",
+  color: "var(--tv-agd-bad, #a3341c)",
   fontWeight: 600,
 };
 
 const footNote: CSSProperties = {
   marginTop: 12,
   fontSize: ".8rem",
-  color: "var(--teks-lembut)",
+  color: "var(--tv-soft-teks, #667085)",
 };
 
 function toneColor(tone: StepTone): string {
-  if (tone === "ok") return "#2f6b1f";
-  if (tone === "warn") return "#8a5320";
-  if (tone === "bad") return "#a3341c";
-  return "var(--teks)";
+  if (tone === "ok") return "var(--tv-agd-ok, #2f6b1f)";
+  if (tone === "warn") return "var(--tv-agd-warn, #8a5320)";
+  if (tone === "bad") return "var(--tv-agd-bad, #a3341c)";
+  return "var(--tv-teks, #0a0b4f)";
 }
 
 function stepStyle(tone: StepTone): CSSProperties {
@@ -292,7 +292,7 @@ export function AbgForm() {
           </ol>
           {outcome.view.warnings.length ? (
             <div style={warnBlock}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px", color: "#D97706" }}>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: "inline-block", verticalAlign: "-2px", marginRight: "4px", color: "var(--tv-agd-ikon-warn, #D97706)" }}>
                 <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
                 <line x1="12" y1="9" x2="12" y2="13"/>
                 <line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -305,7 +305,7 @@ export function AbgForm() {
             <button
               type="button"
               className="tv-btn"
-              style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
+              style={{ background: "var(--tv-agd-btn-bg, #0A0B5F)", color: "var(--tv-agd-btn-teks, #FFFFFF)", fontWeight: 700 }}
               onClick={() => {
                 if (!outcome.view) return;
                 const v = outcome.view;

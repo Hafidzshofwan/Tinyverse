@@ -5742,3 +5742,23 @@ html.dark .tv-decision-tree-card {
   .tv-ballard-tab-sub { font-size: 11px; }
   .tv-skor-opsi { grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; }
 }
+
+/* ===== AGD - warna kartu interpretasi mode gelap =====
+   Nilai mode terang ditulis sebagai fallback di dalam komponen AbgForm,
+   jadi blok ini HANYA berlaku saat tema gelap aktif. */
+:root[data-theme="dark"],
+[data-theme="dark"],
+html.dark {
+  --tv-agd-ok-bg: rgba(6, 78, 59, 0.45);
+  --tv-agd-ok-line: #059669;
+  --tv-agd-ok: #6EE7B7;
+  --tv-agd-warn-bg: rgba(120, 53, 15, 0.42);
+  --tv-agd-warn-line: #B45309;
+  --tv-agd-warn: #FCD34D;
+  --tv-agd-bad: #FCA5A5;
+  --tv-agd-contoh-bg: rgba(139, 92, 246, 0.18);
+  --tv-agd-contoh-teks: #C4B5FD;
+  --tv-agd-btn-bg: #EC4899;
+  --tv-agd-btn-teks: #FFFFFF;
+  --tv-agd-ikon-warn: #FBBF24;
+}
