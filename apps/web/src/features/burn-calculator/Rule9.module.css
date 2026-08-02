@@ -23,12 +23,27 @@
 .regio rect,
 .regio path,
 .regio circle {
-  fill: #F3EDFF;
+  fill: url(#rule9BodyFill);
   stroke: #D5C8F0;
   stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
   transition:
     fill 0.18s ease,
     stroke 0.18s ease;
+}
+
+/* Garis jari tangan dan kaki: hiasan anatomis, bukan bidang yang bisa diisi. */
+.regio .jari {
+  fill: none;
+  stroke: #C9B8EA;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.aktif .jari {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.8);
 }
 
 .regio:hover ellipse,
@@ -131,6 +146,18 @@
 :global(.dark) .aktif circle {
   fill: url(#rule9SelectedFill);
   stroke: #F87BA2;
+}
+
+:global([data-theme="dark"]) .regio .jari,
+:global(html.dark) .regio .jari,
+:global(.dark) .regio .jari {
+  stroke: #4A5C78;
+}
+
+:global([data-theme="dark"]) .aktif .jari,
+:global(html.dark) .aktif .jari,
+:global(.dark) .aktif .jari {
+  stroke: rgba(255, 255, 255, 0.8);
 }
 
 :global([data-theme="dark"]) .angka,
