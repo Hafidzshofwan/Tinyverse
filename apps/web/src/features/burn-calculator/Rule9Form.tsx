@@ -7,7 +7,12 @@ import type {
   RuleOfNinesArea,
 } from "@tinyverse/clinical-core";
 import { DRIP_OPTIONS } from "@tinyverse/clinical-core";
-import { NumberField, RedFlagCrossLink } from "@/shared/ui";
+import {
+  NumberField,
+  RedFlagCrossLink,
+  ReferensiBlok,
+  REFERENSI_LUKA_BAKAR_RULE9,
+} from "@/shared/ui";
 import {
   usePatientProfile,
   usePatientKey,
@@ -503,6 +508,12 @@ export function Rule9Form() {
           anak kecil dan luka yang tersebar.
         </p>
       </div>
+
+      <ReferensiBlok
+        sumber={REFERENSI_LUKA_BAKAR_RULE9}
+        catatan="Pembagian sembilan persen berasal dari Wallace (1951); penyesuaian usia kepala dan tungkai serta laju 2-3-4 mL/kg/%TBSA mengikuti ATLS edisi ke-10 (2018)."
+      />
+
     </div>
   );
 }

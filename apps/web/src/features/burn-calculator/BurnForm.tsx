@@ -2,7 +2,12 @@
 
 import { useEffect, useMemo, useState } from "react";
 import type { BurnArea } from "@tinyverse/clinical-core";
-import { NumberField, RedFlagCrossLink } from "@/shared/ui";
+import {
+  NumberField,
+  RedFlagCrossLink,
+  ReferensiBlok,
+  REFERENSI_LUKA_BAKAR_LUND,
+} from "@/shared/ui";
 import { usePatientProfile, usePatientKey, useSyncedField } from "@/shared/lib/patient";
 import { viewBurn } from "@/entities/burn";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
@@ -503,6 +508,12 @@ export function BurnForm() {
           fasilitas kesehatan.
         </p>
       </div>
+
+      <ReferensiBlok
+        sumber={REFERENSI_LUKA_BAKAR_LUND}
+        catatan="Persentase tiap regio pada chart mengikuti tabel usia Lund &amp; Browder (1944); volume resusitasi mengikuti rumus Parkland (Baxter &amp; Shires, 1968) dengan rumatan Holliday-Segar."
+      />
+
     </div>
   );
 }
