@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { MaintenanceForm } from "@/features/fluid-maintenance";
 import { DripForm } from "@/features/fluid-drip";
-import { BurnForm } from "@/features/burn-calculator";
+import { BurnMethodSwitch } from "@/features/burn-calculator";
 import { WhoPanel } from "@/features/rehydration-who";
 
 type MainTab = "holliday" | "who" | "burn" | "drip";
@@ -55,7 +55,7 @@ const MAINTABS: ReadonlyArray<{ id: MainTab; icon: React.ReactNode; label: strin
 const SUBTITLE: Record<MainTab, string> = {
   holliday: "Holliday–Segar (estimasi cairan rumatan)",
   who: "Rencana A, B, dan C untuk diare",
-  burn: "Parkland + Lund-Browder untuk luka bakar",
+  burn: "Lund-Browder atau Rule of Nines untuk luka bakar",
   drip: "Hitung tetesan cairan infus",
 };
 
@@ -145,7 +145,7 @@ export function FluidsPanel() {
         {tab === "holliday" ? <MaintenanceForm /> : null}
         {tab === "drip" ? <DripForm /> : null}
         {tab === "who" ? <WhoPanel /> : null}
-        {tab === "burn" ? <BurnForm /> : null}
+        {tab === "burn" ? <BurnMethodSwitch /> : null}
       </div>
     </div>
   );
