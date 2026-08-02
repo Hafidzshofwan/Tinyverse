@@ -339,15 +339,38 @@ export function Rule9Form() {
 
               {view.tbsaPercent >= 10 ? (
                 <RedFlagCrossLink
-                  badge="RED-FLAG KLINIS (TBSA >= 10%)"
+                  badge="RED-FLAG KLINIS (TBSA ≥ 10%)"
+                  title="Indikasi Resusitasi Cairan Agresif & Pemantauan Urin"
+                  description="Luka bakar ≥10% TBSA berisiko tinggi syok hipovolemik cepat. Mulai RL hangat sesuai kerangka ATLS, pasang kateter urin dan titrasi laju mengikuti produksi urin, serta siapkan rujukan Unit Luka Bakar."
                   actions={[
                     {
-                      label: "Cek rehidrasi & syok",
+                      label: "Hitung Cairan Rumatan",
                       href: "/preview/fluids",
+                      primary: true,
+                      icon: (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M12 3C12 3 6 10 6 15C6 18.3 8.7 21 12 21C15.3 21 18 18.3 18 15C18 10 12 3 12 3Z"
+                            fill="#FFFFFF"
+                            stroke="#FFFFFF"
+                            strokeWidth="1.2"
+                          />
+                        </svg>
+                      ),
                     },
                     {
-                      label: "Buka panel kegawatan",
+                      label: "Mode Darurat Resusitasi",
                       href: "/preview/darurat",
+                      icon: (
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
+                            fill="currentColor"
+                            stroke="currentColor"
+                            strokeWidth="1.2"
+                          />
+                        </svg>
+                      ),
                     },
                   ]}
                 />
