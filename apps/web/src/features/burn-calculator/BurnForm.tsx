@@ -1,16 +1,26 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import type { BurnArea } from "@tinyverse/clinical-core";
+import type { BurnArea, BurnMechanism, DripType } from "@tinyverse/clinical-core";
 import { NumberField, RedFlagCrossLink } from "@/shared/ui";
 import { usePatientProfile, usePatientKey, useSyncedField } from "@/shared/lib/patient";
 import { viewBurn } from "@/entities/burn";
+import { DRIP_OPTIONS } from "@/entities/fluid";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { BurnSvgMap } from "./BurnSvgMap";
 
 function formatTbsa(n: number): string {
   return n.toFixed(1).replace(".0", "");
 }
+
+function bulat(n: number): string {
+  return Math.round(n).toString();
+}
+
+const MEKANISME: ReadonlyArray<{ id: BurnMechanism; label: string }> = [
+  { id: "termal", label: "Termal / api / air panas" },
+  { id: "listrik", label: "Listrik" },
+];
 
 export function BurnForm() {
   const profile = usePatientProfile();
@@ -21,6 +31,10 @@ export function BurnForm() {
   const [usia, setUsia] = useSyncedField(usiaTahun);
   const [berat, setBerat] = useSyncedField(profile.bb);
   const [selected, setSelected] = useState<ReadonlyArray<BurnArea>>([]);
+  const [mekanisme, setMekanisme] = useState<BurnMechanism>("termal");
+  const [jamKejadian, setJamKejadian] = useState("");
+  const [praRs, setPraRs] = useState("");
+  const [dripType, setDripType] = useState<DripType>("makro");
   const [ditambahkan, setDitambahkan] = useState(false);
 
   /*
@@ -28,11 +42,16 @@ export function BurnForm() {
    * LUKA BAKAR tidak. Bila hanya kolom angka yang direset, luas luka milik
    * pasien sebelumnya akan terhitung memakai berat pasien baru - kombinasi yang
    * tidak pernah ada pada pasien mana pun, dan justru dipakai untuk menghitung
-   * resusitasi cairan. Karena itu peta luka ikut dikosongkan.
+   * resusitasi cairan. Karena itu peta luka ikut dikosongkan. Alasan yang sama
+   * berlaku untuk jam kejadian, cairan pra-rumah sakit, dan mekanisme cedera:
+   * ketiganya milik satu peristiwa, bukan milik alat.
    */
   const kunciPasien = usePatientKey();
   useEffect(() => {
     setSelected([]);
+    setMekanisme("termal");
+    setJamKejadian("");
+    setPraRs("");
     setDitambahkan(false);
   }, [kunciPasien]);
 
@@ -43,28 +62,47 @@ export function BurnForm() {
   }
 
   const view = useMemo(
-    () => viewBurn(selected, usia, berat),
-    [selected, usia, berat],
+    () =>
+      viewBurn(selected, usia, berat, {
+        mekanisme,
+        jamSejakKejadian: jamKejadian,
+        praRsMl: praRs,
+        dripType,
+      }),
+    [selected, usia, berat, mekanisme, jamKejadian, praRs, dripType],
   );
 
+  const atls = view.atls;
   const inputsReady = usia.trim() !== "" && berat.trim() !== "";
   const showResults = inputsReady && (selected.length > 0 || view.error);
 
   const handleTambahRingkasan = () => {
-    if (view.error || view.tbsaPercent === 0) return;
-    const bodyText = [
-      `Usia: ${usia} thn | BB: ${berat} kg`,
+    if (view.error || view.tbsaPercent === 0 || !atls) return;
+    const baris = [
+      `Usia: ${usia} thn | BB: ${berat} kg | Mekanisme: ${atls.mekanisme === "listrik" ? "listrik" : "termal"}`,
       `Luas Luka Bakar (TBSA): ${formatTbsa(view.tbsaPercent)}%`,
-      `Parkland (24j): ${Math.round(view.parkland)} mL (8j pertama: ${Math.round(view.first8h)} mL, 16j berikut: ${Math.round(view.next16h)} mL)`,
-      `Maintenance: ${Math.round(view.maintenance)} mL/hari`,
-      `Total 24j: ${Math.round(view.total24h)} mL`,
-      `Target Urin: ${view.urineMin.toFixed(1)}–${view.urineMax.toFixed(1)} mL/jam`,
-    ].join("\n");
+      `Resusitasi ATLS 24 jam: ${bulat(atls.total24h)} mL RL (${atls.faktor} × ${berat} × ${formatTbsa(view.tbsaPercent)})`,
+      `8 jam pertama sejak kejadian: ${bulat(atls.fase1SisaMl)} mL dalam ${atls.sisaJamFase1 > 0 ? atls.sisaJamFase1 : 0} jam = ${bulat(atls.fase1LajuMlPerJam)} mL/jam`,
+      `16 jam berikutnya: ${bulat(atls.fase2Ml)} mL = ${bulat(atls.fase2LajuMlPerJam)} mL/jam`,
+    ];
+    if (atls.tetesFase1 != null) {
+      baris.push(
+        `Tetesan fase 1 (${atls.dripLabel}, ${atls.faktorTetes} tpm/mL): ${atls.tetesFase1} tetes/menit`,
+      );
+    }
+    if (atls.rumatanBerlaku) {
+      baris.push(
+        `Rumatan 4-2-1 (jalur terpisah, dekstrosa): ${bulat(atls.rumatanMlPerJam)} mL/jam`,
+      );
+    }
+    baris.push(
+      `Target urin: ${atls.urinLabel} (${atls.urinMin.toFixed(1)}–${atls.urinMax.toFixed(1)} mL/jam)`,
+    );
 
     addRingkasanItem({
-      title: `Rehidrasi Luka Bakar - TBSA ${formatTbsa(view.tbsaPercent)}%`,
+      title: `Resusitasi Luka Bakar ATLS - TBSA ${formatTbsa(view.tbsaPercent)}%`,
       source: "Terapi Cairan",
-      body: bodyText,
+      body: baris.join("\n"),
     });
     setDitambahkan(true);
     setTimeout(() => setDitambahkan(false), 2200);
@@ -91,12 +129,62 @@ export function BurnForm() {
           />
         </div>
 
+        <div className="form-row-group">
+          <NumberField
+            label="Jam sejak kejadian"
+            value={jamKejadian}
+            onValueChange={setJamKejadian}
+            placeholder="cth: 2"
+            step={0.5}
+          />
+          <NumberField
+            label="Cairan sudah masuk (mL)"
+            value={praRs}
+            onValueChange={setPraRs}
+            placeholder="cth: 200"
+            step={10}
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Mekanisme cedera</label>
+          <div className="segmented-toggle">
+            {MEKANISME.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                className={`segmented-btn ${mekanisme === m.id ? "aktif" : ""}`}
+                onClick={() => setMekanisme(m.id)}
+              >
+                {m.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Set infus untuk hitungan tetesan</label>
+          <div className="segmented-toggle">
+            {DRIP_OPTIONS.map((d) => (
+              <button
+                key={d.id}
+                type="button"
+                className={`segmented-btn ${dripType === d.id ? "aktif" : ""}`}
+                onClick={() => setDripType(d.id)}
+              >
+                {d.label} ({d.dropFactor})
+              </button>
+            ))}
+          </div>
+        </div>
+
         <p className="catatan-metode" style={{ marginTop: 2 }}>
           Pilih area luka bakar derajat 2/3 langsung pada body map. Kepala
-          depan, kepala belakang, leher depan, dan leher belakang kini bisa
-          dipilih masing-masing; area lengan, tangan, tungkai, dan kaki juga
-          bisa dipilih detail sesuai chart Lund &amp; Browder: A = ½ kepala, B =
-          ½ paha, C = ½ tungkai bawah. Luka bakar superfisial/derajat 1 tidak
+          depan, kepala belakang, leher depan, dan leher belakang bisa dipilih
+          masing-masing; area lengan, tangan, tungkai, dan kaki juga bisa
+          dipilih detail sesuai chart Lund &amp; Browder: A = ½ kepala, B =
+          ½ paha, C = ½ tungkai bawah. Nilai A, B, dan C otomatis
+          mengikuti usia pasien. Luka bakar superfisial/derajat 1 tidak
           dimasukkan.
         </p>
 
@@ -114,7 +202,7 @@ export function BurnForm() {
         </div>
 
         <div className={`hasil-box-cairan ${showResults ? "tampil" : ""}`}>
-          <h3>HASIL REHIDRASI LUKA BAKAR</h3>
+          <h3>HASIL RESUSITASI LUKA BAKAR</h3>
 
           {view.error ? (
             <div className="hasil-rincian" style={{ display: "flex", alignItems: "center", gap: 6 }}>
@@ -164,98 +252,185 @@ export function BurnForm() {
                 </div>
               </div>
 
-              <div className="burn-result-card">
-                <div className="ikon-title">
-                  <span className="ikon water">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <path d="M12 3C12 3 6 10 6 15C6 18.3 8.7 21 12 21C15.3 21 18 18.3 18 15C18 10 12 3 12 3Z" fill="#7DD3FC" stroke="#0284C7" strokeWidth="1.5" />
-                    </svg>
-                  </span>
-                  Cairan Resusitasi (Parkland)
-                </div>
-                <div className="burn-result-value">
-                  {Math.round(view.parkland)} mL
-                </div>
-                <div className="hasil-rincian">
-                  4 × {view.weightKg.toFixed(1)} × {view.tbsaPercent.toFixed(1)}{" "}
-                  = {Math.round(view.parkland)} mL
-                  <br />
-                  <strong>Cairan:</strong> Ringer Laktat (RL) hangat.
-                </div>
-              </div>
+              {atls ? (
+                <>
+                  <div className="burn-result-card">
+                    <div className="ikon-title">
+                      <span className="ikon water">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 3C12 3 6 10 6 15C6 18.3 8.7 21 12 21C15.3 21 18 18.3 18 15C18 10 12 3 12 3Z" fill="#7DD3FC" stroke="#0284C7" strokeWidth="1.5" />
+                        </svg>
+                      </span>
+                      Resusitasi 24 Jam (ATLS)
+                    </div>
+                    <div className="burn-result-value">
+                      {bulat(atls.total24h)} mL
+                    </div>
+                    <div className="hasil-rincian">
+                      {atls.faktor} × {view.weightKg.toFixed(1)} kg ×{" "}
+                      {formatTbsa(view.tbsaPercent)}% = {bulat(atls.total24h)} mL
+                      <br />
+                      Faktor dipakai karena: <strong>{atls.faktorAlasan}</strong>
+                      <br />
+                      <strong>Cairan:</strong> Ringer Laktat (RL) hangat.
+                    </div>
+                  </div>
 
-              <div className="burn-result-card">
-                <div className="ikon-title">
-                  <span className="ikon clock">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="13" r="8" stroke="#0369A1" strokeWidth="1.8" fill="#E0F2FE" />
-                      <path d="M12 9V13L15 15" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                  Pembagian Cairan
-                </div>
-                <div className="hasil-rincian">
-                  <strong>8 jam pertama:</strong> {Math.round(view.first8h)} mL
-                  <br />
-                  <strong>16 jam berikutnya:</strong> {Math.round(view.next16h)}{" "}
-                  mL
-                </div>
-              </div>
+                  <div className="burn-result-card">
+                    <div className="ikon-title">
+                      <span className="ikon clock">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="13" r="8" stroke="#0369A1" strokeWidth="1.8" fill="#E0F2FE" />
+                          <path d="M12 9V13L15 15" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      Laju 8 Jam Pertama
+                    </div>
+                    <div className="burn-result-value">
+                      {bulat(atls.fase1LajuMlPerJam)} mL/jam
+                    </div>
+                    <div className="hasil-rincian">
+                      Jatah fase 1: {bulat(atls.fase1Ml)} mL
+                      {atls.praRsMl > 0 ? (
+                        <>
+                          {" "}− {bulat(atls.praRsMl)} mL sudah masuk ={" "}
+                          {bulat(atls.fase1SisaMl)} mL
+                        </>
+                      ) : null}
+                      <br />
+                      {atls.fase1Terlewat ? (
+                        <strong>
+                          Jam ke-8 sejak kejadian sudah terlampaui. Angka di atas
+                          adalah sisa volume yang tertinggal, bukan laju rutin —
+                          kejar dengan pengawasan ketat.
+                        </strong>
+                      ) : (
+                        <>
+                          Dibagi sisa {atls.sisaJamFase1} jam (jam nol = waktu
+                          kejadian, bukan waktu tiba)
+                        </>
+                      )}
+                      {atls.tetesFase1 != null ? (
+                        <>
+                          <br />
+                          <strong>{atls.tetesFase1} tetes/menit</strong> dengan{" "}
+                          {atls.dripLabel} ({atls.faktorTetes} tpm/mL)
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
 
-              <div className="burn-result-card">
-                <div className="ikon-title">
-                  <span className="ikon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <path d="M9 3H15V6H9V3Z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="1.5" />
-                      <rect x="7" y="6" width="10" height="14" rx="3" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
-                      <path d="M7 11H17" stroke="#38BDF8" strokeWidth="1.5" />
-                    </svg>
-                  </span>
-                  Maintenance
-                </div>
-                <div className="burn-result-value">
-                  {Math.round(view.maintenance)} mL/hari
-                </div>
-                <div className="hasil-rincian">
-                  {view.maintenanceRincian.map((r, i) => (
-                    <div key={i}>{r}</div>
-                  ))}
-                </div>
-              </div>
+                  <div className="burn-result-card">
+                    <div className="ikon-title">
+                      <span className="ikon clock">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <circle cx="12" cy="13" r="8" stroke="#0369A1" strokeWidth="1.8" fill="#E0F2FE" />
+                          <path d="M12 13L12 8M12 13L16 13" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      16 Jam Berikutnya
+                    </div>
+                    <div className="burn-result-value">
+                      {bulat(atls.fase2LajuMlPerJam)} mL/jam
+                    </div>
+                    <div className="hasil-rincian">
+                      {bulat(atls.fase2Ml)} mL dibagi 16 jam
+                      {atls.tetesFase2 != null ? (
+                        <>
+                          <br />
+                          <strong>{atls.tetesFase2} tetes/menit</strong> dengan{" "}
+                          {atls.dripLabel} ({atls.faktorTetes} tpm/mL)
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
 
-              <div className="burn-result-card">
-                <div className="ikon-title">
-                  <span className="ikon">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <path d="M12 3V10M12 10C10.3 10 9 11.3 9 13C9 15.5 12 19 12 19C12 19 15 15.5 15 13C15 11.3 13.7 10 12 10Z" stroke="#0284C7" strokeWidth="1.5" fill="#7DD3FC" />
-                      <circle cx="12" cy="13" r="1.5" fill="#0369A1" />
-                    </svg>
-                  </span>
-                  Total 24 Jam Pertama
-                </div>
-                <div className="burn-result-value">
-                  {Math.round(view.total24h)} mL/24 jam
-                </div>
-                <div className="hasil-rincian">
-                  Parkland {Math.round(view.parkland)} + maintenance{" "}
-                  {Math.round(view.maintenance)} mL
-                </div>
-              </div>
+                  {atls.rumatanBerlaku ? (
+                    <div className="burn-result-card">
+                      <div className="ikon-title">
+                        <span className="ikon">
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 3H15V6H9V3Z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="1.5" />
+                            <rect x="7" y="6" width="10" height="14" rx="3" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
+                            <path d="M7 11H17" stroke="#38BDF8" strokeWidth="1.5" />
+                          </svg>
+                        </span>
+                        Rumatan Dekstrosa (4-2-1)
+                      </div>
+                      <div className="burn-result-value">
+                        {bulat(atls.rumatanMlPerJam)} mL/jam
+                      </div>
+                      <div className="hasil-rincian">
+                        {atls.rumatanRincian}
+                        <br />
+                        Anak ≤ 30 kg. Jalur <strong>terpisah</strong> dari cairan
+                        resusitasi, memakai dekstrosa (D5LR/D5NS), dan{" "}
+                        <strong>tidak dititrasi</strong> mengikuti urin.
+                        {atls.tetesRumatan != null ? (
+                          <>
+                            <br />
+                            {atls.tetesRumatan} tetes/menit dengan {atls.dripLabel}
+                          </>
+                        ) : null}
+                      </div>
+                    </div>
+                  ) : null}
 
-              <div className="burn-result-card">
-                <div className="ikon-title">
-                  <span className="ikon urine">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                      <path d="M12 4C12 4 7 10 7 14.5C7 17.5 9.2 20 12 20C14.8 20 17 17.5 17 14.5C17 10 12 4 12 4Z" fill="#FDE047" stroke="#CA8A04" strokeWidth="1.5" />
-                    </svg>
-                  </span>
-                  Target Produksi Urin
-                </div>
-                <div className="burn-result-value">
-                  {view.urineMin.toFixed(1)}–{view.urineMax.toFixed(1)} mL/jam
-                </div>
-                <div className="hasil-rincian">Target: {view.urineLabel}</div>
-              </div>
+                  <div className="burn-result-card">
+                    <div className="ikon-title">
+                      <span className="ikon urine">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 4C12 4 7 10 7 14.5C7 17.5 9.2 20 12 20C14.8 20 17 17.5 17 14.5C17 10 12 4 12 4Z" fill="#FDE047" stroke="#CA8A04" strokeWidth="1.5" />
+                        </svg>
+                      </span>
+                      Target Produksi Urin
+                    </div>
+                    <div className="burn-result-value">
+                      {atls.urinMin.toFixed(1)}
+                      {atls.urinMax !== atls.urinMin
+                        ? `–${atls.urinMax.toFixed(1)}`
+                        : ""}{" "}
+                      mL/jam
+                    </div>
+                    <div className="hasil-rincian">
+                      Target: {atls.urinLabel}
+                      <br />
+                      Inilah penentu titrasi. Naik-turunkan laju{" "}
+                      <strong>20–33%</strong> tiap jam mengikuti urin; jangan
+                      memberi bolus kecuali pasien syok.
+                    </div>
+                  </div>
+
+                  <div className="burn-result-card">
+                    <div className="ikon-title">
+                      <span className="ikon fire">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                          <path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.8" strokeLinejoin="round" />
+                          <path d="M12 9V14M12 17H12.01" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
+                        </svg>
+                      </span>
+                      Pagar Fluid Creep
+                    </div>
+                    <div className="burn-result-value">
+                      {bulat(atls.batasCreepMlPerJam)} mL/jam
+                    </div>
+                    <div className="hasil-rincian">
+                      Setara 6 mL/kg/%TBSA per 24 jam. Bila kebutuhan titrasi
+                      terus melewati angka ini, pasien tergolong{" "}
+                      <strong>sulit diresusitasi</strong>: pertimbangkan koloid,
+                      cari cedera inhalasi, dan hubungi unit luka bakar.
+                      {atls.melampauiCreep ? (
+                        <>
+                          <br />
+                          <strong>
+                            Laju awal saat ini sudah melewati pagar tersebut.
+                          </strong>
+                        </>
+                      ) : null}
+                    </div>
+                  </div>
+                </>
+              ) : null}
             </div>
           )}
 
@@ -291,8 +466,8 @@ export function BurnForm() {
           {view.tbsaPercent >= 10 && (
             <RedFlagCrossLink
               badge="RED-FLAG KLINIS (TBSA ≥ 10%)"
-              title="Indikasi Resusitasi Cairan Agresif & Pemantauan Urin"
-              description="Luka bakar ≥10% TBSA berisiko tinggi syok hipovolemik cepat. Berikan resusitasi Parkland (RL hangat), pantau kateter urin ketat (target 1–2 mL/kg/jam), & siapkan rujukan Unit Luka Bakar."
+              title="Indikasi Resusitasi Cairan Terpandu & Pemantauan Urin"
+              description="Luka bakar ≥10% TBSA pada anak berisiko tinggi syok hipovolemik cepat. Mulai resusitasi kerangka ATLS (RL hangat) dihitung sejak JAM KEJADIAN, pasang kateter urin, titrasi mengikuti target urin, & siapkan rujukan Unit Luka Bakar."
               actions={[
                 {
                   label: "Hitung Cairan Rumatan",
@@ -484,23 +659,39 @@ export function BurnForm() {
         </div>
         <ul>
           <li>
-            <strong>Parkland:</strong> 4 × BB × %TBSA = cairan resusitasi 24 jam
-            pertama.
+            <strong>TBSA:</strong> chart Lund &amp; Browder, nilai A/B/C
+            mengikuti kelompok usia pasien. Hanya derajat 2 dan 3 yang dihitung.
           </li>
           <li>
-            <strong>Pembagian:</strong> 50% dalam 8 jam pertama, 50% dalam 16
-            jam berikutnya.
+            <strong>Resusitasi (ATLS):</strong> faktor × BB × %TBSA Ringer
+            Laktat untuk 24 jam pertama. Faktor 3 mL untuk anak &lt; 14 tahun, 2
+            mL untuk remaja &amp; dewasa, dan 4 mL untuk cedera listrik segala
+            usia.
           </li>
           <li>
-            <strong>Maintenance:</strong> Holliday–Segar ditambahkan ke
-            kebutuhan resusitasi.
+            <strong>Pembagian:</strong> 50% dalam 8 jam pertama dihitung sejak
+            JAM KEJADIAN, 50% dalam 16 jam berikutnya. Bila pasien datang
+            terlambat, jatah fase pertama dibagi sisa jam yang ada dan cairan
+            pra-rumah sakit dikurangkan.
+          </li>
+          <li>
+            <strong>Rumatan:</strong> hanya untuk anak ≤ 30 kg, memakai rumus
+            4-2-1 dengan cairan dekstrosa lewat jalur terpisah, dan tidak ikut
+            dititrasi.
+          </li>
+          <li>
+            <strong>Titrasi:</strong> keluaran urin adalah penentu, bukan rumus.
+            Sesuaikan laju 20–33% tiap jam.
           </li>
         </ul>
         <p className="catatan-metode">
-          Gunakan sebagai alat bantu hitung cepat. Pilih hanya area luka bakar
-          derajat 2/3; jangan masukkan luka superfisial/eritema. Waktu 8 jam
-          pertama dihitung sejak kejadian luka bakar, bukan sejak pasien tiba di
-          fasilitas kesehatan.
+          Gunakan sebagai alat bantu hitung cepat. Rumus hanya menentukan laju
+          AWAL; angka selanjutnya ditentukan respons pasien. Pilih hanya area
+          luka bakar derajat 2/3, jangan masukkan luka superfisial/eritema.
+          Rule of 10s tidak dipakai di sini karena hanya sahih untuk dewasa
+          ≥ 40 kg. Rumus Parkland 4 mL lama tetap tersedia di lapisan
+          domain sebagai pembanding, tetapi tidak lagi menjadi angka utama
+          karena melebihkan cairan pada anak.
         </p>
       </div>
     </div>

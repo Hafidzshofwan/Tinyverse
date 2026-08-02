@@ -1,21 +1,18 @@
 <svg aria-label="Lund Browder body map anterior detail" class="burn-body-svg burn-body-front burn-body-detailed" role="img" viewBox="0 0 390 680">
 <defs>
-<linearGradient id="burnBodyFillFront" x1="0" x2="1" y1="0" y2="1">
-<stop offset="0%" stop-color="#FFFFFF"></stop>
-<stop offset="100%" stop-color="#FFF2F7"></stop>
-</linearGradient>
+
 <linearGradient id="burnSelectedFill" x1="0" x2="1" y1="0" y2="1">
 <stop offset="0%" stop-color="#FF7A45"></stop>
 <stop offset="100%" stop-color="#FF4F8B"></stop>
 </linearGradient>
-<filter height="170%" id="burnSoftShadow" width="170%" x="-35%" y="-35%">
-<feDropShadow dx="0" dy="11" floodColor="#24265E" floodOpacity=".16" stdDeviation="10"></feDropShadow>
+<filter height="170%" id="burnSoftShadowFront" width="170%" x="-35%" y="-35%">
+<feDropShadow dx="0" dy="11" flood-color="#24265E" flood-opacity=".16" stdDeviation="10"></feDropShadow>
 </filter>
 </defs>
-<g class="burn-anatomy" filter="url(#burnSoftShadow)">
+<g class="burn-anatomy" filter="url(#burnSoftShadowFront)">
 <g aria-label="Kepala depan anterior" class="burn-area burn-area-svg" data-burn-area="headFront" role="button" tabindex="0">
 <ellipse cx="195" cy="64" rx="42" ry="46"></ellipse>
-<text x="195" y="65">A</text>
+<text x="195" y="65" data-burn-value="A">A</text>
 </g>
 <g aria-label="Leher depan anterior" class="burn-area burn-area-svg burn-neck" data-burn-area="neckFront" role="button" tabindex="0">
 <path d="M164 112 L226 112 L219 150 L171 150 Z"></path>
@@ -51,7 +48,7 @@
 </g>
 <g aria-label="Lengan kiri bawah anterior" class="burn-area burn-area-svg" data-burn-area="armLeftLowerFront" role="button" tabindex="0">
 <path d="M309 253 L272 260 L287 343 C290 361 302 371 315 368 C328 365 334 351 330 333 Z"></path>
-<text x="302" y="310">1  </text>
+<text x="302" y="310">1½</text>
 </g>
 <g aria-label="Telapak tangan kiri anterior" class="burn-area burn-area-svg burn-hand" data-burn-area="handLeftFront" role="button" tabindex="0">
 <path d="M318 371 C329 378 332 392 326 405 C320 418 305 420 294 411 C286 404 283 390 289 379 C294 369 307 365 318 371 Z"></path>
@@ -63,11 +60,11 @@
 </g>
 <g aria-label="Paha kanan anterior" class="burn-area burn-area-svg" data-burn-area="legRightThighFront" role="button" tabindex="0">
 <path d="M140 363 C158 375 178 377 193 366 L187 485 L141 485 C132 434 130 394 140 363 Z"></path>
-<text x="164" y="428">B</text>
+<text x="164" y="428" data-burn-value="B">B</text>
 </g>
 <g aria-label="Tungkai bawah kanan anterior" class="burn-area burn-area-svg" data-burn-area="legRightLowerFront" role="button" tabindex="0">
 <path d="M141 490 L187 490 L179 593 L131 593 Z"></path>
-<text x="159" y="544">C</text>
+<text x="159" y="544" data-burn-value="C">C</text>
 </g>
 <g aria-label="Kaki kanan anterior" class="burn-area burn-area-svg burn-foot" data-burn-area="footRightFront" role="button" tabindex="0">
 <path d="M130 598 L180 598 C184 617 173 632 151 632 C132 632 121 621 130 598 Z"></path>
@@ -78,11 +75,11 @@
 </g>
 <g aria-label="Paha kiri anterior" class="burn-area burn-area-svg" data-burn-area="legLeftThighFront" role="button" tabindex="0">
 <path d="M250 363 C232 375 212 377 197 366 L203 485 L249 485 C258 434 260 394 250 363 Z"></path>
-<text x="226" y="428">B</text>
+<text x="226" y="428" data-burn-value="B">B</text>
 </g>
 <g aria-label="Tungkai bawah kiri anterior" class="burn-area burn-area-svg" data-burn-area="legLeftLowerFront" role="button" tabindex="0">
 <path d="M249 490 L203 490 L211 593 L259 593 Z"></path>
-<text x="231" y="544">C</text>
+<text x="231" y="544" data-burn-value="C">C</text>
 </g>
 <g aria-label="Kaki kiri anterior" class="burn-area burn-area-svg burn-foot" data-burn-area="footLeftFront" role="button" tabindex="0">
 <path d="M260 598 L210 598 C206 617 217 632 239 632 C258 632 269 621 260 598 Z"></path>
