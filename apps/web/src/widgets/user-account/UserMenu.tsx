@@ -5,8 +5,8 @@ import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
 import { ProfileModal } from "./ProfileModal";
-import { AdminModal } from "./AdminModal";
 import { KopSuratModal } from "@/shared/ui/KopSuratModal";
+import { ShieldUserIcon } from "@/shared/ui/icons/ShieldUserIcon";
 
 function UserIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -24,16 +24,6 @@ function KopSuratIcon({ size = 16, color = "currentColor" }: { size?: number; co
       <polyline points="14 2 14 8 20 8" />
       <path d="M12 11v6" />
       <path d="M9 14h6" />
-    </svg>
-  );
-}
-
-function ShieldUserIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-      <circle cx="12" cy="10" r="3" />
-      <path d="M7 16c0-2 2.5-3 5-3s5 1 5 3" />
     </svg>
   );
 }
@@ -67,7 +57,6 @@ export function UserMenu() {
   const { profil, keluar } = useAuth();
   const [buka, setBuka] = useState(false);
   const [profilTampil, setProfilTampil] = useState(false);
-  const [adminTampil, setAdminTampil] = useState(false);
   const [kopTampil, setKopTampil] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
@@ -141,15 +130,14 @@ export function UserMenu() {
             <LanggananIcon size={16} /> <span>Langganan</span>
           </Link>
           {admin && (
-            <button
+            <Link
+              href="/admin/pengguna"
               className="tv-drop-item"
-              onClick={() => {
-                setBuka(false);
-                setAdminTampil(true);
-              }}
+              style={{ textDecoration: "none" }}
+              onClick={() => setBuka(false)}
             >
               <ShieldUserIcon size={16} /> <span>Kelola pengguna</span>
-            </button>
+            </Link>
           )}
           <button
             className="tv-drop-item"
@@ -164,9 +152,6 @@ export function UserMenu() {
       )}
       {profilTampil && (
         <ProfileModal onTutup={() => setProfilTampil(false)} />
-      )}
-      {adminTampil && admin && (
-        <AdminModal onTutup={() => setAdminTampil(false)} />
       )}
       <KopSuratModal isOpen={kopTampil} onClose={() => setKopTampil(false)} />
     </div>
