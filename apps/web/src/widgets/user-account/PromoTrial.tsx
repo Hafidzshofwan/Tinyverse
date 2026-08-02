@@ -1,4 +1,4 @@
-import { HARI_TRIAL } from "./promoTrial";
+import { HARI_TRIAL } from "./promo-trial";
 
 /**
  * Spanduk promo trial gratis pada layar login/daftar.
@@ -52,7 +52,7 @@ export function PromoTrial({ ringkas = false }: { ringkas?: boolean }) {
         <circle cx="5.1" cy="19" r="1.05" fill="#99F6E4" />
       </svg>
       <span className="tv-promo-teks">
-        <strong>Gratis Trial {HARI_TRIAL} hari untuk pendaftar baru</strong>
+        <strong>Gratis trial {HARI_TRIAL} hari untuk pendaftar baru</strong>
         {ringkas ? null : (
           <span className="tv-promo-sub">
             Akses penuh seluruh alat klinis. Tanpa kartu kredit.
