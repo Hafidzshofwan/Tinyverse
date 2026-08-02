@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { viewPlanC } from "@/entities/fluid";
 import type { PlanCAgeCategory } from "@/entities/fluid";
-import { NumberField, RedFlagCrossLink } from "@/shared/ui";
+import {
+  NumberField,
+  RedFlagCrossLink,
+  ReferensiBlok,
+  REFERENSI_REHIDRASI_WHO,
+} from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
@@ -207,6 +212,10 @@ export function PlanCForm() {
           hidrasi belum membaik, ulangi tahap 1.
         </p>
       </div>
+      <ReferensiBlok
+        sumber={REFERENSI_REHIDRASI_WHO}
+        catatan="Pembagian 30 mL/kg dan 70 mL/kg beserta patokan waktunya mengikuti Rencana Terapi C pada buku saku Lintas Diare 2011."
+      />
     </div>
   );
 }

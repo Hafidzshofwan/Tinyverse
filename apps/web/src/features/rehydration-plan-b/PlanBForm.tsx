@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import { viewPlanB } from "@/entities/fluid";
-import { NumberField, ResultList, type ResultRow } from "@/shared/ui";
+import {
+  NumberField,
+  ReferensiBlok,
+  REFERENSI_REHIDRASI_WHO,
+  ResultList,
+  type ResultRow,
+} from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 
@@ -111,6 +117,10 @@ export function PlanBForm() {
           sering secara oral/nasogastrik. Nilai ulang setiap 1–2 jam.
         </p>
       </div>
+      <ReferensiBlok
+        sumber={REFERENSI_REHIDRASI_WHO}
+        catatan="Dosis 75 mL/kgBB dalam 3 jam mengikuti Rencana Terapi B pada buku saku Lintas Diare 2011."
+      />
     </div>
   );
 }

@@ -1,0 +1,138 @@
+/*
+ * Blok daftar pustaka bersama.
+ * WHY: dipakai di banyak alat hitung, jadi gayanya dikunci di satu berkas
+ * supaya tidak ada versi yang menyimpang saat alat baru ditambahkan.
+ */
+
+.blok {
+  margin-top: 14px;
+  border: 1px solid var(--tv-line);
+  border-left: 3px solid #6D4CBB;
+  border-radius: 14px;
+  background: var(--tv-putih);
+  overflow: hidden;
+}
+
+.ringkasan {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 14px;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tv-teks);
+  user-select: none;
+}
+
+.ringkasan::-webkit-details-marker {
+  display: none;
+}
+
+.ringkasan:hover {
+  background: var(--tv-hover);
+}
+
+.ringkasan:focus-visible {
+  outline: 2px solid #6D4CBB;
+  outline-offset: -2px;
+}
+
+.ikon {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: #6D4CBB;
+}
+
+.jumlah {
+  margin-left: auto;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--tv-soft-teks);
+}
+
+.panah {
+  flex: 0 0 auto;
+  display: inline-flex;
+  color: var(--tv-soft-teks);
+  transition: transform 0.18s ease;
+}
+
+.blok[open] .panah {
+  transform: rotate(180deg);
+}
+
+.isi {
+  padding: 2px 14px 13px;
+  border-top: 1px solid var(--tv-line);
+}
+
+.daftar {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.daftar li {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--tv-soft-teks);
+}
+
+.daftar li::marker {
+  color: #6D4CBB;
+  font-weight: 700;
+}
+
+.tautan {
+  color: #6D4CBB;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.tautan:hover {
+  text-decoration: underline;
+}
+
+.catatan {
+  margin: 12px 0 0;
+  font-size: 0.76rem;
+  line-height: 1.55;
+  color: var(--tv-soft-teks);
+  font-style: italic;
+}
+
+/* Mode gelap ditulis untuk tiga selektor tema, sama seperti berkas gaya lain. */
+:global([data-theme="dark"]) .blok,
+:global(html.dark) .blok,
+:global(.dark) .blok {
+  border-left-color: #A78BFA;
+}
+
+:global([data-theme="dark"]) .ikon,
+:global(html.dark) .ikon,
+:global(.dark) .ikon,
+:global([data-theme="dark"]) .daftar li::marker,
+:global(html.dark) .daftar li::marker,
+:global(.dark) .daftar li::marker,
+:global([data-theme="dark"]) .tautan,
+:global(html.dark) .tautan,
+:global(.dark) .tautan {
+  color: #A78BFA;
+}
+
+:global([data-theme="dark"]) .ringkasan:focus-visible,
+:global(html.dark) .ringkasan:focus-visible,
+:global(.dark) .ringkasan:focus-visible {
+  outline-color: #A78BFA;
+}
+
+@media (max-width: 640px) {
+  .daftar li {
+    font-size: 0.78rem;
+  }
+}
