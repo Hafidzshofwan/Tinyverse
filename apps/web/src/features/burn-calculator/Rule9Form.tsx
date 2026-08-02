@@ -204,49 +204,83 @@ export function Rule9Form() {
               className="hasil-rincian"
               style={{ display: "flex", alignItems: "center", gap: 6 }}
             >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 3L1 21H23L12 3Z" fill="#FEF3C7" stroke="#D97706" strokeWidth="1.8" strokeLinejoin="round" />
+                <path d="M12 9V14M12 17H12.01" stroke="#B45309" strokeWidth="2" strokeLinecap="round" />
+              </svg>
               {view.error}
             </div>
           ) : atls != null ? (
             <>
               <div className="burn-result-grid">
                 <div className="burn-result-card">
-                  <h4 className="ikon-title fire">Luas Luka Bakar (TBSA)</h4>
+                  <div className="ikon-title">
+                    <span className="ikon fire">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C12 2 7 7 7 12C7 15.9 10.1 19 14 19C17.9 19 21 15.9 21 12C21 8 18 4 18 4C18 4 17 8 15 9C13 10 12 2 12 2Z" fill="#FCA5A5" stroke="#DC2626" strokeWidth="1.5" />
+                        <path d="M12 12C12 12 9 14 9 16.5C9 18.4 10.3 20 12 20C13.7 20 15 18.4 15 16.5C15 14 12 12 12 12Z" fill="#EF4444" />
+                      </svg>
+                    </span>
+                    Luas Luka Bakar (TBSA)
+                  </div>
                   <div className="burn-result-value">
                     {formatTbsa(view.tbsaPercent)}%
                   </div>
-                  <div className="burn-result-detail">
-                    Bagan usia: {view.chartLabel}
+                  <div className="hasil-rincian">
+                    Bagan usia: <strong>{view.chartLabel}</strong>
+                    {view.kontribusi.length > 0 ? (
+                      <ul className="burn-rincian-list">
+                        {view.kontribusi.map((k) => (
+                          <li key={k.label}>
+                            {k.label} = {formatTbsa(k.percent)}%
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="catatan-metode">
+                        Belum ada area luka bakar yang dipilih.
+                      </p>
+                    )}
                   </div>
-                  <ul className="burn-rincian-list">
-                    {view.kontribusi.map((k) => (
-                      <li key={k.label}>
-                        {k.label} - {formatTbsa(k.percent)}%
-                      </li>
-                    ))}
-                  </ul>
                 </div>
 
                 <div className="burn-result-card">
-                  <h4 className="ikon-title water">Cairan Resusitasi (ATLS)</h4>
+                  <div className="ikon-title">
+                    <span className="ikon water">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 3C12 3 6 10 6 15C6 18.3 8.7 21 12 21C15.3 21 18 18.3 18 15C18 10 12 3 12 3Z" fill="#7DD3FC" stroke="#0284C7" strokeWidth="1.5" />
+                      </svg>
+                    </span>
+                    Cairan Resusitasi (ATLS)
+                  </div>
                   <div className="burn-result-value">
                     {bulat(atls.total24h)} mL
                   </div>
-                  <div className="burn-result-detail">
-                    {atls.faktor} mL x {berat} kg x {formatTbsa(view.tbsaPercent)}%
+                  <div className="hasil-rincian">
+                    {atls.faktor} × {berat} × {formatTbsa(view.tbsaPercent)} ={" "}
+                    {bulat(atls.total24h)} mL
                     <br />
-                    {atls.faktorAlasan}
+                    <strong>Faktor:</strong> {atls.faktorAlasan}
                     <br />
-                    Cairan: Ringer Laktat (RL) hangat.
+                    <strong>Cairan:</strong> Ringer Laktat (RL) hangat.
                   </div>
                 </div>
 
                 <div className="burn-result-card">
-                  <h4 className="ikon-title clock">Laju 8 Jam Pertama</h4>
+                  <div className="ikon-title">
+                    <span className="ikon clock">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="13" r="8" stroke="#0369A1" strokeWidth="1.8" fill="#E0F2FE" />
+                        <path d="M12 9V13L15 15" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                    Laju 8 Jam Pertama
+                  </div>
                   <div className="burn-result-value">
                     {bulat(atls.fase1LajuMlPerJam)} mL/jam
                   </div>
-                  <div className="burn-result-detail">
-                    Jatah fase 1: {bulat(atls.fase1Ml)} mL (separuh total).
+                  <div className="hasil-rincian">
+                    <strong>Jatah fase 1:</strong> {bulat(atls.fase1Ml)} mL
                     <br />
                     {atls.praRsMl > 0
                       ? `Sudah masuk ${bulat(atls.praRsMl)} mL, sisa ${bulat(atls.fase1SisaMl)} mL.`
@@ -254,27 +288,35 @@ export function Rule9Form() {
                     <br />
                     {atls.fase1Terlewat
                       ? "8 jam pertama sudah lewat. Kejar sisa defisit dan titrasi ketat."
-                      : `Sisa waktu fase 1: ${atls.sisaJamFase1} jam sejak kejadian.`}
+                      : `Sisa waktu fase 1: ${atls.sisaJamFase1} jam.`}
                     {atls.tetesFase1 != null ? (
                       <>
                         <br />
-                        {atls.tetesFase1} tetes/menit ({atls.dripLabel})
+                        <strong>{atls.tetesFase1} tetes/menit</strong> ({atls.dripLabel})
                       </>
                     ) : null}
                   </div>
                 </div>
 
                 <div className="burn-result-card">
-                  <h4 className="ikon-title clock">16 Jam Berikutnya</h4>
+                  <div className="ikon-title">
+                    <span className="ikon clock">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="13" r="8" stroke="#0369A1" strokeWidth="1.8" fill="#E0F2FE" />
+                        <path d="M12 9V13L15 15" stroke="#0284C7" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                    </span>
+                    16 Jam Berikutnya
+                  </div>
                   <div className="burn-result-value">
                     {bulat(atls.fase2LajuMlPerJam)} mL/jam
                   </div>
-                  <div className="burn-result-detail">
-                    Jatah fase 2: {bulat(atls.fase2Ml)} mL.
+                  <div className="hasil-rincian">
+                    <strong>Jatah fase 2:</strong> {bulat(atls.fase2Ml)} mL
                     {atls.tetesFase2 != null ? (
                       <>
                         <br />
-                        {atls.tetesFase2} tetes/menit ({atls.dripLabel})
+                        <strong>{atls.tetesFase2} tetes/menit</strong> ({atls.dripLabel})
                       </>
                     ) : null}
                   </div>
@@ -282,19 +324,28 @@ export function Rule9Form() {
 
                 {atls.rumatanBerlaku ? (
                   <div className="burn-result-card">
-                    <h4 className="ikon-title water">Rumatan 4-2-1</h4>
+                    <div className="ikon-title">
+                      <span className="ikon">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 3H15V6H9V3Z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="1.5" />
+                        <rect x="7" y="6" width="10" height="14" rx="3" fill="#E0F2FE" stroke="#0284C7" strokeWidth="1.5" />
+                        <path d="M7 11H17" stroke="#38BDF8" strokeWidth="1.5" />
+                      </svg>
+                    </span>
+                      Rumatan 4-2-1
+                    </div>
                     <div className="burn-result-value">
                       {bulat(atls.rumatanMlPerJam)} mL/jam
                     </div>
-                    <div className="burn-result-detail">
+                    <div className="hasil-rincian">
                       {atls.rumatanRincian}
                       <br />
-                      Berat &le; 30 kg: rumatan mengandung dekstrosa diberikan
-                      lewat jalur terpisah dan TIDAK ikut dititrasi.
+                      Berat ≤ 30 kg: rumatan berdekstrosa lewat jalur terpisah,
+                      tidak ikut dititrasi.
                       {atls.tetesRumatan != null ? (
                         <>
                           <br />
-                          {atls.tetesRumatan} tetes/menit ({atls.dripLabel})
+                          <strong>{atls.tetesRumatan} tetes/menit</strong> ({atls.dripLabel})
                         </>
                       ) : null}
                     </div>
@@ -302,40 +353,74 @@ export function Rule9Form() {
                 ) : null}
 
                 <div className="burn-result-card">
-                  <h4 className="ikon-title urine">Target Produksi Urin</h4>
-                  <div className="burn-result-value">{atls.urinLabel}</div>
-                  <div className="burn-result-detail">
-                    Setara {Math.round(atls.urinMin * 10) / 10} -{" "}
-                    {Math.round(atls.urinMax * 10) / 10} mL/jam. Titrasi laju
-                    naik-turun 20-33% mengikuti urin, tanpa bolus.
+                  <div className="ikon-title">
+                    <span className="ikon urine">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 4C12 4 7 10 7 14.5C7 17.5 9.2 20 12 20C14.8 20 17 17.5 17 14.5C17 10 12 4 12 4Z" fill="#FDE047" stroke="#CA8A04" strokeWidth="1.5" />
+                      </svg>
+                    </span>
+                    Target Produksi Urin
+                  </div>
+                  <div className="burn-result-value">
+                    {Math.round(atls.urinMin * 10) / 10}–
+                    {Math.round(atls.urinMax * 10) / 10} mL/jam
+                  </div>
+                  <div className="hasil-rincian">
+                    Target: {atls.urinLabel}
+                    <br />
+                    Titrasi laju naik-turun 20-33% mengikuti urin, tanpa bolus.
                   </div>
                 </div>
 
                 {atls.melampauiCreep ? (
                   <div className="burn-result-card">
-                    <h4 className="ikon-title fire">Waspada Fluid Creep</h4>
+                    <div className="ikon-title">
+                      <span className="ikon fire">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C12 2 7 7 7 12C7 15.9 10.1 19 14 19C17.9 19 21 15.9 21 12C21 8 18 4 18 4C18 4 17 8 15 9C13 10 12 2 12 2Z" fill="#FCA5A5" stroke="#DC2626" strokeWidth="1.5" />
+                        <path d="M12 12C12 12 9 14 9 16.5C9 18.4 10.3 20 12 20C13.7 20 15 18.4 15 16.5C15 14 12 12 12 12Z" fill="#EF4444" />
+                      </svg>
+                    </span>
+                      Waspada Fluid Creep
+                    </div>
                     <div className="burn-result-value">
                       &gt; {bulat(atls.batasCreepMlPerJam)} mL/jam
                     </div>
-                    <div className="burn-result-detail">
-                      Laju awal sudah melewati ambang 6 mL/kg/%TBSA. Risiko
-                      edema, sindrom kompartemen, dan gagal napas meningkat.
-                      Pertimbangkan koloid dan konsultasi pusat luka bakar.
+                    <div className="hasil-rincian">
+                      Laju awal sudah melewati ambang 6 mL/kg/%TBSA. Risiko edema,
+                      sindrom kompartemen, dan gagal napas meningkat. Pertimbangkan
+                      koloid dan konsultasi pusat luka bakar.
                     </div>
                   </div>
                 ) : null}
               </div>
 
-              <button
-                type="button"
-                className="tv-btn-ringkasan"
-                onClick={handleTambahRingkasan}
-                style={{ background: "#0A0B5F" }}
-              >
-                {ditambahkan
-                  ? "Sudah ditambahkan ke Ringkasan"
-                  : "Tambahkan ke Ringkasan"}
-              </button>
+              <div style={{ marginTop: 14 }}>
+                <button
+                  type="button"
+                  className="tv-btn"
+                  style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6 }}
+                  onClick={handleTambahRingkasan}
+                >
+                  {ditambahkan ? (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 6L9 17L4 12" stroke="#4ADE80" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      Ditambahkan ke Ringkasan!
+                    </>
+                  ) : (
+                    <>
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M14 2V8H20" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M8 13H16M8 17H13" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" />
+                      </svg>
+                      Tambahkan ke Ringkasan
+                    </>
+                  )}
+                </button>
+              </div>
 
               {view.tbsaPercent >= 10 ? (
                 <RedFlagCrossLink
