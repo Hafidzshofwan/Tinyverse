@@ -133,6 +133,15 @@ export function KelolaPenggunaPanel() {
     };
   }, [rows]);
 
+  /* Akun sendiri dikeluarkan dari tabel dan ditampilkan tersendiri di atas.
+     Alasannya bukan sekadar rapi: satu-satunya baris yang tidak punya tombol
+     Aktif/Nonaktif adalah baris ini, sehingga di dalam tabel ia tampak seperti
+     baris yang tombolnya lupa dipasang. Di luar tabel, ketiadaan tombol itu
+     justru masuk akal. */
+  const saya = useMemo(() => (rows || []).find((r) => r.saya) ?? null, [rows]);
+  const lain = useMemo(() => (rows || []).filter((r) => !r.saya), [rows]);
+  const tampilSaya = saya ? tampilanLangganan(saya.langganan) : null;
+
   async function onToggleAktif(id: string, aktif: boolean) {
     try {
       await toggleAktif(id, aktif);
@@ -195,16 +204,46 @@ export function KelolaPenggunaPanel() {
             </div>
           </div>
 
+          {saya && tampilSaya ? (
+            <div className={gaya.sayaKartu}>
+              <div className={gaya.sayaUtama}>
+                <div className={gaya.sayaLabel}>Akun Anda</div>
+                <div className={gaya.nama}>{saya.nama}</div>
+                <div className={gaya.email}>{saya.email}</div>
+              </div>
+              <span
+                className={[
+                  gaya.peran,
+                  saya.role === "admin" ? gaya.peranAdmin : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+              >
+                {saya.role === "admin" ? "Admin" : "Pengguna"}
+              </span>
+              <div
+                className={[gaya.lang, tampilSaya.kelas].filter(Boolean).join(" ")}
+              >
+                <span className={gaya.status}>{tampilSaya.teks}</span>
+                <span className={gaya.catatan}>{tampilSaya.catatan}</span>
+              </div>
+            </div>
+          ) : null}
+
           <div className={gaya.bar}>
             <span>
-              Dimuat{diperbarui ? " pukul " + diperbarui : ""}. Yang kedaluwarsa
-              ditampilkan di urutan atas.
+              {lain.length} pengguna lain. Dimuat
+              {diperbarui ? " pukul " + diperbarui : ""}, yang kedaluwarsa di
+              urutan atas.
             </span>
             <button className={gaya.tombolSegar} onClick={muat}>
               Muat ulang
             </button>
           </div>
 
+          {lain.length === 0 ? (
+            <div className={gaya.kosong}>Belum ada pengguna lain.</div>
+          ) : (
           <div className={gaya.gulir}>
             <table className={gaya.tabel}>
               <thead>
@@ -216,7 +255,7 @@ export function KelolaPenggunaPanel() {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r) => {
+                {lain.map((r) => {
                   const tampil = tampilanLangganan(r.langganan);
                   const admin = r.role === "admin";
                   return (
@@ -267,6 +306,7 @@ export function KelolaPenggunaPanel() {
               </tbody>
             </table>
           </div>
+          )}
 
           <p className={gaya.catatanKaki}>
             Peran ditampilkan sebagai keterangan saja. Mengangkat seseorang
