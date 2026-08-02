@@ -13,7 +13,7 @@ import {
 import { LongitudinalGrowthChart } from "./LongitudinalGrowthChart";
 import { usePatientProfile, usePatientKey, PatientProfile, validateAntropometri } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
-import { GenderAvatar } from "./PatientProfile";
+import { GenderAvatar } from "@/shared/ui/icons/GenderAvatar";
 import { hitungIMT } from "./zscore";
 import { ScreeningIcon, type IconStyleVariant } from "@/shared/ui";
 
