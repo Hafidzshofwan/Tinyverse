@@ -174,7 +174,7 @@ function tambahStatusCairan(langkah: Baris[], j: JawabanAlur): void {
         SUMBER.rchHipoNa,
       ),
     );
-  else if (j.statusCairan === "euvolemik")
+  else if (j.statusCairan === "euvolemik") {
     langkah.push(
       b(
         "aksi",
@@ -183,7 +183,22 @@ function tambahStatusCairan(langkah: Baris[], j: JawabanAlur): void {
         SUMBER.rchHipoNa,
       ),
     );
-  else if (j.statusCairan === "hipervolemik")
+    /* Pagar pengaman ini sengaja ditempel langsung pada cabang euvolemik,
+       bukan diletakkan di daftar pagar umum. Alasannya: kesalahan yang paling
+       mungkin terjadi di cabang inilah yang harus dicegah, yaitu melabeli SIADH
+       hanya karena pasien tampak euvolemik, lalu membatasi cairan pada anak
+       yang justru kelebihan asupan air. Dua keadaan itu memerlukan tindakan
+       berbeda dan hanya dapat dipisahkan oleh urin, bukan oleh pemeriksaan
+       fisik. Karena itu angkanya muncul bersama cabangnya, tidak terpisah. */
+    langkah.push(
+      b(
+        "bahaya",
+        "Jangan menyebut SIADH tanpa bukti urin",
+        "SIADH baru layak disebut bila osmolalitas urin di atas 100 mOsm/kg dan natrium urin di atas 30 mmol/L, pada anak euvolemik yang tidak sedang memakai diuretik dan fungsi tiroid serta adrenalnya normal. Ambil kedua sampel urin bersamaan dengan sampel darah, sebelum cairan diubah. Osmolalitas urin yang rendah, di bawah 100 mOsm/kg, justru mengarah ke kelebihan asupan air atau polidipsia; pada keadaan itu yang dihentikan adalah asupan airnya, bukan pembatasan cairan ala SIADH.",
+        SUMBER.rchHipoNa,
+      ),
+    );
+  } else if (j.statusCairan === "hipervolemik")
     langkah.push(
       b(
         "aksi",

@@ -589,7 +589,7 @@ export function ElectrolyteTab() {
           <div style={{ marginTop: "18px" }}>
             <Tanya
               teks="Bagaimana status cairan pasien?"
-              bantu="Status cairan adalah kunci penentu penyebab sekaligus terapinya."
+              bantu="Status cairan adalah kunci penentu penyebab sekaligus terapinya. Nilai dari turgor kulit, waktu isi kapiler, kelembapan mukosa, produksi urin, ada tidaknya edema, tekanan vena jugularis, dan perubahan berat badan dibandingkan berat sebelum sakit. Hipovolemik bila ada tanda kehilangan cairan tanpa edema, hipervolemik bila ada edema atau berat badan naik, euvolemik bila keduanya tidak ada."
               anak={
                 <div>
                   <button type="button" style={gayaPilihan(statusCairan === "hipovolemik")} onClick={() => setStatusCairan("hipovolemik")}>
