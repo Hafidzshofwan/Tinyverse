@@ -201,4 +201,57 @@ describe("catatan dan validasi", () => {
     expect(r.urgent).toBe(true);
     expect(r.followUp.teks).toContain("segera");
   });
+
+  it("memberi alur tindak lanjut bertingkat untuk Elevated BP", () => {
+    const r = evaluateBP(anak8(111, 60));
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.classification.finalCategory).toBe("elevated");
+    expect(r.followUp.cekUlang).toContain("6 bulan");
+    expect(r.followUp.lanjutan).toHaveLength(2);
+    expect(r.followUp.lanjutan.join(" ")).toContain("12 bulan");
+    expect(r.followUp.lanjutan.join(" ")).toContain("ABPM");
+    expect(r.followUp.catatanAktivitas).toBeNull();
+  });
+
+  it("memberi alur 1 sampai 2 minggu lalu 3 bulan untuk Stage 1", () => {
+    const r = evaluateBP(anak8(115, 60));
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.classification.finalCategory).toBe("stage1");
+    expect(r.followUp.cekUlang).toContain("1 sampai 2 minggu");
+    expect(r.followUp.lanjutan.join(" ")).toContain("3 bulan");
+    expect(r.followUp.lanjutan.join(" ")).toContain("3 kunjungan");
+    expect(r.followUp.catatanAktivitas).toContain("LVH");
+  });
+
+  it("memberi opsi rujukan 1 minggu dan larangan olahraga untuk Stage 2", () => {
+    const r = evaluateBP(anak8(130, 60));
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.classification.finalCategory).toBe("stage2");
+    expect(r.urgent).toBe(false);
+    expect(r.followUp.cekUlang).toContain("1 minggu");
+    expect(r.followUp.lanjutan).toHaveLength(1);
+    expect(r.followUp.catatanAktivitas).toContain("olahraga kompetitif");
+  });
+
+  it("tidak menambah tindakan apa pun pada hasil normal", () => {
+    const r = evaluateBP(anak8(100, 60));
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.classification.finalCategory).toBe("normal");
+    expect(r.followUp.lanjutan).toEqual([]);
+    expect(r.followUp.cekUlang).toContain("kunjungan rutin");
+    expect(r.followUp.catatanAktivitas).toBeNull();
+  });
+
+  it("menghapus jadwal cek ulang bila keadaan menuntut evaluasi segera", () => {
+    const r = evaluateBP(anak8(115, 60, { symptomatic: true }));
+    expect(r.status).toBe("ok");
+    if (r.status !== "ok") return;
+    expect(r.urgent).toBe(true);
+    expect(r.followUp.cekUlang).toBeNull();
+    expect(r.followUp.lanjutan).toEqual([]);
+  });
 });

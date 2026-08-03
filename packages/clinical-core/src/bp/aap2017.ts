@@ -290,7 +290,27 @@ export function classifyBPAge13Plus(sbp: number, dbp: number): BPClassification 
   );
 }
 
-export type FollowUp = { teks: string; segera: boolean };
+/*
+ * Tindak lanjut AAP 2017 bukan satu kalimat, melainkan alur bertingkat:
+ * tindakan awal, jadwal cek ulang dengan auskultasi, lalu percabangan bila
+ * kategori yang sama masih bertahan pada kunjungan berikutnya. Struktur ini
+ * dibuat menyerupai pedoman supaya tidak ada tahapan yang hilang saat
+ * ditampilkan. Medan `teks` dipertahankan sebagai ringkasan satu kalimat agar
+ * pemanggil lama tetap berjalan.
+ */
+export type FollowUp = {
+  teks: string;
+  segera: boolean;
+  /** Jadwal pengukuran ulang. Null bila tindakan harus segera. */
+  cekUlang: string | null;
+  /** Percabangan bila kategori bertahan pada kunjungan berikutnya. */
+  lanjutan: string[];
+  /** Pembatasan aktivitas terkait LVH dan olahraga kompetitif. */
+  catatanAktivitas: string | null;
+};
+
+export const AAP_CATATAN_OLAHRAGA =
+  "Pasien dengan bukti hipertrofi ventrikel kiri (LVH) tidak boleh mengikuti olahraga kompetitif sampai tekanan darah kembali normal dengan terapi. Atlet dengan hipertensi Stage 2, sekalipun tanpa bukti kerusakan organ target, tidak boleh mengikuti olahraga kompetitif sampai hipertensi terkendali dengan modifikasi gaya hidup atau terapi farmakologis.";
 
 export function getAAPFollowUpRecommendation(
   category: BPCategory,
@@ -301,32 +321,56 @@ export function getAAPFollowUpRecommendation(
     return {
       teks: "Ada gejala yang menyertai. Lakukan evaluasi medis segera, pertimbangkan rujukan ke instalasi gawat darurat.",
       segera: true,
+      cekUlang: null,
+      lanjutan: [],
+      catatanAktivitas: null,
     };
   }
   if (category === "stage2") {
     return {
-      teks: "Ukur tekanan darah pada ekstremitas atas dan bawah, lalu lakukan evaluasi atau rujukan dalam waktu 1 minggu.",
+      teks: "Bila tanpa gejala, mulai intervensi gaya hidup: pengaturan gizi, tidur cukup, dan aktivitas fisik.",
       segera: false,
+      cekUlang:
+        "Ulangi pengukuran dengan auskultasi dalam 1 minggu, atau rujuk langsung ke subspesialis dalam 1 minggu.",
+      lanjutan: [
+        "Bila masih Stage 2 pada 1 minggu, ukur tekanan darah ekstremitas atas dan bawah, lakukan ABPM (pemantauan tekanan darah ambulatorik 24 jam) beserta evaluasi diagnostik, lalu mulai terapi, atau rujuk ke layanan subspesialis dalam 1 minggu.",
+      ],
+      catatanAktivitas: AAP_CATATAN_OLAHRAGA,
     };
   }
   if (category === "stage1") {
     return {
-      teks: "Bila tanpa gejala, berikan konseling gaya hidup dan ulangi pengukuran auskultasi dalam 1 sampai 2 minggu.",
+      teks: "Bila tanpa gejala, mulai intervensi gaya hidup: pengaturan gizi, tidur cukup, dan aktivitas fisik.",
       segera: false,
+      cekUlang: "Ulangi pengukuran dengan auskultasi dalam 1 sampai 2 minggu.",
+      lanjutan: [
+        "Bila masih Stage 1 pada 1 sampai 2 minggu, ukur tekanan darah ekstremitas atas dan bawah, lalu periksa ulang dengan auskultasi dalam 3 bulan, dengan pertimbangan rujukan gizi atau tata laksana berat badan.",
+        "Bila tetap Stage 1 setelah 3 kunjungan, lakukan ABPM beserta evaluasi diagnostik, mulai terapi, dan pertimbangkan rujukan subspesialis.",
+      ],
+      catatanAktivitas: AAP_CATATAN_OLAHRAGA,
     };
   }
   if (category === "elevated") {
     return {
-      teks: "Berikan konseling gaya hidup dan ulangi pengukuran auskultasi dalam 6 bulan.",
+      teks: "Mulai intervensi gaya hidup: pengaturan gizi, tidur cukup, dan aktivitas fisik.",
       segera: false,
+      cekUlang: "Ulangi pengukuran dengan auskultasi dalam 6 bulan.",
+      lanjutan: [
+        "Bila masih Elevated pada 6 bulan, ukur tekanan darah ekstremitas atas dan bawah, lalu ulangi tata laksana gaya hidup.",
+        "Bila masih Elevated 12 bulan sejak pengukuran awal, lakukan ABPM beserta evaluasi diagnostik, dan pertimbangkan rujukan subspesialis.",
+      ],
+      catatanAktivitas: null,
     };
   }
   return {
-    teks:
+    teks: "Tidak diperlukan tindakan tambahan.",
+    segera: false,
+    cekUlang:
       age >= AAP_ADOLESCENT_AGE
         ? "Ulangi pengukuran pada kunjungan rutin berikutnya."
         : "Ulangi pengukuran pada kunjungan rutin berikutnya, sesuai jadwal pemantauan anak sehat.",
-    segera: false,
+    lanjutan: [],
+    catatanAktivitas: null,
   };
 }
 
@@ -517,6 +561,11 @@ export function generateIndonesianExplanation(result: BPResultOk): string {
       "Karena pengukuran memakai alat digital, konfirmasi dengan auskultasi manual dianjurkan.",
     );
   }
+
+  bagian.push(`Tindak lanjut: ${result.followUp.teks}`);
+  if (result.followUp.cekUlang) bagian.push(result.followUp.cekUlang);
+  for (const langkah of result.followUp.lanjutan) bagian.push(langkah);
+  if (result.followUp.catatanAktivitas) bagian.push(result.followUp.catatanAktivitas);
 
   return bagian.join(" ");
 }

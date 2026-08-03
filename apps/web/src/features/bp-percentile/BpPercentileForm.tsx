@@ -166,6 +166,9 @@ export function BpPercentileForm() {
         t ? `Ambang SBP P90/P95/P95+12: ${t.sbpP90}/${t.sbpP95}/${t.sbpP95plus12} mmHg` : "",
         t ? `Ambang DBP P90/P95/P95+12: ${t.dbpP90}/${t.dbpP95}/${t.dbpP95plus12} mmHg` : "",
         `Tindak lanjut: ${ringkas.followUp.teks}`,
+        ringkas.followUp.cekUlang ?? "",
+        ...ringkas.followUp.lanjutan.map((x) => `- ${x}`),
+        ringkas.followUp.catatanAktivitas ?? "",
         AAP_DISCLAIMER,
       ]
         .filter((x) => x !== "")
@@ -407,6 +410,19 @@ export function BpPercentileForm() {
           >
             <p className="tv-bp-judul">Tindak lanjut menurut AAP 2017</p>
             <p className="tv-bp-teks">{ringkas.followUp.teks}</p>
+            {ringkas.followUp.cekUlang && (
+              <p className="tv-bp-hasil-baris">{ringkas.followUp.cekUlang}</p>
+            )}
+            {ringkas.followUp.lanjutan.length > 0 && (
+              <ul className="tv-bp-daftar">
+                {ringkas.followUp.lanjutan.map((x) => (
+                  <li key={x}>{x}</li>
+                ))}
+              </ul>
+            )}
+            {ringkas.followUp.catatanAktivitas && (
+              <p className="tv-bp-catatan">{ringkas.followUp.catatanAktivitas}</p>
+            )}
             {ringkas.notes.length > 0 && (
               <ul className="tv-bp-daftar">
                 {ringkas.notes.map((n) => (
