@@ -30,9 +30,9 @@ import type { Plan } from "@tinyverse/billing";
  */
 export const KATALOG_PLAN: readonly Plan[] = [
   { id: "bulanan", nama: "1 Bulan", durasiHari: 30, hargaRupiah: 15000, aktif: true },
-  { id: "kuartalan", nama: "3 Bulan", durasiHari: 90, hargaRupiah: 35000, aktif: true },
-  { id: "semesteran", nama: "6 Bulan", durasiHari: 180, hargaRupiah: 60000, aktif: true },
-  { id: "tahunan", nama: "1 Tahun", durasiHari: 365, hargaRupiah: 100000, aktif: true },
+  { id: "kuartalan", nama: "3 Bulan", durasiHari: 90, hargaRupiah: 30000, aktif: true },
+  { id: "semesteran", nama: "6 Bulan", durasiHari: 180, hargaRupiah: 50000, aktif: true },
+  { id: "tahunan", nama: "1 Tahun", durasiHari: 365, hargaRupiah: 80000, aktif: true },
 ];
 
 export function cariPlan(planId: string): Plan | null {
