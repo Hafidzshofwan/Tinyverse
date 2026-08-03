@@ -2692,6 +2692,14 @@ body {
 .tv-vg-score-tag.score-0 { background: #e2e8f0; color: #475569; }
 .tv-vg-score-tag.score-1 { background: #fef3c7; color: #b45309; }
 .tv-vg-score-tag.score-2 { background: #d1fae5; color: #047857; }
+/* Tag skor panduan visual: latar terang dikunci nilai tetap, jadi di mode
+   gelap teksnya harus ikut dikunci gelap, bukan diwarisi. */
+[data-theme="dark"] .tv-vg-score-tag.score-0,
+html.dark .tv-vg-score-tag.score-0 { background: rgba(226, 232, 240, 0.22) !important; color: #E2E8F0 !important; }
+[data-theme="dark"] .tv-vg-score-tag.score-1,
+html.dark .tv-vg-score-tag.score-1 { background: rgba(251, 191, 36, 0.22) !important; color: #FCD34D !important; }
+[data-theme="dark"] .tv-vg-score-tag.score-2,
+html.dark .tv-vg-score-tag.score-2 { background: rgba(52, 211, 153, 0.22) !important; color: #6EE7B7 !important; }
 
 .tv-vg-text {
   font-size: 11.5px;
@@ -4328,12 +4336,25 @@ body.tv-tanpa-dekorasi .bg-decor {
   box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15) !important;
 }
 
-[data-theme="dark"] .tv-skor-poin {
-  color: #cbd5e1 !important;
+/*
+ * Lencana poin di mode gelap. Sebelumnya hanya `color` yang ditimpa,
+ * sedangkan `background` tetap mewarisi aturan terang. Pada opsi terpilih
+ * latarnya #0ea5e9 sementara teksnya ditimpa menjadi #38BDF8, jadi biru
+ * di atas biru dan angka +1 atau +2 lenyap. Latar dan teks kini selalu
+ * ditetapkan berpasangan supaya kontrasnya tidak pernah bergantung pada
+ * aturan mode terang. Ditulis ganda untuk [data-theme="dark"] dan
+ * html.dark karena skrip tema menyetel keduanya.
+ */
+[data-theme="dark"] .tv-skor-poin,
+html.dark .tv-skor-poin {
+  background: rgba(148, 163, 184, 0.18) !important;
+  color: #E2E8F0 !important;
 }
 
-[data-theme="dark"] .tv-skor-opt.aktif .tv-skor-poin {
-  color: #38BDF8 !important;
+[data-theme="dark"] .tv-skor-opt.aktif .tv-skor-poin,
+html.dark .tv-skor-opt.aktif .tv-skor-poin {
+  background: #38BDF8 !important;
+  color: #0F172A !important;
 }
 
 /* Hasil / Results */
