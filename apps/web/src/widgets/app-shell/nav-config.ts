@@ -64,6 +64,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     items: [
       { slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", built: true },
       { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", built: true },
+      { slug: "tekanan-darah", label: "Tekanan Darah", icon: "\uD83E\uDEC0", href: "/preview/tekanan-darah", built: true },
     ],
   },
   {
@@ -98,6 +99,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/puyer": "Hitung tablet yang digerus dan pembagian bungkus.",
   "/preview/pertumbuhan": "Kurva pertumbuhan dan penilaian status gizi anak.",
   "/preview/skoring": "8 skor klinis anak (dehidrasi, croup, GCS, dan lainnya).",
+  "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
   "/preview/nutrisi": "Kebutuhan kalori, protein, dan takaran susu.",
   "/preview/guideline": "Panduan tata laksana penyakit anak tersering.",
@@ -115,6 +117,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/puyer": "Kalkulator racik puyer pediatri: Hitung konversi tablet utuh yang digerus, penyesuaian dosis puyer & sirup, serta estimasi pembagian bungkus obat.",
   "/preview/pertumbuhan": "Pemantauan tumbuh kembang anak: Grafik kurva pertumbuhan WHO (0-5 thn) & CDC (2-20 thn), Z-score BB/U, TB/U, IMT/U, serta skrining perkembangan KPSP, Denver II, & M-CHAT-R.",
   "/preview/skoring": "8 kalkulator skoring klinis pediatrik: Dehidrasi WHO/CDD, Downes/Westley Croup, Pediatric GCS, Skoring TB Anak, APGAR, Skor Nyeri FLACC, & PEWS.",
+  "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
   "/preview/nutrisi": "Kalkulator nutrisi & kecukupan gizi: Hitung Angka Kecukupan Gizi (AKG), kebutuhan kalori & protein anak, takaran susu, serta kebutuhan enteral/parenteral.",
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",

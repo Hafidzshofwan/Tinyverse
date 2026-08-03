@@ -44,6 +44,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
   { type: "menu", slug: "protokol", label: "Guideline", icon: "🩺", href: "/preview/guideline", text: "Guideline & Panduan Pediatrik", keywords: "guideline protokol pedoman who idai pdf" },
   { type: "menu", slug: "imunisasi", label: "Jadwal Imunisasi", icon: "📅", href: "/preview/imunisasi", text: "Jadwal Imunisasi IDAI & Catch-Up", keywords: "imunisasi vaksin vaksinasi idai catch up kejar" },
   { type: "menu", slug: "ringkasan", label: "Ringkasan Klinis", icon: "📄", href: "/preview/ringkasan", text: "Ringkasan & Resume Catatan Medis", keywords: "ringkasan resume rekam medis copy salin" },
+  { type: "menu", slug: "tekanan-darah", label: "Tekanan Darah", icon: "🫀", href: "/preview/tekanan-darah", text: "Kalkulator Persentil Tekanan Darah Anak (AAP 2017)", keywords: "tekanan darah td bp blood pressure hipertensi persentil aap 2017 sistolik diastolik sbp dbp elevated stage 1 stage 2 manset cuff" },
   { type: "menu", slug: "pasien", label: "Profil Pasien", icon: "👤", href: "/", text: "Profil & Data Pasien Aktif", keywords: "pasien profil rekam medis rm berat tinggi usia" },
 
   // Sub-fitur Spesifik Tumbuh Kembang
@@ -222,6 +223,18 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     text: "Nilai Rujukan Normal Laboratorium Pediatrik Berdasarkan Usia",
     keywords: "nilai rujukan normal lab rentang acuan batas normal anak bayi neonatus",
     anchor: "text:Nilai Rujukan"
+  },
+
+  // Kalkulator Persentil Tekanan Darah Anak
+  {
+    type: "content",
+    slug: "tekanan-darah",
+    label: "Persentil Tekanan Darah Anak",
+    icon: "🫀",
+    href: "/preview/tekanan-darah",
+    text: "Kategori Tekanan Darah Anak & Remaja Menurut AAP 2017 (Normal, Elevated BP, Stage 1 HTN range, Stage 2 HTN range)",
+    keywords: "tekanan darah anak hipertensi persentil aap 2017 table 3 table 4 table 5 sistolik diastolik p90 p95 p95+12 elevated stage 1 stage 2 auskultasi osilometrik manset",
+    anchor: "text:Tekanan Darah"
   }
 ];
 
