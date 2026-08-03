@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState, type CSSProperties } from "react";
-import { NumberField, ReferensiBlok } from "@/shared/ui";
+import { useMemo, useState } from "react";
+import { ReferensiBlok } from "@/shared/ui";
 import { usePatientProfile, useSyncedField } from "@/shared/lib/patient";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
@@ -20,9 +20,8 @@ import {
 /**
  * Feature: Kalkulator Persentil Tekanan Darah Anak (AAP 2017).
  *
- * WHY gaya inline seperti GcsForm, bukan kelas v17-cairan: alat ini berdiri
- * sendiri di halamannya, tidak menumpang berkas CSS milik menu terapi cairan.
- * Semua warna memakai token yang sudah ada supaya mode gelap ikut otomatis.
+ * WHY kelas CSS, bukan style inline: kotak isian butuh :focus, ::placeholder,
+ * dan varian mode gelap. Gayanya ada di app/preview/tekanan-darah/tekanan-darah.css.
  */
 
 const REFERENSI_AAP_2017 = [
@@ -35,85 +34,42 @@ const REFERENSI_AAP_2017 = [
 ] as const;
 
 /**
- * Warna kategori.
- *
- * WHY memakai rgba dengan alfa rendah, bukan hex pekat: latar tipis tetap
- * terbaca di mode terang maupun gelap, sedangkan warna teks dipilih pada
- * tingkat kecerahan menengah agar kontras di kedua mode.
+ * Warna kategori. Latar memakai rgba beralfa rendah supaya tetap terbaca di
+ * mode terang maupun gelap, dengan garis tepi kiri sebagai penanda utama.
  */
 const WARNA_KATEGORI: Record<BPCategory, { garis: string; latar: string; teks: string }> = {
-  normal: { garis: "#12957E", latar: "rgba(18, 149, 126, 0.12)", teks: "#12957E" },
-  elevated: { garis: "#C99000", latar: "rgba(201, 144, 0, 0.14)", teks: "#B57400" },
-  stage1: { garis: "#E06C1F", latar: "rgba(224, 108, 31, 0.14)", teks: "#D2620F" },
-  stage2: { garis: "#DC2626", latar: "rgba(220, 38, 38, 0.14)", teks: "#DC2626" },
+  normal: { garis: "#12957E", latar: "rgba(18, 149, 126, 0.12)", teks: "#15A88E" },
+  elevated: { garis: "#C99000", latar: "rgba(201, 144, 0, 0.14)", teks: "#C99000" },
+  stage1: { garis: "#E06C1F", latar: "rgba(224, 108, 31, 0.14)", teks: "#E06C1F" },
+  stage2: { garis: "#DC2626", latar: "rgba(220, 38, 38, 0.14)", teks: "#EF4444" },
 };
 
-const wrapStyle: CSSProperties = { display: "flex", flexDirection: "column", gap: 16 };
-const kartuStyle: CSSProperties = {
-  display: "flex",
-  flexDirection: "column",
-  gap: 12,
-  border: "1px solid var(--etail-line)",
-  borderRadius: 14,
-  padding: 14,
-  background: "var(--putih)",
-};
-const barisStyle: CSSProperties = {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-  gap: 12,
-};
-const labelStyle: CSSProperties = {
-  fontSize: 13,
-  fontWeight: 600,
-  color: "var(--teks)",
-};
-const pillWrapStyle: CSSProperties = { display: "flex", gap: 6, flexWrap: "wrap" };
-const pillBase: CSSProperties = {
-  padding: "6px 12px",
-  fontSize: 12,
-  fontWeight: 600,
-  borderRadius: 999,
-  border: "1px solid var(--etail-line)",
-  background: "var(--putih)",
-  color: "var(--teks-lembut)",
-  cursor: "pointer",
-};
-const pillActive: CSSProperties = {
-  ...pillBase,
-  background: "var(--etail-navy)",
-  borderColor: "var(--etail-navy)",
-  color: "#FFFFFF",
-};
-const catatanStyle: CSSProperties = {
-  fontSize: 12,
-  lineHeight: 1.55,
-  color: "var(--teks-lembut)",
-  margin: 0,
-};
-const judulKartuStyle: CSSProperties = {
-  fontSize: 14,
-  fontWeight: 700,
-  color: "var(--teks)",
-  margin: 0,
-};
-const tabelStyle: CSSProperties = {
-  width: "100%",
-  borderCollapse: "collapse",
-  fontSize: 12.5,
-  color: "var(--teks)",
-};
-const selStyle: CSSProperties = {
-  border: "1px solid var(--etail-line)",
-  padding: "6px 8px",
-  textAlign: "center",
-};
-const selKepalaStyle: CSSProperties = {
-  ...selStyle,
-  fontWeight: 700,
-  background: "var(--etail-soft)",
-  color: "var(--teks-lembut)",
-};
+function Medan(props: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  placeholder?: string;
+  satuan?: string;
+  step?: string;
+}) {
+  return (
+    <div className="tv-bp-medan">
+      <label className="tv-bp-label">{props.label}</label>
+      <div className="tv-bp-satuan">
+        <input
+          className="tv-bp-input"
+          type="number"
+          inputMode="decimal"
+          step={props.step ?? "1"}
+          value={props.value}
+          placeholder={props.placeholder}
+          onChange={(e) => props.onChange(e.target.value)}
+        />
+        {props.satuan ? <span className="tv-bp-satuan-teks">{props.satuan}</span> : null}
+      </div>
+    </div>
+  );
+}
 
 function Pilihan<T extends string>(props: {
   label: string;
@@ -122,16 +78,16 @@ function Pilihan<T extends string>(props: {
   onPilih: (v: T) => void;
 }) {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <span style={labelStyle}>{props.label}</span>
-      <div style={pillWrapStyle}>
+    <div className="tv-bp-medan">
+      <span className="tv-bp-label">{props.label}</span>
+      <div className="tv-bp-pilihan">
         {props.opsi.map((o) => (
           <button
             key={o.nilai}
             type="button"
             aria-pressed={props.nilai === o.nilai}
+            className={props.nilai === o.nilai ? "tv-bp-pil aktif" : "tv-bp-pil"}
             onClick={() => props.onPilih(o.nilai)}
-            style={props.nilai === o.nilai ? pillActive : pillBase}
           >
             {o.label}
           </button>
@@ -145,8 +101,14 @@ export function BpPercentileForm() {
   const profile = usePatientProfile();
   const [usiaBulan, setUsiaBulan] = useSyncedField(profile.usiaBulan);
   const [berat, setBerat] = useSyncedField(profile.bb);
-  const [sex, setSex] = useState<Sex>("male");
-  const [tinggi, setTinggi] = useState("");
+  const [tinggi, setTinggi] = useSyncedField(profile.tb);
+  /**
+   * WHY jenis kelamin memakai null sebagai "belum disentuh": selama pengguna
+   * belum memilih manual, nilainya mengikuti profil pasien yang aktif dan ikut
+   * berubah bila pasien diganti. Begitu dipilih manual, pilihan itu menang.
+   */
+  const [sexManual, setSexManual] = useState<Sex | null>(null);
+  const sex: Sex = sexManual ?? (profile.jk === "female" ? "female" : "male");
   const [sbp, setSbp] = useState("");
   const [dbp, setDbp] = useState("");
   const [metode, setMetode] = useState<BPMethod>("auskultasi");
@@ -200,13 +162,9 @@ export function BpPercentileForm() {
         `SBP: ${BP_CATEGORY_LABEL[ringkas.classification.sbpCategory]} | DBP: ${BP_CATEGORY_LABEL[ringkas.classification.dbpCategory]}`,
         ringkas.usesHeightPercentile && ringkas.heightPercentile
           ? `Persentil tinggi dipakai: P${ringkas.heightPercentile.percentile}`
-          : "Ambang absolut Table 3 (usia >= 13 tahun)",
-        t
-          ? `Ambang SBP P90/P95/P95+12: ${t.sbpP90}/${t.sbpP95}/${t.sbpP95plus12} mmHg`
-          : "",
-        t
-          ? `Ambang DBP P90/P95/P95+12: ${t.dbpP90}/${t.dbpP95}/${t.dbpP95plus12} mmHg`
-          : "",
+          : "Ambang absolut Table 3 (usia 13 tahun ke atas)",
+        t ? `Ambang SBP P90/P95/P95+12: ${t.sbpP90}/${t.sbpP95}/${t.sbpP95plus12} mmHg` : "",
+        t ? `Ambang DBP P90/P95/P95+12: ${t.dbpP90}/${t.dbpP95}/${t.dbpP95plus12} mmHg` : "",
         `Tindak lanjut: ${ringkas.followUp.teks}`,
         AAP_DISCLAIMER,
       ]
@@ -218,23 +176,11 @@ export function BpPercentileForm() {
   }
 
   return (
-    <div style={wrapStyle}>
-      <div style={kartuStyle}>
-        <div style={barisStyle}>
-          <NumberField
-            label="Usia (tahun)"
-            value={tahunTeks}
-            onValueChange={ubahTahun}
-            placeholder="cth: 8"
-            step={1}
-          />
-          <NumberField
-            label="Usia (bulan)"
-            value={sisaBulanTeks}
-            onValueChange={ubahBulan}
-            placeholder="0 - 11"
-            step={1}
-          />
+    <div className="tv-bp">
+      <div className="tv-bp-kartu">
+        <div className="tv-bp-grid">
+          <Medan label="Usia (tahun)" value={tahunTeks} onChange={ubahTahun} placeholder="8" satuan="th" />
+          <Medan label="Usia (bulan)" value={sisaBulanTeks} onChange={ubahBulan} placeholder="0" satuan="bln" />
         </div>
 
         <Pilihan<Sex>
@@ -244,39 +190,31 @@ export function BpPercentileForm() {
             { nilai: "male", label: "Laki-laki" },
             { nilai: "female", label: "Perempuan" },
           ]}
-          onPilih={setSex}
+          onPilih={setSexManual}
         />
 
-        <div style={barisStyle}>
-          <NumberField
-            label="Tinggi badan (cm)"
+        <div className="tv-bp-grid">
+          <Medan
+            label="Tinggi badan"
             value={tinggi}
-            onValueChange={setTinggi}
-            placeholder="cth: 131"
+            onChange={setTinggi}
+            placeholder="131"
+            satuan="cm"
+            step="0.1"
           />
-          <NumberField
-            label="Berat badan (kg, opsional)"
+          <Medan
+            label="Berat badan (opsional)"
             value={berat}
-            onValueChange={setBerat}
-            placeholder="cth: 25"
+            onChange={setBerat}
+            placeholder="25"
+            satuan="kg"
+            step="0.1"
           />
         </div>
 
-        <div style={barisStyle}>
-          <NumberField
-            label="Sistolik / SBP (mmHg)"
-            value={sbp}
-            onValueChange={setSbp}
-            placeholder="cth: 116"
-            step={1}
-          />
-          <NumberField
-            label="Diastolik / DBP (mmHg)"
-            value={dbp}
-            onValueChange={setDbp}
-            placeholder="cth: 76"
-            step={1}
-          />
+        <div className="tv-bp-grid">
+          <Medan label="Sistolik / SBP" value={sbp} onChange={setSbp} placeholder="116" satuan="mmHg" />
+          <Medan label="Diastolik / DBP" value={dbp} onChange={setDbp} placeholder="76" satuan="mmHg" />
         </div>
 
         <Pilihan<BPMethod>
@@ -299,16 +237,7 @@ export function BpPercentileForm() {
           onPilih={setJumlah}
         />
 
-        <label
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            fontSize: 13,
-            color: "var(--teks)",
-            cursor: "pointer",
-          }}
-        >
+        <label className="tv-bp-centang">
           <input
             type="checkbox"
             checked={bergejala}
@@ -317,21 +246,11 @@ export function BpPercentileForm() {
           Ada gejala penyerta (nyeri kepala hebat, gangguan penglihatan, kejang, sesak)
         </label>
 
-        <button
-          type="button"
-          className="btn-hitung"
-          onClick={() => setDihitung(true)}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 6,
-          }}
-        >
+        <button type="button" className="tv-bp-hitung" onClick={() => setDihitung(true)}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
             <path
               d="M3 12H8L10 6L14 18L16 12H21"
-              stroke="#FFFFFF"
+              stroke="currentColor"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -343,14 +262,11 @@ export function BpPercentileForm() {
 
       {hasil && hasil.status === "invalid" && (
         <div
-          style={{
-            ...kartuStyle,
-            borderLeft: "3px solid #D97706",
-            background: "rgba(217, 119, 6, 0.10)",
-          }}
+          className="tv-bp-hasil"
+          style={{ borderLeftColor: "#D97706", background: "rgba(217, 119, 6, 0.10)" }}
         >
-          <p style={judulKartuStyle}>Periksa kembali isian</p>
-          <ul style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: "var(--teks)" }}>
+          <p className="tv-bp-judul">Periksa kembali isian</p>
+          <ul className="tv-bp-daftar">
             {hasil.errors.map((e) => (
               <li key={e}>{e}</li>
             ))}
@@ -363,40 +279,32 @@ export function BpPercentileForm() {
           hasil.status === "unsupported-adult" ||
           hasil.status === "no-data") && (
           <div
-            style={{
-              ...kartuStyle,
-              borderLeft: "3px solid #6D4CBB",
-              background: "rgba(109, 76, 187, 0.10)",
-            }}
+            className="tv-bp-hasil"
+            style={{ borderLeftColor: "#6D4CBB", background: "rgba(109, 76, 187, 0.10)" }}
           >
-            <p style={judulKartuStyle}>Di luar cakupan kalkulator</p>
-            <p style={catatanStyle}>{hasil.message}</p>
+            <p className="tv-bp-judul">Di luar cakupan kalkulator</p>
+            <p className="tv-bp-teks">{hasil.message}</p>
           </div>
         )}
 
       {ringkas && warna && (
         <>
           <div
-            style={{
-              ...kartuStyle,
-              borderLeft: `3px solid ${warna.garis}`,
-              background: warna.latar,
-            }}
+            className="tv-bp-hasil"
+            style={{ borderLeftColor: warna.garis, background: warna.latar }}
           >
-            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--teks-lembut)" }}>
-              Kategori pembacaan
-            </span>
-            <strong style={{ fontSize: 22, fontWeight: 800, color: warna.teks }}>
+            <span className="tv-bp-hasil-label">Kategori pembacaan</span>
+            <strong className="tv-bp-hasil-kategori" style={{ color: warna.teks }}>
               {BP_CATEGORY_LABEL[ringkas.classification.finalCategory]}
             </strong>
-            <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 13 }}>
-              <span style={{ color: "var(--teks)" }}>
+            <div className="tv-bp-hasil-baris">
+              <span>
                 SBP: <strong>{BP_CATEGORY_LABEL[ringkas.classification.sbpCategory]}</strong>
               </span>
-              <span style={{ color: "var(--teks)" }}>
+              <span>
                 DBP: <strong>{BP_CATEGORY_LABEL[ringkas.classification.dbpCategory]}</strong>
               </span>
-              <span style={{ color: "var(--teks)" }}>
+              <span>
                 Persentil tinggi:{" "}
                 <strong>
                   {ringkas.usesHeightPercentile && ringkas.heightPercentile
@@ -405,119 +313,102 @@ export function BpPercentileForm() {
                 </strong>
               </span>
             </div>
-            <p style={{ ...catatanStyle, color: "var(--teks)" }}>
-              {generateIndonesianExplanation(ringkas)}
-            </p>
-            <div>
-              <button
-                type="button"
-                className="tv-btn"
-                style={{
-                  background: "#0A0B5F",
-                  color: "#FFFFFF",
-                  fontWeight: 700,
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 6,
-                }}
-                onClick={tambahRingkasan}
-              >
-                {ditambahkan ? (
-                  <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M20 6L9 17L4 12"
-                        stroke="#4ADE80"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    Ditambahkan ke Ringkasan!
-                  </>
-                ) : (
-                  <>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
-                        stroke="#FFFFFF"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M14 2V8H20"
-                        stroke="#FFFFFF"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path d="M8 13H16M8 17H13" stroke="#FFFFFF" strokeWidth="1.8" strokeLinecap="round" />
-                    </svg>
-                    Tambahkan ke Ringkasan
-                  </>
-                )}
-              </button>
-            </div>
+            <p className="tv-bp-teks">{generateIndonesianExplanation(ringkas)}</p>
+            <button type="button" className="tv-bp-simpan" onClick={tambahRingkasan}>
+              {ditambahkan ? (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M20 6L9 17L4 12"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  Ditambahkan ke Ringkasan!
+                </>
+              ) : (
+                <>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.9 22 6 22H18C19.1 22 20 21.1 20 20V8L14 2Z"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M14 2V8H20"
+                      stroke="currentColor"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path d="M8 13H16M8 17H13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                  Tambahkan ke Ringkasan
+                </>
+              )}
+            </button>
           </div>
 
           {ringkas.thresholds && (
-            <div style={kartuStyle}>
-              <p style={judulKartuStyle}>
-                Ambang referensi{" "}
+            <div className="tv-bp-kartu">
+              <p className="tv-bp-judul">
                 {ringkas.usesHeightPercentile
-                  ? `(Table ${sex === "male" ? "4" : "5"}, usia ${ringkas.ageYearsUsed} tahun, kolom P${ringkas.heightPercentile?.percentile ?? "-"})`
-                  : "(pembanding, tidak dipakai untuk klasifikasi usia 13 tahun ke atas)"}
+                  ? `Ambang referensi (Table ${sex === "male" ? "4" : "5"}, usia ${ringkas.ageYearsUsed} tahun, kolom P${ringkas.heightPercentile?.percentile ?? "-"})`
+                  : "Ambang referensi (pembanding, klasifikasi usia 13 tahun ke atas memakai Table 3)"}
               </p>
-              <div style={{ overflowX: "auto" }}>
-                <table style={tabelStyle}>
+              <div className="tv-bp-tabel-bungkus">
+                <table className="tv-bp-tabel">
                   <thead>
                     <tr>
-                      <th style={selKepalaStyle}>Komponen</th>
-                      <th style={selKepalaStyle}>P50</th>
-                      <th style={selKepalaStyle}>P90</th>
-                      <th style={selKepalaStyle}>P95</th>
-                      <th style={selKepalaStyle}>P95 + 12</th>
+                      <th>Komponen</th>
+                      <th>P50</th>
+                      <th>P90</th>
+                      <th>P95</th>
+                      <th>P95 + 12</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                      <td style={selStyle}>SBP (mmHg)</td>
-                      <td style={selStyle}>{ringkas.thresholds.sbpP50}</td>
-                      <td style={selStyle}>{ringkas.thresholds.sbpP90}</td>
-                      <td style={selStyle}>{ringkas.thresholds.sbpP95}</td>
-                      <td style={selStyle}>{ringkas.thresholds.sbpP95plus12}</td>
+                      <td>SBP (mmHg)</td>
+                      <td>{ringkas.thresholds.sbpP50}</td>
+                      <td>{ringkas.thresholds.sbpP90}</td>
+                      <td>{ringkas.thresholds.sbpP95}</td>
+                      <td>{ringkas.thresholds.sbpP95plus12}</td>
                     </tr>
                     <tr>
-                      <td style={selStyle}>DBP (mmHg)</td>
-                      <td style={selStyle}>{ringkas.thresholds.dbpP50}</td>
-                      <td style={selStyle}>{ringkas.thresholds.dbpP90}</td>
-                      <td style={selStyle}>{ringkas.thresholds.dbpP95}</td>
-                      <td style={selStyle}>{ringkas.thresholds.dbpP95plus12}</td>
+                      <td>DBP (mmHg)</td>
+                      <td>{ringkas.thresholds.dbpP50}</td>
+                      <td>{ringkas.thresholds.dbpP90}</td>
+                      <td>{ringkas.thresholds.dbpP95}</td>
+                      <td>{ringkas.thresholds.dbpP95plus12}</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
               {ringkas.usesHeightPercentile && (
-                <p style={catatanStyle}>
-                  Kategori memakai angka yang lebih rendah antara ambang persentil di atas
-                  dan ambang absolut 120/80, 130/80, serta 140/90 mmHg, sesuai Table 3.
+                <p className="tv-bp-catatan">
+                  Kategori memakai angka yang lebih rendah antara ambang persentil di atas dan
+                  ambang absolut 120/80, 130/80, serta 140/90 mmHg, sesuai Table 3.
                 </p>
               )}
             </div>
           )}
 
           <div
+            className="tv-bp-hasil"
             style={{
-              ...kartuStyle,
-              borderLeft: `3px solid ${ringkas.urgent ? "#DC2626" : "#0A0B5F"}`,
+              borderLeftColor: ringkas.urgent ? "#DC2626" : "#0A0B5F",
+              background: "var(--putih)",
             }}
           >
-            <p style={judulKartuStyle}>Tindak lanjut menurut AAP 2017</p>
-            <p style={{ ...catatanStyle, color: "var(--teks)" }}>{ringkas.followUp.teks}</p>
+            <p className="tv-bp-judul">Tindak lanjut menurut AAP 2017</p>
+            <p className="tv-bp-teks">{ringkas.followUp.teks}</p>
             {ringkas.notes.length > 0 && (
-              <ul style={{ margin: 0, paddingLeft: 20, fontSize: 12.5, color: "var(--teks-lembut)" }}>
+              <ul className="tv-bp-daftar">
                 {ringkas.notes.map((n) => (
                   <li key={n}>{n}</li>
                 ))}
@@ -527,18 +418,18 @@ export function BpPercentileForm() {
         </>
       )}
 
-      <div style={kartuStyle}>
-        <p style={judulKartuStyle}>Teknik pengukuran yang benar (Table 7 AAP 2017)</p>
-        <ul style={{ margin: 0, paddingLeft: 20, fontSize: 12.5, color: "var(--teks-lembut)", lineHeight: 1.6 }}>
+      <div className="tv-bp-kartu">
+        <p className="tv-bp-judul">Teknik pengukuran yang benar (Table 7 AAP 2017)</p>
+        <ul className="tv-bp-daftar">
           {AAP_MEASUREMENT_CHECKLIST.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
       </div>
 
-      <div style={{ ...kartuStyle, borderLeft: "3px solid #6D4CBB" }}>
-        <p style={judulKartuStyle}>Catatan penting</p>
-        <p style={catatanStyle}>{AAP_DISCLAIMER}</p>
+      <div className="tv-bp-hasil" style={{ borderLeftColor: "#6D4CBB", background: "var(--putih)" }}>
+        <p className="tv-bp-judul">Catatan penting</p>
+        <p className="tv-bp-catatan">{AAP_DISCLAIMER}</p>
         <ReferensiBlok
           sumber={REFERENSI_AAP_2017}
           catatan="Table 6 pedoman ini hanya dipakai sebagai nilai skrining awal, bukan untuk klasifikasi akhir. Klasifikasi usia 1 sampai kurang dari 13 tahun memakai Table 4 atau Table 5, dan usia 13 tahun ke atas memakai Table 3."

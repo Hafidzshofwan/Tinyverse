@@ -1,0 +1,340 @@
+/*
+ * Gaya khusus halaman Kalkulator Persentil Tekanan Darah Anak (AAP 2017).
+ *
+ * WHY berkas CSS sendiri, bukan gaya inline: kotak isian butuh keadaan :focus,
+ * ::placeholder, dan varian mode gelap yang tidak bisa ditulis lewat style
+ * inline React. Berkas ini hanya diimpor oleh halaman tekanan darah, meniru
+ * cara preview/fluids mengimpor v17-cairan.css, sehingga tidak membocorkan
+ * gaya ke menu lain.
+ */
+
+.tv-bp {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 4px 0 32px;
+}
+
+.tv-bp-kartu {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--etail-line);
+  border-radius: 16px;
+  background: var(--putih);
+}
+
+.tv-bp-judul {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--teks);
+}
+
+.tv-bp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 520px) {
+  .tv-bp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tv-bp-medan {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tv-bp-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  letter-spacing: 0.01em;
+}
+
+/* Kotak isian. Geometri tenang: satu garis 1px, sudut membulat, tanpa bayangan
+   berwarna. Aksen hanya muncul saat fokus. */
+.tv-bp-input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--etail-line);
+  border-radius: 12px;
+  background: var(--soft, #F8FAFC);
+  color: var(--teks);
+  font-size: 15px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.tv-bp-input::-webkit-outer-spin-button,
+.tv-bp-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.tv-bp-input::placeholder {
+  font-weight: 500;
+  color: var(--teks-lembut);
+  opacity: 0.65;
+}
+
+.tv-bp-input:hover {
+  border-color: #C7BDE6;
+}
+
+.tv-bp-input:focus {
+  border-color: #6D4CBB;
+  background: var(--putih);
+  box-shadow: 0 0 0 3px rgba(109, 76, 187, 0.16);
+}
+
+.tv-bp-satuan {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.tv-bp-satuan .tv-bp-input {
+  padding-right: 52px;
+}
+
+.tv-bp-satuan-teks {
+  position: absolute;
+  right: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teks-lembut);
+  pointer-events: none;
+}
+
+/* Tombol pilihan. Bentuk kapsul datar, tanpa gradien maupun geser saat hover. */
+.tv-bp-pilihan {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tv-bp-pil {
+  padding: 9px 16px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 1px solid var(--etail-line);
+  background: var(--putih);
+  color: var(--teks-lembut);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.tv-bp-pil:hover {
+  border-color: #6D4CBB;
+  color: var(--teks);
+}
+
+.tv-bp-pil.aktif {
+  background: #0A0B5F;
+  border-color: #0A0B5F;
+  color: #FFFFFF;
+}
+
+.tv-bp-centang {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--teks);
+  cursor: pointer;
+}
+
+.tv-bp-centang input {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: #6D4CBB;
+  cursor: pointer;
+}
+
+.tv-bp-hitung {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  border: none;
+  border-radius: 12px;
+  background: #0A0B5F;
+  color: #FFFFFF;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.tv-bp-hitung:hover {
+  filter: brightness(1.12);
+}
+
+.tv-bp-hasil {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px;
+  border: 1px solid var(--etail-line);
+  border-left-width: 3px;
+  border-radius: 16px;
+}
+
+.tv-bp-hasil-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--teks-lembut);
+}
+
+.tv-bp-hasil-kategori {
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.tv-bp-hasil-baris {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-size: 13px;
+  color: var(--teks);
+}
+
+.tv-bp-teks {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--teks);
+}
+
+.tv-bp-catatan {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--teks-lembut);
+}
+
+.tv-bp-daftar {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--teks-lembut);
+}
+
+.tv-bp-tabel-bungkus {
+  overflow-x: auto;
+}
+
+.tv-bp-tabel {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  color: var(--teks);
+  font-variant-numeric: tabular-nums;
+}
+
+.tv-bp-tabel th,
+.tv-bp-tabel td {
+  border: 1px solid var(--etail-line);
+  padding: 8px 10px;
+  text-align: center;
+}
+
+.tv-bp-tabel th {
+  font-weight: 700;
+  color: var(--teks-lembut);
+  background: var(--etail-soft);
+}
+
+.tv-bp-tabel td:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+
+.tv-bp-simpan {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  align-self: flex-start;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #0A0B5F;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/*
+ * Mode gelap.
+ *
+ * WHY dua selektor: globals.css memakai [data-theme="dark"] dan html.dark di
+ * tempat berbeda, jadi keduanya ditulis supaya tidak ada satu pun keadaan yang
+ * lolos tanpa gaya gelap.
+ */
+[data-theme="dark"] .tv-bp-input,
+html.dark .tv-bp-input {
+  background: #16233B;
+  border-color: #334155;
+  color: #F8FAFC;
+}
+
+[data-theme="dark"] .tv-bp-input:hover,
+html.dark .tv-bp-input:hover {
+  border-color: #4C5A73;
+}
+
+[data-theme="dark"] .tv-bp-input:focus,
+html.dark .tv-bp-input:focus {
+  border-color: #A78BFA;
+  background: #1E293B;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.22);
+}
+
+[data-theme="dark"] .tv-bp-pil:hover,
+html.dark .tv-bp-pil:hover {
+  border-color: #A78BFA;
+}
+
+[data-theme="dark"] .tv-bp-pil.aktif,
+html.dark .tv-bp-pil.aktif {
+  background: #38BDF8;
+  border-color: #38BDF8;
+  color: #0F172A;
+}
+
+[data-theme="dark"] .tv-bp-hitung,
+html.dark .tv-bp-hitung,
+[data-theme="dark"] .tv-bp-simpan,
+html.dark .tv-bp-simpan {
+  background: #38BDF8;
+  color: #0F172A;
+}
+
+[data-theme="dark"] .tv-bp-centang input,
+html.dark .tv-bp-centang input {
+  accent-color: #A78BFA;
+}
