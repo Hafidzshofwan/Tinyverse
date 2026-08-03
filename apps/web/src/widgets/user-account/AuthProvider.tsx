@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import type { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import {
   ADMIN_EMAILS,
   initFirebase,
@@ -107,6 +108,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const dbRef = useRef<Any>(null);
   const uidRef = useRef<string | null>(null);
   const sedangDaftar = useRef(false);
+  const router = useRouter();
+  /*
+   * UID yang hasil render servernya sudah disegarkan setelah cookie sesi
+   * terpasang. Penanda ini menjaga router.refresh() hanya berjalan sekali
+   * per akun, bukan di setiap kunjungan saat cookie memang sudah ada.
+   */
+  const sesiDisegarkan = useRef<string | null>(null);
 
   // Tentukan peran akun baru: admin jika email terdaftar admin, atau jika ini
   // pengguna pertama di koleksi users. Selain itu 'user'. (sama seperti v17)
@@ -174,7 +182,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
        * Kegagalan penukaran sengaja tidak menggagalkan login: aplikasi klinis
        * tetap dapat dipakai, hanya fitur berbayar yang belum terbuka.
        */
-      await pastikanSesiServer(user);
+      const sesiSiap = await pastikanSesiServer(user);
+      /*
+       * WHY router.refresh() di sini:
+       * Gerbang /preview adalah Server Component yang membaca cookie sesi.
+       * Saat halaman pertama kali dirender, cookie itu BELUM ada, karena
+       * baru dipasang oleh pastikanSesiServer beberapa saat kemudian.
+       * Tanpa penyegaran, layar terus menampilkan hasil render lama, yaitu
+       * gerbang 'Masuk terlebih dahulu', padahal pengguna sudah masuk.
+       * Itulah sebabnya gembok hilang begitu halaman disegarkan manual.
+       *
+       * Disegarkan HANYA bila penukaran cookie berhasil, dan hanya sekali
+       * per UID. Menyegarkan tanpa cookie cuma memantulkan pengguna ke
+       * gerbang yang sama, dan menyegarkan berulang membuat halaman
+       * berkedip di setiap kunjungan.
+       */
+      if (sesiSiap && sesiDisegarkan.current !== user.uid) {
+        sesiDisegarkan.current = user.uid;
+        router.refresh();
+      }
       try {
         const ref = db.collection("users").doc(user.uid);
         const snap = await ref.get();
@@ -205,7 +231,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setStatus("error");
       }
     },
-    [selesaiMasuk, tentukanPeran],
+    [selesaiMasuk, tentukanPeran, router],
   );
 
   // Inisialisasi Firebase + pantau status login.
@@ -237,13 +263,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setAkunPasien(user.uid);
             handleMasuk(user);
           } else {
+            const tadinyaMasuk = uidRef.current !== null;
             uidRef.current = null;
+            sesiDisegarkan.current = null;
             setProfil(null);
             terapkanPref(null);
             setAkunPasien(null);
             bersihkanPasienLokal();
             void keluarAuthData();
             setStatus("signedOut");
+            /* Cermin dari kasus masuk: setelah cookie dihapus, hasil render
+               server yang masih memuat halaman berbayar harus dibuang juga.
+               Dijaga tadinyaMasuk agar pengunjung yang memang belum pernah
+               masuk tidak ikut menyegarkan halaman tanpa guna. */
+            if (tadinyaMasuk) router.refresh();
           }
         });
       })
