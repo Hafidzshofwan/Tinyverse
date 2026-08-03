@@ -178,7 +178,8 @@
   height: 48px;
   border: none;
   border-radius: 12px;
-  background: #0A0B5F;
+  /* Magenta hanya untuk tombol aksi utama. Navy tetap warna struktural. */
+  background: var(--tv-magenta, #D936A6);
   color: #FFFFFF;
   font-size: 14.5px;
   font-weight: 700;
@@ -326,8 +327,24 @@ html.dark .tv-bp-pil.aktif {
   color: #0F172A;
 }
 
+/*
+ * Tombol aksi utama (Hitung) memakai magenta terang di mode gelap.
+ * Teksnya navy gelap, bukan putih: putih di atas magenta hanya mencapai
+ * rasio sekitar 3,4 banding 1, sedangkan navy gelap melewati 7 banding 1.
+ */
 [data-theme="dark"] .tv-bp-hitung,
-html.dark .tv-bp-hitung,
+html.dark .tv-bp-hitung {
+  background: #EC4899;
+  color: #0F172A;
+}
+
+[data-theme="dark"] .tv-bp-hitung:hover,
+html.dark .tv-bp-hitung:hover {
+  background: #F472B6;
+  filter: none;
+}
+
+/* Simpan adalah aksi sekunder, jadi tetap biru langit seperti semula. */
 [data-theme="dark"] .tv-bp-simpan,
 html.dark .tv-bp-simpan {
   background: #38BDF8;

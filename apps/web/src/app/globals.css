@@ -4422,11 +4422,26 @@ html.dark .tv-skor-opt.aktif .tv-skor-poin {
   color: #94a3b8 !important;
 }
 
-/* Button inside tv-skor-hasil (Tambahkan ke Ringkasan) */
-[data-theme="dark"] .tv-skor-hasil .tv-btn {
-  background: linear-gradient(135deg, #1e1b4b, #312e81) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
+/*
+ * Tombol aksi akhir skoring (Tambahkan ke Ringkasan).
+ * Magenta adalah warna merek kedua dan hanya dipakai pada tombol utama.
+ * Versi gelap sebelumnya memakai gradien indigo #1e1b4b ke #312e81, yang
+ * menghapus magenta sekaligus membuat tombol nyaris menyatu dengan kartu.
+ * Latar kini magenta terang #EC4899 dengan teks navy gelap #0F172A, bukan
+ * putih: putih di atas magenta hanya mencapai rasio sekitar 3,4 banding 1,
+ * sedangkan navy gelap melewati 7 banding 1 sehingga tetap tegas dibaca.
+ */
+[data-theme="dark"] .tv-skor-hasil .tv-btn,
+html.dark .tv-skor-hasil .tv-btn {
+  background: #EC4899 !important;
+  border: 1px solid rgba(236, 72, 153, 0.55) !important;
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil .tv-btn:hover,
+html.dark .tv-skor-hasil .tv-btn:hover {
+  background: #F472B6 !important;
 }
 
 /* RedFlag Banner in Dark Mode */
