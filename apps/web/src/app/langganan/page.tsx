@@ -15,6 +15,8 @@ import type { StatusLangganan } from "@tinyverse/billing";
 
 import type { StatusPesanan } from "@tinyverse/billing";
 
+import type { Plan } from "@tinyverse/billing";
+
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { envMidtrans } from "@/server/env";
 import { KATALOG_PLAN } from "@/server/planKatalog";
@@ -62,6 +64,24 @@ const ISI_LANGGANAN: readonly string[] = [
 
 function rupiah(nilai: number): string {
   return "Rp" + nilai.toLocaleString("id-ID");
+}
+
+/**
+ * Id paket dengan harga per hari termurah, untuk disorot sebagai "Paling
+ * hemat". Dihitung, bukan ditulis tangan: katalog boleh berubah kapan saja,
+ * dan sorotannya harus selalu mengikuti angka yang sesungguhnya berlaku.
+ */
+function planPalingHemat(daftar: readonly Plan[]): string | null {
+  let idTerbaik: string | null = null;
+  let rasioTerbaik = Infinity;
+  for (const p of daftar) {
+    const rasio = p.hargaRupiah / p.durasiHari;
+    if (rasio < rasioTerbaik) {
+      rasioTerbaik = rasio;
+      idTerbaik = p.id;
+    }
+  }
+  return idTerbaik;
 }
 
 function tanggal(iso: string): string {
@@ -157,6 +177,9 @@ export default async function HalamanLangganan() {
     ? peringatanMasaAktif(e.status, percobaan, e.sisaHari, e.berakhirPada)
     : null;
 
+  const paketAktif = KATALOG_PLAN.filter((pl) => pl.aktif);
+  const idPalingHemat = planPalingHemat(paketAktif);
+
   const { clientKey, urlSnapJs } = konfigPembayaran();
   /* "Perpanjang" hanya benar bagi orang yang pernah membayar. Pengguna masa
      percobaan tetap membaca "Beli", karena itulah yang sesungguhnya ia lakukan. */
@@ -237,25 +260,36 @@ export default async function HalamanLangganan() {
 
       <div className={gaya.kartu}>
         <div className={gaya.kepalaKartu}>Paket</div>
-        {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
-          <div key={p.id} className={gaya.barisPaket}>
-            <div>
-              <div className={gaya.namaPaket}>{p.nama}</div>
-              <div className={gaya.detailPaket}>{p.durasiHari} hari</div>
-            </div>
-            <div className={gaya.aksi}>
-              <div className={gaya.hargaPaket}>{rupiah(p.hargaRupiah)}</div>
-              {masuk ? (
-                <TombolBeli
-                  planId={p.id}
-                  label={labelTombol}
-                  clientKey={clientKey}
-                  urlSnapJs={urlSnapJs}
-                />
-              ) : null}
-            </div>
-          </div>
-        ))}
+        <div className={gaya.gridPaket}>
+          {paketAktif.map((p) => {
+            const perHari = Math.round(p.hargaRupiah / p.durasiHari);
+            const unggulan = p.id === idPalingHemat;
+            return (
+              <div
+                key={p.id}
+                className={`${gaya.kartuPaket} ${unggulan ? gaya.kartuPaketUnggulan : ""}`}
+              >
+                {unggulan ? (
+                  <span className={gaya.lencanaUnggulan}>Paling hemat</span>
+                ) : null}
+                <div className={gaya.namaPaketGrid}>{p.nama}</div>
+                <div className={gaya.durasiPaketGrid}>{p.durasiHari} hari</div>
+                <div className={gaya.hargaPaketGrid}>{rupiah(p.hargaRupiah)}</div>
+                <div className={gaya.perHariPaketGrid}>
+                  {"\u2248" + rupiah(perHari) + "/hari"}
+                </div>
+                {masuk ? (
+                  <TombolBeli
+                    planId={p.id}
+                    label={labelTombol}
+                    clientKey={clientKey}
+                    urlSnapJs={urlSnapJs}
+                  />
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
 
         {masuk ? (
           <p className={gaya.catatan}>
@@ -276,7 +310,7 @@ export default async function HalamanLangganan() {
       </div>
 
       <div className={gaya.kartu}>
-        <div className={gaya.kepalaKartu}>Yang Anda dapatkan</div>
+        <div className={gaya.kepalaKartu}>Yang Anda dapatkan di semua paket</div>
         <ul className={gaya.daftar}>
           {ISI_LANGGANAN.map((butir) => (
             <li key={butir}>{butir}</li>

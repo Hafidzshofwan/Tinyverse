@@ -80,28 +80,99 @@
   line-height: 1.6;
 }
 
-.barisPaket {
+/* Grid paket, empat kartu berdampingan (dua kolom di layar sempit, satu
+   kolom di layar sangat sempit). Satu-satunya pembeda antar kartu adalah
+   durasi dan harga -- fiturnya sama semua, jadi tidak diulang di sini. */
+.gridPaket {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 4px 0 4px;
+}
+
+@media (max-width: 720px) {
+  .gridPaket {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 420px) {
+  .gridPaket {
+    grid-template-columns: 1fr;
+  }
+}
+
+.kartuPaket {
+  position: relative;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  padding: 14px 0;
-  border-top: 1px solid rgba(148, 163, 184, 0.28);
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-left: 3px solid rgba(148, 163, 184, 0.55);
+  border-radius: 14px;
+  padding: 18px 16px 16px;
+  background: rgba(148, 163, 184, 0.06);
 }
 
-.namaPaket {
+/* Paket dengan harga per hari termurah -- dihitung di page.tsx, bukan
+   ditulis tangan di sini. Aksen biru yang sama dipakai tombol beli, supaya
+   halaman tidak menambah warna baru hanya untuk satu sorotan. */
+.kartuPaketUnggulan {
+  border-left-color: #2f7cf6;
+  background: rgba(47, 124, 246, 0.08);
+}
+
+.lencanaUnggulan {
+  position: absolute;
+  top: -11px;
+  right: 14px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #2f7cf6;
+  color: #fff;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
-.detailPaket {
-  font-size: 0.88rem;
-  opacity: 0.8;
+.namaPaketGrid {
+  font-weight: 700;
+  font-size: 1.02rem;
 }
 
-.hargaPaket {
-  font-size: 1.15rem;
-  font-weight: 700;
-  white-space: nowrap;
+.durasiPaketGrid {
+  font-size: 0.82rem;
+  opacity: 0.75;
+}
+
+.hargaPaketGrid {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+.perHariPaketGrid {
+  font-size: 0.78rem;
+  opacity: 0.65;
+  margin-bottom: 4px;
+}
+
+/* TombolBeli me-render .aksi dan .tombol dari modul CSS ini juga, jadi
+   kelas yang sama bisa disesuaikan ulang di dalam kartu grid tanpa
+   menyentuh berkas komponennya. */
+.kartuPaket .aksi {
+  align-items: stretch;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.kartuPaket .tombol {
+  width: 100%;
+  text-align: center;
+}
+
+.kartuPaket .kesalahan {
+  text-align: center;
+  max-width: none;
 }
 
 .aksi {
