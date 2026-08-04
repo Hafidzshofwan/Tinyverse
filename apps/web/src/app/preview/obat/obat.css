@@ -1,0 +1,92 @@
+/* === TinyVerse — Obat & Racik Puyer (menu gabungan dua tab) === */
+
+/*
+ * WHY berkas sendiri: gaya .segmented-toggle dan .segmented-btn mode terang
+ * hanya ada di preview/lab/v17-lab.css dan di-scope ke .tv-page-lab, sedangkan
+ * globals.css cuma memuat penimpa mode gelapnya. Tanpa salinan yang di-scope ke
+ * .tv-page-obat, baris tab di halaman ini akan tampil tanpa gaya di mode terang
+ * lalu tiba-tiba bergaya di mode gelap.
+ *
+ * Nilainya disalin apa adanya dari v17-lab.css agar bentuk tab identik, bukan
+ * sekadar mirip.
+ */
+
+.tv-page-obat-wrapper {
+  background: transparent !important;
+  padding: 24px 16px 0;
+}
+
+.tv-page-obat {
+  /* 1100px mengikuti lebar DosingPanel, yang paling lebar di antara keduanya. */
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tv-page-obat .segmented-toggle {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(10, 11, 95, 0.08);
+  border-radius: 999px;
+  padding: 7px;
+  flex-wrap: wrap;
+}
+
+.tv-page-obat .segmented-btn {
+  flex: 1 1 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  font-family: "Fredoka", "Quicksand", system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: -0.012em;
+  color: rgba(10, 11, 95, 0.62);
+  padding: 11px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    background 0.16s ease,
+    color 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.tv-page-obat .segmented-btn.aktif,
+.tv-page-obat .segmented-btn:hover {
+  background: #0a0b5f;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.22);
+}
+
+/*
+ * Mode gelap. WHY dua selektor: globals.css memakai [data-theme="dark"]
+ * sementara skrip tema juga menambahkan class dark pada elemen html.
+ */
+[data-theme="dark"] .tv-page-obat .segmented-toggle,
+html.dark .tv-page-obat .segmented-toggle {
+  background: rgba(30, 41, 59, 0.45) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-page-obat .segmented-btn,
+html.dark .tv-page-obat .segmented-btn {
+  color: #cbd5e1 !important;
+  background: transparent !important;
+}
+
+[data-theme="dark"] .tv-page-obat .segmented-btn.aktif,
+html.dark .tv-page-obat .segmented-btn.aktif,
+[data-theme="dark"] .tv-page-obat .segmented-btn:hover,
+html.dark .tv-page-obat .segmented-btn:hover {
+  background: #d936a6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.35) !important;
+}

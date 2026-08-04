@@ -54,9 +54,10 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
   {
     title: "Kalkulator Klinis",
     items: [
-      { slug: "dosis", label: "Dosis Obat", icon: "\uD83D\uDC8A", href: "/preview/dosing", built: true },
+      // Dosis Obat dan Racik Puyer digabung menjadi satu menu dua tab agar
+      // sidebar tidak memanjang. Rute lama tetap hidup sebagai pengalih.
+      { slug: "obat", label: "Obat & Racik Puyer", icon: "\uD83D\uDC8A", href: "/preview/obat", built: true },
       { slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids", built: true },
-      { slug: "puyer", label: "Racik Puyer", icon: "\u2697\uFE0F", href: "/preview/puyer", built: true },
     ],
   },
   {
@@ -94,6 +95,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/ai-assistant": "Asisten AI terpusat yang memahami seluruh fitur, panduan, dan kalkulator Tinyverse.",
   "/preview/darurat": "Rujukan cepat dosis dan langkah resusitasi anak.",
   "/preview/alur": "Alur interaktif tata laksana kegawatan anak (Fase A: serangan asma).",
+  "/preview/obat": "Dosis obat anak per berat badan atau usia, plus racikan puyer.",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",
   "/preview/fluids": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
   "/preview/puyer": "Hitung tablet yang digerus dan pembagian bungkus.",
@@ -112,6 +114,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/ai-assistant": "Asisten AI Co-Pilot terpusat: Tanyakan dosis obat pediatrik, protokol klinis, interpretasi lab, atau panduan penggunaan kalkulator Tinyverse secara instan.",
   "/preview/darurat": "Rujukan resusitasi darurat pediatrik: Dosis obat emergensi, ukuran ETT, kedalaman kompresi, energi defibrilasi, serta timer algoritma RJP/CPR real-time.",
   "/preview/alur": "Algoritma interaktif tata laksana kegawatan: Panduan langkah-demi-langkah visual untuk penanganan serangan asma akut, kejang, syok, dan kondisi darurat anak.",
+  "/preview/obat": "Dua alat obat dalam satu menu: Tab Dosis Obat menghitung dosis mg/kgBB/hari atau rentang usia, frekuensi pemberian, dan batas dosis maksimum. Tab Racik Puyer menghitung konversi tablet yang digerus, penyesuaian dosis puyer dan sirup, serta pembagian bungkus.",
   "/preview/dosing": "Kalkulator presisi dosis obat anak: Dosis mg/kgBB/hari atau rentang usia, rekomendasi frekuensi pemberian, serta batas dosis maksimum aman.",
   "/preview/fluids": "Kalkulator terapi cairan komprehensif: Kebutuhan rumatan Holliday-Segar, rehidrasi diare WHO, rumus luka bakar Parkland, & perhitungan kecepatan tetesan infus.",
   "/preview/puyer": "Kalkulator racik puyer pediatri: Hitung konversi tablet utuh yang digerus, penyesuaian dosis puyer & sirup, serta estimasi pembagian bungkus obat.",

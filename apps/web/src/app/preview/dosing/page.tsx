@@ -1,9 +1,10 @@
-import { DosingPanel } from "@/widgets/dosing-panel";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Dosis Obat | Tinyverse",
-};
-
+/**
+ * Rute lama Dosis Obat. Alatnya kini menjadi tab di menu Obat & Racik Puyer.
+ * Pengalih dipertahankan supaya tautan lama, riwayat peramban, dan indeks
+ * pencarian global tidak mati.
+ */
 export default function DosingPreviewPage() {
-  return <DosingPanel />;
+  redirect("/preview/obat?tab=dosis");
 }

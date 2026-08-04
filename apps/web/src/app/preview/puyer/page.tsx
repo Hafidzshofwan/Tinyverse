@@ -1,9 +1,8 @@
-import { PuyerPanel } from "@/widgets/puyer-panel";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Racik Puyer | Tinyverse",
-};
-
+/**
+ * Rute lama Racik Puyer. Alatnya kini menjadi tab di menu Obat & Racik Puyer.
+ */
 export default function PuyerPreviewPage() {
-  return <PuyerPanel />;
+  redirect("/preview/obat?tab=puyer");
 }
