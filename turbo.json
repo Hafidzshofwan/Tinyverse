@@ -5,7 +5,17 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"],
-      "env": ["GEMINI_API_KEY"]
+      "env": [
+        "APP_BASE_URL",
+        "CRON_SECRET",
+        "FIREBASE_CLIENT_EMAIL",
+        "FIREBASE_PRIVATE_KEY",
+        "FIREBASE_PROJECT_ID",
+        "GEMINI_API_KEY",
+        "MIDTRANS_CLIENT_KEY",
+        "MIDTRANS_MODE",
+        "MIDTRANS_SERVER_KEY"
+      ]
     },
     "dev": {
       "cache": false,
