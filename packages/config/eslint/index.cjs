@@ -16,7 +16,11 @@ module.exports = {
 		sourceType: "module",
 		ecmaFeatures: { jsx: true },
 	},
-	plugins: ["@typescript-eslint", "boundaries", "import"],
+	// Batas lapisan FSD diurus penuh oleh eslint-plugin-boundaries.
+	// eslint-plugin-import pernah didaftarkan di sini tanpa satu pun aturan
+	// import/* aktif, jadi dicopot dari daftar plugin. Paketnya dibiarkan
+	// terpasang di package.json agar pnpm-lock.yaml tidak berubah.
+	plugins: ["@typescript-eslint", "boundaries"],
 	extends: [
 		"eslint:recommended",
 		"plugin:@typescript-eslint/recommended",
