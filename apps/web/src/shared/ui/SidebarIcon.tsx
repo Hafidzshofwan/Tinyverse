@@ -11,6 +11,8 @@ export type SidebarIconSlug =
   | "dosis"
   | "cairan"
   | "puyer"
+  | "obat"
+  | "tekanan-darah"
   | "tumbuh-kembang"
   | "skoring"
   | "lab"
@@ -33,6 +35,8 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "dosis": "v1",
   "cairan": "v1",
   "puyer": "v1",
+  "obat": "v1",
+  "tekanan-darah": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
   "lab": "v1",
@@ -582,6 +586,93 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
     );
   }
 
+  // --- OBAT & PUYER (menu gabungan) ---
+  // Satu bentuk yang menceritakan dua alat sekaligus: kapsul yang digerus lalu
+  // jatuh menjadi serbuk di atas bungkus puyer. Palet menggabungkan oranye dari
+  // ikon Dosis Obat lama dan ungu dari ikon Racik Puyer lama, supaya menu baru
+  // ini tetap terasa sebagai keturunan keduanya.
+  if (slug === "obat") {
+    if (currentVariant === "v2") {
+      // V2: Mortar, alu, dan kapsul yang siap digerus
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#F5F3FF" />
+          <path d="M15.5 3.5L11.5 11" stroke="#6D28D9" strokeWidth="2.2" strokeLinecap="round" />
+          <rect x="4.6" y="9.4" width="9" height="5.4" rx="2.7" transform="rotate(-38 4.6 9.4)" fill="#FB923C" stroke="#EA580C" strokeWidth="1.4" />
+          <path d="M5 12.5C5 12.5 4.2 18.5 12 18.5C19.8 18.5 19 12.5 19 12.5H5Z" fill="#DDD6FE" stroke="#7C3AED" strokeWidth="1.8" strokeLinejoin="round" />
+          <rect x="4" y="19.6" width="16" height="2" rx="1" fill="#7C3AED" />
+        </svg>
+      );
+    }
+    if (currentVariant === "v3") {
+      // V3: Bungkus puyer terlipat dengan kapsul menyilang di atasnya
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#FFF7ED" />
+          <path d="M4.5 9.5H19.5L17.6 20H6.4L4.5 9.5Z" fill="#EDE9FE" stroke="#7C3AED" strokeWidth="1.7" strokeLinejoin="round" />
+          <path d="M4.5 9.5L12 13L19.5 9.5" stroke="#7C3AED" strokeWidth="1.4" strokeLinejoin="round" />
+          <path d="M12 13V20" stroke="#A78BFA" strokeWidth="1.2" strokeDasharray="2 2" />
+          <rect x="6.2" y="6.6" width="10" height="5.2" rx="2.6" transform="rotate(-24 6.2 6.6)" fill="#FDBA74" stroke="#EA580C" strokeWidth="1.4" />
+          <circle cx="9.5" cy="16.5" r="1.1" fill="#A855F7" />
+          <circle cx="14" cy="17.4" r="1.1" fill="#F59E0B" />
+        </svg>
+      );
+    }
+    // V1: Kapsul terbuka menumpahkan serbuk ke bungkus puyer
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <rect width="24" height="24" rx="6" fill="#FEF6EE" />
+        <rect x="4.4" y="6.2" width="11" height="5.6" rx="2.8" transform="rotate(-32 4.4 6.2)" fill="#FB923C" stroke="#EA580C" strokeWidth="1.5" />
+        <path d="M8.2 3.8L13 10" stroke="#FFFFFF" strokeWidth="1.3" strokeLinecap="round" />
+        <circle cx="11.4" cy="12.6" r="0.85" fill="#F59E0B" />
+        <circle cx="13.8" cy="14" r="0.7" fill="#A855F7" />
+        <circle cx="9.6" cy="14.2" r="0.6" fill="#C084FC" />
+        <path d="M5.4 15.4H18.6L17.1 20.6H6.9L5.4 15.4Z" fill="#DDD6FE" stroke="#7C3AED" strokeWidth="1.7" strokeLinejoin="round" />
+        <path d="M5.4 15.4L12 17.4L18.6 15.4" stroke="#6D28D9" strokeWidth="1.3" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  // --- TEKANAN DARAH ---
+  // Slug ini belum pernah punya ikon, jadi menunya memakai lingkaran fallback.
+  if (slug === "tekanan-darah") {
+    if (currentVariant === "v2") {
+      // V2: Pengukur aneroid dengan jarum dan balon pompa
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#FFF1F2" />
+          <circle cx="10" cy="10" r="6.2" fill="#FFFFFF" stroke="#BE123C" strokeWidth="1.8" />
+          <path d="M10 10L13.2 6.9" stroke="#E11D48" strokeWidth="1.8" strokeLinecap="round" />
+          <circle cx="10" cy="10" r="1.1" fill="#BE123C" />
+          <path d="M6.1 6.2L6.9 7M13.9 6.2L13.1 7M10 4.4V5.4" stroke="#FB7185" strokeWidth="1.2" strokeLinecap="round" />
+          <path d="M14.8 14.4C16.9 14.4 18.6 15.9 18.6 17.8C18.6 19.6 17 21 15 21C13 21 11.4 19.6 11.4 17.8" stroke="#9F1239" strokeWidth="1.7" strokeLinecap="round" fill="#FDA4AF" fillOpacity="0.55" />
+        </svg>
+      );
+    }
+    if (currentVariant === "v3") {
+      // V3: Monitor digital dengan angka tensi dan denyut
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#EFF6FF" />
+          <rect x="4" y="5" width="16" height="11.5" rx="2.4" fill="#FFFFFF" stroke="#1D4ED8" strokeWidth="1.8" />
+          <path d="M6.6 9.2H11.4M6.6 12.4H10.2" stroke="#1E40AF" strokeWidth="1.8" strokeLinecap="round" />
+          <path d="M13 12.6C13 12.6 14 10.4 15 12.6C15.6 13.9 16.4 10 17.4 12.6" stroke="#E11D48" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          <path d="M7 19.4H17" stroke="#60A5FA" strokeWidth="2.4" strokeLinecap="round" />
+        </svg>
+      );
+    }
+    // V1: Manset lengan dengan garis denyut dan selang pompa
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <rect width="24" height="24" rx="6" fill="#FFF1F2" />
+        <path d="M4.6 8.6C4.6 7.5 5.5 6.6 6.6 6.6H15.4C16.5 6.6 17.4 7.5 17.4 8.6V14.6C17.4 15.7 16.5 16.6 15.4 16.6H6.6C5.5 16.6 4.6 15.7 4.6 14.6V8.6Z" fill="#FDA4AF" fillOpacity="0.55" stroke="#BE123C" strokeWidth="1.8" />
+        <path d="M8.2 11.8H10L11.2 9.4L12.8 13.8L14 11.8H15.4" stroke="#9F1239" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M17.4 10.4C19 10.4 19.8 11.4 19.8 12.6C19.8 13.8 19 14.8 17.4 14.8" stroke="#E11D48" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M7 18.8H15" stroke="#FB7185" strokeWidth="2.2" strokeLinecap="round" />
+      </svg>
+    );
+  }
+
   // Default fallback if unknown slug
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
@@ -620,9 +711,8 @@ const SECTIONS: MenuSection[] = [
   {
     title: "Kalkulator Klinis",
     items: [
-      { slug: "dosis", label: "Dosis Obat" },
+      { slug: "obat", label: "Obat & Puyer" },
       { slug: "cairan", label: "Terapi Cairan" },
-      { slug: "puyer", label: "Racik Puyer" },
     ],
   },
   {
@@ -630,6 +720,7 @@ const SECTIONS: MenuSection[] = [
     items: [
       { slug: "tumbuh-kembang", label: "Tumbuh Kembang", fixed: true },
       { slug: "skoring", label: "Skoring Klinis" },
+      { slug: "tekanan-darah", label: "Tekanan Darah" },
     ],
   },
   {

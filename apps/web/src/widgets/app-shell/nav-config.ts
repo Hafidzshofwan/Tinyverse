@@ -56,7 +56,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     items: [
       // Dosis Obat dan Racik Puyer digabung menjadi satu menu dua tab agar
       // sidebar tidak memanjang. Rute lama tetap hidup sebagai pengalih.
-      { slug: "obat", label: "Obat & Racik Puyer", icon: "\uD83D\uDC8A", href: "/preview/obat", built: true },
+      { slug: "obat", label: "Obat & Puyer", icon: "\uD83D\uDC8A", href: "/preview/obat", built: true },
       { slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids", built: true },
     ],
   },
