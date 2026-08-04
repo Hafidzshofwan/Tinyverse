@@ -45,9 +45,27 @@ function ringkas(p: Pesanan): RingkasanPesanan {
   };
 }
 
-/** Riwayat pesanan milik satu akun, terbaru lebih dulu. */
+/**
+ * Riwayat pesanan milik satu akun, terbaru lebih dulu.
+ *
+ * WHY dibungkus try/catch: listByAccount() menyaring accountId lalu
+ * mengurutkan createdAt -- kombinasi filter kesetaraan dan orderBy pada
+ * field lain yang MENUNTUT indeks gabungan Firestore. Firestore tidak
+ * pernah membuat indeks itu sendiri; bila belum dibuat manual di konsol,
+ * seluruh query ini ditolak. Kartu riwayat gagal tampil bukan alasan yang
+ * pantas untuk menjatuhkan seluruh halaman Langganan -- termasuk status
+ * dan tombol beli yang tidak bergantung padanya sama sekali.
+ */
 export async function riwayatPesanan(accountId: string): Promise<RingkasanPesanan[]> {
   const repo = new FirestoreOrderRepository();
-  const daftar = await repo.listByAccount(accountId);
-  return daftar.map(ringkas);
+  try {
+    const daftar = await repo.listByAccount(accountId);
+    return daftar.map(ringkas);
+  } catch (kesalahan) {
+    console.error("[langganan] gagal memuat riwayat pesanan", {
+      accountId,
+      kesalahan,
+    });
+    return [];
+  }
 }
