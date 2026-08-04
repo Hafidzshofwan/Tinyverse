@@ -13,9 +13,14 @@ import Link from "next/link";
 
 import type { StatusLangganan } from "@tinyverse/billing";
 
+import type { StatusPesanan } from "@tinyverse/billing";
+
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { envMidtrans } from "@/server/env";
 import { KATALOG_PLAN } from "@/server/planKatalog";
+import { riwayatPesanan } from "@/server/pesananRiwayat";
+import { akunAktif } from "@/server/provisioning";
+import { bacaSesi } from "@/server/session";
 
 import { TombolBeli } from "./TombolBeli";
 import gaya from "./langganan.module.css";
@@ -33,6 +38,14 @@ const KELAS_STATUS: Record<StatusLangganan, string> = {
   belum: gaya.belum ?? "",
   aktif: gaya.aktif ?? "",
   kedaluwarsa: gaya.kedaluwarsa ?? "",
+};
+
+/** Hanya status yang butuh aksen warna berbeda dari netral bawaan. */
+const KELAS_RIWAYAT: Partial<Record<StatusPesanan, string>> = {
+  selesai: gaya.riwayatSelesai ?? "",
+  dibayar: gaya.riwayatMenunggu ?? "",
+  menunggu: gaya.riwayatMenunggu ?? "",
+  gagal: gaya.riwayatGagal ?? "",
 };
 
 const ISI_LANGGANAN: readonly string[] = [
@@ -90,8 +103,9 @@ function konfigPembayaran(): { clientKey: string; urlSnapJs: string } {
 }
 
 export default async function HalamanLangganan() {
-  const status = await statusAksesSaatIni();
+  const [status, sesi] = await Promise.all([statusAksesSaatIni(), bacaSesi()]);
   const masuk = status.masuk;
+  const daftarPesanan = sesi ? await riwayatPesanan(await akunAktif(sesi)) : [];
   const e = status.entitlement;
   const percobaan = status.percobaan;
 
@@ -134,6 +148,33 @@ export default async function HalamanLangganan() {
               untuk melanjutkan setelah masa percobaan berakhir.
             </p>
           ) : null}
+        </div>
+      ) : null}
+
+      {masuk ? (
+        <div className={gaya.kartu}>
+          <div className={gaya.kepalaKartu}>Riwayat pembayaran</div>
+          {daftarPesanan.length === 0 ? (
+            <p className={gaya.riwayatKosong}>Belum ada pesanan.</p>
+          ) : (
+            <div className={gaya.riwayatDaftar}>
+              {daftarPesanan.map((p) => (
+                <div
+                  key={p.id}
+                  className={`${gaya.barisRiwayat} ${KELAS_RIWAYAT[p.status] ?? ""}`}
+                >
+                  <div className={gaya.riwayatInfoUtama}>
+                    <span className={gaya.riwayatNama}>{p.nama}</span>
+                    <span className={gaya.riwayatTanggal}>{tanggal(p.createdAt)}</span>
+                  </div>
+                  <div className={gaya.riwayatKanan}>
+                    <span className={gaya.riwayatHarga}>{rupiah(p.hargaRupiah)}</span>
+                    <span className={gaya.riwayatStatus}>{p.labelStatus}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       ) : null}
 

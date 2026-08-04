@@ -188,3 +188,79 @@
   opacity: 0.8;
   line-height: 1.6;
 }
+
+/* Riwayat pembayaran. WHY border kiri 3px berwarna + latar tipis 6-8%: pola
+   ini dipakai konsisten untuk daftar berstatus di seluruh aplikasi. Warnanya
+   dipilih dari nilai heksa jenuh di atas latar rgba tipis -- bukan warna
+   solid penuh -- supaya tetap terbaca pada tema terang maupun gelap, sama
+   seperti nilai netral .kartu di atas. */
+.riwayatDaftar {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.barisRiwayat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 12px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-left: 3px solid var(--aksen-riwayat, rgba(148, 163, 184, 0.6));
+  border-radius: 8px;
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.riwayatSelesai {
+  --aksen-riwayat: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.riwayatMenunggu {
+  --aksen-riwayat: #eab308;
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.riwayatGagal {
+  --aksen-riwayat: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.riwayatInfoUtama {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.riwayatNama {
+  font-weight: 600;
+}
+
+.riwayatTanggal {
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.riwayatKanan {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.riwayatHarga {
+  font-weight: 700;
+}
+
+.riwayatStatus {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.riwayatKosong {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
