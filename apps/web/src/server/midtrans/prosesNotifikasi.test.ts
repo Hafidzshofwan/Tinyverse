@@ -152,6 +152,26 @@ class SubRepoPalsu implements SubscriptionRepository {
     this.isi = langganan;
     this.jumlahSimpan += 1;
   }
+
+  /* Tiruan dari transaksi Firestore di subscriptionsAdmin.ts: penjaga
+     lastOrderId dan penulisan digabung sebagai satu langkah atomik. */
+  async terapkanSekaliSaja(args: {
+    accountId: string;
+    orderId: string;
+    hitung: (langganan: Langganan | null) => Langganan;
+  }): Promise<{ diterapkan: boolean; langganan: Langganan }> {
+    const ada =
+      this.isi && this.isi.accountId === args.accountId ? this.isi : null;
+
+    if (ada && ada.lastOrderId === args.orderId) {
+      return { diterapkan: false, langganan: ada };
+    }
+
+    const sesudah = args.hitung(ada);
+    this.isi = sesudah;
+    this.jumlahSimpan += 1;
+    return { diterapkan: true, langganan: sesudah };
+  }
 }
 
 function buatLangganan(ubah: Partial<Langganan> = {}): Langganan {
