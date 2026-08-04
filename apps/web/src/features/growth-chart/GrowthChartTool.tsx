@@ -780,8 +780,12 @@ export function GrowthChartTool() {
     setUnduhSibuk(c.id);
     try {
       const namaChart = c.title || indikator?.label || c.id;
+      // Satuan TIDAK diulang di sini: b.yLabel dari chartConfig sudah
+      // menyertakan satuannya sendiri, mis. "Berat Badan (kg)". Menambahkan
+      // b.yUnit lagi menghasilkan "...(kg): 19,0 kg" yang dobel dan berantakan
+      // pada pita keterangan di berkas unduhan.
       const keterangan = (hasil?.baris ?? []).map(
-        (b) => `${b.yLabel}: ${f(b.nilai, 1)} ${b.yUnit}`,
+        (b) => `${b.yLabel}: ${f(b.nilai, 1)}`,
       );
       if (hasil?.nilaiX != null && indikator) {
         keterangan.unshift(`${indikator.xLabel}: ${f(hasil.nilaiX, 1)}`);
