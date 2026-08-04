@@ -562,10 +562,13 @@ export function generateIndonesianExplanation(result: BPResultOk): string {
     );
   }
 
-  bagian.push(`Tindak lanjut: ${result.followUp.teks}`);
-  if (result.followUp.cekUlang) bagian.push(result.followUp.cekUlang);
-  for (const langkah of result.followUp.lanjutan) bagian.push(langkah);
-  if (result.followUp.catatanAktivitas) bagian.push(result.followUp.catatanAktivitas);
+  /*
+   * Alur tindak lanjut sengaja TIDAK diulang di sini. Narasi ini mengisi
+   * kartu Kategori pembacaan, yang tugasnya menjelaskan dasar klasifikasi.
+   * Jadwal kontrol, percabangan, dan catatan aktivitas sudah ditampilkan
+   * utuh pada kartu Tindak lanjut, jadi menyalinnya ke sini hanya membuat
+   * paragraf panjang yang mengulang isi kartu di bawahnya.
+   */
 
   return bagian.join(" ");
 }
