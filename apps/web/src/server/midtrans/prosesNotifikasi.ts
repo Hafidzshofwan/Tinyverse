@@ -155,30 +155,6 @@ export async function prosesNotifikasiMidtrans(args: {
     /* Sampai titik ini pesanan pasti berstatus "dibayar". Status "dibayar"
        yang tertinggal - misalnya karena penulisan langganan sempat gagal -
        sengaja dipulihkan di sini, bukan diabaikan. */
-    const langganan =
-      (await subRepo.get(pesanan.accountId)) ??
-      langgananKosong(pesanan.accountId, sekarang);
-
-    /*
-     * Kunci anti-perpanjangan-ganda. Bila langganan sudah mencatat pesanan ini
-     * sebagai pembelian terakhirnya, masa aktif sudah pernah ditambahkan dan
-     * tidak boleh ditambahkan lagi - berapa kali pun notifikasi diulang.
-     */
-    if (langganan.lastOrderId === pesanan.id) {
-      await orderRepo.updateStatus({
-        id: pesanan.id,
-        dariStatus: "dibayar",
-        keStatus: "selesai",
-        padaWaktu: sekarang,
-      });
-      return jawab(
-        "diabaikan",
-        "Pembelian ini sudah pernah diterapkan.",
-        "selesai",
-        langganan.periodeBerakhir,
-      );
-    }
-
     /*
      * Paket disusun dari snapshot harga yang dibekukan saat pesanan dibuat,
      * BUKAN dibaca ulang dari katalog. Bila harga atau durasi paket berubah
@@ -193,19 +169,38 @@ export async function prosesNotifikasiMidtrans(args: {
       aktif: true,
     };
 
-    const sesudah = terapkanPembelian({
-      langganan,
-      plan,
+    /*
+     * Kunci anti-perpanjangan-ganda, kini DI DALAM satu transaksi.
+     *
+     * Membaca langganan, memeriksa lastOrderId, dan menyimpan hasilnya adalah
+     * satu operasi tak terpisahkan. Sebelumnya ketiganya berdiri sendiri, dan
+     * dua pemroses yang berjalan hampir bersamaan atas pesanan yang sama -
+     * notifikasi kiriman ulang plus putaran rekonsiliasi - dapat sama-sama
+     * lolos pemeriksaan lalu menambah masa aktif dua kali untuk satu
+     * pembayaran. Penulisan bersyarat pada pesanan tidak menutupnya, karena
+     * pada kedua pemroses status pesanan sudah sama-sama "dibayar".
+     *
+     * hitung() sengaja sinkron dan tanpa efek samping: transaksi dapat diulang
+     * oleh Firestore, sehingga fungsi ini bisa dipanggil lebih dari sekali.
+     */
+    const { diterapkan, langganan } = await subRepo.terapkanSekaliSaja({
+      accountId: pesanan.accountId,
       orderId: pesanan.id,
-      sekarang,
+      hitung: (sebelumnya) =>
+        terapkanPembelian({
+          langganan:
+            sebelumnya ?? langgananKosong(pesanan.accountId, sekarang),
+          plan,
+          orderId: pesanan.id,
+          sekarang,
+        }),
     });
-    await subRepo.save(sesudah);
 
     /* Urutannya disengaja: langganan disimpan lebih dulu, baru pesanan
        ditandai selesai. Bila proses terputus di antara keduanya, pesanan
        tertinggal di "dibayar" dan notifikasi ulang akan merapikannya lewat
-       pemeriksaan lastOrderId di atas. Urutan sebaliknya akan kehilangan
-       jejak bahwa masa aktif belum sempat ditambahkan. */
+       pemeriksaan lastOrderId di dalam transaksi. Urutan sebaliknya akan
+       kehilangan jejak bahwa masa aktif belum sempat ditambahkan. */
     await orderRepo.updateStatus({
       id: pesanan.id,
       dariStatus: "dibayar",
@@ -213,12 +208,22 @@ export async function prosesNotifikasiMidtrans(args: {
       padaWaktu: sekarang,
     });
 
-    return jawab(
-      "diterapkan",
-      `Akses aktif sampai ${sesudah.periodeBerakhir ?? "-"}.`,
-      "selesai",
-      sesudah.periodeBerakhir,
-    );
+    /* Pesanan yang sudah pernah diterapkan tetap dijawab dengan HTTP sukses
+       dan status akhir yang sama. Yang membedakan hanya kodenya, supaya jejak
+       webhook memperlihatkan bahwa masa aktif tidak ditambah dua kali. */
+    return diterapkan
+      ? jawab(
+          "diterapkan",
+          `Akses aktif sampai ${langganan.periodeBerakhir ?? "-"}.`,
+          "selesai",
+          langganan.periodeBerakhir,
+        )
+      : jawab(
+          "diabaikan",
+          "Pembelian ini sudah pernah diterapkan.",
+          "selesai",
+          langganan.periodeBerakhir,
+        );
   }
 
   /*

@@ -16,4 +16,15 @@ export class ClientUnsupportedSubscriptionRepository implements SubscriptionRepo
 	async save(_langganan: Langganan): Promise<void> {
 		throw new NotImplementedError("SubscriptionRepository.save di sisi klien")
 	}
+	async terapkanSekaliSaja(_args: {
+		accountId: string
+		orderId: string
+		hitung: (langganan: Langganan | null) => Langganan
+	}): Promise<{ diterapkan: boolean; langganan: Langganan }> {
+		/* Memperpanjang masa aktif dari peramban akan berarti pelanggan menulis
+		   sendiri tanggal berakhirnya. */
+		throw new NotImplementedError(
+			"SubscriptionRepository.terapkanSekaliSaja di sisi klien",
+		)
+	}
 }

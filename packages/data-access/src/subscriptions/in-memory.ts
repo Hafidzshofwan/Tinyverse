@@ -16,4 +16,23 @@ export class InMemorySubscriptionRepository implements SubscriptionRepository {
 	async save(langganan: Langganan): Promise<void> {
 		this.data.set(langganan.accountId, { ...langganan })
 	}
+
+	/**
+	 * Atomik secara cuma-cuma: JavaScript berjalan satu utas, dan tidak ada
+	 * satu pun `await` di antara pembacaan dan penulisan di bawah. Tidak ada
+	 * pemroses lain yang bisa menyela di tengahnya.
+	 */
+	async terapkanSekaliSaja(args: {
+		accountId: Id
+		orderId: string
+		hitung: (langganan: Langganan | null) => Langganan
+	}): Promise<{ diterapkan: boolean; langganan: Langganan }> {
+		const ada = this.data.get(args.accountId) ?? null
+		if (ada && ada.lastOrderId === args.orderId) {
+			return { diterapkan: false, langganan: { ...ada } }
+		}
+		const sesudah = args.hitung(ada ? { ...ada } : null)
+		this.data.set(args.accountId, { ...sesudah })
+		return { diterapkan: true, langganan: { ...sesudah } }
+	}
 }
