@@ -14,7 +14,6 @@ import {
   atributCookie,
   bacaSesi,
   buatCookieSesi,
-  NAMA_COOKIE_SESI,
 } from "@/server/session";
 
 export const runtime = "nodejs";

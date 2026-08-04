@@ -1,6 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+/*
+ * CSS halaman darurat tinggal di lapisan app, sementara panel ini di widgets.
+ * Ini impor efek samping berkas gaya, bukan ketergantungan kode antar lapisan,
+ * jadi arah FSD tidak benar-benar terbalik. Dikecualikan satu baris ini saja
+ * agar aturan batas tetap ketat untuk semua impor lain.
+ */
+// eslint-disable-next-line boundaries/element-types
 import "@/app/preview/darurat/v17-darurat.css";
 import { PatTab } from "@/features/emergency-pat";
 import { ResusTab } from "@/features/emergency-resus";

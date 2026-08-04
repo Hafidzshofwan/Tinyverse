@@ -435,7 +435,7 @@ describe("pagar keamanan seluruh basis data obat", () => {
   });
 
   it("jumlah pemberian per hari mengikuti data obat atau kelompok usia", () => {
-    for (const { obat, hasil } of SEMUA_KASUS) {
+    for (const { hasil } of SEMUA_KASUS) {
       if (hasil.dosesPerDayFinal === null) continue;
       expect(hasil.dosesPerDayFinal).toBeGreaterThan(0);
     }

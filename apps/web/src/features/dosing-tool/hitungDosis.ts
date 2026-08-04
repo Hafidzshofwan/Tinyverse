@@ -25,6 +25,36 @@ export interface HasilPerhitungan {
   sedBentukFinal?: string | null;
 }
 
+/*
+ * Hasil gagal yang bertipe penuh.
+ *
+ * WHY: sembilan cabang validasi dulu mengembalikan objek separuh isi lalu
+ * dipaksa lolos dengan "as any". Cast itu mematikan pemeriksaan tipe justru di
+ * jalur yang paling sering dilalui pengguna. Semua medan angka diisi null;
+ * pemanggil memang wajib memeriksa "error" lebih dulu sebelum membaca medan
+ * lain. Tidak ada satu pun angka, rumus, atau ambang dosis yang berubah.
+ */
+function hasilGagal(pesan: string): HasilPerhitungan {
+  return {
+    error: pesan,
+    peringatan: [],
+    dosisMinMg: null,
+    dosisMaxMg: null,
+    dosisMinMl: null,
+    dosisMaxMl: null,
+    dosisHarianMinMg: null,
+    dosisHarianMaxMg: null,
+    beratBadan: null,
+    usiaBulan: null,
+    band: null,
+    sediaanLabelFinal: null,
+    doseBasisFinal: "perDose",
+    dosesPerDayFinal: null,
+    dosisMinTablet: null,
+    dosisMaxTablet: null,
+  };
+}
+
 export function formatRentangDosis(
   min?: number | null,
   max?: number | null,
@@ -148,8 +178,8 @@ export function hitungDosisInti(
   let sedMlFinal: number | undefined = sediaanAktif
     ? sediaanAktif.sediaanMl
     : obat.sediaanMl;
-  let sedKekuatanMgFinal: number | undefined = sediaanAktif?.kekuatanMg;
-  let sedBentukFinal: string | null = sediaanAktif?.bentuk || null;
+  const sedKekuatanMgFinal: number | undefined = sediaanAktif?.kekuatanMg;
+  const sedBentukFinal: string | null = sediaanAktif?.bentuk || null;
   let sediaanLabelFinal: string | null = sediaanAktif?.label || null;
 
   let doseBasisFinal =
@@ -225,10 +255,10 @@ export function hitungDosisInti(
   if (obat.doseType === "byAge") {
     usiaBulan = parseFloat(String(usiaBulanInput ?? ""));
     if (isNaN(usiaBulan) || usiaBulan < 0) {
-      return { error: "Mohon masukkan usia anak yang valid (dalam bulan).", peringatan: [] } as any;
+      return hasilGagal("Mohon masukkan usia anak yang valid (dalam bulan).");
     }
     if (usiaBulan > 216) {
-      return { error: "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.", peringatan: [] } as any;
+      return hasilGagal("Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.");
     }
     if (obat.usiaMinValidBulan !== undefined && usiaBulan < obat.usiaMinValidBulan) {
       peringatan.push(
@@ -262,20 +292,19 @@ export function hitungDosisInti(
   } else if (obat.doseType === "ageBands") {
     usiaBulan = parseFloat(String(usiaBulanInput ?? ""));
     if (isNaN(usiaBulan) || usiaBulan < 0) {
-      return { error: "Mohon masukkan usia anak yang valid (dalam bulan).", peringatan: [] } as any;
+      return hasilGagal("Mohon masukkan usia anak yang valid (dalam bulan).");
     }
     if (usiaBulan > 216) {
-      return { error: "Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.", peringatan: [] } as any;
+      return hasilGagal("Usia tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.");
     }
     band = (obat.bands || []).find(
       (b) => usiaBulan! >= b.usiaMinBulan && usiaBulan! <= b.usiaMaxBulan
     ) || null;
 
     if (!band) {
-      return {
-        error: "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter.",
-        peringatan: []
-      } as any;
+      return hasilGagal(
+        "Tidak ada rekomendasi dosis untuk usia tersebut pada kalkulator ini. Mohon konsultasikan ke dokter.",
+      );
     }
     doseBasisFinal = band.doseBasis || doseBasisFinal;
     dosesPerDayFinal = band.dosesPerDay || band.maxDosesPerDay || dosesPerDayFinal;
@@ -288,10 +317,10 @@ export function hitungDosisInti(
     if (band.tipe === "perKg") {
       beratBadan = parseFloat(String(beratBadanInput ?? ""));
       if (isNaN(beratBadan) || beratBadan <= 0) {
-        return { error: "Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini.", peringatan: [] } as any;
+        return hasilGagal("Mohon masukkan berat badan yang valid (lebih dari 0 kg) untuk kelompok usia ini.");
       }
       if (beratBadan > 150) {
-        return { error: "Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.", peringatan: [] } as any;
+        return hasilGagal("Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.");
       }
       if (doseBasisFinal === "perDay") {
         dosisHarianMinMg = (band.dosisMinPerKg || 0) * beratBadan;
@@ -325,10 +354,10 @@ export function hitungDosisInti(
   } else {
     beratBadan = parseFloat(String(beratBadanInput ?? ""));
     if (isNaN(beratBadan) || beratBadan <= 0) {
-      return { error: "Mohon masukkan berat badan yang valid (lebih dari 0 kg).", peringatan: [] } as any;
+      return hasilGagal("Mohon masukkan berat badan yang valid (lebih dari 0 kg).");
     }
     if (beratBadan > 150) {
-      return { error: "Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.", peringatan: [] } as any;
+      return hasilGagal("Berat badan tampak tidak wajar untuk pasien anak. Mohon periksa kembali input Anda.");
     }
 
     if (obat.doseType === "flat") {

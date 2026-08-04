@@ -4,12 +4,8 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import {
   OBAT_LIST,
   PETA_JENIS_OBAT,
-  WARNA_JENIS_OBAT,
-  warnaJenis,
   kategoriTagStyle,
-  labelDosisObat,
   Obat,
-  SediaanOption
 } from "./dosisData";
 import { hitungDosisInti, HasilPerhitungan, keteranganDosisAcuan } from "./hitungDosis";
 import { usePatientProfile, usePatientKey } from "@/shared/lib/patient";

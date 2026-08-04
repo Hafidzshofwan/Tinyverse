@@ -1,5 +1,3 @@
-import type { ReactNode } from "react";
-
 export interface SediaanOption {
   label?: string;
   bentuk?: "sirup" | "suspensi" | "tetes" | "tablet" | "kapsul" | "kaplet" | string;
