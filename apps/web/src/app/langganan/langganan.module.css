@@ -20,6 +20,7 @@
    sekali. Nilai di bawah terbaca pada tema terang maupun gelap. */
 .kartu {
   border: 1px solid rgba(148, 163, 184, 0.32);
+  border-left: 3px solid #2f7cf6;
   border-radius: 16px;
   padding: 20px 22px;
   margin-bottom: 18px;
