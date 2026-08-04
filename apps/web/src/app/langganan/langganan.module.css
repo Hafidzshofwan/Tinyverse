@@ -264,3 +264,33 @@
   font-size: 0.9rem;
   opacity: 0.75;
 }
+
+/* Spanduk pengingat masa aktif. Kuning = akan berakhir, merah = sudah
+   berakhir -- pola border kiri 3px + latar tipis yang sama dipakai di
+   riwayat pembayaran di atas. */
+.peringatan {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  border-left: 3px solid #eab308;
+  border-radius: 12px;
+  background: rgba(234, 179, 8, 0.08);
+}
+
+.peringatanKedaluwarsa {
+  border-left-color: #ef4444;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.peringatanJudul {
+  font-weight: 700;
+}
+
+.peringatanTeks {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  line-height: 1.5;
+}

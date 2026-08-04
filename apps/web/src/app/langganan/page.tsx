@@ -48,6 +48,9 @@ const KELAS_RIWAYAT: Partial<Record<StatusPesanan, string>> = {
   gagal: gaya.riwayatGagal ?? "",
 };
 
+/** Sisa hari pada dan di bawah nilai ini memicu spanduk pengingat. */
+const AMBANG_PERINGATAN_HARI = 7;
+
 const ISI_LANGGANAN: readonly string[] = [
   "Dosis Obat, Terapi Cairan, dan Racik Puyer",
   "Tumbuh Kembang: kurva WHO & CDC serta pemantauan longitudinal",
@@ -85,6 +88,48 @@ function labelLencana(status: StatusLangganan, percobaan: boolean): string {
   return LABEL_STATUS[status];
 }
 
+type Peringatan = { judul: string; teks: string; kedaluwarsa: boolean };
+
+/**
+ * Spanduk pengingat masa aktif.
+ *
+ * WHY ditaruh di halaman langganan, bukan di kerangka aplikasi: ini satu-
+ * satunya tempat yang pasti dilalui pelanggan untuk memperpanjang, dan tidak
+ * menuntut komponen bersama baru. Mengembalikan null memakai status "belum"
+ * dengan sengaja -- orang yang belum pernah berlangganan tidak diingatkan
+ * untuk "memperpanjang" sesuatu yang tidak pernah ia miliki.
+ */
+function peringatanMasaAktif(
+  status: StatusLangganan,
+  percobaan: boolean,
+  sisaHari: number,
+  berakhirPada: string | null,
+): Peringatan | null {
+  if (status === "kedaluwarsa") {
+    return {
+      judul: percobaan
+        ? "Masa percobaan sudah berakhir"
+        : "Masa aktif sudah berakhir",
+      teks: "Pilih paket di bawah untuk membuka kembali akses ke seluruh alat klinis.",
+      kedaluwarsa: true,
+    };
+  }
+
+  if (status === "aktif" && sisaHari <= AMBANG_PERINGATAN_HARI) {
+    return {
+      judul: percobaan
+        ? `Masa percobaan berakhir dalam ${sisaHari} hari`
+        : `Masa aktif berakhir dalam ${sisaHari} hari`,
+      teks: berakhirPada
+        ? `Berlaku sampai ${tanggal(berakhirPada)}. Perpanjang sekarang agar akses tidak terputus.`
+        : "Perpanjang sekarang agar akses tidak terputus.",
+      kedaluwarsa: false,
+    };
+  }
+
+  return null;
+}
+
 /**
  * Konfigurasi jendela pembayaran.
  *
@@ -108,6 +153,9 @@ export default async function HalamanLangganan() {
   const daftarPesanan = sesi ? await riwayatPesanan(await akunAktif(sesi)) : [];
   const e = status.entitlement;
   const percobaan = status.percobaan;
+  const peringatan = masuk
+    ? peringatanMasaAktif(e.status, percobaan, e.sisaHari, e.berakhirPada)
+    : null;
 
   const { clientKey, urlSnapJs } = konfigPembayaran();
   /* "Perpanjang" hanya benar bagi orang yang pernah membayar. Pengguna masa
@@ -119,6 +167,15 @@ export default async function HalamanLangganan() {
     <div className={gaya.wrap}>
       <h1 className={gaya.judul}>Langganan</h1>
       <p className={gaya.sub}>Akses penuh ke seluruh alat klinis Tinyverse.</p>
+
+      {peringatan ? (
+        <div
+          className={`${gaya.peringatan} ${peringatan.kedaluwarsa ? gaya.peringatanKedaluwarsa : ""}`}
+        >
+          <span className={gaya.peringatanJudul}>{peringatan.judul}</span>
+          <span className={gaya.peringatanTeks}>{peringatan.teks}</span>
+        </div>
+      ) : null}
 
       {masuk ? (
         <div className={gaya.kartu}>
