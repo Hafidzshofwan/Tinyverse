@@ -18,6 +18,10 @@ import type { TpnCategory } from "@/entities/nutrition";
 
 type Tab = "tpn" | "formula";
 
+function adalahTabNutrisi(nilai: string | null): nilai is Tab {
+  return nilai === "tpn" || nilai === "formula";
+}
+
 const autoBtn: CSSProperties = {
   width: "100%",
   padding: "12px 15px",
@@ -151,6 +155,28 @@ function BeratField({
 export function NutritionForm() {
   const [tab, setTab] = useState<Tab>("tpn");
   const profile = usePatientProfile();
+
+  // Baca tab awal dari ?tab= di URL (dipakai oleh Pencarian Global & tautan
+  // luar), meniru pola yang sama dengan MedsPanel. Tidak memakai
+  // useSearchParams agar halaman tidak terpaksa jatuh ke render sisi klien.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    if (adalahTabNutrisi(tabParam)) {
+      setTab(tabParam);
+    }
+  }, []);
+
+  const pilihTab = (next: Tab) => {
+    setTab(next);
+    if (typeof window === "undefined") return;
+    // replaceState, bukan pushState: berpindah tab tidak layak menumpuk
+    // riwayat peramban, tetapi URL tetap bisa disalin dan dibagikan.
+    const url = new URL(window.location.href);
+    url.searchParams.set("tab", next);
+    window.history.replaceState(null, "", url.toString());
+  };
   const [bb, setBb] = useSyncedField(profile.bb);
   const [bbGram, setBbGram] = useState("");
   const [beratLahirKg, setBeratLahirKg] = useState("");
@@ -239,7 +265,7 @@ export function NutritionForm() {
           <button
             type="button"
             className={`segmented-btn ${tab === "tpn" ? "aktif" : ""}`}
-            onClick={() => setTab("tpn")}
+            onClick={() => pilihTab("tpn")}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
               <path d="M8 2H16L15.2 6.4H8.8L8 2Z" fill="#7DD3FC" stroke="#0284C7" strokeWidth="1.4" strokeLinejoin="round" />
@@ -253,7 +279,7 @@ export function NutritionForm() {
           <button
             type="button"
             className={`segmented-btn ${tab === "formula" ? "aktif" : ""}`}
-            onClick={() => setTab("formula")}
+            onClick={() => pilihTab("formula")}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
               <path d="M10.4 2H13.6V4.1H10.4V2Z" fill="#F59E0B" />

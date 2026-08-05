@@ -83,7 +83,10 @@ export function HomeFavorites() {
                   <SidebarIcon slug={f.slug} size={34} />
                 </span>
                 <span className="tv-fav-text">
-                  <span className="tv-fav-title">{f.label}</span>
+                  <span className="tv-fav-title">
+                    {f.label}
+                    {f.baru ? <span className="tv-badge-baru">Baru</span> : null}
+                  </span>
                   <span className="tv-fav-sub">{f.desc}</span>
                 </span>
               </Link>

@@ -19,6 +19,7 @@ export interface FiturMeta {
   icon: string;
   desc: string;
   detail: string;
+  baru: boolean;
 }
 
 // Struktur menu meniru v17 (12 menu, 7 grup). Menu yang belum jadi tetap
@@ -103,7 +104,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/skoring": "8 skor klinis anak (dehidrasi, croup, GCS, dan lainnya).",
   "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
-  "/preview/nutrisi": "Kebutuhan kalori, protein, dan takaran susu.",
+  "/preview/nutrisi": "TPN neonatus (GIR, asam amino, lipid) & takaran susu formula.",
   "/preview/guideline": "Panduan tata laksana penyakit anak tersering.",
   "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan bantuan jadwal kejar (catch-up).",
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
@@ -122,17 +123,24 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/skoring": "8 kalkulator skoring klinis pediatrik: Dehidrasi WHO/CDD, Downes/Westley Croup, Pediatric GCS, Skoring TB Anak, APGAR, Skor Nyeri FLACC, & PEWS.",
   "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
-  "/preview/nutrisi": "Kalkulator nutrisi & kecukupan gizi: Hitung Angka Kecukupan Gizi (AKG), kebutuhan kalori & protein anak, takaran susu, serta kebutuhan enteral/parenteral.",
+  "/preview/nutrisi": "Dua alat nutrisi dalam satu menu: Tab TPN Neonatus menghitung kebutuhan nutrisi parenteral total (GIR/Glucose Infusion Rate, asam amino, lipid) untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Susu Formula menghitung takaran & volume susu formula harian.",
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
   "/preview/imunisasi": "Jadwal & panduan imunisasi IDAI: Tabel jadwal imunisasi anak sesuai rekomendasi IDAI terbaru beserta rekomendasi jadwal kejar (Catch-Up Vaccine).",
   "/preview/ringkasan": "Generator ringkasan medis & SOAP: Otomatisasi kompilasi data pemeriksaan, perhitungan dosis, dan catatan klinis menjadi resume medis SOAP siap cetak/salin.",
 };
 
+// Fitur yang baru rilis atau baru mendapat kemampuan besar. Dipakai Quick
+// Access di beranda untuk menandai badge "Baru" dan memastikan fitur ini tetap
+// terlihat walau belum punya riwayat pemakaian. Hapus entri dari daftar ini
+// begitu fiturnya sudah dianggap "lama" oleh tim produk.
+const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/nutrisi"];
+
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan
-// seberapa sering fitur dibuka (lihat shared/lib/personalisasi.ts). GCS & AGD
-// bukan menu tersendiri (bagian dari Skoring & Lab) sehingga tidak muncul di
-// Quick Access.
+// seberapa sering fitur dibuka (lihat shared/lib/personalisasi.ts), dengan
+// pengecualian: fitur yang ditandai "baru" (lihat FITUR_BARU) selalu disisipkan
+// walau belum pernah dibuka. GCS & AGD bukan menu tersendiri (bagian dari
+// Skoring & Lab) sehingga tidak muncul di Quick Access.
 export const FITUR_TERSEDIA: ReadonlyArray<FiturMeta> = NAV_GROUPS.flatMap(
   (g) => g.items,
 )
@@ -144,4 +152,5 @@ export const FITUR_TERSEDIA: ReadonlyArray<FiturMeta> = NAV_GROUPS.flatMap(
     icon: it.icon,
     desc: DESKRIPSI[it.href] ?? "",
     detail: DETAIL_DESKRIPSI[it.href] ?? DESKRIPSI[it.href] ?? "",
+    baru: FITUR_BARU.includes(it.href),
   }));

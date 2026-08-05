@@ -1639,6 +1639,43 @@ body {
   color: var(--tv-magenta);
 }
 
+/* Badge "Baru" untuk fitur yang baru rilis di Quick Access & Favorit */
+.tv-badge-baru {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ec4899, #f472b6);
+  color: #ffffff;
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.35);
+  animation: tvBadgeBaruMuncul 0.4s ease both;
+}
+.tv-fav-item .tv-badge-baru {
+  position: static;
+  margin-left: 8px;
+  box-shadow: none;
+}
+@keyframes tvBadgeBaruMuncul {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+[data-theme="dark"] .tv-badge-baru {
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.5);
+}
+
 /* Actions & Tooltip Info Alat di Beranda */
 .tv-tool-actions {
   position: absolute;

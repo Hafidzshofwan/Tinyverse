@@ -23,14 +23,20 @@ export function HomeQuickAccess() {
     setIsMounted(true);
   }, []);
 
-  const daftar = FITUR_TERSEDIA.map((f, i) => ({
+  // Fitur yang ditandai "baru" (lihat FITUR_BARU di nav-config) selalu
+  // disisipkan di depan walau belum punya riwayat pemakaian, supaya
+  // kemunculan fitur baru tidak tertutup fitur lama yang sering dibuka.
+  // Sisa slot tetap diisi berdasarkan urutan pemakaian seperti sebelumnya.
+  const fiturBaru = FITUR_TERSEDIA.filter((f) => f.baru);
+  const fiturLama = FITUR_TERSEDIA.map((f, i) => ({
     f,
     i,
     hitung: pemakaian[f.href] ?? 0,
   }))
+    .filter((x) => !x.f.baru)
     .sort((a, b) => b.hitung - a.hitung || a.i - b.i)
-    .slice(0, JUMLAH_TAMPIL)
     .map((x) => x.f);
+  const daftar = [...fiturBaru, ...fiturLama].slice(0, JUMLAH_TAMPIL);
 
   const adaData = Object.keys(pemakaian).length > 0;
 
@@ -92,6 +98,7 @@ export function HomeQuickAccess() {
               className="tv-tool-card"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
+              {item.baru ? <span className="tv-badge-baru">Baru</span> : null}
               <div className="tv-tool-actions">
                 <div className="tv-tool-tooltip-wrapper">
                   <button
