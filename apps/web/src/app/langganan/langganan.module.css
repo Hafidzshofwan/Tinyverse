@@ -337,6 +337,27 @@
   opacity: 0.75;
 }
 
+/* Tombol "Lihat semua" riwayat. Sengaja dibuat gaya sekunder (outline tipis,
+   bukan biru solid seperti .tombol) supaya tidak bersaing dengan tombol beli
+   paket -- ini cuma toggle tampilan, bukan aksi transaksi. */
+.tombolLihatSemua {
+  margin-top: 10px;
+  width: 100%;
+  min-height: 38px;
+  padding: 0 16px;
+  border: 1px solid rgba(148, 163, 184, 0.32);
+  border-radius: 10px;
+  background: rgba(148, 163, 184, 0.06);
+  color: inherit;
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+
+.tombolLihatSemua:hover {
+  background: rgba(148, 163, 184, 0.14);
+}
+
 /* Spanduk pengingat masa aktif. Kuning = akan berakhir, merah = sudah
    berakhir -- pola border kiri 3px + latar tipis yang sama dipakai di
    riwayat pembayaran di atas. */
