@@ -213,8 +213,8 @@ export function GuidelineTool() {
         }
 
         .guideline-card-item {
-          background: #F1F3F8;
-          border-radius: 24px;
+          background: #F8FAFC;
+          border-radius: 20px;
           padding: 18px 16px 20px;
           min-height: 220px;
           display: flex;
@@ -224,21 +224,28 @@ export function GuidelineTool() {
           gap: 10px;
           text-align: center;
           cursor: pointer;
-          border: 3px solid transparent;
-          box-shadow: 0 8px 18px rgba(10, 11, 95, 0.06);
-          transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+          border: 1.5px solid rgba(56, 189, 248, 0.35);
+          box-shadow: 0 4px 14px rgba(14, 165, 233, 0.07), 0 1px 3px rgba(0, 0, 0, 0.02);
+          transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
         [data-theme="dark"] .guideline-card-item {
           background: #0F172A;
-          border-color: #334155;
-          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+          border: 1.5px solid rgba(56, 189, 248, 0.3);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
         }
 
         .guideline-card-item:hover {
           transform: translateY(-4px);
+          background: #FFFFFF;
+          border-color: #0284C7;
+          box-shadow: 0 10px 24px rgba(2, 132, 199, 0.18);
+        }
+
+        [data-theme="dark"] .guideline-card-item:hover {
+          background: #1E293B;
           border-color: #38BDF8;
-          box-shadow: 0 12px 24px rgba(56, 189, 248, 0.2);
+          box-shadow: 0 12px 28px rgba(56, 189, 248, 0.25);
         }
 
         .guideline-card-head {
