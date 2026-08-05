@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { AppShell } from "@/widgets/app-shell";
 import { hitungPengingat, type Pengingat } from "@/features/pengingat-langganan";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
@@ -79,6 +80,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body>
         <AppShell pengingat={pengingat}>{children}</AppShell>
+        <Analytics />
       </body>
     </html>
   );
