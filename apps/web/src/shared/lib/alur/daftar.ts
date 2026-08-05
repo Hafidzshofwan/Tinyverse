@@ -1,9 +1,4 @@
 import type { Alur, Setting } from "./tipe";
-import { ASMA } from "./asma";
-import { KEJANG } from "./kejang";
-import { DBD } from "./dbd";
-import { HIPOGLIKEMIA } from "./hipoglikemia";
-import { KAD } from "./kad";
 
 // Metadata kategori untuk mengelompokkan kondisi pada tampilan daftar (grid).
 export type KategoriMeta = {
@@ -52,7 +47,19 @@ export type Kondisi = {
   ikon: string;
   ringkas: string;
   kategori: string;
-  alur: Alur;
+  /**
+   * Dimuat lewat import() dinamis, BUKAN referensi objek langsung.
+   *
+   * WHY: setiap alur (ASMA, DBD, dst) berisi ratusan baris data klinis.
+   * Sebelumnya kelimanya diimpor langsung di sini, sehingga SEMUA alur ikut
+   * terbawa ke bundle begitu satu saja kondisi dibuka -- padahal satu sesi
+   * pengguna biasanya cuma butuh SATU alur. Ini juga ikut membengkakkan
+   * modul yang dievaluasi server saat Next.js merender referensi Client
+   * Component ini, yang menambah waktu respons (TTFB) terutama saat cold
+   * start. Dengan import() dinamis, isi satu alur baru diunduh saat
+   * `muatAlur()` benar-benar dipanggil (lihat AlurTatalaksanaPanel).
+   */
+  muatAlur: () => Promise<Alur>;
   bagan?: Partial<Record<Setting, string>>;
   tersedia: boolean;
 };
@@ -65,7 +72,7 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ikon: "\uD83E\uDEC1",
     ringkas: "Tata laksana serangan asma anak \u2014 FKTP & Rumah Sakit.",
     kategori: "respirasi",
-    alur: ASMA,
+    muatAlur: () => import("./asma").then((m) => m.ASMA),
     bagan: {
       fktp: "/assets/alur/asma-fktp.png",
       rs: "/assets/alur/asma-rs.png",
@@ -79,7 +86,7 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ringkas:
       "Tata laksana kejang akut & status epileptikus anak \u2014 algoritma bertahap sesuai waktu.",
     kategori: "neurologi",
-    alur: KEJANG,
+    muatAlur: () => import("./kejang").then((m) => m.KEJANG),
     bagan: {
       fktp: "/assets/alur/kejang-demam.png",
       rs: "/assets/alur/kejang-demam.png",
@@ -93,7 +100,7 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ringkas:
       "Klasifikasi & tata laksana infeksi dengue anak \u2014 Grup A, B, C.",
     kategori: "infeksi",
-    alur: DBD,
+    muatAlur: () => import("./dbd").then((m) => m.DBD),
     tersedia: true,
   },
   {
@@ -103,7 +110,7 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ringkas:
       "Tata laksana kegawatan hipoglikemia anak \u2014 jalur anak sadar & tidak sadar.",
     kategori: "metabolik",
-    alur: HIPOGLIKEMIA,
+    muatAlur: () => import("./hipoglikemia").then((m) => m.HIPOGLIKEMIA),
     tersedia: true,
   },
   {
@@ -113,7 +120,7 @@ export const DAFTAR_KONDISI: Kondisi[] = [
     ringkas:
       "Tata laksana KAD anak \u2014 resusitasi cairan, insulin, koreksi elektrolit & pemantauan.",
     kategori: "metabolik",
-    alur: KAD,
+    muatAlur: () => import("./kad").then((m) => m.KAD),
     tersedia: true,
   },
 ];

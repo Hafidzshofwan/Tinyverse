@@ -12,6 +12,7 @@ import {
   tambahKeRingkasan,
 } from "@/shared/lib/alur/ringkasan-bridge";
 import type {
+  Alur,
   BlokKonten,
   Layar,
   Nada,
@@ -192,13 +193,13 @@ function RenderBlok({
 }
 
 function komposisiRingkasan(
-  kondisi: Kondisi,
+  alur: Alur,
   layar: Layar,
   setting: Setting,
   pasien: Pasien | null,
 ): string {
   const baris: string[] = [];
-  if (!kondisi.alur.tanpaSetting)
+  if (!alur.tanpaSetting)
     baris.push(`Setting: ${LABEL_SETTING[setting]}`);
   if (
     pasien &&
@@ -221,13 +222,14 @@ function komposisiRingkasan(
     }
   }
   baris.push("");
-  baris.push(`Sumber: ${kondisi.alur.sumber}`);
+  baris.push(`Sumber: ${alur.sumber}`);
   return baris.join("\n");
 }
 
 export function AlurTatalaksanaPanel() {
   const [pasien, setPasien] = useState<Pasien | null>(null);
   const [kondisi, setKondisi] = useState<Kondisi | null>(null);
+  const [alur, setAlur] = useState<Alur | null>(null);
   const [setting, setSetting] = useState<Setting | null>(null);
   const [stack, setStack] = useState<string[]>([]);
   const [toast, setToast] = useState<string | null>(null);
@@ -286,21 +288,29 @@ export function AlurTatalaksanaPanel() {
 
   const pilihKondisi = useCallback((k: Kondisi) => {
     setKondisi(k);
+    setAlur(null);
     setBagan(false);
-    if (k.alur.tanpaSetting) {
-      setSetting("rs");
-      setStack([k.alur.mulai.rs]);
-    } else {
-      setSetting(null);
-      setStack([]);
-    }
+    k.muatAlur().then((data) => {
+      setAlur(data);
+      if (data.tanpaSetting) {
+        setSetting("rs");
+        setStack([data.mulai.rs]);
+      } else {
+        setSetting(null);
+        setStack([]);
+      }
+    });
   }, []);
 
-  const pilihSetting = useCallback((k: Kondisi, s: Setting) => {
-    setSetting(s);
-    setStack([k.alur.mulai[s]]);
-    setBagan(false);
-  }, []);
+  const pilihSetting = useCallback(
+    (s: Setting) => {
+      if (!alur) return;
+      setSetting(s);
+      setStack([alur.mulai[s]]);
+      setBagan(false);
+    },
+    [alur],
+  );
 
   const pergi = useCallback(
     (tujuan: string) => setStack((st) => [...st, tujuan]),
@@ -320,6 +330,7 @@ export function AlurTatalaksanaPanel() {
   }, []);
   const keDaftar = useCallback(() => {
     setKondisi(null);
+    setAlur(null);
     setSetting(null);
     setStack([]);
     setBagan(false);
@@ -520,6 +531,27 @@ export function AlurTatalaksanaPanel() {
     );
   }
 
+  // ===== LOADING: data alur kondisi ini sedang diunduh =====
+  if (!alur) {
+    return (
+      <div>
+        {kartuPasien}
+        <button
+          type="button"
+          className="tv-btn"
+          onClick={keDaftar}
+          style={{ marginBottom: 12 }}
+        >
+          ← Daftar penyakit
+        </button>
+        <div className="tv-card">
+          <div className="tv-card-title">Memuat alur...</div>
+        </div>
+        {toastEl}
+      </div>
+    );
+  }
+
   // ===== 2) PILIH SETTING =====
   if (!setting) {
     return (
@@ -545,7 +577,7 @@ export function AlurTatalaksanaPanel() {
             <button
               type="button"
               className="tv-btn tv-btn-blok"
-              onClick={() => pilihSetting(kondisi, "fktp")}
+              onClick={() => pilihSetting("fktp")}
               style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#EFF6FF"/><path d="M4 20H20M6 20V8L12 4L18 8V20M12 11V15M10 13H14" stroke="#2563EB" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -554,7 +586,7 @@ export function AlurTatalaksanaPanel() {
             <button
               type="button"
               className="tv-btn tv-btn-blok"
-              onClick={() => pilihSetting(kondisi, "rs")}
+              onClick={() => pilihSetting("rs")}
               style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#FDF2F8"/><path d="M3 20H21M5 20V6L12 3L19 6V20M9 10H15M9 14H15" stroke="#D936A6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M12 10V14" stroke="#D936A6" strokeWidth="1.8" fill="none"/></svg>
@@ -568,7 +600,7 @@ export function AlurTatalaksanaPanel() {
               marginTop: 14,
             }}
           >
-            Sumber: {kondisi.alur.sumber}
+            Sumber: {alur.sumber}
           </div>
         </div>
         {toastEl}
@@ -579,7 +611,7 @@ export function AlurTatalaksanaPanel() {
   // ===== 3) ALUR =====
   const kiniId = stack[stack.length - 1];
   const layar: Layar | undefined = kiniId
-    ? kondisi.alur.layar[kiniId]
+    ? alur.layar[kiniId]
     : undefined;
   const baganSrc = kondisi.bagan ? kondisi.bagan[setting] : undefined;
 
@@ -612,7 +644,7 @@ export function AlurTatalaksanaPanel() {
   const tambah = () => {
     tambahKeRingkasan({
       title: `${kondisi.nama} \u2014 ${layar.judul}`,
-      body: komposisiRingkasan(kondisi, layar, setting, pasien),
+      body: komposisiRingkasan(alur, layar, setting, pasien),
       source: `Alur ${kondisi.nama}`,
     });
     setToast("Ditambahkan ke Ringkasan Klinis \u2705");
@@ -649,14 +681,14 @@ export function AlurTatalaksanaPanel() {
         >
           <AlurIcon id={kondisi.id} size={18} />
           <span>{kondisi.nama}</span>
-          {!kondisi.alur.tanpaSetting && ` \u00b7 ${LABEL_SETTING[setting]}`}
+          {!alur.tanpaSetting && ` \u00b7 ${LABEL_SETTING[setting]}`}
         </span>
         {stack.length > 1 && (
           <button type="button" className="tv-btn" onClick={kembali}>
             Kembali
           </button>
         )}
-        {!kondisi.alur.tanpaSetting && (
+        {!alur.tanpaSetting && (
           <button type="button" className="tv-btn" onClick={gantiSetting}>
             Ganti setting
           </button>
@@ -683,13 +715,13 @@ export function AlurTatalaksanaPanel() {
 
           <InteractiveDecisionTree
             stack={stack}
-            kondisi={kondisi}
+            alur={alur}
             onJumpToStep={(index) => setStack(stack.slice(0, index + 1))}
           />
 
           <ol className="tv-alur-stepper">
             {stack.map((id, i) => {
-              const L = kondisi.alur.layar[id];
+              const L = alur.layar[id];
               const aktif = i === stack.length - 1;
               const bisaKlik = i < stack.length - 1;
               return (
@@ -761,6 +793,8 @@ export function AlurTatalaksanaPanel() {
             <img
               src={layar.gambarAlur.src}
               alt={layar.gambarAlur.keterangan ?? `Bagan alur ${kondisi.nama}`}
+              loading="lazy"
+              decoding="async"
               style={{
                 width: "100%",
                 height: "auto",
@@ -776,7 +810,7 @@ export function AlurTatalaksanaPanel() {
               }}
             >
               🖼️ {layar.gambarAlur.keterangan ?? "Bagan alur asli"} · Sumber:{" "}
-              {kondisi.alur.sumber}
+              {alur.sumber}
             </figcaption>
           </figure>
         )}
@@ -830,7 +864,7 @@ export function AlurTatalaksanaPanel() {
             marginTop: 16,
           }}
         >
-          Sumber: {kondisi.alur.sumber}
+          Sumber: {alur.sumber}
         </div>
       </div>
 
@@ -859,6 +893,8 @@ export function AlurTatalaksanaPanel() {
                   gambarToggle.keterangan ??
                   `Bagan ${kondisi.nama} \u2014 ${LABEL_SETTING[setting]}`
                 }
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: "100%",
                   height: "auto",
@@ -874,7 +910,7 @@ export function AlurTatalaksanaPanel() {
                 }}
               >
                 {gambarToggle.keterangan ?? "Bagan asli"} — sumber:{" "}
-                {kondisi.alur.sumber}
+                {alur.sumber}
               </div>
             </div>
           )}
@@ -889,11 +925,11 @@ export function AlurTatalaksanaPanel() {
 
 function InteractiveDecisionTree({
   stack,
-  kondisi,
+  alur,
   onJumpToStep,
 }: {
   stack: string[];
-  kondisi: Kondisi;
+  alur: Alur;
   onJumpToStep: (index: number) => void;
 }) {
   return (
@@ -967,7 +1003,7 @@ function InteractiveDecisionTree({
         }}
       >
         {stack.map((id, i) => {
-          const L = kondisi.alur.layar[id];
+          const L = alur.layar[id];
           const isLast = i === stack.length - 1;
           const nextId = stack[i + 1];
           let chosenOptionLabel: string | null = null;
