@@ -17,6 +17,58 @@
   padding: 4px 0 32px;
 }
 
+/*
+ * Header judul+subjudul+ikon, meniru pola ".judul-section" v17 yang dipakai
+ * pada Terapi Cairan/Kalkulator Nutrisi (lihat v17-cairan.css), supaya menu
+ * Tekanan Darah punya tampilan header yang sama persis.
+ */
+.tv-bp .judul-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.tv-bp .judul-section .ikon-bulat {
+  width: 46px;
+  height: 46px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  color: #db2777;
+  background: rgba(219, 39, 119, 0.1);
+}
+
+.tv-bp .judul-section h2 {
+  font-family: "Fredoka", "Quicksand", sans-serif;
+  font-size: 1.24rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.tv-bp .judul-section p {
+  font-size: 10.24px;
+  color: rgba(10, 11, 95, 0.62);
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+[data-theme="dark"] .tv-bp .judul-section h2,
+html.dark .tv-bp .judul-section h2 {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-bp .judul-section p,
+html.dark .tv-bp .judul-section p {
+  color: #cbd5e1 !important;
+}
+
 .tv-bp-kartu {
   display: flex;
   flex-direction: column;

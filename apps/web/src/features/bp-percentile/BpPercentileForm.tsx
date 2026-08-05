@@ -180,6 +180,41 @@ export function BpPercentileForm() {
 
   return (
     <div className="tv-bp">
+      <div className="judul-section">
+        <div className="ikon-bulat" aria-hidden="true" style={{ background: "transparent" }}>
+          <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="#FDF2F8" />
+            <circle cx="12" cy="13.5" r="7" fill="#FCE7F3" stroke="#DB2777" strokeWidth="1.6" />
+            <path d="M12 7.6V9" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+            <path d="M17.9 13.5H16.5" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+            <path d="M6.1 13.5H7.5" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+            <path d="M16.2 9.3L15.2 10.3" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+            <path d="M8.8 9.3L9.8 10.3" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+            <path d="M12 13.5L15.1 10.6" stroke="#BE185D" strokeWidth="1.8" strokeLinecap="round" />
+            <circle cx="12" cy="13.5" r="1.5" fill="#BE185D" />
+            <path
+              d="M9 20.5C9 18.7 10.1 17.3 12 17.3C13.9 17.3 15 18.7 15 20.5"
+              stroke="#DB2777"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              fill="none"
+            />
+            <path
+              d="M4.3 4H5.6L6.5 2.2L7.6 5.8L8.5 4H9.8"
+              stroke="#F472B6"
+              strokeWidth="1.3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
+        </div>
+        <div>
+          <h2>Tekanan Darah</h2>
+          <p>Persentil AAP 2017 berdasarkan usia, tinggi &amp; jenis kelamin</p>
+        </div>
+      </div>
+
       <div className="tv-bp-kartu">
         <div className="tv-bp-grid">
           <Medan label="Usia (tahun)" value={tahunTeks} onChange={ubahTahun} placeholder="8" satuan="th" />
