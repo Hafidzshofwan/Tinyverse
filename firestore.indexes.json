@@ -10,11 +10,11 @@
         },
         {
           "fieldPath": "createdAt",
-          "arrayConfig": "CONTAINS"
+          "order": "DESCENDING"
         },
         {
           "fieldPath": "__name__",
-          "order": "ASCENDING"
+          "order": "DESCENDING"
         }
       ],
       "density": "SPARSE_ALL"
