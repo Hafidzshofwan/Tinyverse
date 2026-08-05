@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { AppShell } from "@/widgets/app-shell";
 import { hitungPengingat, type Pengingat } from "@/features/pengingat-langganan";
@@ -81,6 +82,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body>
         <AppShell pengingat={pengingat}>{children}</AppShell>
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
