@@ -85,9 +85,65 @@ function DateField({
       <label>{label}</label>
       <input
         type="date"
+        className="tv-date-input"
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
       />
+    </div>
+  );
+}
+
+function BeratField({
+  label,
+  kgValue,
+  onKgChange,
+  gramValue,
+  onGramChange,
+  totalKg,
+}: {
+  label: string;
+  kgValue: string;
+  onKgChange: (value: string) => void;
+  gramValue: string;
+  onGramChange: (value: string) => void;
+  totalKg: number | null;
+}) {
+  return (
+    <div className="form-group berat-kg-gram">
+      <label>{label}</label>
+      <div className="berat-kg-gram-row">
+        <div className="berat-kg-gram-input">
+          <input
+            type="number"
+            inputMode="decimal"
+            min={0}
+            step={1}
+            placeholder="cth: 1"
+            value={kgValue}
+            onChange={(e) => onKgChange(e.target.value)}
+          />
+          <span>kg</span>
+        </div>
+        <span className="berat-kg-gram-plus">+</span>
+        <div className="berat-kg-gram-input">
+          <input
+            type="number"
+            inputMode="decimal"
+            min={0}
+            max={999}
+            step={1}
+            placeholder="cth: 850"
+            value={gramValue}
+            onChange={(e) => onGramChange(e.target.value)}
+          />
+          <span>gram</span>
+        </div>
+      </div>
+      <p className="berat-kg-gram-total">
+        {totalKg != null
+          ? `Jadi total: ${fmt(totalKg, 3)} kg`
+          : "Isi kg saja, gram saja, atau keduanya untuk dijumlah otomatis."}
+      </p>
     </div>
   );
 }
@@ -186,9 +242,11 @@ export function NutritionForm() {
             onClick={() => setTab("tpn")}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
-              <path d="M9 2H15V6H9V2Z" fill="#0EA5E9" />
-              <path d="M8 6H16V12C16 12 18 14 18 17C18 19.7614 15.3137 22 12 22C8.68629 22 6 19.7614 6 17C6 14 8 12 8 12V6Z" fill="#38BDF8" fillOpacity="0.35" stroke="#0284C7" strokeWidth="1.6" />
-              <path d="M8 15H16" stroke="#0284C7" strokeWidth="1.6" />
+              <path d="M8 2H16L15.2 6.4H8.8L8 2Z" fill="#7DD3FC" stroke="#0284C7" strokeWidth="1.4" strokeLinejoin="round" />
+              <path d="M6.8 6.4H17.2L16 17.6C15.8 19.5 14.2 21 12.3 21H11.7C9.8 21 8.2 19.5 8 17.6L6.8 6.4Z" fill="#BAE6FD" fillOpacity="0.65" stroke="#0284C7" strokeWidth="1.6" strokeLinejoin="round" />
+              <path d="M9.2 10.6H14.8M9.8 13.6H13.2" stroke="#0369A1" strokeWidth="1.4" strokeLinecap="round" />
+              <path d="M12 21V22.6" stroke="#0EA5E9" strokeWidth="1.6" strokeLinecap="round" />
+              <circle cx="12" cy="23.3" r="0.75" fill="#0EA5E9" />
             </svg>
             <span>TPN Neonatus</span>
           </button>
@@ -198,11 +256,11 @@ export function NutritionForm() {
             onClick={() => setTab("formula")}
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
-              <path d="M10 2H14V4H10V2Z" fill="#F59E0B" />
-              <rect x="8" y="4" width="8" height="3" rx="1" fill="#2563EB" />
-              <path d="M7 9C7 8 8 7 9 7H15C16 7 17 8 17 9V19C17 20.6569 15.6569 22 14 22H10C8.34315 22 7 20.6569 7 19V9Z" fill="#0EA5E9" fillOpacity="0.2" stroke="#0284C7" strokeWidth="1.6" />
-              <path d="M9 13H15" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
-              <path d="M9 17H13" stroke="#0284C7" strokeWidth="2" strokeLinecap="round" />
+              <path d="M10.4 2H13.6V4.1H10.4V2Z" fill="#F59E0B" />
+              <path d="M9 4.1H15C15.8 4.1 16.2 5.1 15.7 5.7L14.6 7.1C14.85 7.35 15 7.7 15 8.05V9H9V8.05C9 7.7 9.15 7.35 9.4 7.1L8.3 5.7C7.8 5.1 8.2 4.1 9 4.1Z" fill="#FDE68A" stroke="#D97706" strokeWidth="1.3" strokeLinejoin="round" />
+              <path d="M7.6 9H16.4C17.2 9 17.8 9.7 17.8 10.5V19.3C17.8 20.8 16.7 22 15.3 22H8.7C7.3 22 6.2 20.8 6.2 19.3V10.5C6.2 9.7 6.8 9 7.6 9Z" fill="#FFFBEB" stroke="#D97706" strokeWidth="1.6" strokeLinejoin="round" />
+              <path d="M6.2 14.6H17.8V19.3C17.8 20.8 16.7 22 15.3 22H8.7C7.3 22 6.2 20.8 6.2 19.3V14.6Z" fill="#FCD34D" fillOpacity="0.6" />
+              <path d="M8.4 11.2H9.9M8.4 13H9.9" stroke="#D97706" strokeWidth="1.1" strokeLinecap="round" />
             </svg>
             <span>Susu Formula</span>
           </button>
@@ -255,38 +313,22 @@ export function NutritionForm() {
                 />
               </div>
             ) : null}
-            <div className="form-row-group">
-              <NumberField
-                label="Berat Lahir - Kg"
-                value={beratLahirKg}
-                onValueChange={setBeratLahirKg}
-                placeholder="cth: 1"
-                step={1}
-              />
-              <NumberField
-                label="Berat Lahir - gram"
-                value={beratLahirGram}
-                onValueChange={setBeratLahirGram}
-                placeholder="cth: 850"
-                step={1}
-              />
-            </div>
-            <div className="form-row-group">
-              <NumberField
-                label="Berat Badan Saat Ini - Kg"
-                value={bb}
-                onValueChange={setBb}
-                placeholder="cth: 1"
-                step={1}
-              />
-              <NumberField
-                label="Berat Badan Saat Ini - gram"
-                value={bbGram}
-                onValueChange={setBbGram}
-                placeholder="cth: 950"
-                step={1}
-              />
-            </div>
+            <BeratField
+              label="Berat Lahir"
+              kgValue={beratLahirKg}
+              onKgChange={setBeratLahirKg}
+              gramValue={beratLahirGram}
+              onGramChange={setBeratLahirGram}
+              totalKg={beratLahirTotalKg}
+            />
+            <BeratField
+              label="Berat Badan Saat Ini"
+              kgValue={bb}
+              onKgChange={setBb}
+              gramValue={bbGram}
+              onGramChange={setBbGram}
+              totalKg={weightKgTotal}
+            />
             <div className="form-row-group">
               <NumberField
                 label="Volume cairan (mL/kg/hari)"
