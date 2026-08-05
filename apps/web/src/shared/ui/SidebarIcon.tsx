@@ -661,14 +661,22 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
         </svg>
       );
     }
-    // V1: Manset lengan dengan garis denyut dan selang pompa
+    // V1 (default): Gauge tensimeter (sphygmomanometer) dengan jarum, skala,
+    // selang manset, dan guratan pulsa -- SAMA PERSIS dengan ikon header di
+    // halaman Tekanan Darah (lihat BpPercentileForm.tsx) supaya konsisten.
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-        <rect width="24" height="24" rx="6" fill="#FFF1F2" />
-        <path d="M4.6 8.6C4.6 7.5 5.5 6.6 6.6 6.6H15.4C16.5 6.6 17.4 7.5 17.4 8.6V14.6C17.4 15.7 16.5 16.6 15.4 16.6H6.6C5.5 16.6 4.6 15.7 4.6 14.6V8.6Z" fill="#FDA4AF" fillOpacity="0.55" stroke="#BE123C" strokeWidth="1.8" />
-        <path d="M8.2 11.8H10L11.2 9.4L12.8 13.8L14 11.8H15.4" stroke="#9F1239" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M17.4 10.4C19 10.4 19.8 11.4 19.8 12.6C19.8 13.8 19 14.8 17.4 14.8" stroke="#E11D48" strokeWidth="1.6" strokeLinecap="round" />
-        <path d="M7 18.8H15" stroke="#FB7185" strokeWidth="2.2" strokeLinecap="round" />
+        <rect width="24" height="24" rx="6" fill="#FDF2F8" />
+        <circle cx="12" cy="13.5" r="7" fill="#FCE7F3" stroke="#DB2777" strokeWidth="1.6" />
+        <path d="M12 7.6V9" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M17.9 13.5H16.5" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M6.1 13.5H7.5" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M16.2 9.3L15.2 10.3" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M8.8 9.3L9.8 10.3" stroke="#DB2777" strokeWidth="1.3" strokeLinecap="round" />
+        <path d="M12 13.5L15.1 10.6" stroke="#BE185D" strokeWidth="1.8" strokeLinecap="round" />
+        <circle cx="12" cy="13.5" r="1.5" fill="#BE185D" />
+        <path d="M9 20.5C9 18.7 10.1 17.3 12 17.3C13.9 17.3 15 18.7 15 20.5" stroke="#DB2777" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+        <path d="M4.3 4H5.6L6.5 2.2L7.6 5.8L8.5 4H9.8" stroke="#F472B6" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     );
   }
