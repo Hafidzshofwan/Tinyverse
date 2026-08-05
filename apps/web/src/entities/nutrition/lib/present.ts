@@ -7,8 +7,14 @@ import type {
   CalorieProteinResult,
   FormulaFeedResult,
 } from "@tinyverse/clinical-core";
-import { calculateNeonatalTpn } from "./tpn";
+import {
+  calculateNeonatalTpn,
+  calculateDayOfLife,
+  postmenstrualAgeWeeks,
+} from "./tpn";
 import type { NeonatalTpnInput, NeonatalTpnResult } from "./tpn";
+
+export { calculateDayOfLife, postmenstrualAgeWeeks };
 
 // Pembulatan tampilan (UI-only). Core tetap mengembalikan angka eksak.
 export function fmt(n: number | null | undefined, d = 0): string {
@@ -88,6 +94,8 @@ export function computeNeonatalTpn(
   input: Partial<NeonatalTpnInput>,
 ): NeonatalTpnOutcome {
   if (input.weightKg == null) return { error: "Isi berat badan.", result: null };
+  if (input.dayOfLife == null)
+    return { error: "Isi Tanggal Lahir & Tanggal Saat Ini.", result: null };
   if (input.fluidVolumeMlPerKgPerDay == null)
     return { error: "Isi volume cairan.", result: null };
   if (input.dextrosePercent == null)
@@ -102,7 +110,7 @@ export function computeNeonatalTpn(
       result: calculateNeonatalTpn({
         weightKg: input.weightKg,
         category: input.category ?? "preterm",
-        dayOfLife: input.dayOfLife ?? 1,
+        dayOfLife: input.dayOfLife,
         fluidVolumeMlPerKgPerDay: input.fluidVolumeMlPerKgPerDay,
         dextrosePercent: input.dextrosePercent,
         aminoAcidGPerKgPerDay: input.aminoAcidGPerKgPerDay,

@@ -9,6 +9,8 @@ import {
   computeNeonatalTpn,
   computeFormula,
   autoFormulaVolume,
+  calculateDayOfLife,
+  postmenstrualAgeWeeks,
   parseNum,
   fmt,
 } from "@/entities/nutrition";
@@ -61,12 +63,46 @@ function statusColor(status: "rendah" | "dalam-rentang" | "tinggi"): string {
   return "#e63946";
 }
 
+function todayIso(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function DateField({
+  label,
+  value,
+  onValueChange,
+}: {
+  label: string;
+  value: string;
+  onValueChange: (value: string) => void;
+}) {
+  return (
+    <div className="form-group">
+      <label>{label}</label>
+      <input
+        type="date"
+        value={value}
+        onChange={(e) => onValueChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
 export function NutritionForm() {
   const [tab, setTab] = useState<Tab>("tpn");
   const profile = usePatientProfile();
   const [bb, setBb] = useSyncedField(profile.bb);
+  const [bbGram, setBbGram] = useState("");
+  const [beratLahirKg, setBeratLahirKg] = useState("");
+  const [beratLahirGram, setBeratLahirGram] = useState("");
+  const [tanggalLahir, setTanggalLahir] = useState("");
+  const [tanggalSaatIni, setTanggalSaatIni] = useState(() => todayIso());
+  const [usiaKehamilanMinggu, setUsiaKehamilanMinggu] = useState("");
   const [kategori, setKategori] = useState<TpnCategory>("preterm");
-  const [hariKe, setHariKe] = useState("1");
   const [volumeCairan, setVolumeCairan] = useState("");
   const [dekstrosa, setDekstrosa] = useState("");
   const [asamAmino, setAsamAmino] = useState("");
@@ -95,12 +131,50 @@ export function NutritionForm() {
   useEffect(() => {
     setVol("");
     setFeeds("");
+    setBbGram("");
+    setBeratLahirKg("");
+    setBeratLahirGram("");
+    setTanggalLahir("");
+    setTanggalSaatIni(todayIso());
+    setUsiaKehamilanMinggu("");
+    setKategori("preterm");
+    setVolumeCairan("");
+    setDekstrosa("");
+    setAsamAmino("");
+    setLipid("");
     setTpnResult({ error: null, result: null });
     setFResult({ error: null, result: null });
     setDitambahkan(false);
   }, [kunciPasien]);
 
   const bbNum = parseNum(bb);
+  const bbGramNum = parseNum(bbGram);
+  const weightKgTotal =
+    bbNum != null || bbGramNum != null
+      ? (bbNum ?? 0) + (bbGramNum ?? 0) / 1000
+      : null;
+  const beratLahirKgNum = parseNum(beratLahirKg);
+  const beratLahirGramNum = parseNum(beratLahirGram);
+  const beratLahirTotalKg =
+    beratLahirKgNum != null || beratLahirGramNum != null
+      ? (beratLahirKgNum ?? 0) + (beratLahirGramNum ?? 0) / 1000
+      : null;
+  const usiaKehamilanNum = parseNum(usiaKehamilanMinggu);
+
+  let dayOfLifeValue: number | null = null;
+  let dayOfLifeError: string | null = null;
+  if (tanggalLahir && tanggalSaatIni) {
+    try {
+      dayOfLifeValue = calculateDayOfLife(tanggalLahir, tanggalSaatIni);
+    } catch (e) {
+      dayOfLifeError = e instanceof Error ? e.message : "Tanggal tidak valid.";
+    }
+  }
+
+  const postmenstrualWeeks =
+    kategori === "preterm" && usiaKehamilanNum != null && dayOfLifeValue != null
+      ? postmenstrualAgeWeeks(usiaKehamilanNum, dayOfLifeValue)
+      : null;
 
   return (
     <div>
@@ -153,18 +227,63 @@ export function NutritionForm() {
               </button>
             </div>
             <div className="form-row-group">
+              <DateField label="Tanggal Lahir" value={tanggalLahir} onValueChange={setTanggalLahir} />
+              <DateField label="Tanggal Saat Ini" value={tanggalSaatIni} onValueChange={setTanggalSaatIni} />
+            </div>
+            {tanggalLahir && tanggalSaatIni ? (
+              dayOfLifeError ? (
+                <p className="catatan-metode" style={{ marginTop: 0, color: "#e63946", fontWeight: 700 }}>
+                  {dayOfLifeError}
+                </p>
+              ) : (
+                <p className="catatan-metode" style={{ marginTop: 0 }}>
+                  Hari ke-{dayOfLifeValue} kehidupan.
+                  {postmenstrualWeeks != null
+                    ? ` Usia koreksi (postmenstrual): ${fmt(postmenstrualWeeks, 1)} minggu.`
+                    : ""}
+                </p>
+              )
+            ) : null}
+            {kategori === "preterm" ? (
+              <div className="form-row-group">
+                <NumberField
+                  label="Usia kehamilan saat lahir (minggu)"
+                  value={usiaKehamilanMinggu}
+                  onValueChange={setUsiaKehamilanMinggu}
+                  placeholder="cth: 32"
+                  step={1}
+                />
+              </div>
+            ) : null}
+            <div className="form-row-group">
               <NumberField
-                label="Berat Badan (kg)"
-                value={bb}
-                onValueChange={setBb}
-                placeholder="cth: 1.8"
+                label="Berat Lahir - Kg"
+                value={beratLahirKg}
+                onValueChange={setBeratLahirKg}
+                placeholder="cth: 1"
+                step={1}
               />
               <NumberField
-                label="Hari ke- (day of life)"
-                value={hariKe}
-                onValueChange={setHariKe}
+                label="Berat Lahir - gram"
+                value={beratLahirGram}
+                onValueChange={setBeratLahirGram}
+                placeholder="cth: 850"
+                step={1}
+              />
+            </div>
+            <div className="form-row-group">
+              <NumberField
+                label="Berat Badan Saat Ini - Kg"
+                value={bb}
+                onValueChange={setBb}
                 placeholder="cth: 1"
-                min={1}
+                step={1}
+              />
+              <NumberField
+                label="Berat Badan Saat Ini - gram"
+                value={bbGram}
+                onValueChange={setBbGram}
+                placeholder="cth: 950"
                 step={1}
               />
             </div>
@@ -199,19 +318,23 @@ export function NutritionForm() {
             <button
               type="button"
               className="btn-hitung"
-              onClick={() =>
+              onClick={() => {
+                if (dayOfLifeError) {
+                  setTpnResult({ error: dayOfLifeError, result: null });
+                  return;
+                }
                 setTpnResult(
                   computeNeonatalTpn({
-                    weightKg: bbNum ?? undefined,
+                    weightKg: weightKgTotal ?? undefined,
                     category: kategori,
-                    dayOfLife: parseNum(hariKe) ?? undefined,
+                    dayOfLife: dayOfLifeValue ?? undefined,
                     fluidVolumeMlPerKgPerDay: parseNum(volumeCairan) ?? undefined,
                     dextrosePercent: parseNum(dekstrosa) ?? undefined,
                     aminoAcidGPerKgPerDay: parseNum(asamAmino) ?? undefined,
                     lipidGPerKgPerDay: parseNum(lipid) ?? undefined,
                   }),
-                )
-              }
+                );
+              }}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ display: "inline-block", verticalAlign: "-4px", marginRight: "6px" }}>
                 <path d="M12 2C10 6 7 8 7 13C7 16.5 9.5 19.5 13 20C17 20.5 20 17 20 13C20 8 16 5 14 2C14 5 12 6.5 12 8C12 6 12 2 12 2Z" fill="#FF5722" />
@@ -229,6 +352,16 @@ export function NutritionForm() {
             {tpnResult.result ? (
               <div className="hasil-box-cairan">
                 <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
+                <p style={resultText}>
+                  BB saat ini: {fmt(tpnResult.result.weightKg, 3)} kg
+                  {beratLahirTotalKg != null ? ` | BB lahir: ${fmt(beratLahirTotalKg, 3)} kg` : ""}
+                </p>
+                <p style={resultText}>
+                  Kategori: {kategori === "preterm" ? "Preterm" : "Term"}
+                  {usiaKehamilanNum != null ? ` (usia kehamilan saat lahir ${usiaKehamilanNum} minggu)` : ""}
+                  {" "}| Hari ke-{dayOfLifeValue ?? "-"}
+                  {postmenstrualWeeks != null ? ` | Usia koreksi: ${fmt(postmenstrualWeeks, 1)} minggu` : ""}
+                </p>
                 <p style={resultText}>
                   Total volume: {fmt(tpnResult.result.totalVolumeMlPerDay, 0)}{" "}
                   mL/hari.
@@ -283,7 +416,9 @@ export function NutritionForm() {
                       if (!tpnResult.result) return;
                       const res = tpnResult.result;
                       const bodyText = [
-                        `BB: ${res.weightKg} kg | Kategori: ${kategori === "preterm" ? "Preterm" : "Term"} | Hari ke-${hariKe || "-"}`,
+                        `BB saat ini: ${fmt(res.weightKg, 3)} kg${beratLahirTotalKg != null ? ` | BB lahir: ${fmt(beratLahirTotalKg, 3)} kg` : ""}`,
+                        `Kategori: ${kategori === "preterm" ? "Preterm" : "Term"}${usiaKehamilanNum != null ? ` (UK lahir ${usiaKehamilanNum} minggu)` : ""} | Hari ke-${dayOfLifeValue ?? "-"}${tanggalLahir ? ` (lahir ${tanggalLahir})` : ""}`,
+                        postmenstrualWeeks != null ? `Usia koreksi (postmenstrual): ${fmt(postmenstrualWeeks, 1)} minggu` : "",
                         `Volume: ${fmt(res.totalVolumeMlPerDay, 0)} mL/hari`,
                         `GIR: ${fmt(res.girMgKgMin, 2)} mg/kg/menit (${statusLabel(res.girRange.status)}, acuan ${res.girRange.min}${res.girRange.max != null ? `-${res.girRange.max}` : ""} mg/kg/menit)`,
                         `Dekstrosa: ${fmt(res.dextroseGPerDay, 1)} g/hari (${fmt(res.dextroseKcalPerDay, 0)} kkal/hari)`,
@@ -293,7 +428,7 @@ export function NutritionForm() {
                       ].filter(Boolean).join("\n");
 
                       addRingkasanItem({
-                        title: `TPN Neonatus (BB ${res.weightKg} kg)`,
+                        title: `TPN Neonatus (BB ${fmt(res.weightKg, 3)} kg)`,
                         source: "Kebutuhan Nutrisi",
                         body: bodyText,
                       });
@@ -353,7 +488,7 @@ export function NutritionForm() {
               className="auto-fill-btn"
               style={autoBtn}
               onClick={() => {
-                const v = autoFormulaVolume(bbNum);
+                const v = autoFormulaVolume(weightKgTotal);
                 if (v != null) setVol(String(v));
               }}
             >
@@ -363,10 +498,10 @@ export function NutritionForm() {
               </svg>
               Isi otomatis 150 mL/kg dari berat pasien
             </button>
-            {bbNum == null ? (
+            {weightKgTotal == null ? (
               <p className="catatan-metode" style={{ marginTop: 0 }}>
-                Isi &quot;Berat Badan&quot; di tab TPN Neonatus untuk
-                memakai isi otomatis.
+                Isi &quot;Berat Badan Saat Ini&quot; di tab TPN Neonatus
+                untuk memakai isi otomatis.
               </p>
             ) : null}
             <button
@@ -484,6 +619,20 @@ export function NutritionForm() {
               GIR (Glucose Infusion Rate) dihitung dari konsentrasi dekstrosa
               dan volume cairan: GIR (mg/kg/menit) = %dekstrosa × volume
               (mL/kg/hari) ÷ 144.
+            </li>
+            <li>
+              Hari ke- (day of life) dihitung otomatis dari selisih Tanggal
+              Lahir dan Tanggal Saat Ini (tanggal lahir dihitung sebagai hari
+              ke-1).
+            </li>
+            <li>
+              Berat badan (lahir maupun saat ini) dapat diisi dalam kombinasi
+              Kg + gram (mis. 1 Kg 850 gram), atau gram saja, sesuai
+              kebiasaan pencatatan berat neonatus.
+            </li>
+            <li>
+              Usia koreksi (postmenstrual age) untuk bayi preterm = usia
+              kehamilan saat lahir (minggu) + (hari ke- − 1) hari ÷ 7.
             </li>
             <li>
               Rentang GIR acuan: preterm hari 1 = 4-8, hari ≥2 = 8-10 mg/kg/menit;

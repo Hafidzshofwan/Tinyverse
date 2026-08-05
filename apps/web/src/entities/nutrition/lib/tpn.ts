@@ -74,6 +74,37 @@ const KCAL_PER_G_DEXTROSE = 3.4;
 const KCAL_PER_G_AMINO_ACID = 4;
 const KCAL_PER_G_LIPID_20PCT = 10; // ILE 20% = 2 kkal/mL = 10 kkal/g
 
+/**
+ * Menghitung hari ke- (day of life) dari Tanggal Lahir dan Tanggal Saat Ini.
+ * Tanggal lahir dihitung sebagai hari ke-1 (konvensi neonatologi).
+ */
+export function calculateDayOfLife(
+  birthDateIso: string,
+  referenceDateIso: string,
+): number {
+  const birth = new Date(`${birthDateIso}T00:00:00`);
+  const reference = new Date(`${referenceDateIso}T00:00:00`);
+  if (Number.isNaN(birth.getTime()) || Number.isNaN(reference.getTime())) {
+    throw new Error("Tanggal Lahir / Tanggal Saat Ini tidak valid.");
+  }
+  const diffDays = Math.round((reference.getTime() - birth.getTime()) / 86400000);
+  if (diffDays < 0) {
+    throw new Error("Tanggal Saat Ini tidak boleh sebelum Tanggal Lahir.");
+  }
+  return diffDays + 1;
+}
+
+/**
+ * Usia koreksi / postmenstrual age (minggu) untuk bayi preterm:
+ * usia kehamilan saat lahir + (hari ke- - 1) hari yang sudah dijalani.
+ */
+export function postmenstrualAgeWeeks(
+  gestationalAgeAtBirthWeeks: number,
+  dayOfLife: number,
+): number {
+  return gestationalAgeAtBirthWeeks + (dayOfLife - 1) / 7;
+}
+
 export function calculateNeonatalTpn(input: NeonatalTpnInput): NeonatalTpnResult {
   const {
     weightKg,
