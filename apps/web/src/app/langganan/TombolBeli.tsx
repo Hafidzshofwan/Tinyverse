@@ -96,11 +96,15 @@ export function TombolBeli({
   label,
   clientKey,
   urlSnapJs,
+  buttonClassName,
+  containerClassName,
 }: {
   planId: string;
   label: string;
   clientKey: string;
   urlSnapJs: string;
+  buttonClassName?: string;
+  containerClassName?: string;
 }) {
   const [sibuk, setSibuk] = useState(false);
   const [kesalahan, setKesalahan] = useState<string | null>(null);
@@ -192,10 +196,10 @@ export function TombolBeli({
   }
 
   return (
-    <div className={gaya.aksi}>
+    <div className={containerClassName || gaya.aksi}>
       <button
         type="button"
-        className={gaya.tombol}
+        className={buttonClassName || gaya.tombol}
         onClick={beli}
         /* Penjaga terhadap klik ganda. Setiap klik melahirkan satu nomor
            pesanan baru di Midtrans, dan nomor pesanan tidak bisa dipakai
