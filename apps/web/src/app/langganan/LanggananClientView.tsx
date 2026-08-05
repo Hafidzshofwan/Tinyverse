@@ -29,6 +29,110 @@ function rupiah(nilai: number): string {
   return "Rp" + nilai.toLocaleString("id-ID");
 }
 
+/* SVG Icon Components */
+function IconCrown({ size = 20, className, style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14" />
+    </svg>
+  );
+}
+
+function IconTag({ size = 20, className, style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="M12 2H2v10l11.29 11.29a1 1 0 0 0 1.41 0l7.3-7.3a1 1 0 0 0 0-1.41L12 2z" />
+      <circle cx="7" cy="7" r="1.5" />
+    </svg>
+  );
+}
+
+function IconSparkles({ size = 20, className, style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3z" />
+      <path d="M5 3v4M3 5h4M19 17v4M17 19h4" />
+    </svg>
+  );
+}
+
+function IconCheck({ size = 16, className, style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
+function IconReceipt({ size = 20, className, style }: { size?: number; className?: string; style?: React.CSSProperties }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      style={style}
+      aria-hidden="true"
+    >
+      <path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1-2-1Z" />
+      <path d="M16 8H8M16 12H8M13 16H8" />
+    </svg>
+  );
+}
+
 export function LanggananClientView(props: LanggananClientProps) {
   const {
     masuk,
@@ -69,7 +173,7 @@ export function LanggananClientView(props: LanggananClientProps) {
         {masuk && (
           <div className={gaya.obsidianCard}>
             <div className={gaya.obsidianCardTitle}>
-              <span>👑</span> Status Langganan Anda
+              <IconCrown size={20} /> Status Langganan Anda
             </div>
             <div className={gaya.obsidianBaris}>
               <span className={gaya.obsidianLabel}>Status Akses</span>
@@ -100,7 +204,7 @@ export function LanggananClientView(props: LanggananClientProps) {
         {/* Grid Pricing Packages */}
         <div className={gaya.obsidianCard}>
           <div className={gaya.obsidianCardTitle}>
-            <span>🏷️</span> Pilih Paket Berlangganan
+            <IconTag size={20} /> Pilih Paket Berlangganan
           </div>
 
           <div className={gaya.obsidianGrid}>
@@ -113,7 +217,12 @@ export function LanggananClientView(props: LanggananClientProps) {
                   key={p.id}
                   className={`${gaya.obsidianPaketCard} ${unggulan ? gaya.obsidianPaketFeatured : ""}`}
                 >
-                  {unggulan && <div className={gaya.obsidianBadgeFeatured}>👑 PALING HEMAT</div>}
+                  {unggulan && (
+                    <div className={gaya.obsidianBadgeFeatured}>
+                      <IconCrown size={12} style={{ display: "inline-block", verticalAlign: "middle", marginRight: 4 }} />
+                      PALING HEMAT
+                    </div>
+                  )}
                   <div className={gaya.obsidianPaketNama}>{p.nama}</div>
                   <div className={gaya.obsidianPaketDurasi}>{p.durasiHari} Hari Akses</div>
                   <div className={gaya.obsidianPaketHarga}>{rupiah(p.hargaRupiah)}</div>
@@ -154,13 +263,15 @@ export function LanggananClientView(props: LanggananClientProps) {
         {/* Feature List */}
         <div className={gaya.obsidianCard}>
           <div className={gaya.obsidianCardTitle}>
-            <span>⚡</span> Fitur & Fitur Klinis yang Didapatkan
+            <IconSparkles size={20} /> Fitur & Fitur Klinis yang Didapatkan
           </div>
 
           <div className={gaya.obsidianFeatureGrid}>
             {isiLangganan.map((item) => (
               <div key={item} className={gaya.obsidianFeatureItem}>
-                <span className={gaya.obsidianIconCheck}>✦</span>
+                <span className={gaya.obsidianIconCheck}>
+                  <IconCheck size={16} />
+                </span>
                 <span>{item}</span>
               </div>
             ))}
@@ -171,7 +282,7 @@ export function LanggananClientView(props: LanggananClientProps) {
         {masuk && (
           <div className={gaya.obsidianCard}>
             <div className={gaya.obsidianCardTitle}>
-              <span>📜</span> Riwayat Pembayaran
+              <IconReceipt size={20} /> Riwayat Pembayaran
             </div>
             <RiwayatPembayaran daftar={daftarPesanan} />
           </div>

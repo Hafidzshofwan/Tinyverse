@@ -9,8 +9,6 @@
  * Bagian yang menyangkut akun (status langganan dan tombol beli) hanya
  * ditampilkan kepada pengguna yang sudah masuk.
  */
-import Link from "next/link";
-
 import type { StatusLangganan } from "@tinyverse/billing";
 import type { StatusPesanan } from "@tinyverse/billing";
 import type { Plan } from "@tinyverse/billing";
@@ -30,12 +28,6 @@ const LABEL_STATUS: Record<StatusLangganan, string> = {
   belum: "Belum berlangganan",
   aktif: "Aktif",
   kedaluwarsa: "Kedaluwarsa",
-};
-
-const KELAS_STATUS: Record<StatusLangganan, string> = {
-  belum: gaya.belum ?? "",
-  aktif: gaya.aktif ?? "",
-  kedaluwarsa: gaya.kedaluwarsa ?? "",
 };
 
 const KELAS_RIWAYAT: Partial<Record<StatusPesanan, string>> = {
