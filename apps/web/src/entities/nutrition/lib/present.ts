@@ -7,6 +7,8 @@ import type {
   CalorieProteinResult,
   FormulaFeedResult,
 } from "@tinyverse/clinical-core";
+import { calculateNeonatalTpn } from "./tpn";
+import type { NeonatalTpnInput, NeonatalTpnResult } from "./tpn";
 
 // Pembulatan tampilan (UI-only). Core tetap mengembalikan angka eksak.
 export function fmt(n: number | null | undefined, d = 0): string {
@@ -75,4 +77,42 @@ export function computeFormula(
 export function autoFormulaVolume(weightKg: number | null): number | null {
   if (weightKg == null) return null;
   return formulaVolumeFromWeightMl(weightKg);
+}
+
+export interface NeonatalTpnOutcome {
+  error: string | null;
+  result: NeonatalTpnResult | null;
+}
+
+export function computeNeonatalTpn(
+  input: Partial<NeonatalTpnInput>,
+): NeonatalTpnOutcome {
+  if (input.weightKg == null) return { error: "Isi berat badan.", result: null };
+  if (input.fluidVolumeMlPerKgPerDay == null)
+    return { error: "Isi volume cairan.", result: null };
+  if (input.dextrosePercent == null)
+    return { error: "Isi konsentrasi dekstrosa.", result: null };
+  if (input.aminoAcidGPerKgPerDay == null)
+    return { error: "Isi dosis asam amino.", result: null };
+  if (input.lipidGPerKgPerDay == null)
+    return { error: "Isi dosis lipid.", result: null };
+  try {
+    return {
+      error: null,
+      result: calculateNeonatalTpn({
+        weightKg: input.weightKg,
+        category: input.category ?? "preterm",
+        dayOfLife: input.dayOfLife ?? 1,
+        fluidVolumeMlPerKgPerDay: input.fluidVolumeMlPerKgPerDay,
+        dextrosePercent: input.dextrosePercent,
+        aminoAcidGPerKgPerDay: input.aminoAcidGPerKgPerDay,
+        lipidGPerKgPerDay: input.lipidGPerKgPerDay,
+      }),
+    };
+  } catch (e) {
+    return {
+      error: e instanceof Error ? e.message : "Input tidak valid.",
+      result: null,
+    };
+  }
 }
