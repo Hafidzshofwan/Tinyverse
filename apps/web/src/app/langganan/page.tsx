@@ -21,8 +21,6 @@ import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { envMidtrans } from "@/server/env";
 import { KATALOG_PLAN } from "@/server/planKatalog";
 import { riwayatPesanan } from "@/server/pesananRiwayat";
-import { akunAktif } from "@/server/provisioning";
-import { bacaSesi } from "@/server/session";
 
 import { TombolBeli } from "./TombolBeli";
 import gaya from "./langganan.module.css";
@@ -168,9 +166,11 @@ function konfigPembayaran(): { clientKey: string; urlSnapJs: string } {
 }
 
 export default async function HalamanLangganan() {
-  const [status, sesi] = await Promise.all([statusAksesSaatIni(), bacaSesi()]);
+  const status = await statusAksesSaatIni();
   const masuk = status.masuk;
-  const daftarPesanan = sesi ? await riwayatPesanan(await akunAktif(sesi)) : [];
+  const daftarPesanan = status.accountId
+    ? await riwayatPesanan(status.accountId)
+    : [];
   const e = status.entitlement;
   const percobaan = status.percobaan;
   const peringatan = masuk
