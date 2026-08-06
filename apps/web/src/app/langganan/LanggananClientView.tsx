@@ -263,7 +263,7 @@ export function LanggananClientView(props: LanggananClientProps) {
         {/* Feature List */}
         <div className={gaya.obsidianCard}>
           <div className={gaya.obsidianCardTitle}>
-            <IconSparkles size={20} /> Fitur & Fitur Klinis yang Didapatkan
+            <IconSparkles size={20} /> Fitur Klinis yang Didapatkan
           </div>
 
           <div className={gaya.obsidianFeatureGrid}>
@@ -275,6 +275,11 @@ export function LanggananClientView(props: LanggananClientProps) {
                 <span>{item}</span>
               </div>
             ))}
+          </div>
+
+          <div className={gaya.obsidianFeatureSoon}>
+            <span className={gaya.obsidianSoonBadge}>Segera Hadir</span>
+            <span>Dialisis pada Anak</span>
           </div>
         </div>
 

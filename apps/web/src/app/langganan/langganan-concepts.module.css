@@ -296,6 +296,39 @@
   font-size: 0.95rem;
 }
 
+/* Next Update / Coming Soon strip within Feature card */
+.obsidianFeatureSoon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(217, 119, 6, 0.07),
+    rgba(217, 119, 6, 0.07) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  border: 1px dashed rgba(217, 119, 6, 0.45);
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.obsidianSoonBadge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  padding: 3px 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
 /* Shared Footer & Notes */
 .conceptCatatan {
   font-size: 0.82rem;
@@ -505,6 +538,24 @@
 :global([data-theme="dark"]) .obsidianIconCheck,
 :global(.dark) .obsidianIconCheck {
   color: #f59e0b;
+}
+
+:global([data-theme="dark"]) .obsidianFeatureSoon,
+:global(.dark) .obsidianFeatureSoon {
+  background: repeating-linear-gradient(
+    135deg,
+    rgba(245, 158, 11, 0.08),
+    rgba(245, 158, 11, 0.08) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fbbf24;
+}
+
+:global([data-theme="dark"]) .obsidianSoonBadge,
+:global(.dark) .obsidianSoonBadge {
+  color: #0f172a;
 }
 
 :global([data-theme="dark"]) .conceptCatatan,

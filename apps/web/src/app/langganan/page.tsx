@@ -40,12 +40,20 @@ const KELAS_RIWAYAT: Partial<Record<StatusPesanan, string>> = {
 const AMBANG_PERINGATAN_HARI = 7;
 
 const ISI_LANGGANAN: readonly string[] = [
-  "Dosis Obat, Terapi Cairan, dan Racik Puyer",
-  "Tumbuh Kembang: kurva WHO & CDC serta pemantauan longitudinal",
-  "Skoring Klinis dan Interpretasi Lab",
-  "Kalkulator Nutrisi dan Jadwal Imunisasi",
-  "Guideline, Alur Tata Laksana, dan Mode Darurat",
-  "Asisten AI dan pencarian global lintas alat",
+  "Asisten AI Co-Pilot Klinis",
+  "Mode Darurat & Resusitasi Pediatri",
+  "Alur Tata Laksana Interaktif",
+  "Dosis Obat & Racik Puyer",
+  "Terapi Cairan: Rumatan, Rehidrasi, dan Luka Bakar",
+  "Tumbuh Kembang: Kurva WHO & CDC",
+  "Skrining Perkembangan: KPSP, Denver II, dan M-CHAT-R",
+  "Skoring Klinis (8 Skor Pediatri)",
+  "Tekanan Darah: Persentil AAP 2017",
+  "Interpretasi Lab & Analisis Gas Darah (AGD)",
+  "Kalkulator Nutrisi: TPN Neonatus & Susu Formula",
+  "Guideline Tata Laksana Penyakit Anak",
+  "Jadwal Imunisasi & Catch-Up",
+  "Ringkasan Klinis Otomatis",
 ];
 
 function rupiah(nilai: number): string {
