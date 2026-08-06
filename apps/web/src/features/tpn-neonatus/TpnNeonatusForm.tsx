@@ -217,7 +217,7 @@ export function TpnNeonatusForm() {
             className={`segmented-btn ${kategori === "term" ? "aktif" : ""}`}
             onClick={() => setKategori("term")}
           >
-            <span>Term (cukup bulan)</span>
+            <span>Aterm</span>
           </button>
         </div>
         <div className="form-row-group">

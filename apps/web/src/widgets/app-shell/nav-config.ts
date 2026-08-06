@@ -77,13 +77,13 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     ],
   },
   {
-    title: "Tool Neonatus",
+    title: "Tools Neonatus",
     items: [
       // TPN Neonatus dan Bilirubin Neonatus digabung menjadi satu menu dua tab
       // (pola yang sama dengan Obat & Puyer) agar sidebar tidak memanjang.
       // Rute lama /preview/tpn-neonatus dan /preview/bilirubin tetap hidup
       // sebagai pengalih ke tab yang sesuai.
-      { slug: "neonatus", label: "Tool Neonatus", icon: "\uD83D\uDC76", href: "/preview/neonatus", built: true },
+      { slug: "neonatus", label: "Tools Neonatus", icon: "👶", href: "/preview/neonatus", built: true },
     ],
   },
   {
@@ -137,7 +137,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
   "/preview/nutrisi": "Kalkulator takaran susu formula: Volume per pemberian & total kalori/hari berdasarkan total volume susu, jumlah pemberian, dan konsentrasi energi, dengan isi otomatis patokan 150 mL/kg/hari.",
-  "/preview/neonatus": "Tool Neonatus menggabungkan dua kalkulator bayi baru lahir dalam dua tab: Tab TPN Neonatus menghitung GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Bilirubin Neonatus menghitung ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
+  "/preview/neonatus": "Tools Neonatus menggabungkan dua kalkulator bayi baru lahir dalam dua tab: Tab TPN Neonatus menghitung GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Bilirubin Neonatus menghitung ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
   "/preview/tpn-neonatus": "Kalkulator TPN (nutrisi parenteral total) neonatus: GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age).",
   "/preview/bilirubin": "Kalkulator ambang batas bilirubin neonatus: ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
