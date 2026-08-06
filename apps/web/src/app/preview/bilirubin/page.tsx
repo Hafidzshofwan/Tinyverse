@@ -1,8 +1,8 @@
-import "../fluids/v17-cairan.css";
-import { BilirubinPanel } from "@/widgets/bilirubin-panel";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "Bilirubin Neonatus (AAP 2022) | Tinyverse" };
-
+/**
+ * Rute lama Bilirubin Neonatus. Alatnya kini menjadi tab di menu Tool Neonatus.
+ */
 export default function BilirubinPreviewPage() {
-  return <BilirubinPanel />;
+  redirect("/preview/neonatus?tab=bilirubin");
 }

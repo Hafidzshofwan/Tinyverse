@@ -13,6 +13,7 @@ export type SidebarIconSlug =
   | "puyer"
   | "obat"
   | "tekanan-darah"
+  | "neonatus"
   | "tumbuh-kembang"
   | "skoring"
   | "lab"
@@ -37,6 +38,7 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "puyer": "v1",
   "obat": "v1",
   "tekanan-darah": "v1",
+  "neonatus": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
   "lab": "v1",
@@ -681,6 +683,45 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
     );
   }
 
+  // --- TOOL NEONATUS ---
+  if (slug === "neonatus") {
+    if (currentVariant === "v2") {
+      // V2: Botol susu bayi dengan dot dan garis takaran
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#EFF6FF" />
+          <path d="M10.4 2.8H13.6V5H10.4Z" fill="#93C5FD" />
+          <path d="M9.4 5H14.6C15.2 5 15.6 5.4 15.6 6V7.2H8.4V6C8.4 5.4 8.8 5 9.4 5Z" fill="#BFDBFE" />
+          <rect x="8.4" y="7.2" width="7.2" height="13" rx="2.4" fill="#FFFFFF" stroke="#3B82F6" strokeWidth="1.6" />
+          <path d="M9.9 11.2H14.1M9.9 14.2H14.1M9.9 17.2H12.6" stroke="#93C5FD" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+      );
+    }
+    if (currentVariant === "v3") {
+      // V3: Inkubator bayi dengan kubah penghangat
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#FFF7ED" />
+          <path d="M5 13C5 8.6 8.1 5.5 12 5.5C15.9 5.5 19 8.6 19 13" stroke="#F59E0B" strokeWidth="1.7" strokeLinecap="round" fill="#FFFBEB" />
+          <rect x="4" y="13" width="16" height="5" rx="2" fill="#FFFFFF" stroke="#D97706" strokeWidth="1.6" />
+          <circle cx="12" cy="10" r="1.8" fill="#FBBF24" />
+          <path d="M7.5 20.5H16.5" stroke="#FCD34D" strokeWidth="1.6" strokeLinecap="round" />
+        </svg>
+      );
+    }
+    // V1 (default): Wajah bayi dengan lingkaran pelindung
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <rect width="24" height="24" rx="6" fill="#ECFDF5" />
+        <circle cx="12" cy="13" r="6.5" fill="#FFFFFF" stroke="#10B981" strokeWidth="1.7" />
+        <path d="M12 6.5C12 5 13 4 14.2 4.4" stroke="#10B981" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+        <circle cx="9.8" cy="12.4" r="0.9" fill="#059669" />
+        <circle cx="14.2" cy="12.4" r="0.9" fill="#059669" />
+        <path d="M10 15.2C10.7 16 13.3 16 14 15.2" stroke="#059669" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+      </svg>
+    );
+  }
+
   // Default fallback if unknown slug
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
@@ -735,8 +776,12 @@ const SECTIONS: MenuSection[] = [
     title: "Diagnostik & Gizi",
     items: [
       { slug: "lab", label: "Interpretasi Lab" },
-      { slug: "nutrisi", label: "Kalkulator Nutrisi" },
+      { slug: "nutrisi", label: "Kalkulator Susu Formula" },
     ],
+  },
+  {
+    title: "Tool Neonatus",
+    items: [{ slug: "neonatus", label: "Tool Neonatus" }],
   },
   {
     title: "Referensi",

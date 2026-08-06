@@ -1,8 +1,10 @@
-import "../fluids/v17-cairan.css";
-import { TpnNeonatusPanel } from "@/widgets/tpn-neonatus-panel";
+import { redirect } from "next/navigation";
 
-export const metadata = { title: "TPN Neonatus | Tinyverse" };
-
+/**
+ * Rute lama TPN Neonatus. Alatnya kini menjadi tab di menu Tool Neonatus.
+ * Pengalih dipertahankan supaya tautan lama, riwayat peramban, dan indeks
+ * pencarian global tidak mati.
+ */
 export default function TpnNeonatusPreviewPage() {
-  return <TpnNeonatusPanel />;
+  redirect("/preview/neonatus?tab=tpn");
 }
