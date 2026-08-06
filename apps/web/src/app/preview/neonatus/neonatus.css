@@ -1,0 +1,20 @@
+/* === TinyVerse — Tool Neonatus (menu gabungan dua tab) === */
+
+/*
+ * WHY berkas sendiri: .tv-page-cairan-wrapper (dari v17-cairan.css) punya
+ * min-height: 100vh karena didesain untuk HALAMAN PENUH satu alat berdiri
+ * sendiri. Tool Neonatus merender baris tab, lalu widget alat yang aktif
+ * (TpnNeonatusPanel / BilirubinPanel) sebagai elemen terpisah di bawahnya --
+ * dan masing-masing widget itu MEMBAWA .tv-page-cairan-wrapper miliknya
+ * sendiri. Jika baris tab ikut dibungkus .tv-page-cairan-wrapper, dua
+ * min-height: 100vh menumpuk (satu untuk baris tab, satu untuk isi alat),
+ * sehingga isi alat terdorong ke luar layar -- itulah jarak kosong sepanjang
+ * satu viewport yang terlihat di bawah tab.
+ *
+ * Pembungkus ini sengaja HANYA padding atas, tanpa min-height, meniru pola
+ * .tv-page-obat-wrapper pada menu gabungan Obat & Racik Puyer.
+ */
+.tv-page-neonatus-tabs-wrapper {
+  background: transparent !important;
+  padding: 24px 16px 0;
+}

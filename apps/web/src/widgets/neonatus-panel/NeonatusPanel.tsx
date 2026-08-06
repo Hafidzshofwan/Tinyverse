@@ -80,7 +80,7 @@ export function NeonatusPanel() {
 
   return (
     <div>
-      <div className="tv-page-cairan-wrapper">
+      <div className="tv-page-neonatus-tabs-wrapper">
         <div className="tv-page-cairan">
           <div className="kartu">
             <div className="segmented-toggle" role="tablist">
