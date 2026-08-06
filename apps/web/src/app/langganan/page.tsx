@@ -50,7 +50,6 @@ const ISI_LANGGANAN: readonly string[] = [
   "Skoring Klinis (10 Skor Pediatri)",
   "Tekanan Darah: Persentil AAP 2017",
   "Interpretasi Lab & Analisis Gas Darah (AGD)",
-  "Kalkulator Susu Formula",
   "Tool Neonatus: TPN & Bilirubin (AAP 2022)",
   "Guideline Tata Laksana Penyakit Anak",
   "Jadwal Imunisasi & Catch-Up",

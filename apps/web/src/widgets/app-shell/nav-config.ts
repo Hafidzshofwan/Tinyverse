@@ -74,7 +74,6 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     title: "Diagnostik & Gizi",
     items: [
       { slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab", built: true },
-      { slug: "nutrisi", label: "Kalkulator Susu Formula", icon: "\uD83C\uDF4E", href: "/preview/nutrisi", built: true },
     ],
   },
   {
@@ -116,7 +115,6 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
   "/preview/egfr": "Perkiraan fungsi ginjal anak (eGFR) & stadium CKD dari tinggi badan dan kreatinin.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
-  "/preview/nutrisi": "Takaran & volume susu formula harian berdasarkan berat badan.",
   "/preview/neonatus": "Dua alat neonatus dalam satu menu: TPN (GIR, asam amino, lipid) dan ambang batas bilirubin.",
   "/preview/tpn-neonatus": "Nutrisi parenteral total neonatus: GIR, asam amino, dan lipid.",
   "/preview/bilirubin": "Ambang batas fototerapi & transfusi tukar bayi baru lahir.",
@@ -139,7 +137,6 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
   "/preview/egfr": "Kalkulator eGFR pediatrik (usia 1-25 tahun): rumus utama CKiD U25 (Pierce 2021) berbasis tinggi/kreatinin dengan alternatif cystatin C, rumus pembanding Bedside Schwartz (Schwartz 2009), klasifikasi stadium CKD KDIGO G1-G5, serta modul opsional perkiraan pita risiko progresi ke ESRD (Furth 2018) berbasis UPCR.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
-  "/preview/nutrisi": "Kalkulator takaran susu formula: Volume per pemberian & total kalori/hari berdasarkan total volume susu, jumlah pemberian, dan konsentrasi energi, dengan isi otomatis patokan 150 mL/kg/hari.",
   "/preview/neonatus": "Tools Neonatus menggabungkan dua kalkulator bayi baru lahir dalam dua tab: Tab TPN Neonatus menghitung GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Bilirubin Neonatus menghitung ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
   "/preview/tpn-neonatus": "Kalkulator TPN (nutrisi parenteral total) neonatus: GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age).",
   "/preview/bilirubin": "Kalkulator ambang batas bilirubin neonatus: ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",

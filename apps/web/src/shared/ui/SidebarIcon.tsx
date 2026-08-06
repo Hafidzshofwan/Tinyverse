@@ -18,7 +18,6 @@ export type SidebarIconSlug =
   | "tumbuh-kembang"
   | "skoring"
   | "lab"
-  | "nutrisi"
   | "protokol"
   | "imunisasi"
   | "ringkasan";
@@ -44,7 +43,6 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
   "lab": "v1",
-  "nutrisi": "v3",
   "protokol": "v1",
   "imunisasi": "v2",
   "ringkasan": "v3",
@@ -450,42 +448,6 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
     );
   }
 
-  // --- 11. KALKULATOR NUTRISI ---
-  if (slug === "nutrisi") {
-    if (currentVariant === "v2") {
-      // V2: Pediatric Milk Bottle & Star
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#FFF1F2" />
-          <path d="M10 3H14V5H10V3Z" fill="#E11D48" />
-          <path d="M8 8C8 6.9 8.9 6 10 6H14C15.1 6 16 6.9 16 8V18C16 19.1 15.1 20 14 20H10C8.9 20 8 19.1 8 18V8Z" stroke="#E11D48" strokeWidth="1.8" fill="#FFE4E6" />
-          <path d="M8 12H16" stroke="#FB7185" strokeWidth="1.5" />
-          <path d="M12 14L12.5 15.5L14 15.5L12.8 16.4L13.2 17.8L12 16.8L10.8 17.8L11.2 16.4L10 15.5L11.5 15.5L12 14Z" fill="#F59E0B" />
-        </svg>
-      );
-    }
-    if (currentVariant === "v3") {
-      // V3: Dietary Balance Scale & Protein/Fruit
-      return (
-        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#FEF2F2" />
-          <path d="M12 4V20M6 20H18M4 8H20M4 8L7 14H1M20 8L23 14H17" stroke="#DC2626" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="4" cy="12" r="1.5" fill="#16A34A" />
-          <circle cx="20" cy="12" r="1.5" fill="#EA580C" />
-        </svg>
-      );
-    }
-    // V1: Fresh Apple & Calorie Leaf
-    return (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-        <rect width="24" height="24" rx="6" fill="#FEF2F2" />
-        <path d="M12 8C10 6 6 6.5 6 11.5C6 16.5 10 20 12 20C14 20 18 16.5 18 11.5C18 6.5 14 6 12 8Z" fill="#FCA5A5" fillOpacity="0.5" stroke="#EF4444" strokeWidth="1.8" />
-        <path d="M12 7C12 5 13.5 3.5 15 3.5C15 5 13.5 6.5 12 7Z" fill="#16A34A" stroke="#15803D" strokeWidth="1" />
-        <path d="M12 7.5V9.5" stroke="#991B1B" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
   // --- 12. GUIDELINE / PROTOKOL ---
   if (slug === "protokol") {
     if (currentVariant === "v2") {
@@ -823,7 +785,6 @@ const SECTIONS: MenuSection[] = [
     title: "Diagnostik & Gizi",
     items: [
       { slug: "lab", label: "Interpretasi Lab" },
-      { slug: "nutrisi", label: "Kalkulator Susu Formula" },
     ],
   },
   {

@@ -40,7 +40,6 @@ const BASELINE_ENTRIES: SearchEntry[] = [
   { type: "menu", slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", text: "Tumbuh Kembang, Kurva & Skrining KPSP", keywords: "tumbuh kembang kurva who cdc z-score persentil stunting longitudinal kpsp" },
   { type: "menu", slug: "skoring", label: "Skoring Klinis", icon: "🧮", href: "/preview/skoring", text: "8 Skoring & Kriteria Klinis Anak", keywords: "skor skoring cds croup pas downes pass kawasaki centor tbanak" },
   { type: "menu", slug: "lab", label: "Interpretasi Lab", icon: "🔬", href: "/preview/lab", text: "Interpretasi Lab, AGD & Elektrolit", keywords: "lab agd abg gas darah elektrolit natrium kalium hb trombosit rujukan" },
-  { type: "menu", slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "🍎", href: "/preview/nutrisi", text: "TPN Neonatus, Kalori & Takaran Susu Formula", keywords: "nutrisi kalori energi bmr rda susu formula mpasi tpn parenteral gir dekstrosa asam amino lipid neonatus preterm term" },
   { type: "menu", slug: "protokol", label: "Guideline", icon: "🩺", href: "/preview/guideline", text: "Guideline & Panduan Pediatrik", keywords: "guideline protokol pedoman who idai pdf" },
   { type: "menu", slug: "imunisasi", label: "Jadwal Imunisasi", icon: "📅", href: "/preview/imunisasi", text: "Jadwal Imunisasi IDAI & Catch-Up", keywords: "imunisasi vaksin vaksinasi idai catch up kejar" },
   { type: "menu", slug: "ringkasan", label: "Ringkasan Klinis", icon: "📄", href: "/preview/ringkasan", text: "Ringkasan & Resume Catatan Medis", keywords: "ringkasan resume rekam medis copy salin" },
@@ -237,27 +236,6 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     anchor: "text:Tekanan Darah"
   },
 
-  // Sub-fitur Kalkulator Nutrisi (TPN Neonatus & Susu Formula)
-  {
-    type: "content",
-    slug: "nutrisi",
-    label: "TPN Neonatus",
-    icon: "💊",
-    href: "/preview/nutrisi?tab=tpn",
-    text: "Kalkulator TPN (Total Parenteral Nutrition) Neonatus - GIR, Asam Amino, Lipid untuk Bayi Preterm & Term",
-    keywords: "tpn total parenteral nutrition neonatus preterm term gir glucose infusion rate dekstrosa asam amino lipid ile 20% hari kehidupan usia koreksi postmenstrual age berat lahir kalori kkal/kg",
-    anchor: "text:TPN Neonatus"
-  },
-  {
-    type: "content",
-    slug: "nutrisi",
-    label: "Susu Formula",
-    icon: "🍼",
-    href: "/preview/nutrisi?tab=formula",
-    text: "Kalkulator Takaran & Volume Susu Formula Harian",
-    keywords: "susu formula mpasi takaran sendok takar rekonstitusi kkal/ml volume harian bayi",
-    anchor: "text:Susu Formula"
-  }
 ];
 
 export function GlobalSearch() {
