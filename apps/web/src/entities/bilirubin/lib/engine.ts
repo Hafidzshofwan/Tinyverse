@@ -87,7 +87,7 @@ export function lookupBilirubinThreshold(curveKey: string, hoursAfterBirth: numb
   if (!curve) return null;
   if (hoursAfterBirth < 0) return null;
   const hourIndex = Math.floor(hoursAfterBirth);
-  if (hourIndex < curve.values.length) return curve.values[hourIndex];
+  if (hourIndex < curve.values.length) return curve.values[hourIndex] ?? null;
   return curve.plateauValue;
 }
 
@@ -266,8 +266,8 @@ export function computeGuardrailWarnings(input: GuardrailInput): string[] {
   const priorPoints = input.history
     .filter((p) => p.hoursAfterBirth < input.ageHours)
     .sort((a, b) => b.hoursAfterBirth - a.hoursAfterBirth);
-  if (priorPoints.length > 0) {
-    const prev = priorPoints[0];
+  const prev = priorPoints[0];
+  if (prev) {
     const hoursDiff = input.ageHours - prev.hoursAfterBirth;
     if (hoursDiff > 0) {
       const ratePerHour = (input.tsbMgDl - prev.tsbMgDl) / hoursDiff;
