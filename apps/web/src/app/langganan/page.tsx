@@ -47,7 +47,7 @@ const ISI_LANGGANAN: readonly string[] = [
   "Terapi Cairan: Rumatan, Rehidrasi, dan Luka Bakar",
   "Tumbuh Kembang: Kurva WHO & CDC",
   "Skrining Perkembangan: KPSP, Denver II, dan M-CHAT-R",
-  "Skoring Klinis (8 Skor Pediatri)",
+  "Skoring Klinis (10 Skor Pediatri)",
   "Tekanan Darah: Persentil AAP 2017",
   "Interpretasi Lab & Analisis Gas Darah (AGD)",
   "Kalkulator Nutrisi: TPN Neonatus & Susu Formula",
