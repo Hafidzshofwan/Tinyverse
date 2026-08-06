@@ -33,9 +33,9 @@ export function BilirubinPanel() {
             </svg>
           </div>
           <div>
-            <h2 style={{ fontSize: "19.48px" }}>Bilirubin Neonatus (AAP 2022)</h2>
+            <h2 style={{ fontSize: "19.48px" }}>Bilirubin Neonatus</h2>
             <p style={{ fontSize: "10.24px" }}>
-              Threshold fototerapi, eskalasi perawatan &amp; exchange transfusion bayi baru lahir.
+              Ambang batas fototerapi, peningkatan perawatan &amp; transfusi tukar bayi baru lahir.
             </p>
           </div>
         </div>

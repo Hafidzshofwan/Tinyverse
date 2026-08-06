@@ -112,7 +112,7 @@ export function NeonatusPanel() {
                     <path d="M12 3V5M12 19V21M3 12H5M19 12H21M5.6 5.6L7 7M17 17L18.4 18.4M5.6 18.4L7 17M17 7L18.4 5.6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                   </svg>
                 </span>
-                <span>Bilirubin (AAP 2022)</span>
+                <span>Bilirubin</span>
               </button>
             </div>
           </div>

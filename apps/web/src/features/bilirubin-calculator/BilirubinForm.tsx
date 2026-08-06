@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import type { CSSProperties } from "react";
-import { NumberField } from "@/shared/ui";
+import { NumberField, ReferensiBlok, REFERENSI_BILIRUBIN } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import {
   computeThresholds,
@@ -133,12 +133,12 @@ const zoneColorHex: Record<BilirubinZoneColor, string> = {
   "dark-red": "#7C2D12",
 };
 
-const zoneBoxStyle: Record<BilirubinZoneColor, CSSProperties> = {
-  green: { border: "2px solid #10B981", background: "linear-gradient(135deg,#e6fbf1,#fff)" },
-  yellow: { border: "2px solid #EAB308", background: "linear-gradient(135deg,#fef9e6,#fff)" },
-  orange: { border: "2px solid #F97316", background: "linear-gradient(135deg,#fff1e6,#fff)" },
-  red: { border: "2px solid #DC2626", background: "linear-gradient(135deg,#ffe0e0,#fff)" },
-  "dark-red": { border: "2px solid #7C2D12", background: "linear-gradient(135deg,#f7dede,#fff)" },
+const zoneBoxClass: Record<BilirubinZoneColor, string> = {
+  green: "bili-box bili-box-green",
+  yellow: "bili-box bili-box-yellow",
+  orange: "bili-box bili-box-orange",
+  red: "bili-box bili-box-red",
+  "dark-red": "bili-box bili-box-dark-red",
 };
 
 let historyIdCounter = 0;
@@ -242,14 +242,17 @@ export function BilirubinForm() {
         })
       : [];
 
-  const chartWidth = 640;
-  const chartHeight = 300;
-  const padLeft = 40;
-  const padBottom = 30;
-  const padTop = 10;
-  const padRight = 10;
+  const chartWidth = 660;
+  const chartHeight = 350;
+  const padLeft = 50;
+  const padBottom = 52;
+  const padTop = 30;
+  const padRight = 20;
   const maxY = 30;
   const maxX = 336;
+
+  const yTicks = [0, 5, 10, 15, 20, 25, 30];
+  const xTicks = [0, 24, 48, 72, 96, 120, 144, 168, 216, 264, 312, 336];
 
   function xToPx(h: number): number {
     return padLeft + (h / maxX) * (chartWidth - padLeft - padRight);
@@ -269,13 +272,17 @@ export function BilirubinForm() {
     const step = 6;
     const photoPts: Array<[number, number]> = [];
     const exchPts: Array<[number, number]> = [];
+    const escalPts: Array<[number, number]> = [];
     for (let h = 0; h <= maxX; h += step) {
       const pv = lookupBilirubinThreshold(photoSel.curveKey, h);
       const ev = lookupBilirubinThreshold(exchSel.curveKey, h);
       if (pv != null) photoPts.push([h, pv]);
-      if (ev != null) exchPts.push([h, ev]);
+      if (ev != null) {
+        exchPts.push([h, ev]);
+        escalPts.push([h, Math.max(0, ev - 2.0)]);
+      }
     }
-    return { photoPts, exchPts };
+    return { photoPts, escalPts, exchPts };
   }, [thresholds, gaNum, withRF, maxX]);
 
   function addHistoryRow() {
@@ -302,12 +309,12 @@ export function BilirubinForm() {
         </div>
         {gaNum != null && gaNum < 35 ? (
           <p className="catatan-metode" style={{ marginTop: 0, color: "#e63946", fontWeight: 700 }}>
-            Usia gestasi &lt;35 minggu berada di luar cakupan pedoman AAP 2022 ini.
+            Usia gestasi &lt;35 minggu berada di luar cakupan pedoman ini.
           </p>
         ) : null}
         <div className="form-row-group">
           <DateTimeField label="Tanggal & jam lahir" value={birthDateTime} onValueChange={setBirthDateTime} />
-          <DateTimeField label="Tanggal & jam pengukuran TSB" value={measureDateTime} onValueChange={setMeasureDateTime} />
+          <DateTimeField label="Tanggal & jam pengukuran Total Serum Bilirubin (TSB)" value={measureDateTime} onValueChange={setMeasureDateTime} />
         </div>
         {ageError ? (
           <p className="catatan-metode" style={{ marginTop: 0, color: "#e63946", fontWeight: 700 }}>
@@ -329,7 +336,7 @@ export function BilirubinForm() {
         </div>
         <div className="form-row-group">
           <NumberField
-            label={`TSB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
+            label={`Total Serum Bilirubin / TSB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
             value={tsbValue}
             onValueChange={setTsbValue}
             placeholder={tsbUnit === "mgdl" ? "cth: 15" : "cth: 256"}
@@ -341,11 +348,11 @@ export function BilirubinForm() {
           </p>
         ) : null}
 
-        <CheckboxField label="Nilai di atas dari TcB (transkutan), bukan TSB serum" checked={useTcb} onChange={setUseTcb} />
+        <CheckboxField label="Nilai di atas dari Bilirubin Transkutan (TcB), bukan pengukuran serum (TSB)" checked={useTcb} onChange={setUseTcb} />
         {useTcb ? (
           <div className="form-row-group">
             <NumberField
-              label={`TcB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
+              label={`Bilirubin Transkutan / TcB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
               value={tcbValue}
               onValueChange={setTcbValue}
               placeholder="cth: 14"
@@ -382,8 +389,7 @@ export function BilirubinForm() {
         />
         {gaAutoRisk ? (
           <p className="catatan-metode" style={{ marginTop: 4 }}>
-            Usia gestasi &lt;38 minggu — kurva &quot;dengan faktor risiko&quot; otomatis digunakan sesuai AAP
-            2022, terlepas dari checkbox di atas.
+            Usia gestasi &lt;38 minggu — kurva &quot;dengan faktor risiko&quot; otomatis digunakan sesuai pedoman American Academy of Pediatrics, terlepas dari checkbox di atas.
           </p>
         ) : null}
         <CheckboxField
@@ -405,7 +411,7 @@ export function BilirubinForm() {
         {isOnPhototherapy ? (
           <div className="form-row-group">
             <NumberField
-              label={`TSB saat mulai fototerapi (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
+              label={`Total Serum Bilirubin (TSB) saat mulai fototerapi (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
               value={phototherapyStartTsb}
               onValueChange={setPhototherapyStartTsb}
               placeholder="cth: 17"
@@ -413,72 +419,108 @@ export function BilirubinForm() {
           </div>
         ) : null}
 
-        <div style={{ marginTop: 10, marginBottom: 6, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <h3 style={{ fontSize: "0.85rem", margin: 0, color: "var(--navy)" }}>Riwayat pengukuran TSB (opsional, untuk tren)</h3>
-          <button type="button" className="tv-btn" style={{ padding: "6px 12px", fontSize: 13 }} onClick={addHistoryRow}>
+        <div style={{ marginTop: 18, marginBottom: 10, display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 8 }}>
+          <h3 style={{ fontSize: "0.85rem", margin: 0, color: "var(--navy)", fontWeight: 700 }}>
+            Riwayat pengukuran Total Serum Bilirubin (TSB) (opsional, untuk tren)
+          </h3>
+          <button
+            type="button"
+            className="tv-btn sekunder"
+            style={{ width: "auto", margin: 0, padding: "6px 14px", fontSize: 13, fontWeight: 700 }}
+            onClick={addHistoryRow}
+          >
             + Tambah titik
           </button>
         </div>
-        {history.map((row) => (
-          <div key={row.id} className="form-row-group" style={{ alignItems: "flex-end" }}>
-            <DateTimeField
-              label="Tanggal & jam"
-              value={row.dateTime}
-              onValueChange={(v) => updateHistoryRow(row.id, { dateTime: v })}
-            />
-            <NumberField
-              label={`TSB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
-              value={row.value}
-              onValueChange={(v) => updateHistoryRow(row.id, { value: v })}
-              placeholder="cth: 12"
-            />
-            <button
-              type="button"
-              className="tv-btn"
-              style={{ padding: "10px 12px", background: "#fde0e0", color: "#DC2626", fontWeight: 700 }}
-              onClick={() => removeHistoryRow(row.id)}
-            >
-              Hapus
-            </button>
+        {history.map((row, idx) => (
+          <div
+            key={row.id}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr auto",
+              gap: 12,
+              alignItems: "end",
+              padding: "12px",
+              borderRadius: "14px",
+              background: "var(--tv-soft, #f4f5fa)",
+              border: "1px solid var(--tv-line, rgba(10, 11, 95, 0.09))",
+              marginBottom: 10,
+            }}
+          >
+            <div style={{ minWidth: 0 }}>
+              <DateTimeField
+                label={`Tanggal & jam #${idx + 1}`}
+                value={row.dateTime}
+                onValueChange={(v) => updateHistoryRow(row.id, { dateTime: v })}
+              />
+            </div>
+            <div style={{ minWidth: 0 }}>
+              <NumberField
+                label={`Total Serum Bilirubin / TSB (${tsbUnit === "mgdl" ? "mg/dL" : "\u00b5mol/L"})`}
+                value={row.value}
+                onValueChange={(v) => updateHistoryRow(row.id, { value: v })}
+                placeholder="cth: 12"
+              />
+            </div>
+            <div style={{ minWidth: 0, paddingBottom: 18 }}>
+              <button
+                type="button"
+                className="tv-btn"
+                style={{
+                  width: "auto",
+                  padding: "11px 16px",
+                  background: "rgba(220, 38, 38, 0.12)",
+                  color: "#DC2626",
+                  fontWeight: 700,
+                  marginTop: 0,
+                  whiteSpace: "nowrap",
+                  border: "1px solid rgba(220, 38, 38, 0.2)",
+                  boxShadow: "none",
+                }}
+                onClick={() => removeHistoryRow(row.id)}
+              >
+                Hapus
+              </button>
+            </div>
           </div>
         ))}
 
         {gaNum == null || !birthDateTime || !measureDateTime || tsbMgDl == null ? (
           <p className="catatan-metode" style={{ marginTop: 16 }}>
-            Isi usia gestasi, tanggal &amp; jam lahir, tanggal &amp; jam pengukuran, dan nilai TSB untuk melihat
+            Isi usia gestasi, tanggal &amp; jam lahir, tanggal &amp; jam pengukuran, dan nilai Total Serum Bilirubin (TSB) untuk melihat
             hasil.
           </p>
         ) : ageError ? null : thresholds && thresholds.outOfScope ? (
           <div className="hasil-box-cairan" style={errorBoxStyle}>
             <p style={{ margin: 0, color: "#e63946", fontWeight: 700 }}>
-              Usia gestasi &lt;35 minggu berada di luar cakupan pedoman AAP 2022 ini. Gunakan pedoman
+              Usia gestasi &lt;35 minggu berada di luar cakupan pedoman ini. Gunakan pedoman
               neonatologi/NICU yang sesuai.
             </p>
           </div>
         ) : thresholds && zone ? (
-          <div className="hasil-box-cairan" style={zoneBoxStyle[zone.color]}>
-            <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
-            <p style={resultText}>
-              Threshold fototerapi: <b>{fmt(thresholds.phototherapyMgDl, 1)} mg/dL</b> (
+          <div className={zoneBoxClass[zone.color]}>
+            <h3 className="bili-box-title">HASIL PERHITUNGAN</h3>
+            <p className="bili-box-text">
+              Ambang batas fototerapi: <b>{fmt(thresholds.phototherapyMgDl, 1)} mg/dL</b> (
               {fmt(mgdlToUmol(thresholds.phototherapyMgDl ?? 0), 0)} µmol/L)
             </p>
-            <p style={resultText}>
-              Threshold eskalasi perawatan: <b>{fmt(thresholds.escalationMgDl, 1)} mg/dL</b> (
+            <p className="bili-box-text">
+              Ambang batas eskalasi terapi (siaga transfusi tukar): <b>{fmt(thresholds.escalationMgDl, 1)} mg/dL</b> (
               {fmt(mgdlToUmol(thresholds.escalationMgDl ?? 0), 0)} µmol/L)
             </p>
-            <p style={resultText}>
-              Threshold exchange transfusion: <b>{fmt(thresholds.exchangeMgDl, 1)} mg/dL</b> (
+            <p className="bili-box-text">
+              Ambang batas transfusi tukar: <b>{fmt(thresholds.exchangeMgDl, 1)} mg/dL</b> (
               {fmt(mgdlToUmol(thresholds.exchangeMgDl ?? 0), 0)} µmol/L)
             </p>
-            <p className="catatan-metode" style={{ margin: "0 0 10px" }}>
+            <p className="catatan-metode" style={{ margin: "0 0 10px", opacity: 0.85 }}>
               Kurva acuan: {thresholds.curveLabelPhoto} · {thresholds.curveLabelExchange}
             </p>
-            <p style={{ ...resultText, color: zoneColorHex[zone.color], fontWeight: 800, fontSize: 16 }}>
+            <p className="bili-box-text" style={{ fontWeight: 800, fontSize: 16.5, margin: "8px 0" }}>
               {zone.title}
             </p>
             <ul style={{ margin: "0 0 10px", paddingLeft: 20 }}>
               {zone.recommendations.map((r, i) => (
-                <li key={i} style={{ ...resultText, margin: "0 0 4px" }}>
+                <li key={i} className="bili-box-text" style={{ margin: "0 0 4px", fontSize: 14 }}>
                   {r}
                 </li>
               ))}
@@ -486,21 +528,21 @@ export function BilirubinForm() {
             {guardrails.length > 0 ? (
               <div style={{ marginTop: 8 }}>
                 {guardrails.map((w, i) => (
-                  <p key={i} style={{ ...resultText, color: "#DC2626", fontWeight: 700, margin: "0 0 4px" }}>
+                  <p key={i} className="bili-box-text" style={{ fontWeight: 700, margin: "0 0 4px", color: "#EF4444" }}>
                     ⚠ {w}
                   </p>
                 ))}
               </div>
             ) : null}
-            <div style={{ marginTop: 12 }}>
+            <div style={{ marginTop: 14 }}>
               <button
                 type="button"
                 className="tv-btn"
-                style={{ background: "#0A0B5F", color: "#FFFFFF", fontWeight: 700 }}
+                style={{ background: "var(--tv-navy, #0A0B5F)", color: "#FFFFFF", fontWeight: 700 }}
                 onClick={() => {
                   const bodyText = [
                     `GA ${gaNum} minggu, usia ${ageHours != null ? Math.floor(ageHours) : "-"} jam, TSB ${fmt(tsbMgDl, 1)} mg/dL`,
-                    `Threshold: Fototerapi ${fmt(thresholds.phototherapyMgDl, 1)} | Eskalasi ${fmt(thresholds.escalationMgDl, 1)} | Exchange ${fmt(thresholds.exchangeMgDl, 1)} mg/dL`,
+                    `Ambang batas: Fototerapi ${fmt(thresholds.phototherapyMgDl, 1)} | Peningkatan Perawatan ${fmt(thresholds.escalationMgDl, 1)} | Transfusi Tukar ${fmt(thresholds.exchangeMgDl, 1)} mg/dL`,
                     `Zona: ${zone.title}`,
                     ...zone.recommendations,
                     ...guardrails,
@@ -509,7 +551,7 @@ export function BilirubinForm() {
                     .join("\n");
                   addRingkasanItem({
                     title: `Bilirubin Neonatus (GA ${gaNum}mg, TSB ${fmt(tsbMgDl, 1)} mg/dL)`,
-                    source: "Bilirubin Neonatus AAP 2022",
+                    source: "Bilirubin Neonatus",
                     body: bodyText,
                   });
                   setDitambahkan(true);
@@ -525,23 +567,148 @@ export function BilirubinForm() {
 
       {nomogram ? (
         <div className="kartu info-metode">
-          <h3>Nomogram</h3>
-          <svg width="100%" viewBox={`0 0 ${chartWidth} ${chartHeight}`} style={{ maxWidth: "100%" }}>
-            <line x1={padLeft} y1={chartHeight - padBottom} x2={chartWidth - padRight} y2={chartHeight - padBottom} stroke="#94a3b8" strokeWidth={1} />
-            <line x1={padLeft} y1={padTop} x2={padLeft} y2={chartHeight - padBottom} stroke="#94a3b8" strokeWidth={1} />
-            <path d={pointsToPath(nomogram.photoPts)} fill="none" stroke="#F97316" strokeWidth={2} />
-            <path d={pointsToPath(nomogram.exchPts)} fill="none" stroke="#7C2D12" strokeWidth={2} strokeDasharray="6,4" />
-            {historyPoints.map((p, i) => (
-              <circle key={i} cx={xToPx(p.hoursAfterBirth)} cy={yToPx(p.tsbMgDl)} r={4} fill="#2563EB" />
-            ))}
-            {ageHours != null && tsbMgDl != null ? (
-              <circle cx={xToPx(ageHours)} cy={yToPx(tsbMgDl)} r={5} fill="#10B981" stroke="#065f46" strokeWidth={1.5} />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, flexWrap: "wrap", gap: 8 }}>
+            <h3 style={{ margin: 0 }}>Nomogram Ambang Batas Bilirubin</h3>
+            <span className="bili-nomogram-badge">
+              GA {gaNum} mg {withRF ? "(Dengan Risiko Neurotoksisitas)" : "(Tanpa Risiko Neurotoksisitas)"}
+            </span>
+          </div>
+
+          {/* SVG Chart */}
+          <svg width="100%" viewBox={`0 0 ${chartWidth} ${chartHeight}`} className="bili-nomogram-svg" style={{ maxWidth: "100%" }}>
+            {/* Horizontal Gridlines & Y Axis Ticks */}
+            {yTicks.map((v) => {
+              const yPx = yToPx(v);
+              return (
+                <g key={`y-${v}`}>
+                  <line
+                    x1={padLeft}
+                    y1={yPx}
+                    x2={chartWidth - padRight}
+                    y2={yPx}
+                    className="bili-gridline"
+                    strokeDasharray={v === 0 ? undefined : "3,3"}
+                  />
+                  <line x1={padLeft - 5} y1={yPx} x2={padLeft} y2={yPx} className="bili-axis" />
+                  <text x={padLeft - 8} y={yPx + 4} textAnchor="end" className="bili-tick-text">
+                    {v}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Vertical Gridlines & X Axis Ticks */}
+            {xTicks.map((h) => {
+              const xPx = xToPx(h);
+              const dayNum = h / 24;
+              return (
+                <g key={`x-${h}`}>
+                  <line
+                    x1={xPx}
+                    y1={padTop}
+                    x2={xPx}
+                    y2={chartHeight - padBottom}
+                    className="bili-gridline"
+                    strokeDasharray="3,3"
+                  />
+                  <line x1={xPx} y1={chartHeight - padBottom} x2={xPx} y2={chartHeight - padBottom + 5} className="bili-axis" />
+                  <text x={xPx} y={chartHeight - padBottom + 18} textAnchor="middle" className="bili-tick-text">
+                    {h}j
+                  </text>
+                  <text x={xPx} y={chartHeight - padBottom + 31} textAnchor="middle" className="bili-tick-subtext">
+                    {h === 0 ? "Lahir" : `H-${dayNum}`}
+                  </text>
+                </g>
+              );
+            })}
+
+            {/* Main Axes */}
+            <line x1={padLeft} y1={chartHeight - padBottom} x2={chartWidth - padRight} y2={chartHeight - padBottom} className="bili-axis" />
+            <line x1={padLeft} y1={padTop} x2={padLeft} y2={chartHeight - padBottom} className="bili-axis" />
+
+            {/* Axis Titles */}
+            <text x={padLeft} y={18} textAnchor="start" className="bili-axis-title">
+              TSB (mg/dL)
+            </text>
+            <text x={(chartWidth + padLeft - padRight) / 2} y={chartHeight - 8} textAnchor="middle" className="bili-axis-title">
+              Usia Bayi setelah Lahir (Jam &amp; Hari)
+            </text>
+
+            {/* Curves */}
+            {/* Fototerapi */}
+            <path d={pointsToPath(nomogram.photoPts)} fill="none" stroke="#F97316" strokeWidth={2.5} />
+            {/* Siaga Transfusi Tukar / Eskalasi */}
+            <path d={pointsToPath(nomogram.escalPts)} fill="none" stroke="#D97706" strokeWidth={1.5} strokeDasharray="4,3" />
+            {/* Transfusi Tukar */}
+            <path d={pointsToPath(nomogram.exchPts)} fill="none" stroke="#991B1B" strokeWidth={2.5} strokeDasharray="6,4" />
+
+            {/* History trajectory line & dots */}
+            {historyPoints.length > 0 ? (
+              <g>
+                <path
+                  d={historyPoints.map((p, i) => `${i === 0 ? "M" : "L"}${xToPx(p.hoursAfterBirth).toFixed(1)},${yToPx(p.tsbMgDl).toFixed(1)}`).join(" ")}
+                  fill="none"
+                  stroke="#3B82F6"
+                  strokeWidth={2}
+                  strokeDasharray="3,3"
+                />
+                {historyPoints.map((p, i) => (
+                  <circle key={i} cx={xToPx(p.hoursAfterBirth)} cy={yToPx(p.tsbMgDl)} r={4} fill="#3B82F6" stroke="#FFFFFF" strokeWidth={1.5} />
+                ))}
+              </g>
             ) : null}
+
+            {/* Patient current measurement point & crosshair */}
+            {ageHours != null && tsbMgDl != null ? (() => {
+              const px = xToPx(ageHours);
+              const py = yToPx(tsbMgDl);
+              const labelText = `${fmt(tsbMgDl, 1)} mg/dL (${Math.round(ageHours)}j)`;
+              const boxW = 100;
+              const boxH = 22;
+              let bx = px + 8;
+              let by = py - 26;
+              if (bx + boxW > chartWidth - padRight) bx = px - boxW - 8;
+              if (by < padTop) by = py + 8;
+
+              return (
+                <g>
+                  {/* Crosshairs */}
+                  <line x1={padLeft} y1={py} x2={px} y2={py} stroke="#10B981" strokeWidth={1.5} strokeDasharray="3,3" />
+                  <line x1={px} y1={py} x2={px} y2={chartHeight - padBottom} stroke="#10B981" strokeWidth={1.5} strokeDasharray="3,3" />
+                  {/* Pulse Halo */}
+                  <circle cx={px} cy={py} r={10} fill="#10B981" fillOpacity={0.25} stroke="#10B981" strokeWidth={1.5} />
+                  {/* Main Dot */}
+                  <circle cx={px} cy={py} r={5.5} fill="#10B981" stroke="#FFFFFF" strokeWidth={2} />
+                  {/* Tooltip Badge */}
+                  <rect x={bx} y={by} width={boxW} height={boxH} className="bili-tooltip-rect" />
+                  <text x={bx + boxW / 2} y={by + 15} textAnchor="middle" className="bili-tooltip-text">
+                    {labelText}
+                  </text>
+                </g>
+              );
+            })() : null}
           </svg>
-          <p className="catatan-metode">
-            Garis oranye: threshold fototerapi. Garis putus-putus cokelat tua: threshold exchange
-            transfusion. Titik biru: riwayat TSB. Titik hijau: pengukuran saat ini.
-          </p>
+
+          {/* Legend */}
+          <div className="bili-legend">
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 18, height: 3, background: "#F97316", borderRadius: 2 }} /> Garis Ambang Fototerapi
+            </span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 18, height: 2, borderBottom: "2px dashed #D97706" }} /> Garis Siaga Transfusi Tukar (-2 mg/dL)
+            </span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 18, height: 3, borderBottom: "2.5px dashed #991B1B" }} /> Garis Ambang Transfusi Tukar
+            </span>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#10B981", border: "1.5px solid #065F46" }} /> Hasil Pengukuran Saat Ini
+            </span>
+            {historyPoints.length > 0 ? (
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#3B82F6" }} /> Riwayat TSB
+              </span>
+            ) : null}
+          </div>
         </div>
       ) : null}
 
@@ -549,13 +716,12 @@ export function BilirubinForm() {
         <h3>Metode</h3>
         <ul>
           <li>
-            Threshold dihitung persis dari tabel Kemper AR, Newman TB, Slaughter JL, et al. AAP 2022
-            Clinical Practice Guideline (Pediatrics. 2022;150(3):e2022058859), tanpa pembulatan atau
-            interpolasi tambahan.
+            Ambang batas dihitung persis dari tabel pedoman American Academy of Pediatrics
+            (Pediatrics. 2022;150(3):e2022058859), tanpa pembulatan atau interpolasi tambahan.
           </li>
           <li>
-            Threshold eskalasi perawatan = threshold exchange transfusion − 2,0 mg/dL, dihitung langsung
-            dari kurva exchange.
+            Ambang batas eskalasi terapi intensif = ambang batas transfusi tukar − 2,0 mg/dL, dihitung langsung
+            dari kurva transfusi tukar.
           </li>
           <li>
             Usia gestasi &lt;38 minggu otomatis memakai kurva &quot;dengan faktor risiko&quot;, terlepas dari
@@ -563,15 +729,19 @@ export function BilirubinForm() {
           </li>
           <li>Konversi satuan: 1 mg/dL = 17,1 µmol/L.</li>
           <li>
-            Zona diprioritaskan berurutan: tanda ensefalopati akut → TSB ≥ exchange → TSB ≥
-            eskalasi → TSB ≥ fototerapi → di bawah fototerapi (interval kontrol berdasarkan selisih
-            ke threshold fototerapi).
+            Zona diprioritaskan berurutan: tanda ensefalopati akut → Total Serum Bilirubin (TSB) ≥ transfusi tukar → TSB ≥
+            eskalasi terapi intensif → TSB ≥ fototerapi → di bawah fototerapi (interval kontrol berdasarkan selisih
+            ke ambang batas fototerapi).
           </li>
         </ul>
-        <p className="catatan-metode">
-          Threshold AAP 2022 berbasis konsensus ahli. Alat ini pendukung keputusan, bukan pengganti
+        <p className="catatan-metode" style={{ marginBottom: 12 }}>
+          Ambang batas berbasis konsensus ahli. Alat ini pendukung keputusan, bukan pengganti
           penilaian klinis.
         </p>
+        <ReferensiBlok
+          sumber={REFERENSI_BILIRUBIN}
+          catatan="Pedoman tata laksana hiperbilirubinemia neonatus usia gestasi ≥35 minggu oleh American Academy of Pediatrics."
+        />
       </div>
     </div>
   );

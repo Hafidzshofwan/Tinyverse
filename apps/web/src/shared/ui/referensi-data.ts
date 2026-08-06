@@ -35,7 +35,7 @@ const HOLLIDAY_SEGAR_1957: ReferensiItem = {
  */
 export const REFERENSI_REHIDRASI_WHO: ReadonlyArray<ReferensiItem> = [
 	{
-		teks: "Kementerian Kesehatan Republik Indonesia, Direktorat Jenderal Pengendalian Penyakit dan Penyehatan Lingkungan. Buku Saku Petugas Kesehatan: Lintas Diare (Lima Langkah Tuntaskan Diare). Edisi 2011. Jakarta: Kementerian Kesehatan RI; 2011.",
+		teks: "Kementerian Kesehatan Republik Indonesia. Buku Saku Petugas Kesehatan: Lintas Diare (Lima Langkah Tuntaskan Diare). Edisi 2011. Jakarta: Kementerian Kesehatan RI; 2011.",
 		tautan: "https://repository.kemkes.go.id/book/997",
 		labelTautan: "Repositori Kemenkes",
 	},
@@ -91,5 +91,16 @@ export const REFERENSI_LUKA_BAKAR_RULE9: ReadonlyArray<ReferensiItem> = [
 export const REFERENSI_FAKTOR_TETES: ReadonlyArray<ReferensiItem> = [
 	{
 		teks: "Perry AG, Potter PA, Ostendorf WR, Laplante N. Clinical Nursing Skills and Techniques. Edisi ke-10. St. Louis: Elsevier; 2021. Bab Terapi Intravena.",
+	},
+];
+
+/**
+ * Bilirubin Neonatus.
+ */
+export const REFERENSI_BILIRUBIN: ReadonlyArray<ReferensiItem> = [
+	{
+		teks: "American Academy of Pediatrics. Clinical Practice Guideline Revision: Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation. 2022.",
+		tautan: "https://doi.org/10.1542/peds.2022-058859",
+		labelTautan: "DOI 10.1542/peds.2022-058859",
 	},
 ];

@@ -173,9 +173,9 @@ export function classifyZone(thresholds: ThresholdsResult, input: ClassifyInput)
       color: "dark-red",
       title: "EMERGENSI: Tanda Ensefalopati Bilirubin Akut",
       recommendations: [
-        "Lakukan exchange transfusion emergensi segera, terlepas dari nilai TSB saat ini.",
-        "Mulai fototerapi intensif sambil mempersiapkan exchange transfusion.",
-        "Hubungi/rujuk tim neonatologi atau PICU segera.",
+        "Lakukan transfusi tukar emergensi segera, tanpa menunda pemeriksaan ulang Total Serum Bilirubin (TSB).",
+        "Berikan fototerapi intensif ganda dan hidrasi IV selama persiapan transfusi tukar.",
+        "Konsultasikan dan rujuk ke perawatan intensif neonatus (NICU) secara CITO.",
       ],
     };
   }
@@ -184,11 +184,11 @@ export function classifyZone(thresholds: ThresholdsResult, input: ClassifyInput)
     return {
       kind: "exchange",
       color: "red",
-      title: "Zona Exchange Transfusion",
+      title: "Zona Indikasi Transfusi Tukar Emergensi",
       recommendations: [
-        "TSB \u2265 threshold exchange transfusion. Siapkan exchange transfusion emergensi.",
-        "Mulai/lanjutkan fototerapi intensif sambil menunggu atau mempersiapkan exchange transfusion.",
-        "Ulangi TSB setiap 2 jam sampai exchange transfusion dilakukan atau TSB turun jelas di bawah threshold.",
+        "Total Serum Bilirubin (TSB) \u2265 ambang batas transfusi tukar. Lakukan prosedur transfusi tukar segera.",
+        "Berikan fototerapi intensif ganda dan hidrasi IV selama persiapan transfusi tukar.",
+        "Ulangi pemeriksaan Total Serum Bilirubin (TSB) setiap 2 jam sampai prosedur dilakukan atau TSB menunjukkan penurunan yang signifikan.",
       ],
     };
   }
@@ -197,12 +197,13 @@ export function classifyZone(thresholds: ThresholdsResult, input: ClassifyInput)
     return {
       kind: "escalation",
       color: "orange",
-      title: "Zona Eskalasi Perawatan",
+      title: "Zona Eskalasi Terapi Intensif (Siaga Transfusi Tukar)",
       recommendations: [
-        "TSB berada dalam 2,0 mg/dL dari threshold exchange transfusion. Eskalasi perawatan.",
-        "Mulai/lanjutkan fototerapi intensif.",
-        "Pertimbangkan rawat inap tingkat lebih tinggi dan siapkan kemungkinan exchange transfusion.",
-        "Ulangi TSB dalam 4-6 jam.",
+        "Total Serum Bilirubin (TSB) berada pada rentang siaga (dalam 2,0 mg/dL di bawah ambang transfusi tukar). Lakukan eskalasi terapi intensif.",
+        "Berikan fototerapi intensif ganda dan hidrasi cairan IV.",
+        "Lakukan pemeriksaan laboratorium CITO (TSB total & direk, darah rutin, golongan darah & crossmatch, albumin, elektrolit) serta persiapkan ketersediaan darah.",
+        "Segera koordinasikan perawatan di ruang perawatan intensif neonatus (NICU) atau siapkan rujukan.",
+        "Ulangi pemeriksaan Total Serum Bilirubin (TSB) setiap 2 jam.",
       ],
     };
   }
@@ -211,10 +212,10 @@ export function classifyZone(thresholds: ThresholdsResult, input: ClassifyInput)
     return {
       kind: "photo",
       color: "yellow",
-      title: "Zona Fototerapi",
+      title: "Zona Indikasi Fototerapi",
       recommendations: [
-        "TSB \u2265 threshold fototerapi. Mulai fototerapi.",
-        "Ulangi TSB dalam 4-24 jam sesuai usia, tren, dan faktor risiko.",
+        "Total Serum Bilirubin (TSB) \u2265 ambang batas fototerapi. Mulai tata laksana fototerapi intensif.",
+        "Ulangi pemeriksaan Total Serum Bilirubin (TSB) dalam 4\u201324 jam ditiap evaluasi berdasarkan usia, respons terapi, dan faktor risiko.",
       ],
     };
   }
@@ -223,12 +224,12 @@ export function classifyZone(thresholds: ThresholdsResult, input: ClassifyInput)
   return {
     kind: "below-photo",
     color: "green",
-    title: "Di Bawah Threshold Fototerapi",
+    title: "Di Bawah Ambang Batas Fototerapi",
     recommendations: [
-      `TSB ${diff.toFixed(1)} mg/dL di bawah threshold fototerapi.`,
+      `Total Serum Bilirubin (TSB) ${diff.toFixed(1)} mg/dL di bawah ambang batas indikasi fototerapi.`,
       diff <= 2
-        ? "TSB mendekati threshold fototerapi \u2014 pertimbangkan kontrol ulang dalam 24 jam."
-        : "Kontrol ulang sesuai jadwal follow-up rutin dan faktor risiko.",
+        ? "Total Serum Bilirubin (TSB) mendekati ambang batas fototerapi (selisih \u22642,0 mg/dL) \u2014 direkomendasikan pemeriksaan ulang TSB / Bilirubin Transkutan (TcB) dalam 12\u201324 jam."
+        : "Pemantauan klinis berkala sesuai jadwal kontrol rutin dan faktor risiko.",
     ],
   };
 }
@@ -273,7 +274,7 @@ export function computeGuardrailWarnings(input: GuardrailInput): string[] {
       const ratePerHour = (input.tsbMgDl - prev.tsbMgDl) / hoursDiff;
       if (ratePerHour >= 0.3) {
         warnings.push(
-          `Kenaikan TSB cepat (\u2248${ratePerHour.toFixed(2)} mg/dL/jam) \u2014 pertimbangkan evaluasi hemolisis dan pemantauan lebih ketat.`,
+          `Kenaikan Total Serum Bilirubin (TSB) cepat (\u2248${ratePerHour.toFixed(2)} mg/dL/jam) \u2014 pertimbangkan evaluasi hemolisis dan pemantauan lebih ketat.`,
         );
       }
     }
@@ -289,22 +290,22 @@ export function computeGuardrailWarnings(input: GuardrailInput): string[] {
     const drop = input.phototherapyStartTsbMgDl - input.tsbMgDl;
     if (drop <= 0) {
       warnings.push(
-        "TSB tidak turun (atau naik) sejak mulai fototerapi \u2014 evaluasi ulang, pertimbangkan fototerapi intensif atau exchange transfusion.",
+        "Total Serum Bilirubin (TSB) tidak turun (atau naik) sejak mulai fototerapi \u2014 evaluasi ulang, pertimbangkan fototerapi intensif atau transfusi tukar.",
       );
     }
   }
 
   if (input.tsbMgDl >= 30) {
-    warnings.push("TSB \u226530 mg/dL \u2014 hiperbilirubinemia ekstrem, risiko tinggi ensefalopati bilirubin akut.");
+    warnings.push("Total Serum Bilirubin (TSB) \u226530 mg/dL \u2014 hiperbilirubinemia ekstrem, risiko tinggi ensefalopati bilirubin akut.");
   } else if (input.tsbMgDl >= 25) {
-    warnings.push("TSB \u226525 mg/dL \u2014 hiperbilirubinemia berat, tata laksana emergensi sesuai pedoman.");
+    warnings.push("Total Serum Bilirubin (TSB) \u226525 mg/dL \u2014 hiperbilirubinemia berat, tata laksana emergensi sesuai pedoman.");
   }
 
   return warnings;
 }
 
-// TcB (transkutan) mendekati/di atas ambang fototerapi (dalam 3,0 mg/dL) atau
-// >=15 mg/dL perlu dikonfirmasi dengan TSB (pengukuran serum) sesuai AAP 2022.
+// Bilirubin Transkutan (TcB) mendekati/di atas ambang batas fototerapi (dalam 3,0 mg/dL) atau
+// >=15 mg/dL perlu dikonfirmasi dengan pengukuran Total Serum Bilirubin (TSB).
 export function tcbNeedsTsbConfirmation(tcbMgDl: number, phototherapyThresholdMgDl: number): boolean {
   return tcbMgDl >= phototherapyThresholdMgDl - 3.0 || tcbMgDl >= 15;
 }

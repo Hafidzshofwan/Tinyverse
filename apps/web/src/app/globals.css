@@ -5780,45 +5780,246 @@ html.dark .tv-decision-tree-card {
 
 
 
-/* ===== Ballard Sub-Tabs - penyesuaian lebar layar =====
-   Ditempatkan di akhir berkas agar mengalahkan aturan dasar di atas. */
-@media (max-width: 620px) {
-  .tv-ballard-tabs { gap: 6px; padding: 4px; }
-  .tv-ballard-tab { padding: 8px 10px; gap: 1px; }
-  .tv-ballard-tab-icon { width: 15px; height: 15px; }
-}
-@media (max-width: 430px) {
-  /* Dua kolom sudah terlalu sempit: tumpuk agar judul terbaca utuh. */
-  .tv-ballard-tabs { grid-template-columns: 1fr; border-radius: 20px; }
-  .tv-ballard-tab {
-    flex-direction: row;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 3px 8px;
-    border-radius: 16px;
-    padding: 9px 12px;
-  }
-  .tv-ballard-tab-title { font-size: 13px; white-space: nowrap; }
-  .tv-ballard-tab-sub { font-size: 11px; }
-  .tv-skor-opsi { grid-template-columns: repeat(auto-fit, minmax(118px, 1fr)); gap: 8px; }
+/* ===== Bilirubin Neonatus Calculator & Nomogram Mode Gelap / Terang ===== */
+.bili-box {
+  padding: 16px;
+  border-radius: 16px;
+  margin-top: 16px;
+  transition: all 0.25s ease;
 }
 
-/* ===== AGD - warna kartu interpretasi mode gelap =====
-   Nilai mode terang ditulis sebagai fallback di dalam komponen AbgForm,
-   jadi blok ini HANYA berlaku saat tema gelap aktif. */
-:root[data-theme="dark"],
-[data-theme="dark"],
-html.dark {
-  --tv-agd-ok-bg: rgba(6, 78, 59, 0.45);
-  --tv-agd-ok-line: #059669;
-  --tv-agd-ok: #6EE7B7;
-  --tv-agd-warn-bg: rgba(120, 53, 15, 0.42);
-  --tv-agd-warn-line: #B45309;
-  --tv-agd-warn: #FCD34D;
-  --tv-agd-bad: #FCA5A5;
-  --tv-agd-contoh-bg: rgba(139, 92, 246, 0.18);
-  --tv-agd-contoh-teks: #C4B5FD;
-  --tv-agd-btn-bg: #EC4899;
-  --tv-agd-btn-teks: #FFFFFF;
-  --tv-agd-ikon-warn: #FBBF24;
+.bili-box-green {
+  border: 1.5px solid #10B981;
+  background: linear-gradient(135deg, #ECFDF5 0%, #F0FDF4 100%);
+  color: #064E3B;
 }
+
+.bili-box-yellow {
+  border: 1.5px solid #F59E0B;
+  background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%);
+  color: #78350F;
+}
+
+.bili-box-orange {
+  border: 1.5px solid #F97316;
+  background: linear-gradient(135deg, #FFEDD5 0%, #FFF7ED 100%);
+  color: #7C2D12;
+}
+
+.bili-box-red {
+  border: 1.5px solid #EF4444;
+  background: linear-gradient(135deg, #FEE2E2 0%, #FEF2F2 100%);
+  color: #7F1D1D;
+}
+
+.bili-box-dark-red {
+  border: 2px solid #991B1B;
+  background: linear-gradient(135deg, #FCA5A5 0%, #FEE2E2 100%);
+  color: #450A0A;
+}
+
+:root[data-theme="dark"] .bili-box-green,
+[data-theme="dark"] .bili-box-green,
+html.dark .bili-box-green {
+  border-color: #34D399;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.16) 0%, rgba(6, 78, 59, 0.28) 100%);
+  color: #A7F3D0;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.12);
+}
+
+:root[data-theme="dark"] .bili-box-yellow,
+[data-theme="dark"] .bili-box-yellow,
+html.dark .bili-box-yellow {
+  border-color: #FBBF24;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.18) 0%, rgba(120, 53, 15, 0.32) 100%);
+  color: #FDE68A;
+  box-shadow: 0 0 16px rgba(245, 158, 11, 0.12);
+}
+
+:root[data-theme="dark"] .bili-box-orange,
+[data-theme="dark"] .bili-box-orange,
+html.dark .bili-box-orange {
+  border-color: #FB923C;
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.2) 0%, rgba(124, 45, 18, 0.36) 100%);
+  color: #FFEDD5;
+  box-shadow: 0 0 16px rgba(249, 115, 22, 0.15);
+}
+
+:root[data-theme="dark"] .bili-box-red,
+[data-theme="dark"] .bili-box-red,
+html.dark .bili-box-red {
+  border-color: #F87171;
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.24) 0%, rgba(127, 29, 29, 0.42) 100%);
+  color: #FECDD3;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+}
+
+:root[data-theme="dark"] .bili-box-dark-red,
+[data-theme="dark"] .bili-box-dark-red,
+html.dark .bili-box-dark-red {
+  border-color: #EF4444;
+  background: linear-gradient(135deg, rgba(153, 27, 27, 0.42) 0%, rgba(69, 10, 10, 0.65) 100%);
+  color: #FFE4E6;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.3);
+}
+
+.bili-box-title {
+  font-family: 'Fredoka', 'Quicksand', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  font-weight: 800;
+  margin: 0 0 10px;
+  color: currentColor;
+  opacity: 0.95;
+}
+
+.bili-box-text {
+  margin: 0 0 6px;
+  color: currentColor;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.bili-nomogram-badge {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  background: #F1F5F9;
+  color: #334155;
+  border: 1px solid #CBD5E1;
+}
+
+:root[data-theme="dark"] .bili-nomogram-badge,
+[data-theme="dark"] .bili-nomogram-badge,
+html.dark .bili-nomogram-badge {
+  background: #0F172A;
+  color: #38BDF8;
+  border-color: #334155;
+}
+
+.bili-nomogram-svg {
+  background: linear-gradient(180deg, #FAFCFF 0%, #F8FAFC 100%);
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+}
+
+:root[data-theme="dark"] .bili-nomogram-svg,
+[data-theme="dark"] .bili-nomogram-svg,
+html.dark .bili-nomogram-svg {
+  background: linear-gradient(180deg, #0B132B 0%, #0F172A 100%);
+  border-color: #1E293B;
+}
+
+.bili-gridline {
+  stroke: #E2E8F0;
+  stroke-width: 1;
+}
+
+:root[data-theme="dark"] .bili-gridline,
+[data-theme="dark"] .bili-gridline,
+html.dark .bili-gridline {
+  stroke: rgba(255, 255, 255, 0.08);
+}
+
+.bili-axis {
+  stroke: #475569;
+  stroke-width: 1.5;
+}
+
+:root[data-theme="dark"] .bili-axis,
+[data-theme="dark"] .bili-axis,
+html.dark .bili-axis {
+  stroke: #64748B;
+}
+
+.bili-tick-text {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Roboto Mono', 'SF Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  fill: #334155;
+}
+
+:root[data-theme="dark"] .bili-tick-text,
+[data-theme="dark"] .bili-tick-text,
+html.dark .bili-tick-text {
+  fill: #94A3B8;
+}
+
+.bili-tick-subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  fill: #64748B;
+}
+
+:root[data-theme="dark"] .bili-tick-subtext,
+[data-theme="dark"] .bili-tick-subtext,
+html.dark .bili-tick-subtext {
+  fill: #64748B;
+}
+
+.bili-axis-title {
+  font-family: 'Quicksand', 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  fill: #1E293B;
+  letter-spacing: 0.04em;
+}
+
+:root[data-theme="dark"] .bili-axis-title,
+[data-theme="dark"] .bili-axis-title,
+html.dark .bili-axis-title {
+  fill: #E2E8F0;
+}
+
+.bili-tooltip-rect {
+  fill: #065F46;
+  opacity: 0.95;
+  rx: 6;
+}
+
+:root[data-theme="dark"] .bili-tooltip-rect,
+[data-theme="dark"] .bili-tooltip-rect,
+html.dark .bili-tooltip-rect {
+  fill: #064E3B;
+  stroke: #34D399;
+  stroke-width: 1;
+}
+
+.bili-tooltip-text {
+  fill: #FFFFFF;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+:root[data-theme="dark"] .bili-tooltip-text,
+[data-theme="dark"] .bili-tooltip-text,
+html.dark .bili-tooltip-text {
+  fill: #ECFDF5;
+}
+
+.bili-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--tv-teks);
+  font-weight: 600;
+  padding: 10px 14px;
+  background: #F8FAFC;
+  border-radius: 8px;
+  border: 1px solid #E2E8F0;
+}
+
+:root[data-theme="dark"] .bili-legend,
+[data-theme="dark"] .bili-legend,
+html.dark .bili-legend {
+  background: #0F172A;
+  border-color: #334155;
+  color: #E2E8F0;
+}
+
