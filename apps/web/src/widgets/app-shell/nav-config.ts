@@ -67,6 +67,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
       { slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", built: true },
       { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", built: true },
       { slug: "tekanan-darah", label: "Tekanan Darah", icon: "\uD83E\uDEC0", href: "/preview/tekanan-darah", built: true },
+      { slug: "egfr", label: "Kalkulator eGFR", icon: "\uD83E\uDED8", href: "/preview/egfr", built: true },
     ],
   },
   {
@@ -113,6 +114,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/pertumbuhan": "Kurva pertumbuhan dan penilaian status gizi anak.",
   "/preview/skoring": "10 skor klinis anak (dehidrasi, croup, GCS, dan lainnya).",
   "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
+  "/preview/egfr": "Perkiraan fungsi ginjal anak (eGFR) & stadium CKD dari tinggi badan dan kreatinin.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
   "/preview/nutrisi": "Takaran & volume susu formula harian berdasarkan berat badan.",
   "/preview/neonatus": "Dua alat neonatus dalam satu menu: TPN (GIR, asam amino, lipid) dan ambang batas bilirubin.",
@@ -135,6 +137,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/pertumbuhan": "Pemantauan tumbuh kembang anak: Grafik kurva pertumbuhan WHO (0-5 thn) & CDC (2-20 thn), Z-score BB/U, TB/U, IMT/U, serta skrining perkembangan KPSP, Denver II, & M-CHAT-R.",
   "/preview/skoring": "10 kalkulator skoring klinis pediatrik: CDS, Westley Croup, PAS, Downes, PASS, Kawasaki/AHA, Centor/McIsaac, TB Anak, APGAR, & New Ballard.",
   "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
+  "/preview/egfr": "Kalkulator eGFR pediatrik (usia 1-25 tahun): rumus utama CKiD U25 (Pierce 2021) berbasis tinggi/kreatinin dengan alternatif cystatin C, rumus pembanding Bedside Schwartz (Schwartz 2009), klasifikasi stadium CKD KDIGO G1-G5, serta modul opsional perkiraan pita risiko progresi ke ESRD (Furth 2018) berbasis UPCR.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
   "/preview/nutrisi": "Kalkulator takaran susu formula: Volume per pemberian & total kalori/hari berdasarkan total volume susu, jumlah pemberian, dan konsentrasi energi, dengan isi otomatis patokan 150 mL/kg/hari.",
   "/preview/neonatus": "Tools Neonatus menggabungkan dua kalkulator bayi baru lahir dalam dua tab: Tab TPN Neonatus menghitung GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Bilirubin Neonatus menghitung ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
@@ -149,7 +152,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
 // Access di beranda untuk menandai badge "Baru" dan memastikan fitur ini tetap
 // terlihat walau belum punya riwayat pemakaian. Hapus entri dari daftar ini
 // begitu fiturnya sudah dianggap "lama" oleh tim produk.
-const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/neonatus"];
+const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/neonatus", "/preview/egfr"];
 
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan

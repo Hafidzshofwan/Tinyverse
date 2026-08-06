@@ -13,6 +13,7 @@ export type SidebarIconSlug =
   | "puyer"
   | "obat"
   | "tekanan-darah"
+  | "egfr"
   | "neonatus"
   | "tumbuh-kembang"
   | "skoring"
@@ -38,6 +39,7 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "puyer": "v1",
   "obat": "v1",
   "tekanan-darah": "v1",
+  "egfr": "v1",
   "neonatus": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
   "skoring": "v1",
@@ -683,6 +685,50 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
     );
   }
 
+  // --- KALKULATOR eGFR ---
+  if (slug === "egfr") {
+    if (currentVariant === "v2") {
+      // V2: Simbol filtrasi - corong tetesan bening melalui saringan ginjal
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#ECFEFF" />
+          <path d="M5 5H19L14.5 12.5V19L9.5 17.5V12.5L5 5Z" fill="#CFFAFE" stroke="#0E7490" strokeWidth="1.6" strokeLinejoin="round" />
+          <path d="M8 8.4H16" stroke="#0891B2" strokeWidth="1.3" strokeLinecap="round" />
+          <circle cx="12" cy="14.6" r="0.9" fill="#22D3EE" />
+        </svg>
+      );
+    }
+    if (currentVariant === "v3") {
+      // V3: Kartu hasil lab dengan grafik naik dan tetesan kecil
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          <rect width="24" height="24" rx="6" fill="#F0FDFA" />
+          <rect x="4" y="4.5" width="16" height="15" rx="2.2" fill="#FFFFFF" stroke="#0D9488" strokeWidth="1.6" />
+          <path d="M6.5 15L9.5 11.4L12 13.6L17.5 7.6" stroke="#0D9488" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <path d="M7 18H17" stroke="#5EEAD4" strokeWidth="1.6" strokeLinecap="round" />
+        </svg>
+      );
+    }
+    // V1 (default): Sepasang ginjal bergaya sederhana dengan denyut kecil --
+    // SAMA PERSIS dengan ikon header di halaman Kalkulator eGFR.
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <rect width="24" height="24" rx="6" fill="#ECFEFF" />
+        <path
+          d="M12 3.5C9 6.8 6.2 10.3 6.2 14C6.2 17.6 8.8 20.3 12 20.3C15.2 20.3 17.8 17.6 17.8 14C17.8 10.3 15 6.8 12 3.5Z"
+          fill="#CFFAFE"
+          stroke="#0891B2"
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        <path d="M9.3 11.6C9.3 14.4 10.4 16.3 12 16.3" stroke="#0E7490" strokeWidth="1.3" strokeLinecap="round" fill="none" />
+        <circle cx="12" cy="9.4" r="1.05" fill="#0E7490" />
+        <circle cx="14.6" cy="13.1" r="0.85" fill="#22D3EE" />
+        <circle cx="10" cy="14.6" r="0.7" fill="#22D3EE" />
+      </svg>
+    );
+  }
+
   // --- TOOL NEONATUS ---
   if (slug === "neonatus") {
     if (currentVariant === "v2") {
@@ -770,6 +816,7 @@ const SECTIONS: MenuSection[] = [
       { slug: "tumbuh-kembang", label: "Tumbuh Kembang", fixed: true },
       { slug: "skoring", label: "Skoring Klinis" },
       { slug: "tekanan-darah", label: "Tekanan Darah" },
+      { slug: "egfr", label: "Kalkulator eGFR" },
     ],
   },
   {

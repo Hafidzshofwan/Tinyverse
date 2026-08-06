@@ -514,8 +514,7 @@ export function BilirubinForm() {
             <div style={{ marginTop: 14 }}>
               <button
                 type="button"
-                className="tv-btn"
-                style={{ background: "var(--tv-navy, #0A0B5F)", color: "#FFFFFF", fontWeight: 700 }}
+                className="tv-btn bili-btn-ringkasan"
                 onClick={() => {
                   const bodyText = [
                     `GA ${gaNum} minggu, usia ${ageHours != null ? Math.floor(ageHours) : "-"} jam, TSB ${fmt(tsbMgDl, 1)} mg/dL`,
@@ -694,7 +693,7 @@ export function BilirubinForm() {
         <ul>
           <li>
             Ambang batas dihitung persis dari tabel pedoman American Academy of Pediatrics
-            (Pediatrics. 2022;150(3):e2022058859), tanpa pembulatan atau interpolasi tambahan.
+            (2022), tanpa pembulatan atau interpolasi tambahan.
           </li>
           <li>
             Ambang batas eskalasi terapi intensif = ambang batas transfusi tukar − 2,0 mg/dL, dihitung langsung
