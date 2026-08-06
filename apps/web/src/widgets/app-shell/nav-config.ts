@@ -73,7 +73,14 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     title: "Diagnostik & Gizi",
     items: [
       { slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab", built: true },
-      { slug: "nutrisi", label: "Kalkulator Nutrisi", icon: "\uD83C\uDF4E", href: "/preview/nutrisi", built: true },
+      { slug: "nutrisi", label: "Kalkulator Susu Formula", icon: "\uD83C\uDF4E", href: "/preview/nutrisi", built: true },
+    ],
+  },
+  {
+    title: "Tool Neonatus",
+    items: [
+      { slug: "tpn-neonatus", label: "TPN Neonatus", icon: "\uD83D\uDCA7", href: "/preview/tpn-neonatus", built: true },
+      { slug: "bilirubin", label: "Bilirubin Neonatus (AAP 2022)", icon: "\u2600\uFE0F", href: "/preview/bilirubin", built: true },
     ],
   },
   {
@@ -95,7 +102,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
 const DESKRIPSI: Record<string, string> = {
   "/preview/ai-assistant": "Asisten AI terpusat yang memahami seluruh fitur, panduan, dan kalkulator Tinyverse.",
   "/preview/darurat": "Rujukan cepat dosis dan langkah resusitasi anak.",
-  "/preview/alur": "Alur interaktif tata laksana kegawatan anak.",
+  "/preview/alur": "Alur interaktif tata laksana kegawatan anak (Fase A: serangan asma).",
   "/preview/obat": "Dosis obat anak per berat badan atau usia, plus racikan puyer.",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",
   "/preview/fluids": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
@@ -104,8 +111,10 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/skoring": "10 skor klinis anak (dehidrasi, croup, GCS, dan lainnya).",
   "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
-  "/preview/nutrisi": "TPN neonatus (GIR, asam amino, lipid) & takaran susu formula.",
-  "/preview/guideline": "Panduan tata laksana penyakit anak.",
+  "/preview/nutrisi": "Takaran & volume susu formula harian berdasarkan berat badan.",
+  "/preview/tpn-neonatus": "Nutrisi parenteral total neonatus: GIR, asam amino, dan lipid.",
+  "/preview/bilirubin": "Threshold fototerapi & exchange transfusion bayi baru lahir (AAP 2022).",
+  "/preview/guideline": "Panduan tata laksana penyakit anak tersering.",
   "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan bantuan jadwal kejar (catch-up).",
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
 };
@@ -120,10 +129,12 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/fluids": "Kalkulator terapi cairan komprehensif: Kebutuhan rumatan Holliday-Segar, rehidrasi diare WHO, rumus luka bakar Parkland, & perhitungan kecepatan tetesan infus.",
   "/preview/puyer": "Kalkulator racik puyer pediatri: Hitung konversi tablet utuh yang digerus, penyesuaian dosis puyer & sirup, serta estimasi pembagian bungkus obat.",
   "/preview/pertumbuhan": "Pemantauan tumbuh kembang anak: Grafik kurva pertumbuhan WHO (0-5 thn) & CDC (2-20 thn), Z-score BB/U, TB/U, IMT/U, serta skrining perkembangan KPSP, Denver II, & M-CHAT-R.",
-  "/preview/skoring": "8 kalkulator skoring klinis pediatrik: Dehidrasi WHO/CDD, Downes/Westley Croup, Pediatric GCS, Skoring TB Anak, APGAR, Skor Nyeri FLACC, & PEWS.",
+  "/preview/skoring": "10 kalkulator skoring klinis pediatrik: CDS, Westley Croup, PAS, Downes, PASS, Kawasaki/AHA, Centor/McIsaac, TB Anak, APGAR, & New Ballard.",
   "/preview/tekanan-darah": "Kalkulator persentil tekanan darah anak: Klasifikasi Normal, Elevated BP, Stage 1, dan Stage 2 HTN range menurut AAP 2017 memakai Table 4/5 untuk usia 1 sampai kurang dari 13 tahun dan cut-off absolut Table 3 untuk usia 13 tahun ke atas.",
   "/preview/lab": "Interpretasi laboratorium & AGD: Analisis Gas Darah (AGD) otomatis dengan evaluasi kompensasi asam-basa, serta nilai rujukan hematologi & kimia darah anak.",
-  "/preview/nutrisi": "Dua alat nutrisi dalam satu menu: Tab TPN Neonatus menghitung kebutuhan nutrisi parenteral total (GIR/Glucose Infusion Rate, asam amino, lipid) untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age). Tab Susu Formula menghitung takaran & volume susu formula harian.",
+  "/preview/nutrisi": "Kalkulator takaran susu formula: Volume per pemberian & total kalori/hari berdasarkan total volume susu, jumlah pemberian, dan konsentrasi energi, dengan isi otomatis patokan 150 mL/kg/hari.",
+  "/preview/tpn-neonatus": "Kalkulator TPN (nutrisi parenteral total) neonatus: GIR/Glucose Infusion Rate, dosis asam amino, dan dosis lipid untuk bayi preterm & term berdasarkan hari kehidupan dan usia koreksi (postmenstrual age).",
+  "/preview/bilirubin": "Kalkulator threshold bilirubin neonatus sesuai AAP 2022 Clinical Practice Guideline: threshold fototerapi, eskalasi perawatan, dan exchange transfusion berdasarkan usia gestasi, jam usia, dan faktor risiko neurotoksisitas.",
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
   "/preview/imunisasi": "Jadwal & panduan imunisasi IDAI: Tabel jadwal imunisasi anak sesuai rekomendasi IDAI terbaru beserta rekomendasi jadwal kejar (Catch-Up Vaccine).",
   "/preview/ringkasan": "Generator ringkasan medis & SOAP: Otomatisasi kompilasi data pemeriksaan, perhitungan dosis, dan catatan klinis menjadi resume medis SOAP siap cetak/salin.",
@@ -133,7 +144,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
 // Access di beranda untuk menandai badge "Baru" dan memastikan fitur ini tetap
 // terlihat walau belum punya riwayat pemakaian. Hapus entri dari daftar ini
 // begitu fiturnya sudah dianggap "lama" oleh tim produk.
-const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/nutrisi"];
+const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/tpn-neonatus", "/preview/bilirubin"];
 
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan
