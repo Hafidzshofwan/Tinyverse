@@ -25,21 +25,6 @@ interface HistoryRow {
   value: string;
 }
 
-const resultTitle: CSSProperties = {
-  fontSize: "0.78rem",
-  color: "var(--navy)",
-  fontWeight: 800,
-  letterSpacing: "0.04em",
-  margin: "0 0 10px",
-  fontFamily: "'Fredoka','Quicksand',sans-serif",
-};
-const resultText: CSSProperties = {
-  margin: "0 0 6px",
-  color: "var(--navy-soft)",
-  fontSize: 15,
-  fontWeight: 700,
-  lineHeight: 1.5,
-};
 const errorBoxStyle: CSSProperties = {
   border: "2px solid #e63946",
   background: "linear-gradient(135deg,#ffe0e0,#fff7f7)",
@@ -124,14 +109,6 @@ function CheckboxField({
     </label>
   );
 }
-
-const zoneColorHex: Record<BilirubinZoneColor, string> = {
-  green: "#10B981",
-  yellow: "#EAB308",
-  orange: "#F97316",
-  red: "#DC2626",
-  "dark-red": "#7C2D12",
-};
 
 const zoneBoxClass: Record<BilirubinZoneColor, string> = {
   green: "bili-box bili-box-green",
