@@ -91,7 +91,12 @@ export function NeonatusPanel() {
                 className={"segmented-btn" + (tab === "tpn" ? " aktif" : "")}
                 onClick={() => pilihTab("tpn")}
               >
-                <span aria-hidden="true">{"\uD83D\uDCA7"}</span>
+                <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center" }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2.5C12 2.5 6 9.5 6 14C6 17.3 8.7 20 12 20C15.3 20 18 17.3 18 14C18 9.5 12 2.5 12 2.5Z" fill="currentColor" fillOpacity="0.2" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+                    <path d="M12 11V16M10 14H14" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+                  </svg>
+                </span>
                 <span>TPN Neonatus</span>
               </button>
               <button
@@ -101,7 +106,12 @@ export function NeonatusPanel() {
                 className={"segmented-btn" + (tab === "bilirubin" ? " aktif" : "")}
                 onClick={() => pilihTab("bilirubin")}
               >
-                <span aria-hidden="true">{"\u2600\uFE0F"}</span>
+                <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center" }}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="5" stroke="currentColor" strokeWidth="2" fill="currentColor" fillOpacity="0.2" />
+                    <path d="M12 3V5M12 19V21M3 12H5M19 12H21M5.6 5.6L7 7M17 17L18.4 18.4M5.6 18.4L7 17M17 7L18.4 5.6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                </span>
                 <span>Bilirubin (AAP 2022)</span>
               </button>
             </div>
