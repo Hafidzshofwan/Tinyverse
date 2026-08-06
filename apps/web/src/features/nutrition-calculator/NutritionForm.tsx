@@ -191,9 +191,11 @@ export function NutritionForm() {
         {fResult.result ? (
           <div className="hasil-box-cairan">
             <h3 style={resultTitle}>HASIL PERHITUNGAN</h3>
-            <p style={resultText}>
-              Volume per pemberian: <b>{fmt(fResult.result.volumePerFeedMl, 1)} mL</b>
-            </p>
+            {fResult.result.perFeed ? (
+              <p style={resultText}>
+                Volume per pemberian: <b>{fmt(fResult.result.perFeed.volumeMl, 1)} mL</b>
+              </p>
+            ) : null}
             <p style={resultText}>
               Total kalori: <b>{fmt(fResult.result.totalKcalPerDay, 0)} kkal/hari</b>
             </p>
@@ -211,7 +213,8 @@ export function NutritionForm() {
                   if (!fResult.result) return;
                   const res = fResult.result;
                   const bodyText = [
-                    `Volume per pemberian: ${fmt(res.volumePerFeedMl, 1)} mL`,
+                    res.perFeed ? `Volume per pemberian: ${fmt(res.perFeed.volumeMl, 1)} mL` : "",
+                    `Total volume: ${fmt(res.totalVolumeMl, 0)} mL/hari`,
                     `Total kalori: ${fmt(res.totalKcalPerDay, 0)} kkal/hari`,
                     weightKgTotal != null
                       ? `Kalori per kg: ${fmt(res.totalKcalPerDay / weightKgTotal, 1)} kkal/kg/hari`
@@ -220,7 +223,7 @@ export function NutritionForm() {
                     .filter(Boolean)
                     .join("\n");
                   addRingkasanItem({
-                    title: `Susu Formula (${fmt(res.volumePerFeedMl, 1)} mL/pemberian)`,
+                    title: `Susu Formula (${res.perFeed ? fmt(res.perFeed.volumeMl, 1) + " mL/pemberian" : fmt(res.totalVolumeMl, 0) + " mL/hari"})`,
                     source: "Kalkulator Susu Formula",
                     body: bodyText,
                   });
