@@ -2,7 +2,7 @@ import { ToolShell } from "@/shared/ui/ToolShell";
 import { BurnPanel } from "@/widgets/burn-panel";
 
 export const metadata = {
-  title: "Preview - Rehidrasi Luka Bakar | TinyVerse",
+  title: "Preview - Rehidrasi Luka Bakar",
 };
 
 export default function BurnPreviewPage() {
