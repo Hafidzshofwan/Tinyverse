@@ -598,10 +598,12 @@ export default function AiAssistantPage() {
             {messages.map((m) => (
               <div
                 key={m.id}
+                data-tv-chat-msg
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: m.sender === "user" ? "flex-end" : "flex-start",
+                  animation: "tvChatMsgIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both",
                 }}
               >
                 <div

@@ -1138,14 +1138,71 @@ body {
 .tv-nav-item:hover {
   transform: translateY(-1px);
 }
+.tv-nav-item:hover .tv-nav-ico {
+  transform: scale(1.12);
+}
 .tv-nav-item.aktif {
   background: linear-gradient(160deg, var(--tv-navy), var(--tv-navy-2));
   color: #ffffff;
   box-shadow: 0 5px 0 rgba(10, 11, 95, 0.28), 0 10px 22px rgba(10, 11, 95, 0.26);
+  animation: tvNavAktifPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.tv-nav-item.aktif .tv-nav-ico {
+  animation: tvNavIcoBounce 0.42s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .tv-nav-ico {
   font-size: 17px;
   line-height: 1;
+  display: inline-flex;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Highlight menu sidebar aktif: sedikit "pop" saat berpindah menu, dan ikon
+   melompat singkat supaya perpindahan terasa hidup tanpa mengganggu. */
+@keyframes tvNavAktifPop {
+  0% {
+    transform: scale(0.96);
+  }
+  55% {
+    transform: scale(1.025);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes tvNavIcoBounce {
+  0% {
+    transform: scale(0.7) rotate(-6deg);
+  }
+  60% {
+    transform: scale(1.18) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Animasi masuknya bubble chat Asisten AI (fade + geser naik tipis). */
+@keyframes tvChatMsgIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hormati preferensi pengguna yang mengaktifkan pengurangan gerak di OS. */
+@media (prefers-reduced-motion: reduce) {
+  .tv-nav-item.aktif,
+  .tv-nav-item.aktif .tv-nav-ico,
+  .tv-nav-item:hover .tv-nav-ico,
+  [data-tv-chat-msg] {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 /* ============ CARDS ============ */
