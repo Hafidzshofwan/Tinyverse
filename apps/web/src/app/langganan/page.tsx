@@ -88,6 +88,15 @@ export default async function LanggananPage() {
       }
     : null;
 
+  // Tampilan "Berlaku Sampai" memakai tanggal-bulan-tahun berbahasa
+  // Indonesia, sama seperti tanggal riwayat pembayaran di bawahnya dan
+  // seperti gerbang berbayar di app/preview/layout.tsx. Perhitungan sisa
+  // hari & pengingat tetap memakai entitlement.berakhirPada mentah (ISO) di
+  // atas -- hanya versi yang dikirim ke tampilan yang diformat di sini.
+  const berakhirPadaTampil = entitlement.berakhirPada
+    ? tanggalIndo(entitlement.berakhirPada)
+    : null;
+
   const paketAktif = KATALOG_PLAN.filter((p) => p.aktif);
   const idPalingHemat =
     paketAktif.reduce<{ id: string; perHari: number } | null>((termurah, p) => {
@@ -102,7 +111,7 @@ export default async function LanggananPage() {
     <LanggananClientView
       masuk={masuk}
       status={entitlement.status}
-      berakhirPada={entitlement.berakhirPada}
+      berakhirPada={berakhirPadaTampil}
       sisaHari={entitlement.sisaHari}
       percobaan={percobaan}
       labelLencana={labelLencanaUntuk(entitlement.status, percobaan)}
@@ -113,7 +122,7 @@ export default async function LanggananPage() {
       labelTombol="Beli Sekarang"
       clientKey={clientKey}
       urlSnapJs={urlSnapJs}
-      isiLangganan={FITUR_TERSEDIA.map((f) => f.label)}
+      isiLangganan={FITUR_TERSEDIA.map((f) => ({ label: f.label, baru: f.baru }))}
     />
   );
 }

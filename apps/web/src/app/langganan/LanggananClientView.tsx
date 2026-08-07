@@ -8,6 +8,11 @@ import gaya from "./langganan-concepts.module.css";
 
 type Peringatan = { judul: string; teks: string; kedaluwarsa: boolean };
 
+/** Satu baris pada "Fitur Klinis yang Didapatkan". `baru` menandai fitur
+ *  yang baru ditambahkan (lihat FITUR_BARU di widgets/app-shell/nav-config)
+ *  sehingga ditandai lencana "Update" di daftar fitur. */
+export type ItemFiturLangganan = { label: string; baru: boolean };
+
 export type LanggananClientProps = {
   masuk: boolean;
   status: StatusLangganan;
@@ -22,7 +27,7 @@ export type LanggananClientProps = {
   labelTombol: string;
   clientKey: string;
   urlSnapJs: string;
-  isiLangganan: readonly string[];
+  isiLangganan: readonly ItemFiturLangganan[];
 };
 
 function rupiah(nilai: number): string {
@@ -268,11 +273,14 @@ export function LanggananClientView(props: LanggananClientProps) {
 
           <div className={gaya.obsidianFeatureGrid}>
             {isiLangganan.map((item) => (
-              <div key={item} className={gaya.obsidianFeatureItem}>
+              <div key={item.label} className={gaya.obsidianFeatureItem}>
                 <span className={gaya.obsidianIconCheck}>
                   <IconCheck size={16} />
                 </span>
-                <span>{item}</span>
+                <span>{item.label}</span>
+                {item.baru && (
+                  <span className={gaya.obsidianSoonBadge}>Update</span>
+                )}
               </div>
             ))}
           </div>
