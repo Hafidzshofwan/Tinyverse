@@ -1,4 +1,4 @@
-import { ToolShell } from "@/shared/ui/ToolShell";
+﻿import { ToolShell } from "@/shared/ui/ToolShell";
 import { AbgPanel } from "@/widgets/abg-panel";
 
 export const metadata = {

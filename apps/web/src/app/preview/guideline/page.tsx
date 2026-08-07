@@ -1,4 +1,4 @@
-import { GuidelinePanel } from "@/widgets/guideline-panel";
+﻿import { GuidelinePanel } from "@/widgets/guideline-panel";
 
 export const metadata = {
   title: "Guideline",

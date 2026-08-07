@@ -1,10 +1,11 @@
-import "./tekanan-darah.css";
-import { BpPercentileForm } from "@/features/bp-percentile";
+﻿import { HomeGreeting, HomeQuickAccess, HomeFavorites } from "@/widgets/home-dashboard";
 
-export const metadata = {
-  title: "Persentil Tekanan Darah Anak (AAP 2017)",
-};
-
-export default function TekananDarahPage() {
-  return <BpPercentileForm />;
+export default function HomePage() {
+  return (
+    <div className="tv-stack">
+      <HomeGreeting />
+      <HomeQuickAccess />
+      <HomeFavorites />
+    </div>
+  );
 }

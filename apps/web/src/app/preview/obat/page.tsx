@@ -1,4 +1,4 @@
-import "./obat.css";
+﻿import "./obat.css";
 import { MedsPanel } from "@/widgets/meds-panel";
 
 export const metadata = {

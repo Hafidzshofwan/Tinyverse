@@ -1,4 +1,4 @@
-import { GrowthPanel } from "@/widgets/growth-panel";
+﻿import { GrowthPanel } from "@/widgets/growth-panel";
 
 export const metadata = {
   title: "Tumbuh Kembang",

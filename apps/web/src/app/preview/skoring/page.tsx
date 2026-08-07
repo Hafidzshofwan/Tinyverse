@@ -1,4 +1,4 @@
-import { ScoringPanel } from "@/widgets/scoring-panel";
+﻿import { ScoringPanel } from "@/widgets/scoring-panel";
 
 export const metadata = {
   title: "Skoring Klinis",

@@ -1,4 +1,4 @@
-import { ToolShell } from "@/shared/ui/ToolShell";
+﻿import { ToolShell } from "@/shared/ui/ToolShell";
 import { RingkasanPanel } from "@/widgets/ringkasan-panel";
 import { SidebarIcon } from "@/shared/ui/SidebarIcon";
 

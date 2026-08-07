@@ -1,4 +1,4 @@
-import { ToolShell } from "@/shared/ui/ToolShell";
+﻿import { ToolShell } from "@/shared/ui/ToolShell";
 import { GcsPanel } from "@/widgets/gcs-panel";
 
 export const metadata = {
