@@ -44,7 +44,7 @@ export default async function HalamanSelesai() {
             {akses.entitlement.sisaHari} hari lagi).
           </p>
           <p>
-            <Link href="/preview">Mulai memakai alat klinis</Link>
+            <Link href="/">Mulai memakai alat klinis</Link>
           </p>
         </>
       ) : (
