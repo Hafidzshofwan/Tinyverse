@@ -42,12 +42,12 @@ function kelasStatusPesanan(status: string): string {
   switch (status) {
     case "selesai":
     case "dibayar":
-      return gaya.riwayatSelesai;
+      return gaya.riwayatSelesai!;
     case "menunggu":
-      return gaya.riwayatMenunggu;
+      return gaya.riwayatMenunggu!;
     default:
       // gagal, kedaluwarsa, dibatalkan
-      return gaya.riwayatGagal;
+      return gaya.riwayatGagal!;
   }
 }
 
