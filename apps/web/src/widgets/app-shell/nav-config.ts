@@ -65,15 +65,15 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     title: "Pemantauan Klinis",
     items: [
       { slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", built: true },
-      { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", built: true },
       { slug: "tekanan-darah", label: "Tekanan Darah", icon: "\uD83E\uDEC0", href: "/preview/tekanan-darah", built: true },
-      { slug: "egfr", label: "Kalkulator eGFR", icon: "\uD83E\uDED8", href: "/preview/egfr", built: true },
+      { slug: "skoring", label: "Skoring Klinis", icon: "\uD83E\uDDEE", href: "/preview/skoring", built: true },
     ],
   },
   {
     title: "Diagnostik",
     items: [
       { slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab", built: true },
+      { slug: "egfr", label: "eGFR Pediatrik", icon: "\uD83E\uDED8", href: "/preview/egfr", built: true },
     ],
   },
   {
