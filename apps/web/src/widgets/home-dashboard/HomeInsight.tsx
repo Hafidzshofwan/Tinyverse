@@ -40,7 +40,7 @@ function ambilIndexHarian(panjang: number): number {
  * kalkulator atau guideline lengkap.
  */
 export function HomeInsight() {
-  const tip = TIPS[ambilIndexHarian(TIPS.length)];
+  const tip = TIPS[ambilIndexHarian(TIPS.length)]!;
 
   return (
     <section className="tv-card tv-stack tv-insight-card">
