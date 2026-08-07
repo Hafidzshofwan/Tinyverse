@@ -40,6 +40,8 @@ const BASELINE_ENTRIES: SearchEntry[] = [
   { type: "menu", slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", text: "Tumbuh Kembang, Kurva & Skrining KPSP", keywords: "tumbuh kembang kurva who cdc z-score persentil stunting longitudinal kpsp" },
   { type: "menu", slug: "skoring", label: "Skoring Klinis", icon: "🧮", href: "/preview/skoring", text: "8 Skoring & Kriteria Klinis Anak", keywords: "skor skoring cds croup pas downes pass kawasaki centor tbanak" },
   { type: "menu", slug: "lab", label: "Interpretasi Lab", icon: "🔬", href: "/preview/lab", text: "Interpretasi Lab, AGD & Elektrolit", keywords: "lab agd abg gas darah elektrolit natrium kalium hb trombosit rujukan" },
+  { type: "menu", slug: "egfr", label: "Kalkulator eGFR", icon: "🫘", href: "/preview/egfr", text: "Kalkulator eGFR Pediatrik & Stadium CKD", keywords: "egfr gfr fungsi ginjal ckd chronic kidney disease ckid u25 bedside schwartz kreatinin cystatin c kdigo stadium g1 g2 g3 g4 g5 upcr furth pierce estimasi laju filtrasi glomerulus" },
+  { type: "menu", slug: "neonatus", label: "Tools Neonatus", icon: "👶", href: "/preview/neonatus", text: "Tools Neonatus: TPN & Bilirubin Neonatus", keywords: "neonatus bayi baru lahir tpn total parenteral nutrition gir glucose infusion rate asam amino lipid bilirubin ikterus jaundice fototerapi transfusi tukar hiperbilirubinemia preterm term aap 2022" },
   { type: "menu", slug: "protokol", label: "Guideline", icon: "🩺", href: "/preview/guideline", text: "Guideline & Panduan Pediatrik", keywords: "guideline protokol pedoman who idai pdf" },
   { type: "menu", slug: "imunisasi", label: "Jadwal Imunisasi", icon: "📅", href: "/preview/imunisasi", text: "Jadwal Imunisasi IDAI & Catch-Up", keywords: "imunisasi vaksin vaksinasi idai catch up kejar" },
   { type: "menu", slug: "ringkasan", label: "Ringkasan Klinis", icon: "📄", href: "/preview/ringkasan", text: "Ringkasan & Resume Catatan Medis", keywords: "ringkasan resume rekam medis copy salin" },
@@ -222,6 +224,40 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     text: "Nilai Rujukan Normal Laboratorium Pediatrik Berdasarkan Usia",
     keywords: "nilai rujukan normal lab rentang acuan batas normal anak bayi neonatus",
     anchor: "text:Nilai Rujukan"
+  },
+
+  // Sub-fitur Tools Neonatus (TPN Neonatus & Bilirubin Neonatus)
+  {
+    type: "content",
+    slug: "neonatus",
+    label: "TPN Neonatus",
+    icon: "💊",
+    href: "/preview/neonatus?tab=tpn",
+    text: "Kalkulator TPN (Total Parenteral Nutrition) Neonatus - GIR, Asam Amino, Lipid untuk Bayi Preterm & Term",
+    keywords: "tpn total parenteral nutrition neonatus preterm term gir glucose infusion rate dekstrosa asam amino lipid hari kehidupan usia koreksi postmenstrual age berat lahir kalori kkal/kg nutrisi parenteral",
+    anchor: "text:TPN Neonatus"
+  },
+  {
+    type: "content",
+    slug: "neonatus",
+    label: "Bilirubin Neonatus",
+    icon: "🌟",
+    href: "/preview/neonatus?tab=bilirubin",
+    text: "Kalkulator Ambang Batas Bilirubin Neonatus - Fototerapi, Peningkatan Perawatan, Transfusi Tukar (AAP 2022)",
+    keywords: "bilirubin neonatus ikterus jaundice fototerapi peningkatan perawatan transfusi tukar hiperbilirubinemia aap 2022 usia gestasi jam usia faktor risiko neurotoksisitas",
+    anchor: "text:Bilirubin Neonatus"
+  },
+
+  // Kalkulator eGFR Pediatrik
+  {
+    type: "content",
+    slug: "egfr",
+    label: "Kalkulator eGFR Pediatrik",
+    icon: "🫘",
+    href: "/preview/egfr",
+    text: "Kalkulator eGFR Pediatrik: CKiD U25, Bedside Schwartz, Stadium CKD KDIGO, dan Risiko Progresi ESRD berbasis UPCR",
+    keywords: "egfr gfr fungsi ginjal ckd ckid u25 bedside schwartz kreatinin cystatin c kdigo g1 g2 g3 g4 g5 upcr furth pierce estimasi laju filtrasi glomerulus stadium",
+    anchor: "text:Kalkulator eGFR"
   },
 
   // Kalkulator Persentil Tekanan Darah Anak

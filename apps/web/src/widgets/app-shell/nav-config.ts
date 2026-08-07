@@ -71,7 +71,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     ],
   },
   {
-    title: "Diagnostik & Gizi",
+    title: "Diagnostik",
     items: [
       { slug: "lab", label: "Interpretasi Lab", icon: "\uD83D\uDD2C", href: "/preview/lab", built: true },
     ],

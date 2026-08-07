@@ -212,7 +212,7 @@ html.dark .tv-egfr .judul-section p {
   height: 48px;
   border: none;
   border-radius: 12px;
-  background: #0891B2;
+  background: var(--tv-magenta);
   color: #FFFFFF;
   font-size: 14.5px;
   font-weight: 700;
@@ -372,14 +372,13 @@ html.dark .tv-egfr-pil.aktif {
 
 [data-theme="dark"] .tv-egfr-tombol-hitung,
 html.dark .tv-egfr-tombol-hitung {
-  background: #22D3EE;
-  color: #0F172A;
+  background: var(--tv-magenta);
+  color: #FFFFFF;
 }
 
 [data-theme="dark"] .tv-egfr-tombol-hitung:hover,
 html.dark .tv-egfr-tombol-hitung:hover {
-  background: #67E8F9;
-  filter: none;
+  filter: brightness(1.15);
 }
 
 [data-theme="dark"] .tv-egfr-tombol-ringkasan,
