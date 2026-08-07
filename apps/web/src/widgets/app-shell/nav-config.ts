@@ -77,7 +77,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
     ],
   },
   {
-    title: "Tools Neonatus",
+    title: "Neonatus",
     items: [
       // TPN Neonatus dan Bilirubin Neonatus digabung menjadi satu menu dua tab
       // (pola yang sama dengan Obat & Puyer) agar sidebar tidak memanjang.
