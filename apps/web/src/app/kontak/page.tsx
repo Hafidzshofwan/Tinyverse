@@ -9,13 +9,28 @@
  * diserahkan kepada Midtrans lewat formulir pendaftaran, dan tidak ada alasan
  * memajangnya kepada umum.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import gaya from "../legal/legal.module.css";
 
-export const metadata = {
-  title: "Kontak — Tinyverse",
-  description: "Cara menghubungi pengelola Tinyverse.",
+export const metadata: Metadata = {
+  title: "Kontak",
+  description:
+    "Cara menghubungi pengelola Tinyverse: surel, Instagram, dan jam layanan.",
+  keywords: ["kontak Tinyverse", "hubungi Tinyverse", "layanan pelanggan Tinyverse"],
+  alternates: { canonical: "/kontak" },
+  openGraph: {
+    title: "Kontak — Tinyverse",
+    description: "Cara menghubungi pengelola Tinyverse.",
+    url: "/kontak",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kontak — Tinyverse",
+    description: "Cara menghubungi pengelola Tinyverse.",
+  },
 };
 
 const SUREL = "tinyverse.app@gmail.com";

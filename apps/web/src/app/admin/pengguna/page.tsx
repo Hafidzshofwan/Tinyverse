@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { KelolaPenggunaPanel } from "@/widgets/kelola-pengguna";
 
-export const metadata = {
-  title: "Kelola Pengguna | Tinyverse",
+/** Halaman admin internal -- sengaja noindex, lihat juga app/robots.ts. */
+export const metadata: Metadata = {
+  title: "Kelola Pengguna",
+  robots: { index: false, follow: false },
 };
 
 /**

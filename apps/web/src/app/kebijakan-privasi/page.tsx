@@ -17,14 +17,34 @@
  * apps/web/src/app/api/chat/route.ts. Setiap perubahan pada data yang dikirim
  * ke penyedia model WAJIB diikuti perubahan di bagian tersebut.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import gaya from "../legal/legal.module.css";
 
-export const metadata = {
-  title: "Kebijakan Privasi — Tinyverse",
+export const metadata: Metadata = {
+  title: "Kebijakan Privasi",
   description:
     "Bagaimana Tinyverse mengumpulkan, menyimpan, dan menghapus data akun serta data pasien yang Anda catat.",
+  keywords: [
+    "kebijakan privasi Tinyverse",
+    "privasi data pasien anak",
+    "perlindungan data kesehatan anak",
+  ],
+  alternates: { canonical: "/kebijakan-privasi" },
+  openGraph: {
+    title: "Kebijakan Privasi — Tinyverse",
+    description:
+      "Bagaimana Tinyverse mengumpulkan, menyimpan, dan menghapus data akun serta data pasien yang Anda catat.",
+    url: "/kebijakan-privasi",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kebijakan Privasi — Tinyverse",
+    description:
+      "Bagaimana Tinyverse mengumpulkan, menyimpan, dan menghapus data akun serta data pasien yang Anda catat.",
+  },
 };
 
 export default function HalamanKebijakanPrivasi() {

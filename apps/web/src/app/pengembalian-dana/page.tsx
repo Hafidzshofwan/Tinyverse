@@ -13,14 +13,30 @@
  * menilai seluruh alat klinis tanpa mengeluarkan uang sepeser pun, sehingga
  * "berubah pikiran setelah membayar" bukan lagi keadaan yang tak terhindarkan.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import gaya from "../legal/legal.module.css";
 
-export const metadata = {
-  title: "Kebijakan Pengembalian Dana — Tinyverse",
+export const metadata: Metadata = {
+  title: "Kebijakan Pengembalian Dana",
   description:
     "Ketentuan pengembalian dana langganan Tinyverse dan cara mengajukannya.",
+  keywords: ["kebijakan pengembalian dana Tinyverse", "refund Tinyverse"],
+  alternates: { canonical: "/pengembalian-dana" },
+  openGraph: {
+    title: "Kebijakan Pengembalian Dana — Tinyverse",
+    description:
+      "Ketentuan pengembalian dana langganan Tinyverse dan cara mengajukannya.",
+    url: "/pengembalian-dana",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Kebijakan Pengembalian Dana — Tinyverse",
+    description:
+      "Ketentuan pengembalian dana langganan Tinyverse dan cara mengajukannya.",
+  },
 };
 
 export default function HalamanPengembalianDana() {

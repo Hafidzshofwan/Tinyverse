@@ -1,8 +1,11 @@
 import type { CSSProperties } from "react";
+import type { Metadata } from "next";
 import { ToolShell } from "@/shared/ui/ToolShell";
 
-export const metadata = {
-  title: "Segera Hadir | Tinyverse",
+/** Halaman penampung placeholder tanpa konten nyata -- sengaja noindex. */
+export const metadata: Metadata = {
+  title: "Segera Hadir",
+  robots: { index: false, follow: false },
 };
 
 const pStyle: CSSProperties = {

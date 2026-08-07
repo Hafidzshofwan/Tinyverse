@@ -13,14 +13,30 @@
  * disebut dalam syarat & ketentuan adalah ketidaksesuaian yang justru dicari
  * oleh peninjau pendaftaran merchant.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import gaya from "../legal/legal.module.css";
 
-export const metadata = {
-  title: "Syarat & Ketentuan — Tinyverse",
+export const metadata: Metadata = {
+  title: "Syarat & Ketentuan",
   description:
     "Ketentuan penggunaan layanan Tinyverse, alat bantu klinis pediatri berlangganan.",
+  keywords: ["syarat dan ketentuan Tinyverse", "ketentuan langganan Tinyverse"],
+  alternates: { canonical: "/syarat-ketentuan" },
+  openGraph: {
+    title: "Syarat & Ketentuan — Tinyverse",
+    description:
+      "Ketentuan penggunaan layanan Tinyverse, alat bantu klinis pediatri berlangganan.",
+    url: "/syarat-ketentuan",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Syarat & Ketentuan — Tinyverse",
+    description:
+      "Ketentuan penggunaan layanan Tinyverse, alat bantu klinis pediatri berlangganan.",
+  },
 };
 
 export default function HalamanSyaratKetentuan() {

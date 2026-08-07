@@ -10,12 +10,23 @@
  * belum tentu tercatat pada detik pelanggan kembali ke sini, halaman ini
  * harus tetap masuk akal saat statusnya belum aktif.
  */
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+/**
+ * Halaman ini spesifik untuk satu transaksi (bergantung pesanan yang baru
+ * diselesaikan seseorang) dan tidak punya nilai bagi pengunjung umum, jadi
+ * sengaja noindex -- lihat juga app/robots.ts dan app/sitemap.ts.
+ */
+export const metadata: Metadata = {
+  title: "Status Pesanan",
+  robots: { index: false, follow: false },
+};
 
 export default async function HalamanSelesai() {
   const akses = await statusAksesSaatIni();

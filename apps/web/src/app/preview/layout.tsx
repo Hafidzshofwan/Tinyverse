@@ -31,10 +31,23 @@
  * cepat atau lambat akan lupa dimatikan.
  */
 import type { ReactNode } from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { KATALOG_PLAN } from "@/server/planKatalog";
 import gaya from "./gerbang.module.css";
+
+/**
+ * Seluruh isi /preview ditahan gerbang berbayar sehingga pengunjung yang
+ * belum masuk atau belum berlangganan hanya melihat layar kunci di atas --
+ * bukan konten alat klinis sebenarnya. Menandainya noindex mencegah mesin
+ * pencari mengindeks belasan salinan layar kunci yang identik. Diterapkan di
+ * layout ini (bukan tiap halaman) agar seluruh alat klinis, termasuk yang
+ * baru ditambahkan nanti, otomatis ikut noindex -- lihat juga app/robots.ts.
+ */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 /* Admin SDK tidak bisa berjalan di Edge Runtime. */
 export const runtime = "nodejs";
