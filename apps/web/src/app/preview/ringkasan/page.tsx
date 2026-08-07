@@ -3,7 +3,7 @@ import { RingkasanPanel } from "@/widgets/ringkasan-panel";
 import { SidebarIcon } from "@/shared/ui/SidebarIcon";
 
 export const metadata = {
-  title: "Ringkasan Klinis | Tinyverse",
+  title: "Ringkasan Klinis",
 };
 
 export default function RingkasanPage() {
@@ -17,4 +17,3 @@ export default function RingkasanPage() {
     </ToolShell>
   );
 }
-

@@ -1,7 +1,7 @@
 import { GuidelinePanel } from "@/widgets/guideline-panel";
 
 export const metadata = {
-  title: "Guideline | Tinyverse",
+  title: "Guideline",
 };
 
 export default function GuidelinePage() {

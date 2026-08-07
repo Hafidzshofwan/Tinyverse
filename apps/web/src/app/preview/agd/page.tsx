@@ -2,7 +2,7 @@ import { ToolShell } from "@/shared/ui/ToolShell";
 import { AbgPanel } from "@/widgets/abg-panel";
 
 export const metadata = {
-  title: "Preview - Analisis Gas Darah | Tinyverse",
+  title: "Preview - Analisis Gas Darah",
 };
 
 export default function AgdPreviewPage() {

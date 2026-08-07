@@ -2,7 +2,7 @@ import { ToolShell } from "@/shared/ui/ToolShell";
 import { GcsPanel } from "@/widgets/gcs-panel";
 
 export const metadata = {
-  title: "Preview - Penilaian pGCS | Tinyverse",
+  title: "Preview - Penilaian pGCS",
 };
 
 export default function GcsPreviewPage() {
