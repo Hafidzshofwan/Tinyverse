@@ -1,153 +1,157 @@
-/**
- * Gerbang berbayar untuk SELURUH alat klinis.
- *
- * WHY di layout, bukan di tiap halaman: ada enam belas alat di bawah /preview,
- * dan akan bertambah. Bila penjagaan ditulis di masing-masing halaman, cukup
- * satu halaman baru dibuat tanpa mengingat pemeriksaan ini untuk membuka
- * seluruh isi berbayar. Layout membungkus semua rute di bawahnya tanpa kecuali,
- * termasuk rute yang belum ada. Aman secara bawaan, bukan aman bila diingat.
- *
- * WHY Server Component: keputusan diambil sebelum HTML dikirim, sehingga markup
- * alat berbayar tidak pernah sampai ke browser pengguna yang belum berlangganan.
- * Penjagaan di sisi klien hanya menyembunyikan tampilan — datanya tetap terkirim
- * dan bisa dibaca lewat devtools dalam hitungan detik.
- *
- * Tidak ada jalan pintas untuk admin. Pemilik yang perlu menguji cukup
- * mengaktifkan langganannya sendiri lewat aktivasi manual. Setiap jalan pintas
- * adalah cabang kode yang tidak pernah dilalui pengguna sungguhan, sehingga
- * kerusakan di jalur utama bisa lama tidak tertangkap.
- *
- * SATU-SATUNYA pengecualian ada di `gerbangDimatikan()` di bawah, khusus untuk
- * lingkungan pengembangan. Alasannya praktis: penyunting seperti Google AI
- * Studio menjalankan aplikasi pada host lain dan di dalam iframe, sehingga
- * cookie sesi `tv_sesi` tidak pernah ikut terkirim dan seluruh alat klinis
- * terkunci meski penyuntingnya sudah masuk.
- *
- * Pengecualian itu dibuat mustahil menyentuh produksi: syaratnya NODE_ENV harus
- * bukan "production". Vercel selalu membangun dengan NODE_ENV=production, baik
- * untuk domain utama maupun untuk deployment pratinjau, jadi situs yang diakses
- * pengguna tetap terjaga tanpa perlu mengingat mematikan saklar apa pun. Inilah
- * sebabnya saya tidak memakai environment variable: saklar yang harus diingat
- * cepat atau lambat akan lupa dimatikan.
- */
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import type { Metadata } from "next";
-import Link from "next/link";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { AppShell } from "@/widgets/app-shell";
+import { hitungPengingat, type Pengingat } from "@/features/pengingat-langganan";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
-import { KATALOG_PLAN } from "@/server/planKatalog";
-import gaya from "./gerbang.module.css";
+import {
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE_DEFAULT,
+  SITE_TITLE_TEMPLATE,
+  SITE_URL,
+} from "@/shared/seo/siteConfig";
+import { StructuredData } from "@/shared/seo/StructuredData";
+import "@tinyverse/ui-kit/tokens.css";
+import "./globals.css";
 
 /**
- * Seluruh isi /preview ditahan gerbang berbayar sehingga pengunjung yang
- * belum masuk atau belum berlangganan hanya melihat layar kunci di atas --
- * bukan konten alat klinis sebenarnya. Menandainya noindex mencegah mesin
- * pencari mengindeks belasan salinan layar kunci yang identik. Diterapkan di
- * layout ini (bukan tiap halaman) agar seluruh alat klinis, termasuk yang
- * baru ditambahkan nanti, otomatis ikut noindex -- lihat juga app/robots.ts.
+ * Metadata global situs. Setiap halaman mewarisi ini kecuali ia mengatur
+ * field-nya sendiri (mis. title dan description per halaman publik, atau
+ * robots: noindex pada halaman berlangganan/admin/preview).
+ *
+ * `verification` sengaja dibaca dari environment variable, bukan ditulis
+ * langsung: kode kepemilikan Google Search Console dan Bing Webmaster Tools
+ * sebaiknya diisi lewat konfigurasi Vercel (NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+ * dan NEXT_PUBLIC_BING_SITE_VERIFICATION) agar tidak perlu mengubah kode
+ * setiap kali kode verifikasi diperbarui. Bila variabelnya belum diisi, tag
+ * meta terkait otomatis tidak dirender -- tidak ada tag kosong yang tertinggal.
  */
 export const metadata: Metadata = {
-  robots: { index: false, follow: false },
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_TITLE_DEFAULT,
+    template: SITE_TITLE_TEMPLATE,
+  },
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: SITE_LOCALE,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: "/icon.png",
+        width: 512,
+        height: 512,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary",
+    title: SITE_TITLE_DEFAULT,
+    description: SITE_DESCRIPTION,
+    images: ["/icon.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  verification: {
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || undefined,
+    other: process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
+      ? { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION }
+      : undefined,
+  },
 };
 
-/* Admin SDK tidak bisa berjalan di Edge Runtime. */
-export const runtime = "nodejs";
-/* Tanpa ini, Next boleh menyajikan hasil render lama dari cache — dan hasil
-   render itu bisa berasal dari pengguna dengan status langganan berbeda. */
-export const dynamic = "force-dynamic";
-
-function KunciIcon() {
-  return (
-    <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="11" width="18" height="11" rx="2" />
-      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-      <circle cx="12" cy="16.5" r="1.5" />
-    </svg>
-  );
-}
-
-function rupiah(nilai: number): string {
-  return "Rp" + nilai.toLocaleString("id-ID");
-}
-
-function tanggal(iso: string | null): string {
-  if (!iso) return "\u2014";
-  return new Date(iso).toLocaleDateString("id-ID", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
-}
+// Pastikan penskalaan mengikuti lebar perangkat (mobile tidak mengecil/membesar).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 /**
- * Benar hanya saat aplikasi dijalankan lewat `next dev` (mesin sendiri atau
- * penyunting daring). Selalu salah pada hasil build produksi.
+ * Pengingat masa langganan, dihitung di server.
+ *
+ * WHY di layout akar, bukan di /preview: pengguna yang masa aktifnya sudah
+ * habis tidak akan pernah melihat halaman /preview -- gerbang berbayar sudah
+ * menahannya lebih dulu. Bila pengingat hanya dipasang di sana, justru orang
+ * yang paling perlu diingatkan yang tidak pernah menerimanya.
+ *
+ * Konsekuensi yang perlu disadari: memanggil ini membaca cookie sesi, sehingga
+ * seluruh halaman dirender per permintaan alih-alih disajikan dari hasil build.
+ * Untuk aplikasi yang memang menuntut masuk pada hampir semua halamannya, ini
+ * pertukaran yang wajar.
+ *
+ * Sumber spanduk dirakit di sini secara EKSPLISIT, tidak lagi dengan menyuapkan
+ * objek entitlement apa adanya. Sebelumnya itu bekerja karena bentuk kedua tipe
+ * kebetulan cocok, dan kecocokan yang kebetulan akan patah tanpa peringatan
+ * begitu salah satu tipe berubah. Sekarang terlihat jelas data apa saja yang
+ * dipakai spanduk -- termasuk keterangan masa percobaan, yang sengaja TIDAK
+ * dititipkan di dalam entitlement agar penentu hak akses tetap tidak tersentuh.
+ *
+ * Seluruh badan fungsi dibungkus try/catch dengan sengaja. Layout akar
+ * membungkus SETIAP halaman, termasuk halaman publik yang harus tetap terbuka
+ * bagi calon pelanggan dan peninjau merchant. Satu galat di sini -- kredensial
+ * Firebase yang belum terpasang, Firestore yang sedang terganggu -- akan
+ * mematikan seluruh situs. Pengingat yang gagal tampil hanya merugikan sedikit;
+ * situs yang mati merugikan segalanya.
  */
-function gerbangDimatikan(): boolean {
-  return process.env.NODE_ENV !== "production";
+async function ambilPengingat(): Promise<Pengingat | null> {
+  try {
+    const status = await statusAksesSaatIni();
+    if (!status.masuk) return null;
+    return hitungPengingat(
+      {
+        status: status.entitlement.status,
+        berakhirPada: status.entitlement.berakhirPada,
+        percobaan: status.percobaan,
+      },
+      new Date().toISOString(),
+    );
+  } catch {
+    return null;
+  }
 }
 
-export default async function LayoutPreview({ children }: { children: ReactNode }) {
-  if (gerbangDimatikan()) return <>{children}</>;
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const pengingat = await ambilPengingat();
 
-  const status = await statusAksesSaatIni();
-
-  /* Belum masuk. AppShell sudah menampilkan layar masuk di sisi klien, tetapi
-     server tidak boleh bergantung pada itu: pemeriksaan klien tidak menghalangi
-     siapa pun mengambil HTML halaman ini langsung. */
-  if (!status.masuk) {
-    return (
-      <main className={gaya.wrap}>
-        <div className={gaya.ikon} aria-hidden>
-          <KunciIcon />
-        </div>
-        <h1 className={gaya.judul}>Masuk terlebih dahulu</h1>
-        <p className={gaya.sub}>
-          Alat klinis Tinyverse hanya tersedia bagi pengguna yang sudah masuk.
-        </p>
-      </main>
-    );
-  }
-
-  const e = status.entitlement;
-
-  if (!e.bolehAkses) {
-    const kedaluwarsa = e.status === "kedaluwarsa";
-    return (
-      <main className={gaya.wrap}>
-        <div className={gaya.ikon} aria-hidden>
-          <KunciIcon />
-        </div>
-        <h1 className={gaya.judul}>
-          {kedaluwarsa ? "Masa langganan berakhir" : "Fitur berlangganan"}
-        </h1>
-        <p className={gaya.sub}>
-          {kedaluwarsa
-            ? `Langganan Anda berakhir pada ${tanggal(e.berakhirPada)}. Perpanjang untuk memakai alat klinis kembali.`
-            : "Seluruh alat klinis Tinyverse tersedia untuk pelanggan. Data pasien yang sudah Anda simpan tetap utuh."}
-        </p>
-
-        <section className={gaya.kartu}>
-          {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
-            <div className={gaya.baris} key={p.id}>
-              <span className={gaya.label}>
-                {p.nama} &middot; {p.durasiHari} hari
-              </span>
-              <span className={gaya.nilai}>{rupiah(p.hargaRupiah)}</span>
-            </div>
-          ))}
-        </section>
-
-        <Link href="/langganan" className={gaya.tombol}>
-          Lihat langganan
-        </Link>
-
-        <p className={gaya.catatan}>
-          Sekali bayar. Bila tidak diperpanjang, tidak ada tagihan berikutnya dan
-          tidak ada penarikan otomatis.
-        </p>
-      </main>
-    );
-  }
-
-  return <>{children}</>;
+  return (
+    <html lang="id" data-theme="navy" suppressHydrationWarning>
+      <head>
+        {/* Font dimuat lewat @import di globals.css. Preconnect di sini
+            memangkas jeda tampil huruf (FOUT) pada kunjungan pertama. */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('tv-theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');}}catch(e){}})()`,
+          }}
+        />
+      </head>
+      <body>
+        <StructuredData />
+        <AppShell pengingat={pengingat}>{children}</AppShell>
+        <SpeedInsights />
+        <Analytics />
+      </body>
+    </html>
+  );
 }
