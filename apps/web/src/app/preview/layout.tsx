@@ -34,7 +34,8 @@ import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { statusAksesSaatIni } from "@/server/entitlementServer";
-import { KATALOG_PLAN } from "@/server/planKatalog";
+import { katalogTampil } from "@/server/planKatalog";
+import { promoSedangBerlaku, PROMO_LAUNCHING } from "@/server/promoLaunching";
 import gaya from "./gerbang.module.css";
 
 /**
@@ -126,13 +127,24 @@ export default async function LayoutPreview({ children }: { children: ReactNode 
             : "Seluruh alat klinis Tinyverse tersedia untuk pelanggan. Data pasien yang sudah Anda simpan tetap utuh."}
         </p>
 
+        {promoSedangBerlaku() && (
+          <p className={gaya.catatan}>
+            &#127881; Promo peluncuran: diskon {PROMO_LAUNCHING.diskonPersen}% untuk semua paket, waktu terbatas.
+          </p>
+        )}
+
         <section className={gaya.kartu}>
-          {KATALOG_PLAN.filter((p) => p.aktif).map((p) => (
+          {katalogTampil().filter((p) => p.aktif).map((p) => (
             <div className={gaya.baris} key={p.id}>
               <span className={gaya.label}>
                 {p.nama} &middot; {p.durasiHari} hari
               </span>
-              <span className={gaya.nilai}>{rupiah(p.hargaRupiah)}</span>
+              <span className={gaya.nilai}>
+                {p.promoAktif && (
+                  <span className={gaya.hargaCoret}>{rupiah(p.hargaAsli)}</span>
+                )}
+                {" "}{rupiah(p.hargaRupiah)}
+              </span>
             </div>
           ))}
         </section>

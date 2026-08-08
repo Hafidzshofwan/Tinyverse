@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { riwayatPesanan } from "@/server/pesananRiwayat";
-import { KATALOG_PLAN } from "@/server/planKatalog";
+import { katalogTampil } from "@/server/planKatalog";
+import { PROMO_LAUNCHING, promoSedangBerlaku } from "@/server/promoLaunching";
 import { envMidtrans } from "@/server/env";
 import { hitungPengingat } from "@/features/pengingat-langganan/pengingat";
 import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
@@ -97,13 +98,19 @@ export default async function LanggananPage() {
     ? tanggalIndo(entitlement.berakhirPada)
     : null;
 
-  const paketAktif = KATALOG_PLAN.filter((p) => p.aktif);
+  const paketAktif = katalogTampil().filter((p) => p.aktif);
   const idPalingHemat =
     paketAktif.reduce<{ id: string; perHari: number } | null>((termurah, p) => {
       const perHari = p.hargaRupiah / p.durasiHari;
       if (!termurah || perHari < termurah.perHari) return { id: p.id, perHari };
       return termurah;
     }, null)?.id ?? null;
+
+  // Dihitung sekali di server lalu dikirim sebagai prop tetap. Halaman ini
+  // memakai `dynamic = "force-dynamic"`, jadi nilai ini tetap dievaluasi
+  // ulang di setiap kunjungan -- promo akan padam sendiri begitu
+  // PROMO_LAUNCHING.berakhir terlewati, tanpa deploy ulang.
+  const promoAktifSekarang = promoSedangBerlaku();
 
   const { clientKey, urlSnapJs } = envMidtrans();
 
@@ -123,6 +130,9 @@ export default async function LanggananPage() {
       clientKey={clientKey}
       urlSnapJs={urlSnapJs}
       isiLangganan={FITUR_TERSEDIA.map((f) => ({ label: f.label, baru: f.baru }))}
+      promoAktif={promoAktifSekarang}
+      promoBerakhirPada={PROMO_LAUNCHING.berakhir}
+      diskonPersen={PROMO_LAUNCHING.diskonPersen}
     />
   );
 }

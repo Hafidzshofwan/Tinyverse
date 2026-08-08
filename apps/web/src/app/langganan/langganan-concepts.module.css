@@ -577,3 +577,176 @@
 :global(.dark) .conceptPenyangkalan {
   color: #64748b;
 }
+
+/* ================================================================
+   PROMO PELUNCURAN (banner + jam hitung mundur realtime)
+   ================================================================ */
+
+.promoBanner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+  padding: 22px 24px;
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #1e1b4b 0%, #7c2d92 55%, #be185d 100%);
+  box-shadow: 0 14px 36px rgba(190, 24, 93, 0.28), 0 4px 14px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  animation: promoMasuk 0.5s ease-out;
+}
+
+@keyframes promoMasuk {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.promoBannerGlow {
+  position: absolute;
+  inset: -40% -10%;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.22), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(255, 214, 102, 0.25), transparent 50%);
+  animation: promoGlowGerak 6s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes promoGlowGerak {
+  from {
+    transform: translate(-2%, -2%) scale(1);
+  }
+  to {
+    transform: translate(2%, 2%) scale(1.08);
+  }
+}
+
+.promoBannerIsi {
+  position: relative;
+  z-index: 1;
+}
+
+.promoBadge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffe4f1;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 14px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.promoJudul {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 16px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.promoTimer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.promoTimerUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 8px 12px;
+  min-width: 54px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.promoTimerAngka {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.promoTimerLabel {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 4px;
+}
+
+.promoTimerTitik {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.3rem;
+  font-weight: 800;
+  padding-bottom: 14px;
+}
+
+.promoCatatan {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.8rem;
+  margin: 0;
+}
+
+.promoDiskonBadge {
+  display: inline-block;
+  align-self: center;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 6px;
+  box-shadow: 0 3px 10px rgba(220, 38, 38, 0.35);
+}
+
+.obsidianPaketHargaCoret {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-decoration: line-through;
+  margin-top: 2px;
+}
+
+:global([data-theme="dark"]) .obsidianPaketHargaCoret,
+:global(.dark) .obsidianPaketHargaCoret {
+  color: #64748b;
+}
+
+@media (max-width: 480px) {
+  .promoTimerUnit {
+    min-width: 44px;
+    padding: 6px 8px;
+  }
+
+  .promoTimerAngka {
+    font-size: 1.2rem;
+  }
+
+  .promoJudul {
+    font-size: 1.05rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .promoBanner,
+  .promoBannerGlow {
+    animation: none;
+  }
+}

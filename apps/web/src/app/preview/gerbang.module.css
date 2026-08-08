@@ -53,6 +53,13 @@
   text-align: right;
 }
 
+.hargaCoret {
+  font-weight: 500;
+  opacity: 0.55;
+  text-decoration: line-through;
+  margin-right: 6px;
+}
+
 .tombol {
   display: inline-block;
   margin-top: 24px;

@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import type { StatusLangganan, Plan } from "@tinyverse/billing";
+import type { StatusLangganan } from "@tinyverse/billing";
+import type { PaketTampil } from "@/server/planKatalog";
 import { TombolBeli } from "./TombolBeli";
 import { RiwayatPembayaran, type BarisRiwayat } from "./RiwayatPembayaran";
+import { PromoCountdown } from "./PromoCountdown";
 import gaya from "./langganan-concepts.module.css";
 
 type Peringatan = { judul: string; teks: string; kedaluwarsa: boolean };
@@ -22,12 +24,18 @@ export type LanggananClientProps = {
   labelLencana: string;
   peringatan: Peringatan | null;
   daftarPesanan: BarisRiwayat[];
-  paketAktif: readonly Plan[];
+  paketAktif: readonly PaketTampil[];
   idPalingHemat: string | null;
   labelTombol: string;
   clientKey: string;
   urlSnapJs: string;
   isiLangganan: readonly ItemFiturLangganan[];
+  /** True bila promo peluncuran sedang berlaku sekarang (dihitung di server). */
+  promoAktif: boolean;
+  /** ISO tetap kapan promo berakhir, dipakai jam hitung mundur realtime. */
+  promoBerakhirPada: string;
+  /** Persentase diskon promo peluncuran. */
+  diskonPersen: number;
 };
 
 function rupiah(nilai: number): string {
@@ -153,6 +161,9 @@ export function LanggananClientView(props: LanggananClientProps) {
     clientKey,
     urlSnapJs,
     isiLangganan,
+    promoAktif,
+    promoBerakhirPada,
+    diskonPersen,
   } = props;
 
   return (
@@ -165,6 +176,11 @@ export function LanggananClientView(props: LanggananClientProps) {
             Akses tak terbatas ke seluruh alat bantu klinis, kalkulator medis, dan asisten AI pediatri.
           </p>
         </div>
+
+        {/* Promo Peluncuran: banner + jam hitung mundur realtime */}
+        {promoAktif && (
+          <PromoCountdown berakhirPada={promoBerakhirPada} diskonPersen={diskonPersen} />
+        )}
 
         {/* Warning Banner if Expiring */}
         {peringatan && (
@@ -230,6 +246,12 @@ export function LanggananClientView(props: LanggananClientProps) {
                   )}
                   <div className={gaya.obsidianPaketNama}>{p.nama}</div>
                   <div className={gaya.obsidianPaketDurasi}>{p.durasiHari} Hari Akses</div>
+                  {p.promoAktif && (
+                    <div className={gaya.promoDiskonBadge}>-{p.diskonPersen}%</div>
+                  )}
+                  {p.promoAktif && (
+                    <div className={gaya.obsidianPaketHargaCoret}>{rupiah(p.hargaAsli)}</div>
+                  )}
                   <div className={gaya.obsidianPaketHarga}>{rupiah(p.hargaRupiah)}</div>
                   <div className={gaya.obsidianPaketPerHari}>
                     {"\u2248" + rupiah(perHari) + "/hari"}
