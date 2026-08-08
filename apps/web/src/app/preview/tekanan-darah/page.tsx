@@ -1,8 +1,8 @@
-﻿import "./tekanan-darah.css";
+import "./tekanan-darah.css";
 import { BpPercentileForm } from "@/features/bp-percentile";
 
 export const metadata = {
-  title: "Persentil Tekanan Darah Anak (AAP 2017)",
+  title: "Tekanan Darah",
 };
 
 export default function TekananDarahPage() {

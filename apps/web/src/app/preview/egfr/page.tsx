@@ -1,8 +1,8 @@
-﻿import "./egfr.css";
+import "./egfr.css";
 import { EgfrForm } from "@/features/egfr-calculator";
 
 export const metadata = {
-  title: "Kalkulator eGFR Pediatrik (CKiD U25)",
+  title: "eGFR Pediatrik",
 };
 
 export default function EgfrPage() {
