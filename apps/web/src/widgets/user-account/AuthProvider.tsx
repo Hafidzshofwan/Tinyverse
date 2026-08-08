@@ -32,7 +32,7 @@ export interface Profil {
   institusi?: string;
   role: "admin" | "user";
   avatar?: string;
-  preferensi?: { sembunyikanDekorasi?: boolean };
+  preferensi?: { sembunyikanDekorasi?: boolean; tourSelesai?: boolean };
   dibuat?: number;
   terakhirMasuk?: number;
   aktif?: boolean;
@@ -61,6 +61,13 @@ interface AuthContextValue {
   profil: Profil | null;
   errorMsg: string;
   infoMsg: string;
+  /**
+   * true hanya untuk sesi tempat akun BARU SAJA dibuat (mendaftar email atau
+   * masuk Google pertama kali). Dipakai memicu tur onboarding otomatis --
+   * bukan disimpan ke Firestore, jadi otomatis bernilai false lagi setelah
+   * halaman dimuat ulang.
+   */
+  akunBaru: boolean;
   masuk: (email: string, pass: string) => Promise<void>;
   masukGoogle: () => Promise<void>;
   kirimResetSandi: (email: string) => Promise<void>;
@@ -76,7 +83,9 @@ interface AuthContextValue {
     institusi: string;
     avatar?: string;
   }) => Promise<void>;
-  simpanPref: (pref: { sembunyikanDekorasi: boolean }) => Promise<void>;
+  simpanPref: (
+    pref: Partial<{ sembunyikanDekorasi: boolean; tourSelesai: boolean }>,
+  ) => Promise<void>;
   muatRiwayat: () => Promise<RiwayatItem[]>;
   catatRiwayat: (tipe: string, judul: string, detail: string) => void;
   muatPengguna: () => Promise<PenggunaRow[]>;
@@ -103,6 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [profil, setProfil] = useState<Profil | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
+  const [akunBaru, setAkunBaru] = useState(false);
 
   const authRef = useRef<Any>(null);
   const dbRef = useRef<Any>(null);
@@ -224,6 +234,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             aktif: true,
           };
           await ref.set(data);
+          setAkunBaru(true);
           selesaiMasuk(data);
         }
       } catch (e) {
@@ -369,6 +380,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await db.collection("users").doc(user.uid).set(data);
         uidRef.current = user.uid;
         sedangDaftar.current = false;
+        setAkunBaru(true);
         selesaiMasuk(data);
       } catch (e) {
         sedangDaftar.current = false;
@@ -410,14 +422,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 
   const simpanPref = useCallback(
-    async (pref: { sembunyikanDekorasi: boolean }) => {
+    async (
+      pref: Partial<{ sembunyikanDekorasi: boolean; tourSelesai: boolean }>,
+    ) => {
       const db = dbRef.current;
       const uid = uidRef.current;
       if (!db || !uid) throw new Error("Belum masuk.");
       try {
-        await db.collection("users").doc(uid).update({ preferensi: pref });
+        /*
+         * Ditulis lewat path bertitik ("preferensi.tourSelesai", dst), BUKAN
+         * `{ preferensi: pref }`. Firestore `update` dengan field biasa
+         * MENGGANTI seluruh map preferensi -- menyimpan tourSelesai akan
+         * diam-diam menghapus sembunyikanDekorasi yang sudah tersimpan
+         * sebelumnya, begitu pula sebaliknya. Path bertitik hanya menyentuh
+         * kunci yang benar-benar dikirim, sisanya tetap utuh.
+         */
+        const patch: Any = {};
+        for (const kunci of Object.keys(pref)) {
+          patch[`preferensi.${kunci}`] = (pref as Any)[kunci];
+        }
+        await db.collection("users").doc(uid).update(patch);
         setProfil((prev) => {
-          const next = prev ? { ...prev, preferensi: pref } : prev;
+          if (!prev) return prev;
+          const next = { ...prev, preferensi: { ...prev.preferensi, ...pref } };
           terapkanPref(next);
           return next;
         });
@@ -516,6 +543,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     profil,
     errorMsg,
     infoMsg,
+    akunBaru,
     masuk,
     masukGoogle,
     kirimResetSandi,

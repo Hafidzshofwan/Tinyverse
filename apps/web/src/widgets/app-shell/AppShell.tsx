@@ -15,6 +15,7 @@ import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
+import { OnboardingTour } from "@/widgets/onboarding-tour";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
@@ -151,6 +152,19 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
     return () => window.removeEventListener("message", onMsg);
   }, []);
 
+  // Tur onboarding perlu sidebar TERBUKA saat menyorotnya, termasuk di layar
+  // sempit (mobile) yang defaultnya tertutup. Dikoordinasikan lewat event
+  // custom, bukan prop, karena OnboardingTour dipasang di luar percabangan
+  // render ini dan tidak punya akses langsung ke state `open`.
+  useEffect(() => {
+    function onBukaSidebar() {
+      setOpen(true);
+    }
+    window.addEventListener("tv-tour-buka-sidebar", onBukaSidebar);
+    return () =>
+      window.removeEventListener("tv-tour-buka-sidebar", onBukaSidebar);
+  }, []);
+
   const kelasShell = useMemo(
     () => (open ? "tv-shell" : "tv-shell tv-shell-collapsed"),
     [open],
@@ -219,15 +233,19 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           <Logo />
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
-        <SectionErrorBoundary label="Pencarian" variant="silent">
-          <GlobalSearch />
-        </SectionErrorBoundary>
+        <span id="tvTourSearch" style={{ display: "contents" }}>
+          <SectionErrorBoundary label="Pencarian" variant="silent">
+            <GlobalSearch />
+          </SectionErrorBoundary>
+        </span>
         <SectionErrorBoundary label="Pengganti tema" variant="silent">
           <ThemeToggle />
         </SectionErrorBoundary>
-        <SectionErrorBoundary label="Menu pengguna" variant="inline">
-          <UserMenu />
-        </SectionErrorBoundary>
+        <span id="tvTourUserMenu" style={{ display: "contents" }}>
+          <SectionErrorBoundary label="Menu pengguna" variant="inline">
+            <UserMenu />
+          </SectionErrorBoundary>
+        </span>
       </header>
       {/* Tanpa prop variant: animasi perpindahan halaman harus memakai animasi
           yang dipilih pengguna, sama seperti layar pemuatan sesi. Sebelumnya
@@ -245,7 +263,7 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           aria-hidden
           onClick={() => setOpen(false)}
         />
-        <aside className="tv-sidebar">
+        <aside className="tv-sidebar" id="tvTourSidebar">
           <SectionErrorBoundary label="Menu navigasi" variant="inline">
             <NavLinks groups={NAV_GROUPS} />
           </SectionErrorBoundary>
@@ -288,6 +306,11 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
       </SectionErrorBoundary>
       <SectionErrorBoundary label="Asisten AI" variant="inline">
         <AiAssistantWidget />
+      </SectionErrorBoundary>
+      {/* Silent: tur onboarding adalah kenyamanan tambahan, bukan fitur inti --
+          kalau ia gagal, pengguna tetap harus bisa memakai seluruh aplikasi. */}
+      <SectionErrorBoundary label="Tur onboarding" variant="silent">
+        <OnboardingTour />
       </SectionErrorBoundary>
     </div>
   );

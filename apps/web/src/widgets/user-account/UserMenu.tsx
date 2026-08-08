@@ -48,6 +48,16 @@ function LogOutIcon({ size = 16, color = "currentColor" }: { size?: number; colo
   );
 }
 
+function TurIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 2-3 4" />
+      <line x1="12" y1="17" x2="12.01" y2="17" />
+    </svg>
+  );
+}
+
 /**
  * Tombol profil di header + dropdown. Menggantikan placeholder "Profil (segera)".
  * Setia dengan v17: avatar/inisial, nama, badge peran, menu Profil / Kelola
@@ -149,6 +159,15 @@ export function UserMenu() {
               <ShieldUserIcon size={16} /> <span>Pemantauan error</span>
             </Link>
           )}
+          <button
+            className="tv-drop-item"
+            onClick={() => {
+              setBuka(false);
+              window.dispatchEvent(new Event("tv-mulai-tur"));
+            }}
+          >
+            <TurIcon size={16} /> <span>Mulai tur fitur</span>
+          </button>
           <button
             className="tv-drop-item"
             onClick={() => {
