@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
 import { useAiChatStore, type Message } from "@/widgets/ai-assistant";
 import { SidebarIcon, ConfirmationModal } from "@/shared/ui";
+import { usePatientProfile } from "@/shared/lib/patient";
 
 function FolderIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -159,12 +160,6 @@ const PRESET_TOPICS = [
   },
 ];
 
-interface PasienData {
-  nama?: string;
-  bb?: number;
-  usiaBulan?: number;
-}
-
 export default function AiAssistantPage() {
   const {
     messages,
@@ -181,7 +176,10 @@ export default function AiAssistantPage() {
   const [isFocused, setIsFocused] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [patientData, setPatientData] = useState<PasienData | null>(null);
+  // Profil pasien aktif dibaca secara reaktif, sama seperti menu lain
+  // (Lab, Profil Pasien, dsb). Dengan ini menu Asisten AI ikut memperbarui
+  // diri sendiri saat pasien diganti di menu lain, tanpa perlu refresh halaman.
+  const patientData = usePatientProfile();
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [editingTitleId, setEditingTitleId] = useState<string | null>(null);
   const [titleInputValue, setTitleInputValue] = useState("");
@@ -202,18 +200,6 @@ export default function AiAssistantPage() {
     setToastMsg(msg);
     setTimeout(() => setToastMsg(null), 2500);
   };
-
-  useEffect(() => {
-    // Muat profil pasien aktif
-    try {
-      const raw = localStorage.getItem("tv_pasien_aktif");
-      if (raw) {
-        setPatientData(JSON.parse(raw));
-      }
-    } catch {
-      /* abaikan */
-    }
-  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
