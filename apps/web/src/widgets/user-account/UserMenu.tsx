@@ -139,6 +139,16 @@ export function UserMenu() {
               <ShieldUserIcon size={16} /> <span>Kelola pengguna</span>
             </Link>
           )}
+          {admin && (
+            <Link
+              href="/admin/error-logs"
+              className="tv-drop-item"
+              style={{ textDecoration: "none" }}
+              onClick={() => setBuka(false)}
+            >
+              <ShieldUserIcon size={16} /> <span>Pemantauan error</span>
+            </Link>
+          )}
           <button
             className="tv-drop-item"
             onClick={() => {

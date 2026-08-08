@@ -15,6 +15,7 @@ import {
   SITE_URL,
 } from "@/shared/seo/siteConfig";
 import { StructuredData } from "@/shared/seo/StructuredData";
+import { ErrorMonitorMount } from "@/shared/lib/errorMonitoring";
 import "@tinyverse/ui-kit/tokens.css";
 import "./globals.css";
 
@@ -148,6 +149,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body>
         <StructuredData />
+        <ErrorMonitorMount />
         <AppShell pengingat={pengingat}>{children}</AppShell>
         <SpeedInsights />
         <Analytics />

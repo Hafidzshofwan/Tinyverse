@@ -400,16 +400,16 @@ export function AlurTatalaksanaPanel() {
     <div
       style={{
         border: "1px solid var(--tv-line)",
-        borderRadius: 12,
-        padding: "10px 12px",
+        borderRadius: 10,
+        padding: "8px 10px",
         background: "var(--tv-putih)",
-        marginBottom: 14,
+        marginBottom: 10,
       }}
     >
       <div
         style={{
           fontWeight: 700,
-          fontSize: "1rem",
+          fontSize: "13px",
           color: "var(--tv-navy)",
           marginBottom: 2,
           display: "flex",
@@ -425,12 +425,12 @@ export function AlurTatalaksanaPanel() {
         <span>Profil Pasien</span>
       </div>
       {punyaPasien && pasien ? (
-        <div style={{ fontSize: ".85rem" }}>
+        <div style={{ fontSize: "13px" }}>
           {pasien.nama ?? "Tanpa nama"} · BB {pasien.bb ?? "\u2013"} kg · TB{" "}
           {pasien.tb ?? "\u2013"} cm · Usia {usiaTeks(pasien.usiaBulan)}
         </div>
       ) : (
-        <div className="tv-warn" style={{ marginTop: 2 }}>
+        <div className="tv-warn" style={{ marginTop: 2, fontSize: "13px" }}>
           Belum ada data pasien. Isi Profil Pasien agar dosis dihitung otomatis.
         </div>
       )}

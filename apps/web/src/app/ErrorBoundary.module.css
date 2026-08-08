@@ -1,0 +1,53 @@
+/*
+ * Tampilan batas error segmen (app/error.tsx).
+ *
+ * Dirender di dalam layout akar, jadi variabel warna & kelas .tv-btn dari
+ * globals.css sudah tersedia — tidak perlu diduplikasi di sini.
+ */
+
+.bungkus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 24px;
+}
+
+.kartu {
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  border-left: 3px solid #DC2626;
+  border-radius: 0 16px 16px 0;
+  padding: 32px 28px;
+  background: var(--tv-putih, #FFFFFF);
+}
+
+.ikon {
+  font-size: 34px;
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.judul {
+  margin: 0 0 10px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tv-navy, #0F172A);
+}
+
+.pesan {
+  margin: 0 0 22px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--tv-text-secondary, #64748B);
+}
+
+.aksi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
