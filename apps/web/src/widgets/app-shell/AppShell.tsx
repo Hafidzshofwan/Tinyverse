@@ -14,7 +14,7 @@ import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-acco
 import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
-import { LoadingAnimation } from "@/shared/ui";
+import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
@@ -219,9 +219,15 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           <Logo />
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
-        <GlobalSearch />
-        <ThemeToggle />
-        <UserMenu />
+        <SectionErrorBoundary label="Pencarian" variant="silent">
+          <GlobalSearch />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Pengganti tema" variant="silent">
+          <ThemeToggle />
+        </SectionErrorBoundary>
+        <SectionErrorBoundary label="Menu pengguna" variant="inline">
+          <UserMenu />
+        </SectionErrorBoundary>
       </header>
       {/* Tanpa prop variant: animasi perpindahan halaman harus memakai animasi
           yang dipilih pengguna, sama seperti layar pemuatan sesi. Sebelumnya
@@ -240,14 +246,20 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           onClick={() => setOpen(false)}
         />
         <aside className="tv-sidebar">
-          <NavLinks groups={NAV_GROUPS} />
+          <SectionErrorBoundary label="Menu navigasi" variant="inline">
+            <NavLinks groups={NAV_GROUPS} />
+          </SectionErrorBoundary>
         </aside>
         <main className="tv-main">
           <div className="tv-main-inner">
             {/* Pengingat langganan sengaja di dalam tv-main-inner, sejajar isi
                 halaman: ia ikut tergulung bersama konten dan tidak pernah
                 menutupi header maupun hasil perhitungan alat klinis. */}
-            {pengingat ? <SpandukLangganan pengingat={pengingat} /> : null}
+            {pengingat ? (
+              <SectionErrorBoundary label="Pengingat langganan" variant="silent">
+                <SpandukLangganan pengingat={pengingat} />
+              </SectionErrorBoundary>
+            ) : null}
             {children}
           </div>
         </main>
@@ -271,8 +283,12 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           </div>
         </div>
       </footer>
-      <PatientProfile />
-      <AiAssistantWidget />
+      <SectionErrorBoundary label="Profil pasien" variant="inline">
+        <PatientProfile />
+      </SectionErrorBoundary>
+      <SectionErrorBoundary label="Asisten AI" variant="inline">
+        <AiAssistantWidget />
+      </SectionErrorBoundary>
     </div>
   );
 }

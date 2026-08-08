@@ -11,3 +11,4 @@ export * from "./LoadingAnimation";
 export * from "./LoadingSelectorModal";
 export * from "./ReferensiBlok";
 export * from "./referensi-data";
+export * from "./SectionErrorBoundary";

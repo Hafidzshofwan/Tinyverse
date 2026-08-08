@@ -583,6 +583,65 @@ html.dark .tv-greeting-hand-icon {
   color: #ffffff;
 }
 
+/* Kop Surat Modal - Dark Mode */
+[data-theme="dark"] .tv-kop-surat-card {
+  background: rgba(30, 41, 59, 0.95) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-card h3 {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-card label {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-card input,
+[data-theme="dark"] .tv-kop-surat-card .tv-input {
+  background: #0F172A !important;
+  color: #F8FAFC !important;
+  border: 1px solid #334155 !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-card input:focus,
+[data-theme="dark"] .tv-kop-surat-card .tv-input:focus {
+  border-color: #EC4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.3) !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-close-btn {
+  background: #273449 !important;
+  color: #CBD5E1 !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-close-btn:hover {
+  background: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-reset-btn {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-reset-btn:hover {
+  background: #273449 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-kop-surat-save-btn {
+  background: linear-gradient(135deg, #EC4899, #DB2777) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4) !important;
+}
+
 /* Patient Profile FAB & Overlay */
 [data-theme="dark"] #tvPasienOverlay {
   background: rgba(2, 6, 23, 0.8) !important;
