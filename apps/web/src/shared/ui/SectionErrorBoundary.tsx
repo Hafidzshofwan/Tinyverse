@@ -40,13 +40,13 @@ type State = {
 };
 
 export class SectionErrorBoundary extends Component<Props, State> {
-  state: State = { hasError: false };
+  override state: State = { hasError: false };
 
   static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, info: ErrorInfo) {
+  override componentDidCatch(error: Error, info: ErrorInfo) {
     catatErrorProduksi({
       message: `[${this.props.label}] ${error.message}`,
       stack: error.stack || info.componentStack || undefined,
@@ -58,7 +58,7 @@ export class SectionErrorBoundary extends Component<Props, State> {
     this.setState({ hasError: false });
   };
 
-  render() {
+  override render() {
     if (!this.state.hasError) return this.props.children;
     if (this.props.variant === "silent") return null;
 

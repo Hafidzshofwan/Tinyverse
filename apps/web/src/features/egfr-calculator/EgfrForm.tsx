@@ -121,8 +121,7 @@ function Pilihan<T extends string>(props: {
 
 export function EgfrForm() {
   const profile = usePatientProfile();
-  const usiaTahunProfil = profile.usiaBulan != null ? Math.round((profile.usiaBulan / 12) * 100) / 100 : null;
-  const [usiaTahun, setUsiaTahun] = useSyncedField(usiaTahunProfil);
+  const [usiaBulanTotal, setUsiaBulanTotal] = useSyncedField(profile.usiaBulan);
   const [tinggi, setTinggi] = useSyncedField(profile.tb);
   const [sexManual, setSexManual] = useState<Sex | null>(null);
   const sex: Sex = sexManual ?? (profile.jk === "female" ? "female" : "male");
@@ -136,6 +135,37 @@ export function EgfrForm() {
   const [dihitung, setDihitung] = useState(false);
   const [ditambahkan, setDitambahkan] = useState(false);
 
+  const totalBulan = usiaBulanTotal.trim() === "" ? null : Number(usiaBulanTotal);
+  const tahunTeks = totalBulan === null || Number.isNaN(totalBulan) ? "" : String(Math.floor(totalBulan / 12));
+  const bulanTeks = totalBulan === null || Number.isNaN(totalBulan) ? "" : String(totalBulan % 12);
+
+  function ubahTahun(v: string) {
+    if (v.trim() === "") {
+      const sisa = bulanTeks === "" ? 0 : Math.max(0, parseInt(bulanTeks, 10) || 0);
+      setUsiaBulanTotal(sisa === 0 ? "" : String(sisa));
+      return;
+    }
+    const t = Math.max(0, parseFloat(v) || 0);
+    const sisa = bulanTeks === "" ? 0 : Math.max(0, parseInt(bulanTeks, 10) || 0);
+    setUsiaBulanTotal(String(Math.round(t * 12 + sisa)));
+  }
+
+  function ubahBulan(v: string) {
+    if (v.trim() === "") {
+      const th = tahunTeks === "" ? 0 : Math.max(0, parseInt(tahunTeks, 10) || 0);
+      setUsiaBulanTotal(th === 0 ? "" : String(th * 12));
+      return;
+    }
+    const b = Math.max(0, parseInt(v, 10) || 0);
+    const th = tahunTeks === "" ? 0 : Math.max(0, parseInt(tahunTeks, 10) || 0);
+    setUsiaBulanTotal(String(th * 12 + b));
+  }
+
+  const ageYears = useMemo(() => {
+    if (totalBulan === null || Number.isNaN(totalBulan) || totalBulan <= 0) return NaN;
+    return totalBulan / 12;
+  }, [totalBulan]);
+
   const scrMgDl = useMemo(() => {
     if (scrValue.trim() === "") return NaN;
     const v = Number(scrValue);
@@ -145,7 +175,7 @@ export function EgfrForm() {
   const hasil: EgfrComputeResult | null = useMemo(() => {
     if (!dihitung) return null;
     return computeEgfr({
-      ageYears: usiaTahun.trim() === "" ? NaN : Number(usiaTahun),
+      ageYears,
       sex,
       heightCm: tinggi.trim() === "" ? NaN : Number(tinggi),
       scrMgDl,
@@ -153,7 +183,7 @@ export function EgfrForm() {
       upcrMgMg: upcr.trim() === "" ? null : Number(upcr),
       isGlomerular: glomerular === "unknown" ? null : glomerular === "glomerular",
     });
-  }, [dihitung, usiaTahun, sex, tinggi, scrMgDl, cysC, upcr, glomerular]);
+  }, [dihitung, ageYears, sex, tinggi, scrMgDl, cysC, upcr, glomerular]);
 
   function tambahRingkasan() {
     if (!hasil) return;
@@ -215,7 +245,8 @@ export function EgfrForm() {
       <div className="tv-egfr-kartu">
         <h3 className="tv-egfr-subjudul">Data Pasien</h3>
         <div className="tv-egfr-grid">
-          <Medan label="Usia" value={usiaTahun} onChange={setUsiaTahun} placeholder="cth. 8" satuan="tahun" step="0.1" />
+          <Medan label="Usia (tahun)" value={tahunTeks} onChange={ubahTahun} placeholder="cth. 8" satuan="th" step="1" />
+          <Medan label="Usia (bulan)" value={bulanTeks} onChange={ubahBulan} placeholder="cth. 0" satuan="bln" step="1" />
           <Medan label="Tinggi badan" value={tinggi} onChange={setTinggi} placeholder="cth. 125" satuan="cm" step="0.1" />
           <Pilihan
             label="Jenis kelamin"
