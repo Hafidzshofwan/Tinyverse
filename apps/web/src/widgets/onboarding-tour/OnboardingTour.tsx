@@ -285,7 +285,17 @@ export function OnboardingTour() {
     return () => window.removeEventListener("tv-mulai-tur", onMulai);
   }, []);
 
-  // Hitung ulang posisi target setiap kali langkah berganti.
+  // Hitung ulang posisi target setiap kali langkah berganti, lalu lacak terus
+  // menerus selama langkah itu aktif.
+  //
+  // WHY dilacak tiap frame (bukan hanya lewat event "resize"/"scroll"): posisi
+  // tombol yang disorot bisa berubah karena banyak hal yang TIDAK selalu
+  // memicu event tersebut secara konsisten di semua browser -- zoom halaman
+  // desktop (mis. 50%/75%/90%), pinch-zoom di HP, rotasi layar, animasi buka
+  // sidebar, atau elemen yang baru selesai memuat font/gambar. Mengukur ulang
+  // tiap frame lewat requestAnimationFrame membuat sorotan SELALU mengikuti
+  // posisi asli elemen saat ini, pada ukuran layar/zoom/perangkat apa pun,
+  // tanpa perlu menebak event mana saja yang mesti didengarkan.
   useEffect(() => {
     if (langkahAktif < 0) return;
     const langkahDipilih = LANGKAH[langkahAktif];
@@ -297,6 +307,7 @@ export function OnboardingTour() {
     const langkah: LangkahTur = langkahDipilih;
 
     let batal = false;
+    let idFrame: number | null = null;
     setSiapTampil(false);
 
     function ambilRect(id: string): RectTarget | null {
@@ -304,6 +315,26 @@ export function OnboardingTour() {
       if (!elemen) return null;
       const r = elemen.getBoundingClientRect();
       return { top: r.top, left: r.left, width: r.width, height: r.height };
+    }
+
+    // Ambang 0.5px: hindari memperbarui state karena pembulatan subpiksel
+    // yang tidak kasatmata, supaya tidak me-render ulang tiap frame saat
+    // posisi sebenarnya sedang diam.
+    function berubahBerarti(a: RectTarget | null, b: RectTarget | null): boolean {
+      if (!a || !b) return a !== b;
+      return (
+        Math.abs(a.top - b.top) > 0.5 ||
+        Math.abs(a.left - b.left) > 0.5 ||
+        Math.abs(a.width - b.width) > 0.5 ||
+        Math.abs(a.height - b.height) > 0.5
+      );
+    }
+
+    function lacakTerus() {
+      if (batal || !langkah.targetId) return;
+      const r = ambilRect(langkah.targetId);
+      setRect((sebelumnya) => (berubahBerarti(sebelumnya, r) ? r : sebelumnya));
+      idFrame = requestAnimationFrame(lacakTerus);
     }
 
     function ukur(sisaPercobaan: number) {
@@ -328,6 +359,9 @@ export function OnboardingTour() {
       }
       setRect(r);
       setSiapTampil(true);
+      // Target ditemukan -- mulai lacak posisinya tiap frame selama langkah
+      // ini masih aktif (dihentikan oleh cleanup di bawah).
+      idFrame = requestAnimationFrame(lacakTerus);
     }
 
     if (langkah.perluSidebarTerbuka) {
@@ -341,17 +375,9 @@ export function OnboardingTour() {
       ukur(PERCOBAAN_UKUR);
     }
 
-    function onGeser() {
-      if (!langkah.targetId) return;
-      const r = ambilRect(langkah.targetId);
-      if (r) setRect(r);
-    }
-    window.addEventListener("resize", onGeser);
-    window.addEventListener("scroll", onGeser, true);
     return () => {
       batal = true;
-      window.removeEventListener("resize", onGeser);
-      window.removeEventListener("scroll", onGeser, true);
+      if (idFrame !== null) cancelAnimationFrame(idFrame);
     };
   }, [langkahAktif]);
 

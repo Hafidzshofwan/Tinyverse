@@ -64,7 +64,7 @@ function TurIcon({ size = 16, color = "currentColor" }: { size?: number; color?:
  * Setia dengan v17: avatar/inisial, nama, badge peran, menu Profil / Kelola
  * pengguna (admin) / Keluar.
  */
-export function UserMenu() {
+export function UserMenu({ id }: { id?: string } = {}) {
   const { profil, keluar } = useAuth();
   const [buka, setBuka] = useState(false);
   const [profilTampil, setProfilTampil] = useState(false);
@@ -87,7 +87,7 @@ export function UserMenu() {
   const ava = avatarProps(profil.avatar, profil.nama);
 
   return (
-    <div className="tv-user" ref={wrapRef}>
+    <div className="tv-user" ref={wrapRef} id={id}>
       <button
         type="button"
         className="tv-user-pill"

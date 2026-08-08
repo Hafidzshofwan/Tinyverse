@@ -233,19 +233,15 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
           <Logo />
           <span className="tv-brand-txt">Tinyverse</span>
         </Link>
-        <span id="tvTourSearch" style={{ display: "contents" }}>
-          <SectionErrorBoundary label="Pencarian" variant="silent">
-            <GlobalSearch />
-          </SectionErrorBoundary>
-        </span>
+        <SectionErrorBoundary label="Pencarian" variant="silent">
+          <GlobalSearch id="tvTourSearch" />
+        </SectionErrorBoundary>
         <SectionErrorBoundary label="Pengganti tema" variant="silent">
           <ThemeToggle />
         </SectionErrorBoundary>
-        <span id="tvTourUserMenu" style={{ display: "contents" }}>
-          <SectionErrorBoundary label="Menu pengguna" variant="inline">
-            <UserMenu />
-          </SectionErrorBoundary>
-        </span>
+        <SectionErrorBoundary label="Menu pengguna" variant="inline">
+          <UserMenu id="tvTourUserMenu" />
+        </SectionErrorBoundary>
       </header>
       {/* Tanpa prop variant: animasi perpindahan halaman harus memakai animasi
           yang dipilih pengguna, sama seperti layar pemuatan sesi. Sebelumnya

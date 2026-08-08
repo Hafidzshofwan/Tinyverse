@@ -274,7 +274,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
 
 ];
 
-export function GlobalSearch() {
+export function GlobalSearch({ id }: { id?: string } = {}) {
   const [query, setQuery] = useState("");
   const [entries, setEntries] = useState<SearchEntry[]>(BASELINE_ENTRIES);
   const [open, setOpen] = useState(false);
@@ -418,7 +418,7 @@ export function GlobalSearch() {
   const showPanel = open && query.trim().length >= 2;
 
   return (
-    <div className="tv-search" ref={boxRef}>
+    <div className="tv-search" ref={boxRef} id={id}>
       <span className="tv-search-ico" aria-hidden>
         <svg
           width="16"
