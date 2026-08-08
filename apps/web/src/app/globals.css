@@ -6124,13 +6124,15 @@ body.tv-tour-aktif {
   position: fixed;
   width: 340px;
   max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
   background: var(--tv-card, #ffffff);
   border-radius: 18px;
   padding: 22px 22px 18px;
   box-shadow: 0 20px 60px rgba(6, 8, 40, 0.45);
   transition:
-    top 0.45s cubic-bezier(0.65, 0, 0.35, 1),
-    left 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+    top 0.3s cubic-bezier(0.65, 0, 0.35, 1),
+    left 0.3s cubic-bezier(0.65, 0, 0.35, 1);
   animation: tvTourKartuMasuk 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -6177,20 +6179,32 @@ body.tv-tour-aktif {
   background: #A5B4FC;
 }
 
-.tv-tour-emoji {
-  font-size: 30px;
-  line-height: 1;
-  margin-bottom: 10px;
-  animation: tvTourEmojiGoyang 0.6s ease 0.15s both;
+.tv-tour-ikon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0A0B5F 0%, #D936A6 100%);
+  box-shadow: 0 8px 18px rgba(217, 54, 166, 0.35);
+  animation: tvTourIkonMasuk 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
 }
 
-@keyframes tvTourEmojiGoyang {
+.tv-tour-kartu.tengah .tv-tour-ikon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes tvTourIkonMasuk {
   0% {
-    transform: scale(0.5) rotate(-12deg);
+    transform: scale(0.4) rotate(-10deg);
     opacity: 0;
   }
   60% {
-    transform: scale(1.12) rotate(6deg);
+    transform: scale(1.08) rotate(4deg);
     opacity: 1;
   }
   100% {
@@ -6324,7 +6338,7 @@ html.dark .tv-tour-btn-ghost:hover {
 @media (prefers-reduced-motion: reduce) {
   .tv-tour-sorotan,
   .tv-tour-kartu,
-  .tv-tour-emoji,
+  .tv-tour-ikon,
   .tv-tour-latar {
     animation: none !important;
     transition: opacity 0.2s ease !important;

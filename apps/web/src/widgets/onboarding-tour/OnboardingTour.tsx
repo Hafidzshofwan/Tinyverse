@@ -1,8 +1,90 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import type { CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import type { ComponentType, CSSProperties } from "react";
 import { useAuth } from "@/widgets/user-account";
+
+type PropsIkon = { size?: number };
+
+function IkonSambut({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M18 11.5V6a2 2 0 0 0-4 0v4" />
+      <path d="M14 10V4a2 2 0 0 0-4 0v6" />
+      <path d="M10 10.5V6a2 2 0 0 0-4 0v9" />
+      <path d="M18 8.5a2 2 0 1 1 4 0V15a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-6-2.34l-3.2-3.2a2 2 0 0 1 2.83-2.82L8 16" />
+    </svg>
+  );
+}
+
+function IkonSidebar({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2.5" />
+      <line x1="9.5" y1="3" x2="9.5" y2="21" />
+      <line x1="5.5" y1="7" x2="6.8" y2="7" />
+      <line x1="5.5" y1="11" x2="6.8" y2="11" />
+      <line x1="5.5" y1="15" x2="6.8" y2="15" />
+    </svg>
+  );
+}
+
+function IkonCari({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="7.5" />
+      <line x1="21" y1="21" x2="16.2" y2="16.2" />
+    </svg>
+  );
+}
+
+function IkonPasien({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="8" y="2.5" width="8" height="4" rx="1" />
+      <path d="M9 4.5H6.5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V6.5a2 2 0 0 0-2-2H15" />
+      <path d="M9 13.5h6" />
+      <path d="M12 10.5v6" />
+    </svg>
+  );
+}
+
+function IkonAsisten({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M12 8V4.5H9" />
+      <rect x="4" y="8" width="16" height="12" rx="2.5" />
+      <path d="M2 14h2" />
+      <path d="M20 14h2" />
+      <path d="M9 13v2.2" />
+      <path d="M15 13v2.2" />
+    </svg>
+  );
+}
+
+function IkonPengaturan({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82A1.65 1.65 0 0 0 3 13.09H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+    </svg>
+  );
+}
+
+function IkonSelesai({ size = 26 }: PropsIkon) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
 
 interface LangkahTur {
   id: string;
@@ -10,7 +92,7 @@ interface LangkahTur {
   targetId: string | null;
   /** Set true jika target hanya terlihat setelah sidebar dibuka (mobile). */
   perluSidebarTerbuka?: boolean;
-  emoji: string;
+  Ikon: ComponentType<PropsIkon>;
   judul: string;
   deskripsi: string;
 }
@@ -19,7 +101,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "selamat-datang",
     targetId: null,
-    emoji: "\u{1F44B}",
+    Ikon: IkonSambut,
     judul: "Selamat datang di Tinyverse!",
     deskripsi:
       "Senang Anda bergabung. Yuk, kenalan singkat dengan bagian-bagian penting supaya Anda langsung nyaman memakainya. Tur ini kurang dari satu menit.",
@@ -28,7 +110,7 @@ const LANGKAH: LangkahTur[] = [
     id: "sidebar",
     targetId: "tvTourSidebar",
     perluSidebarTerbuka: true,
-    emoji: "\u{1F9ED}",
+    Ikon: IkonSidebar,
     judul: "Semua alat klinis, rapi di sini",
     deskripsi:
       "Menu di samping ini mengelompokkan semua kalkulator dan alat bantu: Darurat, Kalkulator Klinis, Tumbuh Kembang, Diagnostik, Neonatus, sampai Referensi.",
@@ -36,7 +118,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "pencarian",
     targetId: "tvTourSearch",
-    emoji: "\u{1F50D}",
+    Ikon: IkonCari,
     judul: "Bingung cari menu apa?",
     deskripsi:
       "Ketik nama alat, gejala, atau istilah di kotak pencarian ini. Tinyverse langsung menampilkan alat paling cocok tanpa perlu menyusuri menu satu per satu.",
@@ -44,7 +126,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "pasien",
     targetId: "tvPasienFab",
-    emoji: "\u{1FA7A}",
+    Ikon: IkonPasien,
     judul: "Simpan data pasien yang sedang ditangani",
     deskripsi:
       "Klik tombol ini untuk mencatat profil pasien bangsal. Kalkulator lain (dosis obat, cairan, dll.) otomatis memakai berat badan dan usianya tanpa mengetik ulang.",
@@ -52,7 +134,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "asisten-ai",
     targetId: "tvAiFab",
-    emoji: "\u{1F916}",
+    Ikon: IkonAsisten,
     judul: "Asisten AI siap membantu",
     deskripsi:
       "Punya pertanyaan klinis mendadak? Tanyakan ke Asisten AI Tinyverse di sini -- dari dosis obat, interpretasi hasil, sampai panduan tata laksana.",
@@ -60,7 +142,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "user-menu",
     targetId: "tvTourUserMenu",
-    emoji: "\u2699\uFE0F",
+    Ikon: IkonPengaturan,
     judul: "Profil & pengaturan akun Anda",
     deskripsi:
       "Kelola profil, kop surat cetak PDF, langganan, dan tema gelap/terang di sini. Anda juga bisa membuka tur ini lagi kapan saja lewat menu ini.",
@@ -68,7 +150,7 @@ const LANGKAH: LangkahTur[] = [
   {
     id: "selesai",
     targetId: null,
-    emoji: "\u{1F389}",
+    Ikon: IkonSelesai,
     judul: "Siap dipakai!",
     deskripsi:
       "Semua siap. Selamat bekerja, semoga Tinyverse membantu memperlancar tugas klinis Anda sehari-hari.",
@@ -85,6 +167,67 @@ interface RectTarget {
 const PERCOBAAN_UKUR = 6;
 const JEDA_UKUR_MS = 220;
 const LEBAR_KARTU = 340;
+const LEBAR_KARTU_TENGAH = 380;
+const MARGIN_LAYAR = 16;
+
+function jepit(nilai: number, min: number, maks: number): number {
+  if (maks < min) return min;
+  return Math.max(min, Math.min(nilai, maks));
+}
+
+/**
+ * Menentukan posisi kartu relatif terhadap target yang disorot.
+ *
+ * Target "besar" (mis. sidebar yang tingginya hampir sepenuh layar) tidak
+ * punya ruang "di atas" atau "di bawah" yang berarti -- menaruh kartu di
+ * bawah target seperti itu akan mendorongnya ke luar layar. Untuk target
+ * semacam ini, kartu ditaruh di sisi yang lebih lapang (kanan/kiri), atau
+ * sebagai lembar mengambang di bagian bawah layar kalau tidak ada ruang di
+ * samping sama sekali (mis. drawer selebar layar di HP).
+ */
+function hitungPosisiKartu(
+  rect: RectTarget,
+  lebarKartu: number,
+  tinggiKartu: number,
+): { top: number; left: number } {
+  const lebarLayar = window.innerWidth;
+  const tinggiLayar = window.innerHeight;
+  const targetTinggiPenuh = rect.height > tinggiLayar * 0.55;
+  const targetLebarPenuh = rect.width > lebarLayar * 0.55;
+  const ruangKanan = lebarLayar - (rect.left + rect.width);
+  const ruangKiri = rect.left;
+  const cukupUntukSamping =
+    Math.max(ruangKanan, ruangKiri) >= lebarKartu + MARGIN_LAYAR * 2;
+
+  let top: number;
+  let left: number;
+
+  if ((targetTinggiPenuh || targetLebarPenuh) && cukupUntukSamping) {
+    const diKanan = ruangKanan >= ruangKiri;
+    left = diKanan
+      ? rect.left + rect.width + MARGIN_LAYAR
+      : rect.left - MARGIN_LAYAR - lebarKartu;
+    top = rect.top + rect.height / 2 - tinggiKartu / 2;
+  } else if (targetTinggiPenuh || targetLebarPenuh) {
+    // Tak ada ruang di samping (mis. drawer mobile selebar layar) -- taruh
+    // kartu sebagai lembar mengambang di bagian bawah layar.
+    top = tinggiLayar - tinggiKartu - MARGIN_LAYAR;
+    left = (lebarLayar - lebarKartu) / 2;
+  } else {
+    const ruangBawah = tinggiLayar - (rect.top + rect.height);
+    const diBawah =
+      ruangBawah > tinggiKartu + MARGIN_LAYAR || rect.top < tinggiKartu + MARGIN_LAYAR;
+    left = rect.left + rect.width / 2 - lebarKartu / 2;
+    top = diBawah
+      ? rect.top + rect.height + 18
+      : rect.top - 18 - tinggiKartu;
+  }
+
+  return {
+    top: jepit(top, MARGIN_LAYAR, tinggiLayar - tinggiKartu - MARGIN_LAYAR),
+    left: jepit(left, MARGIN_LAYAR, lebarLayar - lebarKartu - MARGIN_LAYAR),
+  };
+}
 
 /**
  * Tur pengenalan fitur untuk pengguna baru (spotlight + kartu mengambang).
@@ -100,12 +243,20 @@ export function OnboardingTour() {
   const [rect, setRect] = useState<RectTarget | null>(null);
   const [siapTampil, setSiapTampil] = useState(false);
   const sudahAutoRef = useRef(false);
+  const kartuRef = useRef<HTMLDivElement>(null);
+  const tinggiKartuRef = useRef(230);
+  const [koreksi, setKoreksi] = useState<{
+    untukLangkah: number;
+    top: number;
+    left: number;
+  } | null>(null);
 
   const tutupTur = useCallback(
     (tandaiSelesai: boolean) => {
       setLangkahAktif(-1);
       setRect(null);
       setSiapTampil(false);
+      setKoreksi(null);
       if (tandaiSelesai) {
         simpanPref({ tourSelesai: true }).catch(() => {});
       }
@@ -181,7 +332,11 @@ export function OnboardingTour() {
 
     if (langkah.perluSidebarTerbuka) {
       window.dispatchEvent(new Event("tv-tour-buka-sidebar"));
-      setTimeout(() => ukur(PERCOBAAN_UKUR), JEDA_UKUR_MS);
+      // Sidebar mobile/tablet biasanya butuh waktu untuk animasi buka penuh
+      // sebelum ukurannya stabil -- ukur beberapa kali dengan jeda supaya
+      // tidak menangkap ukuran di tengah animasi (kotak sorotan jadi kecil
+      // dan salah tempat).
+      setTimeout(() => ukur(PERCOBAAN_UKUR), JEDA_UKUR_MS * 2);
     } else {
       ukur(PERCOBAAN_UKUR);
     }
@@ -200,6 +355,50 @@ export function OnboardingTour() {
     };
   }, [langkahAktif]);
 
+  // Pastikan kartu selalu sepenuhnya terlihat di layar, berapa pun ukuran
+  // kontennya dan berapa pun ukuran/posisi target yang disorot (termasuk
+  // target setinggi layar seperti sidebar, dan layar sempit di HP). Dijalankan
+  // sebelum browser menggambar ulang supaya tidak ada kedipan posisi yang
+  // terlihat pengguna.
+  useLayoutEffect(() => {
+    if (langkahAktif < 0) return;
+
+    function ukurDanKoreksi() {
+      const elemen = kartuRef.current;
+      if (!elemen) return;
+      const r = elemen.getBoundingClientRect();
+      tinggiKartuRef.current = r.height;
+      let top = r.top;
+      let left = r.left;
+      let ubah = false;
+      if (r.bottom > window.innerHeight - MARGIN_LAYAR) {
+        top -= r.bottom - (window.innerHeight - MARGIN_LAYAR);
+        ubah = true;
+      }
+      if (top < MARGIN_LAYAR) {
+        top = MARGIN_LAYAR;
+        ubah = true;
+      }
+      if (r.right > window.innerWidth - MARGIN_LAYAR) {
+        left -= r.right - (window.innerWidth - MARGIN_LAYAR);
+        ubah = true;
+      }
+      if (left < MARGIN_LAYAR) {
+        left = MARGIN_LAYAR;
+        ubah = true;
+      }
+      setKoreksi((sebelumnya) => {
+        if (ubah) return { untukLangkah: langkahAktif, top, left };
+        if (sebelumnya && sebelumnya.untukLangkah === langkahAktif) return null;
+        return sebelumnya;
+      });
+    }
+
+    ukurDanKoreksi();
+    window.addEventListener("resize", ukurDanKoreksi);
+    return () => window.removeEventListener("resize", ukurDanKoreksi);
+  }, [langkahAktif, rect, siapTampil]);
+
   // Kunci gulir halaman selama tur aktif, sama seperti drawer/modal lain.
   useEffect(() => {
     if (langkahAktif < 0) return;
@@ -214,27 +413,33 @@ export function OnboardingTour() {
   const langkahPertama = langkahAktif === 0;
   const langkahTerakhir = langkahAktif === LANGKAH.length - 1;
   const tengah = !langkah.targetId;
+  const tinggiPerkiraan = tinggiKartuRef.current;
 
   let kartuStyle: CSSProperties;
   if (tengah || !rect) {
+    const lebarKartu = Math.min(LEBAR_KARTU_TENGAH, window.innerWidth - MARGIN_LAYAR * 2);
     kartuStyle = {
-      top: "50%",
-      left: "50%",
-      transform: "translate(-50%, -50%)",
+      top: jepit(
+        (window.innerHeight - tinggiPerkiraan) / 2,
+        MARGIN_LAYAR,
+        window.innerHeight - tinggiPerkiraan - MARGIN_LAYAR,
+      ),
+      left: jepit(
+        (window.innerWidth - lebarKartu) / 2,
+        MARGIN_LAYAR,
+        window.innerWidth - lebarKartu - MARGIN_LAYAR,
+      ),
     };
   } else {
-    const margin = 16;
-    const ruangBawah = window.innerHeight - (rect.top + rect.height);
-    const diBawah = ruangBawah > 240 || rect.top < 240;
-    let kiri = rect.left + rect.width / 2 - LEBAR_KARTU / 2;
-    kiri = Math.max(
-      margin,
-      Math.min(kiri, window.innerWidth - LEBAR_KARTU - margin),
-    );
-    kartuStyle = diBawah
-      ? { top: Math.min(rect.top + rect.height + 18, window.innerHeight - 24), left: kiri }
-      : { top: Math.max(margin, rect.top - 18), left: kiri, transform: "translateY(-100%)" };
+    const lebarKartu = Math.min(LEBAR_KARTU, window.innerWidth - MARGIN_LAYAR * 2);
+    kartuStyle = hitungPosisiKartu(rect, lebarKartu, tinggiPerkiraan);
   }
+
+  if (koreksi && koreksi.untukLangkah === langkahAktif) {
+    kartuStyle = { ...kartuStyle, top: koreksi.top, left: koreksi.left };
+  }
+
+  const Ikon = langkah.Ikon;
 
   return (
     <div
@@ -257,6 +462,7 @@ export function OnboardingTour() {
         <div className="tv-tour-latar" />
       )}
       <div
+        ref={kartuRef}
         className={"tv-tour-kartu" + (tengah ? " tengah" : "")}
         style={kartuStyle}
       >
@@ -271,8 +477,8 @@ export function OnboardingTour() {
             />
           ))}
         </div>
-        <div className="tv-tour-emoji" aria-hidden>
-          {langkah.emoji}
+        <div className="tv-tour-ikon" aria-hidden>
+          <Ikon size={26} />
         </div>
         <h3 className="tv-tour-judul">{langkah.judul}</h3>
         <p className="tv-tour-deskripsi">{langkah.deskripsi}</p>
