@@ -44,17 +44,18 @@
   font-weight: 800;
   font-size: 0.9rem;
   color: #ffffff;
-  background: linear-gradient(135deg, #EC4899 0%, #D946EF 100%);
+  background: #0A0B5F;
   border-radius: 9999px;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.25);
 }
 
 .dosis-nav-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(236, 72, 153, 0.45);
+  background: #17186F;
+  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.35);
   opacity: 0.95;
 }
 
@@ -474,7 +475,7 @@
 .dosis-btn-hitung {
   width: 100%;
   padding: 14px 24px;
-  background: linear-gradient(135deg, #EC4899 0%, #D946EF 100%);
+  background: #0A0B5F;
   color: #ffffff;
   border: none;
   border-radius: 16px;
@@ -482,13 +483,14 @@
   font-weight: 800;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 16px rgba(10, 11, 95, 0.25);
   margin-bottom: 24px;
 }
 
 .dosis-btn-hitung:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.45);
+  background: #17186F;
+  box-shadow: 0 6px 20px rgba(10, 11, 95, 0.35);
 }
 
 /* Result Box */
@@ -678,7 +680,7 @@
   gap: 8px;
   padding: 12px 18px;
   border-radius: 14px;
-  background: linear-gradient(135deg, #0A0B5F 0%, #1A1C8A 100%);
+  background: #0A0B5F;
   color: #ffffff;
   font-weight: 700;
   font-size: 0.88rem;
@@ -689,7 +691,7 @@
 }
 
 .dosis-btn-ringkasan:hover {
-  background: linear-gradient(135deg, #131580 0%, #2528B0 100%);
+  background: #17186F;
   transform: translateY(-1px);
   box-shadow: 0 6px 18px rgba(10, 11, 95, 0.35);
 }
@@ -751,10 +753,36 @@ html.dark .dosis-chip:hover {
 
 [data-theme="dark"] .dosis-chip.aktif,
 html.dark .dosis-chip.aktif {
-  background-color: #6366F1 !important;
+  background-color: #D936A6 !important;
   color: #ffffff !important;
-  border-color: #6366F1 !important;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35) !important;
+  border-color: #D936A6 !important;
+  box-shadow: 0 4px 12px rgba(217, 54, 166, 0.35) !important;
+}
+
+[data-theme="dark"] .dosis-nav-btn,
+html.dark .dosis-nav-btn {
+  background: #D936A6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.35) !important;
+}
+
+[data-theme="dark"] .dosis-nav-btn:hover,
+html.dark .dosis-nav-btn:hover {
+  background: #EC4899 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .dosis-btn-hitung,
+html.dark .dosis-btn-hitung {
+  background: #D936A6 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(217, 54, 166, 0.35) !important;
+}
+
+[data-theme="dark"] .dosis-btn-hitung:hover,
+html.dark .dosis-btn-hitung:hover {
+  background: #EC4899 !important;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .dosis-card,
@@ -994,15 +1022,15 @@ html.dark .keamanan-disclaimer {
 
 [data-theme="dark"] .dosis-btn-ringkasan,
 html.dark .dosis-btn-ringkasan {
-  background: linear-gradient(135deg, #0A0B5F 0%, #1E2298 100%) !important;
+  background: #D936A6 !important;
   color: #FFFFFF !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.45) !important;
+  box-shadow: 0 4px 14px rgba(217, 54, 166, 0.35) !important;
 }
 
 [data-theme="dark"] .dosis-btn-ringkasan:hover,
 html.dark .dosis-btn-ringkasan:hover {
-  background: linear-gradient(135deg, #131580 0%, #2A2EC8 100%) !important;
-  box-shadow: 0 6px 18px rgba(10, 11, 95, 0.6) !important;
+  background: #EC4899 !important;
+  box-shadow: 0 6px 18px rgba(217, 54, 166, 0.5) !important;
 }
 

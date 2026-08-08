@@ -230,3 +230,26 @@ export function onRingkasanChange(cb: () => void): () => void {
     window.removeEventListener("message", onMsg);
   };
 }
+
+// ---------- Konteks untuk Asisten AI ----------
+// Bentuk minimal yang aman dikirim ke penyedia model AI: hanya judul, sumber
+// alat, dan poin klinis terkurasi. Item RingkasanItem sejak awal TIDAK memuat
+// identitas pasien (lihat kontrak addRingkasanItem di atas), sehingga aman
+// diteruskan apa adanya sebagai konteks otomatis untuk Asisten AI.
+export interface RingkasanAiContextItem {
+  title: string;
+  source?: string;
+  body: string;
+}
+
+export function toAiContext(
+  items: RingkasanItem[],
+  limit?: number,
+): RingkasanAiContextItem[] {
+  const sliced = typeof limit === "number" ? items.slice(0, limit) : items;
+  return sliced.map((it) => ({
+    title: it.title,
+    source: it.source,
+    body: it.body,
+  }));
+}

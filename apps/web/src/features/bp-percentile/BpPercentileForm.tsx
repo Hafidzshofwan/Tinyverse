@@ -26,10 +26,9 @@ import {
 
 const REFERENSI_AAP_2017 = [
   {
-    teks:
-      "Flynn JT, Kaelber DC, Baker-Smith CM, dkk; Subcommittee on Screening and Management of High Blood Pressure in Children. Clinical Practice Guideline for Screening and Management of High Blood Pressure in Children and Adolescents. Pediatrics. 2017;140(3):e20171904.",
+    teks: "American Academy of Pediatrics. 2017.",
     tautan: "https://doi.org/10.1542/peds.2017-1904",
-    labelTautan: "DOI 10.1542/peds.2017-1904",
+    labelTautan: "https://doi.org/10.1542/peds.2017-1904",
   },
 ] as const;
 

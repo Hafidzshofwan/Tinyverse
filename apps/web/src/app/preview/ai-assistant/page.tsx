@@ -6,6 +6,7 @@ import { FormattedMessage } from "@/widgets/ai-assistant/FormattedMessage";
 import { useAiChatStore, type Message } from "@/widgets/ai-assistant";
 import { SidebarIcon, ConfirmationModal } from "@/shared/ui";
 import { usePatientProfile } from "@/shared/lib/patient";
+import { loadItems, onRingkasanChange, toAiContext } from "@/shared/lib/ringkasan";
 
 function FolderIcon({ size = 15, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -121,6 +122,60 @@ function UserIcon({ size = 14, color = "currentColor" }: { size?: number; color?
   );
 }
 
+function ClipboardIcon({ size = 14, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1z" />
+      <rect x="5" y="5" width="14" height="16" rx="2" />
+      <path d="M9 12h6M9 16h6" />
+    </svg>
+  );
+}
+
+function MicIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="2" width="6" height="12" rx="3" />
+      <path d="M5 10v1a7 7 0 0 0 14 0v-1" />
+      <line x1="12" y1="19" x2="12" y2="22" />
+      <line x1="8" y1="22" x2="16" y2="22" />
+    </svg>
+  );
+}
+
+/* Tipe minimal untuk Web Speech API. Tipe DOM bawaan TypeScript belum tentu
+   menyertakan SpeechRecognition dan implementasinya berbeda antar peramban --
+   karena itu didefinisikan sendiri seperlunya di sini, bukan menambah
+   dependensi baru. */
+interface TvSpeechRecognitionResult {
+  transcript: string;
+}
+interface TvSpeechRecognitionEvent {
+  results: { [index: number]: { [index: number]: TvSpeechRecognitionResult } };
+}
+interface TvSpeechRecognition {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  start: () => void;
+  stop: () => void;
+  onstart: (() => void) | null;
+  onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+}
+type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
+
+function getSpeechRecognitionCtor(): TvSpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null;
+  const w = window as unknown as {
+    SpeechRecognition?: TvSpeechRecognitionConstructor;
+    webkitSpeechRecognition?: TvSpeechRecognitionConstructor;
+  };
+  return w.SpeechRecognition || w.webkitSpeechRecognition || null;
+}
+
 const PRESET_TOPICS = [
   {
     title: "Kegawatdaruratan & PALS",
@@ -186,6 +241,25 @@ export default function AiAssistantPage() {
   const [sessionSearchQuery, setSessionSearchQuery] = useState("");
   const [sessionToDelete, setSessionToDelete] = useState<{ id: string; title: string } | null>(null);
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+  // Hasil kalkulator yang sudah dikurasi pengguna lewat Ringkasan Klinis.
+  // Dipakai agar Asisten AI otomatis tahu hasil terbaru (tanpa user ketik
+  // ulang) dan sebagai bahan Ringkasan Kunjungan format SOAP.
+  const [ringkasanItems, setRingkasanItems] = useState(loadItems);
+  const [isListening, setIsListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const recognitionRef = useRef<TvSpeechRecognition | null>(null);
+
+  useEffect(() => {
+    const off = onRingkasanChange(() => setRingkasanItems(loadItems()));
+    return off;
+  }, []);
+
+  useEffect(() => {
+    setVoiceSupported(!!getSpeechRecognitionCtor());
+    return () => {
+      recognitionRef.current?.stop?.();
+    };
+  }, []);
 
   const filteredSessions = sessions.filter((s) => {
     if (!sessionSearchQuery.trim()) return true;
@@ -209,7 +283,10 @@ export default function AiAssistantPage() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async (promptText?: string) => {
+  const handleSend = async (
+    promptText?: string,
+    options?: { allResults?: boolean },
+  ) => {
     const textToSend = promptText || input;
     if (!textToSend.trim() || isLoading) return;
 
@@ -237,6 +314,14 @@ export default function AiAssistantPage() {
           text: m.text,
         }));
 
+      // Hasil kalkulator dibaca ulang saat pengiriman (bukan dari state)
+      // supaya selalu memakai data paling akhir, termasuk hasil yang baru
+      // saja ditambahkan alat lain sesaat sebelum pesan dikirim.
+      const recentResults = toAiContext(
+        loadItems(),
+        options?.allResults ? undefined : 5,
+      );
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -244,6 +329,7 @@ export default function AiAssistantPage() {
           message: textToSend,
           history,
           contextData: { ...patientData, nama: undefined, namaPasien: undefined },
+          recentResults,
         }),
       });
 
@@ -287,6 +373,51 @@ export default function AiAssistantPage() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  const handleSoapSummary = () => {
+    if (isLoading) return;
+    if (ringkasanItems.length === 0) {
+      showToast(
+        "Belum ada hasil kalkulator di Ringkasan Klinis. Gunakan alat lain dan tambahkan hasilnya dahulu.",
+      );
+      return;
+    }
+    handleSend(
+      "Buatkan Ringkasan Kunjungan dalam format catatan SOAP (Subjective, Objective, Assessment, Plan) yang rapi, ringkas, dan siap ditempel ke rekam medis, berdasarkan seluruh hasil kalkulator dan poin klinis pasien ini yang sudah tercatat di Ringkasan Klinis.",
+      { allResults: true },
+    );
+  };
+
+  const toggleListening = () => {
+    const RecognitionCtor = getSpeechRecognitionCtor();
+    if (!RecognitionCtor) {
+      showToast("Input suara tidak didukung di peramban ini.");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+    const recognition = new RecognitionCtor();
+    recognition.lang = "id-ID";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onstart = () => setIsListening(true);
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || "";
+      if (transcript) {
+        setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
+      }
+    };
+    recognition.onerror = () => {
+      setIsListening(false);
+      showToast("Gagal merekam suara. Periksa izin mikrofon lalu coba lagi.");
+    };
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    recognition.start();
+  };
+
   return (
     <div className="tv-ai-wrap">
       {/* Header Halaman Magenta Glassmorphism dengan Dukungan Dark Mode */}
@@ -318,6 +449,15 @@ export default function AiAssistantPage() {
             <div className="tv-ai-tip-chip">
               <LightbulbIcon size={16} color="#f59e0b" />
               <span>Tips: Isi Profil Pasien untuk rekomendasi otomatis berdasarkan berat badan.</span>
+            </div>
+          )}
+          {ringkasanItems.length > 0 && (
+            <div
+              className="tv-ai-context-chip"
+              title="Hasil kalkulator ini otomatis dipakai Asisten AI sebagai konteks jawaban"
+            >
+              <ClipboardIcon size={14} color="#0ea5e9" />
+              <span>{ringkasanItems.length} hasil kalkulator siap dipakai AI</span>
             </div>
           )}
         </div>
@@ -375,6 +515,16 @@ export default function AiAssistantPage() {
               >
                 <ResetIcon size={13} color="var(--tv-text-secondary, #64748b)" />
                 <span>Reset</span>
+              </button>
+              <button
+                type="button"
+                onClick={handleSoapSummary}
+                disabled={isLoading}
+                className="tv-ai-btn-pill tv-ai-btn-soap"
+                title="Buat Ringkasan Kunjungan format SOAP dari hasil kalkulator"
+              >
+                <ClipboardIcon size={13} color="#0ea5e9" />
+                <span>Ringkasan SOAP</span>
               </button>
             </div>
           </div>
@@ -463,6 +613,17 @@ export default function AiAssistantPage() {
                 disabled={isLoading}
                 className={`tv-ai-text-input ${isFocused || input.trim().length > 0 ? "tv-ai-text-input-fokus" : ""}`}
               />
+              {voiceSupported && (
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  disabled={isLoading}
+                  className={`tv-ai-mic-btn ${isListening ? "tv-ai-mic-btn-active" : ""}`}
+                  title={isListening ? "Berhenti merekam suara" : "Bicara ke Asisten AI"}
+                >
+                  <MicIcon size={18} color={isListening ? "#ffffff" : "var(--tv-accent, #ec4899)"} />
+                </button>
+              )}
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}

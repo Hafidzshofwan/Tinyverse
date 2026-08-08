@@ -710,3 +710,57 @@
   font-weight: 600;
   border: 1px solid var(--tv-border, transparent);
 }
+
+/* ---------- Fitur baru: konteks hasil kalkulator, ringkasan SOAP, input suara ---------- */
+
+.tv-ai-context-chip {
+  padding: 8px 16px;
+  border-radius: 20px;
+  background-color: rgba(14, 165, 233, 0.08);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  font-size: 12px;
+  font-weight: 600;
+  color: #0ea5e9;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tv-ai-btn-soap {
+  background: var(--tv-card, #ffffff);
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  color: #0ea5e9;
+  font-weight: 700;
+}
+.tv-ai-btn-soap:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.tv-ai-mic-btn {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid var(--tv-border, #cbd5e1);
+  background-color: var(--tv-card, #ffffff);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.tv-ai-mic-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.tv-ai-mic-btn-active {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  border-color: transparent;
+  animation: tvMicPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes tvMicPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}

@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Rute Asisten AI Klinis.
  *
  * PENJAGAAN AKSES: rute ini WAJIB memeriksa sesi dan masa aktif langganan.
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { message, history, contextData } = body;
+    const { message, history, contextData, recentResults } = body;
 
     if (!message || typeof message !== "string") {
       return NextResponse.json(
@@ -94,6 +94,36 @@ export async function POST(req: Request) {
 
       if (parts.length > 0) {
         extraContext = `\n\n[DATA KONTEKS PASIEN & HALAMAN SAAT INI]\n${parts.join("\n")}\nGunakan informasi di atas jika relevan dengan pertanyaan pengguna. Identitas pasien tidak disertakan; jangan menanyakan atau menyebut nama pasien.`;
+      }
+    }
+
+    /* Hasil kalkulator terkini yang sudah dikurasi pengguna lewat Ringkasan
+       Klinis (shared/lib/ringkasan.ts). Item ini sejak awal ditulis TANPA
+       identitas pasien -- lihat kontrak addRingkasanItem() -- sehingga aman
+       diteruskan apa adanya. Tujuannya: pengguna tidak perlu mengetik ulang
+       skor/hasil yang baru saja didapat dari alat lain di web ini. */
+    if (Array.isArray(recentResults) && recentResults.length > 0) {
+      const items = recentResults
+        .filter(
+          (it: unknown): it is { title?: unknown; source?: unknown; body?: unknown } =>
+            !!it && typeof it === "object",
+        )
+        .slice(0, 10)
+        .map((it) => ({
+          title: typeof it.title === "string" ? it.title.slice(0, 120) : "Hasil",
+          source: typeof it.source === "string" ? it.source.slice(0, 60) : undefined,
+          body: typeof it.body === "string" ? it.body.slice(0, 800) : "",
+        }))
+        .filter((it) => it.body.trim().length > 0);
+
+      if (items.length > 0) {
+        const formatted = items
+          .map(
+            (it, i) =>
+              `${i + 1}. ${it.title}${it.source ? ` (${it.source})` : ""}\n${it.body}`,
+          )
+          .join("\n\n");
+        extraContext += `\n\n[HASIL KALKULATOR TERKINI PASIEN INI]\n${formatted}\nGunakan hasil di atas secara otomatis bila relevan dengan pertanyaan pengguna, tanpa meminta pengguna mengetik ulang. Data ini tidak memuat identitas pasien. Bila pengguna meminta ringkasan kunjungan atau catatan SOAP, susun Subjective, Objective, Assessment, dan Plan berdasarkan seluruh hasil di atas.`;
       }
     }
 
