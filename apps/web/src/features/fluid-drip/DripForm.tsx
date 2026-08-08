@@ -84,11 +84,11 @@ export function DripForm() {
               key={opsi.id}
               type="button"
               className={`segmented-btn ${factor === opsi.id ? "aktif" : ""}`}
+              style={{ flexDirection: "column", gap: "2px", padding: "8px 10px" }}
               onClick={() => setFactor(opsi.id)}
             >
-              {opsi.label}
-              <br />
-              <small style={{ fontSize: "0.72rem" }}>{opsi.dropFactor} tpm/mL</small>
+              <span>{opsi.label}</span>
+              <small style={{ fontSize: "0.72rem", display: "block" }}>{opsi.dropFactor} tpm/mL</small>
             </button>
           ))}
         </div>
