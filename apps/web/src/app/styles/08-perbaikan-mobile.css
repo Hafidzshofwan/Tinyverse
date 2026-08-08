@@ -1,0 +1,87 @@
+/* ============ PENYEMPURNAAN MOBILE (BUNDEL-12) ============ */
+/* Rapikan proporsi di layar kecil: kurangi padding ganda, perkecil judul, dan
+   pastikan kartu satu kolom penuh agar tidak kebesaran/kekecilan. */
+@media (max-width: 900px) {
+  .tv-topbar {
+    padding: 11px 16px;
+    gap: 10px;
+  }
+  .tv-brand {
+    font-size: 18px;
+  }
+  .tv-body {
+    padding: 0;
+  }
+  .tv-main {
+    padding: 18px 16px 48px;
+  }
+  .tv-home-header {
+    padding: 22px 20px 24px;
+    border-radius: 20px;
+  }
+  .tv-home-header h1 {
+    font-size: 1.5rem;
+    margin: 12px 0 6px;
+  }
+  .tv-home-header p {
+    font-size: 0.9rem;
+  }
+  .tv-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .tv-card {
+    padding: 18px;
+  }
+  .tv-home-cols {
+    gap: 14px;
+  }
+}
+@media (max-width: 480px) {
+  .tv-brand-logo {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+  }
+  .tv-home-header {
+    padding: 20px 16px 22px;
+  }
+  .tv-home-header h1 {
+    font-size: 1.34rem;
+  }
+  .tv-home-section-head h2 {
+    font-size: 1.06rem;
+  }
+  .tv-tool-card {
+    padding: 16px;
+  }
+  .tv-footer-inner {
+    padding: 18px 16px;
+  }
+  .tv-auth-panel {
+    padding: 26px 22px;
+  }
+  .tv-auth-kartu {
+    border-radius: 24px;
+  }
+}
+
+/* ===== BUNDEL-20: Perbaikan dead space (tablet & HP) ===== */
+/* Di desktop, panel konten tool/kalkulator sengaja dibatasi 520px agar nyaman
+   dibaca. Namun di tablet/HP batas ini menyisakan ruang kosong (dead space) di
+   kiri-kanan. Pada layar <= 1024px, biarkan panel mengisi lebar area konten. */
+@media (max-width: 1024px) {
+  .tv-panel-narrow {
+    max-width: none;
+  }
+}
+
+/* ===== FIX MOBILE SEARCH: beri ruang kotak pencarian di layar sangat kecil ===== */
+/* Sembunyikan teks "Tinyverse" di brand (logo tetap tampil) agar kotak pencarian
+   punya lebar cukup di HP kecil. */
+@media (max-width: 560px) {
+  .tv-brand-txt {
+    display: none;
+  }
+}
+

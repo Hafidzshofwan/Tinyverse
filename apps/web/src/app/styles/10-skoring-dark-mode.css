@@ -1,0 +1,578 @@
+/* ===== SKORING KLINIS DARK MODE OVERRIDES ===== */
+[data-theme="dark"] .tv-skor-header-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-header-lead {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-header-ico {
+  background: rgba(217, 54, 166, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(217, 54, 166, 0.2) !important;
+}
+
+.tv-skor-pasien-aktif {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 4px 0 !important;
+  font-size: 13px;
+  color: var(--tv-soft-teks, #64748b);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark"] .tv-skor-pasien-aktif {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #cbd5e1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+[data-theme="dark"] .tv-skor-pasien-aktif strong {
+  color: #ffffff !important;
+}
+
+/* Skoring Catalog Cards (button#skor-cds, #skor-croup, #skor-pas, etc.) */
+[data-theme="dark"] .tv-skor-card {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(236, 72, 153, 0.35) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-card:hover {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border-color: rgba(244, 114, 182, 0.75) !important;
+  box-shadow: 0 10px 28px rgba(236, 72, 153, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-skor-card-ic {
+  background: rgba(30, 41, 59, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-skor-card-nama {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-card-ket {
+  color: #cbd5e1 !important;
+}
+
+/* Detail Skoring View */
+[data-theme="dark"] .tv-skor-back {
+  color: #f472b6 !important;
+}
+
+[data-theme="dark"] .tv-skor-detail-nama {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-detail-ket {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-param {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+[data-theme="dark"] .tv-skor-label {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-auto-tag {
+  background: rgba(217, 54, 166, 0.3) !important;
+  color: #f472b6 !important;
+  border: 1px solid rgba(244, 114, 182, 0.3) !important;
+}
+
+[data-theme="dark"] .tv-skor-opt {
+  background: rgba(15, 23, 42, 0.5) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-opt:hover {
+  background: rgba(30, 41, 59, 0.7) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-skor-opt.aktif {
+  background: rgba(56, 189, 248, 0.12) !important;
+  border-color: #38BDF8 !important;
+  color: #38BDF8 !important;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.15) !important;
+}
+
+/*
+ * Lencana poin di mode gelap. Sebelumnya hanya `color` yang ditimpa,
+ * sedangkan `background` tetap mewarisi aturan terang. Pada opsi terpilih
+ * latarnya #0ea5e9 sementara teksnya ditimpa menjadi #38BDF8, jadi biru
+ * di atas biru dan angka +1 atau +2 lenyap. Latar dan teks kini selalu
+ * ditetapkan berpasangan supaya kontrasnya tidak pernah bergantung pada
+ * aturan mode terang. Ditulis ganda untuk [data-theme="dark"] dan
+ * html.dark karena skrip tema menyetel keduanya.
+ */
+[data-theme="dark"] .tv-skor-poin,
+html.dark .tv-skor-poin {
+  background: rgba(148, 163, 184, 0.18) !important;
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tv-skor-opt.aktif .tv-skor-poin,
+html.dark .tv-skor-opt.aktif .tv-skor-poin {
+  background: #38BDF8 !important;
+  color: #0F172A !important;
+}
+
+/* Hasil / Results */
+[data-theme="dark"] .tv-skor-hasil {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.ok {
+  background: rgba(16, 185, 129, 0.18) !important;
+  border: 1px solid rgba(52, 211, 153, 0.45) !important;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.ok .tv-skor-kat {
+  color: #34d399 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.warn {
+  background: rgba(245, 158, 11, 0.18) !important;
+  border: 1px solid rgba(251, 191, 36, 0.45) !important;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.warn .tv-skor-kat {
+  color: #fbbf24 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.crit {
+  background: rgba(244, 63, 94, 0.18) !important;
+  border: 1.5px solid rgba(251, 113, 133, 0.45) !important;
+  box-shadow: 0 0 24px rgba(244, 63, 94, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil.crit .tv-skor-kat {
+  color: #fb7185 !important;
+}
+
+[data-theme="dark"] .tv-skor-total {
+  color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .tv-skor-total strong {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-skor-saran {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-page-skoring-wrapper .tv-card {
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.14) !important;
+}
+
+[data-theme="dark"] .tv-skor-sumber {
+  color: #94a3b8 !important;
+}
+
+/*
+ * Tombol aksi akhir skoring (Tambahkan ke Ringkasan).
+ * Magenta adalah warna merek kedua dan hanya dipakai pada tombol utama.
+ * Versi gelap sebelumnya memakai gradien indigo #1e1b4b ke #312e81, yang
+ * menghapus magenta sekaligus membuat tombol nyaris menyatu dengan kartu.
+ * Latar kini magenta terang #EC4899 dengan teks navy gelap #0F172A, bukan
+ * putih: putih di atas magenta hanya mencapai rasio sekitar 3,4 banding 1,
+ * sedangkan navy gelap melewati 7 banding 1 sehingga tetap tegas dibaca.
+ */
+[data-theme="dark"] .tv-skor-hasil .tv-btn,
+html.dark .tv-skor-hasil .tv-btn {
+  background: #EC4899 !important;
+  border: 1px solid rgba(236, 72, 153, 0.55) !important;
+  color: #0F172A !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-skor-hasil .tv-btn:hover,
+html.dark .tv-skor-hasil .tv-btn:hover {
+  background: #F472B6 !important;
+}
+
+/* RedFlag Banner in Dark Mode */
+[data-theme="dark"] .tv-redflag-banner {
+  background: rgba(244, 63, 94, 0.16) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1.5px solid rgba(251, 113, 133, 0.5) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 20px rgba(244, 63, 94, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner div {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner a,
+[data-theme="dark"] .tv-redflag-banner button {
+  background: rgba(30, 41, 59, 0.8) !important;
+  color: #f8fafc !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-redflag-banner a:hover,
+[data-theme="dark"] .tv-redflag-banner button:hover {
+  background: rgba(51, 65, 85, 0.9) !important;
+}
+
+/* AI FAB Floating Badge */
+.tv-ai-fab-badge {
+  background-color: #0a0b5f;
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tv-ai-fab-badge {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(217, 54, 166, 0.4) !important;
+  color: #f8fafc !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* === Tumbuh Kembang Tab Switcher & Segmented Toggles (Light & Dark Theme) === */
+/* bentuk pil: 999px dipakai agar ujung selalu setengah lingkaran
+   berapa pun tinggi tab, tidak perlu disetel ulang bila font berubah. */
+.tv-growth-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  background: #F1F5F9;
+  padding: 6px;
+  border-radius: 999px;
+  border: 1px solid #E2E8F0;
+  flex-wrap: wrap;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Definisi .tv-growth-tab-btn dipusatkan di blok bawah berkas ini.
+   Blok lama di sini memakai ejaan .aktif yang tidak pernah dipakai
+   GrowthPanel.tsx (memakai .active), jadi dihapus. */
+
+/* Dark mode overrides for Tumbuh Kembang Tab Switcher */
+[data-theme="dark"] .tv-growth-tabs,
+[data-theme="dark"] .segmented-toggle {
+  background: rgba(30, 41, 59, 0.75) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .segmented-btn {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .segmented-btn:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .segmented-btn.aktif {
+  background: #EC4899 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.45) !important;
+}
+
+/* === Dark Mode for Tumbuh Kembang (WHO/CDC, Pemantauan Longitudinal, & Skrining) === */
+[data-theme="dark"] .tv-growth-panel-root {
+  color: #F8FAFC !important;
+}
+
+/* All Cards, Kartu, and Container Elements */
+[data-theme="dark"] .tv-growth-panel-root .kartu,
+[data-theme="dark"] .tv-growth-panel-root .tv-growth-card {
+  background-color: #1E293B !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Sub-containers & Inner Boxes */
+[data-theme="dark"] .tv-growth-panel-root .tv-growth-subcard {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #F8FAFC !important;
+}
+
+/* Headings & Primary Text */
+[data-theme="dark"] .tv-growth-panel-root h1,
+[data-theme="dark"] .tv-growth-panel-root h2,
+[data-theme="dark"] .tv-growth-panel-root h3,
+[data-theme="dark"] .tv-growth-panel-root h4,
+[data-theme="dark"] .tv-growth-panel-root h5,
+[data-theme="dark"] .tv-growth-panel-root h6 {
+  color: #F8FAFC !important;
+}
+
+/* Catch RGB white and light backgrounds rendered by React inline styles */
+[data-theme="dark"] .tv-growth-panel-root div[style*="255, 255, 255"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="255,255,255"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="255, 255, 255"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="255,255,255"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="#FFFFFF"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="#fff"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="#FFFFFF"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="#fff"] {
+  background-color: #1E293B !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #F8FAFC !important;
+}
+
+/* Catch RGB light gray backgrounds rendered by React inline styles */
+[data-theme="dark"] .tv-growth-panel-root div[style*="248, 250, 252"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="241, 245, 249"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="248, 250, 252"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="241, 245, 249"],
+[data-theme="dark"] .tv-growth-panel-root tr[style*="248, 250, 252"],
+[data-theme="dark"] .tv-growth-panel-root tr[style*="241, 245, 249"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="#F8FAFC"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="#F1F5F9"] {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #E2E8F0 !important;
+}
+
+/* Catch RGB Navy text color (rgb(10, 11, 95)) and dark text rendered by React inline styles */
+[data-theme="dark"] .tv-growth-panel-root *[style*="10, 11, 95"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="10,11,95"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="30, 41, 59"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="16, 24, 40"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="10, 11, 79"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#0A0B5F"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#0a0b5f"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#0a0b4f"] {
+  color: #F8FAFC !important;
+}
+
+/* Catch RGB Muted text colors rendered by React inline styles */
+[data-theme="dark"] .tv-growth-panel-root *[style*="100, 116, 139"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="102, 112, 133"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="71, 85, 105"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="152, 162, 179"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#64748B"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#667085"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="#475569"] {
+  color: #CBD5E1 !important;
+}
+
+/* Inputs, Selects, Textareas */
+[data-theme="dark"] .tv-growth-panel-root input,
+[data-theme="dark"] .tv-growth-panel-root select,
+[data-theme="dark"] .tv-growth-panel-root textarea {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-growth-panel-root input::placeholder,
+[data-theme="dark"] .tv-growth-panel-root textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* Tables */
+[data-theme="dark"] .tv-growth-panel-root table,
+[data-theme="dark"] .tv-growth-panel-root th,
+[data-theme="dark"] .tv-growth-panel-root td {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tv-growth-panel-root tr {
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Recharts Charts Dark Customizations */
+[data-theme="dark"] .recharts-cartesian-grid line,
+html.dark .recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.18) !important;
+}
+
+[data-theme="dark"] .recharts-text.recharts-cartesian-axis-tick-value,
+html.dark .recharts-text.recharts-cartesian-axis-tick-value,
+[data-theme="dark"] .recharts-cartesian-axis-tick tspan,
+html.dark .recharts-cartesian-axis-tick tspan {
+  fill: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .recharts-cartesian-axis-line,
+html.dark .recharts-cartesian-axis-line {
+  stroke: #475569 !important;
+}
+
+[data-theme="dark"] .recharts-legend-item-text,
+html.dark .recharts-legend-item-text {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .recharts-default-tooltip,
+html.dark .recharts-default-tooltip {
+  background-color: #0F172A !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Callout Banners - Green Success Banner in Dark Mode */
+[data-theme="dark"] .tv-growth-banner-normal,
+[data-theme="dark"] .tv-growth-panel-root div[style*="ECFDF5"],
+[data-theme="dark"] .tv-growth-panel-root div[style*="236, 253, 245"] {
+  background-color: rgba(6, 78, 59, 0.45) !important;
+  border-color: rgba(52, 211, 153, 0.4) !important;
+  color: #6EE7B7 !important;
+}
+
+[data-theme="dark"] .tv-growth-banner-normal div,
+[data-theme="dark"] .tv-growth-panel-root div[style*="ECFDF5"] div,
+[data-theme="dark"] .tv-growth-panel-root div[style*="236, 253, 245"] div {
+  color: #6EE7B7 !important;
+}
+
+/* Bright green title for normal growth status */
+[data-theme="dark"] .tv-growth-banner-normal div > div:first-child,
+[data-theme="dark"] .tv-growth-panel-root *[style*="#065F46"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="065F46"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="6, 95, 70"] {
+  color: #A7F3D0 !important;
+}
+
+/* Bright green body text for normal growth status description */
+[data-theme="dark"] .tv-growth-banner-normal div > div:nth-child(2),
+[data-theme="dark"] .tv-growth-panel-root *[style*="#047857"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="047857"],
+[data-theme="dark"] .tv-growth-panel-root *[style*="4, 120, 87"] {
+  color: #34D399 !important;
+}
+
+/* Bright button for "Lihat Laporan" or success actions */
+[data-theme="dark"] .tv-growth-banner-normal button,
+[data-theme="dark"] .tv-growth-panel-root button[style*="#059669"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="059669"],
+[data-theme="dark"] .tv-growth-panel-root button[style*="5, 150, 105"] {
+  background-color: #10B981 !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35) !important;
+}
+
+[data-theme="dark"] .tv-growth-panel-root div[style*="254, 242, 242"] {
+  background-color: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #FCA5A5 !important;
+}
+
+
+/* Ringkasan Klinis Button Design - Option 2 Soft Tint Minimalist */
+.tv-rk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.25;
+  background: #F8FAFC;
+  color: #334155;
+  border: 1px solid #E2E8F0;
+}
+.tv-rk-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tv-rk-btn.type-profil { background: #F0F9FF; color: #0369A1; border-color: #BAE6FD; }
+.tv-rk-btn.type-salin { background: #F5F3FF; color: #6D28D9; border-color: #DDD6FE; }
+.tv-rk-btn.type-export { background: #ECFDF5; color: #047857; border-color: #A7F3D0; }
+.tv-rk-btn.type-cetak { background: #2563EB; color: #FFFFFF; border-color: #2563EB; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25); }
+.tv-rk-btn.type-cetak:hover { background: #1D4ED8; border-color: #1D4ED8; }
+.tv-rk-btn.type-kop { background: #FEF3C7; color: #B45309; border-color: #FDE68A; }
+.tv-rk-btn.type-hapus { background: #FFF1F2; color: #E11D48; border-color: #FECDD3; }
+
+/* Dark mode adjustments for Ringkasan buttons */
+[data-theme="dark"] .tv-rk-btn.type-profil { background: rgba(56, 189, 248, 0.15); color: #38BDF8; border-color: rgba(56, 189, 248, 0.3); }
+[data-theme="dark"] .tv-rk-btn.type-salin { background: rgba(167, 139, 250, 0.15); color: #C4B5FD; border-color: rgba(167, 139, 250, 0.3); }
+[data-theme="dark"] .tv-rk-btn.type-export { background: rgba(52, 211, 153, 0.15); color: #34D399; border-color: rgba(52, 211, 153, 0.3); }
+[data-theme="dark"] .tv-rk-btn.type-cetak { background: #2563EB; color: #FFFFFF; border-color: #2563EB; box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3); }
+[data-theme="dark"] .tv-rk-btn.type-kop { background: rgba(251, 191, 36, 0.15); color: #FBBF24; border-color: rgba(251, 191, 36, 0.3); }
+[data-theme="dark"] .tv-rk-btn.type-hapus { background: rgba(251, 113, 133, 0.15); color: #FB7185; border-color: rgba(251, 113, 133, 0.3); }
+
+/* Ringkasan Klinis Staggered Fade-In & Hover Styles */
+@keyframes tvRingkasanFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.tv-ringkasan-item {
+  animation: tvRingkasanFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tv-ringkasan-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(10, 11, 95, 0.08);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+[data-theme="dark"] .tv-ringkasan-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tv-ringkasan-del-btn {
+  transition: all 0.15s ease;
+}
+
+.tv-ringkasan-del-btn:hover {
+  background: #FFF1F2 !important;
+  color: #E11D48 !important;
+  border-color: #FECDD3 !important;
+  transform: scale(1.1);
+}
+
+[data-theme="dark"] .tv-ringkasan-del-btn:hover {
+  background: rgba(251, 113, 133, 0.2) !important;
+  color: #FB7185 !important;
+  border-color: rgba(251, 113, 133, 0.4) !important;
+}
+

@@ -1,0 +1,125 @@
+/* ============ SHELL ============ */
+.tv-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 13px 26px;
+  background: var(--tv-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--tv-line);
+}
+.tv-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--tv-navy);
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}
+.tv-brand-logo {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 19px;
+  background: linear-gradient(135deg, var(--tv-magenta) 0%, var(--tv-navy) 100%);
+}
+.tv-badge-stg {
+  font-family: "Fredoka", sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--tv-magenta);
+  background: rgba(217, 54, 166, 0.12);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+.tv-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0;
+}
+.tv-sidebar {
+  position: sticky;
+  top: 66px;
+  align-self: flex-start;
+  width: 236px;
+  flex: 0 0 236px;
+  max-height: calc(100vh - 66px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 10px 28px 14px;
+  background: var(--tv-glass);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid var(--tv-line);
+}
+.tv-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 24px 30px 60px;
+}
+.tv-main-inner {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* ============ SIDEBAR ITEMS ============ */
+.tv-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tv-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 12px 10px 12px 14px;
+  /* Border transparan WAJIB ada di mode terang.
+     Mode gelap menambahkan `border: 1px solid #334155`. Karena box-sizing
+     border-box hanya mengunci LEBAR (width: 100%), sedangkan TINGGI item
+     ditentukan isinya, border 1px membuat tiap item bertambah 2px lebih
+     tinggi di mode gelap. Dengan ~13 item, sidebar bergeser ~26px saat mode
+     diganti. Border transparan ini menyamakan kotak kedua mode; mode gelap
+     cukup mengganti WARNA-nya lewat border-color, bukan menambah border. */
+  border: 1px solid transparent;
+  border-radius: 18px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 0.94rem;
+  color: var(--tv-teks);
+  text-decoration: none;
+  background: var(--tv-putih);
+  box-shadow: var(--tv-chunky-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease,
+    color 0.15s ease;
+}
+.tv-nav-item:hover {
+  transform: translateY(-1px);
+}
+.tv-nav-item.aktif {
+  background: linear-gradient(160deg, var(--tv-navy), var(--tv-navy-2));
+  color: #ffffff;
+  box-shadow: 0 5px 0 rgba(10, 11, 95, 0.28), 0 10px 22px rgba(10, 11, 95, 0.26);
+}
+.tv-nav-ico {
+  font-size: 17px;
+  line-height: 1;
+}
+

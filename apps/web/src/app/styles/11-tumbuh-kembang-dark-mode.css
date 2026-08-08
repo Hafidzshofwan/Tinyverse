@@ -1,0 +1,194 @@
+/* ================================================================
+   TUMBUH KEMBANG & SKRINING PERKEMBANGAN — DARK MODE SPEC
+   ================================================================ */
+
+.tv-growth-tabs-switcher {
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 999px;
+}
+
+[data-theme="dark"] .tv-growth-tabs-switcher,
+html.dark .tv-growth-tabs-switcher {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+/* Duplikat aturan di atas; karena berada lebih bawah, blok inilah yang
+   sebenarnya menang. Keduanya sengaja disamakan agar bentuk pil tidak
+   hilang bila salah satu blok kelak dihapus. */
+.tv-growth-tab-btn {
+  flex: 1;
+  min-width: 160px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 700;
+  font-family: Fredoka, Quicksand, system-ui, sans-serif;
+  font-size: 12.5px;
+  cursor: pointer;
+  background: transparent;
+  color: #1E293B;
+  box-shadow: none;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tv-growth-tab-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.tv-growth-tab-btn.active {
+  background: #0A0B5F;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(10, 11, 95, 0.3);
+}
+
+[data-theme="dark"] .tv-growth-tab-btn,
+html.dark .tv-growth-tab-btn {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-growth-tab-btn:hover,
+html.dark .tv-growth-tab-btn:hover {
+  background: #273449 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-growth-tab-btn.active,
+html.dark .tv-growth-tab-btn.active {
+  background: linear-gradient(135deg, #EC4899, #DB2777) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.4) !important;
+}
+
+/* Cards & Containers inside Growth Tracking & Screening */
+[data-theme="dark"] .kartu,
+html.dark .kartu,
+[data-theme="dark"] .tv-growth-card,
+html.dark .tv-growth-card {
+  background: #1E293B !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3) !important;
+}
+
+.tv-patient-info-box {
+  background: #FFFFFF;
+  border: 1px solid #CBD5E1;
+  color: #1E293B;
+}
+
+.tv-patient-info-box .tv-patient-name {
+  color: #0A0B5F;
+  font-weight: 700;
+}
+
+.tv-patient-info-box .tv-patient-meta {
+  color: #64748B;
+  font-weight: 500;
+}
+
+[data-theme="dark"] .tv-growth-subcard,
+html.dark .tv-growth-subcard,
+[data-theme="dark"] .tv-patient-info-box,
+html.dark .tv-patient-info-box {
+  background: #0F172A !important;
+  border: 1px solid #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-patient-info-box .tv-patient-name,
+html.dark .tv-patient-info-box .tv-patient-name {
+  color: #38BDF8 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-patient-info-box .tv-patient-meta,
+html.dark .tv-patient-info-box .tv-patient-meta {
+  color: #CBD5E1 !important;
+  font-weight: 500 !important;
+}
+
+/* Typography contrast in dark mode */
+[data-theme="dark"] h1,
+html.dark h1,
+[data-theme="dark"] h2,
+html.dark h2,
+[data-theme="dark"] h3,
+html.dark h3,
+[data-theme="dark"] h4,
+html.dark h4,
+[data-theme="dark"] h5,
+html.dark h5 {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] p,
+html.dark p,
+[data-theme="dark"] label,
+html.dark label {
+  color: #CBD5E1 !important;
+}
+
+/* Force dark-mode text visibility for hardcoded light-theme color elements */
+[data-theme="dark"] [style*="color: #0A0B5F"],
+html.dark [style*="color: #0A0B5F"],
+[data-theme="dark"] [style*="color: #0a0b4f"],
+html.dark [style*="color: #0a0b4f"],
+[data-theme="dark"] [style*="color: #0A0B5F9E"],
+html.dark [style*="color: #0A0B5F9E"],
+[data-theme="dark"] [style*="color: #1E293B"],
+html.dark [style*="color: #1E293B"],
+[data-theme="dark"] [style*="color: #0F172A"],
+html.dark [style*="color: #0F172A"],
+[data-theme="dark"] [style*="color: #344054"],
+html.dark [style*="color: #344054"],
+[data-theme="dark"] [style*="color: #667085"],
+html.dark [style*="color: #667085"],
+[data-theme="dark"] [style*="color: #64748B"],
+html.dark [style*="color: #64748B"],
+[data-theme="dark"] [style*="color: #98A2B3"],
+html.dark [style*="color: #98A2B3"] {
+  color: #F8FAFC !important;
+}
+
+/* Secondary descriptions */
+[data-theme="dark"] [style*="color: #0A0B5F9E"],
+html.dark [style*="color: #0A0B5F9E"],
+[data-theme="dark"] [style*="color: #667085"],
+html.dark [style*="color: #667085"],
+[data-theme="dark"] [style*="color: #64748B"],
+html.dark [style*="color: #64748B"],
+[data-theme="dark"] [style*="color: #98A2B3"],
+html.dark [style*="color: #98A2B3"] {
+  color: #CBD5E1 !important;
+}
+
+/* Form controls in Dark Mode */
+[data-theme="dark"] input,
+html.dark input,
+[data-theme="dark"] select,
+html.dark select,
+[data-theme="dark"] textarea,
+html.dark textarea {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] input::placeholder,
+html.dark input::placeholder,
+[data-theme="dark"] textarea::placeholder,
+html.dark textarea::placeholder {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator,
+html.dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) !important;
+}
+

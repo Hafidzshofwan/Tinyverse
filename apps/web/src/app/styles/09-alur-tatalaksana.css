@@ -1,0 +1,231 @@
+/* ===== ALUR TATA LAKSANA: grid kategori berwarna + stepper alur ===== */
+.tv-alur-kat-sec {
+  margin-bottom: 22px;
+}
+.tv-alur-kat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+.tv-alur-kat-ikon {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  font-size: 16px;
+  background: var(--kat-lembut, rgba(10, 11, 95, 0.08));
+}
+.tv-alur-kat-nama {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--kat, var(--tv-navy));
+  letter-spacing: 0.2px;
+}
+.tv-alur-kat-garis {
+  flex: 1 1 auto;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--kat-lembut, var(--tv-line)),
+    transparent
+  );
+}
+.tv-alur-kat-jml {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--kat, var(--tv-soft-teks));
+  background: var(--kat-lembut, rgba(10, 11, 95, 0.06));
+  padding: 2px 9px;
+  border-radius: 999px;
+}
+.tv-alur-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+.tv-alur-kartu {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: var(--tv-putih);
+  border: 1px solid var(--tv-line);
+  border-left: 4px solid var(--kat, var(--tv-magenta));
+  border-radius: 16px;
+  padding: 16px;
+  transition:
+    transform 0.16s ease,
+    box-shadow 0.16s ease,
+    border-color 0.16s ease;
+}
+.tv-alur-kartu:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(10, 11, 95, 0.1);
+}
+.tv-alur-kartu:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.tv-alur-kartu-ikon {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 24px;
+  background: var(--kat-lembut, rgba(10, 11, 95, 0.08));
+}
+.tv-alur-kartu-teks {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.tv-alur-kartu-judul {
+  font-family: "Fredoka", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--tv-teks);
+}
+.tv-alur-kartu-ringkas {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--tv-soft-teks);
+  padding-right: 56px;
+}
+.tv-alur-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  color: var(--tv-soft-teks);
+  background: rgba(10, 11, 95, 0.06);
+}
+.tv-alur-chip.ada {
+  color: var(--kat, var(--tv-navy));
+  background: var(--kat-lembut, rgba(10, 11, 95, 0.08));
+}
+
+/* Stepper / jejak langkah alur (breadcrumb bertahap) */
+.tv-alur-stepper {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 6px 2px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.tv-alur-step {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+}
+.tv-alur-step:not(:first-child)::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  flex: 0 0 auto;
+  background: var(--tv-line);
+}
+.tv-alur-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: var(--tv-soft-teks);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 999px;
+}
+.tv-alur-step-btn:disabled {
+  cursor: default;
+}
+.tv-alur-step-node {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--nada, var(--tv-navy));
+  transition: box-shadow 0.16s ease;
+}
+.tv-alur-step-lbl {
+  font-size: 0.78rem;
+  font-weight: 600;
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tv-alur-step:not(.aktif) .tv-alur-step-node {
+  opacity: 0.7;
+}
+.tv-alur-step.aktif .tv-alur-step-node {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nada, #0a0b5f) 24%, transparent);
+}
+.tv-alur-step.aktif .tv-alur-step-lbl {
+  color: var(--tv-teks);
+  font-weight: 700;
+}
+.tv-alur-step-btn:hover:not(:disabled) .tv-alur-step-lbl {
+  color: var(--tv-teks);
+}
+@media (max-width: 560px) {
+  .tv-alur-step:not(.aktif) .tv-alur-step-lbl {
+    display: none;
+  }
+  .tv-alur-step:not(:first-child)::before {
+    width: 12px;
+  }
+}
+
+/* ================================================================
+   FIX: samakan kotak ikon header "Alur Tata Laksana" dengan Racik
+   Puyer (.ikon-bulat). Header Alur dirender ToolShell dengan style
+   INLINE (54x54, radius 18, gradien, 26px), jadi harus ditimpa
+   dengan !important. Scope hanya ke halaman Alur (kontainer yang
+   memuat elemen .tv-alur-*), sehingga panel/alat lain yang juga
+   memakai ToolShell TIDAK ikut berubah.
+   Nilai target = computed .ikon-bulat #page-puyer di puyer-tool.html:
+   52x52, radius 17px, background magenta 10%, warna #D936A6, 1.24rem.
+   ================================================================ */
+.tv-tool-head span[aria-hidden="true"] {
+  flex: 0 0 38px !important;
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  border-radius: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 38px !important;
+  font-family: 'Quicksand', system-ui, sans-serif !important;
+  line-height: 1 !important;
+  background: transparent !important;
+  color: #d936a6 !important;
+  box-shadow: none !important;
+}
+

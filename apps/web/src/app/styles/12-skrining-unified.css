@@ -1,0 +1,480 @@
+/* ================================================================
+   SKRINING & PEMANTAUAN (KPSP, DENVER, M-CHAT, GROWTH) UNIFIED STYLING
+   ================================================================ */
+
+/* Patient Active Info Banner */
+.tv-patient-active-banner {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0A0B5F;
+  background: rgba(217, 54, 166, 0.08);
+  border: 1px solid rgba(217, 54, 166, 0.18);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+[data-theme="dark"] .tv-patient-active-banner,
+html.dark .tv-patient-active-banner {
+  color: #F472B6 !important;
+  background: rgba(217, 54, 166, 0.2) !important;
+  border-color: rgba(217, 54, 166, 0.4) !important;
+}
+
+/* Age Pill Buttons */
+.tv-age-btn {
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #344054);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tv-age-btn:hover {
+  border-color: #CBD5E1;
+}
+
+.tv-age-btn.active {
+  background: var(--tv-navy, #0a0b5f) !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+[data-theme="dark"] .tv-age-btn,
+html.dark .tv-age-btn {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-age-btn.active,
+html.dark .tv-age-btn.active {
+  background: linear-gradient(135deg, #38BDF8, #2563EB) !important;
+  color: #ffffff !important;
+  border: 1px solid #7DD3FC !important;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45) !important;
+  font-weight: 800 !important;
+}
+
+[data-theme="dark"] .tv-age-btn.active span,
+html.dark .tv-age-btn.active span {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+}
+
+/* Number Dot Buttons (1..10 navigator) */
+.tv-num-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #98A2B3);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.tv-num-dot.active-step {
+  border: 2px solid var(--tv-navy, #0a0b5f) !important;
+}
+
+.tv-num-dot.ans-ya {
+  background: #0a0b5f !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+.tv-num-dot.ans-tidak {
+  background: #991B1B !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+}
+
+[data-theme="dark"] .tv-num-dot,
+html.dark .tv-num-dot {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tv-num-dot.active-step,
+html.dark .tv-num-dot.active-step {
+  border: 2px solid #38BDF8 !important;
+}
+
+[data-theme="dark"] .tv-num-dot.ans-ya,
+html.dark .tv-num-dot.ans-ya {
+  background: #2563EB !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-num-dot.ans-tidak,
+html.dark .tv-num-dot.ans-tidak {
+  background: #DC2626 !important;
+  color: #ffffff !important;
+}
+
+/* Option Buttons (YA / TIDAK, PASS / FAIL, etc.) */
+.tv-opt-btn {
+  flex: 1;
+  padding: 13px 10px;
+  border-radius: 12px;
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: var(--tv-card, #ffffff);
+  color: var(--tv-soft-teks, #344054);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.15s ease;
+}
+
+.tv-opt-btn.selected-ya,
+.tv-opt-btn.selected-pass {
+  background: #0a0b5f !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.tv-opt-btn.selected-tidak,
+.tv-opt-btn.selected-fail {
+  background: #991B1B !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+[data-theme="dark"] .tv-opt-btn,
+html.dark .tv-opt-btn {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-opt-btn.selected-ya,
+[data-theme="dark"] .tv-opt-btn.selected-pass,
+html.dark .tv-opt-btn.selected-ya,
+html.dark .tv-opt-btn.selected-pass {
+  background: linear-gradient(135deg, #38BDF8, #2563EB) !important;
+  color: #ffffff !important;
+  border: 1px solid #7DD3FC !important;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45) !important;
+}
+
+[data-theme="dark"] .tv-opt-btn.selected-tidak,
+[data-theme="dark"] .tv-opt-btn.selected-fail,
+html.dark .tv-opt-btn.selected-tidak,
+html.dark .tv-opt-btn.selected-fail {
+  background: linear-gradient(135deg, #DC2626, #B91C1C) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4) !important;
+}
+
+/* Secondary Action Buttons (Kembali, Reset, Ubah, Simpan) */
+.tv-btn-sec {
+  background: var(--tv-card, #ffffff);
+  border: 1px solid var(--tv-line, #EAECF0);
+  border-radius: 12px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--tv-navy, #0A0B5F);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .tv-btn-sec,
+html.dark .tv-btn-sec {
+  background: #334155 !important;
+  border-color: #475569 !important;
+  color: #F8FAFC !important;
+  box-shadow: none !important;
+}
+
+/* Primary Action Buttons (Hitung Hasil, Submit) */
+.tv-btn-pri {
+  padding: 11px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--tv-navy, #0a0b5f);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tv-btn-pri:disabled {
+  background: #E2E8F0 !important;
+  color: #98A2B3 !important;
+  cursor: not-allowed !important;
+}
+
+[data-theme="dark"] .tv-btn-pri,
+html.dark .tv-btn-pri {
+  background: linear-gradient(135deg, #2563EB, #1D4ED8) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .tv-btn-pri:disabled,
+html.dark .tv-btn-pri:disabled {
+  background: #334155 !important;
+  color: #64748B !important;
+}
+
+/* Result Cards for KPSP / MCHAT / Denver */
+.tv-res-card {
+  margin-top: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid transparent;
+}
+
+.tv-res-card.sesuai,
+.tv-res-card.rendah {
+  background: #ECFDF5;
+  border-color: #A7F3D0;
+  color: #047857;
+}
+
+.tv-res-card.meragukan,
+.tv-res-card.sedang {
+  background: #FFFBEB;
+  border-color: #FDE68A;
+  color: #B45309;
+}
+
+.tv-res-card.penyimpangan,
+.tv-res-card.tinggi {
+  background: #FEF2F2;
+  border-color: #FCA5A5;
+  color: #B42318;
+}
+
+[data-theme="dark"] .tv-res-card.sesuai,
+[data-theme="dark"] .tv-res-card.rendah,
+html.dark .tv-res-card.sesuai,
+html.dark .tv-res-card.rendah {
+  background: rgba(6, 78, 59, 0.45) !important;
+  border-color: #059669 !important;
+  color: #A7F3D0 !important;
+}
+
+[data-theme="dark"] .tv-res-card.meragukan,
+[data-theme="dark"] .tv-res-card.sedang,
+html.dark .tv-res-card.meragukan,
+html.dark .tv-res-card.sedang {
+  background: rgba(120, 53, 15, 0.45) !important;
+  border-color: #D97706 !important;
+  color: #FDE047 !important;
+}
+
+[data-theme="dark"] .tv-res-card.penyimpangan,
+[data-theme="dark"] .tv-res-card.tinggi,
+html.dark .tv-res-card.penyimpangan,
+html.dark .tv-res-card.tinggi {
+  background: rgba(127, 29, 29, 0.45) !important;
+  border-color: #DC2626 !important;
+  color: #FCA5A5 !important;
+}
+
+/* Specific text inside result cards in dark mode */
+[data-theme="dark"] .tv-res-card p,
+[data-theme="dark"] .tv-res-card div,
+[data-theme="dark"] .tv-res-card li,
+[data-theme="dark"] .tv-res-card span,
+html.dark .tv-res-card p,
+html.dark .tv-res-card div,
+html.dark .tv-res-card li,
+html.dark .tv-res-card span {
+  color: inherit !important;
+}
+
+/* Denver Screening Specific Component Styles */
+.tv-denver-card {
+  background: #FFFFFF;
+  border: 1px solid #EAECF0;
+  color: #101828;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
+}
+
+.tv-denver-item-title {
+  color: #101828;
+}
+
+.tv-denver-item-desc {
+  color: #475569;
+}
+
+.tv-denver-type-tag {
+  color: #667085;
+  background: #F2F4F7;
+}
+
+.tv-denver-milestone-box {
+  background: #F8FAFC;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-milestone-title {
+  color: #344054;
+}
+
+.tv-denver-milestone-footer {
+  color: #667085;
+}
+
+.tv-denver-age-banner {
+  background: #F8FAFC;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-mode-switcher {
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+}
+
+.tv-prematur-box {
+  background: #FEF8EE;
+  border: 1px solid #F9DBAF;
+}
+
+.tv-denver-track {
+  background: #EAECF0;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.tv-denver-metric-box {
+  background: #FAFAFA;
+  border: 1px solid #EAECF0;
+}
+
+.tv-denver-rekomendasi {
+  background: #F8FAFC;
+  border-left: 4px solid #0A0B5F;
+  color: #1D2939;
+}
+
+/* Dark Mode Overrides for Denver Screening Components */
+[data-theme="dark"] .tv-denver-card,
+html.dark .tv-denver-card {
+  background: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+}
+
+[data-theme="dark"] .tv-denver-item-title,
+html.dark .tv-denver-item-title {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-item-desc,
+html.dark .tv-denver-item-desc {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .tv-denver-type-tag,
+html.dark .tv-denver-type-tag {
+  color: #CBD5E1 !important;
+  background: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-box,
+html.dark .tv-denver-milestone-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-title,
+html.dark .tv-denver-milestone-title {
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .tv-denver-milestone-footer,
+html.dark .tv-denver-milestone-footer {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .tv-denver-track,
+html.dark .tv-denver-track {
+  background: #334155 !important;
+}
+
+[data-theme="dark"] .tv-denver-metric-box,
+html.dark .tv-denver-metric-box {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-rekomendasi,
+html.dark .tv-denver-rekomendasi {
+  background: #1E293B !important;
+  border-left-color: #38BDF8 !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .tv-denver-rekomendasi strong,
+html.dark .tv-denver-rekomendasi strong {
+  color: #38BDF8 !important;
+}
+
+[data-theme="dark"] .tv-denver-age-banner,
+html.dark .tv-denver-age-banner {
+  background: #1E293B !important;
+  border-color: #334155 !important;
+}
+
+[data-theme="dark"] .tv-prematur-box,
+html.dark .tv-prematur-box {
+  background: rgba(247, 144, 9, 0.16) !important;
+  border: 1.5px solid #F97316 !important;
+  box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2) !important;
+}
+
+[data-theme="dark"] .tv-prematur-label,
+html.dark .tv-prematur-label {
+  color: #FFEDD5 !important;
+  font-weight: 700 !important;
+}
+
+[data-theme="dark"] .tv-prematur-select,
+html.dark .tv-prematur-select {
+  background: #0F172A !important;
+  border: 1px solid #F97316 !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-prematur-select option,
+html.dark .tv-prematur-select option {
+  background: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+[data-theme="dark"] .tv-prematur-note,
+html.dark .tv-prematur-note {
+  color: #FED7AA !important;
+}
+
+[data-theme="dark"] .tv-denver-garis-pill,
+html.dark .tv-denver-garis-pill {
+  color: #0A0B5F !important;
+}
+
