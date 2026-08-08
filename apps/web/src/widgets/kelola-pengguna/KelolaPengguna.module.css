@@ -275,3 +275,16 @@
   text-transform: uppercase;
   color: var(--tv-text-secondary, #64748B);
 }
+
+.barTombol {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sinkronPesan {
+  margin: -4px 0 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--tv-text-secondary, #64748B);
+}

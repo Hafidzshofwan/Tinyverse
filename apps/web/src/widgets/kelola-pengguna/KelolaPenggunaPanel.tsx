@@ -93,6 +93,8 @@ export function KelolaPenggunaPanel() {
   const [rows, setRows] = useState<BarisPengguna[] | null>(null);
   const [galat, setGalat] = useState("");
   const [diperbarui, setDiperbarui] = useState("");
+  const [sinkronSedang, setSinkronSedang] = useState(false);
+  const [sinkronPesan, setSinkronPesan] = useState("");
 
   const muat = useCallback(() => {
     setGalat("");
@@ -148,6 +150,43 @@ export function KelolaPenggunaPanel() {
       muat();
     } catch (e) {
       alert("Gagal: " + (e as Error).message);
+    }
+  }
+
+  /* Dokumen users/{uid} tidak otomatis ikut terhapus saat akun
+     Authentication-nya dihapus manual (mis. lewat Firebase Console), jadi
+     daftar ini bisa terus menampilkan akun yang sebenarnya sudah tidak ada.
+     Tombol ini memanggil endpoint yang mencocokkan setiap dokumen dengan
+     Firebase Authentication yang sesungguhnya, lalu membersihkan yang basi. */
+  async function onSinkron() {
+    setSinkronSedang(true);
+    setSinkronPesan("");
+    try {
+      const res = await fetch("/api/admin/pengguna/sinkron", {
+        method: "POST",
+        credentials: "same-origin",
+        cache: "no-store",
+      });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        penggunaDihapus?: string[];
+        error?: string;
+      } | null;
+      if (!res.ok || !data?.ok) {
+        throw new Error((data && data.error) || "HTTP " + res.status);
+      }
+      const jumlah = data.penggunaDihapus?.length ?? 0;
+      setSinkronPesan(
+        jumlah > 0
+          ? jumlah +
+              " akun basi (sudah dihapus di Firebase Authentication) dibersihkan dari daftar."
+          : "Sudah sinkron, tidak ada akun basi yang ditemukan.",
+      );
+      muat();
+    } catch (e) {
+      setSinkronPesan("Gagal sinkron: " + (e as Error).message);
+    } finally {
+      setSinkronSedang(false);
     }
   }
 
@@ -236,10 +275,23 @@ export function KelolaPenggunaPanel() {
               {diperbarui ? " pukul " + diperbarui : ""}, yang kedaluwarsa di
               urutan atas.
             </span>
-            <button className={gaya.tombolSegar} onClick={muat}>
-              Muat ulang
-            </button>
+            <span className={gaya.barTombol}>
+              <button
+                className={gaya.tombolSegar}
+                onClick={onSinkron}
+                disabled={sinkronSedang}
+                title="Cocokkan daftar ini dengan Firebase Authentication dan bersihkan akun yang sudah dihapus"
+              >
+                {sinkronSedang ? "Menyinkronkan\u2026" : "Sinkronkan"}
+              </button>
+              <button className={gaya.tombolSegar} onClick={muat}>
+                Muat ulang
+              </button>
+            </span>
           </div>
+          {sinkronPesan ? (
+            <div className={gaya.sinkronPesan}>{sinkronPesan}</div>
+          ) : null}
 
           {lain.length === 0 ? (
             <div className={gaya.kosong}>Belum ada pengguna lain.</div>

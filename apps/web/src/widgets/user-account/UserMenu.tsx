@@ -7,6 +7,7 @@ import { avatarProps } from "./avatar";
 import { ProfileModal } from "./ProfileModal";
 import { KopSuratModal } from "@/shared/ui/KopSuratModal";
 import { ShieldUserIcon } from "@/shared/ui/icons/ShieldUserIcon";
+import { BugIcon } from "@/shared/ui/icons/BugIcon";
 
 function UserIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -156,7 +157,7 @@ export function UserMenu() {
               style={{ textDecoration: "none" }}
               onClick={() => setBuka(false)}
             >
-              <ShieldUserIcon size={16} /> <span>Pemantauan error</span>
+              <BugIcon size={16} /> <span>Pemantauan error</span>
             </Link>
           )}
           <button

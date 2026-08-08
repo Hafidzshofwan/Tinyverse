@@ -33,6 +33,7 @@ import { KOLEKSI } from "@/server/accountsAdmin";
 import { KOLEKSI_BILLING } from "@/server/billingCollections";
 import { adminAuth, adminDb } from "@/server/firebaseAdmin";
 import { NAMA_COOKIE_SESI } from "@/server/session";
+import { ambilSemuaUidAuth } from "@/server/authUsers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -86,14 +87,24 @@ export async function GET() {
   const db = adminDb();
   const sekarang = new Date().toISOString();
 
-  /* Tiga pembacaan menyeluruh sekaligus, lalu dijodohkan di memori. Alternatifnya
+  /* Empat pembacaan menyeluruh sekaligus, lalu dijodohkan di memori. Alternatifnya
      satu query langganan per pengguna, yang berarti N perjalanan ke Firestore
      untuk satu kali buka modal. */
-  const [snapUsers, snapMemberships, snapSubs] = await Promise.all([
+  const [snapUsers, snapMemberships, snapSubs, uidAuth] = await Promise.all([
     db.collection(KOLEKSI.users).get(),
     db.collection(KOLEKSI.memberships).get(),
     db.collection(KOLEKSI_BILLING.subscriptions).get(),
+    ambilSemuaUidAuth(),
   ]);
+
+  /* Dokumen users/{uid} TIDAK otomatis ikut terhapus saat akun
+     Authentication-nya dihapus manual (mis. lewat Firebase Console). Baris
+     yang uid-nya sudah tidak ada di Authentication disaring di sini supaya
+     akun yang sudah dihapus tidak tampil lagi -- lihat juga endpoint
+     /api/admin/pengguna/sinkron yang benar-benar membersihkan dokumennya. */
+  const dokumenPenggunaAktif = snapUsers.docs.filter((doc) =>
+    uidAuth.has(doc.id),
+  );
 
   const akunPerUid = new Map<string, string>();
   snapMemberships.forEach((d) => {
@@ -108,7 +119,7 @@ export async function GET() {
     langgananPerAkun.set(d.id, d.data() as Langganan);
   });
 
-  const baris: BarisPenggunaAdmin[] = snapUsers.docs.map((doc) => {
+  const baris: BarisPenggunaAdmin[] = dokumenPenggunaAktif.map((doc) => {
     const d = doc.data() as Record<string, unknown>;
     const accountId = akunPerUid.get(doc.id) ?? null;
 
