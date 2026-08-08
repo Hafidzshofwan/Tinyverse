@@ -137,8 +137,13 @@ export function OnboardingTour() {
   // Hitung ulang posisi target setiap kali langkah berganti.
   useEffect(() => {
     if (langkahAktif < 0) return;
-    const langkah = LANGKAH[langkahAktif];
-    if (!langkah) return;
+    const langkahDipilih = LANGKAH[langkahAktif];
+    if (!langkahDipilih) return;
+    // Alias baru dengan tipe yang sudah pasti (bukan `LangkahTur | undefined`):
+    // TypeScript tidak mempertahankan penyempitan tipe dari `if (!x) return`
+    // ke dalam fungsi bersarang di bawah ini, jadi harus dibuatkan binding
+    // baru yang tipenya sudah tetap sejak awal dideklarasikan.
+    const langkah: LangkahTur = langkahDipilih;
 
     let batal = false;
     setSiapTampil(false);

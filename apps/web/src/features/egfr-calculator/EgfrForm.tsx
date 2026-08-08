@@ -217,23 +217,31 @@ export function EgfrForm() {
         <div className="ikon-bulat" aria-hidden="true" style={{ background: "transparent" }}>
           <svg width="38" height="38" viewBox="0 0 24 24" fill="none">
             <rect width="24" height="24" rx="6" fill="#ECFEFF" />
+            {/* Left Kidney Organ */}
             <path
-              d="M12 3.5C9 6.8 6.2 10.3 6.2 14C6.2 17.6 8.8 20.3 12 20.3C15.2 20.3 17.8 17.6 17.8 14C17.8 10.3 15 6.8 12 3.5Z"
+              d="M 8.5 6.2 C 5.8 6.2 4.8 8.5 4.8 11.5 C 4.8 14.5 5.8 16.8 8.5 16.8 C 9.6 16.8 9.6 14.8 8.6 13.5 C 7.6 12.2 7.6 10.8 8.6 9.5 C 9.6 8.2 9.6 6.2 8.5 6.2 Z"
               fill="#CFFAFE"
               stroke="#0891B2"
-              strokeWidth="1.6"
+              strokeWidth="1.5"
               strokeLinejoin="round"
             />
+            {/* Right Kidney Organ */}
             <path
-              d="M9.3 11.6C9.3 14.4 10.4 16.3 12 16.3"
-              stroke="#0E7490"
-              strokeWidth="1.3"
-              strokeLinecap="round"
-              fill="none"
+              d="M 15.5 6.2 C 18.2 6.2 19.2 8.5 19.2 11.5 C 19.2 14.5 18.2 16.8 15.5 16.8 C 14.4 16.8 14.4 14.8 15.4 13.5 C 16.4 12.2 16.4 10.8 15.4 9.5 C 14.4 8.2 14.4 6.2 15.5 6.2 Z"
+              fill="#CFFAFE"
+              stroke="#0891B2"
+              strokeWidth="1.5"
+              strokeLinejoin="round"
             />
-            <circle cx="12" cy="9.4" r="1.05" fill="#0E7490" />
-            <circle cx="14.6" cy="13.1" r="0.85" fill="#22D3EE" />
-            <circle cx="10" cy="14.6" r="0.7" fill="#22D3EE" />
+            {/* Renal Cortex / Inner Calyx Details */}
+            <path d="M 7.2 9.2 C 6.5 10.5 6.5 12.5 7.2 13.8" stroke="#0E7490" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+            <path d="M 16.8 9.2 C 17.5 10.5 17.5 12.5 16.8 13.8" stroke="#0E7490" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+            {/* Vessels & Ureters */}
+            <path d="M 8.2 11.5 C 9.8 11.5 11 12.5 11.5 15.5 V 19" stroke="#0891B2" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+            <path d="M 15.8 11.5 C 14.2 11.5 13 12.5 12.5 15.5 V 19" stroke="#0891B2" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+            {/* eGFR Glomerular Filtration Sparkle Indicator */}
+            <circle cx="12" cy="4.5" r="1.1" fill="#06B6D4" />
+            <path d="M 10.5 8.2 L 12 6.8 L 13.5 8.2" stroke="#06B6D4" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         </div>
         <div>

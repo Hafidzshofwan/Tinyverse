@@ -650,43 +650,67 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
   // --- KALKULATOR eGFR ---
   if (slug === "egfr") {
     if (currentVariant === "v2") {
-      // V2: Simbol filtrasi - corong tetesan bening melalui saringan ginjal
+      // V2: Nefron & Corong Filtrasi Glomerulus (Nephron & Glomerular Filtration)
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#ECFEFF" />
-          <path d="M5 5H19L14.5 12.5V19L9.5 17.5V12.5L5 5Z" fill="#CFFAFE" stroke="#0E7490" strokeWidth="1.6" strokeLinejoin="round" />
-          <path d="M8 8.4H16" stroke="#0891B2" strokeWidth="1.3" strokeLinecap="round" />
-          <circle cx="12" cy="14.6" r="0.9" fill="#22D3EE" />
+          <rect width="24" height="24" rx="6" fill="#CCFBF1" />
+          <path
+            d="M 13.5 4.5 C 8 4.5 5 7.8 5 12 C 5 16.2 8 19.5 13.5 19.5 C 15.8 19.5 16.5 16.5 14.5 14.5 C 13 13 13 11 14.5 9.5 C 16.5 7.5 15.8 4.5 13.5 4.5 Z"
+            fill="#99F6E4"
+            stroke="#0D9488"
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          <circle cx="9.5" cy="9.5" r="2.2" fill="#0D9488" fillOpacity="0.3" stroke="#0F766E" strokeWidth="1.3" />
+          <path d="M 9.5 11.7 V 15 C 9.5 16.2 11.5 16.2 11.5 15 V 13" stroke="#0F766E" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+          <circle cx="17.5" cy="12" r="1" fill="#14B8A6" />
+          <circle cx="19.5" cy="12" r="0.7" fill="#2DD4BF" />
         </svg>
       );
     }
     if (currentVariant === "v3") {
-      // V3: Kartu hasil lab dengan grafik naik dan tetesan kecil
+      // V3: Modern Clinical Kidney Meter & GFR Gauge
       return (
         <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
-          <rect width="24" height="24" rx="6" fill="#F0FDFA" />
-          <rect x="4" y="4.5" width="16" height="15" rx="2.2" fill="#FFFFFF" stroke="#0D9488" strokeWidth="1.6" />
-          <path d="M6.5 15L9.5 11.4L12 13.6L17.5 7.6" stroke="#0D9488" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-          <path d="M7 18H17" stroke="#5EEAD4" strokeWidth="1.6" strokeLinecap="round" />
+          <rect width="24" height="24" rx="6" fill="#E0F2FE" />
+          <path d="M 8 6 C 5.8 6 4.8 8 4.8 10.5 C 4.8 13 5.8 15 8 15 C 9 15 9.2 13.8 8.5 12.8 C 7.8 11.8 7.8 10.2 8.5 9.2 C 9.2 8.2 9 6 8 6 Z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="1.5" />
+          <path d="M 16 6 C 18.2 6 19.2 8 19.2 10.5 C 19.2 13 18.2 15 16 15 C 15 15 14.8 13.8 15.5 12.8 C 16.2 11.8 16.2 10.2 15.5 9.2 C 14.8 8.2 15 6 16 6 Z" fill="#BAE6FD" stroke="#0284C7" strokeWidth="1.5" />
+          <path d="M 6.5 18 H 17.5" stroke="#0369A1" strokeWidth="1.6" strokeLinecap="round" />
+          <path d="M 9 18 L 12 14 L 15 18" stroke="#0284C7" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <circle cx="12" cy="14" r="1.5" fill="#0369A1" />
         </svg>
       );
     }
-    // V1 (default): Sepasang ginjal bergaya sederhana dengan denyut kecil --
+    // V1 (default): Sepasang Organ Ginjal Pediatrik & Laju Filtrasi Glomerulus (eGFR) --
     // SAMA PERSIS dengan ikon header di halaman Kalkulator eGFR.
     return (
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
         <rect width="24" height="24" rx="6" fill="#ECFEFF" />
+        {/* Left Kidney Organ */}
         <path
-          d="M12 3.5C9 6.8 6.2 10.3 6.2 14C6.2 17.6 8.8 20.3 12 20.3C15.2 20.3 17.8 17.6 17.8 14C17.8 10.3 15 6.8 12 3.5Z"
+          d="M 8.5 6.2 C 5.8 6.2 4.8 8.5 4.8 11.5 C 4.8 14.5 5.8 16.8 8.5 16.8 C 9.6 16.8 9.6 14.8 8.6 13.5 C 7.6 12.2 7.6 10.8 8.6 9.5 C 9.6 8.2 9.6 6.2 8.5 6.2 Z"
           fill="#CFFAFE"
           stroke="#0891B2"
-          strokeWidth="1.6"
+          strokeWidth="1.5"
           strokeLinejoin="round"
         />
-        <path d="M9.3 11.6C9.3 14.4 10.4 16.3 12 16.3" stroke="#0E7490" strokeWidth="1.3" strokeLinecap="round" fill="none" />
-        <circle cx="12" cy="9.4" r="1.05" fill="#0E7490" />
-        <circle cx="14.6" cy="13.1" r="0.85" fill="#22D3EE" />
-        <circle cx="10" cy="14.6" r="0.7" fill="#22D3EE" />
+        {/* Right Kidney Organ */}
+        <path
+          d="M 15.5 6.2 C 18.2 6.2 19.2 8.5 19.2 11.5 C 19.2 14.5 18.2 16.8 15.5 16.8 C 14.4 16.8 14.4 14.8 15.4 13.5 C 16.4 12.2 16.4 10.8 15.4 9.5 C 14.4 8.2 14.4 6.2 15.5 6.2 Z"
+          fill="#CFFAFE"
+          stroke="#0891B2"
+          strokeWidth="1.5"
+          strokeLinejoin="round"
+        />
+        {/* Renal Cortex / Inner Calyx Details */}
+        <path d="M 7.2 9.2 C 6.5 10.5 6.5 12.5 7.2 13.8" stroke="#0E7490" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        <path d="M 16.8 9.2 C 17.5 10.5 17.5 12.5 16.8 13.8" stroke="#0E7490" strokeWidth="1.2" strokeLinecap="round" fill="none" />
+        {/* Vessels & Ureters */}
+        <path d="M 8.2 11.5 C 9.8 11.5 11 12.5 11.5 15.5 V 19" stroke="#0891B2" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+        <path d="M 15.8 11.5 C 14.2 11.5 13 12.5 12.5 15.5 V 19" stroke="#0891B2" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+        {/* eGFR Glomerular Filtration Sparkle Indicator */}
+        <circle cx="12" cy="4.5" r="1.1" fill="#06B6D4" />
+        <path d="M 10.5 8.2 L 12 6.8 L 13.5 8.2" stroke="#06B6D4" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" fill="none" />
       </svg>
     );
   }
