@@ -207,7 +207,7 @@ export function EgfrForm() {
           </svg>
         </div>
         <div>
-          <h2>Kalkulator eGFR Pediatrik</h2>
+          <h2>eGFR Pediatrik</h2>
           <p>CKiD U25 (Pierce 2021) &amp; Bedside Schwartz (Schwartz 2009), usia 1-25 tahun</p>
         </div>
       </div>

@@ -51,9 +51,9 @@ function TrashIcon({ size = 14, color = "currentColor" }: { size?: number; color
   );
 }
 
-function SearchIcon({ size = 14, color = "currentColor", style }: { size?: number; color?: string; style?: React.CSSProperties }) {
+function SearchIcon({ size = 14, color = "currentColor", className }: { size?: number; color?: string; className?: string }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <circle cx="11" cy="11" r="8" />
       <line x1="21" y1="21" x2="16.65" y2="16.65" />
     </svg>
@@ -90,7 +90,7 @@ function LightbulbIcon({ size = 15, color = "currentColor" }: { size?: number; c
 
 function SpinnerIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
   return (
-    <svg className="tv-ai-spinner" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "spin 1s linear infinite" }}>
+    <svg className="tv-ai-spinner" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <line x1="12" y1="2" x2="12" y2="6" />
       <line x1="12" y1="18" x2="12" y2="22" />
       <line x1="4.93" y1="4.93" x2="7.76" y2="7.76" />
@@ -302,127 +302,34 @@ export default function AiAssistantPage() {
   };
 
   return (
-    <div style={{ maxWidth: 1080, margin: "0 auto", padding: "16px", fontFamily: "'Quicksand', sans-serif" }}>
+    <div className="tv-ai-wrap">
       {/* Header Halaman Magenta Glassmorphism dengan Dukungan Dark Mode */}
-      <div
-        style={{
-          position: "relative",
-          overflow: "hidden",
-          padding: "24px 28px",
-          borderRadius: "var(--tv-radius-lg, 24px)",
-          backgroundColor: "var(--tv-bg, #f4f5fa)",
-          border: "1px solid var(--tv-border, rgba(217, 54, 166, 0.2))",
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.15)",
-          marginBottom: 20,
-        }}
-      >
+      <div className="tv-ai-header">
         {/* Glow Halus di Sudut */}
-        <div
-          style={{
-            position: "absolute",
-            top: -40,
-            right: -40,
-            width: 240,
-            height: 240,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(236, 72, 153, 0.25) 0%, rgba(236, 72, 153, 0) 70%)",
-            filter: "blur(25px)",
-            pointerEvents: "none",
-          }}
-        />
+        <div className="tv-ai-header-glow" />
 
-        <div
-          style={{
-            position: "relative",
-            zIndex: 1,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
-        >
+        <div className="tv-ai-header-inner">
           <div>
-            <div
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                padding: "5px 12px",
-                borderRadius: 20,
-                backgroundColor: "var(--tv-soft, #f8fafc)",
-                border: "1px solid var(--tv-border, rgba(10, 11, 95, 0.08))",
-                fontSize: 11,
-                fontWeight: 700,
-                textTransform: "uppercase",
-                color: "var(--tv-text-primary, #0a0b5f)",
-                letterSpacing: "0.5px",
-                marginBottom: 10,
-              }}
-            >
+            <div className="tv-ai-badge">
               <SidebarIcon slug="ai-assistant" size={16} />
               <span>TINYVERSE AI CO-PILOT</span>
             </div>
-            <h1
-              style={{
-                margin: 0,
-                fontSize: 26,
-                fontWeight: 700,
-                fontFamily: "'Fredoka', 'Quicksand', sans-serif",
-                color: "var(--tv-text-primary, #0a0b5f)",
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-              }}
-            >
+            <h1 className="tv-ai-title">
               <SidebarIcon slug="ai-assistant" size={28} />
               <span>Asisten AI Tinyverse</span>
             </h1>
-            <p
-              style={{
-                margin: "6px 0 0",
-                fontSize: 14,
-                color: "var(--tv-text-secondary, #64748b)",
-                fontWeight: 500,
-              }}
-            >
+            <p className="tv-ai-subtitle">
               Pusat Informasi & Co-Pilot Klinis Pediatrik Terintegrasi
             </p>
           </div>
 
           {patientData?.bb ? (
-            <div
-              style={{
-                padding: "8px 16px",
-                borderRadius: 20,
-                backgroundColor: "var(--tv-soft, #f8fafc)",
-                border: "1px solid var(--tv-border, rgba(236, 72, 153, 0.3))",
-                fontSize: 13,
-                fontWeight: 600,
-                color: "var(--tv-text-primary, #0a0b5f)",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
+            <div className="tv-ai-patient-chip">
               <UserIcon size={16} color="var(--tv-accent, #ec4899)" />
               <span>Pasien Aktif: {patientData.nama || "Anak"} (BB: {patientData.bb} kg)</span>
             </div>
           ) : (
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--tv-text-primary, #0a0b5f)",
-                backgroundColor: "var(--tv-soft, rgba(236, 72, 153, 0.08))",
-                border: "1px solid var(--tv-border, rgba(236, 72, 153, 0.25))",
-                padding: "8px 14px",
-                borderRadius: 14,
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
+            <div className="tv-ai-tip-chip">
               <LightbulbIcon size={16} color="#f59e0b" />
               <span>Tips: Isi Profil Pasien untuk rekomendasi otomatis berdasarkan berat badan.</span>
             </div>
@@ -430,76 +337,26 @@ export default function AiAssistantPage() {
         </div>
       </div>
 
-      <div
-        style={{
-          gap: 20,
-          alignItems: "start",
-        }}
-        className="tv-ai-page-grid"
-      >
+      <div className="tv-ai-page-grid">
         {/* Kolom Percakapan Utama */}
-        <div
-          style={{
-            backgroundColor: "var(--tv-card, #ffffff)",
-            borderRadius: 16,
-            border: "1px solid var(--tv-border, #e2e8f0)",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-            display: "flex",
-            flexDirection: "column",
-            height: 680,
-            overflow: "hidden",
-          }}
-        >
+        <div className="tv-ai-chat-col">
           {/* Header Panel Chat */}
-          <div
-            style={{
-              padding: "12px 18px",
-              borderBottom: "1px solid var(--tv-border, #e2e8f0)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              backgroundColor: "var(--tv-soft, #f8fafc)",
-              flexWrap: "wrap",
-              gap: 8,
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span
-                style={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: "50%",
-                  backgroundColor: "#22c55e",
-                  display: "inline-block",
-                  boxShadow: "0 0 8px #22c55e",
-                }}
-              />
-              <span style={{ fontSize: 13, fontWeight: 700, color: "var(--tv-text-primary, #1e293b)" }}>
+          <div className="tv-ai-chat-header">
+            <div className="tv-ai-flex-8">
+              <span className="tv-ai-status-dot" />
+              <span className="tv-ai-status-text">
                 Koneksi Gemini AI Aktif
               </span>
             </div>
 
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <div className="tv-ai-flex-8">
               <button
                 type="button"
                 onClick={() => {
                   saveCurrentSession();
                   showToast("Sesi aktif berhasil disimpan!");
                 }}
-                style={{
-                  background: "var(--tv-card, #ffffff)",
-                  border: "1px solid rgba(16, 185, 129, 0.4)",
-                  padding: "5px 12px",
-                  borderRadius: 20,
-                  fontSize: 12,
-                  fontFamily: "Quicksand, system-ui, -apple-system, sans-serif",
-                  color: "#10b981",
-                  cursor: "pointer",
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                }}
+                className="tv-ai-btn-pill tv-ai-btn-save"
                 title="Simpan Sesi Diskusi Saat Ini"
               >
                 <SaveIcon size={14} color="#10b981" />
@@ -511,20 +368,7 @@ export default function AiAssistantPage() {
                   createNewSession();
                   showToast("Sesi diskusi baru berhasil dibuat!");
                 }}
-                style={{
-                  background: "var(--tv-card, #ffffff)",
-                  border: "1px solid rgba(236, 72, 153, 0.4)",
-                  padding: "5px 12px",
-                  borderRadius: 20,
-                  fontSize: 12,
-                  fontFamily: "Quicksand, system-ui, -apple-system, sans-serif",
-                  color: "var(--tv-accent, #ec4899)",
-                  cursor: "pointer",
-                  fontWeight: 700,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                }}
+                className="tv-ai-btn-pill tv-ai-btn-new"
                 title="Mulai Sesi Chat Baru"
               >
                 <PlusIcon size={14} color="var(--tv-accent, #ec4899)" />
@@ -540,20 +384,7 @@ export default function AiAssistantPage() {
                     showToast("Percakapan direset");
                   }
                 }}
-                style={{
-                  background: "transparent",
-                  border: "1px solid var(--tv-border, #cbd5e1)",
-                  padding: "5px 12px",
-                  borderRadius: 20,
-                  fontSize: 12,
-                  fontFamily: "Quicksand, system-ui, -apple-system, sans-serif",
-                  color: "var(--tv-text-secondary, #64748b)",
-                  cursor: "pointer",
-                  fontWeight: 600,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 5,
-                }}
+                className="tv-ai-btn-pill tv-ai-btn-reset"
                 title="Reset Percakapan"
               >
                 <ResetIcon size={13} color="var(--tv-text-secondary, #64748b)" />
@@ -564,107 +395,33 @@ export default function AiAssistantPage() {
 
           {/* Toast Notification Alert */}
           {toastMsg && (
-            <div
-              style={{
-                padding: "8px 16px",
-                backgroundColor: "rgba(16, 185, 129, 0.15)",
-                color: "#10b981",
-                fontSize: 12,
-                fontWeight: 700,
-                borderBottom: "1px solid rgba(16, 185, 129, 0.3)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                animation: "fadeIn 0.2s ease-out",
-              }}
-            >
+            <div className="tv-ai-toast">
               <span>{toastMsg}</span>
-              <span style={{ fontSize: 10, opacity: 0.8 }}>Tersimpan Otomatis di LocalStorage</span>
+              <span className="tv-ai-toast-sub">Tersimpan Otomatis di LocalStorage</span>
             </div>
           )}
 
           {/* Area Pesan */}
-          <div
-            style={{
-              flex: 1,
-              overflowY: "auto",
-              padding: "20px",
-              backgroundColor: "var(--tv-soft, #f8fafc)",
-              display: "flex",
-              flexDirection: "column",
-              gap: 16,
-            }}
-          >
+          <div className="tv-ai-messages">
             {messages.map((m) => (
               <div
                 key={m.id}
                 data-tv-chat-msg
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: m.sender === "user" ? "flex-end" : "flex-start",
-                  animation: "tvChatMsgIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both",
-                }}
+                className={`tv-ai-msg ${m.sender === "user" ? "tv-ai-msg-user" : "tv-ai-msg-ai"}`}
               >
-                <div
-                  style={{
-                    maxWidth: "85%",
-                    padding: "14px 18px",
-                    borderRadius:
-                      m.sender === "user"
-                        ? "18px 18px 4px 18px"
-                        : "18px 18px 18px 4px",
-                    backgroundColor:
-                      m.sender === "user" ? "var(--tv-accent, #ec4899)" : "var(--tv-card, #ffffff)",
-                    background:
-                      m.sender === "user"
-                        ? "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)"
-                        : "var(--tv-card, #ffffff)",
-                    color: m.sender === "user" ? "#ffffff" : "var(--tv-text-primary, #0a0b4f)",
-                    border:
-                      m.sender === "user"
-                        ? "none"
-                        : "1px solid var(--tv-border, rgba(10, 11, 95, 0.09))",
-                    boxShadow:
-                      m.sender === "user"
-                        ? "0 3px 8px rgba(236, 72, 153, 0.3)"
-                        : "0 2px 6px rgba(0,0,0,0.05)",
-                    fontSize: 14,
-                    lineHeight: 1.6,
-                    wordBreak: "break-word",
-                  }}
-                >
+                <div className={`tv-ai-bubble ${m.sender === "user" ? "tv-ai-bubble-user" : "tv-ai-bubble-ai"}`}>
                   <FormattedMessage text={m.text} isUser={m.sender === "user"} />
                 </div>
 
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    marginTop: 4,
-                    padding: "0 4px",
-                  }}
-                >
-                  <span style={{ fontSize: 11, color: "var(--tv-text-secondary, #94a3b8)" }}>
+                <div className="tv-ai-msg-meta">
+                  <span className="tv-ai-msg-time">
                     {m.timestamp}
                   </span>
                   {m.sender === "ai" && (
                     <button
                       type="button"
                       onClick={() => copyText(m.id, m.text)}
-                      style={{
-                        background: "none",
-                        border: "none",
-                        color: copiedId === m.id ? "#10b981" : "var(--tv-text-secondary, #64748b)",
-                        fontSize: 12,
-                        cursor: "pointer",
-                        padding: 0,
-                        fontWeight: 600,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 4,
-                      }}
+                      className={`tv-ai-copy-btn ${copiedId === m.id ? "tv-ai-copy-btn-done" : ""}`}
                     >
                       {copiedId === m.id ? (
                         <>
@@ -681,21 +438,7 @@ export default function AiAssistantPage() {
             ))}
 
             {isLoading && (
-              <div
-                style={{
-                  alignSelf: "flex-start",
-                  backgroundColor: "var(--tv-card, #ffffff)",
-                  border: "1px solid var(--tv-border, #e2e8f0)",
-                  borderRadius: "18px 18px 18px 4px",
-                  padding: "14px 18px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 10,
-                  fontSize: 14,
-                  color: "#38bdf8",
-                  fontWeight: 600,
-                }}
-              >
+              <div className="tv-ai-loading-bubble">
                 <SpinnerIcon size={18} color="var(--tv-accent, #ec4899)" />
                 <span>Memproses analisis klinis & modul TinyVerse...</span>
               </div>
@@ -710,48 +453,20 @@ export default function AiAssistantPage() {
               e.preventDefault();
               handleSend();
             }}
-            style={{
-              padding: "16px 20px",
-              backgroundColor: "var(--tv-card, #ffffff)",
-              borderTop: "1px solid var(--tv-border, rgba(217, 54, 166, 0.15))",
-              display: "flex",
-              flexDirection: "column",
-              gap: 8,
-              transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
-              boxShadow: isFocused || input.trim().length > 0 ? "0 -4px 20px rgba(236, 72, 153, 0.12)" : "none",
-            }}
+            className={`tv-ai-form ${isFocused || input.trim().length > 0 ? "tv-ai-form-fokus" : ""}`}
           >
             {(isFocused || input.trim().length > 0) && (
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  fontSize: 12,
-                  color: "var(--tv-text-primary, #0a0b5f)",
-                  fontWeight: 700,
-                  padding: "0 6px",
-                  animation: "fadeIn 0.2s ease-out",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                  <span
-                    style={{
-                      width: 7,
-                      height: 7,
-                      borderRadius: "50%",
-                      backgroundColor: "var(--tv-accent, #ec4899)",
-                      boxShadow: "0 0 8px var(--tv-accent, #ec4899)",
-                    }}
-                  />
+              <div className="tv-ai-focus-row">
+                <span className="tv-ai-focus-label">
+                  <span className="tv-ai-focus-dot" />
                   Mode Fokus Pertanyaan AI Co-Pilot
                 </span>
-                <span style={{ fontSize: 11, color: "var(--tv-text-secondary, #64748b)", fontWeight: 600 }}>
+                <span className="tv-ai-char-count">
                   {input.length} karakter
                 </span>
               </div>
             )}
-            <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            <div className="tv-ai-input-row">
               <input
                 type="text"
                 placeholder="Tanyakan topik klinis pediatri atau penggunaan alat web..."
@@ -760,46 +475,12 @@ export default function AiAssistantPage() {
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
                 disabled={isLoading}
-                style={{
-                  flex: 1,
-                  padding: "12px 20px",
-                  borderRadius: 24,
-                  border: isFocused || input.trim().length > 0
-                    ? "1.5px solid var(--tv-accent, #ec4899)"
-                    : "1px solid var(--tv-border, #cbd5e1)",
-                  fontSize: 14,
-                  outline: "none",
-                  color: "var(--tv-text-primary, #0f172a)",
-                  backgroundColor: "var(--tv-soft, #ffffff)",
-                  boxShadow: isFocused || input.trim().length > 0
-                    ? "0 0 0 4px rgba(236, 72, 153, 0.2), 0 6px 20px rgba(0, 0, 0, 0.1)"
-                    : "0 1px 3px rgba(0, 0, 0, 0.03)",
-                  transition: "all 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
-                }}
+                className={`tv-ai-text-input ${isFocused || input.trim().length > 0 ? "tv-ai-text-input-fokus" : ""}`}
               />
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                style={{
-                  padding: "12px 24px",
-                  borderRadius: 24,
-                  background:
-                    isLoading || !input.trim()
-                      ? "var(--tv-border, #cbd5e1)"
-                      : "linear-gradient(135deg, var(--tv-accent, #ec4899) 0%, #db2777 100%)",
-                  color: "#ffffff",
-                  border: "none",
-                  fontFamily: "'Fredoka', 'Quicksand', sans-serif",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  cursor: isLoading || !input.trim() ? "not-allowed" : "pointer",
-                  boxShadow:
-                    isLoading || !input.trim()
-                      ? "none"
-                      : "0 4px 16px rgba(236, 72, 153, 0.35)",
-                  transform: isFocused && input.trim() ? "scale(1.02)" : "scale(1)",
-                  transition: "all 0.2s ease",
-                }}
+                className={`tv-ai-submit-btn ${isFocused && input.trim() ? "tv-ai-submit-btn-siap" : ""}`}
               >
                 Kirim
               </button>
@@ -808,45 +489,14 @@ export default function AiAssistantPage() {
         </div>
 
         {/* Sidebar Kanan: Topik & Pintasan Modul */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div className="tv-ai-sidebar-col">
           {/* Kotak Sesi Diskusi Klinis Tersimpan */}
-          <div
-            style={{
-              backgroundColor: "var(--tv-card, #ffffff)",
-              borderRadius: 16,
-              border: "1px solid var(--tv-border, rgba(217, 54, 166, 0.25))",
-              padding: "18px",
-              boxShadow: "0 4px 16px rgba(0, 0, 0, 0.05)",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12, gap: 8 }}>
-              <h3
-                style={{
-                  margin: 0,
-                  fontSize: 13.5,
-                  fontWeight: 700,
-                  color: "var(--tv-text-primary, #0a0b5f)",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  minWidth: 0,
-                  whiteSpace: "nowrap",
-                }}
-              >
+          <div className="tv-ai-panel tv-ai-panel-sesi">
+            <div className="tv-ai-sesi-header-row">
+              <h3 className="tv-ai-sesi-title">
                 <FolderIcon size={16} color="var(--tv-accent, #ec4899)" />
-                <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Sesi Tersimpan</span>
-                <span
-                  style={{
-                    fontSize: 11,
-                    color: "var(--tv-accent, #ec4899)",
-                    backgroundColor: "rgba(236, 72, 153, 0.12)",
-                    padding: "2px 7px",
-                    borderRadius: 10,
-                    fontWeight: 700,
-                    whiteSpace: "nowrap",
-                    flexShrink: 0,
-                  }}
-                >
+                <span className="tv-ai-ellipsis">Sesi Tersimpan</span>
+                <span className="tv-ai-count-badge">
                   {sessionSearchQuery.trim() ? `${filteredSessions.length}/${sessions.length}` : sessions.length}
                 </span>
               </h3>
@@ -856,22 +506,7 @@ export default function AiAssistantPage() {
                   createNewSession();
                   showToast("Sesi baru siap!");
                 }}
-                style={{
-                  fontSize: 11.5,
-                  fontWeight: 700,
-                  color: "#ffffff",
-                  backgroundColor: "var(--tv-accent, #ec4899)",
-                  border: "none",
-                  padding: "6px 12px",
-                  borderRadius: 10,
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 5,
-                  whiteSpace: "nowrap",
-                  flexShrink: 0,
-                  boxShadow: "0 2px 8px rgba(236, 72, 153, 0.25)",
-                }}
+                className="tv-ai-btn-sesi-baru"
               >
                 <PlusIcon size={12} color="#ffffff" />
                 <span>Sesi Baru</span>
@@ -879,40 +514,20 @@ export default function AiAssistantPage() {
             </div>
 
             {sessions.length > 0 && (
-              <div style={{ marginBottom: 12, position: "relative" }}>
+              <div className="tv-ai-search-wrap">
                 <input
                   type="text"
                   value={sessionSearchQuery}
                   onChange={(e) => setSessionSearchQuery(e.target.value)}
                   placeholder="Cari riwayat percakapan..."
-                  style={{
-                    width: "100%",
-                    padding: "7px 12px 7px 32px",
-                    fontSize: 12,
-                    borderRadius: 10,
-                    border: "1px solid var(--tv-border, #e2e8f0)",
-                    backgroundColor: "var(--tv-soft, #f8fafc)",
-                    color: "var(--tv-text-primary, #0f172a)",
-                    outline: "none",
-                  }}
+                  className="tv-ai-search-input"
                 />
-                <SearchIcon size={14} color="var(--tv-text-secondary, #94a3b8)" style={{ position: "absolute", left: 10, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }} />
+                <SearchIcon size={14} color="var(--tv-text-secondary, #94a3b8)" className="tv-ai-search-icon" />
                 {sessionSearchQuery && (
                   <button
                     type="button"
                     onClick={() => setSessionSearchQuery("")}
-                    style={{
-                      position: "absolute",
-                      right: 8,
-                      top: "50%",
-                      transform: "translateY(-50%)",
-                      background: "none",
-                      border: "none",
-                      fontSize: 12,
-                      color: "var(--tv-text-secondary, #94a3b8)",
-                      cursor: "pointer",
-                      padding: "2px 4px",
-                    }}
+                    className="tv-ai-search-clear"
                   >
                     ✕
                   </button>
@@ -921,15 +536,15 @@ export default function AiAssistantPage() {
             )}
 
             {sessions.length === 0 ? (
-              <div style={{ fontSize: 12, color: "var(--tv-text-secondary, #64748b)", fontStyle: "italic", textAlign: "center", padding: "12px 0" }}>
+              <div className="tv-ai-empty-state">
                 Belum ada sesi tersimpan. Percakapan akan otomatis disimpan di localStorage.
               </div>
             ) : filteredSessions.length === 0 ? (
-              <div style={{ fontSize: 12, color: "var(--tv-text-secondary, #64748b)", fontStyle: "italic", textAlign: "center", padding: "12px 0" }}>
+              <div className="tv-ai-empty-state">
                 Tidak ada sesi yang cocok dengan &quot;{sessionSearchQuery}&quot;.
               </div>
             ) : (
-              <div style={{ display: "flex", flexDirection: "column", gap: 10, maxHeight: 280, overflowY: "auto" }}>
+              <div className="tv-ai-sessions-list">
                 {filteredSessions.map((s) => {
                   const isActive = s.id === activeSessionId;
                   const isEditingThis = editingTitleId === s.id;
@@ -944,19 +559,10 @@ export default function AiAssistantPage() {
                   return (
                     <div
                       key={s.id}
-                      style={{
-                        padding: "10px 12px",
-                        borderRadius: 12,
-                        backgroundColor: isActive ? "var(--tv-hover, #fdf2f8)" : "var(--tv-soft, #f8fafc)",
-                        border: isActive ? "1.5px solid var(--tv-accent, #ec4899)" : "1px solid var(--tv-border, #e2e8f0)",
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 6,
-                        transition: "all 0.15s ease",
-                      }}
+                      className={`tv-ai-session-card ${isActive ? "tv-ai-session-card-aktif" : ""}`}
                     >
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-                        <div style={{ flex: 1, minWidth: 0 }}>
+                      <div className="tv-ai-session-row">
+                        <div className="tv-ai-session-title-wrap">
                           {isEditingThis ? (
                             <form
                               onSubmit={(e) => {
@@ -967,66 +573,31 @@ export default function AiAssistantPage() {
                                   showToast("Nama sesi diperbarui!");
                                 }
                               }}
-                              style={{ display: "flex", gap: 4 }}
+                              className="tv-ai-edit-form"
                             >
                               <input
                                 type="text"
                                 value={titleInputValue}
                                 onChange={(e) => setTitleInputValue(e.target.value)}
                                 autoFocus
-                                style={{
-                                  fontSize: 12,
-                                  padding: "2px 6px",
-                                  borderRadius: 6,
-                                  border: "1px solid var(--tv-accent, #ec4899)",
-                                  backgroundColor: "var(--tv-card, #ffffff)",
-                                  color: "var(--tv-text-primary, #000000)",
-                                  width: "100%",
-                                }}
+                                className="tv-ai-edit-input"
                               />
                               <button
                                 type="submit"
-                                style={{
-                                  fontSize: 10,
-                                  fontWeight: 700,
-                                  backgroundColor: "var(--tv-accent, #ec4899)",
-                                  color: "#ffffff",
-                                  border: "none",
-                                  borderRadius: 6,
-                                  padding: "2px 6px",
-                                  cursor: "pointer",
-                                }}
+                                className="tv-ai-edit-ok-btn"
                               >
                                 OK
                               </button>
                             </form>
                           ) : (
-                            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                            <div className="tv-ai-title-row">
                               {isActive && (
-                                <span
-                                  style={{
-                                    fontSize: 9,
-                                    fontWeight: 800,
-                                    backgroundColor: "var(--tv-accent, #ec4899)",
-                                    color: "#ffffff",
-                                    padding: "1px 6px",
-                                    borderRadius: 10,
-                                    textTransform: "uppercase",
-                                    flexShrink: 0,
-                                  }}
-                                >
+                                <span className="tv-ai-aktif-badge">
                                   Aktif
                                 </span>
                               )}
                               <span
-                                style={{
-                                  fontSize: 13,
-                                  fontWeight: 700,
-                                  color: "var(--tv-text-primary, #0a0b5f)",
-                                  whiteSpace: "nowrap",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                }}
+                                className="tv-ai-session-title"
                                 title={s.title}
                               >
                                 {s.title}
@@ -1035,7 +606,7 @@ export default function AiAssistantPage() {
                           )}
                         </div>
 
-                        <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+                        <div className="tv-ai-session-actions">
                           {!isEditingThis && (
                             <button
                               type="button"
@@ -1043,15 +614,7 @@ export default function AiAssistantPage() {
                                 setEditingTitleId(s.id);
                                 setTitleInputValue(s.title);
                               }}
-                              style={{
-                                background: "none",
-                                border: "none",
-                                fontSize: 11,
-                                cursor: "pointer",
-                                opacity: 0.8,
-                                color: "var(--tv-text-secondary, #64748b)",
-                                padding: "2px",
-                              }}
+                              className="tv-ai-icon-btn tv-ai-icon-btn-edit"
                               title="Ubah Nama Sesi"
                             >
                               <PencilIcon size={12} color="var(--tv-text-secondary, #64748b)" />
@@ -1062,15 +625,7 @@ export default function AiAssistantPage() {
                             onClick={() => {
                               setSessionToDelete({ id: s.id, title: s.title || "Sesi" });
                             }}
-                            style={{
-                              background: "none",
-                              border: "none",
-                              fontSize: 11,
-                              cursor: "pointer",
-                              opacity: 0.8,
-                              color: "#ef4444",
-                              padding: "2px",
-                            }}
+                            className="tv-ai-icon-btn tv-ai-icon-btn-delete"
                             title="Hapus Sesi"
                           >
                             <TrashIcon size={12} color="#ef4444" />
@@ -1078,7 +633,7 @@ export default function AiAssistantPage() {
                         </div>
                       </div>
 
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 11, color: "var(--tv-text-secondary, #64748b)" }}>
+                      <div className="tv-ai-session-footer">
                         <span>{dateFormatted} • {msgCount} pesan</span>
                         {!isActive && (
                           <button
@@ -1087,19 +642,7 @@ export default function AiAssistantPage() {
                               loadSession(s.id);
                               showToast(`Sesi "${s.title}" dimuat!`);
                             }}
-                            style={{
-                              fontSize: 11,
-                              fontWeight: 700,
-                              color: "var(--tv-text-primary, #0a0b5f)",
-                              backgroundColor: "var(--tv-card, #ffffff)",
-                              border: "1px solid var(--tv-border, #cbd5e1)",
-                              padding: "2px 8px",
-                              borderRadius: 8,
-                              cursor: "pointer",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 2,
-                            }}
+                            className="tv-ai-lanjutkan-btn"
                           >
                             <span>Lanjutkan</span>
                             <ExternalLinkIcon size={10} color="var(--tv-text-primary, #0a0b5f)" />
@@ -1114,64 +657,26 @@ export default function AiAssistantPage() {
           </div>
 
           {/* Kotak Preset Topik Pertanyaan */}
-          <div
-            style={{
-              backgroundColor: "var(--tv-card, #ffffff)",
-              borderRadius: 16,
-              border: "1px solid var(--tv-border, #e2e8f0)",
-              padding: "18px",
-            }}
-          >
-            <h3
-              style={{
-                margin: "0 0 12px",
-                fontSize: 15,
-                fontWeight: 700,
-                color: "var(--tv-text-primary, #0f172a)",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
+          <div className="tv-ai-panel">
+            <h3 className="tv-ai-panel-title">
               <LightbulbIcon size={16} color="#f59e0b" />
               <span>Topik & Pertanyaan Cepat</span>
             </h3>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <div className="tv-ai-topics-col">
               {PRESET_TOPICS.map((topic, idx) => (
                 <div key={idx}>
-                  <div
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: "var(--tv-text-secondary, #64748b)",
-                      marginBottom: 6,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 6,
-                    }}
-                  >
+                  <div className="tv-ai-topic-group-title">
                     <SidebarIcon slug={topic.slug} size={16} />
                     <span>{topic.title}</span>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  <div className="tv-ai-topic-prompts-col">
                     {topic.prompts.map((p, pIdx) => (
                       <button
                         key={pIdx}
                         onClick={() => handleSend(p)}
                         disabled={isLoading}
-                        style={{
-                          textAlign: "left",
-                          padding: "8px 10px",
-                          borderRadius: 8,
-                          backgroundColor: "var(--tv-soft, #f8fafc)",
-                          border: "1px solid var(--tv-border, #e2e8f0)",
-                          color: "var(--tv-text-primary, #334155)",
-                          fontSize: 12,
-                          cursor: "pointer",
-                          lineHeight: 1.4,
-                          transition: "all 0.15s",
-                        }}
+                        className="tv-ai-prompt-btn"
                       >
                         {p}
                       </button>
@@ -1183,35 +688,12 @@ export default function AiAssistantPage() {
           </div>
 
           {/* Kotak Modul Web Terkait */}
-          <div
-            style={{
-              backgroundColor: "var(--tv-card, #ffffff)",
-              borderRadius: 16,
-              border: "1px solid var(--tv-border, #e2e8f0)",
-              padding: "18px",
-            }}
-          >
-            <h3
-              style={{
-                margin: "0 0 12px",
-                fontSize: 15,
-                fontWeight: 700,
-                color: "var(--tv-text-primary, #0f172a)",
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-              }}
-            >
+          <div className="tv-ai-panel">
+            <h3 className="tv-ai-panel-title">
               <ExternalLinkIcon size={16} color="var(--tv-accent, #ec4899)" />
               <span>Akses Cepat Modul Web</span>
             </h3>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 8,
-              }}
-            >
+            <div className="tv-ai-modul-grid">
               {[
                 { href: "/preview/darurat", label: "Mode Darurat", slug: "darurat" },
                 { href: "/preview/dosing", label: "Dosis Obat", slug: "dosis" },
@@ -1223,22 +705,10 @@ export default function AiAssistantPage() {
                 <Link
                   key={mIdx}
                   href={mod.href}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 6,
-                    padding: "8px 10px",
-                    borderRadius: 8,
-                    backgroundColor: "var(--tv-soft, #f1f5f9)",
-                    color: "var(--tv-text-primary, #0f172a)",
-                    textDecoration: "none",
-                    fontSize: 12,
-                    fontWeight: 600,
-                    border: "1px solid var(--tv-border, transparent)",
-                  }}
+                  className="tv-ai-modul-link"
                 >
                   <SidebarIcon slug={mod.slug} size={18} />
-                  <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <span className="tv-ai-ellipsis">
                     {mod.label}
                   </span>
                 </Link>
