@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useAuth } from "./AuthProvider";
 import type { RiwayatItem } from "./AuthProvider";
-import { avatarProps, fotoKeDataUrl } from "./avatar";
+import { avatarProps } from "./avatar";
+import { FotoCropModal } from "./FotoCropModal";
 
 type Tab = "info" | "pref" | "riwayat";
 
@@ -42,6 +43,7 @@ export function ProfileModal({ onTutup }: { onTutup: () => void }) {
   const [riwayat, setRiwayat] = useState<RiwayatItem[] | null>(null);
   const [riwayatGalat, setRiwayatGalat] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const [fotoTerpilih, setFotoTerpilih] = useState<File | null>(null);
   const [pasang, setPasang] = useState(false);
   useEffect(() => setPasang(true), []);
 
@@ -66,16 +68,24 @@ export function ProfileModal({ onTutup }: { onTutup: () => void }) {
   const avaSumber = avatarSementara || profil.avatar;
   const ava = avatarProps(avaSumber, profil.nama);
 
-  async function pilihFoto(e: React.ChangeEvent<HTMLInputElement>) {
+  function pilihFoto(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files && e.target.files[0];
     if (!f) return;
-    try {
-      const dataUrl = await fotoKeDataUrl(f);
-      setAvatarSementara(dataUrl);
-      setPesan({ txt: "Foto siap disimpan. Klik Simpan perubahan.", jenis: "info" });
-    } catch (err) {
-      setPesan({ txt: (err as Error).message, jenis: "galat" });
-    }
+    // Buka dialog atur foto dulu (geser & perbesar) sebelum foto dipakai,
+    // supaya pengguna bisa memilih sendiri bagian foto yang ditampilkan.
+    setFotoTerpilih(f);
+  }
+
+  function onCropSelesai(dataUrl: string) {
+    setAvatarSementara(dataUrl);
+    setFotoTerpilih(null);
+    if (fileRef.current) fileRef.current.value = "";
+    setPesan({ txt: "Foto siap disimpan. Klik Simpan perubahan.", jenis: "info" });
+  }
+
+  function onCropBatal() {
+    setFotoTerpilih(null);
+    if (fileRef.current) fileRef.current.value = "";
   }
 
   async function onSimpanProfil() {
@@ -166,6 +176,13 @@ export function ProfileModal({ onTutup }: { onTutup: () => void }) {
                 />
               </label>
             </div>
+            {fotoTerpilih && (
+              <FotoCropModal
+                file={fotoTerpilih}
+                onBatal={onCropBatal}
+                onSelesai={onCropSelesai}
+              />
+            )}
             <div className="tv-field">
               <label>Nama lengkap</label>
               <input
