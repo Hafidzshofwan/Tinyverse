@@ -153,6 +153,9 @@ interface TvSpeechRecognitionResult {
 interface TvSpeechRecognitionEvent {
   results: { [index: number]: { [index: number]: TvSpeechRecognitionResult } };
 }
+interface TvSpeechRecognitionErrorEvent {
+  error?: string;
+}
 interface TvSpeechRecognition {
   lang: string;
   continuous: boolean;
@@ -162,7 +165,7 @@ interface TvSpeechRecognition {
   stop: () => void;
   onstart: (() => void) | null;
   onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
-  onerror: (() => void) | null;
+  onerror: ((event: TvSpeechRecognitionErrorEvent) => void) | null;
   onend: (() => void) | null;
 }
 type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
