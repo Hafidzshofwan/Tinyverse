@@ -121,7 +121,7 @@ interface TvSpeechRecognition {
   stop: () => void;
   onstart: (() => void) | null;
   onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
-  onerror: ((event: unknown) => void) | null;
+  onerror: ((event?: any) => void) | null;
   onend: (() => void) | null;
 }
 type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
@@ -1001,6 +1001,7 @@ export function AiAssistantWidget() {
               {messages.map((m) => (
                 <div
                   key={m.id}
+                  className={`tv-ai-msg ${m.sender === "user" ? "tv-ai-msg-user" : "tv-ai-msg-ai"}`}
                   style={{
                     display: "flex",
                     flexDirection: "column",

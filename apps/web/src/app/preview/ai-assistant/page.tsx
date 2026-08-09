@@ -153,9 +153,6 @@ interface TvSpeechRecognitionResult {
 interface TvSpeechRecognitionEvent {
   results: { [index: number]: { [index: number]: TvSpeechRecognitionResult } };
 }
-interface TvSpeechRecognitionErrorEvent {
-  error?: string;
-}
 interface TvSpeechRecognition {
   lang: string;
   continuous: boolean;
@@ -165,7 +162,7 @@ interface TvSpeechRecognition {
   stop: () => void;
   onstart: (() => void) | null;
   onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
-  onerror: ((event: TvSpeechRecognitionErrorEvent) => void) | null;
+  onerror: ((event?: any) => void) | null;
   onend: (() => void) | null;
 }
 type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
@@ -425,7 +422,7 @@ export default function AiAssistantPage() {
         setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
       }
     };
-    recognition.onerror = (e) => {
+    recognition.onerror = (e: unknown) => {
       setIsListening(false);
       const errObj = e as { error?: string };
       if (errObj?.error === "not-allowed" || errObj?.error === "service-not-allowed") {

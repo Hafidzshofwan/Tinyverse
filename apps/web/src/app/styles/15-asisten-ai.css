@@ -16,8 +16,36 @@
 }
 
 @keyframes tvChatMsgIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes tvChatMsgSlideInUser {
+  0% {
+    opacity: 0;
+    transform: translate3d(10px, 12px, 0) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes tvChatMsgSlideInAi {
+  0% {
+    opacity: 0;
+    transform: translate3d(-10px, 12px, 0) scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }
 
 .tv-ai-wrap {
@@ -232,13 +260,16 @@
 .tv-ai-msg {
   display: flex;
   flex-direction: column;
-  animation: tvChatMsgIn 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: tvChatMsgIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
 }
 .tv-ai-msg-user {
   align-items: flex-end;
+  animation: tvChatMsgSlideInUser 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .tv-ai-msg-ai {
   align-items: flex-start;
+  animation: tvChatMsgSlideInAi 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .tv-ai-bubble {
