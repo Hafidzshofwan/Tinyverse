@@ -422,7 +422,7 @@ export default function AiAssistantPage() {
         setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
       }
     };
-    recognition.onerror = (e: unknown) => {
+    recognition.onerror = (e) => {
       setIsListening(false);
       const errObj = e as { error?: string };
       if (errObj?.error === "not-allowed" || errObj?.error === "service-not-allowed") {
