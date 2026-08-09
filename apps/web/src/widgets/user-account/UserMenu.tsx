@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
 import { ProfileModal } from "./ProfileModal";
-import { KopSuratModal } from "@/shared/ui/KopSuratModal";
 import { ShieldUserIcon } from "@/shared/ui/icons/ShieldUserIcon";
 import { BugIcon } from "@/shared/ui/icons/BugIcon";
 
@@ -14,17 +13,6 @@ function UserIcon({ size = 16, color = "currentColor" }: { size?: number; color?
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
       <circle cx="12" cy="7" r="4" />
-    </svg>
-  );
-}
-
-function KopSuratIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-      <polyline points="14 2 14 8 20 8" />
-      <path d="M12 11v6" />
-      <path d="M9 14h6" />
     </svg>
   );
 }
@@ -68,7 +56,6 @@ export function UserMenu({ id }: { id?: string } = {}) {
   const { profil, keluar } = useAuth();
   const [buka, setBuka] = useState(false);
   const [profilTampil, setProfilTampil] = useState(false);
-  const [kopTampil, setKopTampil] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -123,15 +110,6 @@ export function UserMenu({ id }: { id?: string } = {}) {
           >
             <UserIcon size={16} /> <span>Profil saya</span>
           </button>
-          <button
-            className="tv-drop-item"
-            onClick={() => {
-              setBuka(false);
-              setKopTampil(true);
-            }}
-          >
-            <KopSuratIcon size={16} /> <span>Kop Surat (PDF)</span>
-          </button>
           <Link
             href="/langganan"
             className="tv-drop-item"
@@ -183,7 +161,6 @@ export function UserMenu({ id }: { id?: string } = {}) {
       {profilTampil && (
         <ProfileModal onTutup={() => setProfilTampil(false)} />
       )}
-      <KopSuratModal isOpen={kopTampil} onClose={() => setKopTampil(false)} />
     </div>
   );
 }

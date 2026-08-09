@@ -95,6 +95,46 @@ function CheckIcon({ size = 12, color = "currentColor" }: { size?: number; color
   );
 }
 
+function MicIcon({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="9" y="2" width="6" height="12" rx="3" />
+      <path d="M5 10v1a7 7 0 0 0 14 0v-1" />
+      <line x1="12" y1="19" x2="12" y2="22" />
+      <line x1="8" y1="22" x2="16" y2="22" />
+    </svg>
+  );
+}
+
+interface TvSpeechRecognitionResult {
+  transcript: string;
+}
+interface TvSpeechRecognitionEvent {
+  results: { [index: number]: { [index: number]: TvSpeechRecognitionResult } };
+}
+interface TvSpeechRecognition {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  maxAlternatives: number;
+  start: () => void;
+  stop: () => void;
+  onstart: (() => void) | null;
+  onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
+  onerror: ((event: unknown) => void) | null;
+  onend: (() => void) | null;
+}
+type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
+
+function getSpeechRecognitionCtor(): TvSpeechRecognitionConstructor | null {
+  if (typeof window === "undefined") return null;
+  const w = window as unknown as {
+    SpeechRecognition?: TvSpeechRecognitionConstructor;
+    webkitSpeechRecognition?: TvSpeechRecognitionConstructor;
+  };
+  return w.SpeechRecognition || w.webkitSpeechRecognition || null;
+}
+
 const PRESET_PROMPTS = [
   "Berapa dosis Epinefrin resusitasi & nebulizer anak 10 kg?",
   "Jelaskan alur tatalaksana Kejang Demam menurut IDAI",
@@ -125,6 +165,73 @@ export function AiAssistantWidget() {
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const [sessionToDelete, setSessionToDelete] = useState<{ id: string; title: string } | null>(null);
   const [isConfirmNewSessionOpen, setIsConfirmNewSessionOpen] = useState(false);
+  const [isListening, setIsListening] = useState(false);
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const recognitionRef = useRef<TvSpeechRecognition | null>(null);
+
+  useEffect(() => {
+    setVoiceSupported(!!getSpeechRecognitionCtor());
+    return () => {
+      recognitionRef.current?.stop?.();
+    };
+  }, []);
+
+  const toggleListening = async () => {
+    const RecognitionCtor = getSpeechRecognitionCtor();
+    if (!RecognitionCtor) {
+      showToast("Input suara tidak didukung di peramban ini.");
+      return;
+    }
+    if (isListening) {
+      recognitionRef.current?.stop();
+      return;
+    }
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    } catch (err: unknown) {
+      console.warn("Akses mikrofon ditolak atau gagal:", err);
+      showToast("Izin mikrofon ditolak. Izinkan akses mikrofon pada peramban.");
+      setIsListening(false);
+      return;
+    }
+
+    const recognition = new RecognitionCtor();
+    recognition.lang = "id-ID";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+    recognition.onstart = () => setIsListening(true);
+    recognition.onresult = (event) => {
+      const transcript = event.results?.[0]?.[0]?.transcript || "";
+      if (transcript) {
+        setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
+      }
+    };
+    recognition.onerror = (e: unknown) => {
+      setIsListening(false);
+      const errObj = e as { error?: string };
+      if (errObj?.error === "not-allowed" || errObj?.error === "service-not-allowed") {
+        showToast("Izin mikrofon ditolak. Silakan izinkan akses mikrofon pada peramban.");
+      } else if (errObj?.error === "no-speech") {
+        showToast("Tidak ada suara terdeteksi. Silakan coba bicara lagi.");
+      } else {
+        showToast("Gagal merekam suara. Periksa izin mikrofon lalu coba lagi.");
+      }
+    };
+    recognition.onend = () => setIsListening(false);
+    recognitionRef.current = recognition;
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Gagal memulai recognition:", err);
+      setIsListening(false);
+      showToast("Gagal memulai perekaman suara.");
+    }
+  };
 
   const filteredSessions = sessions.filter((s) => {
     if (!sessionSearchQuery.trim()) return true;
@@ -1110,6 +1217,30 @@ export function AiAssistantWidget() {
                     transition: "all 0.22s cubic-bezier(0.16, 1, 0.3, 1)",
                   }}
                 />
+                {voiceSupported && (
+                  <button
+                    type="button"
+                    onClick={toggleListening}
+                    disabled={isLoading}
+                    title={isListening ? "Berhenti merekam suara" : "Bicara ke Asisten AI"}
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "50%",
+                      border: "none",
+                      backgroundColor: isListening ? "#ef4444" : "var(--tv-soft, #f1f5f9)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      cursor: isLoading ? "not-allowed" : "pointer",
+                      flexShrink: 0,
+                      boxShadow: isListening ? "0 0 12px rgba(239, 68, 68, 0.5)" : "none",
+                      transition: "all 0.2s ease",
+                    }}
+                  >
+                    <MicIcon size={18} color={isListening ? "#ffffff" : "var(--tv-accent, #ec4899)"} />
+                  </button>
+                )}
                 <button
                   type="submit"
                   disabled={isLoading || !input.trim()}

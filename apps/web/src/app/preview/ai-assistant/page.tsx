@@ -387,7 +387,7 @@ export default function AiAssistantPage() {
     );
   };
 
-  const toggleListening = () => {
+  const toggleListening = async () => {
     const RecognitionCtor = getSpeechRecognitionCtor();
     if (!RecognitionCtor) {
       showToast("Input suara tidak didukung di peramban ini.");
@@ -397,6 +397,19 @@ export default function AiAssistantPage() {
       recognitionRef.current?.stop();
       return;
     }
+
+    try {
+      if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    } catch (err: unknown) {
+      console.warn("Akses mikrofon ditolak atau gagal:", err);
+      showToast("Izin mikrofon ditolak. Izinkan akses mikrofon pada peramban.");
+      setIsListening(false);
+      return;
+    }
+
     const recognition = new RecognitionCtor();
     recognition.lang = "id-ID";
     recognition.continuous = false;
@@ -409,13 +422,26 @@ export default function AiAssistantPage() {
         setInput((prev) => (prev ? `${prev} ${transcript}` : transcript));
       }
     };
-    recognition.onerror = () => {
+    recognition.onerror = (e: unknown) => {
       setIsListening(false);
-      showToast("Gagal merekam suara. Periksa izin mikrofon lalu coba lagi.");
+      const errObj = e as { error?: string };
+      if (errObj?.error === "not-allowed" || errObj?.error === "service-not-allowed") {
+        showToast("Izin mikrofon ditolak. Silakan izinkan akses mikrofon pada peramban.");
+      } else if (errObj?.error === "no-speech") {
+        showToast("Tidak ada suara terdeteksi. Silakan coba bicara lagi.");
+      } else {
+        showToast("Gagal merekam suara. Periksa izin mikrofon lalu coba lagi.");
+      }
     };
     recognition.onend = () => setIsListening(false);
     recognitionRef.current = recognition;
-    recognition.start();
+    try {
+      recognition.start();
+    } catch (err) {
+      console.error("Gagal memulai recognition:", err);
+      setIsListening(false);
+      showToast("Gagal memulai perekaman suara.");
+    }
   };
 
   return (

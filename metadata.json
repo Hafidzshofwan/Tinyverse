@@ -1,0 +1,6 @@
+{
+  "name": "Tinyverse",
+  "description": "Alat bantu klinis pediatri untuk dokter dan tenaga kesehatan",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
