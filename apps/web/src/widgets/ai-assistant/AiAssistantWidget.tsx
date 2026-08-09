@@ -121,7 +121,7 @@ interface TvSpeechRecognition {
   stop: () => void;
   onstart: (() => void) | null;
   onresult: ((event: TvSpeechRecognitionEvent) => void) | null;
-  onerror: ((event?: any) => void) | null;
+  onerror: ((event?: { error?: string }) => void) | null;
   onend: (() => void) | null;
 }
 type TvSpeechRecognitionConstructor = new () => TvSpeechRecognition;
