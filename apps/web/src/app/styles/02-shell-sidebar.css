@@ -22,6 +22,65 @@
   font-weight: 700;
   font-size: 20px;
 }
+
+/* ============ LOGO & BRAND ANIMATION (DETAK & GELOMBANG) ============ */
+.tv-brand-logo-img {
+  display: inline-block;
+  animation: tvLogoPulseHeart 1.8s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+  will-change: transform, filter;
+}
+
+.tv-brand-txt {
+  display: inline-block;
+  background: linear-gradient(120deg, #ec4899 0%, #8b5cf6 35%, #06b6d4 70%, #ec4899 100%);
+  background-size: 250% 250%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: tvTextWaveGradient 3s ease infinite;
+  transition: all 0.3s ease;
+  will-change: transform, background-position;
+}
+
+.tv-brand:hover .tv-brand-logo-img {
+  transform: scale(1.15) rotate(-4deg);
+}
+
+@keyframes tvLogoPulseHeart {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.4));
+  }
+  15% {
+    transform: scale(1.18);
+    filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.85));
+  }
+  30% {
+    transform: scale(0.95);
+    filter: drop-shadow(0 0 3px rgba(236, 72, 153, 0.3));
+  }
+  45% {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.7));
+  }
+  70% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.4));
+  }
+}
+
+@keyframes tvTextWaveGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .tv-brand-logo {
   width: 36px;
   height: 36px;
