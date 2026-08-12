@@ -126,10 +126,10 @@ export default async function LanggananPage() {
       daftarPesanan={daftarPesanan}
       paketAktif={paketAktif}
       idPalingHemat={idPalingHemat}
-      labelTombol="Beli Sekarang"
+      labelTombol={masuk ? "Perpanjang" : "Beli Sekarang"}
       clientKey={clientKey}
       urlSnapJs={urlSnapJs}
-      isiLangganan={FITUR_TERSEDIA.map((f) => ({ label: f.label, baru: f.baru }))}
+      isiLangganan={FITUR_TERSEDIA.map((f) => ({ label: f.label, baru: f.baru, desc: f.desc }))}
       promoAktif={promoAktifSekarang}
       promoBerakhirPada={PROMO_LAUNCHING.berakhir}
       diskonPersen={PROMO_LAUNCHING.diskonPersen}

@@ -279,7 +279,7 @@
 
 .obsidianFeatureItem {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   padding: 10px 14px;
   background: #f8fafc;
@@ -294,6 +294,28 @@
   color: #d97706;
   font-weight: 800;
   font-size: 0.95rem;
+  margin-top: 1px;
+}
+
+.obsidianFeatureText {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.obsidianFeatureLabelRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.obsidianFeatureDesc {
+  font-size: 0.76rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #64748b;
 }
 
 /* Next Update / Coming Soon strip within Feature card */
@@ -538,6 +560,11 @@
 :global([data-theme="dark"]) .obsidianIconCheck,
 :global(.dark) .obsidianIconCheck {
   color: #f59e0b;
+}
+
+:global([data-theme="dark"]) .obsidianFeatureDesc,
+:global(.dark) .obsidianFeatureDesc {
+  color: #94a3b8;
 }
 
 :global([data-theme="dark"]) .obsidianFeatureSoon,

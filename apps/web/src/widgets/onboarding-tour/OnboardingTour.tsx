@@ -145,7 +145,7 @@ const LANGKAH: LangkahTur[] = [
     Ikon: IkonPengaturan,
     judul: "Profil & pengaturan akun Anda",
     deskripsi:
-      "Kelola profil, kop surat cetak PDF, langganan, dan tema gelap/terang di sini. Anda juga bisa membuka tur ini lagi kapan saja lewat menu ini.",
+      "Kelola profil, langganan, dan tema gelap/terang di sini. Anda juga bisa membuka tur ini lagi kapan saja lewat menu ini.",
   },
   {
     id: "selesai",

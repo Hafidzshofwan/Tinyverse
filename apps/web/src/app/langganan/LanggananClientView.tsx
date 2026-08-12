@@ -13,7 +13,7 @@ type Peringatan = { judul: string; teks: string; kedaluwarsa: boolean };
 /** Satu baris pada "Fitur Klinis yang Didapatkan". `baru` menandai fitur
  *  yang baru ditambahkan (lihat FITUR_BARU di widgets/app-shell/nav-config)
  *  sehingga ditandai lencana "Update" di daftar fitur. */
-export type ItemFiturLangganan = { label: string; baru: boolean };
+export type ItemFiturLangganan = { label: string; baru: boolean; desc: string };
 
 export type LanggananClientProps = {
   masuk: boolean;
@@ -299,10 +299,17 @@ export function LanggananClientView(props: LanggananClientProps) {
                 <span className={gaya.obsidianIconCheck}>
                   <IconCheck size={16} />
                 </span>
-                <span>{item.label}</span>
-                {item.baru && (
-                  <span className={gaya.obsidianSoonBadge}>Update</span>
-                )}
+                <span className={gaya.obsidianFeatureText}>
+                  <span className={gaya.obsidianFeatureLabelRow}>
+                    <span>{item.label}</span>
+                    {item.baru && (
+                      <span className={gaya.obsidianSoonBadge}>Update</span>
+                    )}
+                  </span>
+                  {item.desc && (
+                    <span className={gaya.obsidianFeatureDesc}>{item.desc}</span>
+                  )}
+                </span>
               </div>
             ))}
           </div>
