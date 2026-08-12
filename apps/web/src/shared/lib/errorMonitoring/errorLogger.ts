@@ -37,6 +37,31 @@ function kunciDedup(pesan: string, stack: string): string {
 }
 
 /**
+ * Pola pesan/stack yang DIKETAHUI bukan bug Tinyverse, melainkan noise dari
+ * browser (bug WebKit di IndexedDB, internal autofill Safari) atau skrip
+ * pihak ketiga (Google gapi, atau error lintas-origin generik tanpa detail).
+ *
+ * WHY difilter di sini dan bukan "diperbaiki": pesan-pesan ini tidak
+ * mengandung informasi apa pun yang bisa ditelusuri ke baris kode kita, dan
+ * beberapa di antaranya adalah bug yang sudah diakui pihak browser/vendor
+ * sendiri. Membiarkannya lolos hanya menghabiskan jatah MAKS_LAPORAN_PER_SESI
+ * milik pengguna yang sedang mengalami bug SUNGGUHAN di kode kita.
+ */
+const POLA_KEBISINGAN_DIKENAL: RegExp[] = [
+  /attempt to get records from database without an in-progress transaction/i,
+  /connection to indexed database server (was )?lost/i,
+  /an internal error was encountered in the indexed database server/i,
+  /_autofillcallbackhandler/i,
+  /^script error\.?$/i,
+];
+
+function apakahKebisingan(message: string, stack: string): boolean {
+  if (POLA_KEBISINGAN_DIKENAL.some((pola) => pola.test(message))) return true;
+  if (/apis\.google\.com|gapi\.loaded|accounts\.google\.com/i.test(stack)) return true;
+  return false;
+}
+
+/**
  * Kirim satu laporan error ke server. Aman dipanggil dari mana saja di
  * klien — termasuk dari `catch` manual di luar boundary React.
  */
@@ -46,6 +71,7 @@ export function catatErrorProduksi(laporan: LaporanError): void {
   const message = String(laporan.message || "").slice(0, 500);
   const stack = String(laporan.stack || "").slice(0, 4000);
   if (!message) return;
+  if (apakahKebisingan(message, stack)) return;
 
   const kunci = kunciDedup(message, stack);
   const sekarang = Date.now();
