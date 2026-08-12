@@ -127,23 +127,6 @@ export function Rule9Form() {
           />
         </div>
 
-        <div className="form-row-group">
-          <NumberField
-            label="Jam sejak kejadian"
-            value={jamKejadian}
-            onValueChange={setJamKejadian}
-            placeholder="cth: 2"
-            step={0.5}
-          />
-          <NumberField
-            label="Cairan sudah masuk (mL)"
-            value={praRs}
-            onValueChange={setPraRs}
-            placeholder="cth: 200"
-            step={10}
-          />
-        </div>
-
         <div className="form-group">
           <label>Mekanisme cedera</label>
           <div className="segmented-toggle">

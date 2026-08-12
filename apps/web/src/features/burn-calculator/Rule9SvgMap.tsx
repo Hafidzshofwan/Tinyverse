@@ -24,6 +24,16 @@ interface RegioProps {
   children: ReactNode;
 }
 
+const QUICK_PAIRS: ReadonlyArray<{
+  pair: readonly [RuleOfNinesArea, RuleOfNinesArea];
+  label: string;
+}> = [
+  { pair: ["armRightFront", "armRightBack"], label: "Seluruh lengan kanan" },
+  { pair: ["armLeftFront", "armLeftBack"], label: "Seluruh lengan kiri" },
+  { pair: ["legRightFront", "legRightBack"], label: "Seluruh tungkai kanan" },
+  { pair: ["legLeftFront", "legLeftBack"], label: "Seluruh tungkai kiri" },
+];
+
 function formatPersen(nilai: number): string {
   return String(Math.round(nilai * 100) / 100).replace(".", ",");
 }
@@ -259,6 +269,31 @@ export function Rule9SvgMap({
         Sisi kanan pasien digambar di sebelah kiri layar, sama seperti chart Lund
         &amp; Browder.
       </p>
+
+      <div className="burn-quick-panel">
+        <div className="burn-quick-grid">
+          {QUICK_PAIRS.map((q) => {
+            const isFull = set.has(q.pair[0]) && set.has(q.pair[1]);
+            return (
+              <button
+                key={q.label}
+                type="button"
+                className={`burn-quick-btn ${isFull ? "aktif" : ""}`}
+                aria-pressed={isFull}
+                onClick={() => {
+                  q.pair.forEach((area) => {
+                    const sudahAktif = set.has(area);
+                    if (isFull && sudahAktif) onToggle(area);
+                    if (!isFull && !sudahAktif) onToggle(area);
+                  });
+                }}
+              >
+                {q.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
