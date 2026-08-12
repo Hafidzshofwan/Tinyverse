@@ -176,7 +176,7 @@ export function AiAssistantWidget() {
     };
   }, []);
 
-  const toggleListening = async () => {
+  const toggleListening = () => {
     const RecognitionCtor = getSpeechRecognitionCtor();
     if (!RecognitionCtor) {
       showToast("Input suara tidak didukung di peramban ini.");
@@ -184,18 +184,6 @@ export function AiAssistantWidget() {
     }
     if (isListening) {
       recognitionRef.current?.stop();
-      return;
-    }
-
-    try {
-      if (typeof navigator !== "undefined" && navigator.mediaDevices?.getUserMedia) {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach((track) => track.stop());
-      }
-    } catch (err: unknown) {
-      console.warn("Akses mikrofon ditolak atau gagal:", err);
-      showToast("Izin mikrofon ditolak. Izinkan akses mikrofon pada peramban.");
-      setIsListening(false);
       return;
     }
 
