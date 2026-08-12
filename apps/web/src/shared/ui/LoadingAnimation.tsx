@@ -208,34 +208,12 @@ export function LoadingAnimation({
             fontSize: "14px",
             fontWeight: 600,
             color: "#F8FAFC",
-            margin: "0 0 2px 0",
+            margin: 0,
             letterSpacing: "0.2px",
           }}
         >
           {currentMessage}
         </p>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "6px",
-            fontSize: "11px",
-            color: "#94A3B8",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-block",
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: "#38BDF8",
-              boxShadow: "0 0 8px #38BDF8",
-            }}
-          />
-          <span>Tinyverse Pediatric Engine</span>
-        </div>
       </div>
     </div>
   );
