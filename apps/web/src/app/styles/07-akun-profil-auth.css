@@ -45,7 +45,7 @@
   font-weight: 600;
   font-size: 15px;
   color: #ffffff;
-  background: linear-gradient(135deg, var(--tv-navy), var(--tv-magenta));
+  background: var(--tv-magenta, #d936a6);
   box-shadow: var(--tv-chunky-sm);
   transition: transform 0.15s ease, opacity 0.15s ease;
   margin-top: 4px;

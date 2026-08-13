@@ -185,19 +185,7 @@ function ScreeningPanelInner({ iconVariant = "svg-v1" }: ScreeningPanelProps) {
           </button>
         ))}
 
-        <div
-          className="tv-growth-subcard"
-          style={{
-            border: "1px dashed var(--tv-line, #E2E8F0)",
-            borderRadius: 18,
-            padding: "16px 18px",
-            color: "var(--tv-soft-teks, #98A2B3)",
-            fontSize: 12.5,
-            textAlign: "center",
-          }}
-        >
-          Alat skrining lain (mis. Denver II) akan ditambahkan secara bertahap.
-        </div>
+
       </div>
     </div>
   );

@@ -379,6 +379,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         await db.collection("users").doc(user.uid).set(data);
         uidRef.current = user.uid;
+        /*
+         * Tukarkan token & segarkan gerbang server, sama seperti di
+         * handleMasuk() -- jalur INI (pendaftaran) sengaja melompati
+         * handleMasuk lewat sedangDaftar, jadi pertukaran cookie sesi harus
+         * diulang manual di sini. Tanpa ini akun baru tetap terkunci di
+         * gerbang '/preview' sampai halaman disegarkan manual, karena
+         * status "signedIn" di klien tidak pernah diberitahukan ke server.
+         */
+        const sesiSiap = await pastikanSesiServer(user);
+        if (sesiSiap && sesiDisegarkan.current !== user.uid) {
+          sesiDisegarkan.current = user.uid;
+          router.refresh();
+        }
         sedangDaftar.current = false;
         setAkunBaru(true);
         selesaiMasuk(data);
@@ -387,7 +400,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         throw new Error(petaError(e));
       }
     },
-    [selesaiMasuk, tentukanPeran],
+    [selesaiMasuk, tentukanPeran, router],
   );
 
   const keluar = useCallback(() => {
