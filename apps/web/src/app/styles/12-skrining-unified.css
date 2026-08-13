@@ -1,3 +1,8 @@
+/* File ini dipecah otomatis dari app/globals.css agar tidak dobel isi.
+   Sumber kebenaran konten: app/globals.css versi terakhir yang live. */
+
+
+
 /* ================================================================
    SKRINING & PEMANTAUAN (KPSP, DENVER, M-CHAT, GROWTH) UNIFIED STYLING
    ================================================================ */
@@ -18,12 +23,16 @@
   margin-bottom: 14px;
 }
 
+
+
 [data-theme="dark"] .tv-patient-active-banner,
 html.dark .tv-patient-active-banner {
   color: #F472B6 !important;
   background: rgba(217, 54, 166, 0.2) !important;
   border-color: rgba(217, 54, 166, 0.4) !important;
 }
+
+
 
 /* Age Pill Buttons */
 .tv-age-btn {
@@ -38,9 +47,13 @@ html.dark .tv-patient-active-banner {
   transition: all 0.15s ease;
 }
 
+
+
 .tv-age-btn:hover {
   border-color: #CBD5E1;
 }
+
+
 
 .tv-age-btn.active {
   background: var(--tv-navy, #0a0b5f) !important;
@@ -48,12 +61,16 @@ html.dark .tv-patient-active-banner {
   border-color: transparent !important;
 }
 
+
+
 [data-theme="dark"] .tv-age-btn,
 html.dark .tv-age-btn {
   background: #334155 !important;
   border-color: #475569 !important;
   color: #F8FAFC !important;
 }
+
+
 
 [data-theme="dark"] .tv-age-btn.active,
 html.dark .tv-age-btn.active {
@@ -64,11 +81,15 @@ html.dark .tv-age-btn.active {
   font-weight: 800 !important;
 }
 
+
+
 [data-theme="dark"] .tv-age-btn.active span,
 html.dark .tv-age-btn.active span {
   color: #ffffff !important;
   font-weight: 800 !important;
 }
+
+
 
 /* Number Dot Buttons (1..10 navigator) */
 .tv-num-dot {
@@ -87,9 +108,13 @@ html.dark .tv-age-btn.active span {
   transition: all 0.15s ease;
 }
 
+
+
 .tv-num-dot.active-step {
   border: 2px solid var(--tv-navy, #0a0b5f) !important;
 }
+
+
 
 .tv-num-dot.ans-ya {
   background: #0a0b5f !important;
@@ -97,11 +122,15 @@ html.dark .tv-age-btn.active span {
   border-color: transparent !important;
 }
 
+
+
 .tv-num-dot.ans-tidak {
   background: #991B1B !important;
   color: #ffffff !important;
   border-color: transparent !important;
 }
+
+
 
 [data-theme="dark"] .tv-num-dot,
 html.dark .tv-num-dot {
@@ -110,10 +139,14 @@ html.dark .tv-num-dot {
   color: #94A3B8 !important;
 }
 
+
+
 [data-theme="dark"] .tv-num-dot.active-step,
 html.dark .tv-num-dot.active-step {
   border: 2px solid #38BDF8 !important;
 }
+
+
 
 [data-theme="dark"] .tv-num-dot.ans-ya,
 html.dark .tv-num-dot.ans-ya {
@@ -121,11 +154,15 @@ html.dark .tv-num-dot.ans-ya {
   color: #ffffff !important;
 }
 
+
+
 [data-theme="dark"] .tv-num-dot.ans-tidak,
 html.dark .tv-num-dot.ans-tidak {
   background: #DC2626 !important;
   color: #ffffff !important;
 }
+
+
 
 /* Option Buttons (YA / TIDAK, PASS / FAIL, etc.) */
 .tv-opt-btn {
@@ -142,12 +179,16 @@ html.dark .tv-num-dot.ans-tidak {
   transition: all 0.15s ease;
 }
 
+
+
 .tv-opt-btn.selected-ya,
 .tv-opt-btn.selected-pass {
   background: #0a0b5f !important;
   color: #ffffff !important;
   border: none !important;
 }
+
+
 
 .tv-opt-btn.selected-tidak,
 .tv-opt-btn.selected-fail {
@@ -156,12 +197,16 @@ html.dark .tv-num-dot.ans-tidak {
   border: none !important;
 }
 
+
+
 [data-theme="dark"] .tv-opt-btn,
 html.dark .tv-opt-btn {
   background: #334155 !important;
   border-color: #475569 !important;
   color: #F8FAFC !important;
 }
+
+
 
 [data-theme="dark"] .tv-opt-btn.selected-ya,
 [data-theme="dark"] .tv-opt-btn.selected-pass,
@@ -173,6 +218,8 @@ html.dark .tv-opt-btn.selected-pass {
   box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45) !important;
 }
 
+
+
 [data-theme="dark"] .tv-opt-btn.selected-tidak,
 [data-theme="dark"] .tv-opt-btn.selected-fail,
 html.dark .tv-opt-btn.selected-tidak,
@@ -181,6 +228,8 @@ html.dark .tv-opt-btn.selected-fail {
   color: #ffffff !important;
   box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4) !important;
 }
+
+
 
 /* Secondary Action Buttons (Kembali, Reset, Ubah, Simpan) */
 .tv-btn-sec {
@@ -199,6 +248,8 @@ html.dark .tv-opt-btn.selected-fail {
   transition: all 0.15s ease;
 }
 
+
+
 [data-theme="dark"] .tv-btn-sec,
 html.dark .tv-btn-sec {
   background: #334155 !important;
@@ -206,6 +257,8 @@ html.dark .tv-btn-sec {
   color: #F8FAFC !important;
   box-shadow: none !important;
 }
+
+
 
 /* Primary Action Buttons (Hitung Hasil, Submit) */
 .tv-btn-pri {
@@ -220,11 +273,15 @@ html.dark .tv-btn-sec {
   transition: all 0.15s ease;
 }
 
+
+
 .tv-btn-pri:disabled {
   background: #E2E8F0 !important;
   color: #98A2B3 !important;
   cursor: not-allowed !important;
 }
+
+
 
 [data-theme="dark"] .tv-btn-pri,
 html.dark .tv-btn-pri {
@@ -232,11 +289,15 @@ html.dark .tv-btn-pri {
   color: #ffffff !important;
 }
 
+
+
 [data-theme="dark"] .tv-btn-pri:disabled,
 html.dark .tv-btn-pri:disabled {
   background: #334155 !important;
   color: #64748B !important;
 }
+
+
 
 /* Result Cards for KPSP / MCHAT / Denver */
 .tv-res-card {
@@ -246,12 +307,16 @@ html.dark .tv-btn-pri:disabled {
   border: 1px solid transparent;
 }
 
+
+
 .tv-res-card.sesuai,
 .tv-res-card.rendah {
   background: #ECFDF5;
   border-color: #A7F3D0;
   color: #047857;
 }
+
+
 
 .tv-res-card.meragukan,
 .tv-res-card.sedang {
@@ -260,12 +325,16 @@ html.dark .tv-btn-pri:disabled {
   color: #B45309;
 }
 
+
+
 .tv-res-card.penyimpangan,
 .tv-res-card.tinggi {
   background: #FEF2F2;
   border-color: #FCA5A5;
   color: #B42318;
 }
+
+
 
 [data-theme="dark"] .tv-res-card.sesuai,
 [data-theme="dark"] .tv-res-card.rendah,
@@ -276,6 +345,8 @@ html.dark .tv-res-card.rendah {
   color: #A7F3D0 !important;
 }
 
+
+
 [data-theme="dark"] .tv-res-card.meragukan,
 [data-theme="dark"] .tv-res-card.sedang,
 html.dark .tv-res-card.meragukan,
@@ -285,6 +356,8 @@ html.dark .tv-res-card.sedang {
   color: #FDE047 !important;
 }
 
+
+
 [data-theme="dark"] .tv-res-card.penyimpangan,
 [data-theme="dark"] .tv-res-card.tinggi,
 html.dark .tv-res-card.penyimpangan,
@@ -293,6 +366,8 @@ html.dark .tv-res-card.tinggi {
   border-color: #DC2626 !important;
   color: #FCA5A5 !important;
 }
+
+
 
 /* Specific text inside result cards in dark mode */
 [data-theme="dark"] .tv-res-card p,
@@ -306,6 +381,8 @@ html.dark .tv-res-card span {
   color: inherit !important;
 }
 
+
+
 /* Denver Screening Specific Component Styles */
 .tv-denver-card {
   background: #FFFFFF;
@@ -314,62 +391,88 @@ html.dark .tv-res-card span {
   box-shadow: 0 1px 3px rgba(16, 24, 40, 0.03);
 }
 
+
+
 .tv-denver-item-title {
   color: #101828;
 }
 
+
+
 .tv-denver-item-desc {
   color: #475569;
 }
+
+
 
 .tv-denver-type-tag {
   color: #667085;
   background: #F2F4F7;
 }
 
+
+
 .tv-denver-milestone-box {
   background: #F8FAFC;
   border: 1px solid #EAECF0;
 }
 
+
+
 .tv-denver-milestone-title {
   color: #344054;
 }
 
+
+
 .tv-denver-milestone-footer {
   color: #667085;
 }
+
+
 
 .tv-denver-age-banner {
   background: #F8FAFC;
   border: 1px solid #EAECF0;
 }
 
+
+
 .tv-denver-mode-switcher {
   background: #F8FAFC;
   border: 1px solid #E2E8F0;
 }
+
+
 
 .tv-prematur-box {
   background: #FEF8EE;
   border: 1px solid #F9DBAF;
 }
 
+
+
 .tv-denver-track {
   background: #EAECF0;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
 }
+
+
 
 .tv-denver-metric-box {
   background: #FAFAFA;
   border: 1px solid #EAECF0;
 }
 
+
+
 .tv-denver-rekomendasi {
   background: #F8FAFC;
   border-left: 4px solid #0A0B5F;
   color: #1D2939;
 }
+
+
 
 /* Dark Mode Overrides for Denver Screening Components */
 [data-theme="dark"] .tv-denver-card,
@@ -380,15 +483,21 @@ html.dark .tv-denver-card {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-item-title,
 html.dark .tv-denver-item-title {
   color: #F8FAFC !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-item-desc,
 html.dark .tv-denver-item-desc {
   color: #CBD5E1 !important;
 }
+
+
 
 [data-theme="dark"] .tv-denver-type-tag,
 html.dark .tv-denver-type-tag {
@@ -396,26 +505,36 @@ html.dark .tv-denver-type-tag {
   background: #334155 !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-milestone-box,
 html.dark .tv-denver-milestone-box {
   background: #1E293B !important;
   border-color: #334155 !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-milestone-title,
 html.dark .tv-denver-milestone-title {
   color: #E2E8F0 !important;
 }
+
+
 
 [data-theme="dark"] .tv-denver-milestone-footer,
 html.dark .tv-denver-milestone-footer {
   color: #94A3B8 !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-track,
 html.dark .tv-denver-track {
   background: #334155 !important;
 }
+
+
 
 [data-theme="dark"] .tv-denver-metric-box,
 html.dark .tv-denver-metric-box {
@@ -424,6 +543,8 @@ html.dark .tv-denver-metric-box {
   color: #F8FAFC !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-rekomendasi,
 html.dark .tv-denver-rekomendasi {
   background: #1E293B !important;
@@ -431,16 +552,22 @@ html.dark .tv-denver-rekomendasi {
   color: #F8FAFC !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-rekomendasi strong,
 html.dark .tv-denver-rekomendasi strong {
   color: #38BDF8 !important;
 }
+
+
 
 [data-theme="dark"] .tv-denver-age-banner,
 html.dark .tv-denver-age-banner {
   background: #1E293B !important;
   border-color: #334155 !important;
 }
+
+
 
 [data-theme="dark"] .tv-prematur-box,
 html.dark .tv-prematur-box {
@@ -449,11 +576,15 @@ html.dark .tv-prematur-box {
   box-shadow: 0 4px 16px rgba(249, 115, 22, 0.2) !important;
 }
 
+
+
 [data-theme="dark"] .tv-prematur-label,
 html.dark .tv-prematur-label {
   color: #FFEDD5 !important;
   font-weight: 700 !important;
 }
+
+
 
 [data-theme="dark"] .tv-prematur-select,
 html.dark .tv-prematur-select {
@@ -462,19 +593,24 @@ html.dark .tv-prematur-select {
   color: #FFFFFF !important;
 }
 
+
+
 [data-theme="dark"] .tv-prematur-select option,
 html.dark .tv-prematur-select option {
   background: #0F172A !important;
   color: #FFFFFF !important;
 }
 
+
+
 [data-theme="dark"] .tv-prematur-note,
 html.dark .tv-prematur-note {
   color: #FED7AA !important;
 }
 
+
+
 [data-theme="dark"] .tv-denver-garis-pill,
 html.dark .tv-denver-garis-pill {
   color: #0A0B5F !important;
 }
-

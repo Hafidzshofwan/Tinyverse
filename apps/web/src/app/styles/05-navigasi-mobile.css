@@ -1,53 +1,17 @@
-/* ============ HAMBURGER / SIDEBAR TOGGLE ============ */
-.tv-hamburger {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  cursor: pointer;
-  border-radius: 12px;
-  font-size: 19px;
-  line-height: 1;
-  color: var(--tv-navy);
-  background: #ffffff;
-  box-shadow: var(--tv-chunky-sm);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-.tv-hamburger {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s ease, box-shadow 0.2s ease;
-}
-.tv-hamburger span {
-  display: inline-block;
-  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
+/* File ini dipecah otomatis dari app/globals.css agar tidak dobel isi.
+   Sumber kebenaran konten: app/globals.css versi terakhir yang live. */
+
+
 .tv-shell:not(.tv-shell-collapsed) .tv-hamburger span {
   transform: rotate(90deg);
 }
-.tv-hamburger:hover {
-  transform: translateY(-1px);
-}
-.tv-hamburger:active {
-  transform: translateY(0);
-}
-.tv-sidebar {
-  transition: width 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    flex-basis 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    padding 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    margin 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.28s ease,
-    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 0.25s ease,
-    box-shadow 0.32s ease;
-  will-change: width, flex-basis, opacity, transform;
-}
-.tv-sidebar > * {
-  min-width: 0;
-  transition: opacity 0.22s ease, transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-}
+
+
 .tv-shell-collapsed .tv-body {
   gap: 0;
 }
+
+
 .tv-shell-collapsed .tv-sidebar {
   width: 0 !important;
   flex-basis: 0 !important;
@@ -60,11 +24,15 @@
   border-right-color: transparent;
   transform: translateX(-8px);
 }
+
+
 .tv-shell-collapsed .tv-sidebar > * {
   opacity: 0;
   transform: translateX(-12px);
   pointer-events: none;
 }
+
+
 
 /* ============ COMING SOON / PLACEHOLDER PAGES ============ */
 .tv-soon-grid {
@@ -72,6 +40,8 @@
   grid-template-columns: 1fr 1fr;
   gap: 22px;
 }
+
+
 .tv-soon-tag {
   display: inline-flex;
   align-items: center;
@@ -84,11 +54,15 @@
   padding: 6px 12px;
   border-radius: 999px;
 }
+
+
 .tv-soon-h {
   margin: 0;
   font-size: 16px;
   color: var(--tv-teks);
 }
+
+
 .tv-soon-list {
   margin: 0;
   padding-left: 18px;
@@ -98,30 +72,22 @@
   flex-direction: column;
   gap: 2px;
 }
+
+
 .tv-soon-note {
   margin: 6px 0 0;
   font-size: 13px;
   color: var(--tv-soft-teks);
 }
+
+
 @media (max-width: 760px) {
   .tv-soon-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* ============ HEADER: SEARCH + PROFILE ============ */
-.tv-search {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1 1 auto;
-  max-width: 440px;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 8px 12px;
-  box-shadow: var(--tv-chunky-sm);
-}
+
 .tv-search-ico {
   display: inline-flex;
   align-items: center;
@@ -130,59 +96,22 @@
   font-size: 14px;
   opacity: 0.7;
 }
-.tv-search input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font: inherit;
-  width: 100%;
-  color: var(--tv-teks);
-}
-.tv-search input::placeholder {
-  color: #9aa2b1;
-}
-/* Dropdown hasil pencarian global (command palette) */
-.tv-search-results {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  z-index: 60;
-  max-height: 420px;
-  overflow-y: auto;
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 6px;
-  border: 1px solid #eef1f6;
-  box-shadow: 0 12px 32px rgba(20, 30, 60, 0.18);
-}
+
+
 .tv-search-empty {
   padding: 14px 12px;
   color: #7a8291;
   font-size: 13px;
 }
-.tv-search-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  width: 100%;
-  text-align: left;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  padding: 9px 10px;
-  border-radius: 10px;
-  color: var(--tv-teks);
-}
-.tv-search-item:hover,
-.tv-search-item.aktif {
-  background: #f3f6fc;
-}
+
+
 .tv-search-item-ico {
   font-size: 18px;
   line-height: 1.2;
   flex: 0 0 auto;
 }
+
+
 .tv-search-item-body {
   display: flex;
   flex-direction: column;
@@ -190,25 +119,22 @@
   min-width: 0;
   flex: 1 1 auto;
 }
+
+
 .tv-search-item-top {
   display: flex;
   align-items: center;
   gap: 8px;
 }
+
+
 .tv-search-item-tool {
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
   font-size: 13.5px;
 }
-.tv-search-item-type {
-  font-size: 10.5px;
-  font-weight: 600;
-  color: #6b7280;
-  background: #eef1f6;
-  border-radius: 999px;
-  padding: 1px 8px;
-  flex: 0 0 auto;
-}
+
+
 .tv-search-item-snip {
   font-size: 12px;
   color: #6b7280;
@@ -216,25 +142,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.tv-profile {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: none;
-  cursor: pointer;
-  background: #ffffff;
-  border-radius: 999px;
-  padding: 5px 14px 5px 6px;
-  box-shadow: var(--tv-chunky-sm);
-  color: var(--tv-teks);
-  font-family: "Fredoka", sans-serif;
-  font-weight: 600;
-  font-size: 13px;
-  transition: transform 0.15s ease;
-}
-.tv-profile:hover {
-  transform: translateY(-1px);
-}
+
+
 .tv-profile-av {
   width: 28px;
   height: 28px;
@@ -246,43 +155,22 @@
   font-size: 12px;
   font-weight: 700;
 }
+
+
 .tv-nav-empty {
   margin: 4px 8px;
   font-size: 13px;
   color: var(--tv-soft-teks);
 }
 
-/* ============ WARNING BOX (dipakai Racik Puyer, dll) ============ */
-.tv-warn {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  background: rgba(245, 158, 11, 0.1);
-  border-radius: 12px;
-  padding: 10px 12px;
-}
-.tv-warn p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.5;
-  color: #92600a;
-}
 
-/* ============ DISCLAIMER SERAGAM (kotak kuning 13,44px, samakan Mode Darurat) ============ */
-.tv-disclaimer {
-  background: #fff8e5;
-  border: 2px solid #ffe2a8;
-  border-radius: 14px;
-  padding: 12px 16px;
-  font-size: 13.44px;
-  color: #8a6d1a;
-  line-height: 1.5;
-}
 
 /* ============ BACKDROP (mobile drawer) ============ */
 .tv-backdrop {
   display: none;
 }
+
+
 
 /* ============ MOBILE: SIDEBAR JADI DRAWER ============ */
 @media (max-width: 900px) {
@@ -370,4 +258,3 @@
     pointer-events: none;
   }
 }
-

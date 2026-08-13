@@ -1,3 +1,19 @@
+/* File ini dipecah otomatis dari app/globals.css agar tidak dobel isi.
+   Sumber kebenaran konten: app/globals.css versi terakhir yang live. */
+
+
+.tv-brand-logo {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  font-size: 19px;
+  background: linear-gradient(135deg, var(--tv-magenta) 0%, var(--tv-navy) 100%);
+}
+
+
+
 /* ============ PENYEMPURNAAN MOBILE (BUNDEL-12) ============ */
 /* Rapikan proporsi di layar kecil: kurangi padding ganda, perkecil judul, dan
    pastikan kartu satu kolom penuh agar tidak kebesaran/kekecilan. */
@@ -37,6 +53,8 @@
     gap: 14px;
   }
 }
+
+
 @media (max-width: 480px) {
   .tv-brand-logo {
     width: 30px;
@@ -66,15 +84,7 @@
   }
 }
 
-/* ===== BUNDEL-20: Perbaikan dead space (tablet & HP) ===== */
-/* Di desktop, panel konten tool/kalkulator sengaja dibatasi 520px agar nyaman
-   dibaca. Namun di tablet/HP batas ini menyisakan ruang kosong (dead space) di
-   kiri-kanan. Pada layar <= 1024px, biarkan panel mengisi lebar area konten. */
-@media (max-width: 1024px) {
-  .tv-panel-narrow {
-    max-width: none;
-  }
-}
+
 
 /* ===== FIX MOBILE SEARCH: beri ruang kotak pencarian di layar sangat kecil ===== */
 /* Sembunyikan teks "Tinyverse" di brand (logo tetap tampil) agar kotak pencarian
@@ -84,4 +94,3 @@
     display: none;
   }
 }
-

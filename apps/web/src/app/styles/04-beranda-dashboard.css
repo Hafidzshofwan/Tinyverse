@@ -1,12 +1,27 @@
-/* ============ SKELETON SCREENS ============ */
-@keyframes tvSkeletonPulse {
-  0% {
-    background-position: 100% 0;
-  }
-  100% {
-    background-position: -100% 0;
-  }
+/* File ini dipecah otomatis dari app/globals.css agar tidak dobel isi.
+   Sumber kebenaran konten: app/globals.css versi terakhir yang live. */
+
+
+.tv-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 0;
 }
+
+
+
+/* ============ SIDEBAR ITEMS ============ */
+.tv-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+
 
 .tv-skeleton {
   background: linear-gradient(
@@ -21,6 +36,8 @@
   display: inline-block;
 }
 
+
+
 .tv-tool-card-skeleton {
   position: relative;
   display: flex;
@@ -34,6 +51,8 @@
   pointer-events: none;
 }
 
+
+
 .tv-fav-skeleton {
   display: flex;
   align-items: center;
@@ -45,10 +64,14 @@
   pointer-events: none;
 }
 
+
+
 /* ============ TOOL PAGE HEADER (ToolShell) ============ */
 .tv-tool-head {
   margin-bottom: 20px;
 }
+
+
 .tv-tool-badge {
   display: inline-block;
   font-family: "Fredoka", sans-serif;
@@ -61,46 +84,20 @@
   padding: 4px 10px;
   border-radius: 999px;
 }
-.tv-tool-title {
-  margin: 0;
-  font-family: "Fredoka", "Quicksand", sans-serif;
-  font-weight: 700;
-  font-size: 19.48px;
-  color: var(--tv-text-primary, #0a0b5f);
-}
-.tv-tool-lead {
-  margin: 2px 0 0 0;
-  max-width: 640px;
-  color: var(--tv-text-secondary, #0a0b5f9e);
-  font-family: "Quicksand", system-ui, sans-serif;
-  font-size: 10.24px;
-  line-height: 1.3;
-}
+
+
 .tv-panel-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
 }
+
+
 .tv-panel-narrow {
   max-width: 520px;
 }
 
-/* ============ INPUTS ============ */
-.tv-input {
-  width: 100%;
-  padding: 10px 13px;
-  border-radius: 12px;
-  border: 1px solid var(--tv-line);
-  background: var(--tv-putih);
-  color: var(--tv-teks);
-  font: inherit;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
-.tv-input:focus {
-  outline: none;
-  border-color: var(--tv-magenta);
-  box-shadow: 0 0 0 3px rgba(217, 54, 166, 0.16);
-}
+
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 900px) {
@@ -125,15 +122,21 @@
   }
 }
 
+
+
 /* ============ SIDEBAR GROUPS ============ */
 .tv-nav {
   gap: 16px;
 }
+
+
 .tv-side-grup {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
+
+
 .tv-side-judul {
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
@@ -143,9 +146,13 @@
   color: var(--tv-soft-teks);
   padding: 2px 8px 0;
 }
+
+
 .tv-nav-label {
   flex: 1 1 auto;
 }
+
+
 .tv-nav-soon {
   font-family: "Fredoka", sans-serif;
   font-size: 0.58rem;
@@ -157,84 +164,26 @@
   padding: 2px 7px;
   border-radius: 999px;
 }
+
+
 .tv-nav-item.aktif .tv-nav-soon {
   color: #ffffff;
   background: rgba(255, 255, 255, 0.22);
 }
-.tv-nav-item.emergency {
-  background: linear-gradient(160deg, #ffe3ea, #ffffff);
-  color: #c01643;
-}
-.tv-nav-item.emergency.aktif {
-  background: linear-gradient(160deg, #e23a5e, #c01643);
-  color: #ffffff;
-  box-shadow: 0 5px 0 rgba(192, 22, 67, 0.28), 0 10px 22px rgba(192, 22, 67, 0.26);
-}
-.tv-sidebar {
-  /* tinggi, scroll, & padding diatur di aturan .tv-sidebar utama (rail kiri) */
-}
 
-/* ============ HOME HEADER ============ */
-.tv-home-header {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--tv-radius-lg);
-  border: 1px solid var(--tv-line);
-  padding: 28px 28px 30px;
-  margin-bottom: 24px;
-  background: linear-gradient(135deg, rgba(217, 54, 166, 0.1), rgba(10, 11, 95, 0.06)),
-    #ffffff;
-  box-shadow: var(--tv-chunky);
-  animation: tvMuncul 0.4s ease both;
-}
-.tv-home-header::after {
-  content: "";
-  position: absolute;
-  right: -70px;
-  top: -70px;
-  width: 260px;
-  height: 260px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(217, 54, 166, 0.16) 0%, rgba(217, 54, 166, 0) 70%);
-}
-.tv-home-badge {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: "Fredoka", sans-serif;
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  color: var(--tv-navy);
-  background: rgba(255, 255, 255, 0.72);
-  padding: 5px 12px;
-  border-radius: 999px;
-}
-.tv-home-header h1 {
-  position: relative;
-  margin: 14px 0 6px;
-  font-family: "Fredoka", sans-serif;
-  font-weight: 700;
-  font-size: 1.9rem;
-  color: var(--tv-navy);
-}
-.tv-home-header p {
-  position: relative;
-  margin: 0;
-  max-width: 560px;
-  color: var(--tv-soft-teks);
-  font-size: 0.96rem;
-}
+
 
 /* ============ HOME SECTIONS ============ */
 .tv-home-section {
   margin-bottom: 26px;
 }
+
+
 .tv-home-section-head {
   margin-bottom: 12px;
 }
+
+
 .tv-home-section-head h2 {
   display: flex;
   align-items: center;
@@ -245,37 +194,15 @@
   font-size: 1.16rem;
   color: var(--tv-navy);
 }
+
+
 .tv-home-section-head p {
   margin: 0;
   color: var(--tv-soft-teks);
   font-size: 0.86rem;
 }
-.tv-tool-star {
-  position: static;
-  z-index: 2;
-  width: 32px;
-  height: 32px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: none;
-  border-radius: 10px;
-  background: transparent;
-  font-size: 19px;
-  line-height: 1;
-  cursor: pointer;
-  color: rgba(10, 11, 95, 0.28);
-  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.15s ease, background 0.15s ease, box-shadow 0.2s ease;
-}
-.tv-tool-star:hover {
-  transform: scale(1.25) rotate(12deg);
-  background: rgba(236, 72, 153, 0.16);
-  color: var(--tv-magenta);
-  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.25);
-}
-.tv-tool-star.aktif {
-  color: var(--tv-magenta);
-}
+
+
 
 /* Badge "Baru" untuk fitur yang baru rilis di Quick Access & Favorit */
 .tv-badge-baru {
@@ -295,24 +222,20 @@
   box-shadow: 0 4px 10px rgba(236, 72, 153, 0.35);
   animation: tvBadgeBaruMuncul 0.4s ease both;
 }
+
+
 .tv-fav-item .tv-badge-baru {
   position: static;
   margin-left: 8px;
   box-shadow: none;
 }
-@keyframes tvBadgeBaruMuncul {
-  from {
-    opacity: 0;
-    transform: scale(0.7);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
+
+
 [data-theme="dark"] .tv-badge-baru {
   box-shadow: 0 4px 12px rgba(236, 72, 153, 0.5);
 }
+
+
 
 /* Actions & Tooltip Info Alat di Beranda */
 .tv-tool-actions {
@@ -325,62 +248,7 @@
   gap: 6px;
 }
 
-.tv-tool-info-btn {
-  width: 28px;
-  height: 28px;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  border: 1px solid rgba(10, 11, 95, 0.14);
-  border-radius: 50%;
-  background: #f8fafc;
-  font-size: 12px;
-  font-weight: 800;
-  color: var(--tv-navy);
-  cursor: help;
-  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
-}
 
-.tv-tool-info-btn:hover,
-.tv-tool-info-btn:focus-visible {
-  background: var(--tv-navy);
-  color: #ffffff;
-  border-color: var(--tv-navy);
-  transform: scale(1.12);
-  box-shadow: 0 4px 12px rgba(10, 11, 95, 0.22);
-}
-
-.tv-tool-tooltip-box {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  width: 260px;
-  max-width: min(260px, calc(100vw - 32px));
-  padding: 12px 14px;
-  border-radius: 14px;
-  background: #0f172a;
-  border: 1px solid #334155;
-  color: #f8fafc;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
-  font-size: 0.8rem;
-  line-height: 1.45;
-  z-index: 999;
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-4px);
-  transition: opacity 0.22s cubic-bezier(0.16, 1, 0.3, 1), transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.22s;
-}
-
-.tv-tool-tooltip-box::before {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  right: 18px;
-  border-width: 6px;
-  border-style: solid;
-  border-color: transparent transparent #0f172a transparent;
-}
 
 .tv-tool-tooltip-wrapper {
   position: relative;
@@ -388,10 +256,14 @@
   z-index: 50;
 }
 
+
+
 .tv-tool-tooltip-wrapper:hover,
 .tv-tool-tooltip-wrapper:focus-within {
   z-index: 100;
 }
+
+
 
 .tv-tool-tooltip-wrapper:hover .tv-tool-tooltip-box,
 .tv-tool-tooltip-wrapper:focus-within .tv-tool-tooltip-box,
@@ -402,18 +274,7 @@
   transform: translateY(0);
 }
 
-.tv-tool-tooltip-head {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-family: "Fredoka", sans-serif;
-  font-weight: 700;
-  font-size: 0.74rem;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: #38bdf8;
-  margin-bottom: 6px;
-}
+
 .tv-home-cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -421,60 +282,35 @@
   margin-bottom: 26px;
 }
 
+
+
 /* ============ FAVORIT ============ */
 .tv-fav-card {
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
 }
+
+
 .tv-fav-card:hover {
   transform: translateY(-3px) scale(1.012);
   box-shadow: 0 10px 0 rgba(10, 11, 95, 0.04), 0 20px 38px rgba(10, 11, 95, 0.12);
   border-color: rgba(245, 158, 11, 0.5);
 }
+
+
 [data-theme="dark"] .tv-fav-card:hover {
   box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
   border-color: rgba(245, 158, 11, 0.5);
 }
+
+
 
 .tv-fav-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-.tv-fav-item {
-  position: relative;
-  overflow: visible;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px 8px 14px;
-  border-radius: 16px;
-  border: 1px solid var(--tv-line);
-  background: var(--tv-soft);
-  cursor: pointer;
-  transition: transform 0.28s cubic-bezier(0.34, 1.85, 0.64, 1), box-shadow 0.24s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.24s ease, background 0.2s ease;
-}
-.tv-fav-item:hover,
-.tv-fav-item:focus-within {
-  z-index: 100;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.22), 0 2px 8px rgba(10, 11, 95, 0.08);
-  border-color: rgba(245, 158, 11, 0.65);
-  background: #ffffff;
-}
-[data-theme="dark"] .tv-fav-item {
-  background: #1E293B;
-  border: 1px solid #334155;
-  color: #F8FAFC;
-}
-[data-theme="dark"] .tv-fav-item:hover,
-[data-theme="dark"] .tv-fav-item:focus-within {
-  z-index: 100;
-  transform: translateY(-3px) scale(1.02);
-  background: #273449;
-  border-color: rgba(245, 158, 11, 0.65);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 14px rgba(245, 158, 11, 0.3);
-}
+
+
 .tv-fav-main {
   display: flex;
   align-items: center;
@@ -484,6 +320,8 @@
   text-decoration: none;
   color: var(--tv-navy);
 }
+
+
 .tv-fav-del {
   flex: 0 0 auto;
   width: 30px;
@@ -500,12 +338,16 @@
   cursor: pointer;
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.15s ease, color 0.15s ease, box-shadow 0.2s ease;
 }
+
+
 .tv-fav-del:hover {
   transform: scale(1.22) rotate(90deg);
   background: rgba(239, 68, 68, 0.15);
   color: #ef4444;
   box-shadow: 0 4px 10px rgba(239, 68, 68, 0.2);
 }
+
+
 .tv-fav-empty {
   padding: 16px;
   border-radius: 14px;
@@ -515,6 +357,8 @@
   font-size: 0.85rem;
   line-height: 1.5;
 }
+
+
 .tv-fav-ico {
   width: 38px;
   height: 38px;
@@ -527,26 +371,38 @@
   box-shadow: none;
   transition: transform 0.24s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+
+
 .tv-fav-item:hover .tv-fav-ico {
   transform: scale(1.12) rotate(-3deg);
 }
+
+
 .tv-fav-ico svg {
   width: 38px;
   height: 38px;
 }
+
+
 .tv-fav-text {
   display: flex;
   flex-direction: column;
 }
+
+
 .tv-fav-title {
   font-family: "Fredoka", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
 }
+
+
 .tv-fav-sub {
   font-size: 0.76rem;
   color: var(--tv-soft-teks);
 }
+
+
 
 /* ============ INSIGHT & UPDATE ============ */
 .tv-insight-card,
@@ -554,11 +410,15 @@
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease;
 }
 
+
+
 .tv-insight-card:hover {
   transform: translateY(-3px) scale(1.012);
   box-shadow: 0 10px 0 rgba(10, 11, 95, 0.04), 0 20px 38px rgba(10, 11, 95, 0.12);
   border-color: rgba(56, 189, 248, 0.45);
 }
+
+
 
 .tv-update-card:hover {
   transform: translateY(-3px) scale(1.012);
@@ -566,15 +426,21 @@
   border-color: rgba(2, 132, 199, 0.45);
 }
 
+
+
 [data-theme="dark"] .tv-insight-card:hover {
   box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
   border-color: rgba(56, 189, 248, 0.45);
 }
 
+
+
 [data-theme="dark"] .tv-update-card:hover {
   box-shadow: 0 10px 0 rgba(0, 0, 0, 0.2), 0 20px 38px rgba(0, 0, 0, 0.45);
   border-color: rgba(2, 132, 199, 0.45);
 }
+
+
 
 .tv-insight-body {
   margin: 0;
@@ -582,11 +448,15 @@
   line-height: 1.55;
   font-size: 0.92rem;
 }
+
+
 .tv-insight-note {
   margin: 0;
   color: var(--tv-soft-teks);
   font-size: 0.78rem;
 }
+
+
 .tv-update-list {
   margin: 0;
   padding: 0;
@@ -595,6 +465,8 @@
   flex-direction: column;
   gap: 10px;
 }
+
+
 .tv-update-list li {
   display: flex;
   gap: 9px;
@@ -607,20 +479,28 @@
   border: 1px solid transparent;
   transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.22s ease, background 0.2s ease;
 }
+
+
 .tv-update-list li:hover {
   transform: translateX(4px) scale(1.01);
   background: #ffffff;
   border-color: rgba(2, 132, 199, 0.35);
   box-shadow: 0 6px 18px rgba(2, 132, 199, 0.12);
 }
+
+
 [data-theme="dark"] .tv-update-list li {
   background: #1E293B;
 }
+
+
 [data-theme="dark"] .tv-update-list li:hover {
   background: #273449;
   border-color: rgba(56, 189, 248, 0.45);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
+
+
 
 /* ============ FOOTER ============ */
 .tv-footer {
@@ -629,6 +509,8 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+
+
 .tv-footer-inner {
   max-width: 1200px;
   margin: 0 auto;
@@ -639,22 +521,30 @@
   gap: 18px;
   flex-wrap: wrap;
 }
+
+
 .tv-footer-brand {
   display: flex;
   align-items: center;
   gap: 12px;
 }
+
+
 .tv-footer-name {
   font-family: "Fredoka", sans-serif;
   font-weight: 700;
   font-size: 1.05rem;
   color: var(--tv-navy);
 }
+
+
 .tv-footer-cap {
   font-size: 0.8rem;
   color: var(--tv-soft-teks);
   max-width: 440px;
 }
+
+
 .tv-footer-maker {
   display: flex;
   flex-direction: column;
@@ -663,19 +553,18 @@
   font-size: 0.85rem;
   color: var(--tv-soft-teks);
 }
+
+
 .tv-footer-maker strong {
   color: var(--tv-navy);
 }
+
+
 .tv-footer-year {
   font-size: 0.72rem;
 }
 
-@media (max-width: 900px) {
-  .tv-sidebar {
-    max-height: none;
-    overflow: visible;
-  }
-}
+
 @media (max-width: 760px) {
   .tv-home-cols {
     grid-template-columns: 1fr;
@@ -689,3 +578,26 @@
   }
 }
 
+
+
+/* ===== BUNDEL-20: Perbaikan dead space (tablet & HP) ===== */
+/* Di desktop, panel konten tool/kalkulator sengaja dibatasi 520px agar nyaman
+   dibaca. Namun di tablet/HP batas ini menyisakan ruang kosong (dead space) di
+   kiri-kanan. Pada layar <= 1024px, biarkan panel mengisi lebar area konten. */
+@media (max-width: 1024px) {
+  .tv-panel-narrow {
+    max-width: none;
+  }
+}
+
+
+@keyframes tvBadgeBaruMuncul {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

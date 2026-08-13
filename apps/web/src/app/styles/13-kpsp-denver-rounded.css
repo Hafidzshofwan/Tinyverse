@@ -1,25 +1,7 @@
-/* ================================================================
-   KPSP & DENVER RECTANGLE ROUNDED CORNERS & DARK MODE LIGHT PATIENT DATA
-   ================================================================ */
+/* File ini dipecah otomatis dari app/globals.css agar tidak dobel isi.
+   Sumber kebenaran konten: app/globals.css versi terakhir yang live. */
 
-/* Rounded corners for general .kartu rectangle boxes (age groups, questions) */
-.kartu {
-  background: var(--tv-card, #ffffff);
-  border: 1px solid var(--tv-line, #E2E8F0);
-  border-radius: 20px !important;
-  padding: 20px;
-  box-shadow: var(--tv-chunky-sm, 0 4px 16px rgba(10, 11, 95, 0.06));
-  overflow: hidden;
-}
 
-[data-theme="dark"] .kartu,
-html.dark .kartu {
-  background: #1E293B !important;
-  border: 1px solid #334155 !important;
-  border-radius: 20px !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
-  color: #F8FAFC !important;
-}
 
 /* Brighter & Lighter Patient Data in Dark Mode */
 [data-theme="dark"] .tv-patient-active-banner,
@@ -33,6 +15,8 @@ html.dark .tv-patient-info-box {
   color: #7DD3FC !important;
   border-radius: 16px !important;
 }
+
+
 
 [data-theme="dark"] .tv-patient-active-banner strong,
 html.dark .tv-patient-active-banner strong,
@@ -49,6 +33,8 @@ html.dark .tv-pas-chip-nama {
   text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
 }
 
+
+
 [data-theme="dark"] .tv-patient-meta,
 html.dark .tv-patient-meta,
 [data-theme="dark"] .tv-patient-sub,
@@ -57,6 +43,8 @@ html.dark .tv-patient-sub,
 html.dark .tv-pas-item-sub {
   color: #E2E8F0 !important;
 }
+
+
 
 /* Question & Section Title text explicitly white in Dark Mode */
 [data-theme="dark"] .tv-soal-teks,
@@ -70,6 +58,8 @@ html.dark .kartu .tv-section-title {
   color: #FFFFFF !important;
 }
 
+
+
 [data-theme="dark"] .tv-soal-counter,
 html.dark .tv-soal-counter,
 [data-theme="dark"] .tv-soal-petunjuk,
@@ -79,20 +69,28 @@ html.dark .tv-soal-subtext {
   color: #CBD5E1 !important;
 }
 
+
+
 /* Progress line div styling for M-CHAT / KPSP in Dark Mode */
 .tv-progress-bar-fill {
   background: var(--tv-navy, #0a0b5f);
 }
+
+
 
 [data-theme="dark"] .tv-progress-bar-fill,
 html.dark .tv-progress-bar-fill {
   background: #FFFFFF !important;
 }
 
+
+
 [data-theme="dark"] .tv-progress-bar-track,
 html.dark .tv-progress-bar-track {
   background: rgba(255, 255, 255, 0.15) !important;
 }
+
+
 
 /* ===== ALUR TATALAKSANA DARK MODE STYLES ===== */
 [data-theme="dark"] .tv-alur-kartu,
@@ -105,12 +103,16 @@ html.dark .tv-alur-kartu {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25) !important;
 }
 
+
+
 [data-theme="dark"] .tv-alur-kartu:hover:not(:disabled),
 html.dark .tv-alur-kartu:hover:not(:disabled) {
   background: #273549 !important;
   border-left-width: 5px !important;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35) !important;
 }
+
+
 
 [data-theme="dark"] .tv-alur-kat[style*="respirasi"],
 [data-theme="dark"] .tv-alur-kartu[style*="respirasi"],
@@ -121,6 +123,8 @@ html.dark .tv-alur-kartu[style*="respirasi"] {
   border-left-color: #34D399 !important;
 }
 
+
+
 [data-theme="dark"] .tv-alur-kat[style*="neurologi"],
 [data-theme="dark"] .tv-alur-kartu[style*="neurologi"],
 html.dark .tv-alur-kat[style*="neurologi"],
@@ -129,6 +133,8 @@ html.dark .tv-alur-kartu[style*="neurologi"] {
   --kat-lembut: rgba(192, 132, 252, 0.18) !important;
   border-left-color: #C084FC !important;
 }
+
+
 
 [data-theme="dark"] .tv-alur-kat[style*="metabolik"],
 [data-theme="dark"] .tv-alur-kartu[style*="metabolik"],
@@ -139,6 +145,8 @@ html.dark .tv-alur-kartu[style*="metabolik"] {
   border-left-color: #FBBF24 !important;
 }
 
+
+
 [data-theme="dark"] .tv-alur-kat[style*="infeksi"],
 [data-theme="dark"] .tv-alur-kartu[style*="infeksi"],
 html.dark .tv-alur-kat[style*="infeksi"],
@@ -148,15 +156,21 @@ html.dark .tv-alur-kartu[style*="infeksi"] {
   border-left-color: #2DD4BF !important;
 }
 
+
+
 [data-theme="dark"] .tv-alur-kartu-judul,
 html.dark .tv-alur-kartu-judul {
   color: #F8FAFC !important;
 }
 
+
+
 [data-theme="dark"] .tv-alur-kartu-ringkas,
 html.dark .tv-alur-kartu-ringkas {
   color: #94A3B8 !important;
 }
+
+
 
 [data-theme="dark"] .tv-decision-tree-box,
 html.dark .tv-decision-tree-box {
@@ -166,10 +180,11 @@ html.dark .tv-decision-tree-box {
   --tv-tree-border: #334155 !important;
 }
 
+
+
 [data-theme="dark"] .tv-decision-tree-card,
 html.dark .tv-decision-tree-card {
   --tv-tree-card-bg: #0F172A !important;
   background: #0F172A !important;
   border-color: #334155 !important;
 }
-

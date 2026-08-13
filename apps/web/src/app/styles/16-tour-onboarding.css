@@ -1,0 +1,309 @@
+/* Style panduan tur onboarding (.tv-tour-*). Sebelumnya tertanam
+   langsung di app/globals.css tanpa file sendiri. */
+
+
+
+/* =========================================================================
+   Tur onboarding (pengenalan fitur untuk pengguna baru)
+   ========================================================================= */
+
+body.tv-tour-aktif {
+  overflow: hidden;
+}
+
+
+
+.tv-tour-lapisan {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+
+
+.tv-tour-latar {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 40%,
+    rgba(10, 11, 95, 0.72) 0%,
+    rgba(6, 8, 40, 0.86) 100%
+  );
+  animation: tvTourLatarMasuk 0.4s ease;
+}
+
+
+
+.tv-tour-sorotan {
+  position: fixed;
+  border-radius: 14px;
+  box-shadow: 0 0 0 9999px rgba(6, 8, 40, 0.8);
+  border: 2px solid #F5C242;
+  transition:
+    top 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    left 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    width 0.45s cubic-bezier(0.65, 0, 0.35, 1),
+    height 0.45s cubic-bezier(0.65, 0, 0.35, 1);
+  animation: tvTourCincinPulsa 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+
+
+@keyframes tvTourLatarMasuk {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+@keyframes tvTourCincinPulsa {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 9999px rgba(6, 8, 40, 0.8),
+      0 0 0 0 rgba(245, 194, 66, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 0 9999px rgba(6, 8, 40, 0.8),
+      0 0 0 8px rgba(245, 194, 66, 0);
+  }
+}
+
+
+
+.tv-tour-kartu {
+  position: fixed;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+  background: var(--tv-card, #ffffff);
+  border-radius: 18px;
+  padding: 22px 22px 18px;
+  box-shadow: 0 20px 60px rgba(6, 8, 40, 0.45);
+  transition:
+    top 0.3s cubic-bezier(0.65, 0, 0.35, 1),
+    left 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  animation: tvTourKartuMasuk 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+
+.tv-tour-kartu.tengah {
+  text-align: center;
+  width: 380px;
+}
+
+
+
+@keyframes tvTourKartuMasuk {
+  from {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+
+
+.tv-tour-progres {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+
+
+.tv-tour-kartu.tengah .tv-tour-progres {
+  justify-content: center;
+}
+
+
+
+.tv-tour-titik {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #E2E8F0;
+  transition: background 0.25s ease, width 0.25s ease;
+}
+
+
+
+.tv-tour-titik.lewat {
+  background: #A5B4FC;
+}
+
+
+
+.tv-tour-ikon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0A0B5F 0%, #D936A6 100%);
+  box-shadow: 0 8px 18px rgba(217, 54, 166, 0.35);
+  animation: tvTourIkonMasuk 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.1s both;
+}
+
+
+
+.tv-tour-kartu.tengah .tv-tour-ikon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+@keyframes tvTourIkonMasuk {
+  0% {
+    transform: scale(0.4) rotate(-10deg);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) rotate(4deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+
+
+.tv-tour-judul {
+  margin: 0 0 8px;
+  font-family: 'Fredoka', 'Quicksand', sans-serif;
+  font-size: 1.08rem;
+  color: var(--tv-navy, #0a0b5f);
+}
+
+
+
+.tv-tour-deskripsi {
+  margin: 0 0 18px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--tv-teks, #334155);
+}
+
+
+
+.tv-tour-aksi {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+
+
+.tv-tour-lewati {
+  background: none;
+  border: none;
+  color: #94A3B8;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 4px;
+}
+
+
+
+.tv-tour-lewati:hover {
+  color: #64748B;
+  text-decoration: underline;
+}
+
+
+
+.tv-tour-nav {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+
+
+.tv-tour-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+
+.tv-tour-btn:active {
+  transform: scale(0.96);
+}
+
+
+
+.tv-tour-btn-utama {
+  background: linear-gradient(135deg, #0A0B5F 0%, #D936A6 100%);
+  color: #ffffff;
+  box-shadow: 0 6px 16px rgba(217, 54, 166, 0.35);
+}
+
+
+
+.tv-tour-btn-utama:hover {
+  box-shadow: 0 8px 20px rgba(217, 54, 166, 0.45);
+}
+
+
+
+.tv-tour-btn-ghost {
+  background: #F1F5F9;
+  color: #475569;
+}
+
+
+
+.tv-tour-btn-ghost:hover {
+  background: #E2E8F0;
+}
+
+
+
+@media (max-width: 480px) {
+  .tv-tour-kartu {
+    width: calc(100vw - 32px);
+  }
+  .tv-tour-kartu.tengah {
+    width: calc(100vw - 32px);
+  }
+}
+
+
+
+@media (prefers-reduced-motion: reduce) {
+  .tv-tour-sorotan,
+  .tv-tour-kartu,
+  .tv-tour-ikon,
+  .tv-tour-latar {
+    animation: none !important;
+    transition: opacity 0.2s ease !important;
+  }
+}
