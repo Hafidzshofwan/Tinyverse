@@ -55,15 +55,13 @@ export type BarisPenggunaAdmin = {
   aktif: boolean;
   saya: boolean;
   accountId: string | null;
+  dibuat: number;
   langganan: RingkasLangganan;
 };
 
-/* Yang kedaluwarsa naik ke atas: itulah yang butuh tindakan. */
-const URUTAN: Record<StatusLangganan, number> = {
-  kedaluwarsa: 0,
-  aktif: 1,
-  belum: 2,
-};
+/* Riwayat: sebelumnya diurutkan berdasarkan status langganan (kedaluwarsa di
+   atas). Diganti atas permintaan pemilik menjadi urutan waktu pendaftaran
+   akun, terbaru di atas -- lihat sort di bawah. */
 
 export async function GET() {
   const cookie = cookies().get(NAMA_COOKIE_SESI)?.value;
@@ -144,6 +142,7 @@ export async function GET() {
       aktif: d.aktif !== false,
       saya: doc.id === klaim.uid,
       accountId,
+      dibuat: typeof d.dibuat === "number" ? d.dibuat : 0,
       langganan: {
         status: ent.status,
         percobaan:
@@ -157,14 +156,10 @@ export async function GET() {
     };
   });
 
-  baris.sort((a, b) => {
-    const selisih = URUTAN[a.langganan.status] - URUTAN[b.langganan.status];
-    if (selisih !== 0) return selisih;
-    if (a.langganan.sisaHari !== b.langganan.sisaHari) {
-      return a.langganan.sisaHari - b.langganan.sisaHari;
-    }
-    return a.nama.localeCompare(b.nama, "id");
-  });
+  /* Terbaru duluan. Akun tanpa `dibuat` tercatat (data lama) jatuh ke paling
+     bawah, bukan ke atas -- dianggap seolah "paling lama" agar tidak
+     menutupi pendaftar baru yang sungguhan. */
+  baris.sort((a, b) => b.dibuat - a.dibuat);
 
   return NextResponse.json({ ok: true, sekarang, baris });
 }
