@@ -33,7 +33,7 @@ import { KOLEKSI } from "@/server/accountsAdmin";
 import { KOLEKSI_BILLING } from "@/server/billingCollections";
 import { adminAuth, adminDb } from "@/server/firebaseAdmin";
 import { NAMA_COOKIE_SESI } from "@/server/session";
-import { ambilSemuaUidAuth } from "@/server/authUsers";
+import { ambilWaktuBuatAuth } from "@/server/authUsers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -88,12 +88,13 @@ export async function GET() {
   /* Empat pembacaan menyeluruh sekaligus, lalu dijodohkan di memori. Alternatifnya
      satu query langganan per pengguna, yang berarti N perjalanan ke Firestore
      untuk satu kali buka modal. */
-  const [snapUsers, snapMemberships, snapSubs, uidAuth] = await Promise.all([
+  const [snapUsers, snapMemberships, snapSubs, waktuBuatAuth] = await Promise.all([
     db.collection(KOLEKSI.users).get(),
     db.collection(KOLEKSI.memberships).get(),
     db.collection(KOLEKSI_BILLING.subscriptions).get(),
-    ambilSemuaUidAuth(),
+    ambilWaktuBuatAuth(),
   ]);
+  const uidAuth = new Set(waktuBuatAuth.keys());
 
   /* Dokumen users/{uid} TIDAK otomatis ikut terhapus saat akun
      Authentication-nya dihapus manual (mis. lewat Firebase Console). Baris
@@ -142,7 +143,7 @@ export async function GET() {
       aktif: d.aktif !== false,
       saya: doc.id === klaim.uid,
       accountId,
-      dibuat: typeof d.dibuat === "number" ? d.dibuat : 0,
+      dibuat: waktuBuatAuth.get(doc.id) ?? 0,
       langganan: {
         status: ent.status,
         percobaan:
