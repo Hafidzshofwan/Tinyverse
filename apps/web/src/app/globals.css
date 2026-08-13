@@ -3771,6 +3771,155 @@ body.tv-ai-chat-open .tv-ai-fab-container {
   border-bottom-color: var(--tv-magenta);
 }
 
+/* ---- Halaman penuh /profil (pengganti modal) ---- */
+.tv-halaman-profil {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 8px 4px 40px;
+}
+.tv-halaman-profil > h1 {
+  font-family: "Fredoka", sans-serif;
+  font-size: 24px;
+  margin: 4px 0 20px;
+  color: var(--tv-teks);
+}
+
+/* ---- Zona berbahaya: hapus akun ----
+   Kesan risiko sengaja dibangun lewat visual, bukan lewat judul tebal:
+   kartu nyaris hitam, lis diagonal ala pita pembatas di tepi kiri, lencana
+   ikon bulat berdenyut pelan, dan tombol bergradasi gelap yang menyala merah
+   saat disentuh. */
+.tv-zona-bahaya {
+  position: relative;
+  overflow: hidden;
+  margin-top: 36px;
+  padding: 22px 22px 22px 26px;
+  border-radius: var(--tv-radius-lg);
+  background: linear-gradient(155deg, #1a1011 0%, #120c0d 60%, #0d0909 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(220, 38, 38, 0.28),
+    0 10px 30px -12px rgba(220, 38, 38, 0.35);
+}
+.tv-zona-bahaya-lis {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 7px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #f59e0b 0px,
+    #f59e0b 6px,
+    #1a1011 6px,
+    #1a1011 12px
+  );
+}
+.tv-zona-bahaya-isi {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+.tv-zona-bahaya-lencana {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: #fca5a5;
+  background: radial-gradient(circle at 35% 30%, #4c1414, #2a0d0d 70%);
+  box-shadow: 0 0 0 1px rgba(252, 165, 165, 0.25);
+  animation: tv-bahaya-denyut 2.8s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tv-zona-bahaya-lencana {
+    animation: none;
+  }
+}
+@keyframes tv-bahaya-denyut {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(252, 165, 165, 0.25), 0 0 0 0 rgba(220, 38, 38, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(252, 165, 165, 0.35), 0 0 0 8px rgba(220, 38, 38, 0);
+  }
+}
+.tv-zona-bahaya p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #cbb3b3;
+  margin: 0;
+  width: 100%;
+}
+.tv-btn-bahaya {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 14px 20px;
+  font-family: "Fredoka", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: #ffece9;
+  background: linear-gradient(135deg, #7f1d1d 0%, #450a0a 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 6px 16px -6px rgba(220, 38, 38, 0.5);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+.tv-btn-bahaya:hover:not(:disabled) {
+  background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 10px 26px -8px rgba(220, 38, 38, 0.75);
+  transform: translateY(-1px);
+}
+.tv-btn-bahaya:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+.tv-btn-bahaya:disabled {
+  opacity: 0.4;
+  cursor: default;
+  transform: none;
+}
+.tv-konfirmasi-hapus {
+  width: 100%;
+}
+.tv-konfirmasi-hapus p {
+  color: #e8d5d5;
+}
+.tv-konfirmasi-hapus input {
+  width: 100%;
+  border: 1.5px solid rgba(220, 38, 38, 0.4);
+  border-radius: 12px;
+  padding: 11px 14px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #ffece9;
+  background: #1e1414;
+  box-sizing: border-box;
+  margin: 10px 0 14px;
+}
+.tv-konfirmasi-hapus input::placeholder {
+  color: #8a6a6a;
+}
+.tv-konfirmasi-hapus input:focus {
+  outline: none;
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
+}
+.tv-konfirmasi-aksi {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 /* ---- Profil: avatar besar & unggah foto ---- */
 .tv-ava-aksi {
   display: flex;
