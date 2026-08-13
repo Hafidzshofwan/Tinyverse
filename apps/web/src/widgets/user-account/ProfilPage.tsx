@@ -14,6 +14,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import { WarningTriangleIcon } from "@/shared/ui/icons/WarningTriangleIcon";
 import { useAuth } from "./AuthProvider";
 import type { RiwayatItem } from "./AuthProvider";
 import { avatarProps } from "./avatar";
@@ -272,57 +273,62 @@ export function ProfilPage() {
           apa pun, supaya tidak tersenggol tak sengaja saat mengedit profil
           biasa. */}
       <div className="tv-zona-bahaya">
-        <h2>Zona berbahaya</h2>
-        <p>
-          Menghapus akun bersifat permanen. Data profil, preferensi, dan
-          riwayat perhitungan Anda akan hilang dan tidak bisa dikembalikan.
-          Langganan yang masih berjalan tidak otomatis dikembalikan (refund)
-          lewat penghapusan akun ini.
-        </p>
+        <div className="tv-zona-bahaya-lis" aria-hidden />
+        <div className="tv-zona-bahaya-isi">
+          <span className="tv-zona-bahaya-lencana">
+            <WarningTriangleIcon size={20} />
+          </span>
+          <p>
+            Menghapus akun bersifat permanen. Data profil, preferensi, dan
+            riwayat perhitungan Anda akan hilang dan tidak bisa dikembalikan.
+            Langganan yang masih berjalan tidak otomatis dikembalikan (refund)
+            lewat penghapusan akun ini.
+          </p>
 
-        {!konfirmasiTampil ? (
-          <button
-            className="tv-btn-bahaya"
-            onClick={() => {
-              setKonfirmasiTampil(true);
-              setKetikan("");
-              setHapusGalat("");
-            }}
-          >
-            Hapus akun
-          </button>
-        ) : (
-          <div className="tv-konfirmasi-hapus">
-            {hapusGalat && <div className="tv-pesan galat">{hapusGalat}</div>}
-            <p>
-              Ketik <b>HAPUS</b> untuk mengonfirmasi. Tindakan ini tidak bisa
-              dibatalkan setelah tombol di bawah ditekan.
-            </p>
-            <input
-              type="text"
-              value={ketikan}
-              onChange={(e) => setKetikan(e.target.value)}
-              placeholder="Ketik HAPUS"
-              disabled={hapusSibuk}
-            />
-            <div className="tv-konfirmasi-aksi">
-              <button
-                className="tv-btn-bahaya"
-                disabled={ketikan !== "HAPUS" || hapusSibuk}
-                onClick={onHapusAkun}
-              >
-                {hapusSibuk ? "Menghapus\u2026" : "Ya, hapus akun saya permanen"}
-              </button>
-              <button
-                className="tv-btn sekunder"
+          {!konfirmasiTampil ? (
+            <button
+              className="tv-btn-bahaya"
+              onClick={() => {
+                setKonfirmasiTampil(true);
+                setKetikan("");
+                setHapusGalat("");
+              }}
+            >
+              Hapus akun
+            </button>
+          ) : (
+            <div className="tv-konfirmasi-hapus">
+              {hapusGalat && <div className="tv-pesan galat">{hapusGalat}</div>}
+              <p>
+                Ketik <b>HAPUS</b> untuk mengonfirmasi. Tindakan ini tidak bisa
+                dibatalkan setelah tombol di bawah ditekan.
+              </p>
+              <input
+                type="text"
+                value={ketikan}
+                onChange={(e) => setKetikan(e.target.value)}
+                placeholder="Ketik HAPUS"
                 disabled={hapusSibuk}
-                onClick={() => setKonfirmasiTampil(false)}
-              >
-                Batal
-              </button>
+              />
+              <div className="tv-konfirmasi-aksi">
+                <button
+                  className="tv-btn-bahaya"
+                  disabled={ketikan !== "HAPUS" || hapusSibuk}
+                  onClick={onHapusAkun}
+                >
+                  {hapusSibuk ? "Menghapus\u2026" : "Ya, hapus akun saya permanen"}
+                </button>
+                <button
+                  className="tv-btn sekunder"
+                  disabled={hapusSibuk}
+                  onClick={() => setKonfirmasiTampil(false)}
+                >
+                  Batal
+                </button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
