@@ -272,7 +272,7 @@ export function KelolaPenggunaPanel() {
           <div className={gaya.bar}>
             <span>
               {lain.length} pengguna lain. Dimuat
-              {diperbarui ? " pukul " + diperbarui : ""}, yang kedaluwarsa di
+              {diperbarui ? " pukul " + diperbarui : ""}, akun terbaru di
               urutan atas.
             </span>
             <span className={gaya.barTombol}>
