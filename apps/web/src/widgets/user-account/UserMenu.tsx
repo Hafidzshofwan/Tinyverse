@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
-import { ProfileModal } from "./ProfileModal";
 import { ShieldUserIcon } from "@/shared/ui/icons/ShieldUserIcon";
 import { BugIcon } from "@/shared/ui/icons/BugIcon";
 
@@ -55,7 +54,6 @@ function TurIcon({ size = 16, color = "currentColor" }: { size?: number; color?:
 export function UserMenu({ id }: { id?: string } = {}) {
   const { profil, keluar } = useAuth();
   const [buka, setBuka] = useState(false);
-  const [profilTampil, setProfilTampil] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -101,15 +99,14 @@ export function UserMenu({ id }: { id?: string } = {}) {
               {admin ? "Admin" : "Pengguna"}
             </span>
           </div>
-          <button
+          <Link
+            href="/profil"
             className="tv-drop-item"
-            onClick={() => {
-              setBuka(false);
-              setProfilTampil(true);
-            }}
+            style={{ textDecoration: "none" }}
+            onClick={() => setBuka(false)}
           >
             <UserIcon size={16} /> <span>Profil saya</span>
-          </button>
+          </Link>
           <Link
             href="/langganan"
             className="tv-drop-item"
@@ -157,9 +154,6 @@ export function UserMenu({ id }: { id?: string } = {}) {
             <LogOutIcon size={16} /> <span>Keluar</span>
           </button>
         </div>
-      )}
-      {profilTampil && (
-        <ProfileModal onTutup={() => setProfilTampil(false)} />
       )}
     </div>
   );

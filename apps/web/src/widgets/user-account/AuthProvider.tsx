@@ -78,6 +78,7 @@ interface AuthContextValue {
     pass: string,
   ) => Promise<void>;
   keluar: () => void;
+  hapusAkunSendiri: () => Promise<void>;
   simpanProfil: (data: {
     nama: string;
     institusi: string;
@@ -414,6 +415,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  /**
+   * Hapus akun sendiri secara permanen. Server yang menghapus data
+   * Firestore + akun Authentication (lihat /api/auth/hapus-akun); fungsi ini
+   * hanya memicunya lalu membersihkan sisi klien seperti keluar().
+   *
+   * Melempar bila server gagal, supaya pemanggil (tombol di halaman /profil)
+   * bisa menampilkan pesan galat alih-alih diam-diam gagal.
+   */
+  const hapusAkunSendiri = useCallback(async () => {
+    const res = await fetch("/api/auth/hapus-akun", {
+      method: "POST",
+      credentials: "same-origin",
+    });
+    const data = (await res.json().catch(() => null)) as {
+      ok?: boolean;
+      error?: string;
+    } | null;
+    if (!res.ok || !data?.ok) {
+      throw new Error((data && data.error) || "Gagal menghapus akun.");
+    }
+    bersihkanPasienLokal();
+    setAkunPasien(null);
+    if (authRef.current) authRef.current.signOut();
+  }, []);
+
   const simpanProfil = useCallback(
     async (data: { nama: string; institusi: string; avatar?: string }) => {
       const db = dbRef.current;
@@ -562,6 +588,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     kirimResetSandi,
     daftar,
     keluar,
+    hapusAkunSendiri,
     simpanProfil,
     simpanPref,
     muatRiwayat,
