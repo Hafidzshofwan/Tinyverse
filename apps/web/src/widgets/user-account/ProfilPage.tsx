@@ -273,11 +273,13 @@ export function ProfilPage() {
           apa pun, supaya tidak tersenggol tak sengaja saat mengedit profil
           biasa. */}
       <div className="tv-zona-bahaya">
-        <div className="tv-zona-bahaya-lis" aria-hidden />
         <div className="tv-zona-bahaya-isi">
-          <span className="tv-zona-bahaya-lencana">
-            <WarningTriangleIcon size={20} />
-          </span>
+          <div className="tv-zona-bahaya-judul">
+            <span className="tv-zona-bahaya-lencana">
+              <WarningTriangleIcon size={16} />
+            </span>
+            Hapus akun
+          </div>
           <p>
             Menghapus akun bersifat permanen. Data profil, preferensi, dan
             riwayat perhitungan Anda akan hilang dan tidak bisa dikembalikan.
