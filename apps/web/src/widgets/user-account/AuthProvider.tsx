@@ -192,29 +192,41 @@ export function AuthProvider({ children }: { children: ReactNode }) {
        *
        * Kegagalan penukaran sengaja tidak menggagalkan login: aplikasi klinis
        * tetap dapat dipakai, hanya fitur berbayar yang belum terbuka.
-       */
-      const sesiSiap = await pastikanSesiServer(user);
-      /*
-       * WHY router.refresh() di sini:
-       * Gerbang /preview adalah Server Component yang membaca cookie sesi.
-       * Saat halaman pertama kali dirender, cookie itu BELUM ada, karena
-       * baru dipasang oleh pastikanSesiServer beberapa saat kemudian.
-       * Tanpa penyegaran, layar terus menampilkan hasil render lama, yaitu
-       * gerbang 'Masuk terlebih dahulu', padahal pengguna sudah masuk.
-       * Itulah sebabnya gembok hilang begitu halaman disegarkan manual.
        *
-       * Disegarkan HANYA bila penukaran cookie berhasil, dan hanya sekali
-       * per UID. Menyegarkan tanpa cookie cuma memantulkan pengguna ke
-       * gerbang yang sama, dan menyegarkan berulang membuat halaman
-       * berkedip di setiap kunjungan.
+       * WHY dijalankan BARENGAN dengan ref.get() (Promise.all), bukan
+       * berurutan: dua permintaan ini sama sekali tidak saling butuh hasil
+       * satu sama lain (satu menuju API sesi kita sendiri, satu menuju
+       * Firestore), tapi sebelumnya ditulis satu-per-satu sehingga setiap
+       * login menanggung DUA kali waktu tempuh jaringan padahal cukup satu.
+       * Ini kena di setiap halaman yang mensyaratkan login, paling terasa
+       * saat pemuatan dingin (buka tautan langsung / segarkan manual),
+       * persis pola yang terlihat di Speed Insights pada /profil dan
+       * /admin/pengguna.
        */
-      if (sesiSiap && sesiDisegarkan.current !== user.uid) {
-        sesiDisegarkan.current = user.uid;
-        router.refresh();
-      }
       try {
         const ref = db.collection("users").doc(user.uid);
-        const snap = await ref.get();
+        const [sesiSiap, snap] = await Promise.all([
+          pastikanSesiServer(user),
+          ref.get(),
+        ]);
+        /*
+         * WHY router.refresh() di sini:
+         * Gerbang /preview adalah Server Component yang membaca cookie sesi.
+         * Saat halaman pertama kali dirender, cookie itu BELUM ada, karena
+         * baru dipasang oleh pastikanSesiServer beberapa saat kemudian.
+         * Tanpa penyegaran, layar terus menampilkan hasil render lama, yaitu
+         * gerbang 'Masuk terlebih dahulu', padahal pengguna sudah masuk.
+         * Itulah sebabnya gembok hilang begitu halaman disegarkan manual.
+         *
+         * Disegarkan HANYA bila penukaran cookie berhasil, dan hanya sekali
+         * per UID. Menyegarkan tanpa cookie cuma memantulkan pengguna ke
+         * gerbang yang sama, dan menyegarkan berulang membuat halaman
+         * berkedip di setiap kunjungan.
+         */
+        if (sesiSiap && sesiDisegarkan.current !== user.uid) {
+          sesiDisegarkan.current = user.uid;
+          router.refresh();
+        }
         if (snap.exists) {
           const data = snap.data() as Profil;
           ref.update({ terakhirMasuk: Date.now() }).catch(() => {});
@@ -378,7 +390,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           terakhirMasuk: Date.now(),
           aktif: true,
         };
-        await db.collection("users").doc(user.uid).set(data);
         uidRef.current = user.uid;
         /*
          * Tukarkan token & segarkan gerbang server, sama seperti di
@@ -387,8 +398,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
          * diulang manual di sini. Tanpa ini akun baru tetap terkunci di
          * gerbang '/preview' sampai halaman disegarkan manual, karena
          * status "signedIn" di klien tidak pernah diberitahukan ke server.
+         *
+         * Dijalankan BARENGAN dengan penulisan dokumen Firestore (Promise.all)
+         * karena keduanya independen -- sama seperti di handleMasuk().
          */
-        const sesiSiap = await pastikanSesiServer(user);
+        const [, sesiSiap] = await Promise.all([
+          db.collection("users").doc(user.uid).set(data),
+          pastikanSesiServer(user),
+        ]);
         if (sesiSiap && sesiDisegarkan.current !== user.uid) {
           sesiDisegarkan.current = user.uid;
           router.refresh();
