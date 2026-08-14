@@ -11,7 +11,6 @@ import { ThemeToggle } from "./ThemeToggle";
 import { PatientProfile } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
 import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
-import { SpandukLangganan, type Pengingat } from "@/features/pengingat-langganan";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
@@ -21,13 +20,18 @@ import publik from "./publik.module.css";
 export interface AppShellProps {
   children: ReactNode;
   /**
-   * Pengingat masa langganan yang sudah dihitung di server oleh layout akar.
+   * Slot JSX pengingat langganan, sudah dirakit + dibungkus <Suspense> oleh
+   * layout akar (lihat widgets/app-shell/PengingatSlot.tsx).
    *
-   * Dititipkan, bukan diambil sendiri: komponen ini berjalan di browser dan
-   * tidak boleh menjadi sumber kebenaran kedua tentang siapa yang masih
-   * berlangganan. null berarti tidak ada yang perlu diingatkan.
+   * WHY berupa ReactNode siap-pakai, bukan lagi data mentah `Pengingat |
+   * null`: AppShell adalah Client Component, sedangkan pengambilan datanya
+   * (baca cookie sesi + Firestore) harus tetap di server DAN tidak boleh
+   * memblokir render. React Server Component streaming mendukung pola ini --
+   * Server Component boleh dioper sebagai children/prop ke Client Component,
+   * asal tidak dibongkar isinya di sisi klien. AppShell cukup menaruhnya di
+   * posisi yang tepat, tanpa perlu tahu apa isinya atau kapan datanya siap.
    */
-  pengingat?: Pengingat | null;
+  pengingatSlot?: ReactNode;
 }
 
 const STORAGE_KEY = "tv-sidebar-open";
@@ -70,15 +74,15 @@ const LABEL_BY_HREF: Record<string, string> = (() => {
   return m;
 })();
 
-export function AppShell({ children, pengingat }: AppShellProps) {
+export function AppShell({ children, pengingatSlot }: AppShellProps) {
   return (
     <AuthProvider>
-      <AppShellInner pengingat={pengingat}>{children}</AppShellInner>
+      <AppShellInner pengingatSlot={pengingatSlot}>{children}</AppShellInner>
     </AuthProvider>
   );
 }
 
-function AppShellInner({ children, pengingat }: AppShellProps) {
+function AppShellInner({ children, pengingatSlot }: AppShellProps) {
   const { status, catatRiwayat } = useAuth();
   const [open, setOpen] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
@@ -269,11 +273,7 @@ function AppShellInner({ children, pengingat }: AppShellProps) {
             {/* Pengingat langganan sengaja di dalam tv-main-inner, sejajar isi
                 halaman: ia ikut tergulung bersama konten dan tidak pernah
                 menutupi header maupun hasil perhitungan alat klinis. */}
-            {pengingat ? (
-              <SectionErrorBoundary label="Pengingat langganan" variant="silent">
-                <SpandukLangganan pengingat={pengingat} />
-              </SectionErrorBoundary>
-            ) : null}
+            {pengingatSlot}
             {children}
           </div>
         </main>
