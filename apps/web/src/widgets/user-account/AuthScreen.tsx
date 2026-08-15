@@ -265,10 +265,8 @@ export function AuthScreen() {
             <div>
               <h2>Welcome back, Meds!</h2>
               <p className="tv-auth-sub">
-                Masuk untuk melanjutkan ke Tinyverse dengan tampilan terbaru
-                yang lebih elegan dan fokus.
+                Masuk untuk melanjutkan ke Tinyverse.
               </p>
-              <PromoTrial ringkas />
               {(pesan.txt || errorMsg) && (
                 <div className={"tv-pesan " + (pesan.txt ? pesan.jenis : "galat")}>
                   {pesan.txt || errorMsg}
