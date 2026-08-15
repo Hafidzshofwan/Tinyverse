@@ -1119,6 +1119,14 @@ export function GrowthChartTool() {
                         src={c.image}
                         alt={`Growth chart ${c.title || indikator.label} ${labelKelamin}`}
                         onError={() => setGambarGagal((g) => ({ ...g, [c.image]: true }))}
+                        // WHY fetchPriority="high" dioper lewat objek biasa
+                        // (bukan atribut JSX langsung): menghindari tebak-tebakan
+                        // apakah versi tipe React di proyek ini sudah mengenal
+                        // atribut ini atau belum -- ini tetap valid di HTML dan
+                        // browser terlepas dari itu. Tidak mengubah ukuran,
+                        // posisi, atau elemen apa pun, jadi tidak berisiko
+                        // menggeser kalibrasi.
+                        {...({ fetchPriority: "high" } as Record<string, string>)}
                       />
                       {(hasil?.titikPerChart?.[c.id] ?? []).map((t) => {
                         const baseBawah = isFinite(t.titik.sumbuUsiaPersen)
