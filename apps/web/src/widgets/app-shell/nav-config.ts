@@ -111,15 +111,15 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/fluids": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
   "/preview/puyer": "Hitung tablet yang digerus dan pembagian bungkus.",
   "/preview/pertumbuhan": "Kurva pertumbuhan, penilaian status gizi, dan skrining perkembangan anak.",
-  "/preview/skoring": "10 skor klinis anak (dehidrasi, croup, GCS, dan lainnya).",
+  "/preview/skoring": "10 skor klinis anak (westley, downes, centor, dan lainnya).",
   "/preview/tekanan-darah": "Kategori tekanan darah anak berdasarkan persentil AAP 2017.",
   "/preview/egfr": "Perkiraan fungsi ginjal anak (eGFR) & stadium CKD dari tinggi badan dan kreatinin.",
   "/preview/lab": "Interpretasi hasil lab, termasuk analisis gas darah (AGD).",
   "/preview/neonatus": "Dua alat neonatus dalam satu menu: TPN (GIR, asam amino, lipid) dan ambang batas bilirubin.",
   "/preview/tpn-neonatus": "Nutrisi parenteral total neonatus: GIR, asam amino, dan lipid.",
   "/preview/bilirubin": "Ambang batas fototerapi & transfusi tukar bayi baru lahir.",
-  "/preview/guideline": "Panduan tata laksana penyakit anak tersering.",
-  "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan bantuan jadwal kejar (catch-up).",
+  "/preview/guideline": "Panduan tata laksana penyakit anak.",
+  "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan informasi tiap vaksin.",
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
 };
 
