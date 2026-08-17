@@ -1119,14 +1119,6 @@ export function GrowthChartTool() {
                         src={c.image}
                         alt={`Growth chart ${c.title || indikator.label} ${labelKelamin}`}
                         onError={() => setGambarGagal((g) => ({ ...g, [c.image]: true }))}
-                        // WHY fetchPriority="high" dioper lewat objek biasa
-                        // (bukan atribut JSX langsung): menghindari tebak-tebakan
-                        // apakah versi tipe React di proyek ini sudah mengenal
-                        // atribut ini atau belum -- ini tetap valid di HTML dan
-                        // browser terlepas dari itu. Tidak mengubah ukuran,
-                        // posisi, atau elemen apa pun, jadi tidak berisiko
-                        // menggeser kalibrasi.
-                        {...({ fetchPriority: "high" } as Record<string, string>)}
                       />
                       {(hasil?.titikPerChart?.[c.id] ?? []).map((t) => {
                         const baseBawah = isFinite(t.titik.sumbuUsiaPersen)
@@ -1192,6 +1184,16 @@ export function GrowthChartTool() {
                               <span style={{ color: t.warna }}>⬤</span> {t.yLabel}
                               <br />
                               {t.nilai} {t.yUnit}
+                              {/* WHY khusus c.id === "bbtb": hanya chart BB/TB
+                                  yang perlu ini. Chart lain (BB/U, IMT/U) sumbu-X-nya
+                                  usia, dan menampilkan usia di box titik dianggap
+                                  tidak perlu -- diminta dibatasi ke BB/TB saja. */}
+                              {c.id === "bbtb" && indikator && hasil?.nilaiX != null && (
+                                <>
+                                  <br />
+                                  {indikator.xLabel}: {hasil.nilaiX} {indikator.xUnit}
+                                </>
+                              )}
                             </div>
                           </div>
                         );
