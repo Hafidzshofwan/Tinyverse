@@ -59,7 +59,7 @@ const FONT_STACK = "'Fredoka', 'Segoe UI', system-ui, sans-serif";
 // --- Pita promosi Tinyverse (baris paling bawah unduhan) ---
 const PROMO_LOGO_SRC = "/brand/logo.png";
 const PROMO_NAMA = "Tinyverse";
-const PROMO_LINK_LABEL = "tinyverse-web.vercel.app";
+const PROMO_LINK_LABEL = "tinyverse.web.id";
 const WARNA_PROMO_BG = "#F8FAFC";
 const WARNA_PROMO_GARIS = "#E2E8F0";
 const WARNA_PROMO_NAMA = "#0F172A";
