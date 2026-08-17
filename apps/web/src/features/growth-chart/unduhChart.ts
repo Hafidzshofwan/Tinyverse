@@ -51,9 +51,6 @@ export interface OpsiUnduhChart {
 }
 
 const WARNA_LABEL_BG = "#0F172A";
-const WARNA_PITA_BG = "#FFFFFF";
-const WARNA_PITA_TEKS = "#0F172A";
-const WARNA_PITA_SUB = "#475569";
 const FONT_STACK = "'Fredoka', 'Segoe UI', system-ui, sans-serif";
 
 // --- Pita promosi Tinyverse (baris paling bawah unduhan) ---
@@ -236,85 +233,10 @@ function gambarTitik(
 }
 
 /**
- * Tulis satu baris teks; potong dengan elipsis "..." bila lebih lebar
- * daripada ruang yang tersedia, alih-alih dibiarkan meluber dan menabrak
- * elemen lain di sebelahnya.
+ * Sama seperti gambarTeksPas (dulu di atasnya, sudah dihapus bersama
+ * gambarPita), tetapi rata kanan -- masih dipakai gambarPromo untuk label
+ * domain di pojok kanan pita promosi.
  */
-function gambarTeksPas(
-  ctx: CanvasRenderingContext2D,
-  teks: string,
-  x: number,
-  y: number,
-  lebarMaks: number,
-): void {
-  if (ctx.measureText(teks).width <= lebarMaks) {
-    ctx.fillText(teks, x, y);
-    return;
-  }
-  const elipsis = "\u2026";
-  let potong = teks;
-  while (potong.length > 1 && ctx.measureText(potong + elipsis).width > lebarMaks) {
-    potong = potong.slice(0, -1);
-  }
-  ctx.fillText(potong + elipsis, x, y);
-}
-
-/**
- * Pita data pasien di bawah chart, supaya gambar bisa berdiri sendiri di slide.
- *
- * Judul & subjudul pendek berbagi baris atas (kiri/kanan). Keterangan (nilai
- * terukur) SELALU mendapat baris sendiri di bawahnya, lebar penuh -- ini
- * sengaja dipisah dari desain lama yang menaruh keterangan di sela-sela
- * judul/subjudul: pada indikator dengan banyak nilai terukur (mis. WHO yang
- * menampilkan berat, tinggi, DAN IMT sekaligus), teks itu bisa memanjang dan
- * menabrak judul bila keduanya berbagi baris. Dipotong elipsis bila tetap
- * kelewat panjang untuk lebar chart yang bersangkutan.
- */
-function gambarPita(
-  ctx: CanvasRenderingContext2D,
-  W: number,
-  yAtas: number,
-  tinggi: number,
-  judul: string,
-  subjudul: string,
-  keterangan: string[],
-): void {
-  const unit = W / 900;
-  ctx.save();
-  ctx.fillStyle = WARNA_PITA_BG;
-  ctx.fillRect(0, yAtas, W, tinggi);
-
-  ctx.fillStyle = "#E2E8F0";
-  ctx.fillRect(0, yAtas, W, Math.max(1, unit));
-
-  const kiri = 18 * unit;
-  const kanan = W - 18 * unit;
-  ctx.textBaseline = "middle";
-
-  // Baris atas: judul (kiri) & subjudul (kanan) -- keduanya singkat.
-  ctx.fillStyle = WARNA_PITA_TEKS;
-  ctx.font = `700 ${Math.round(15 * unit)}px ${FONT_STACK}`;
-  const yBarisJudul = yAtas + tinggi * 0.32;
-  const lebarJudulMaks = (kanan - kiri) * 0.58;
-  gambarTeksPas(ctx, judul, kiri, yBarisJudul, lebarJudulMaks);
-
-  ctx.fillStyle = WARNA_PITA_SUB;
-  ctx.font = `600 ${Math.round(11.5 * unit)}px ${FONT_STACK}`;
-  const lebarSubjudulMaks = (kanan - kiri) * 0.38;
-  gambarTeksPasKanan(ctx, subjudul, kanan, yBarisJudul, lebarSubjudulMaks);
-
-  // Baris bawah: keterangan (data pasien) -- baris SENDIRI, lebar penuh.
-  const isi = keterangan.filter(Boolean).join("   \u2022   ");
-  if (isi) {
-    ctx.fillStyle = WARNA_PITA_TEKS;
-    ctx.font = `600 ${Math.round(12 * unit)}px ${FONT_STACK}`;
-    const yBarisKet = yAtas + tinggi * 0.72;
-    gambarTeksPas(ctx, isi, kiri, yBarisKet, kanan - kiri);
-  }
-  ctx.restore();
-}
-
-/** Sama seperti gambarTeksPas, tetapi rata kanan (dipakai untuk subjudul). */
 function gambarTeksPasKanan(
   ctx: CanvasRenderingContext2D,
   teks: string,
@@ -404,7 +326,7 @@ function gambarPromo(
  * unduhan peramban. Menghasilkan error bila gambar chart belum selesai dimuat.
  */
 export async function unduhChartPNG(opsi: OpsiUnduhChart): Promise<void> {
-  const { img, titik, namaBerkas, judul, subjudul, keterangan } = opsi;
+  const { img, titik, namaBerkas } = opsi;
 
   if (!img.complete || !img.naturalWidth) {
     throw new Error("Gambar chart belum selesai dimuat.");
@@ -419,9 +341,11 @@ export async function unduhChartPNG(opsi: OpsiUnduhChart): Promise<void> {
 
   const W = Math.round(img.naturalWidth * skala);
   const Hchart = Math.round(img.naturalHeight * skala);
-  const tinggiPitaData = Math.round((W / 900) * 74);
   const tinggiPitaPromo = Math.round((W / 900) * 42);
-  const H = Hchart + tinggiPitaData + tinggiPitaPromo;
+  // Pita keterangan (judul/subjudul/nilai pasien) SENGAJA tidak lagi
+  // digambar -- hanya pita promosi (logo + domain) yang tersisa, langsung
+  // menempel di bawah gambar chart tanpa jeda.
+  const H = Hchart + tinggiPitaPromo;
 
   const canvas = document.createElement("canvas");
   canvas.width = W;
@@ -438,8 +362,7 @@ export async function unduhChartPNG(opsi: OpsiUnduhChart): Promise<void> {
 
   for (const t of titik) gambarTitik(ctx, t, W, Hchart);
 
-  gambarPita(ctx, W, Hchart, tinggiPitaData, judul, subjudul, keterangan);
-  gambarPromo(ctx, logo, W, Hchart + tinggiPitaData, tinggiPitaPromo);
+  gambarPromo(ctx, logo, W, Hchart, tinggiPitaPromo);
 
   const blob = await new Promise<Blob | null>((resolve) => {
     canvas.toBlob(resolve, "image/png");
