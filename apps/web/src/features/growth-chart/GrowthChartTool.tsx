@@ -1126,6 +1126,18 @@ export function GrowthChartTool() {
                           : t.titik.sumbuBawahPersen;
                         const targetX = tkTargetGarisHorizontal(t.titik, t.yLabel, t.yUnit, t.nilai, c.id);
                         const isGarisKeKanan = targetX === t.titik.sumbuKananPersen;
+                        /* WHY ambang batas ini beda untuk BB/TB: box di sini
+                           punya baris ekstra (tinggi badan digabung di sini,
+                           lihat kondisi c.id === "bbtb" di bawah), jadi lebih
+                           tinggi & berpotensi lebih lebar dari box chart lain.
+                           Ambang 72% yang pas untuk box 2 baris membuat box
+                           3 baris ini masih nempel ke KANAN saat titik masih
+                           di ~73% lebar chart, dan menutupi angka z-score di
+                           tepi kanan. Diturunkan khusus di sini supaya box
+                           lebih cepat berpindah ke kiri titik. */
+                        const adaBarisTinggi =
+                          c.id === "bbtb" && indikator && hasil?.nilaiX != null;
+                        const batasPangkasKanan = adaBarisTinggi ? 55 : 72;
                         let pangkasKeKiri = false;
                         if (isGarisKeKanan) {
                           // Garis horizontal ke kanan (mis. Berat Badan CDC) -> div ke KIRI
@@ -1136,7 +1148,7 @@ export function GrowthChartTool() {
                         } else {
                           // Garis horizontal ke kiri (mis. WHO, TB CDC) -> div ke KANAN
                           pangkasKeKiri = false;
-                          if (t.titik.leftPercent > 72) {
+                          if (t.titik.leftPercent > batasPangkasKanan) {
                             pangkasKeKiri = true;
                           }
                         }
