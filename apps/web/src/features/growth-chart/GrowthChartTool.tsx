@@ -1192,28 +1192,27 @@ export function GrowthChartTool() {
                                 top: `${t.titik.topPercent}%`,
                                 transform: `translate(${offsetX}, ${offsetY})`,
                                 borderColor: t.warna,
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <span style={{ color: t.warna }}>⬤</span> {t.yLabel}
-                              <br />
+                              {/* WHY satu baris (tanpa <br/>) & tanpa satuan
+                                  ganda: sebelumnya isi box dipecah 2-3 baris
+                                  (label, lalu nilai, lalu baris PB/TB) dan
+                                  masing-masing menulis satuannya sendiri,
+                                  sehingga "kg"/"cm" bisa disebut dua kali
+                                  dalam satu box. Sekarang semua digabung jadi
+                                  satu kalimat mengalir, satuan cukup sekali
+                                  di akhir tiap nilai. yLabel dari
+                                  chartConfig.ts tidak diubah di sumbernya
+                                  (dipakai juga di PDF, dsb) -- kurung
+                                  satuannya cukup dibuang saat ditampilkan di
+                                  sini saja. */}
+                              <span style={{ color: t.warna }}>⬤</span>{" "}
+                              {t.yLabel.replace(/\s*\([^)]*\)\s*$/, "")}:{" "}
                               {t.nilai} {t.yUnit}
-                              {/* WHY label ini ditulis manual per c.id, bukan
-                                  pakai indikator.xLabel: xLabel di data chart
-                                  sengaja digabung jadi "Panjang/Tinggi Badan
-                                  (cm)" karena satu grup indikator menaungi
-                                  dua chart (BB/PB usia 0-2 thn ukur telentang,
-                                  BB/TB usia 2-5 thn ukur berdiri). Di box titik
-                                  pasien, yang relevan cuma SALAH SATU sesuai
-                                  chart yang sedang aktif -- tidak keduanya
-                                  sekaligus, karena pengguna cuma memilih &
-                                  mengisi satu cara ukur di satu waktu. */}
                               {(c.id === "bbtb" || c.id === "bbpb") &&
-                                hasil?.nilaiX != null && (
-                                  <>
-                                    <br />
-                                    {c.id === "bbpb" ? "Panjang Badan (cm)" : "Tinggi Badan (cm)"}: {hasil.nilaiX} cm
-                                  </>
-                                )}
+                                hasil?.nilaiX != null &&
+                                `, ${c.id === "bbpb" ? "Panjang Badan" : "Tinggi Badan"}: ${hasil.nilaiX} cm`}
                             </div>
                           </div>
                         );
