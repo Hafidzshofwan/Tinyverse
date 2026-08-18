@@ -1126,17 +1126,18 @@ export function GrowthChartTool() {
                           : t.titik.sumbuBawahPersen;
                         const targetX = tkTargetGarisHorizontal(t.titik, t.yLabel, t.yUnit, t.nilai, c.id);
                         const isGarisKeKanan = targetX === t.titik.sumbuKananPersen;
-                        /* WHY ambang batas ini beda untuk BB/TB: box di sini
-                           punya baris ekstra (tinggi badan digabung di sini,
-                           lihat kondisi c.id === "bbtb" di bawah), jadi lebih
-                           tinggi & berpotensi lebih lebar dari box chart lain.
-                           Ambang 72% yang pas untuk box 2 baris membuat box
-                           3 baris ini masih nempel ke KANAN saat titik masih
-                           di ~73% lebar chart, dan menutupi angka z-score di
-                           tepi kanan. Diturunkan khusus di sini supaya box
-                           lebih cepat berpindah ke kiri titik. */
+                        /* WHY ambang batas ini beda untuk BB/PB & BB/TB: box
+                           di sini punya baris ekstra (panjang/tinggi badan
+                           digabung di sini, lihat kondisi di bawah), jadi
+                           lebih tinggi & berpotensi lebih lebar dari box
+                           chart lain. Ambang 72% yang pas untuk box 2 baris
+                           membuat box 3 baris ini masih nempel ke KANAN saat
+                           titik masih di ~73% lebar chart, dan menutupi angka
+                           z-score di tepi kanan. Diturunkan khusus di sini
+                           supaya box lebih cepat berpindah ke kiri titik. */
                         const adaBarisTinggi =
-                          c.id === "bbtb" && indikator && hasil?.nilaiX != null;
+                          (c.id === "bbtb" || c.id === "bbpb") &&
+                          hasil?.nilaiX != null;
                         const batasPangkasKanan = adaBarisTinggi ? 55 : 72;
                         let pangkasKeKiri = false;
                         if (isGarisKeKanan) {
@@ -1196,16 +1197,23 @@ export function GrowthChartTool() {
                               <span style={{ color: t.warna }}>⬤</span> {t.yLabel}
                               <br />
                               {t.nilai} {t.yUnit}
-                              {/* WHY khusus c.id === "bbtb": hanya chart BB/TB
-                                  yang perlu ini. Chart lain (BB/U, IMT/U) sumbu-X-nya
-                                  usia, dan menampilkan usia di box titik dianggap
-                                  tidak perlu -- diminta dibatasi ke BB/TB saja. */}
-                              {c.id === "bbtb" && indikator && hasil?.nilaiX != null && (
-                                <>
-                                  <br />
-                                  {indikator.xLabel}: {hasil.nilaiX} {indikator.xUnit}
-                                </>
-                              )}
+                              {/* WHY label ini ditulis manual per c.id, bukan
+                                  pakai indikator.xLabel: xLabel di data chart
+                                  sengaja digabung jadi "Panjang/Tinggi Badan
+                                  (cm)" karena satu grup indikator menaungi
+                                  dua chart (BB/PB usia 0-2 thn ukur telentang,
+                                  BB/TB usia 2-5 thn ukur berdiri). Di box titik
+                                  pasien, yang relevan cuma SALAH SATU sesuai
+                                  chart yang sedang aktif -- tidak keduanya
+                                  sekaligus, karena pengguna cuma memilih &
+                                  mengisi satu cara ukur di satu waktu. */}
+                              {(c.id === "bbtb" || c.id === "bbpb") &&
+                                hasil?.nilaiX != null && (
+                                  <>
+                                    <br />
+                                    {c.id === "bbpb" ? "Panjang Badan (cm)" : "Tinggi Badan (cm)"}: {hasil.nilaiX} cm
+                                  </>
+                                )}
                             </div>
                           </div>
                         );
