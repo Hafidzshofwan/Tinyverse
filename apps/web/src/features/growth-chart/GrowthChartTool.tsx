@@ -1192,27 +1192,36 @@ export function GrowthChartTool() {
                                 top: `${t.titik.topPercent}%`,
                                 transform: `translate(${offsetX}, ${offsetY})`,
                                 borderColor: t.warna,
-                                whiteSpace: "nowrap",
                               }}
                             >
-                              {/* WHY satu baris (tanpa <br/>) & tanpa satuan
-                                  ganda: sebelumnya isi box dipecah 2-3 baris
-                                  (label, lalu nilai, lalu baris PB/TB) dan
-                                  masing-masing menulis satuannya sendiri,
-                                  sehingga "kg"/"cm" bisa disebut dua kali
-                                  dalam satu box. Sekarang semua digabung jadi
-                                  satu kalimat mengalir, satuan cukup sekali
-                                  di akhir tiap nilai. yLabel dari
-                                  chartConfig.ts tidak diubah di sumbernya
-                                  (dipakai juga di PDF, dsb) -- kurung
-                                  satuannya cukup dibuang saat ditampilkan di
-                                  sini saja. */}
-                              <span style={{ color: t.warna }}>⬤</span>{" "}
-                              {t.yLabel.replace(/\s*\([^)]*\)\s*$/, "")}:{" "}
-                              {t.nilai} {t.yUnit}
+                              {/* WHY <br/> ANTAR item, tapi whiteSpace:nowrap
+                                  DI TIAP item: tiap item (Berat Badan, atau
+                                  Tinggi/Panjang Badan) adalah satu baris
+                                  sendiri -- tidak digabung jadi satu kalimat
+                                  panjang, tapi juga satu item tidak boleh
+                                  kepotong jadi dua baris karena box kesempitan.
+                                  nowrap diterapkan per <span> item (bukan di
+                                  wadah <div> box), supaya baris demi baris
+                                  tetap terpisah lewat <br/> seperti biasa,
+                                  hanya SETIAP baris itu sendiri yang dipaksa
+                                  tidak membungkus. Satuan cukup sekali di
+                                  akhir nilai -- yLabel dari chartConfig.ts
+                                  (mis. "Berat Badan (kg)") sudah menulis
+                                  satuan dalam kurung, jadi kurungnya dibuang
+                                  di sini saja supaya tidak dobel dengan "12 kg". */}
+                              <span style={{ whiteSpace: "nowrap" }}>
+                                <span style={{ color: t.warna }}>⬤</span>{" "}
+                                {t.yLabel.replace(/\s*\([^)]*\)\s*$/, "")}: {t.nilai} {t.yUnit}
+                              </span>
                               {(c.id === "bbtb" || c.id === "bbpb") &&
-                                hasil?.nilaiX != null &&
-                                `, ${c.id === "bbpb" ? "Panjang Badan" : "Tinggi Badan"}: ${hasil.nilaiX} cm`}
+                                hasil?.nilaiX != null && (
+                                  <>
+                                    <br />
+                                    <span style={{ whiteSpace: "nowrap" }}>
+                                      {c.id === "bbpb" ? "Panjang Badan" : "Tinggi Badan"}: {hasil.nilaiX} cm
+                                    </span>
+                                  </>
+                                )}
                             </div>
                           </div>
                         );
