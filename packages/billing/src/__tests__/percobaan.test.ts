@@ -11,10 +11,10 @@ import { langgananKosong, type Langganan } from "../subscription/types"
 import type { Plan } from "../plans/types"
 
 const SEKARANG = "2026-06-01T00:00:00.000Z"
-/* Tujuh hari setelah SEKARANG. Ditulis sebagai angka mati, bukan dihitung ulang
+/* Sepuluh hari setelah SEKARANG. Ditulis sebagai angka mati, bukan dihitung ulang
    dengan tambahHari - kalau tambahHari suatu saat rusak, uji yang memakai
    tambahHari untuk menyusun jawabannya sendiri akan tetap hijau. */
-const AKHIR_PERCOBAAN = "2026-06-08T00:00:00.000Z"
+const AKHIR_PERCOBAAN = "2026-06-11T00:00:00.000Z"
 
 const PAKET_BULANAN: Plan = {
 	id: "bulanan",
@@ -44,15 +44,15 @@ function langgananBerbayar(berakhir: string): Langganan {
 }
 
 describe("buatLanggananPercobaan", () => {
-	it("memberi akses tepat tujuh hari", () => {
+	it("memberi akses tepat sepuluh hari", () => {
 		const langganan = buatLanggananPercobaan("akun-1", SEKARANG)
 		const e = hitungEntitlement(langganan, SEKARANG)
 
-		expect(HARI_PERCOBAAN).toBe(7)
+		expect(HARI_PERCOBAAN).toBe(10)
 		expect(langganan.periodeBerakhir).toBe(AKHIR_PERCOBAAN)
 		expect(e.status).toBe("aktif")
 		expect(e.bolehAkses).toBe(true)
-		expect(e.sisaHari).toBe(7)
+		expect(e.sisaHari).toBe(10)
 	})
 
 	it("tidak menyimpan nomor pesanan, karena tidak ada uang yang masuk", () => {
@@ -68,13 +68,13 @@ describe("buatLanggananPercobaan", () => {
 
 	it("masih mengizinkan satu milidetik sebelum habis", () => {
 		const langganan = buatLanggananPercobaan("akun-1", SEKARANG)
-		const e = hitungEntitlement(langganan, "2026-06-07T23:59:59.999Z")
+		const e = hitungEntitlement(langganan, "2026-06-10T23:59:59.999Z")
 		expect(e.bolehAkses).toBe(true)
 	})
 
-	it("hari kedelapan sudah tertutup dan berstatus kedaluwarsa", () => {
+	it("hari kesebelas sudah tertutup dan berstatus kedaluwarsa", () => {
 		const langganan = buatLanggananPercobaan("akun-1", SEKARANG)
-		const e = hitungEntitlement(langganan, "2026-06-09T00:00:00.000Z")
+		const e = hitungEntitlement(langganan, "2026-06-12T00:00:00.000Z")
 		expect(e.status).toBe("kedaluwarsa")
 		expect(e.bolehAkses).toBe(false)
 	})
@@ -94,7 +94,7 @@ describe("bolehDapatPercobaan", () => {
 	/*
 	 * Kasus yang menentukan: langganan yang SUDAH LEWAT tetap menutup pintu
 	 * masa percobaan. Tanpa uji ini, seseorang yang langganannya habis bisa
-	 * mendapat 7 hari gratis setiap kali dokumennya dianggap "tidak aktif",
+	 * mendapat 10 hari gratis setiap kali dokumennya dianggap "tidak aktif",
 	 * dan itu berarti akses gratis tanpa batas dengan cara menunggu.
 	 */
 	it("menolak akun yang langganannya sudah kedaluwarsa", () => {
@@ -120,19 +120,19 @@ describe("pembelian saat masa percobaan masih berjalan", () => {
 	 * terapkanPembelian menghitung titik awal dari yang paling akhir antara
 	 * "sekarang" dan akhir periode berjalan. Karena masa percobaan adalah
 	 * periode berjalan, pembeli mendapat sisa masa percobaannya sebagai bonus -
-	 * paling banyak 7 hari.
+	 * paling banyak 10 hari.
 	 *
 	 * Ini dibiarkan dengan sengaja: perilakunya konsisten dengan janji yang
 	 * sudah tertulis di perpanjang.ts ("pelanggan yang memperpanjang lebih awal
 	 * tidak kehilangan sisa harinya"), dan menambah cabang khusus di fungsi
 	 * yang menghitung masa akses hasil uang sungguhan jauh lebih berisiko
-	 * daripada memberi 7 hari. Uji ini ada supaya perilaku itu tidak pernah
+	 * daripada memberi 10 hari. Uji ini ada supaya perilaku itu tidak pernah
 	 * berubah tanpa seseorang sadar mengubahnya.
 	 *
-	 * Bonus ini ikut membesar saat durasi trial dinaikkan dari 2 ke 7 hari.
-	 * Itu disadari dan diterima: pembeli paling awal mendapat paling banyak
-	 * tujuh hari tambahan, dan justru orang yang membeli lebih cepat yang
-	 * pantas diuntungkan.
+	 * Bonus ini ikut membesar seiring durasi trial dinaikkan: dari 2 ke 7 hari,
+	 * lalu dari 7 ke 10 hari. Itu disadari dan diterima: pembeli paling awal
+	 * mendapat paling banyak sepuluh hari tambahan, dan justru orang yang
+	 * membeli lebih cepat yang pantas diuntungkan.
 	 */
 	it("menambahkan paket di atas sisa masa percobaan", () => {
 		const percobaan = buatLanggananPercobaan("akun-1", SEKARANG)
@@ -143,8 +143,8 @@ describe("pembelian saat masa percobaan masih berjalan", () => {
 			sekarang: "2026-06-02T00:00:00.000Z",
 		})
 
-		/* 8 Juni (akhir percobaan) + 30 hari, bukan 2 Juni + 30 hari. */
-		expect(sesudah.periodeBerakhir).toBe("2026-07-08T00:00:00.000Z")
+		/* 11 Juni (akhir percobaan) + 30 hari, bukan 2 Juni + 30 hari. */
+		expect(sesudah.periodeBerakhir).toBe("2026-07-11T00:00:00.000Z")
 		expect(sesudah.planId).toBe("bulanan")
 		expect(sesudah.lastOrderId).toBe("TV-1")
 	})
