@@ -1,0 +1,1 @@
+export { SpandukVerifikasiEmail } from "./SpandukVerifikasiEmail";

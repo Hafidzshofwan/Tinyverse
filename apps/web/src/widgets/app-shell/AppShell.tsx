@@ -10,11 +10,12 @@ import { GlobalSearch } from "./GlobalSearch";
 import { ThemeToggle } from "./ThemeToggle";
 import { PatientProfile } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
-import { AuthProvider, AuthScreen, UserMenu, useAuth } from "@/widgets/user-account";
+import { AuthProvider, AuthScreen, VerifikasiEmailScreen, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
 import { OnboardingTour } from "@/widgets/onboarding-tour";
+import { SpandukVerifikasiEmail } from "@/features/verifikasi-email";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
@@ -83,7 +84,7 @@ export function AppShell({ children, pengingatSlot }: AppShellProps) {
 }
 
 function AppShellInner({ children, pengingatSlot }: AppShellProps) {
-  const { status, catatRiwayat } = useAuth();
+  const { status, emailVerified, catatRiwayat } = useAuth();
   const [open, setOpen] = useState(true);
   const [isNavigating, setIsNavigating] = useState(false);
   const pathname = usePathname();
@@ -221,6 +222,22 @@ function AppShellInner({ children, pengingatSlot }: AppShellProps) {
     return <AuthScreen />;
   }
 
+  /*
+   * Email belum diverifikasi: tampilkan layar verifikasi penuh.
+   *
+   * WHY di sini (bukan di AuthScreen atau dalam halaman tersendiri):
+   * AuthScreen hanya tampil saat status !== "signedIn". Setelah daftar,
+   * status langsung menjadi "signedIn" -- AuthScreen menghilang, dan tanpa
+   * gerbang ini pengguna langsung masuk ke seluruh fitur tanpa pernah
+   * mengklik tautan verifikasi.
+   *
+   * Akun Google dikecualikan secara otomatis: Google selalu menetapkan
+   * emailVerified = true pada akun yang masuk lewat OAuth.
+   */
+  if (!emailVerified) {
+    return <VerifikasiEmailScreen />;
+  }
+
   return (
     <div className={kelasShell}>
       <header className="tv-topbar">
@@ -273,6 +290,12 @@ function AppShellInner({ children, pengingatSlot }: AppShellProps) {
             {/* Pengingat langganan sengaja di dalam tv-main-inner, sejajar isi
                 halaman: ia ikut tergulung bersama konten dan tidak pernah
                 menutupi header maupun hasil perhitungan alat klinis. */}
+            {/* Spanduk verifikasi email: tampil hanya bila email belum diverifikasi.
+                Ditempatkan paling atas agar tidak terlewat, sebelum pengingat
+                langganan karena verifikasi email lebih mendesak untuk diselesaikan. */}
+            <SectionErrorBoundary label="Verifikasi email" variant="silent">
+              <SpandukVerifikasiEmail />
+            </SectionErrorBoundary>
             {pengingatSlot}
             {children}
           </div>
