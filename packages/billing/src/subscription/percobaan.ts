@@ -13,7 +13,7 @@ import type { Langganan } from "./types"
  * jawaban untuk satu pertanyaan "boleh masuk atau tidak", dan dua jawaban itu
  * pasti akan berbeda pada kasus pinggir - berupa pelanggan membayar yang
  * tertolak, atau akses gratis yang tidak pernah tertutup. Karena itu masa
- * percobaan hanyalah langganan 10 hari yang tidak dibayar.
+ * percobaan hanyalah langganan 7 hari yang tidak dibayar.
  */
 
 /**
@@ -38,7 +38,7 @@ export const PERCOBAAN_PLAN_ID = "percobaan"
  * atas tidak bisa diuji mesin - keduanya mengikat secara hukum, jadi selisih
  * angka di sana bukan sekadar salah tulis.
  */
-export const HARI_PERCOBAAN = 10
+export const HARI_PERCOBAAN = 7
 
 /**
  * Susun langganan masa percobaan untuk sebuah akun.

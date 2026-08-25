@@ -79,7 +79,7 @@ export default function HalamanSyaratKetentuan() {
         <h2 className={gaya.kepala}>3. Masa percobaan gratis</h2>
         <ul className={gaya.daftar}>
           <li>
-            Setiap akun baru memperoleh <strong>masa percobaan 10 hari</strong>
+            Setiap akun baru memperoleh <strong>masa percobaan 7 hari</strong>
             {" "}dengan akses penuh ke seluruh alat klinis, tanpa biaya.
           </li>
           <li>
@@ -92,7 +92,7 @@ export default function HalamanSyaratKetentuan() {
             {" "}dan tidak dapat diperpanjang maupun diaktifkan ulang.
           </li>
           <li>
-            Setelah 10 hari, akses ke alat klinis berhenti dengan sendirinya.
+            Setelah 7 hari, akses ke alat klinis berhenti dengan sendirinya.
             Data pasien yang telah Anda simpan tetap utuh dan dapat diakses
             kembali setelah Anda berlangganan.
           </li>

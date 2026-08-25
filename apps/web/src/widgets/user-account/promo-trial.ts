@@ -27,4 +27,4 @@
  *   - apps/web/src/app/syarat-ketentuan/page.tsx  (bagian 3)
  *   - apps/web/src/app/pengembalian-dana/page.tsx
  */
-export const HARI_TRIAL = 10;
+export const HARI_TRIAL = 7;

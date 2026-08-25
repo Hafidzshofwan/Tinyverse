@@ -9,7 +9,7 @@
  * merupakan kesalahan kami. Yang dituntut Midtrans bukan kebijakan yang
  * longgar, melainkan kebijakan yang JELAS dan dapat dibaca sebelum membayar.
  *
- * Masa percobaan 10 hari memperkuat dasar kebijakan ini: pembeli sudah dapat
+ * Masa percobaan 7 hari memperkuat dasar kebijakan ini: pembeli sudah dapat
  * menilai seluruh alat klinis tanpa mengeluarkan uang sepeser pun, sehingga
  * "berubah pikiran setelah membayar" bukan lagi keadaan yang tak terhindarkan.
  */
@@ -58,7 +58,7 @@ export default function HalamanPengembalianDana() {
           tagihan yang muncul tanpa Anda kehendaki.
         </p>
         <p className={gaya.teks}>
-          Setiap akun baru memperoleh <strong>masa percobaan 10 hari</strong>
+          Setiap akun baru memperoleh <strong>masa percobaan 7 hari</strong>
           {" "}dengan akses penuh dan tanpa biaya. Anda dianjurkan menilai
           seluruh alat klinis pada masa itu sebelum memutuskan membeli. Masa
           percobaan tidak melibatkan pembayaran, sehingga tidak ada dana yang
