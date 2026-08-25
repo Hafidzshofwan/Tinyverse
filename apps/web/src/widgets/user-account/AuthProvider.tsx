@@ -68,9 +68,13 @@ interface AuthContextValue {
    * halaman dimuat ulang.
    */
   akunBaru: boolean;
+  /** Status verifikasi email sesi saat ini. Lihat catatan di state emailVerified. */
+  emailVerified: boolean;
   masuk: (email: string, pass: string) => Promise<void>;
   masukGoogle: () => Promise<void>;
   kirimResetSandi: (email: string) => Promise<void>;
+  kirimUlangVerifikasiEmail: () => Promise<void>;
+  periksaVerifikasiEmail: () => Promise<boolean>;
   daftar: (
     nama: string,
     institusi: string,
@@ -108,12 +112,85 @@ function terapkanPref(profil: Profil | null) {
   document.body.classList.toggle("tv-tanpa-dekorasi", !!p.sembunyikanDekorasi);
 }
 
+/**
+ * Domain email sekali-pakai (disposable/temp-mail) yang dikenal luas.
+ *
+ * WHY diblokir SEBELUM createUserWithEmailAndPassword dipanggil, bukan
+ * sesudahnya: begitu akun Authentication terbuat, ia sudah memakai jatah
+ * satu email tersebut selamanya (Firebase tidak mengizinkan dua akun dengan
+ * email yang sama). Menolak di titik ini berarti tidak ada akun "sampah"
+ * yang sempat tercipta sama sekali -- lebih bersih daripada membuat lalu
+ * menghapusnya lagi.
+ *
+ * WHY ini BUKAN solusi tunggal: daftar ini tidak mungkin lengkap selamanya
+ * (layanan baru bermunculan terus), dan seseorang tetap bisa memakai Gmail
+ * asli tanpa niat baik. Ini lapisan pertama yang murah untuk menyaring bot
+ * atau percobaan otomatis yang memang lazim memakai domain semacam ini --
+ * bukan pengganti verifikasi email (lihat kirimUlangVerifikasi di bawah).
+ *
+ * Perlu diperbarui manual dari waktu ke waktu; bukan daftar yang disinkron
+ * otomatis dari sumber luar.
+ */
+const DOMAIN_EMAIL_SEKALI_PAKAI = new Set([
+  "mailinator.com",
+  "guerrillamail.com",
+  "guerrillamail.info",
+  "guerrillamail.biz",
+  "guerrillamail.org",
+  "guerrillamail.de",
+  "sharklasers.com",
+  "grr.la",
+  "tempmail.com",
+  "temp-mail.org",
+  "10minutemail.com",
+  "10minutemail.net",
+  "20minutemail.com",
+  "throwawaymail.com",
+  "yopmail.com",
+  "yopmail.fr",
+  "yopmail.net",
+  "trashmail.com",
+  "getnada.com",
+  "dispostable.com",
+  "fakeinbox.com",
+  "maildrop.cc",
+  "moakt.com",
+  "mintemail.com",
+  "mohmal.com",
+  "emailondeck.com",
+  "spamgourmet.com",
+  "mytemp.email",
+  "tempinbox.com",
+  "tempr.email",
+  "burnermail.io",
+  "inboxbear.com",
+  "discard.email",
+  "discardmail.com",
+]);
+
+function domainEmailSekaliPakai(email: string): boolean {
+  const domain = String(email || "")
+    .toLowerCase()
+    .split("@")[1];
+  return !!domain && DOMAIN_EMAIL_SEKALI_PAKAI.has(domain);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [status, setStatus] = useState<Status>("loading");
   const [profil, setProfil] = useState<Profil | null>(null);
   const [errorMsg, setErrorMsg] = useState("");
   const [infoMsg, setInfoMsg] = useState("");
   const [akunBaru, setAkunBaru] = useState(false);
+  /*
+   * Status verifikasi email milik SESI SAAT INI, dibaca langsung dari objek
+   * Firebase Auth (auth.currentUser.emailVerified) -- BUKAN disimpan sebagai
+   * field di dokumen Firestore users/{uid}. Alasannya: status ini murni milik
+   * Firebase Authentication dan bisa berubah kapan saja pengguna mengklik
+   * link di emailnya, di tab/perangkat lain, tanpa aplikasi ini tahu. Kalau
+   * disalin ke Firestore, salinannya nyaris pasti basi begitu diklik di luar
+   * sesi yang sedang berjalan.
+   */
+  const [emailVerified, setEmailVerified] = useState(false);
 
   const authRef = useRef<Any>(null);
   const dbRef = useRef<Any>(null);
@@ -158,6 +235,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     const auth = authRef.current;
     const u = auth && auth.currentUser ? auth.currentUser : null;
+    setEmailVerified(!!(u && u.emailVerified));
     const lanjut = (role: "admin" | "user") => {
       const finalProfil: Profil = { ...data, role };
       terapkanPref(finalProfil);
@@ -291,6 +369,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             uidRef.current = null;
             sesiDisegarkan.current = null;
             setProfil(null);
+            setEmailVerified(false);
             terapkanPref(null);
             setAkunPasien(null);
             bersihkanPasienLokal();
@@ -351,6 +430,47 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
+  /**
+   * Kirim ulang email verifikasi ke alamat akun yang sedang masuk.
+   *
+   * Dipakai tombol "Kirim ulang" pada spanduk pengingat verifikasi di UI.
+   * Firebase sendiri yang membatasi laju pengiriman (menolak bila terlalu
+   * sering diminta dalam waktu singkat) -- pesan errornya diteruskan apa
+   * adanya lewat petaError agar pengguna tahu harus menunggu.
+   */
+  const kirimUlangVerifikasiEmail = useCallback(async () => {
+    const auth = authRef.current;
+    const u = auth && auth.currentUser ? auth.currentUser : null;
+    if (!u) throw new Error("Belum masuk.");
+    try {
+      await u.sendEmailVerification();
+    } catch (e) {
+      throw new Error(petaError(e));
+    }
+  }, []);
+
+  /**
+   * Muat ulang data akun dari Firebase Auth lalu perbarui emailVerified.
+   *
+   * WHY perlu dipanggil manual (bukan otomatis): Firebase tidak mengabari
+   * aplikasi secara real-time saat pengguna mengklik link verifikasi di
+   * emailnya -- status barunya hanya terlihat setelah token/data akun
+   * dimuat ulang. Ini yang dipanggil tombol "Saya sudah verifikasi".
+   */
+  const periksaVerifikasiEmail = useCallback(async () => {
+    const auth = authRef.current;
+    const u = auth && auth.currentUser ? auth.currentUser : null;
+    if (!u) return false;
+    try {
+      await u.reload();
+      const terverifikasi = !!u.emailVerified;
+      setEmailVerified(terverifikasi);
+      return terverifikasi;
+    } catch {
+      return false;
+    }
+  }, []);
+
   const masukGoogle = useCallback(async () => {
     const auth = authRef.current;
     const fb = (window as unknown as { firebase?: Any }).firebase;
@@ -372,11 +492,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const auth = authRef.current;
       const db = dbRef.current;
       if (!auth || !db) throw new Error("Firebase belum siap.");
+      if (domainEmailSekaliPakai(email)) {
+        throw new Error(
+          "Email sekali-pakai/sementara tidak dapat dipakai untuk mendaftar. Gunakan alamat email pribadi atau institusi Anda.",
+        );
+      }
       sedangDaftar.current = true;
       try {
         const cred = await auth.createUserWithEmailAndPassword(email, pass);
         const user = cred.user;
         await user.updateProfile({ displayName: nama }).catch(() => {});
+        /*
+         * Kirim email verifikasi -- best-effort, tidak menggagalkan
+         * pendaftaran bila pengirimannya gagal (mis. kuota Firebase habis).
+         * Akun tetap bisa dipakai tanpa verifikasi untuk saat ini; status
+         * terverifikasi-atau-belum dilacak lewat context value
+         * `emailVerified` (lihat definisinya di atas), bukan disimpan di
+         * dokumen Firestore.
+         */
+        user.sendEmailVerification().catch(() => {});
         const peran = await tentukanPeran(email);
         const data: Profil = {
           uid: user.uid,
@@ -600,9 +734,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     errorMsg,
     infoMsg,
     akunBaru,
+    emailVerified,
     masuk,
     masukGoogle,
     kirimResetSandi,
+    kirimUlangVerifikasiEmail,
+    periksaVerifikasiEmail,
     daftar,
     keluar,
     hapusAkunSendiri,
