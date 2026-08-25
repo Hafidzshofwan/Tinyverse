@@ -10,12 +10,11 @@ import { GlobalSearch } from "./GlobalSearch";
 import { ThemeToggle } from "./ThemeToggle";
 import { PatientProfile } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
-import { AuthProvider, AuthScreen, VerifikasiEmailScreen, UserMenu, useAuth } from "@/widgets/user-account";
+import { AuthProvider, AuthScreen, VerifikasiEmailScreen, SpandukVerifikasiEmail, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
 import { OnboardingTour } from "@/widgets/onboarding-tour";
-import { SpandukVerifikasiEmail } from "@/features/verifikasi-email";
 import publik from "./publik.module.css";
 
 export interface AppShellProps {
