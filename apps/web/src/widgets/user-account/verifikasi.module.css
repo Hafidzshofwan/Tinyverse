@@ -185,3 +185,34 @@
     padding: 6px 12px;
   }
 }
+
+
+/* Hint folder spam — kotak kuning kecil di bawah teks utama */
+.hintSpam {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: 7px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: #fefce8;
+  border: 1px solid #fde68a;
+  border-left: 3px solid #f59e0b;
+  font-size: 0.8rem;
+  color: #78350f;
+  line-height: 1.5;
+}
+
+.hintSpamIkon {
+  flex-shrink: 0;
+  font-size: 0.95rem;
+  margin-top: 1px;
+}
+
+/* Dark mode hint spam */
+:global([data-theme="dark"]) .hintSpam {
+  background: rgba(234, 179, 8, 0.1);
+  border-color: rgba(234, 179, 8, 0.3);
+  border-left-color: #f59e0b;
+  color: #fde68a;
+}

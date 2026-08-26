@@ -10,17 +10,6 @@ import { LoadingAnimation } from "@/shared/ui";
  * Tampil setelah pendaftaran email/sandi berhasil, SEBELUM pengguna masuk ke
  * aplikasi. Hanya berlaku untuk akun email/sandi -- akun Google dikecualikan
  * otomatis karena Google selalu menetapkan emailVerified = true.
- *
- * WHY layar penuh, bukan sekadar spanduk:
- * SpandukVerifikasiEmail (yang sudah ada) tampil DI DALAM aplikasi dan mudah
- * diabaikan -- pengguna bisa langsung pakai fitur tanpa pernah memverifikasi.
- * Gerbang ini menutup seluruh aplikasi sampai email terverifikasi, memastikan
- * hanya alamat email yang benar-benar dimiliki pengguna yang bisa dipakai.
- *
- * WHY tidak menampilkan email pengguna secara utuh:
- * Profil bisa saja belum termuat saat layar ini tampil (race condition tipis).
- * Diambil dari profil bila tersedia, dengan fallback ke string kosong -- UI
- * tetap fungsional tanpa email.
  */
 export function VerifikasiEmailScreen() {
   const { profil, kirimUlangVerifikasiEmail, periksaVerifikasiEmail, keluar } =
@@ -61,8 +50,6 @@ export function VerifikasiEmailScreen() {
           jenis: "galat",
         });
       }
-      // Bila terverifikasi: emailVerified di context berubah jadi true →
-      // AppShell tidak lagi merender layar ini, pengguna masuk ke aplikasi.
     } catch (e) {
       setPesan({ txt: (e as Error).message, jenis: "galat" });
     }
@@ -85,7 +72,7 @@ export function VerifikasiEmailScreen() {
   return (
     <div className="tv-auth">
       <div className="tv-auth-kartu">
-        {/* Panel kiri: brand sama persis seperti AuthScreen */}
+        {/* Panel kiri: brand */}
         <aside className="tv-auth-brand" aria-hidden>
           <div className="tv-auth-logo">
             <span className="tv-auth-logo-badge">{"\u2726"}</span>
@@ -107,13 +94,8 @@ export function VerifikasiEmailScreen() {
         {/* Panel kanan: instruksi verifikasi */}
         <main className="tv-auth-panel">
           <div>
-            {/* Ikon amplop besar */}
             <div
-              style={{
-                fontSize: "3rem",
-                marginBottom: "12px",
-                lineHeight: 1,
-              }}
+              style={{ fontSize: "3rem", marginBottom: "12px", lineHeight: 1 }}
               aria-hidden
             >
               ✉️
@@ -132,11 +114,36 @@ export function VerifikasiEmailScreen() {
               ke sini dan tekan tombol di bawah.
             </p>
 
+            {/* Hint spam — kotak tersendiri agar mata langsung tertuju */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "8px",
+                margin: "12px 0 16px",
+                padding: "10px 13px",
+                borderRadius: "10px",
+                background: "#fefce8",
+                border: "1px solid #fde68a",
+                borderLeft: "3px solid #f59e0b",
+                fontSize: "0.83rem",
+                color: "#78350f",
+                lineHeight: 1.5,
+              }}
+            >
+              <span style={{ fontSize: "1rem", flexShrink: 0, marginTop: "1px" }} aria-hidden>
+                📂
+              </span>
+              <span>
+                Tidak ketemu emailnya?{" "}
+                <strong>Cek folder Spam atau Promosi</strong>.
+              </span>
+            </div>
+
             {pesan && (
               <div className={"tv-pesan " + pesan.jenis}>{pesan.txt}</div>
             )}
 
-            {/* Tombol utama: sudah verifikasi */}
             <button
               className="tv-btn"
               disabled={sibuk}
@@ -146,7 +153,6 @@ export function VerifikasiEmailScreen() {
               {sibukPeriksa ? "Memeriksa\u2026" : "Saya sudah verifikasi \u2713"}
             </button>
 
-            {/* Tombol sekunder: kirim ulang */}
             <button
               className="tv-btn sekunder"
               disabled={sibuk}

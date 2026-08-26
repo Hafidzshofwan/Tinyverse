@@ -11,18 +11,6 @@ const TUTUP_KEY = "tv-verif-email-tutup";
  *
  * Tampil hanya bila pengguna sudah masuk TAPI emailnya belum diverifikasi
  * (pasti akun email/sandi -- akun Google selalu terverifikasi otomatis).
- *
- * WHY ditempatkan di sisi klien (Client Component):
- * Status emailVerified dibaca langsung dari Firebase Auth dan dipantau oleh
- * AuthProvider; tidak ada di cookie server. Komponen ini tidak perlu data
- * apapun dari server, hanya state yang sudah tersedia di context.
- *
- * WHY "Saya sudah verifikasi" perlu tombol manual:
- * Firebase tidak mengirimkan event real-time ke aplikasi yang sedang berjalan
- * ketika pengguna mengklik link verifikasi di tab/perangkat lain. Satu-satunya
- * cara aplikasi tahu adalah dengan memanggil u.reload() -- itulah yang
- * dilakukan periksaVerifikasiEmail(). Tombol ini menjadi jembatan antara
- * "sudah klik di email" dan "banner menghilang".
  */
 export function SpandukVerifikasiEmail() {
   const { status, emailVerified, kirimUlangVerifikasiEmail, periksaVerifikasiEmail } =
@@ -42,7 +30,6 @@ export function SpandukVerifikasiEmail() {
     }
   });
 
-  // Hanya tampil bila: sudah masuk, email belum terverifikasi, belum ditutup
   if (status !== "signedIn" || emailVerified || ditutup) return null;
 
   function tutup() {
@@ -80,14 +67,11 @@ export function SpandukVerifikasiEmail() {
           jenis: "galat",
         });
       } else {
-        // Berhasil terverifikasi: hapus flag "ditutup" agar tidak meninggalkan
-        // entri localStorage yang tidak relevan di browser pengguna.
         try {
           window.localStorage.removeItem(TUTUP_KEY);
         } catch {
           /* abaikan */
         }
-        // emailVerified di context berubah jadi true → komponen tidak render lagi.
       }
     } catch (e) {
       setPesan({ txt: (e as Error).message, jenis: "galat" });
@@ -105,6 +89,12 @@ export function SpandukVerifikasiEmail() {
         <span className={gaya.pesan}>
           Kami sudah mengirim tautan verifikasi ke email Anda. Klik tautan tersebut
           untuk mengaktifkan akun sepenuhnya.
+        </span>
+        {/* Hint spam — dibedakan visual agar tidak terlewat */}
+        <span className={gaya.hintSpam}>
+          <span className={gaya.hintSpamIkon} aria-hidden>📂</span>
+          Tidak ketemu? Email verifikasi kadang nyasar ke{" "}
+          <strong>folder Spam atau Promosi</strong> — coba cek di sana juga.
         </span>
         {pesan && (
           <span className={`${gaya.info} ${gaya[pesan.jenis]}`}>{pesan.txt}</span>
