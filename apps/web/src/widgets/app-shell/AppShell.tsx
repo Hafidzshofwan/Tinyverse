@@ -10,7 +10,7 @@ import { GlobalSearch } from "./GlobalSearch";
 import { ThemeToggle } from "./ThemeToggle";
 import { PatientProfile } from "@/widgets/patient-profile";
 import { AiAssistantWidget } from "@/widgets/ai-assistant";
-import { AuthProvider, AuthScreen, VerifikasiEmailScreen, SpandukVerifikasiEmail, UserMenu, useAuth } from "@/widgets/user-account";
+import { AuthProvider, AuthScreen, VerifikasiEmailScreen, UserMenu, useAuth } from "@/widgets/user-account";
 import { Logo } from "./Logo";
 import { catatPemakaian } from "@/shared/lib/personalisasi";
 import { LoadingAnimation, SectionErrorBoundary } from "@/shared/ui";
@@ -289,12 +289,6 @@ function AppShellInner({ children, pengingatSlot }: AppShellProps) {
             {/* Pengingat langganan sengaja di dalam tv-main-inner, sejajar isi
                 halaman: ia ikut tergulung bersama konten dan tidak pernah
                 menutupi header maupun hasil perhitungan alat klinis. */}
-            {/* Spanduk verifikasi email: tampil hanya bila email belum diverifikasi.
-                Ditempatkan paling atas agar tidak terlewat, sebelum pengingat
-                langganan karena verifikasi email lebih mendesak untuk diselesaikan. */}
-            <SectionErrorBoundary label="Verifikasi email" variant="silent">
-              <SpandukVerifikasiEmail />
-            </SectionErrorBoundary>
             {pengingatSlot}
             {children}
           </div>
