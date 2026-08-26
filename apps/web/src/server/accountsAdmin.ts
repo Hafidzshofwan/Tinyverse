@@ -15,6 +15,18 @@ export const KOLEKSI = {
   users: "users",
   accounts: "accounts",
   memberships: "memberships",
+  /**
+   * Riwayat email yang pernah menerima masa percobaan, ditulis SEKALI dan
+   * PERMANEN saat trial pertama kali diberikan (lihat provisioning.ts,
+   * tanamPercobaanBilaPerlu). Koleksi ini sengaja tidak pernah disentuh oleh
+   * penghapusan akun (app/api/auth/hapus-akun) -- itulah intinya. Tanpa
+   * catatan yang bertahan lebih lama dari akunnya sendiri, seseorang bisa
+   * hapus akun lalu daftar ulang dengan email yang sama dan mendapat trial
+   * baru berkali-kali, karena accountId (=uid) selalu baru pada setiap
+   * pendaftaran sementara pemeriksaan kelayakan trial yang lama hanya melihat
+   * accountId.
+   */
+  trialEmailHistory: "trialEmailHistory",
 } as const;
 
 /** Id keanggotaan dibuat gabungan agar satu user hanya bisa punya satu baris

@@ -37,7 +37,21 @@ export type HasilPenyediaan = {
 };
 
 /**
- * Berikan masa percobaan bila akun ini belum pernah punya catatan langganan.
+ * Kunci dokumen riwayat trial untuk sebuah email.
+ *
+ * Dinormalkan huruf kecil + tanpa spasi tepi supaya "Nama@Contoh.com" dan
+ * " nama@contoh.com " dianggap email yang sama persis -- keduanya memang
+ * alamat yang sama, dan pengecekan yang peka huruf besar/kecil di sini
+ * hanya akan membuka celah yang sama lewat variasi kapitalisasi.
+ */
+function kunciRiwayatTrial(email: string): string {
+  return email.trim().toLowerCase();
+}
+
+/**
+ * Berikan masa percobaan bila akun ini belum pernah punya catatan langganan
+ * DAN emailnya belum pernah menerima trial sebelumnya (termasuk lewat akun
+ * lama yang sudah dihapus).
  *
  * WHY di sini, bukan pada saat akun dibuat: pengguna yang sudah terdaftar
  * sebelum fitur ini ada tidak akan pernah "dibuat" lagi. Bila hadiahnya
@@ -46,6 +60,23 @@ export type HasilPenyediaan = {
  * akun - satu jalur kode ini melayani pengguna baru dan pengguna lama
  * sekaligus, dan tetap mustahil memberi dua kali.
  *
+ * WHY pengecekan email ini perlu, padahal bolehDapatPercobaan(accountId)
+ * sudah ada: accountId sama dengan uid (lihat idAkunPersonal), dan uid selalu
+ * berupa nilai baru setiap kali akun Authentication dibuat -- termasuk saat
+ * seseorang menghapus akunnya lalu mendaftar ulang dengan email yang persis
+ * sama. Tanpa pengecekan tambahan ini, accountId yang baru itu tidak pernah
+ * punya dokumen langganan, sehingga bolehDapatPercobaan selalu menjawab
+ * "boleh" - trial bisa didapat berulang kali hanya dengan hapus-lalu-daftar
+ * ulang. Riwayat berbasis email inilah yang bertahan melewati siklus
+ * hapus-akun, karena disimpan di koleksi yang sengaja tidak pernah disentuh
+ * oleh /api/auth/hapus-akun.
+ *
+ * WHY tidak digabung ke dalam bolehDapatPercobaan di packages/billing:
+ * fungsi itu sengaja murni (tanpa Firestore, tanpa I/O apa pun) - itulah yang
+ * membuatnya gampang diuji dan gampang dipercaya. Pengecekan riwayat email
+ * perlu membaca Firestore, jadi tempatnya di sini, di lapisan yang memang
+ * sudah melakukan I/O untuk urusan ini.
+ *
  * WHY penulisan ke subscriptions boleh terjadi di luar alur pembayaran:
  * dokumen langganan adalah catatan MASA AKSES, bukan catatan uang. Masa
  * percobaan adalah masa akses yang harganya nol. Yang tetap dijaga ketat:
@@ -53,16 +84,43 @@ export type HasilPenyediaan = {
  * membiarkannya null.
  *
  * Bila dua permintaan masuk bersamaan, keduanya menulis nilai yang praktis
- * sama (beda beberapa milidetik pada tanggal mulai) ke dokumen yang sama, jadi
- * lomba ini tidak bisa menghasilkan dua masa percobaan atau memperpanjangnya.
+ * sama (beda beberapa milidetik pada tanggal mulai) ke dokumen subscriptions
+ * yang sama, jadi lomba ini tidak bisa menghasilkan dua masa percobaan atau
+ * memperpanjangnya. Untuk dokumen riwayat email berlaku hal yang sama: dua
+ * penulisan yang beriringan hanya saling menimpa dengan nilai yang praktis
+ * identik, bukan menciptakan dua catatan.
+ *
+ * Bila email tidak ada (kasus yang seharusnya tidak pernah terjadi untuk akun
+ * email/sandi maupun Google, tapi dijaga untuk berjaga-jaga), pengecekan
+ * riwayat ini dilewati dan hanya bolehDapatPercobaan(accountId) yang berlaku
+ * -- lebih aman membiarkan jalur lama berjalan daripada menolak trial tanpa
+ * kunci yang jelas untuk dicatat.
  */
 async function tanamPercobaanBilaPerlu(
   accountId: string,
+  email: string | null,
   sekarang: string,
 ): Promise<boolean> {
   const repo = new FirestoreSubscriptionRepository();
   const langganan = await repo.get(accountId);
   if (!bolehDapatPercobaan(langganan)) return false;
+
+  const db = adminDb();
+  const kunciEmail = email ? kunciRiwayatTrial(email) : null;
+
+  if (kunciEmail) {
+    const refRiwayat = db.collection(KOLEKSI.trialEmailHistory).doc(kunciEmail);
+    const sudahPernah = (await refRiwayat.get()).exists;
+    if (sudahPernah) return false;
+
+    await repo.save(buatLanggananPercobaan(accountId, sekarang));
+    await refRiwayat.set({
+      email: kunciEmail,
+      accountIdPertama: accountId,
+      waktuPertama: sekarang,
+    });
+    return true;
+  }
 
   await repo.save(buatLanggananPercobaan(accountId, sekarang));
   return true;
@@ -108,7 +166,7 @@ export async function pastikanUserDanAkun(sesi: Sesi): Promise<HasilPenyediaan> 
     await repo.saveMembership(anggota);
   }
 
-  const percobaanDitanam = await tanamPercobaanBilaPerlu(accountId, sekarang);
+  const percobaanDitanam = await tanamPercobaanBilaPerlu(accountId, sesi.email, sekarang);
 
   return { accountId, baru: !sudahAda, percobaanDitanam };
 }
