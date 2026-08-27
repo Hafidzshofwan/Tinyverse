@@ -18,3 +18,76 @@
   background: transparent !important;
   padding: 24px 16px 0;
 }
+
+/*
+ * Override segmented tab khusus halaman Neonatus.
+ *
+ * WHY override di sini dan bukan di v17-cairan.css: kedua tombol di sini
+ * lebih panjang labelnya (ikon + "Nutrisi Parenteral" vs "Bilirubin")
+ * daripada tab di halaman lain. Override global di v17-cairan.css menciutkan
+ * font ke 0.65rem di mobile (< 480px) yang membuat label terpotong dan tab
+ * terlihat rapat/gepeng. Di sini font dibiarkan lebih besar dan padding
+ * disesuaikan agar keduanya tetap proporsional dan mudah disentuh.
+ */
+.tv-page-neonatus-tabs-wrapper .tv-page-cairan .kartu {
+  padding: 8px;
+  border-radius: 20px;
+}
+
+.tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-toggle {
+  gap: 6px;
+  padding: 5px;
+}
+
+.tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
+  font-size: 0.85rem;
+  padding: 11px 10px;
+  gap: 7px;
+}
+
+@media (max-width: 480px) {
+  .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
+    font-size: 0.8rem;
+    padding: 10px 8px;
+    gap: 6px;
+  }
+
+  .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 360px) {
+  .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
+    font-size: 0.74rem;
+    padding: 9px 6px;
+    gap: 5px;
+  }
+
+  .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/*
+ * Header "box ke-2": judul alat (TPN Neonatus / Bilirubin Neonatus) beserta
+ * ikonnya di dalam kartu putih di bawah tab switcher.
+ *
+ * WHY diatur di sini bukan di inline style: inline style pakai px tetap
+ * (19.48px) tanpa breakpoint -- di layar sempit header terasa terlalu besar
+ * dan memotong ruang form. Lebih aman override di sini daripada mengubah
+ * TpnNeonatusPanel.tsx / BilirubinPanel.tsx yang berisi banyak logic kalkulasi.
+ * Target .judul-section adalah class yang sudah ada di markup kedua panel.
+ */
+.tv-page-cairan .judul-section h2 {
+  font-size: clamp(15px, 4.5vw, 19.48px);
+  line-height: 1.25;
+}
+
+.tv-page-cairan .judul-section p {
+  font-size: clamp(9px, 2.6vw, 10.24px);
+  line-height: 1.4;
+}
