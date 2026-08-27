@@ -30,45 +30,45 @@
  * disesuaikan agar keduanya tetap proporsional dan mudah disentuh.
  */
 .tv-page-neonatus-tabs-wrapper .tv-page-cairan .kartu {
-  padding: 8px;
-  border-radius: 20px;
+  padding: 8px !important;
+  border-radius: 20px !important;
 }
 
 .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-toggle {
-  gap: 6px;
-  padding: 5px;
+  gap: 6px !important;
+  padding: 5px !important;
 }
 
 .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
-  font-size: 0.85rem;
-  padding: 11px 10px;
-  gap: 7px;
+  font-size: 0.85rem !important;
+  padding: 11px 10px !important;
+  gap: 7px !important;
 }
 
 @media (max-width: 480px) {
   .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
-    font-size: 0.8rem;
-    padding: 10px 8px;
-    gap: 6px;
+    font-size: 0.8rem !important;
+    padding: 10px 8px !important;
+    gap: 6px !important;
   }
 
   .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn svg {
-    width: 18px;
-    height: 18px;
+    width: 18px !important;
+    height: 18px !important;
     flex-shrink: 0;
   }
 }
 
 @media (max-width: 360px) {
   .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn {
-    font-size: 0.74rem;
-    padding: 9px 6px;
-    gap: 5px;
+    font-size: 0.74rem !important;
+    padding: 9px 6px !important;
+    gap: 5px !important;
   }
 
   .tv-page-neonatus-tabs-wrapper .tv-page-cairan .segmented-btn svg {
-    width: 16px;
-    height: 16px;
+    width: 16px !important;
+    height: 16px !important;
   }
 }
 
@@ -76,18 +76,19 @@
  * Header "box ke-2": judul alat (TPN Neonatus / Bilirubin Neonatus) beserta
  * ikonnya di dalam kartu putih di bawah tab switcher.
  *
- * WHY diatur di sini bukan di inline style: inline style pakai px tetap
- * (19.48px) tanpa breakpoint -- di layar sempit header terasa terlalu besar
- * dan memotong ruang form. Lebih aman override di sini daripada mengubah
- * TpnNeonatusPanel.tsx / BilirubinPanel.tsx yang berisi banyak logic kalkulasi.
- * Target .judul-section adalah class yang sudah ada di markup kedua panel.
+ * WHY !important WAJIB di sini (bukan cuma pemanis): TpnNeonatusPanel.tsx dan
+ * BilirubinPanel.tsx menulis ukuran fontnya lewat inline style
+ * (style={{ fontSize: "19.48px" }}), dan inline style HTML/React selalu
+ * menang melawan CSS eksternal apa pun -- terlepas dari seberapa spesifik
+ * selector-nya. Tanpa !important, aturan di bawah ini tidak akan pernah
+ * benar-benar diterapkan oleh browser sama sekali.
  */
 .tv-page-cairan .judul-section h2 {
-  font-size: clamp(15px, 4.5vw, 19.48px);
-  line-height: 1.25;
+  font-size: clamp(15px, 4.5vw, 19.48px) !important;
+  line-height: 1.25 !important;
 }
 
 .tv-page-cairan .judul-section p {
-  font-size: clamp(9px, 2.6vw, 10.24px);
-  line-height: 1.4;
+  font-size: clamp(9px, 2.6vw, 10.24px) !important;
+  line-height: 1.4 !important;
 }
