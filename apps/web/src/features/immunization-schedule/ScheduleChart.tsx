@@ -131,13 +131,23 @@ export function ScheduleChart() {
       </div>
 
       <div className="imunisasi-image-wrap" ref={wrapRef}>
-        {/* eslint-disable-next-line @next/next/no-img-element -- gambar statis, tidak butuh optimasi Next/Image */}
+        {/* eslint-disable-next-line @next/next/no-img-element -- gambar statis
+            beresolusi tinggi (dipakai zoom sampai 300%), sengaja tidak
+            dilewatkan next/image karena resizing otomatisnya berisiko
+            mengirim varian resolusi lebih rendah yang buram saat di-zoom. */}
         <img
           className="imunisasi-image"
           src={chart.src}
           alt={chart.alt}
           style={{ width: zoom * 100 + "%" }}
           onClick={klikGambar}
+          // WHY fetchPriority="high": ini elemen visual utama begitu halaman
+          // ini terbuka -- LCP (Largest Contentful Paint) yang jauh lebih
+          // lambat di mobile (11.6 detik) besar kemungkinan berasal dari
+          // gambar ini yang baru mulai diunduh belakangan, bersaing dengan
+          // resource lain. Petunjuk ini tidak mengubah ukuran atau kualitas
+          // gambar sama sekali -- murni urutan prioritas unduhan di browser.
+          {...({ fetchPriority: "high" } as Record<string, string>)}
         />
       </div>
 
