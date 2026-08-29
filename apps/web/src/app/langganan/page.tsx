@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { statusAksesSaatIni } from "@/server/entitlementServer";
 import { riwayatPesanan } from "@/server/pesananRiwayat";
@@ -7,6 +8,7 @@ import { PROMO_LAUNCHING, promoSedangBerlaku } from "@/server/promoLaunching";
 import { envMidtrans } from "@/server/env";
 import { hitungPengingat } from "@/features/pengingat-langganan/pengingat";
 import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
+import { LoadingAnimation } from "@/shared/ui";
 
 import { LanggananClientView } from "./LanggananClientView";
 import type { BarisRiwayat } from "./RiwayatPembayaran";
@@ -58,7 +60,30 @@ function labelLencanaUntuk(status: "belum" | "aktif" | "kedaluwarsa", percobaan:
   return "Belum Berlangganan";
 }
 
-export default async function LanggananPage() {
+/**
+ * Isi sungguhan halaman /langganan -- dipisah dari default export di bawah
+ * murni supaya bisa dibungkus <Suspense>.
+ *
+ * WHY dipisah: sebelumnya SELURUH halaman ini (termasuk katalog paket yang
+ * sama untuk semua orang) menunggu dua permintaan Firestore BERURUTAN --
+ * statusAksesSaatIni() lalu riwayatPesanan() -- selesai dulu sebelum satu
+ * byte HTML pun terkirim ke peramban. Ditambah `dynamic = "force-dynamic"`
+ * (tidak ada cache sama sekali), setiap kunjungan menanggung penuh biaya
+ * dua round-trip itu. Di kondisi jaringan yang disimulasikan lebih lambat
+ * (mobile), inilah yang membuat LCP meledak jauh di atas versi desktop --
+ * bukan soal gambar atau CSS, murni HTML-nya belum mulai dikirim.
+ *
+ * Dengan Suspense, Next.js bisa langsung mengirim kerangka halaman +
+ * fallback lebih dulu (lihat LoadingAnimation di bawah), lalu menyusulkan
+ * konten sungguhan begitu kedua permintaan Firestore itu selesai -- pola
+ * yang sama persis dengan PengingatSlot.tsx di layout akar.
+ *
+ * riwayatPesanan(accountId) SENGAJA tetap menunggu statusAksesSaatIni()
+ * lebih dulu (bukan Promise.all): accountId hanya ada setelah panggilan
+ * pertama selesai, jadi keduanya memang saling bergantung, tidak bisa
+ * dijalankan paralel.
+ */
+async function LanggananContent() {
   const akses = await statusAksesSaatIni();
   const { masuk, accountId, entitlement, percobaan } = akses;
 
@@ -134,5 +159,13 @@ export default async function LanggananPage() {
       promoBerakhirPada={PROMO_LAUNCHING.berakhir}
       diskonPersen={PROMO_LAUNCHING.diskonPersen}
     />
+  );
+}
+
+export default function LanggananPage() {
+  return (
+    <Suspense fallback={<LoadingAnimation message="Memuat halaman langganan..." />}>
+      <LanggananContent />
+    </Suspense>
   );
 }
