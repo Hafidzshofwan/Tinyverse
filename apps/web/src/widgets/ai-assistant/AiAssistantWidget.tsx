@@ -214,10 +214,19 @@ export function AiAssistantWidget() {
     recognitionRef.current = recognition;
     try {
       recognition.start();
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Gagal memulai recognition:", err);
       setIsListening(false);
-      showToast("Gagal memulai perekaman suara.");
+      
+      const errMsg = err instanceof Error ? err.message.toLowerCase() : "";
+      const errName = err instanceof Error ? err.name : "";
+      
+      // Penanganan khusus jika policy browser menolak akses secara sinkron (Mode Iframe/Preview)
+      if (errName === "NotAllowedError" || errMsg.includes("denied") || errMsg.includes("not allowed")) {
+        showToast("Akses mikrofon diblokir. Pastikan Anda tidak berada di mode Preview atau izinkan akses di peramban.");
+      } else {
+        showToast("Gagal memulai perekaman suara.");
+      }
     }
   };
 
