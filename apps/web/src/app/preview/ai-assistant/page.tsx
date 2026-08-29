@@ -182,35 +182,71 @@ const PRESET_TOPICS = [
     slug: "darurat",
     prompts: [
       "Berapa dosis Epinefrin resusitasi & atropin untuk anak?",
-      "Bagaimana tahapan defibrilasi pada penderita ventrikel fibrilasi anak?",
-      "Rangkumkan panduan tatalaksana Syok Anafilaksis pada anak",
+      "Bagaimana tahapan defibrilasi & kardioversi pada henti jantung anak?",
+      "Jelaskan alur tatalaksana KAD dan hipoglikemia berat pada anak",
     ],
   },
   {
-    title: "Dosis Obat & Puyer",
-    slug: "dosis",
+    title: "Obat & Racik Puyer",
+    slug: "obat",
     prompts: [
       "Hitung dosis Parasetamol sirup untuk anak berat 12.5 kg",
       "Jelaskan perbedaan metode DTM dan DTD pada penulisan resep puyer",
-      "Berapa dosis maksimal Ibuprofen per hari untuk anak?",
+      "Berapa batas keamanan tablet yang digerus untuk sediaan puyer?",
     ],
   },
   {
-    title: "Terapi Cairan & Dehidrasi",
+    title: "Terapi Cairan & Luka Bakar",
     slug: "cairan",
     prompts: [
-      "Bagaimana rumus Holliday-Segar untuk kebutuhan cairan pemeliharaan?",
+      "Bagaimana rumus Holliday-Segar untuk kebutuhan cairan rumatan?",
       "Tatalaksana rehidrasi diare berat menurut IDAI / WHO (Rencana C)",
-      "Berapa faktor tetes makro vs mikro untuk pemberian cairan infus?",
+      "Hitung rumus cairan luka bakar Parkland dan pemetaan Lund-Browder",
     ],
   },
   {
-    title: "Skoring & Interpretasi Lab",
-    slug: "skoring",
+    title: "Tumbuh Kembang & Skrining",
+    slug: "tumbuh-kembang",
     prompts: [
-      "Penjelasan komponen Pediatric Early Warning Score (PEWS)",
-      "Cara menilai Glasgow Coma Scale (GCS) pada bayi di bawah 2 tahun",
+      "Bagaimana kriteria interpretasi Z-Score WHO & CDC antropometri?",
+      "Cara penilaian KPSP 3-72 bulan dan tindak lanjut skor meragukan",
+      "Interpretasi hasil skrining Denver II 4 sektor & M-CHAT-R/F autisme",
+    ],
+  },
+  {
+    title: "Tekanan Darah & eGFR Ginjal",
+    slug: "egfr",
+    prompts: [
+      "Klasifikasi tekanan darah anak berdasarkan persentil AAP 2017",
+      "Perhitungan eGFR CKiD U25 & klasifikasi stadium CKD KDIGO",
+      "Estimasi risiko progresi ke ESRD berdasarkan rasio UPCR",
+    ],
+  },
+  {
+    title: "Diagnostik Lab & Analisis Gas Darah",
+    slug: "lab",
+    prompts: [
       "Bagaimana cara membaca Analisis Gas Darah (AGD) dan Anion Gap?",
+      "Rumus koreksi defisit Natrium pada hiponatremia simptomatik",
+      "Protokol koreksi Kalium lambat dengan pemantauan EKG anak",
+    ],
+  },
+  {
+    title: "Neonatologi & Skoring Klinis",
+    slug: "neonatus",
+    prompts: [
+      "Hitung GIR, dosis Asam Amino, dan Lipid TPN Neonatus",
+      "Kapan indikasi fototerapi & transfusi tukar hiperbilirubinemia AAP?",
+      "Sistem Skoring TB Anak Kemenkes dan Downes Score distres napas",
+    ],
+  },
+  {
+    title: "Guideline & Jadwal Imunisasi",
+    slug: "protokol",
+    prompts: [
+      "Rangkuman PPK Pneumonia 2025 dan Asma Anak 2022 IDAI",
+      "Panduan praktis tatalaksana Epilepsi Anak IDAI 2025",
+      "Jadwal vaksinasi primer & aturan imunisasi kejar IDAI 2024",
     ],
   },
 ];
@@ -869,11 +905,17 @@ export default function AiAssistantPage() {
             <div className="tv-ai-modul-grid">
               {[
                 { href: "/preview/darurat", label: "Mode Darurat", slug: "darurat" },
-                { href: "/preview/dosing", label: "Dosis Obat", slug: "dosis" },
+                { href: "/preview/alur", label: "Alur Klinis", slug: "alur" },
+                { href: "/preview/obat", label: "Obat & Puyer", slug: "obat" },
                 { href: "/preview/fluids", label: "Terapi Cairan", slug: "cairan" },
-                { href: "/preview/lab", label: "Interpretasi Lab", slug: "lab" },
+                { href: "/preview/pertumbuhan", label: "Tumbuh Kembang", slug: "tumbuh-kembang" },
+                { href: "/preview/tekanan-darah", label: "Tekanan Darah", slug: "tekanan-darah" },
+                { href: "/preview/egfr", label: "eGFR Pediatrik", slug: "egfr" },
                 { href: "/preview/skoring", label: "Skor Klinis", slug: "skoring" },
+                { href: "/preview/lab", label: "Interpretasi Lab", slug: "lab" },
+                { href: "/preview/neonatus", label: "Tools Neonatus", slug: "neonatus" },
                 { href: "/preview/guideline", label: "Guideline IDAI", slug: "protokol" },
+                { href: "/preview/imunisasi", label: "Jadwal Imunisasi", slug: "imunisasi" },
               ].map((mod, mIdx) => (
                 <Link
                   key={mIdx}

@@ -136,12 +136,16 @@ function getSpeechRecognitionCtor(): TvSpeechRecognitionConstructor | null {
 }
 
 const PRESET_PROMPTS = [
-  "Berapa dosis Epinefrin resusitasi & nebulizer anak 10 kg?",
-  "Jelaskan alur tatalaksana Kejang Demam menurut IDAI",
-  "Bagaimana cara menghitung kebutuhan cairan Holliday-Segar?",
-  "Apa kriteria interpretasi Analisis Gas Darah (AGD) pediatrik?",
-  "Apa saja komponen Pediatric Early Warning Score (PEWS)?",
-  "Rekomendasi vaksinasi IDAI untuk anak usia 2 tahun",
+  "Berapa dosis Epinefrin resusitasi & inotropik anak 10 kg?",
+  "Jelaskan alur tatalaksana Kejang Demam & KAD anak",
+  "Hitung cairan luka bakar Parkland & rumatan anak 12 kg",
+  "Interpretasi KPSP dan Denver II untuk skrining perkembangan",
+  "Bagaimana cara membaca eGFR CKiD U25 & staging KDIGO?",
+  "Hitung GIR, Asam Amino, dan Lipid TPN Neonatus",
+  "Berapa ambang fototerapi bilirubin bayi baru lahir?",
+  "Perbedaan metode DTM vs DTD pada resep racik puyer",
+  "Formula koreksi defisit Natrium & Kalium lab anak",
+  "Rekomendasi vaksinasi & jadwal kejar IDAI 2024",
 ];
 
 export function AiAssistantWidget() {
