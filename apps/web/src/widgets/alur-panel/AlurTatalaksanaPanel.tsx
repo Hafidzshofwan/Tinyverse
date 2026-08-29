@@ -781,6 +781,18 @@ export function AlurTatalaksanaPanel() {
         )}
 
         {layar.gambarAlur && !layar.gambarAlur.toggle && (
+          /*
+           * WHY loading="eager" + fetchPriority (bukan "lazy" seperti gambar
+           * di bawah yang berada di balik tombol toggle): gambar ini tampil
+           * OTOMATIS mengikuti langkah alur yang sedang aktif, tanpa perlu
+           * diklik -- kalau langkah pertama sebuah alur kebetulan punya
+           * gambarAlur, gambar inilah yang menjadi elemen visual pertama
+           * yang terlihat pengguna (kandidat LCP). "lazy" pada gambar yang
+           * berpotensi jadi LCP justru MENUNDA unduhannya, kebalikan dari
+           * yang diinginkan -- ini kemungkinan besar penyebab LCP
+           * /preview/alur jauh lebih lambat di mobile (6.8 detik) dibanding
+           * desktop.
+           */
           <figure
             style={{
               margin: "16px 0 4px",
@@ -793,7 +805,7 @@ export function AlurTatalaksanaPanel() {
             <img
               src={layar.gambarAlur.src}
               alt={layar.gambarAlur.keterangan ?? `Bagan alur ${kondisi.nama}`}
-              loading="lazy"
+              loading="eager"
               decoding="async"
               style={{
                 width: "100%",
@@ -801,6 +813,11 @@ export function AlurTatalaksanaPanel() {
                 borderRadius: 8,
                 display: "block",
               }}
+              // WHY fetchPriority dioper lewat objek biasa, bukan atribut JSX
+              // langsung: menghindari tebak-tebakan apakah versi tipe React
+              // di proyek ini sudah mengenal atribut ini atau belum -- ini
+              // tetap valid di HTML dan browser terlepas dari itu.
+              {...({ fetchPriority: "high" } as Record<string, string>)}
             />
             <figcaption
               style={{
