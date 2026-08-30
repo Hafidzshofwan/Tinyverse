@@ -82,6 +82,12 @@
   .tv-auth-kartu {
     border-radius: 24px;
   }
+  /* Fredoka di mobile terasa lebih lebar dari system font pada ukuran sama;
+     turunkan tv-tukar agar tetap lebih kecil dari teks utama (15px btn). */
+  .tv-tukar {
+    font-size: 11px;
+    font-weight: 400;
+  }
 }
 
 
