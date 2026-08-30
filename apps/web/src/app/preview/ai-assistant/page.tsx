@@ -387,7 +387,7 @@ export default function AiAssistantPage() {
 
       setMessages((prev) => [...prev, aiMsg]);
     } catch (err: unknown) {
-      const errText = err instanceof Error ? err.message : "Gagal menghubungkan ke Asisten AI Gemini. Silakan periksa koneksi dan setelan GEMINI_API_KEY.";
+      const errText = err instanceof Error ? err.message : "Gagal menghubungkan ke Asisten AI. Silakan periksa koneksi dan setelan sistem.";
       const errorMsg: Message = {
         id: `ai-err-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
         sender: "ai",
@@ -533,7 +533,7 @@ export default function AiAssistantPage() {
             <div className="tv-ai-flex-8">
               <span className="tv-ai-status-dot" />
               <span className="tv-ai-status-text">
-                Koneksi Gemini AI Aktif
+                Koneksi AI Klinis Aktif
               </span>
             </div>
 
@@ -922,7 +922,9 @@ export default function AiAssistantPage() {
                   href={mod.href}
                   className="tv-ai-modul-link"
                 >
-                  <SidebarIcon slug={mod.slug} size={18} />
+                  <span className="tv-ai-modul-icon" aria-hidden="true">
+                    <SidebarIcon slug={mod.slug} size={20} />
+                  </span>
                   <span className="tv-ai-ellipsis">
                     {mod.label}
                   </span>

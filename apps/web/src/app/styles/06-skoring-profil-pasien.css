@@ -883,7 +883,9 @@ html.dark .tv-vg-score-tag.score-2 { background: rgba(52, 211, 153, 0.22) !impor
 /* Responsive AI Assistant Page Grid */
 .tv-ai-page-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: 1fr 340px;
+  gap: 20px;
+  align-items: start;
 }
 
 

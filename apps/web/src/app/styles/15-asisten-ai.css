@@ -434,13 +434,19 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tv-ai-panel {
   background-color: var(--tv-card, #ffffff);
   border-radius: 16px;
-  padding: 18px;
+  padding: 16px;
   border: 1px solid var(--tv-border, #e2e8f0);
+  box-sizing: border-box;
+  width: 100%;
+  overflow: hidden;
 }
 .tv-ai-panel-sesi {
   border: 1px solid var(--tv-border, rgba(217, 54, 166, 0.25));
@@ -724,48 +730,62 @@
 
 .tv-ai-modul-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .tv-ai-modul-link {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 7px;
-  padding: 9px 10px;
+  gap: 6px;
+  padding: 7px 8px;
   min-height: 40px;
-  border-radius: 8px;
+  min-width: 0;
+  width: 100%;
+  border-radius: 10px;
   background-color: var(--tv-soft, #f1f5f9);
   color: var(--tv-text-primary, #0f172a);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
-  border: 1px solid var(--tv-border, transparent);
-  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
-  line-height: 1.3;
+  border: 1px solid var(--tv-border, rgba(0, 0, 0, 0.06));
+  box-sizing: border-box;
+  transition: all 0.15s ease;
+  overflow: hidden;
 }
 
 .tv-ai-modul-link:hover {
-  background-color: rgba(236, 72, 153, 0.07);
-  border-color: rgba(236, 72, 153, 0.25);
-  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.10);
-  color: var(--tv-navy, #0a0b5f);
+  background-color: var(--tv-card-hover, rgba(236, 72, 153, 0.08));
+  border-color: var(--tv-border-hover, rgba(236, 72, 153, 0.3));
+  transform: translateY(-1px);
 }
 
-.tv-ai-modul-link > span {
-  flex: 1;
+.tv-ai-modul-link .tv-ai-ellipsis {
   min-width: 0;
+  flex: 1;
   overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 11.5px;
+  line-height: 1.25;
 }
 
-.tv-ai-modul-link > img,
-.tv-ai-modul-link > svg,
-.tv-ai-modul-link > span:first-child {
+.tv-ai-modul-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
+}
+
+.tv-ai-modul-icon svg {
+  display: block;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
 }
 
 /* ---------- Fitur baru: konteks hasil kalkulator, ringkasan SOAP, input suara ---------- */
