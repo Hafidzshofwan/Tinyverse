@@ -82,10 +82,10 @@
   .tv-auth-kartu {
     border-radius: 24px;
   }
-  /* Fredoka di mobile terasa lebih lebar dari system font pada ukuran sama;
-     turunkan tv-tukar agar tetap lebih kecil dari teks utama (15px btn). */
+  /* Pakai rem (bukan px) agar proporsional di semua level zoom browser.
+     0.75rem = ~12px di zoom normal, tapi ikut membesar saat user zoom. */
   .tv-tukar {
-    font-size: 11px;
+    font-size: 0.75rem;
     font-weight: 400;
   }
 }
