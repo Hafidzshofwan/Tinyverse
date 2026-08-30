@@ -728,9 +728,9 @@ body.tv-tanpa-dekorasi .bg-decor {
 }
 
 
-/* tv-tukar mobile: pakai em (relatif ke container) bukan px,
-   agar selalu proporsional di zoom berapapun. */
-@media (max-width: 480px) {
+/* tv-tukar: aktif bersamaan dengan layout single-column (brand hilang di 720px).
+   Pakai em agar proporsional di semua level zoom. */
+@media (max-width: 720px) {
   .tv-tukar {
     font-size: 0.75em;
     font-weight: 400;
