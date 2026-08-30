@@ -24,6 +24,7 @@ export function AuthScreen() {
   // Form masuk
   const [mEmail, setMEmail] = useState("");
   const [mPass, setMPass] = useState("");
+  const [lihatPass, setLihatPass] = useState(false);
   // Form lupa kata sandi
   const [lEmail, setLEmail] = useState("");
   // Form daftar
@@ -31,6 +32,7 @@ export function AuthScreen() {
   const [dInst, setDInst] = useState("");
   const [dEmail, setDEmail] = useState("");
   const [dPass, setDPass] = useState("");
+  const [lihatDPass, setLihatDPass] = useState(false);
 
   const memuat = status === "loading";
 
@@ -265,7 +267,7 @@ export function AuthScreen() {
             <div>
               <h2>Welcome back, Meds!</h2>
               <p className="tv-auth-sub">
-                Masuk untuk melanjutkan ke Tinyverse.
+                Isi data untuk melanjutkan ke Tinyverse.
               </p>
               {(pesan.txt || errorMsg) && (
                 <div className={"tv-pesan " + (pesan.txt ? pesan.jenis : "galat")}>
@@ -284,16 +286,49 @@ export function AuthScreen() {
               </div>
               <div className="tv-field">
                 <label>Kata sandi</label>
-                <input
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder="Masukkan kata sandi"
-                  value={mPass}
-                  onChange={(e) => setMPass(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") submitMasuk();
-                  }}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={lihatPass ? "text" : "password"}
+                    autoComplete="current-password"
+                    placeholder="Masukkan kata sandi"
+                    value={mPass}
+                    onChange={(e) => setMPass(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") submitMasuk();
+                    }}
+                    style={{ paddingRight: "42px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setLihatPass((v) => !v)}
+                    aria-label={lihatPass ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px",
+                      color: "#64748b",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {lihatPass ? (
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                      </svg>
+                    ) : (
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
               <button className="tv-btn" disabled={sibuk} onClick={submitMasuk}>
                 {sibuk ? "Memproses\u2026" : "Masuk ke Tinyverse"}
@@ -391,16 +426,49 @@ export function AuthScreen() {
               </div>
               <div className="tv-field">
                 <label>Kata sandi</label>
-                <input
-                  type="password"
-                  autoComplete="new-password"
-                  placeholder="Minimal 6 karakter"
-                  value={dPass}
-                  onChange={(e) => setDPass(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") submitDaftar();
-                  }}
-                />
+                <div style={{ position: "relative" }}>
+                  <input
+                    type={lihatDPass ? "text" : "password"}
+                    autoComplete="new-password"
+                    placeholder="Minimal 6 karakter"
+                    value={dPass}
+                    onChange={(e) => setDPass(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") submitDaftar();
+                    }}
+                    style={{ paddingRight: "42px" }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setLihatDPass((v) => !v)}
+                    aria-label={lihatDPass ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+                    style={{
+                      position: "absolute",
+                      right: "12px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      padding: "4px",
+                      color: "#64748b",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    {lihatDPass ? (
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                        <line x1="1" y1="1" x2="23" y2="23"/>
+                      </svg>
+                    ) : (
+                      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                    )}
+                  </button>
+                </div>
               </div>
               <button className="tv-btn" disabled={sibuk} onClick={submitDaftar}>
                 {sibuk ? "Memproses\u2026" : "Buat akun"}
