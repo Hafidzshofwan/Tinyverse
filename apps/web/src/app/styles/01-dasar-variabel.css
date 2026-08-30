@@ -1138,6 +1138,10 @@ html.dark .tv-greeting-hand-icon {
   box-shadow: 0 34px 100px rgba(0, 0, 0, 0.8);
 }
 
+[data-theme="dark"] .tv-auth-kartu::before {
+  display: none !important;
+}
+
 
 
 [data-theme="dark"] .tv-auth-panel {
@@ -2092,8 +2096,7 @@ html.dark .tv-greeting-hand-icon {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(10, 11, 95, 0.055), transparent 43%);
+  display: none;
 }
 
 
