@@ -82,12 +82,6 @@
   .tv-auth-kartu {
     border-radius: 24px;
   }
-  /* Pakai rem (bukan px) agar proporsional di semua level zoom browser.
-     0.75rem = ~12px di zoom normal, tapi ikut membesar saat user zoom. */
-  .tv-tukar {
-    font-size: 0.75rem;
-    font-weight: 400;
-  }
 }
 
 

@@ -726,3 +726,13 @@ body.tv-tanpa-dekorasi .bg-decor {
     transform: rotate(360deg);
   }
 }
+
+
+/* tv-tukar mobile: pakai em (relatif ke container) bukan px,
+   agar selalu proporsional di zoom berapapun. */
+@media (max-width: 480px) {
+  .tv-tukar {
+    font-size: 0.75em;
+    font-weight: 400;
+  }
+}
