@@ -2093,8 +2093,7 @@ html.dark .tv-greeting-hand-icon {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(10, 11, 95, 0.055), transparent 43%),
-    radial-gradient(circle at 48% 18%, rgba(255, 255, 255, 0.82), transparent 34%);
+    linear-gradient(90deg, rgba(10, 11, 95, 0.055), transparent 43%);
 }
 
 
