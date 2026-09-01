@@ -218,7 +218,7 @@ export function ScoreCatalog() {
     evaluateSkor();
     window.addEventListener("hashchange", evaluateSkor);
     return () => window.removeEventListener("hashchange", evaluateSkor);
-  }, []);
+  }, [buka]);
 
   const bannerPasien = adaInfoPasien ? (
     <div className="tv-skor-pasien-aktif">

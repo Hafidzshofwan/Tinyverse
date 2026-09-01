@@ -30,6 +30,8 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
   const isLastLangkah = langkahIdx === totalLangkah - 1;
   const progress = ((langkahIdx + 1) / totalLangkah) * 100;
 
+  if (!lk) return null;
+
   const jawabanLangkahIni = jawabanUser[lk.id];
   const sudahPilih = jawabanLangkahIni !== undefined && jawabanLangkahIni !== "";
 

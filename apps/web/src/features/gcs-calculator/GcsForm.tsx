@@ -173,10 +173,10 @@ export function GcsForm() {
     eyeMotor: manualEM ?? derived.eyeMotor,
     verbal: manualV ?? derived.verbal,
   };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const { eyeMotor: groupEyeMotor, verbal: groupVerbal } = groups;
   const options = useMemo(
-    () => gcsOptionsFor(groups),
-    [groups.eyeMotor, groups.verbal],
+    () => gcsOptionsFor({ eyeMotor: groupEyeMotor, verbal: groupVerbal }),
+    [groupEyeMotor, groupVerbal],
   );
   const result: GcsResult = useMemo(
     () => computeGcs({ eye, motor, verbal, intubated }),
