@@ -395,7 +395,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       cancelled = true;
       if (unsub) unsub();
     };
-  }, [handleMasuk]);
+  }, [handleMasuk, router]);
 
   const masuk = useCallback(async (email: string, pass: string) => {
     const auth = authRef.current;

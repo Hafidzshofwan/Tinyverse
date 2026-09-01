@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Kasus, TipeInput } from "./types";
+import type { Kasus } from "./types";
 
 const IKON_KATEGORI: Record<string, string> = {
   dehidrasi: "💧", neonatus: "👶", respirasi: "🫁",

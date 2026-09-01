@@ -173,6 +173,7 @@ export function GcsForm() {
     eyeMotor: manualEM ?? derived.eyeMotor,
     verbal: manualV ?? derived.verbal,
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const options = useMemo(
     () => gcsOptionsFor(groups),
     [groups.eyeMotor, groups.verbal],

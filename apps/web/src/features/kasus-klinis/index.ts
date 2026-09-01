@@ -7,3 +7,7 @@ export {
   kasusFttGizi,
   kasusKejangDemam,
 } from "./data";
+
+export { KasusGrid } from "./KasusGrid";
+export { KasusRunner } from "./KasusRunner";
+export type { Kasus, TipeInput, LangkahKasus, OpsiKasus } from "./types";

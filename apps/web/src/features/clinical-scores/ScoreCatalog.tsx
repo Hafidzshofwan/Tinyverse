@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { usePatientProfile } from "@/shared/lib/patient";
 import { RedFlagCrossLink } from "@/shared/ui";
 import { addRingkasanItem } from "@/shared/lib/ringkasan";
@@ -145,7 +145,7 @@ export function ScoreCatalog() {
     profil.nama || profil.usiaBulan != null || profil.bb != null
   );
 
-  const buka = (id: string) => {
+  const buka = useCallback((id: string) => {
     const d = DAFTAR_SKOR.find((s) => s.id === id);
     if (!d) return;
     setAktifId(id);
@@ -162,7 +162,7 @@ export function ScoreCatalog() {
     }
     setUsiaAutoDariProfil(autoUsia);
     setPilihan(nilaiAwal);
-  };
+  }, [profil.usiaBulan]);
   const pilih = (i: number, opt: number) => {
     setPilihan((prev) => prev.map((v, idx) => (idx === i ? opt : v)));
     if (i === 0) setUsiaAutoDariProfil(false);
