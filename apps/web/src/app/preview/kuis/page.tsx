@@ -1,11 +1,6 @@
-import { KuisPanel } from "@/widgets/kuis-panel";
+import { redirect } from "next/navigation";
 
-export const metadata = {
-  title: "Uji Pemahaman — Tinyverse",
-  description:
-    "Uji pengetahuan klinismu dengan soal MCQ per modul — Skoring Klinis, Terapi Cairan, dan Tools Neonatus.",
-};
-
+// /preview/kuis dialihkan ke halaman Pembelajaran tab Uji Pemahaman
 export default function KuisPage() {
-  return <KuisPanel />;
+  redirect("/preview/pembelajaran#kuis");
 }
