@@ -32,12 +32,8 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
 
   const soal = modul.soal;
   const soalSaat = soal[soalAktif];
-
-  // Guard untuk memastikan soalSaat tidak undefined sebelum digunakan.
-  if (!soalSaat) return null;
-
   const totalSoal = soal.length;
-  const jawabanSaat = jawaban[soalSaat.id] ?? null;
+  const jawabanSaat = jawaban[soalSaat?.id ?? ""] ?? null;
   const sudahJawab = jawabanSaat !== null;
   const isLast = soalAktif === totalSoal - 1;
 
@@ -46,6 +42,9 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
     setSoalAktif(0);
     setJawaban({});
   }, [modul.modulId]);
+
+  // Guard setelah seluruh Hook agar urutan Hook tetap konsisten.
+  if (!soalSaat) return null;
 
   function pilihJawaban(opsiId: string) {
     if (fase !== "kuis") return;
