@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useRef } from "react";
 import type { PaketTryOut, HasilTryOut, OpsiId, StatusJawabanUser, SubdivisiSKDI, SubdivisiScore } from "./types";
-import { ClinicalSvgIcon } from "@/shared/ui";
+import {
+  TryoutTimerIcon,
+  TryoutGridSheetIcon,
+  TryoutFlagIcon,
+  TryoutExitIcon,
+  TryoutExamCardIcon,
+  TryoutWarningAlertIcon,
+} from "./TryoutIcons";
 
 interface TryoutExamRunnerProps {
   paket: PaketTryOut;
@@ -173,7 +180,8 @@ export function TryoutExamRunner({
             }}
             title="Keluar dari ujian"
           >
-            ✕ Keluar
+            <TryoutExitIcon size={13} />
+            <span>Keluar</span>
           </button>
           <div className="tv-tryout-cbt-title-block">
             <h2 className="tv-tryout-cbt-title">{paket.judul}</h2>
@@ -186,7 +194,7 @@ export function TryoutExamRunner({
         <div className="tv-tryout-cbt-header-right">
           {mode === "cbt" && (
             <div className={`tv-tryout-timer-pill ${isKritisTimer ? "kritis" : ""}`}>
-              <ClinicalSvgIcon name="alur" size={18} />
+              <TryoutTimerIcon size={16} />
               <span className="tv-tryout-timer-text">
                 {menitTersisa}:{sisaDetikFormat}
               </span>
@@ -197,7 +205,7 @@ export function TryoutExamRunner({
             className="tv-tryout-toggle-grid-btn"
             onClick={() => setTampilkanGridDrawer(!tampilkanGridDrawer)}
           >
-            <ClinicalSvgIcon name="skoring" size={18} />
+            <TryoutGridSheetIcon size={16} />
             <span>Nomor Soal ({jumlahTerjawab}/{totalSoal})</span>
           </button>
 
@@ -223,9 +231,6 @@ export function TryoutExamRunner({
               <span className="tv-tryout-soal-subdiv-badge">
                 {soalAktif.subdivisiLabel}
               </span>
-              <span className="tv-tryout-soal-skdi-badge">
-                SKDI {soalAktif.tingkatSKDI}
-              </span>
             </div>
 
             <label className="tv-tryout-ragu-toggle">
@@ -234,6 +239,7 @@ export function TryoutExamRunner({
                 checked={statusSoalAktif.raguRagu}
                 onChange={handleToggleRagu}
               />
+              <TryoutFlagIcon size={14} />
               <span className="tv-tryout-ragu-label">
                 Tandai Ragu-ragu
               </span>
@@ -367,7 +373,7 @@ export function TryoutExamRunner({
         <div className="tv-tryout-modal-overlay">
           <div className="tv-tryout-modal-card">
             <div className="tv-tryout-modal-header">
-              <ClinicalSvgIcon name="skoring" size={28} />
+              <TryoutExamCardIcon size={36} />
               <h3 className="tv-tryout-modal-title">Konfirmasi Selesai Ujian</h3>
             </div>
 
@@ -392,7 +398,8 @@ export function TryoutExamRunner({
 
             {jumlahKosong > 0 && (
               <div className="tv-tryout-warning-alert">
-                ⚠️ Masih ada <strong>{jumlahKosong} soal</strong> yang belum Anda jawab.
+                <TryoutWarningAlertIcon size={16} />
+                <span>Masih ada <strong>{jumlahKosong} soal</strong> yang belum Anda jawab.</span>
               </div>
             )}
 

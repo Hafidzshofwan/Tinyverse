@@ -5,7 +5,7 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
     id: "ukmppd-stase-anak-1",
     slug: "ukmppd-stase-anak-1",
     judul: "Try Out UKNPDPD Pediatri — Paket 1 (Komprehensif)",
-    deskripsi: "Simulasi ujian CBT komprehensif tingkat kompetensi SKDI 4A & 3B: Respirologi, Neonatologi, Infeksi Tropis, Gastrohepatologi, dan Gawat Darurat Pediatri.",
+    deskripsi: "Simulasi ujian CBT komprehensif: Respirologi, Neonatologi, Infeksi Tropis, Gastrohepatologi, dan Gawat Darurat Pediatri.",
     durasiMenit: 15,
     passingGradePersen: 66,
     kategori: "ukmppd",

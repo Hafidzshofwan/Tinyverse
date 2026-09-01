@@ -6,7 +6,16 @@ import { TryoutExamRunner } from "./TryoutExamRunner";
 import { TryoutResultView } from "./TryoutResultView";
 import { useTryoutStorage } from "./useTryoutStorage";
 import type { PaketTryOut, HasilTryOut } from "./types";
-import { ClinicalSvgIcon } from "@/shared/ui";
+import {
+  TryoutExamCardIcon,
+  TryoutPlayCbtIcon,
+  TryoutStudyModeIcon,
+  TryoutDocumentIcon,
+  TryoutTimerIcon,
+  TryoutTargetIcon,
+  TryoutTrophyScoreIcon,
+  TryoutCheckIcon,
+} from "./TryoutIcons";
 
 function PaketKartu({
   paket,
@@ -24,11 +33,10 @@ function PaketKartu({
     <div className="tv-tryout-paket-card">
       <div className="tv-tryout-paket-card-top">
         <div className="tv-tryout-paket-icon-box">
-          <ClinicalSvgIcon name="quiz" size={32} />
+          <TryoutExamCardIcon size={38} />
         </div>
         <div className="tv-tryout-paket-badge-group">
           <span className="tv-tryout-badge-kategori">{paket.kategoriLabel}</span>
-          <span className="tv-tryout-badge-skdi">{paket.badge}</span>
         </div>
       </div>
 
@@ -38,20 +46,26 @@ function PaketKartu({
 
         <div className="tv-tryout-paket-meta-list">
           <span className="tv-tryout-meta-item">
-            📝 <strong>{paket.daftarSoal.length}</strong> Soal Vignette
+            <TryoutDocumentIcon size={16} />
+            <span><strong>{paket.daftarSoal.length}</strong> Soal Kasus</span>
           </span>
           <span className="tv-tryout-meta-item">
-            ⏱ <strong>{paket.durasiMenit}</strong> Menit
+            <TryoutTimerIcon size={16} />
+            <span><strong>{paket.durasiMenit}</strong> Menit</span>
           </span>
           <span className="tv-tryout-meta-item">
-            🎯 Passing Grade <strong>{paket.passingGradePersen}%</strong>
+            <TryoutTargetIcon size={16} />
+            <span>Passing Grade <strong>{paket.passingGradePersen}%</strong></span>
           </span>
         </div>
 
         {skorTerbaik !== null ? (
           <div className="tv-tryout-paket-history">
             <div className="tv-tryout-history-row">
-              <span className="tv-tryout-history-label">Skor Tertinggi:</span>
+              <span className="tv-tryout-history-label">
+                <TryoutTrophyScoreIcon size={15} />
+                <span>Skor Tertinggi:</span>
+              </span>
               <span
                 className={`tv-tryout-history-score ${
                   skorTerbaik >= paket.passingGradePersen ? "lulus" : "evaluasi"
@@ -86,13 +100,14 @@ function PaketKartu({
           className="tv-btn tv-btn-primary tv-tryout-btn-main"
           onClick={() => onMulaiCBT(paket)}
         >
-          <ClinicalSvgIcon name="alur" size={18} />
+          <TryoutPlayCbtIcon size={18} />
           <span>Mulai Try Out CBT</span>
         </button>
         <button
           className="tv-btn tv-btn-secondary tv-tryout-btn-sub"
           onClick={() => onMulaiLatihan(paket)}
         >
+          <TryoutStudyModeIcon size={16} />
           <span>Mode Latihan Mandiri</span>
         </button>
       </div>
@@ -172,16 +187,16 @@ export function TryoutGrid() {
           </p>
           <div className="tv-tryout-feature-bullets">
             <div className="tv-tryout-feat-item">
-              <span className="tv-tryout-feat-check">✓</span>
-              <span>Soal vignette kasus klinis komprehensif</span>
+              <TryoutCheckIcon size={16} />
+              <span>Soal kasus klinis komprehensif</span>
             </div>
             <div className="tv-tryout-feat-item">
-              <span className="tv-tryout-feat-check">✓</span>
+              <TryoutCheckIcon size={16} />
               <span>Timer & lembar navigasi nomor soal CBT</span>
             </div>
             <div className="tv-tryout-feat-item">
-              <span className="tv-tryout-feat-check">✓</span>
-              <span>Kunci jawaban & pembahasan berbasis IDAI / WHO</span>
+              <TryoutCheckIcon size={16} />
+              <span>Kunci jawaban & pembahasan berbasis ilmiah</span>
             </div>
           </div>
         </div>

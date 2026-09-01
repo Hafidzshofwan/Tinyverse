@@ -3,6 +3,15 @@
 import { useState } from "react";
 import type { PaketTryOut, HasilTryOut } from "./types";
 import { ClinicalSvgIcon } from "@/shared/ui";
+import {
+  TryoutAnalyticsIcon,
+  TryoutReviewDiscussionIcon,
+  TryoutCheckIcon,
+  TryoutCrossIcon,
+  TryoutMinusIcon,
+  TryoutTimerIcon,
+  TryoutFlagIcon,
+} from "./TryoutIcons";
 import Link from "next/link";
 
 interface TryoutResultViewProps {
@@ -39,7 +48,6 @@ export function TryoutResultView({
       <div className={`tv-tryout-result-banner ${hasil.lulus ? "lulus" : "evaluasi"}`}>
         <div className="tv-tryout-result-badge-row">
           <span className="tv-tryout-chip-kategori">{paket.kategoriLabel}</span>
-          <span className="tv-tryout-chip-skdi">{paket.badge}</span>
         </div>
 
         <div className="tv-tryout-result-main">
@@ -59,28 +67,32 @@ export function TryoutResultView({
             </p>
             <div className="tv-tryout-stat-pills">
               <span className="tv-tryout-stat-pill benar">
-                ✓ {hasil.jumlahBenar} Benar
+                <TryoutCheckIcon size={14} />
+                <span>{hasil.jumlahBenar} Benar</span>
               </span>
               <span className="tv-tryout-stat-pill salah">
-                ✕ {hasil.jumlahSalah} Salah
+                <TryoutCrossIcon size={14} />
+                <span>{hasil.jumlahSalah} Salah</span>
               </span>
               {hasil.jumlahKosong > 0 && (
                 <span className="tv-tryout-stat-pill kosong">
-                  ○ {hasil.jumlahKosong} Kosong
+                  <TryoutMinusIcon size={14} />
+                  <span>{hasil.jumlahKosong} Kosong</span>
                 </span>
               )}
               <span className="tv-tryout-stat-pill waktu">
-                ⏱ {durasiMenit}m {durasiDetik}s
+                <TryoutTimerIcon size={14} />
+                <span>{durasiMenit}m {durasiDetik}s</span>
               </span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ── Analisis Performa Per Subdivisi SKDI ─────────────────────── */}
+      {/* ── Analisis Performa Per Subdivisi ──────────────────────────── */}
       <div className="tv-tryout-subdivisi-card">
         <div className="tv-tryout-section-head">
-          <ClinicalSvgIcon name="skoring" size={22} />
+          <TryoutAnalyticsIcon size={24} />
           <div>
             <h3 className="tv-tryout-section-title">Breakdown Nilai Subdivisi Pediatri</h3>
             <p className="tv-tryout-section-sub">Pemetaan kekuatan dan area materi yang perlu dievaluasi</p>
@@ -113,7 +125,7 @@ export function TryoutResultView({
       <div className="tv-tryout-review-section">
         <div className="tv-tryout-review-header-wrap">
           <div className="tv-tryout-section-head">
-            <ClinicalSvgIcon name="quiz" size={22} />
+            <TryoutReviewDiscussionIcon size={24} />
             <div>
               <h3 className="tv-tryout-section-title">Kunci Jawaban & Pembahasan Soal</h3>
               <p className="tv-tryout-section-sub">Pelajari rasionalisasi diagnosis dan eliminasi opsi jawaban</p>
@@ -170,13 +182,25 @@ export function TryoutResultView({
                       No. {soal.nomor}
                     </span>
                     <span className="tv-tryout-item-subdiv">{soal.subdivisiLabel}</span>
-                    <span className="tv-tryout-item-skdi">SKDI {soal.tingkatSKDI}</span>
                     {userState?.raguRagu && (
-                      <span className="tv-tryout-item-ragu">⚠️ Ragu</span>
+                      <span className="tv-tryout-item-ragu">
+                        <TryoutFlagIcon size={12} />
+                        <span>Ragu</span>
+                      </span>
                     )}
                   </div>
                   <span className="tv-tryout-review-status-label">
-                    {isBenar ? "✓ Jawaban Benar" : "✕ Jawaban Salah"}
+                    {isBenar ? (
+                      <>
+                        <TryoutCheckIcon size={14} />
+                        <span>Jawaban Benar</span>
+                      </>
+                    ) : (
+                      <>
+                        <TryoutCrossIcon size={14} />
+                        <span>Jawaban Salah</span>
+                      </>
+                    )}
                   </span>
                 </div>
 

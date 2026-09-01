@@ -327,6 +327,12 @@
   color: var(--tv-navy);
 }
 
+.tv-tryout-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .tv-tryout-paket-history {
   margin-top: 0.75rem;
   padding: 0.6rem 0.85rem;
@@ -341,6 +347,13 @@
   justify-content: space-between;
   font-size: 0.82rem;
   font-weight: 600;
+}
+
+.tv-tryout-history-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--tv-soft-teks);
 }
 
 .tv-tryout-history-score.lulus {
@@ -417,11 +430,15 @@
   background: none;
   border: 1px solid var(--tv-line);
   border-radius: 8px;
-  padding: 4px 8px;
+  padding: 5px 9px;
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--tv-soft-teks);
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 150ms ease;
 }
 
 .tv-tryout-cbt-exit-btn:hover {
@@ -902,9 +919,13 @@
   background: #fffbeb;
   border: 1px solid #fde68a;
   border-radius: 8px;
-  padding: 0.5rem;
+  padding: 0.6rem 0.8rem;
   font-size: 0.78rem;
   color: #b45309;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: left;
 }
 
 .tv-tryout-modal-actions {
@@ -1040,8 +1061,11 @@
 .tv-tryout-stat-pill {
   font-size: 0.75rem;
   font-weight: 700;
-  padding: 3px 8px;
+  padding: 4px 9px;
   border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 .tv-tryout-stat-pill.benar { background: #dcfce7; color: #15803d; }
 .tv-tryout-stat-pill.salah { background: #fee2e2; color: #b91c1c; }
@@ -1224,11 +1248,17 @@
   font-size: 0.7rem;
   color: #b45309;
   font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .tv-tryout-review-status-label {
   font-size: 0.75rem;
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .tv-tryout-review-item.benar .tv-tryout-review-status-label { color: #16a34a; }
