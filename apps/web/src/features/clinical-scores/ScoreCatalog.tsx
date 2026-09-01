@@ -419,7 +419,7 @@ export function ScoreCatalog() {
           actions={[
             {
               label: "Buka Terapi Cairan Rencana C",
-              href: "/preview/fluids",
+              href: "/preview/cairan",
               primary: true,
               icon: "💧",
             },

@@ -418,7 +418,7 @@ export function Rule9Form() {
                   actions={[
                     {
                       label: "Hitung Cairan Rumatan",
-                      href: "/preview/fluids",
+                      href: "/preview/cairan",
                       primary: true,
                       icon: (
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">

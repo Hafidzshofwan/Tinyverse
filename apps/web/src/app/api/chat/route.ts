@@ -43,7 +43,7 @@ PERAN & KEMAMPUAN UTAMA:
 
    - Obat & Racik Puyer (/preview/obat): Dua tab dalam satu halaman — tab Dosis Obat menghitung dosis mg/kgBB, sediaan sirup/drops/puyer, batas dosis maksimum anak, penyesuaian fungsi ginjal; tab Racik Puyer menghitung metode DTM (Dosis Tulis Murni) vs DTD (Da Tales Doses), jumlah tablet yang digerus, pembagian bungkus, dan batas keamanan bahan aktif. Rute lama /preview/dosing dan /preview/puyer tetap aktif sebagai pengalih ke halaman ini.
 
-   - Terapi Cairan Pediatrik (/preview/fluids): Empat tab dalam satu halaman:
+   - Terapi Cairan Pediatrik (/preview/cairan): Empat tab dalam satu halaman:
      * Tab Holliday-Segar: Rumus rumatan 100 mL/kg untuk 10 kg pertama, 50 mL/kg untuk 10 kg kedua, 20 mL/kg untuk sisa berat badan.
      * Tab Rehidrasi WHO (Rencana A/B/C): Rencana A — tanpa dehidrasi, minum rumahan 10 mL/kg tiap BAB cair; Rencana B — dehidrasi ringan-sedang, Oralit 75 mL/kg dalam 3 jam secara oral; Rencana C — dehidrasi berat, cairan IV Ringer Laktat 100 mL/kg (30 mL/kg dalam 30 menit, dilanjutkan 70 mL/kg dalam 2,5 jam untuk anak atau 5 jam untuk bayi).
      * Tab Rehidrasi Luka Bakar: Dua metode penilaian luas luka bakar — chart Lund-Browder (akurat berbasis usia, mengoreksi proporsi kepala dan kaki) dan Rule of Nines anak (Wallace). Rumus cairan: Parkland 4 mL x %TBSA x BB (kg), separuh diberikan 8 jam pertama sejak luka bakar, separuh 16 jam berikutnya. Cairan yang digunakan adalah Ringer Laktat.
@@ -73,7 +73,7 @@ PERAN & KEMAMPUAN UTAMA:
      * Tab Bilirubin Neonatus: Ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi (minggu), jam usia, dan faktor risiko neurotoksisitas (isoimmune hemolytic disease, G6PD, asfiksia, letargi, instabilitas suhu, sepsis, albumin kurang dari 3 g/dL).
      Rute lama /preview/tpn-neonatus dan /preview/bilirubin tetap aktif sebagai pengalih ke tab yang sesuai.
 
-   - Rehidrasi Luka Bakar — Halaman Mandiri (/preview/burn): Halaman khusus perhitungan luka bakar yang bisa diakses langsung. Fitur identik dengan Tab Rehidrasi Luka Bakar di /preview/fluids — tersedia dua metode penilaian luas luka bakar: chart Lund-Browder (akurat berbasis usia, mengoreksi proporsi kepala dan kaki) dan Rule of Nines anak (Wallace/Rule of 9). Rumus cairan Parkland: 4 mL x %TBSA x BB (kg), separuh diberikan 8 jam pertama sejak luka bakar, separuh 16 jam berikutnya, menggunakan Ringer Laktat. Halaman ini juga dapat diakses melalui tab Burn di /preview/fluids.
+   - Rehidrasi Luka Bakar — Halaman Mandiri (/preview/burn): Halaman khusus perhitungan luka bakar yang bisa diakses langsung. Fitur identik dengan Tab Rehidrasi Luka Bakar di /preview/cairan — tersedia dua metode penilaian luas luka bakar: chart Lund-Browder (akurat berbasis usia, mengoreksi proporsi kepala dan kaki) dan Rule of Nines anak (Wallace/Rule of 9). Rumus cairan Parkland: 4 mL x %TBSA x BB (kg), separuh diberikan 8 jam pertama sejak luka bakar, separuh 16 jam berikutnya, menggunakan Ringer Laktat. Halaman ini juga dapat diakses melalui tab Burn di /preview/cairan.
 
    - Penilaian pGCS (/preview/gcs): Pediatric Glasgow Coma Scale berdasarkan kelompok usia — penilaian respons Eye (E1-4), Verbal (V1-5), dan Motor (M1-6), total skor 3 sampai 15.
 

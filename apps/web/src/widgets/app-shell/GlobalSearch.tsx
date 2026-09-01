@@ -35,7 +35,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
   { type: "menu", slug: "darurat", label: "Mode Darurat", icon: "🚨", href: "/preview/darurat", text: "Mode Darurat & Resusitasi PALS", keywords: "darurat emergency pat gcs pals resusitasi epinefrin rjp cpr" },
   { type: "menu", slug: "alur", label: "Alur Tata Laksana", icon: "🧭", href: "/preview/alur", text: "Alur & Algoritma Tata Laksana", keywords: "alur algoritma asma kejang dbd hipoglikemia kad" },
   { type: "menu", slug: "dosis", label: "Dosis Obat", icon: "💊", href: "/preview/obat?tab=dosis", text: "Kalkulator Dosis Obat Anak", keywords: "dosis obat paracetamol mg/kg sediaan sirup" },
-  { type: "menu", slug: "cairan", label: "Terapi Cairan", icon: "💧", href: "/preview/fluids", text: "Terapi Cairan Rumatan & Rehidrasi", keywords: "cairan rumatan holliday segar who rehidrasi luka bakar parkland tetesan infus" },
+  { type: "menu", slug: "cairan", label: "Terapi Cairan", icon: "💧", href: "/preview/cairan", text: "Terapi Cairan Rumatan & Rehidrasi", keywords: "cairan rumatan holliday segar who rehidrasi luka bakar parkland tetesan infus" },
   { type: "menu", slug: "puyer", label: "Racik Puyer", icon: "⚗️", href: "/preview/obat?tab=puyer", text: "Kalkulator Racik Puyer Multi-Obat", keywords: "puyer pulveres racik dtd bagi tablet kapsul etiket" },
   { type: "menu", slug: "tumbuh-kembang", label: "Tumbuh Kembang", icon: "📊", href: "/preview/pertumbuhan", text: "Tumbuh Kembang, Kurva & Skrining KPSP", keywords: "tumbuh kembang kurva who cdc z-score persentil stunting longitudinal kpsp" },
   { type: "menu", slug: "skoring", label: "Skoring Klinis", icon: "🧮", href: "/preview/skoring", text: "8 Skoring & Kriteria Klinis Anak", keywords: "skor skoring cds croup pas downes pass kawasaki centor tbanak" },
@@ -106,7 +106,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     slug: "cairan",
     label: "Rumatan Cairan Holliday-Segar",
     icon: "🧃",
-    href: "/preview/fluids?tab=holliday",
+    href: "/preview/cairan?tab=holliday",
     text: "Rumatan Cairan Holliday-Segar (24 Jam & Kecepatan Tetesan Per Jam)",
     keywords: "cairan rumatan maintenance holliday segar kebutuhan24jam kecepatan per jam infus",
     anchor: "text:Holliday"
@@ -116,7 +116,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     slug: "cairan",
     label: "Rehidrasi Diare WHO",
     icon: "🩹",
-    href: "/preview/fluids?tab=who",
+    href: "/preview/cairan?tab=who",
     text: "Rehidrasi Diare WHO (Rencana A, Rencana B, Rencana C, Zinc, Oralit)",
     keywords: "rehidrasi diare who rencana a rencana b rencana c oralit zinc dehidrasi ringan sedang berat iv kristaloid",
     anchor: "text:Rehidrasi WHO"
@@ -126,7 +126,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     slug: "cairan",
     label: "Resusitasi Luka Bakar",
     icon: "🔥",
-    href: "/preview/fluids?tab=burn",
+    href: "/preview/cairan?tab=burn",
     text: "Resusitasi Luka Bakar (Formula Parkland / Baxter & Chart Lund-Browder Anak)",
     keywords: "luka bakar burn parkland baxter lund browder luas luka bakar bsa % resusitasi cairan ringer laktat",
     anchor: "text:Luka Bakar"
@@ -136,7 +136,7 @@ const BASELINE_ENTRIES: SearchEntry[] = [
     slug: "cairan",
     label: "Faktor Tetes & Drip",
     icon: "💉",
-    href: "/preview/fluids?tab=drip",
+    href: "/preview/cairan?tab=drip",
     text: "Kalkulator Tetesan Infus & Drip Syringe Pump (Mikro & Makro Tetes)",
     keywords: "faktor tetes tetesan infus mpm dpm mikrotetes makrotetes kecepatan tetes syringe pump infus pump drip",
     anchor: "text:Faktor Tetes"

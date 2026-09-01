@@ -907,7 +907,7 @@ export default function AiAssistantPage() {
                 { href: "/preview/darurat", label: "Mode Darurat", slug: "darurat" },
                 { href: "/preview/alur", label: "Alur Klinis", slug: "alur" },
                 { href: "/preview/obat", label: "Obat & Puyer", slug: "obat" },
-                { href: "/preview/fluids", label: "Terapi Cairan", slug: "cairan" },
+                { href: "/preview/cairan", label: "Terapi Cairan", slug: "cairan" },
                 { href: "/preview/pertumbuhan", label: "Tumbuh Kembang", slug: "tumbuh-kembang" },
                 { href: "/preview/tekanan-darah", label: "Tekanan Darah", slug: "tekanan-darah" },
                 { href: "/preview/egfr", label: "eGFR Pediatrik", slug: "egfr" },

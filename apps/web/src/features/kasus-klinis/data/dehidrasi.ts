@@ -55,7 +55,7 @@ Pemeriksaan fisik:
       ],
       jawabanBenar: "c",
       penjelasan: "Rencana C digunakan untuk dehidrasi berat atau ketidakmampuan minum. Cairan pilihan: Ringer Laktat (RL). Total 100 mL/kgBB dibagi: 30 mL/kgBB dalam 1 jam pertama (bayi <12 bulan), lanjut 70 mL/kgBB dalam 5 jam berikutnya.",
-      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/fluids" },
+      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/cairan" },
     },
     {
       id: "d4",
@@ -66,7 +66,7 @@ Pemeriksaan fisik:
       jawabanBenar: 240,
       toleransi: 0,
       penjelasan: "30 mL/kgBB × 8 kg = 240 mL Ringer Laktat diberikan dalam 1 jam pertama. Pantau nadi, turgor, dan CRT setiap 15–30 menit. Jika memburuk atau syok → percepat tetesan.",
-      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/fluids" },
+      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/cairan" },
     },
     {
       id: "d5",
@@ -77,7 +77,7 @@ Pemeriksaan fisik:
       jawabanBenar: 800,
       toleransi: 0,
       penjelasan: "100 mL/kgBB × 8 kg = 800 mL total. Rincian: 240 mL dalam 1 jam pertama, dilanjutkan 560 mL (70 mL × 8) dalam 5 jam berikutnya. Tambahkan cairan rumatan terpisah (Holliday-Segar) jika ada kebutuhan tambahan.",
-      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/fluids" },
+      linkKalkulator: { label: "Buka Kalkulator Cairan", href: "/preview/cairan" },
     },
     {
       id: "d6",
