@@ -28,7 +28,10 @@ export type ClinicalIconType =
   | "check-badge"
   | "trophy"
   | "book"
-  | "refresh";
+  | "refresh"
+  | "tryout"
+  | "cbt"
+  | "exam";
 
 interface ClinicalSvgIconProps {
   name: ClinicalIconType | string;
@@ -275,6 +278,21 @@ export const ClinicalSvgIcon: React.FC<ClinicalSvgIconProps> = ({
         <polyline points="20 4 20 9.5 14.5 9.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M20 12C20 16.4183 16.4183 20 12 20C8.57143 20 5.64181 17.8443 4.50247 14.8164" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         <polyline points="4 20 4 14.5 9.5 14.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+
+  if (norm === "tryout" || norm === "cbt" || norm === "exam" || norm === "uji-kompetensi") {
+    // Professional CBT Exam / Pediatric Board Simulation SVG
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className} style={style}>
+        <rect width="24" height="24" rx="6" fill="#F0FDF4" />
+        {/* Computer Screen / CBT Display */}
+        <rect x="3" y="4" width="18" height="12" rx="2" stroke="#16A34A" strokeWidth="1.6" fill="#DCFCE7" />
+        {/* Base */}
+        <path d="M8 19H16M12 16V19" stroke="#16A34A" strokeWidth="1.6" strokeLinecap="round" />
+        {/* Checkmark inside CBT screen */}
+        <path d="M8 10L10.5 12.5L16 7" stroke="#15803D" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     );
   }

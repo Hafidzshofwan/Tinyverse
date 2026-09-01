@@ -1,9 +1,9 @@
 import { PembelajaranPanel } from "@/widgets/pembelajaran-panel";
 
 export const metadata = {
-  title: "Pembelajaran — Tinyverse",
+  title: "Ruang Belajar Pediatri — Tinyverse",
   description:
-    "Dua mode belajar pediatrik dalam satu halaman: Uji Pemahaman (MCQ per modul) dan Pembelajaran Berbasis Kasus klinis step-by-step.",
+    "Pusat evaluasi kompetensi klinis pediatri: simulasi CBT UKNPDPD, uji pemahaman per modul, dan pembelajaran berbasis kasus klinis terstruktur.",
 };
 
 export default function PembelajaranPage() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { TryoutGrid } from "@/features/tryout";
 import { ModulGrid } from "@/features/quiz";
 import { KasusGrid } from "@/features/kasus-klinis";
 import {
@@ -10,39 +11,49 @@ import {
   useSidebarIconVariants,
 } from "@/shared/ui";
 
-type Tab = "kuis" | "kasus";
+type Tab = "tryout" | "kuis" | "kasus";
 
-const TABS: { id: Tab; label: string; iconName: "quiz" | "kasus"; sub: string }[] = [
+const TABS: { id: Tab; label: string; iconName: "tryout" | "quiz" | "kasus"; sub: string }[] = [
+  {
+    id: "tryout",
+    label: "Try Out UKNPDPD",
+    iconName: "tryout",
+    sub: "Simulasi CBT · Ujian Stase",
+  },
   {
     id: "kuis",
     label: "Uji Pemahaman",
     iconName: "quiz",
-    sub: "MCQ per modul · skor tersimpan",
+    sub: "MCQ per Modul & Penilaian",
   },
   {
     id: "kasus",
     label: "Berbasis Kasus",
     iconName: "kasus",
-    sub: "Step-by-step · penjelasan klinis",
+    sub: "Studi Kasus Step-by-Step",
   },
 ];
 
 export function PembelajaranPanel() {
-  const [tab, setTab] = useState<Tab>("kuis");
+  const [tab, setTab] = useState<Tab>("tryout");
   const pembelajaranTitle = usePembelajaranMenuTitle();
   const { variants } = useSidebarIconVariants();
   const currentIconVariant = variants.pembelajaran || "v1";
 
-  // Sync tab dari URL hash (#kuis atau #kasus) supaya deep-link bisa bekerja
+  // Sync tab dari URL hash (#tryout, #kuis, atau #kasus) supaya deep-link bisa bekerja
   useEffect(() => {
     const hash = window.location.hash.replace("#", "") as Tab;
-    if (hash === "kuis" || hash === "kasus") setTab(hash);
+    if (hash === "tryout" || hash === "kuis" || hash === "kasus") setTab(hash);
   }, []);
 
   function gantiTab(id: Tab) {
     setTab(id);
     window.history.replaceState(null, "", `#${id}`);
   }
+
+  // Hitung posisi indikator geser tab (3 tab = 33.333% per tab)
+  const tabIndex = TABS.findIndex((t) => t.id === tab);
+  const indicatorLeft = `calc(${tabIndex * 33.333}% + 4px)`;
 
   return (
     <div className="tv-pembelajaran-page">
@@ -82,15 +93,15 @@ export function PembelajaranPanel() {
           </h1>
           <p
             className="tv-pembelajaran-sub"
-            style={{ margin: "6px auto 0 auto", maxWidth: "520px" }}
+            style={{ margin: "6px auto 0 auto", maxWidth: "560px" }}
           >
-            {pembelajaranTitle.currentOption.tagline}
+            Pusat persiapan uji kompetensi dokter & penalaran klinis pediatri: simulasi CBT Try Out UKNPDPD, uji pemahaman per modul, dan pembelajaran kasus interaktif.
           </p>
         </div>
       </div>
 
       {/* ── Tab switcher ────────────────────────────────────────── */}
-      <div className="tv-pembelajaran-tab-wrap" role="tablist">
+      <div className="tv-pembelajaran-tab-wrap tv-3-tabs" role="tablist">
         {TABS.map((t) => (
           <button
             key={t.id}
@@ -118,15 +129,17 @@ export function PembelajaranPanel() {
         ))}
         {/* Garis indikator bergerak */}
         <div
-          className="tv-pembelajaran-tab-indicator"
-          style={{ left: tab === "kuis" ? "4px" : "calc(50% + 2px)" }}
+          className="tv-pembelajaran-tab-indicator tv-3-tabs"
+          style={{ left: indicatorLeft }}
           aria-hidden="true"
         />
       </div>
 
       {/* ── Konten tab ──────────────────────────────────────────── */}
       <div className="tv-pembelajaran-konten">
-        {tab === "kuis" ? <ModulGrid /> : <KasusGrid />}
+        {tab === "tryout" && <TryoutGrid />}
+        {tab === "kuis" && <ModulGrid />}
+        {tab === "kasus" && <KasusGrid />}
       </div>
     </div>
   );
