@@ -32,8 +32,12 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
 
   const soal = modul.soal;
   const soalSaat = soal[soalAktif];
+
+  // Guard untuk memastikan soalSaat tidak undefined sebelum digunakan.
+  if (!soalSaat) return null;
+
   const totalSoal = soal.length;
-  const jawabanSaat = jawaban[soalSaat?.id ?? ""] ?? null;
+  const jawabanSaat = jawaban[soalSaat.id] ?? null;
   const sudahJawab = jawabanSaat !== null;
   const isLast = soalAktif === totalSoal - 1;
 
