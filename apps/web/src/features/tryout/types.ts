@@ -6,6 +6,7 @@ export type SubdivisiSKDI =
   | "infeksi-tropis"
   | "kardiologi"
   | "tumbuh-kembang"
+  | "nutrisi-metabolik"
   | "nefrologi"
   | "gawat-darurat";
 

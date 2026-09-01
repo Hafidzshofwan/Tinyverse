@@ -30,7 +30,7 @@ function PaketKartu({
   const hasilTerakhir = riwayat[0];
 
   return (
-    <div className="tv-tryout-paket-card">
+    <div id={`tv-tryout-card-${paket.id}`} className="tv-tryout-paket-card">
       <div className="tv-tryout-paket-card-top">
         <div className="tv-tryout-paket-icon-box">
           <TryoutExamCardIcon size={38} />
@@ -97,6 +97,7 @@ function PaketKartu({
 
       <div className="tv-tryout-paket-actions">
         <button
+          id={`btn-mulai-cbt-${paket.id}`}
           className="tv-btn tv-btn-primary tv-tryout-btn-main"
           onClick={() => onMulaiCBT(paket)}
         >
@@ -104,10 +105,11 @@ function PaketKartu({
           <span>Mulai Try Out CBT</span>
         </button>
         <button
+          id={`btn-mulai-latihan-${paket.id}`}
           className="tv-btn tv-btn-secondary tv-tryout-btn-sub"
           onClick={() => onMulaiLatihan(paket)}
         >
-          <TryoutStudyModeIcon size={16} />
+          <TryoutStudyModeIcon size={18} />
           <span>Mode Latihan Mandiri</span>
         </button>
       </div>
