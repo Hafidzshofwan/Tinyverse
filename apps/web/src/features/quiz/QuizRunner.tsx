@@ -47,7 +47,7 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
   if (!soalSaat) return null;
 
   function pilihJawaban(opsiId: string) {
-    if (fase !== "kuis") return;
+    if (fase !== "kuis" || !soalSaat) return;
     setJawaban((prev) => ({ ...prev, [soalSaat.id]: opsiId }));
   }
 
