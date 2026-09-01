@@ -4,6 +4,7 @@ import { useState } from "react";
 import { SEMUA_KUIS } from "./data";
 import { QuizRunner } from "./QuizRunner";
 import { useKuisStorage } from "./useKuisStorage";
+import { ClinicalSvgIcon } from "@/shared/ui";
 
 // ─── Kartu per modul (baca skor terbaik dari localStorage) ────────────────
 
@@ -11,14 +12,12 @@ function ModulKartu({
   modulId,
   judul,
   deskripsi,
-  icon,
   jumlahSoal,
   onMulai,
 }: {
   modulId: string;
   judul: string;
   deskripsi: string;
-  icon: string;
   jumlahSoal: number;
   onMulai: () => void;
 }) {
@@ -26,7 +25,17 @@ function ModulKartu({
 
   return (
     <div className="tv-kuis-modul-kartu">
-      <div className="tv-kuis-modul-icon" aria-hidden="true">{icon}</div>
+      <div
+        className="tv-kuis-modul-icon"
+        aria-hidden="true"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <ClinicalSvgIcon name={modulId} size={32} />
+      </div>
       <div className="tv-kuis-modul-konten">
         <h3 className="tv-kuis-modul-judul">{judul}</h3>
         <p className="tv-kuis-modul-desk">{deskripsi}</p>
@@ -72,8 +81,7 @@ export function ModulGrid() {
       <div className="tv-kuis-page-header">
         <h1 className="tv-kuis-page-judul">Uji Pemahaman</h1>
         <p className="tv-kuis-page-sub">
-          Uji pengetahuan klinismu dengan soal MCQ berbasis modul. Skor tersimpan
-          otomatis dan bisa dicoba ulang kapan saja.
+          Latihan soal pilihan ganda untuk menguji pemahaman klinis pada tiap topik pediatri. Hasil dan progres tersimpan langsung di perangkat.
         </p>
       </div>
 
@@ -84,7 +92,6 @@ export function ModulGrid() {
             modulId={modul.modulId}
             judul={modul.judul}
             deskripsi={modul.deskripsi}
-            icon={modul.icon}
             jumlahSoal={modul.soal.length}
             onMulai={() => setAktifModulId(modul.modulId)}
           />
@@ -92,7 +99,16 @@ export function ModulGrid() {
       </div>
 
       <div className="tv-kuis-info-box">
-        <span className="tv-kuis-info-ikon">💡</span>
+        <span
+          className="tv-kuis-info-ikon"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ClinicalSvgIcon name="lightbulb" size={24} />
+        </span>
         <p className="tv-kuis-info-teks">
           Soal dirancang untuk level koas (dokter muda) dan mengacu pada panduan{" "}
           <strong>IDAI, WHO, AAP, dan ESPGHAN</strong> terbaru. Skor tersimpan di

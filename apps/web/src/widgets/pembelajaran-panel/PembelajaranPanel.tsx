@@ -5,23 +5,24 @@ import { ModulGrid } from "@/features/quiz";
 import { KasusGrid } from "@/features/kasus-klinis";
 import {
   SidebarIcon,
+  ClinicalSvgIcon,
   usePembelajaranMenuTitle,
   useSidebarIconVariants,
 } from "@/shared/ui";
 
 type Tab = "kuis" | "kasus";
 
-const TABS: { id: Tab; label: string; icon: string; sub: string }[] = [
+const TABS: { id: Tab; label: string; iconName: "quiz" | "kasus"; sub: string }[] = [
   {
     id: "kuis",
     label: "Uji Pemahaman",
-    icon: "📝",
+    iconName: "quiz",
     sub: "MCQ per modul · skor tersimpan",
   },
   {
     id: "kasus",
     label: "Berbasis Kasus",
-    icon: "🩺",
+    iconName: "kasus",
     sub: "Step-by-step · penjelasan klinis",
   },
 ];
@@ -98,8 +99,16 @@ export function PembelajaranPanel() {
             className={`tv-pembelajaran-tab${tab === t.id ? " aktif" : ""}`}
             onClick={() => gantiTab(t.id)}
           >
-            <span className="tv-pembelajaran-tab-icon" aria-hidden="true">
-              {t.icon}
+            <span
+              className="tv-pembelajaran-tab-icon"
+              aria-hidden="true"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <ClinicalSvgIcon name={t.iconName} size={24} />
             </span>
             <span className="tv-pembelajaran-tab-teks">
               <span className="tv-pembelajaran-tab-label">{t.label}</span>

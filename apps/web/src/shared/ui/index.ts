@@ -4,6 +4,7 @@ export * from "./RedFlagCrossLink";
 export * from "./KopSuratModal";
 export * from "./ScreeningIcon";
 export * from "./SidebarIcon";
+export * from "./ClinicalSvgIcon";
 export * from "./AlurIcon";
 export * from "./DaruratIcons";
 export * from "./ConfirmationModal";

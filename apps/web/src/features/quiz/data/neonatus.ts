@@ -4,7 +4,7 @@ export const kuisNeonatus: KuisModul = {
   modulId: "neonatus",
   judul: "Tools Neonatus",
   deskripsi: "Uji pemahaman tentang TPN neonatus, GIR, dan bilirubin neonatal",
-  icon: "👶",
+  icon: "neonatus",
   soal: [
     {
       id: "ne-01",

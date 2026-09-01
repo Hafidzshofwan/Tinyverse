@@ -2,13 +2,18 @@
 
 import { useState } from "react";
 import type { Kasus } from "./types";
+import { ClinicalSvgIcon } from "@/shared/ui";
 
-const IKON_KATEGORI: Record<string, string> = {
-  dehidrasi: "💧", neonatus: "👶", respirasi: "🫁",
-  "tumbuh-kembang": "📏", neurologi: "🧠", farmakologi: "💊",
+const WARNA_TINGKAT_DOT: Record<string, string> = {
+  dasar: "#10B981",
+  menengah: "#F59E0B",
+  lanjut: "#EF4444",
 };
-const IKON_TINGKAT: Record<string, string> = {
-  dasar: "🟢 Dasar", menengah: "🟡 Menengah", lanjut: "🔴 Lanjut",
+
+const LABEL_TINGKAT: Record<string, string> = {
+  dasar: "Dasar",
+  menengah: "Menengah",
+  lanjut: "Lanjut",
 };
 
 interface KasusRunnerProps {
@@ -77,13 +82,26 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
     return (
       <div className="tv-kasus-runner">
         <div className="tv-kasus-selesai">
-          <div className="tv-kasus-selesai-ikon">🎉</div>
+          <div
+            className="tv-kasus-selesai-ikon"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "0 auto 1rem auto",
+            }}
+          >
+            <ClinicalSvgIcon name="trophy" size={56} />
+          </div>
           <h2 className="tv-kasus-selesai-judul">Kasus Selesai!</h2>
           <p className="tv-kasus-selesai-sub">
             Kamu berhasil menyelesaikan kasus <strong>{kasus.judul}</strong>.
           </p>
           <div className="tv-kasus-ref-box">
-            <p className="tv-kasus-ref-label">Referensi:</p>
+            <p className="tv-kasus-ref-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <ClinicalSvgIcon name="book" size={16} />
+              <span>Referensi Klinis:</span>
+            </p>
             <ul className="tv-kasus-ref-list">
               {kasus.referensi.map((r) => <li key={r}>{r}</li>)}
             </ul>
@@ -106,8 +124,29 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
       <div className="tv-kasus-runner-header">
         <button className="tv-kuis-back-btn" onClick={onKembali}>← Kasus Lain</button>
         <div className="tv-kasus-meta">
-          <span>{IKON_KATEGORI[kasus.kategori] ?? "📋"} {kasus.judul}</span>
-          <span className="tv-kasus-tingkat-badge">{IKON_TINGKAT[kasus.tingkat]}</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+            <ClinicalSvgIcon name={kasus.kategori} size={20} />
+            <span>{kasus.judul}</span>
+          </span>
+          <span
+            className="tv-kasus-tingkat-badge"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+            }}
+          >
+            <span
+              style={{
+                width: "8px",
+                height: "8px",
+                borderRadius: "50%",
+                backgroundColor: WARNA_TINGKAT_DOT[kasus.tingkat] || "#10B981",
+                display: "inline-block",
+              }}
+            />
+            <span>{LABEL_TINGKAT[kasus.tingkat]}</span>
+          </span>
         </div>
       </div>
 
@@ -176,7 +215,10 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
         {/* Penjelasan setelah cek / atau untuk info */}
         {(sudahCek || lk.tipeInput === "info") && (
           <div className="tv-kasus-penjelasan">
-            <p className="tv-kasus-penjelasan-label">💡 Penjelasan:</p>
+            <p className="tv-kasus-penjelasan-label" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <ClinicalSvgIcon name="lightbulb" size={18} />
+              <span>Penjelasan:</span>
+            </p>
             <p className="tv-kasus-penjelasan-teks">{lk.penjelasan}</p>
             {lk.linkKalkulator && (
               <a href={lk.linkKalkulator.href} className="tv-kasus-kalkulator-link" target="_blank" rel="noopener noreferrer">
@@ -196,7 +238,7 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
         )}
         {bisaLanjut && (
           <button className="tv-btn tv-kuis-lanjut-btn" onClick={lanjut}>
-            {isLastLangkah ? "Selesai 🎉" : "Lanjut →"}
+            {isLastLangkah ? "Selesai" : "Lanjut →"}
           </button>
         )}
       </div>

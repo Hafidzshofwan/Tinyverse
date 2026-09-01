@@ -3,17 +3,25 @@
 import { useState, useEffect } from "react";
 import type { KuisModul, FaseKuis } from "./types";
 import { useKuisStorage } from "./useKuisStorage";
+import { ClinicalSvgIcon } from "@/shared/ui";
 
 function SkorBadge({ persentase }: { persentase: number }) {
   let cls = "tv-kuis-skor-badge";
   let label = "";
-  if (persentase >= 80) { cls += " lulus-baik"; label = "Lulus dengan baik 🎉"; }
-  else if (persentase >= 60) { cls += " lulus-cukup"; label = "Lulus 👍"; }
-  else { cls += " perlu-belajar"; label = "Perlu lebih banyak latihan 📖"; }
+  if (persentase >= 80) { cls += " lulus-baik"; label = "Lulus dengan baik"; }
+  else if (persentase >= 60) { cls += " lulus-cukup"; label = "Lulus kompeten"; }
+  else { cls += " perlu-belajar"; label = "Perlu lebih banyak latihan"; }
   return (
     <div className={cls}>
       <span className="tv-kuis-skor-angka">{persentase}%</span>
-      <span className="tv-kuis-skor-label">{label}</span>
+      <span className="tv-kuis-skor-label" style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+        {persentase >= 80 ? (
+          <ClinicalSvgIcon name="trophy" size={18} />
+        ) : (
+          <ClinicalSvgIcon name="check-badge" size={18} />
+        )}
+        <span>{label}</span>
+      </span>
     </div>
   );
 }
@@ -83,7 +91,10 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
           <button className="tv-kuis-back-btn" onClick={onKembali}>
             ← Pilih Modul
           </button>
-          <span className="tv-kuis-modul-nama">{modul.icon} {modul.judul}</span>
+          <span className="tv-kuis-modul-nama" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+            <ClinicalSvgIcon name={modul.modulId} size={22} />
+            <span>{modul.judul}</span>
+          </span>
         </div>
 
         <div className="tv-kuis-progress-wrap">
@@ -131,7 +142,10 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
     <div className="tv-kuis-runner">
       <div className="tv-kuis-runner-header">
         <button className="tv-kuis-back-btn" onClick={onKembali}>← Pilih Modul</button>
-        <span className="tv-kuis-modul-nama">{modul.icon} {modul.judul}</span>
+        <span className="tv-kuis-modul-nama" style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+          <ClinicalSvgIcon name={modul.modulId} size={22} />
+          <span>{modul.judul}</span>
+        </span>
       </div>
 
       <div className="tv-kuis-hasil-header">
@@ -167,7 +181,10 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
               </p>
               <p className="tv-kuis-review-penjelasan">{s.penjelasan}</p>
               {s.referensi && (
-                <p className="tv-kuis-review-referensi">📚 {s.referensi}</p>
+                <p className="tv-kuis-review-referensi" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <ClinicalSvgIcon name="book" size={16} />
+                  <span>{s.referensi}</span>
+                </p>
               )}
             </div>
           );
@@ -175,7 +192,10 @@ export function QuizRunner({ modul, onKembali }: QuizRunnerProps) {
       </div>
 
       <div className="tv-kuis-hasil-aksi">
-        <button className="tv-btn tv-kuis-ulangi-btn" onClick={ulangi}>🔄 Ulangi Kuis</button>
+        <button className="tv-btn tv-kuis-ulangi-btn" onClick={ulangi} style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+          <ClinicalSvgIcon name="refresh" size={16} />
+          <span>Ulangi Kuis</span>
+        </button>
         <button className="tv-kuis-back-btn-outline" onClick={onKembali}>Pilih Modul Lain</button>
       </div>
     </div>

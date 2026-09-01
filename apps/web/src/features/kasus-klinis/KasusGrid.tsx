@@ -4,11 +4,8 @@ import { useState, useEffect } from "react";
 import { SEMUA_KASUS } from "./data";
 import { KasusRunner } from "./KasusRunner";
 import type { Kasus } from "./types";
+import { ClinicalSvgIcon } from "@/shared/ui";
 
-const IKON_KATEGORI: Record<string, string> = {
-  dehidrasi: "💧", neonatus: "👶", respirasi: "🫁",
-  "tumbuh-kembang": "📏", neurologi: "🧠", farmakologi: "💊",
-};
 const WARNA_TINGKAT: Record<string, string> = {
   dasar: "hijau", menengah: "kuning", lanjut: "merah",
 };
@@ -39,12 +36,29 @@ function KasusKartu({ kasus, selesai, onMulai }: { kasus: Kasus; selesai: boolea
   return (
     <div className={`tv-kasus-kartu${selesai ? " selesai" : ""}`}>
       <div className="tv-kasus-kartu-atas">
-        <span className="tv-kasus-icon">{IKON_KATEGORI[kasus.kategori] ?? "📋"}</span>
+        <span
+          className="tv-kasus-icon"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ClinicalSvgIcon name={kasus.kategori} size={28} />
+        </span>
         <div className="tv-kasus-badge-group">
           <span className={`tv-kasus-tingkat tv-kasus-tingkat-${WARNA_TINGKAT[kasus.tingkat]}`}>
             {LABEL_TINGKAT[kasus.tingkat]}
           </span>
-          {selesai && <span className="tv-kasus-selesai-chip">✓ Selesai</span>}
+          {selesai && (
+            <span
+              className="tv-kasus-selesai-chip"
+              style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}
+            >
+              <ClinicalSvgIcon name="check-badge" size={14} />
+              <span>Selesai</span>
+            </span>
+          )}
         </div>
       </div>
       <h3 className="tv-kasus-kartu-judul">{kasus.judul}</h3>
@@ -89,11 +103,22 @@ export function KasusGrid() {
       <div className="tv-kuis-page-header">
         <h1 className="tv-kuis-page-judul">Pembelajaran Berbasis Kasus</h1>
         <p className="tv-kuis-page-sub">
-          Hadapi kasus klinis anak fiktif tapi realistis secara bertahap — dari anamnesis hingga tatalaksana. Setiap langkah disertai penjelasan dokter senior.
+          Simulasi kasus klinis pediatri terstruktur mulai dari anamnesis hingga tatalaksana, lengkap dengan panduan dan pembahasan klinis.
         </p>
         {jumlahSelesai > 0 && (
-          <p className="tv-kasus-progress-global">
-            ✅ Diselesaikan: <strong>{jumlahSelesai} / {SEMUA_KASUS.length}</strong> kasus
+          <p
+            className="tv-kasus-progress-global"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px",
+            }}
+          >
+            <ClinicalSvgIcon name="check-badge" size={16} />
+            <span>
+              Diselesaikan: <strong>{jumlahSelesai} / {SEMUA_KASUS.length}</strong> kasus
+            </span>
           </p>
         )}
       </div>
@@ -110,7 +135,16 @@ export function KasusGrid() {
       </div>
 
       <div className="tv-kuis-info-box">
-        <span className="tv-kuis-info-ikon">🩺</span>
+        <span
+          className="tv-kuis-info-ikon"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <ClinicalSvgIcon name="kasus" size={24} />
+        </span>
         <p className="tv-kuis-info-teks">
           Kasus dirancang berdasarkan skenario klinis nyata dan mengacu pada panduan{" "}
           <strong>IDAI, WHO, AAP, dan GINA</strong>. Setiap kasus dapat diulang kapan saja untuk memperkuat pemahaman.

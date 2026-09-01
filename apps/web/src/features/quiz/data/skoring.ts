@@ -4,7 +4,7 @@ export const kuisSkoring: KuisModul = {
   modulId: "skoring",
   judul: "Skoring Klinis",
   deskripsi: "Uji pemahaman tentang 10 skor klinis pediatrik tervalidasi",
-  icon: "🧮",
+  icon: "skoring",
   soal: [
     {
       id: "sk-01",

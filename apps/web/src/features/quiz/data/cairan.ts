@@ -4,7 +4,7 @@ export const kuisCairan: KuisModul = {
   modulId: "cairan",
   judul: "Terapi Cairan",
   deskripsi: "Uji pemahaman tentang rehidrasi, rumatan, dan terapi cairan pediatrik",
-  icon: "💧",
+  icon: "cairan",
   soal: [
     {
       id: "ca-01",
