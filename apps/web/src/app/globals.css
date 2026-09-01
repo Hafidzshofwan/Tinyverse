@@ -15,6 +15,8 @@
 @import "./styles/14-animasi-bilirubin.css";
 @import "./styles/15-asisten-ai.css";
 @import "./styles/16-tour-onboarding.css";
+@import "./styles/17-quiz-uji-pemahaman.css";
+@import "./styles/18-kasus-klinis.css";
 
 /* ---- Dasar global: reset, :root, elemen dasar, dekorasi lintas-halaman ----
    Konten di bawah ini SENGAJA tetap di sini (bukan dipindah ke file

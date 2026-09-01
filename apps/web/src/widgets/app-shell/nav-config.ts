@@ -99,6 +99,13 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
       { slug: "ringkasan", label: "Ringkasan Klinis", icon: "\uD83D\uDCC4", href: "/preview/ringkasan", built: true },
     ],
   },
+  {
+    title: "Pembelajaran",
+    items: [
+      { slug: "kuis",  label: "Uji Pemahaman",           icon: "📝", href: "/preview/kuis",  built: true },
+      { slug: "kasus", label: "Pembelajaran Berbasis Kasus", icon: "🩺", href: "/preview/kasus", built: true },
+    ],
+  },
 ];
 
 // Deskripsi singkat tiap fitur (dipakai kartu Quick Access & Favorit).
@@ -121,6 +128,8 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/guideline": "Panduan tata laksana penyakit anak.",
   "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan informasi tiap vaksin.",
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
+  "/preview/kuis":  "Uji pemahaman klinis dengan soal MCQ per modul — Skoring, Cairan, dan Neonatus.",
+  "/preview/kasus": "Pembelajaran berbasis kasus klinis anak — 5 kasus step-by-step dengan penjelasan dokter senior.",
 };
 
 // Deskripsi mendalam fungsi alat untuk tooltip hover.
@@ -143,13 +152,15 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
   "/preview/imunisasi": "Jadwal & panduan imunisasi IDAI: Tabel jadwal imunisasi anak sesuai rekomendasi IDAI terbaru beserta rekomendasi jadwal kejar (Catch-Up Vaccine).",
   "/preview/ringkasan": "Generator ringkasan medis & SOAP: Otomatisasi kompilasi data pemeriksaan, perhitungan dosis, dan catatan klinis menjadi resume medis SOAP siap cetak/salin.",
+  "/preview/kasus": "Pembelajaran Berbasis Kasus: 5 kasus klinis pediatri fiktif tapi realistis (dehidrasi berat, ikterus neonatus, asma akut, failure to thrive, kejang demam) dikerjakan step-by-step dengan MCQ, input numerik, dan penjelasan dokter senior di setiap langkah.",
+  "/preview/kuis": "Platform Uji Pemahaman: Kerjakan soal MCQ klinis per modul (Skoring Klinis, Terapi Cairan, Tools Neonatus) dengan 8 soal level koas per modul. Skor terbaik dan riwayat pengerjaan tersimpan otomatis di perangkatmu.",
 };
 
 // Fitur yang baru rilis atau baru mendapat kemampuan besar. Dipakai Quick
 // Access di beranda untuk menandai badge "Baru" dan memastikan fitur ini tetap
 // terlihat walau belum punya riwayat pemakaian. Hapus entri dari daftar ini
 // begitu fiturnya sudah dianggap "lama" oleh tim produk.
-const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/neonatus", "/preview/egfr"];
+const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/neonatus", "/preview/egfr", "/preview/kuis", "/preview/kasus"];
 
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan

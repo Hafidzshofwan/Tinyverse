@@ -1,0 +1,403 @@
+/* ================================================================
+   18 — PEMBELAJARAN BERBASIS KASUS
+   Halaman: /preview/kasus
+   Komponen: KasusGrid, KasusKartu, KasusRunner
+   ================================================================ */
+
+/* ── Grid kartu kasus ────────────────────────────────────────── */
+
+.tv-kasus-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tv-kasus-progress-global {
+  font-size: 0.88rem;
+  color: var(--tv-soft-teks);
+  margin: 0.25rem 0 0;
+}
+
+.tv-kasus-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* ── Kartu kasus ─────────────────────────────────────────────── */
+
+.tv-kasus-kartu {
+  background: var(--tv-card);
+  border: 1.5px solid var(--tv-line);
+  border-radius: var(--tv-radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.tv-kasus-kartu:hover {
+  border-color: var(--tv-magenta);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.1);
+}
+
+.tv-kasus-kartu.selesai {
+  border-color: #22c55e;
+}
+
+.tv-kasus-kartu-atas {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tv-kasus-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.tv-kasus-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.tv-kasus-tingkat {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+}
+
+.tv-kasus-tingkat-hijau  { background: #dcfce7; color: #166534; }
+.tv-kasus-tingkat-kuning { background: #fef9c3; color: #854d0e; }
+.tv-kasus-tingkat-merah  { background: #fee2e2; color: #991b1b; }
+
+.tv-kasus-selesai-chip {
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.tv-kasus-kartu-judul {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-kasus-kartu-desk {
+  font-size: 0.83rem;
+  color: var(--tv-soft-teks);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.tv-kasus-langkah-info {
+  font-size: 0.78rem;
+  color: var(--tv-soft-teks);
+  margin: 0;
+}
+
+.tv-kasus-mulai-btn {
+  margin-top: 0.25rem;
+  align-self: flex-start;
+  font-size: 0.85rem;
+  padding: 0.5rem 1.1rem;
+}
+
+/* ── Runner wrapper ──────────────────────────────────────────── */
+
+.tv-kasus-runner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.tv-kasus-runner-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tv-kasus-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  flex-wrap: wrap;
+}
+
+.tv-kasus-tingkat-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--tv-soft-teks);
+}
+
+/* ── Kartu langkah ───────────────────────────────────────────── */
+
+.tv-kasus-langkah-kartu {
+  background: var(--tv-card);
+  border: 1.5px solid var(--tv-line);
+  border-radius: var(--tv-radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tv-kasus-langkah-judul {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-kasus-narasi {
+  font-size: 0.89rem;
+  line-height: 1.7;
+  color: var(--tv-navy);
+  margin: 0;
+  white-space: pre-line;
+}
+
+.tv-kasus-pertanyaan {
+  font-size: 0.96rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  margin: 0;
+  padding: 0.75rem 1rem;
+  background: color-mix(in srgb, var(--tv-navy) 5%, var(--tv-card));
+  border-left: 3px solid var(--tv-navy);
+  border-radius: 0 12px 12px 0;
+  line-height: 1.5;
+}
+
+/* ── Opsi MCQ — state tambahan untuk kasus ───────────────────── */
+
+.tv-kuis-opsi.jawaban-benar {
+  border-color: #22c55e;
+  background: #dcfce7;
+}
+
+.tv-kuis-opsi.jawaban-salah {
+  border-color: #ef4444;
+  background: #fee2e2;
+}
+
+.tv-kasus-opsi-check {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #166534;
+  flex-shrink: 0;
+}
+
+.tv-kasus-opsi-cross {
+  margin-left: auto;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #991b1b;
+  flex-shrink: 0;
+}
+
+/* ── Input numerik ───────────────────────────────────────────── */
+
+.tv-kasus-numerik-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.tv-kasus-numerik-input {
+  font-family: "Inter", monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid var(--tv-line);
+  border-radius: 12px;
+  background: var(--tv-soft);
+  color: var(--tv-navy);
+  width: 180px;
+  outline: none;
+  transition: border-color 180ms;
+}
+
+.tv-kasus-numerik-input:focus {
+  border-color: var(--tv-navy);
+}
+
+.tv-kasus-numerik-input.benar { border-color: #22c55e; background: #dcfce7; }
+.tv-kasus-numerik-input.salah { border-color: #ef4444; background: #fee2e2; }
+.tv-kasus-numerik-input:disabled { opacity: 0.8; cursor: not-allowed; }
+
+.tv-kasus-numerik-icon {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+.tv-kasus-numerik-icon.benar { color: #166534; }
+.tv-kasus-numerik-icon.salah { color: #991b1b; }
+
+/* ── Penjelasan ──────────────────────────────────────────────── */
+
+.tv-kasus-penjelasan {
+  background: color-mix(in srgb, var(--tv-navy) 4%, var(--tv-card));
+  border: 1px solid var(--tv-line);
+  border-radius: 14px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: tvFadeIn 300ms ease;
+}
+
+@keyframes tvFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tv-kasus-penjelasan-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-kasus-penjelasan-teks {
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--tv-soft-teks);
+  margin: 0;
+}
+
+.tv-kasus-kalkulator-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tv-magenta);
+  text-decoration: none;
+  border: 1px solid var(--tv-magenta);
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  align-self: flex-start;
+  transition: background 200ms, color 200ms;
+}
+
+.tv-kasus-kalkulator-link:hover {
+  background: var(--tv-magenta);
+  color: #fff;
+}
+
+/* ── Layar selesai kasus ─────────────────────────────────────── */
+
+.tv-kasus-selesai {
+  background: var(--tv-card);
+  border: 1.5px solid #22c55e;
+  border-radius: var(--tv-radius);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.tv-kasus-selesai-ikon { font-size: 3rem; }
+
+.tv-kasus-selesai-judul {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-kasus-selesai-sub {
+  font-size: 0.92rem;
+  color: var(--tv-soft-teks);
+  margin: 0;
+}
+
+.tv-kasus-ref-box {
+  background: var(--tv-soft);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  width: 100%;
+  text-align: left;
+}
+
+.tv-kasus-ref-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--tv-soft-teks);
+  margin: 0 0 0.4rem;
+}
+
+.tv-kasus-ref-list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tv-kasus-ref-list li {
+  font-size: 0.78rem;
+  color: var(--tv-soft-teks);
+  font-style: italic;
+}
+
+.tv-kasus-selesai-aksi {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ══ DARK MODE ═══════════════════════════════════════════════════ */
+
+[data-theme="dark"] .tv-kasus-kartu.selesai { border-color: #4ade80; }
+[data-theme="dark"] .tv-kasus-selesai { border-color: #4ade80; }
+[data-theme="dark"] .tv-kasus-selesai-chip { background: rgba(34,197,94,.15); color: #86efac; }
+[data-theme="dark"] .tv-kasus-tingkat-hijau { background: rgba(34,197,94,.15); color: #86efac; }
+[data-theme="dark"] .tv-kasus-tingkat-kuning { background: rgba(234,179,8,.15); color: #fde047; }
+[data-theme="dark"] .tv-kasus-tingkat-merah { background: rgba(239,68,68,.15); color: #fca5a5; }
+[data-theme="dark"] .tv-kuis-opsi.jawaban-benar { border-color: #4ade80; background: rgba(34,197,94,.12); }
+[data-theme="dark"] .tv-kuis-opsi.jawaban-salah { border-color: #f87171; background: rgba(239,68,68,.12); }
+[data-theme="dark"] .tv-kasus-numerik-input.benar { border-color: #4ade80; background: rgba(34,197,94,.12); }
+[data-theme="dark"] .tv-kasus-numerik-input.salah { border-color: #f87171; background: rgba(239,68,68,.12); }
+[data-theme="dark"] .tv-kasus-opsi-check { color: #86efac; }
+[data-theme="dark"] .tv-kasus-opsi-cross { color: #fca5a5; }
+[data-theme="dark"] .tv-kasus-numerik-icon.benar { color: #86efac; }
+[data-theme="dark"] .tv-kasus-numerik-icon.salah { color: #fca5a5; }
+
+/* ══ MOBILE ══════════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .tv-kasus-mulai-btn { width: 100%; text-align: center; }
+  .tv-kasus-langkah-kartu { padding: 1.1rem; }
+  .tv-kasus-numerik-input { width: 100%; }
+  .tv-kasus-selesai-aksi { flex-direction: column; }
+  .tv-kasus-selesai-aksi .tv-btn { width: 100%; text-align: center; }
+}
