@@ -25,12 +25,13 @@ export function KasusRunner({ kasus, onKembali, onSelesai }: KasusRunnerProps) {
   const [selesai, setSelesai] = useState(false);
 
   const langkah = kasus.langkah;
-  const lk = langkah[langkahIdx];
   const totalLangkah = langkah.length;
   const isLastLangkah = langkahIdx === totalLangkah - 1;
   const progress = ((langkahIdx + 1) / totalLangkah) * 100;
 
-  if (!lk) return null;
+  const lkRaw = langkah[langkahIdx];
+  if (!lkRaw) return null;
+  const lk = lkRaw;
 
   const jawabanLangkahIni = jawabanUser[lk.id];
   const sudahPilih = jawabanLangkahIni !== undefined && jawabanLangkahIni !== "";
