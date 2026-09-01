@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import { ModulGrid } from "@/features/quiz";
 import { KasusGrid } from "@/features/kasus-klinis";
+import {
+  SidebarIcon,
+  usePembelajaranMenuTitle,
+  useSidebarIconVariants,
+} from "@/shared/ui";
 
 type Tab = "kuis" | "kasus";
 
@@ -23,6 +28,9 @@ const TABS: { id: Tab; label: string; icon: string; sub: string }[] = [
 
 export function PembelajaranPanel() {
   const [tab, setTab] = useState<Tab>("kuis");
+  const pembelajaranTitle = usePembelajaranMenuTitle();
+  const { variants } = useSidebarIconVariants();
+  const currentIconVariant = variants.pembelajaran || "v1";
 
   // Sync tab dari URL hash (#kuis atau #kasus) supaya deep-link bisa bekerja
   useEffect(() => {
@@ -38,11 +46,46 @@ export function PembelajaranPanel() {
   return (
     <div className="tv-pembelajaran-page">
       {/* ── Header ─────────────────────────────────────────────── */}
-      <div className="tv-pembelajaran-header">
-        <h1 className="tv-pembelajaran-judul">Pembelajaran</h1>
-        <p className="tv-pembelajaran-sub">
-          Dua mode belajar dalam satu tempat — pilih yang sesuai dengan waktumu.
-        </p>
+      <div
+        className="tv-pembelajaran-header"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          gap: "8px",
+        }}
+      >
+        <div
+          style={{
+            width: "56px",
+            height: "56px",
+            borderRadius: "16px",
+            background:
+              "linear-gradient(135deg, rgba(217,54,166,0.12) 0%, rgba(10,11,95,0.08) 100%)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 4px 14px rgba(10,11,95,0.06)",
+          }}
+        >
+          <SidebarIcon
+            slug="pembelajaran"
+            variant={currentIconVariant}
+            size={36}
+          />
+        </div>
+        <div>
+          <h1 className="tv-pembelajaran-judul" style={{ margin: 0 }}>
+            {pembelajaranTitle.label}
+          </h1>
+          <p
+            className="tv-pembelajaran-sub"
+            style={{ margin: "6px auto 0 auto", maxWidth: "520px" }}
+          >
+            {pembelajaranTitle.currentOption.tagline}
+          </p>
+        </div>
       </div>
 
       {/* ── Tab switcher ────────────────────────────────────────── */}

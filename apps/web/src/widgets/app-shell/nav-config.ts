@@ -58,7 +58,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
       // Dosis Obat dan Racik Puyer digabung menjadi satu menu dua tab agar
       // sidebar tidak memanjang. Rute lama tetap hidup sebagai pengalih.
       { slug: "obat", label: "Obat & Puyer", icon: "\uD83D\uDC8A", href: "/preview/obat", built: true },
-      { slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/cairan", built: true },
+      { slug: "cairan", label: "Terapi Cairan", icon: "\uD83D\uDCA7", href: "/preview/fluids", built: true },
     ],
   },
   {
@@ -102,7 +102,7 @@ export const NAV_GROUPS: ReadonlyArray<NavGroup> = [
   {
     title: "Pembelajaran",
     items: [
-      { slug: "pembelajaran", label: "Pembelajaran", icon: "🎓", href: "/preview/pembelajaran", built: true },
+      { slug: "pembelajaran", label: "Ruang Belajar", icon: "🎓", href: "/preview/pembelajaran", built: true },
     ],
   },
 ];
@@ -114,7 +114,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/alur": "Alur interaktif tata laksana kegawatan anak.",
   "/preview/obat": "Dosis obat anak per berat badan atau usia, plus racikan puyer.",
   "/preview/dosing": "Dosis obat anak berdasarkan berat badan atau usia.",
-  "/preview/cairan": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
+  "/preview/fluids": "Rumatan, rehidrasi diare, luka bakar, dan faktor tetes.",
   "/preview/puyer": "Hitung tablet yang digerus dan pembagian bungkus.",
   "/preview/pertumbuhan": "Kurva pertumbuhan, penilaian status gizi, dan skrining perkembangan anak.",
   "/preview/skoring": "10 skor klinis anak (westley, downes, centor, dan lainnya).",
@@ -137,7 +137,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/alur": "Algoritma interaktif tata laksana kegawatan: Panduan langkah-demi-langkah visual untuk penanganan serangan asma akut, kejang, syok, dan kondisi darurat anak.",
   "/preview/obat": "Dua alat obat dalam satu menu: Tab Dosis Obat menghitung dosis mg/kgBB/hari atau rentang usia, frekuensi pemberian, dan batas dosis maksimum. Tab Racik Puyer menghitung konversi tablet yang digerus, penyesuaian dosis puyer dan sirup, serta pembagian bungkus.",
   "/preview/dosing": "Kalkulator presisi dosis obat anak: Dosis mg/kgBB/hari atau rentang usia, rekomendasi frekuensi pemberian, serta batas dosis maksimum aman.",
-  "/preview/cairan": "Kalkulator terapi cairan komprehensif: Kebutuhan rumatan Holliday-Segar, rehidrasi diare WHO, rumus luka bakar Parkland, & perhitungan kecepatan tetesan infus.",
+  "/preview/fluids": "Kalkulator terapi cairan komprehensif: Kebutuhan rumatan Holliday-Segar, rehidrasi diare WHO, rumus luka bakar Parkland, & perhitungan kecepatan tetesan infus.",
   "/preview/puyer": "Kalkulator racik puyer pediatri: Hitung konversi tablet utuh yang digerus, penyesuaian dosis puyer & sirup, serta estimasi pembagian bungkus obat.",
   "/preview/pertumbuhan": "Pemantauan tumbuh kembang anak: Grafik kurva pertumbuhan WHO (0-5 thn) & CDC (2-20 thn), Z-score BB/U, TB/U, IMT/U, serta skrining perkembangan KPSP, Denver II, & M-CHAT-R.",
   "/preview/skoring": "10 kalkulator skoring klinis pediatrik: CDS, Westley Croup, PAS, Downes, PASS, Kawasaki/AHA, Centor/McIsaac, TB Anak, APGAR, & New Ballard.",

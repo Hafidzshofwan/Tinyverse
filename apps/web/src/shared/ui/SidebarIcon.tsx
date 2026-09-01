@@ -20,13 +20,110 @@ export type SidebarIconSlug =
   | "lab"
   | "protokol"
   | "imunisasi"
-  | "ringkasan";
+  | "ringkasan"
+  | "pembelajaran";
 
 export type SidebarIconVariant = "v1" | "v2" | "v3";
 
 export type IconVariantMap = Record<SidebarIconSlug, SidebarIconVariant>;
 
 const STORAGE_KEY = "tv-sidebar-icon-variants";
+const NAME_STORAGE_KEY = "tv-pembelajaran-menu-title";
+
+export type PembelajaranNameKey = "akademi-klinis" | "kasus-kuis" | "ruang-belajar";
+
+export interface PembelajaranNameOption {
+  key: PembelajaranNameKey;
+  label: string;
+  badge: string;
+  tagline: string;
+  description: string;
+  recommendation: string;
+}
+
+export const PEMBELAJARAN_NAME_OPTIONS: ReadonlyArray<PembelajaranNameOption> = [
+  {
+    key: "ruang-belajar",
+    label: "Ruang Belajar",
+    badge: "Opsi 1 · Edukatif",
+    tagline: "Pusat Studi Kasus & Kuis Interaktif",
+    description: "Nuansa hangat, bersahabat, dan memotivasi belajar mandiri dengan penjelasan dokter senior di setiap langkah.",
+    recommendation: "Pilihan ramah dan interaktif untuk mendampingi stase anak.",
+  },
+  {
+    key: "akademi-klinis",
+    label: "Akademi Klinis",
+    badge: "Opsi 2 · Prestisius",
+    tagline: "Pusat Pendalaman & Kurikulum Pediatri",
+    description: "Nuansa profesional, berwibawa, dan sangat cocok untuk dokter muda, residen, maupun dokter spesialis.",
+    recommendation: "Pilihan utama bernuansa akademisi dan pelatihan klinis berstandar tinggi.",
+  },
+  {
+    key: "kasus-kuis",
+    label: "Kasus & Kuis Klinis",
+    badge: "Opsi 3 · Interaktif",
+    tagline: "Uji MCQ & Simulasi Kasus Step-by-Step",
+    description: "Langsung menggambarkan dua modul inti di dalamnya: Uji Pemahaman MCQ dan Pembelajaran Berbasis Kasus nyata.",
+    recommendation: "Pilihan paling to-the-point, jelas, dan memikat rasa ingin tahu.",
+  },
+];
+
+const DEFAULT_NAME_KEY: PembelajaranNameKey = "ruang-belajar";
+
+export function getSavedPembelajaranNameKey(): PembelajaranNameKey {
+  if (typeof window === "undefined") return DEFAULT_NAME_KEY;
+  try {
+    const val = window.localStorage.getItem(NAME_STORAGE_KEY) as PembelajaranNameKey | null;
+    if (val && val === "ruang-belajar") {
+      return val;
+    }
+    // Default to ruang-belajar
+    window.localStorage.setItem(NAME_STORAGE_KEY, "ruang-belajar");
+    return DEFAULT_NAME_KEY;
+  } catch {
+    return DEFAULT_NAME_KEY;
+  }
+}
+
+export function setSavedPembelajaranNameKey(key: PembelajaranNameKey) {
+  try {
+    window.localStorage.setItem(NAME_STORAGE_KEY, key);
+  } catch (error) {
+    console.error(error);
+  }
+  LISTENERS.forEach((cb) => cb());
+}
+
+const FALLBACK_PEMBELAJARAN_OPTION: PembelajaranNameOption = {
+  key: "ruang-belajar",
+  label: "Ruang Belajar",
+  badge: "Opsi 1 · Edukatif",
+  tagline: "Pusat Studi Kasus & Kuis Interaktif",
+  description: "Nuansa hangat, bersahabat, dan memotivasi belajar mandiri dengan penjelasan dokter senior di setiap langkah.",
+  recommendation: "Pilihan ramah dan interaktif untuk mendampingi stase anak.",
+};
+
+export function usePembelajaranMenuTitle() {
+  const [key, setKey] = useState<PembelajaranNameKey>(getSavedPembelajaranNameKey);
+
+  useEffect(() => {
+    const update = () => setKey(getSavedPembelajaranNameKey());
+    LISTENERS.add(update);
+    return () => {
+      LISTENERS.delete(update);
+    };
+  }, []);
+
+  const currentOption: PembelajaranNameOption =
+    PEMBELAJARAN_NAME_OPTIONS.find((o) => o.key === key) ?? FALLBACK_PEMBELAJARAN_OPTION;
+
+  return {
+    key,
+    currentOption,
+    label: currentOption.label,
+    setKey: setSavedPembelajaranNameKey,
+  };
+}
 
 const DEFAULT_VARIANTS: IconVariantMap = {
   "beranda": "v3",
@@ -46,6 +143,7 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "protokol": "v1",
   "imunisasi": "v2",
   "ringkasan": "v3",
+  "pembelajaran": "v1",
 };
 
 // Global event listener system for real-time synchronization
@@ -754,6 +852,103 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
     );
   }
 
+  // --- PEMBELAJARAN / AKADEMI KLINIS ---
+  if (slug === "pembelajaran") {
+    if (currentVariant === "v2") {
+      // V2: Buku Pintar Medis & Berkas Sinar Ide (Kasus & Eksplorasi Klinis)
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          {!hideBackground && <rect width="24" height="24" rx="6" fill="#ECFDF5" />}
+          {/* Open Book Base */}
+          <path
+            d="M12 6.5C10 5.2 6.5 5.2 4 6.2V17.8C6.5 16.8 10 16.8 12 18.2C14 16.8 17.5 16.8 20 17.8V6.2C17.5 5.2 14 5.2 12 6.5Z"
+            fill={hideBackground ? "rgba(255,255,255,0.2)" : "#D1FAE5"}
+            fillOpacity={hideBackground ? "1" : "0.75"}
+            stroke={hideBackground ? "#FFFFFF" : "#059669"}
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          {/* Book Spine */}
+          <path d="M12 6.5V18.2" stroke={hideBackground ? "#FFFFFF" : "#047857"} strokeWidth="1.6" strokeLinecap="round" />
+          {/* Pediatric ECG curve line */}
+          <path
+            d="M5.5 11.5H7.2L8.2 9.5L9.5 13.5L10.5 11.5H11"
+            stroke={hideBackground ? "#FFFFFF" : "#10B981"}
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          {/* Knowledge Sparkle Star at Top */}
+          <path
+            d="M12 2L12.6 3.6L14.2 4.2L12.6 4.8L12 6.4L11.4 4.8L9.8 4.2L11.4 3.6L12 2Z"
+            fill={hideBackground ? "#FEF08A" : "#F59E0B"}
+          />
+        </svg>
+      );
+    }
+    if (currentVariant === "v3") {
+      // V3: Lencana Medali Prestasi & Pita Klinis (Kuis & Simulasi)
+      return (
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+          {!hideBackground && <rect width="24" height="24" rx="6" fill="#FDF2F8" />}
+          {/* Rosette Ribbon Banner */}
+          <path
+            d="M8 14.5L6.5 21L12 18.5L17.5 21L16 14.5"
+            fill={hideBackground ? "rgba(255,255,255,0.25)" : "#FCE7F3"}
+            stroke={hideBackground ? "#FFFFFF" : "#D936A6"}
+            strokeWidth="1.5"
+            strokeLinejoin="round"
+          />
+          {/* Badge Rosette Round */}
+          <circle
+            cx="12"
+            cy="9.5"
+            r="6"
+            fill={hideBackground ? "rgba(255,255,255,0.3)" : "#F472B6"}
+            fillOpacity={hideBackground ? "1" : "0.25"}
+            stroke={hideBackground ? "#FFFFFF" : "#D936A6"}
+            strokeWidth="1.7"
+          />
+          {/* Golden Star of Clinical Excellence */}
+          <path
+            d="M12 5.8L13.2 8.3L15.9 8.7L13.9 10.6L14.4 13.3L12 12L9.6 13.3L10.1 10.6L8.1 8.7L10.8 8.3L12 5.8Z"
+            fill={hideBackground ? "#FEF08A" : "#F59E0B"}
+            stroke={hideBackground ? "#F59E0B" : "#D97706"}
+            strokeWidth="0.6"
+            strokeLinejoin="round"
+          />
+        </svg>
+      );
+    }
+    // V1 (default): Topi Wisuda Toga & Rumbai Emas (Akademi Pediatrik)
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        {!hideBackground && <rect width="24" height="24" rx="6" fill="#EEF2FF" />}
+        {/* Cap Diamond Top */}
+        <path
+          d="M12 3.5L21 7.8L12 12.2L3 7.8L12 3.5Z"
+          fill={hideBackground ? "rgba(255,255,255,0.35)" : "#818CF8"}
+          fillOpacity={hideBackground ? "1" : "0.75"}
+          stroke={hideBackground ? "#FFFFFF" : "#4338CA"}
+          strokeWidth="1.6"
+          strokeLinejoin="round"
+        />
+        {/* Cap Lower Base */}
+        <path
+          d="M6.5 10.5V14.8C6.5 17 9 18.5 12 18.5C15 18.5 17.5 17 17.5 14.8V10.5"
+          fill={hideBackground ? "rgba(255,255,255,0.15)" : "#C7D2FE"}
+          fillOpacity={hideBackground ? "1" : "0.4"}
+          stroke={hideBackground ? "#FFFFFF" : "#4F46E5"}
+          strokeWidth="1.5"
+        />
+        {/* Tassel & Golden Bead */}
+        <path d="M18.8 9.5V16L17.5 17.2" stroke={hideBackground ? "#FEF08A" : "#F59E0B"} strokeWidth="1.5" strokeLinecap="round" />
+        <circle cx="17.5" cy="17.2" r="1.1" fill={hideBackground ? "#FEF08A" : "#D97706"} />
+        <circle cx="12" cy="7.8" r="1" fill={hideBackground ? "#FFFFFF" : "#312E81"} />
+      </svg>
+    );
+  }
+
   // Default fallback if unknown slug
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
@@ -816,6 +1011,10 @@ const SECTIONS: MenuSection[] = [
     items: [{ slug: "neonatus", label: "Tool Neonatus" }],
   },
   {
+    title: "Pembelajaran & Modul",
+    items: [{ slug: "pembelajaran", label: "Akademi / Pembelajaran" }],
+  },
+  {
     title: "Referensi",
     items: [
       { slug: "protokol", label: "Guideline" },
@@ -833,6 +1032,7 @@ export const IconCustomizerModal: React.FC<IconCustomizerModalProps> = ({
   onClose,
 }) => {
   const { variants, setVariant, resetVariants } = useSidebarIconVariants();
+  const pembelajaranTitle = usePembelajaranMenuTitle();
 
   if (!isOpen) return null;
 
@@ -905,10 +1105,10 @@ export const IconCustomizerModal: React.FC<IconCustomizerModalProps> = ({
                   fontFamily: "var(--font-fredoka, 'Fredoka', sans-serif)",
                 }}
               >
-                Kustomisasi Desain Ikon Sidebar
+                Kustomisasi Nama & Desain Ikon Sidebar
               </h3>
               <p style={{ margin: "2px 0 0 0", fontSize: "0.85rem", color: "#64748B" }}>
-                Pilih opsi gaya SVG favorit Anda untuk masing-masing menu navigasi.
+                Pilih opsi nama menu dan gaya SVG favorit Anda untuk navigasi Tinyverse.
               </p>
             </div>
           </div>
@@ -1002,6 +1202,198 @@ export const IconCustomizerModal: React.FC<IconCustomizerModalProps> = ({
                       );
                     }
 
+                    if (item.slug === "pembelajaran") {
+                      return (
+                        <div
+                          key={item.slug}
+                          style={{
+                            padding: "16px 18px",
+                            borderRadius: "16px",
+                            background: "linear-gradient(180deg, #FFFFFF 0%, #FAF5FF 100%)",
+                            border: "2px solid #E9D5FF",
+                            boxShadow: "0 4px 14px rgba(217, 54, 166, 0.08)",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "space-between",
+                              marginBottom: "14px",
+                            }}
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                              <SidebarIcon slug="pembelajaran" variant={activeVariant} size={28} />
+                              <div>
+                                <div style={{ fontWeight: 800, color: "#0A0B5F", fontSize: "1rem" }}>
+                                  Menu Pembelajaran:{" "}
+                                  <span style={{ color: "#D936A6" }}>{pembelajaranTitle.label}</span>
+                                </div>
+                                <div style={{ fontSize: "0.8rem", color: "#64748B" }}>
+                                  Pilih kombinasi nama menu dan desain SVG favorit Anda di bawah:
+                                </div>
+                              </div>
+                            </div>
+                            <span
+                              style={{
+                                fontSize: "0.72rem",
+                                fontWeight: 800,
+                                padding: "4px 10px",
+                                borderRadius: "20px",
+                                background: "#FDF2F8",
+                                color: "#D936A6",
+                                border: "1px solid #FBCFE8",
+                              }}
+                            >
+                              ✨ 3 Opsi Nama &amp; Ikon
+                            </span>
+                          </div>
+
+                          {/* 1. Name Selection */}
+                          <div style={{ marginBottom: "16px" }}>
+                            <div
+                              style={{
+                                fontSize: "0.8rem",
+                                fontWeight: 700,
+                                color: "#475569",
+                                marginBottom: "8px",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em",
+                              }}
+                            >
+                              1. Pilihan Nama Menu di Sidebar (3 Opsi)
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "8px" }}>
+                              {PEMBELAJARAN_NAME_OPTIONS.map((opt) => {
+                                const isSelected = pembelajaranTitle.key === opt.key;
+                                return (
+                                  <button
+                                    key={opt.key}
+                                    type="button"
+                                    onClick={() => pembelajaranTitle.setKey(opt.key)}
+                                    style={{
+                                      textAlign: "left",
+                                      padding: "10px 12px",
+                                      borderRadius: "12px",
+                                      border: isSelected ? "2px solid #9333EA" : "1px solid #E2E8F0",
+                                      background: isSelected ? "#F3E8FF" : "#FFFFFF",
+                                      cursor: "pointer",
+                                      transition: "all 0.15s ease",
+                                    }}
+                                  >
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "space-between",
+                                        marginBottom: "4px",
+                                      }}
+                                    >
+                                      <span
+                                        style={{
+                                          fontSize: "0.7rem",
+                                          fontWeight: 700,
+                                          color: isSelected ? "#9333EA" : "#64748B",
+                                        }}
+                                      >
+                                        {opt.badge}
+                                      </span>
+                                      {isSelected && <span style={{ color: "#9333EA", fontWeight: 800 }}>✓</span>}
+                                    </div>
+                                    <div
+                                      style={{
+                                        fontWeight: 800,
+                                        fontSize: "0.92rem",
+                                        color: isSelected ? "#581C87" : "#0A0B5F",
+                                        marginBottom: "2px",
+                                      }}
+                                    >
+                                      {opt.label}
+                                    </div>
+                                    <div style={{ fontSize: "0.75rem", color: "#64748B", lineHeight: 1.3 }}>
+                                      {opt.tagline}
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* 2. SVG Icon Selection */}
+                          <div>
+                            <div
+                              style={{
+                                fontSize: "0.8rem",
+                                fontWeight: 700,
+                                color: "#475569",
+                                marginBottom: "8px",
+                                textTransform: "uppercase",
+                                letterSpacing: "0.05em",
+                              }}
+                            >
+                              2. Pilihan Desain Ikon SVG (3 Opsi)
+                            </div>
+                            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "10px" }}>
+                              {[
+                                {
+                                  variant: "v1" as SidebarIconVariant,
+                                  title: "Topi Wisuda & Toga",
+                                  subtitle: "Akademi Pediatri",
+                                },
+                                {
+                                  variant: "v2" as SidebarIconVariant,
+                                  title: "Buku Pintar & Ide",
+                                  subtitle: "Studi Kasus & Sinar",
+                                },
+                                {
+                                  variant: "v3" as SidebarIconVariant,
+                                  title: "Medali Prestasi",
+                                  subtitle: "Kuis & Bintang Emas",
+                                },
+                              ].map((itemOption, idx) => {
+                                const isSelected = activeVariant === itemOption.variant;
+                                return (
+                                  <button
+                                    key={itemOption.variant}
+                                    type="button"
+                                    onClick={() => setVariant("pembelajaran", itemOption.variant)}
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                      gap: "6px",
+                                      padding: "12px 8px",
+                                      borderRadius: "14px",
+                                      border: isSelected ? "2px solid #D936A6" : "1px solid #E2E8F0",
+                                      background: isSelected ? "#FDF2F8" : "#FFFFFF",
+                                      cursor: "pointer",
+                                      transition: "all 0.15s ease",
+                                    }}
+                                  >
+                                    <SidebarIcon slug="pembelajaran" variant={itemOption.variant} size={36} />
+                                    <div style={{ textAlign: "center" }}>
+                                      <div
+                                        style={{
+                                          fontSize: "0.78rem",
+                                          fontWeight: isSelected ? 800 : 700,
+                                          color: isSelected ? "#D936A6" : "#0A0B5F",
+                                        }}
+                                      >
+                                        Opsi {idx + 1} {isSelected ? "✓" : ""}
+                                      </div>
+                                      <div style={{ fontSize: "0.7rem", color: "#64748B" }}>
+                                        {itemOption.title}
+                                      </div>
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+
                     return (
                       <div
                         key={item.slug}
@@ -1085,7 +1477,10 @@ export const IconCustomizerModal: React.FC<IconCustomizerModalProps> = ({
         >
           <button
             type="button"
-            onClick={resetVariants}
+            onClick={() => {
+              resetVariants();
+              pembelajaranTitle.setKey("akademi-klinis");
+            }}
             style={{
               padding: "8px 14px",
               borderRadius: "10px",
