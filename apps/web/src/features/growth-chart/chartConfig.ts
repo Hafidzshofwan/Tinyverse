@@ -158,7 +158,7 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
               { id: "lkbu", title: "LK/U \u2014 Lingkar Kepala menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_m_lkbu,
                 series: [ { key: "lk", yField: "lk", yLabel: "Lingkar Kepala (cm)", yUnit: "cm", emoji: "\u{1F535}", zKey: "hcfa", warna: "#0277BD" } ],
-                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:294,y1:1324},xRange:[0,60],yRange:[28.61,56.21]} } }
+                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:290,y1:1324},xRange:[0,60],yRange:[30,56]} } }
             ]
           }
         }
@@ -222,7 +222,7 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
               { id: "lkbu", title: "LK/U \u2014 Lingkar Kepala menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
                 image: TKIMG.who_f_lkbu,
                 series: [ { key: "lk", yField: "lk", yLabel: "Lingkar Kepala (cm)", yUnit: "cm", emoji: "\u{1F535}", zKey: "hcfa", warna: "#0277BD" } ],
-                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:294,y1:1324},xRange:[0,60],yRange:[28.69,55.22]} } }
+                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:292,y1:1322},xRange:[0,60],yRange:[30,55]} } }
             ]
           }
         }
