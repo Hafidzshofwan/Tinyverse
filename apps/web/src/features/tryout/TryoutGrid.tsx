@@ -117,7 +117,11 @@ function PaketKartu({
   );
 }
 
-export function TryoutGrid() {
+export function TryoutGrid({
+  onActiveStateChange,
+}: {
+  onActiveStateChange?: (active: boolean) => void;
+} = {}) {
   const [paketAktif, setPaketAktif] = useState<PaketTryOut | null>(null);
   const [modeAktif, setModeAktif] = useState<"cbt" | "latihan">("cbt");
   const [hasilAktif, setHasilAktif] = useState<HasilTryOut | null>(null);
@@ -128,26 +132,31 @@ export function TryoutGrid() {
     setPaketAktif(paket);
     setModeAktif("cbt");
     setHasilAktif(null);
+    onActiveStateChange?.(true);
   }
 
   function handleMulaiLatihan(paket: PaketTryOut) {
     setPaketAktif(paket);
     setModeAktif("latihan");
     setHasilAktif(null);
+    onActiveStateChange?.(true);
   }
 
   function handleSelesaiUjian(hasil: HasilTryOut) {
     simpanHasil(hasil);
     setHasilAktif(hasil);
+    onActiveStateChange?.(true);
   }
 
   function handleUlangi() {
     setHasilAktif(null);
+    onActiveStateChange?.(true);
   }
 
   function handleKembali() {
     setPaketAktif(null);
     setHasilAktif(null);
+    onActiveStateChange?.(false);
   }
 
   // Jika sedang melihat hasil
