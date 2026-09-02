@@ -2,417 +2,991 @@ import type { PaketTryOut } from "../types";
 
 export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   {
-    id: "ukmppd-stase-anak-1",
-    slug: "ukmppd-stase-anak-1",
-    judul: "Try Out UKNPDPD Pediatri — Paket 1 (Komprehensif)",
-    deskripsi: "Simulasi ujian CBT komprehensif: Respirologi, Neonatologi, Infeksi Tropis, Gastrohepatologi, dan Gawat Darurat Pediatri.",
+    id: "drill-pediatri-paket-1",
+    slug: "drill-pediatri-paket-1",
+    judul: "Try Out UKMPPD Pediatri — Paket 1 (Komprehensif)",
+    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Neonatologi, Infeksi Tropis, Nutrisi, Genetik & Tumbuh Kembang, serta Kegawatdaruratan.",
     durasiMenit: 15,
     passingGradePersen: 66,
     kategori: "ukmppd",
-    kategoriLabel: "Simulasi UKNPDPD",
-    badge: "SKDI 4A / 3B",
+    kategoriLabel: "Simulasi Komprehensif",
+    badge: "15 Soal / 15 Menit",
     daftarSoal: [
       {
-        id: "to-01",
+        id: "p1-soal-01",
         nomor: 1,
-        subdivisi: "respirologi",
-        subdivisiLabel: "Respirologi",
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
         tingkatSKDI: "4A",
         vignette:
-          "Seorang anak laki-laki berusia 4 tahun dibawa ke IGD dengan keluhan sesak napas yang semakin memberat sejak 6 jam lalu. Pasien memiliki riwayat asma bronkial sejak usia 2 tahun. Pada pemeriksaan fisik didapatkan anak gelisah, berbicara terputus-putus dalam kata, frekuensi napas 50 kali/menit, denyut nadi 130 kali/menit, SpO2 91% pada udara kamar, tampak retraksi suprasternal dan interkostal nyata, serta terdengar mengi ekspiratoir dan inspiratoir di seluruh lapang paru.",
-        pertanyaan: "Tatalaksana medikamentosa awal yang paling tepat diberikan di IGD adalah?",
+          "Seorang bayi laki-laki baru lahir beberapa jam yang lalu di bidan dan dibawa ke RS dengan keluhan bayi tampak sesak dan biru. Bayi lahir dari seorang ibu G1P0A0 dengan usia kehamilan 32 minggu dengan BBL 2.000 gram. Bayi tidak menangis spontan setelah lahir. Pemeriksaan tanda vital TD 70/50, HR 140, RR 70, T 37°C. Pada pemeriksaan fisik didapatkan retraksi intercostal (+), pernapasan cuping hidung (+), dan sianosis perioral (+).",
+        pertanyaan: "Pernyataan yang tepat pada kondisi pasien adalah?",
         opsi: [
-          { id: "a", teks: "Inhalasi salbutamol + ipratropium bromida nebulisasi per 20 menit dalam 1 jam pertama + kortikosteroid sistemik oral/IV" },
-          { id: "b", teks: "Inhalasi salbutamol dosis tunggal + antibiotik seftriakson intravena" },
-          { id: "c", teks: "Injeksi aminofilin bolus intravena + mukolitik nebulisasi" },
-          { id: "d", teks: "Inhalasi kortikosteroid dosis rendah secara mandiri tanpa bronkodilator" },
-          { id: "e", teks: "Injeksi epinefrin subkutan 0,01 mg/kgBB sebagai lini pertama" },
+          { id: "a", teks: "Gambaran rontgen ditemukan gambaran atelektasis" },
+          { id: "b", teks: "Salah satu faktor risiko adalah ketuban pecah dini" },
+          { id: "c", teks: "Etiologi keluhan pasien berupa kolaps paru" },
+          { id: "d", teks: "Diagnosis yang tepat adalah hyaline membrane disease" },
+          { id: "e", teks: "Tatalaksana yang tepat adalah suction" },
         ],
-        jawabanBenar: "a",
+        jawabanBenar: "d",
         pembahasan:
-          "Berdasarkan Pedoman Diagnosis dan Tata Laksana Asma Anak (IDAI 2021) & GINA 2023, pasien mengalami serangan asma derajat berat (gelisah, bicara per kata, retraksi jelas, SpO2 < 92%). Tatalaksana lini pertama di IGD adalah pemberian Short-Acting Beta-2 Agonist (SABA / Salbutamol) dikombinasikan dengan Short-Acting Muscarinic Antagonist (SAMA / Ipratropium Bromida) secara nebulisasi continue/intermiten tiap 20 menit dalam 1 jam pertama, disertai inisiasi dini kortikosteroid sistemik (metilprednisolon/prednison 1–2 mg/kgBB/hari).",
-        referensi: "Pedoman Nasional Asma Anak IDAI (2021); Global Initiative for Asthma (GINA 2023).",
-        linkAlatTerkait: {
-          label: "Buka Penilaian Skoring PAS & Asma",
-          href: "/preview/skoring",
-        },
+          "Bayi prematur (32 minggu, BBL 2000 g) yang mengalami distres pernapasan progresif pascalahir (takipnea, retraksi, cuping hidung, sianosis) memiliki gambaran klasik Hyaline Membrane Disease (HMD) / Respiratory Distress Syndrome (RDS) tipe 1 yang disebabkan oleh defisiensi surfaktan akibat imaturitas paru.",
+        referensi: "Pedoman Pelayanan Medis Neonatus IDAI; Nelson Textbook of Pediatrics."
       },
       {
-        id: "to-02",
+        id: "p1-soal-02",
         nomor: 2,
         subdivisi: "neonatologi",
         subdivisiLabel: "Neonatologi",
         tingkatSKDI: "4A",
         vignette:
-          "Bayi laki-laki berusia 36 jam lahir cukup bulan (38 minggu, BBL 3.100 gram) dari ibu golongan darah O Rh positif. Bayi memiliki golongan darah A Rh positif. Ibu mengeluhkan kulit bayinya tampak kuning hingga ke daerah dada dan perut (Kramer 3). Bayi tampak aktif dan menyusu ASI kuat. Hasil laboratorium menunjukkan kadar Bilirubin Total Serum (TSB) 14,8 mg/dL dengan Bilirubin Direk 0,6 mg/dL. Ambang fototerapi AAP untuk usia dan faktor risiko pasien adalah 12,0 mg/dL.",
-        pertanyaan: "Tatalaksana yang paling tepat untuk neonatus ini adalah?",
+          "Seorang bayi laki-laki lahir secara pervaginam dengan usia kehamilan 37 minggu di RS. Bayi lahir tidak menangis spontan dan tonus otot buruk. Berat badan bayi 2.500 gram. Dokter telah melakukan penanganan awal. Kemudian dievaluasi, bayi megap-megap dengan laju napas 80 x/menit. Pemeriksaan tanda vital TD 80/60, RR 70, T 36,3°C. Pemeriksaan fisik didapatkan retraksi intercostal (+).",
+        pertanyaan: "Tatalaksana berikutnya yang tepat untuk pasien adalah?",
         opsi: [
-          { id: "a", teks: "Observasi rawat jalan dan jemur di bawah sinar matahari pagi 15 menit" },
-          { id: "b", teks: "Fototerapi intensif di rumah sakit serta lanjutkan pemberian ASI adekuat" },
-          { id: "c", teks: "Transfusi tukar darurat (double volume exchange transfusion)" },
-          { id: "d", teks: "Hentikan pemberian ASI dan ganti dengan formula hidrolisat ekstensif" },
-          { id: "e", teks: "Pemberian fenobarbital oral 5 mg/kgBB/hari untuk induksi enzim hepar" },
+          { id: "a", teks: "Berikan oksigen aliran bebas" },
+          { id: "b", teks: "Melakukan VTP + epinefrin 0,2 mg IV" },
+          { id: "c", teks: "Melakukan VTP" },
+          { id: "d", teks: "Melakukan VTP + kompresi dada" },
+          { id: "e", teks: "Berikan CPAP dengan PEEP 7 cmH2O" },
         ],
-        jawabanBenar: "b",
+        jawabanBenar: "c",
         pembahasan:
-          "Bayi mengalami hiperbilirubinemia indirek dengan inkompatibilitas ABO (Ibu O, Bayi A) yang merupakan faktor risiko neurotoksisitas hemolitik isoimun. Kadar Bilirubin Total (14,8 mg/dL) telah melampaui ambang batas fototerapi AAP (12,0 mg/dL). Terapi pilihan utama adalah inisiasi fototerapi intensif segera disertai optimalisasi hidrasi per oral (ASI diteruskan). Menjemur di bawah sinar matahari tidak direkomendasikan karena inefektif dan berisiko sunburn/hipertermia.",
-        referensi: "Kemper AR, et al. Management of Hyperbilirubinemia in the Newborn Infant 35 or More Weeks of Gestation. Pediatrics 2022.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Kurva Fototerapi AAP",
-          href: "/preview/neonatus",
-        },
+          "Pada alur resusitasi neonatus (IDAI / AHA Neonatal Resuscitation Program), jika setelah langkah awal bayi masih megap-megap (gasping) atau apneu atau HR < 100 x/menit, langkah mutlak selanjutnya adalah segera melakukan Ventilasi Tekanan Positif (VTP) dengan balon dan sungkup.",
+        referensi: "Pedoman Resusitasi Neonatus IDAI / AHA NRP Guidelines."
       },
       {
-        id: "to-03",
+        id: "p1-soal-03",
         nomor: 3,
         subdivisi: "gastrohepatologi",
         subdivisiLabel: "Gastrohepatologi",
         tingkatSKDI: "4A",
         vignette:
-          "Anak perempuan berusia 10 bulan (BB 8 kg) dibawa orang tuanya ke puskesmas karena diare cair sejak 2 hari yang lalu, frekuensi BAB 6–8 kali per hari tanpa lendir atau darah. Pada pemeriksaan fisik didapatkan anak rewel dan haus (minum dengan sangat lahap), mata agak cekung, air mata berkurang, dan turgor kulit kembali lambat (1–2 detik).",
-        pertanyaan: "Berdasarkan pedoman WHO/IDAI, klasifikasi dehidrasi dan rencana terapi yang tepat adalah?",
+          "Seorang bayi perempuan berusia 14 hari dibawa oleh orang tuanya ke dokter karena kuning hampir seluruh badan sejak hari pertama lahir. Riwayat demam disangkal. Ibu memberi ASI 10 kali per hari. BAB berwarna cokelat dan urin berwarna kuning jernih. Pemeriksaan tanda vital TD 80/60, HR 140, RR 40, T 37,2°C. Pemeriksaan fisik didapatkan ikterus hingga telapak tangan dan kaki. Pada pemeriksaan penunjang didapatkan bilirubin total 21 mg/dL.",
+        pertanyaan: "Tatalaksana yang paling tepat untuk pasien tersebut adalah?",
         opsi: [
-          { id: "a", teks: "Tanpa dehidrasi → Terapi Rencana A di rumah dengan oralit 50–100 mL setiap BAB" },
-          { id: "b", teks: "Dehidrasi ringan–sedang → Terapi Rencana B dengan 600 mL oralit dalam 3–4 jam pertama" },
-          { id: "c", teks: "Dehidrasi berat → Terapi Rencana C dengan infus Ringer Laktat 240 mL dalam 1 jam" },
-          { id: "d", teks: "Dehidrasi ringan–sedang → Terapi antibiotik kotrimoksazol oral + puasakan 6 jam" },
-          { id: "e", teks: "Tanpa dehidrasi → Berikan cairan infus D5 1/4 NS kecepatan rumatan" },
+          { id: "a", teks: "Observasi" },
+          { id: "b", teks: "Tambahkan jumlah dan frekuensi ASI" },
+          { id: "c", teks: "Medikamentosa" },
+          { id: "d", teks: "Fototerapi" },
+          { id: "e", teks: "Transfusi tukar" },
         ],
-        jawabanBenar: "b",
+        jawabanBenar: "e",
         pembahasan:
-          "Pasien memenuhi 2 tanda dehidrasi ringan–sedang menurut klasifikasi WHO: rewel/haus minum lahap, mata cekung, turgor lambat. Tatalaksana yang tepat adalah WHO Rencana B: pemberian Oralit sejumlah 75 mL/kgBB dalam 3–4 jam pertama di fasilitas kesehatan. Untuk BB 8 kg: 75 mL × 8 = 600 mL oralit dalam 3–4 jam pertama, dilanjutkan suplementasi Zinc 20 mg/hari (karena usia > 6 bulan) selama 10–14 hari.",
-        referensi: "Buku Saku Pelayanan Kesehatan Anak di Rumah Sakit, WHO 2013; Pedoman Diare Akut IDAI 2019.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Terapi Cairan & Rehidrasi",
-          href: "/preview/cairan",
-        },
+          "Kadar bilirubin total mencapai 21 mg/dL pada usia 14 hari dengan ikterus Kramer V (sampai telapak tangan dan kaki) telah melewati batas aman neurotoksisitas dan memenuhi indikasi segera untuk Transfusi Tukar (Exchange Transfusion) guna mencegah terjadinya Ensefalopati Bilirubin Akut / Kernikterus.",
+        referensi: "Tata Laksana Hiperbilirubinemia Neonatus IDAI / AAP Hyperbilirubinemia Guidelines."
       },
       {
-        id: "to-04",
-        nomor: 4,
-        subdivisi: "neurologi",
-        subdivisiLabel: "Neurologi",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak laki-laki berusia 18 bulan dibawa ke IGD karena kejang saat demam. Kejang berlangsung selama 3 menit berupa kelojotan seluruh tubuh (tonik-klonik umum), mata mendelik ke atas, dan setelah kejang anak menangis lalu tertidur. Ini merupakan kejang pertama kali. Tidak ada riwayat trauma kepala, riwayat keluarga dengan epilepsi disangkal. Pada pemeriksaan fisis pascakejang: Suhu 39,2°C, anak sadar baik, tidak ada tanda rangsang meningeal, defisit neurologis fokal (-).",
-        pertanyaan: "Diagnosis yang paling tepat pada pasien ini adalah?",
-        opsi: [
-          { id: "a", teks: "Kejang Demam Sederhana (Simple Febrile Seizure)" },
-          { id: "b", teks: "Kejang Demam Kompleks (Complex Febrile Seizure)" },
-          { id: "c", teks: "Epilepsi umum idiopatik" },
-          { id: "d", teks: "Meningitis bakterial akut" },
-          { id: "e", teks: "Ensefalopati pasca-infeksi" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Kejang Demam Sederhana (KDS) didefinisikan sebagai bangkitan kejang yang berlangsung singkat (< 15 menit), bersifat umum (tonik dan/atau klonik bilateral), tidak berulang dalam kurun waktu 24 jam, dan terjadi pada anak usia 6 bulan hingga 5 tahun yang dipicu oleh demam (bukan infeksi SSP atau gangguan elektrolit). Pasien sadar baik pasca-kejang tanpa tanda rangsang meningeal.",
-        referensi: "Konsensus Penatalaksanaan Kejang Demam IDAI (2016); AAP Febrile Seizures Guideline.",
-      },
-      {
-        id: "to-05",
-        nomor: 5,
-        subdivisi: "infeksi-tropis",
-        subdivisiLabel: "Infeksi Tropis",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak perempuan berusia 6 tahun (BB 20 kg) dirawat pada hari ke-4 demam dengan diagnosis Demam Berdarah Dengue (DBD). Saat ini suhu tubuh mulai turun (37,0°C / fase kritis), namun pasien mengeluh nyeri perut hebat dan lemas. Pada pemeriksaan fisik: TD 100/70 mmHg, HR 108 x/menit, RR 24 x/menit, akral hangat, CRT 2 detik. Hasil laboratorium: Hb 14,8 g/dL, Hematokrit 46% (meningkat 25% dari baseline), Trombosit 38.000/uL.",
-        pertanyaan: "Kondisi klinis pasien dan tatalaksana cairan intravena inisial yang tepat adalah?",
-        opsi: [
-          { id: "a", teks: "DBD derajat II tanpa syok dengan tanda bahaya (warning signs) → Berikan kristaloid isotonis (RL/NaCl 0,9%) 5–7 mL/kgBB/jam selama 1–2 jam" },
-          { id: "b", teks: "Dengue Shock Syndrome (DSS) terkompensasi → Berikan bolus koloid 20 mL/kgBB secepatnya" },
-          { id: "c", teks: "Fase pemulihan demam dengue → Hentikan cairan intravena untuk mencegah overload" },
-          { id: "d", teks: "Trombositopenia refrakter → Lakukan transfusi konsentrat trombosit segera" },
-          { id: "e", teks: "DBD derajat I → Terapi cairan rumatan D5 1/4 NS kecepatan lambat 2 mL/kgBB/jam" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Pasien berada pada fase kritis DBD derajat II dengan warning signs (nyeri perut hebat, hemokonsentrasi Ht meningkat > 20%, trombositopenia berat). Berdasarkan Pedoman WHO & IDAI 2014, tatalaksana cairan inisial untuk DBD dengan warning signs tanpa syok adalah infus larutan kristaloid isotonis (Ringer Laktat atau NaCl 0,9%) dengan kecepatan 5–7 mL/kgBB/jam selama 1–2 jam, lalu dititrasi bertahap turun (3–5 mL/kg/jam) sesuai respons klinis dan tren hematokrit. Transfusi trombosit tidak diindikasikan kecuali terdapat perdarahan masif.",
-        referensi: "WHO Dengue Guidelines for Diagnosis, Treatment, Prevention and Control (2009); Panduan Praktis Klinis IDAI Infeksi Dengue.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Dosis & Cairan",
-          href: "/preview/cairan",
-        },
-      },
-    ],
-  },
-  {
-    id: "ukmppd-stase-anak-2",
-    slug: "ukmppd-stase-anak-2",
-    judul: "Try Out UKNPDPD Pediatri — Paket 2 (Infeksi & Tumbuh Kembang)",
-    deskripsi: "Latihan fokus: Morbili/Campak, Tuberkulosis Anak & Skoring TB, Imunisasi Kejar, Stunting & Gagal Tumbuh, serta Infeksi Saluran Kemih.",
-    durasiMenit: 15,
-    passingGradePersen: 66,
-    kategori: "ukmppd",
-    kategoriLabel: "Simulasi UKNPDPD",
-    badge: "SKDI 4A / 3B",
-    daftarSoal: [
-      {
-        id: "to-2-01",
-        nomor: 1,
-        subdivisi: "infeksi-tropis",
-        subdivisiLabel: "Infeksi Tropis",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak laki-laki berusia 3 tahun dibawa ke puskesmas dengan demam tinggi 4 hari, batuk pilek (coryza), dan mata merah berair (konjungtivitis). Hari ini muncul ruam makulopapular kemerahan yang bermula dari belakang telinga dan garis rambut, lalu menyebar ke leher dan dada. Pada pemeriksaan mukosa bukal dekat molar bawah ditemukan bercak putih keabuan dengan dasar eritematosa (Koplik spots).",
-        pertanyaan: "Diagnosis klinis dan suplementasi mikronutrien esensial yang wajib diberikan sesuai rekomendasi WHO/IDAI adalah?",
-        opsi: [
-          { id: "a", teks: "Morbili (Campak) → Suplementasi Vitamin A dosis 200.000 IU segera dan hari berikutnya" },
-          { id: "b", teks: "Rubella (German Measles) → Suplementasi Vitamin C 500 mg per hari" },
-          { id: "c", teks: "Roseola Infantum (Exanthema Subitum) → Terapi Asiklovir oral" },
-          { id: "d", teks: "Demam Skarlatina → Suplementasi Zinc 20 mg per hari" },
-          { id: "e", teks: "Varisela Zoster → Suplementasi Vitamin D3 1000 IU" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Trias 3C (cough, coryza, conjunctivitis) disertai Koplik's spot dan ruam makulopapular sefalokaudal khas untuk Morbili (Campak). Terapi suportif utama wajib disertai suplementasi Vitamin A dosis tinggi (200.000 IU untuk usia ≥ 12 bulan) yang diberikan dalam 2 dosis (hari ke-1 dan ke-2) guna mencegah defisiensi, kebutaan xerophthalmia, serta komplikasi pneumonia berat.",
-        referensi: "Pedoman Teknis Pengendalian Campak-Rubella Kemenkes RI / WHO (2020).",
-        linkAlatTerkait: {
-          label: "Buka Panduan Imunisasi & Vaksinasi",
-          href: "/preview/imunisasi",
-        },
-      },
-      {
-        id: "to-2-02",
-        nomor: 2,
-        subdivisi: "respirologi",
-        subdivisiLabel: "Respirologi",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak perempuan berusia 5 tahun dibawa ibunya karena berat badan tidak kunjung naik dan nafsu makan turun selama 3 bulan terakhir. Pasien juga batuk hilang timbul lebih dari 3 minggu tanpa perbaikan dengan antibiotik standar. Ayah pasien sedang menjalani pengobatan TB paru selama 2 bulan (BTA positif). Hasil uji tuberkulin (Mantoux test PPD RT23 2TU) menunjukkan indurasi transversal sebesar 14 mm.",
-        pertanyaan: "Berdasarkan Sistem Skoring Tuberkulosis Anak IDAI, skor total dan langkah tatalaksana yang tepat adalah?",
-        opsi: [
-          { id: "a", teks: "Skor ≥ 6 (TB Anak Terkonfirmasi Klinis) → Inisiasi Obat Anti Tuberkulosis (OAT) regimen 2RHZ / 4RH" },
-          { id: "b", teks: "Skor < 6 → Cukup observasi dan berikan multivitamin penambah nafsu makan" },
-          { id: "c", teks: "Skor 5 → Berikan profilaksis Isoniazid (INH) monoterapi selama 3 bulan" },
-          { id: "d", teks: "Lakukan foto rontgen toraks berulang setelah 1 bulan sebelum memulai terapi" },
-          { id: "e", teks: "Rujuk untuk bronkoskopi dan biopsi paru" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Penghitungan Sistem Skoring TB Anak IDAI: Kontak TB BTA positif (skor 3) + Uji Tuberkulin positif ≥ 10 mm (skor 3) + BB/status gizi kurang menetap (skor 1) + Batuk kronik ≥ 3 minggu (skor 1) = Total Skor 8. Bila skor total ≥ 6, anak didiagnosis TB dan harus segera dimulai terapi OAT kategori anak (2HRZ/4HR).",
-        referensi: "Petunjuk Teknis Manajemen TB Anak IDAI & Kemenkes RI (2023).",
-        linkAlatTerkait: {
-          label: "Buka Sistem Skoring Klinis TB",
-          href: "/preview/skoring",
-        },
-      },
-      {
-        id: "to-2-03",
-        nomor: 3,
-        subdivisi: "tumbuh-kembang",
-        subdivisiLabel: "Tumbuh Kembang",
-        tingkatSKDI: "4A",
-        vignette:
-          "Seorang bayi laki-laki berusia 14 bulan dibawa ke klinik tumbuh kembang untuk pemeriksaan berkala. Dari riwayat imunisasi dasar, pasien belum pernah mendapatkan vaksin PCV (Pneumokokus) sama sekali. Orang tua ingin melengkapi imunisasi PCV yang tertinggal.",
-        pertanyaan: "Berdasarkan Jadwal Imunisasi IDAI 2024 (Catch-up schedule), jadwal pemberian vaksin PCV yang tepat adalah?",
-        opsi: [
-          { id: "a", teks: "Diberikan 2 dosis dengan interval minimal 2 bulan (8 minggu)" },
-          { id: "b", teks: "Diberikan 3 dosis lengkap seperti jadwal bayi usia < 6 bulan" },
-          { id: "c", teks: "Diberikan 1 dosis tunggal saja tanpa perlu ulangan" },
-          { id: "d", teks: "Tidak perlu diberikan karena sudah lewat usia efektif" },
-          { id: "e", teks: "Diberikan bersamaan dengan vaksin BCG dan oral polio" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Berdasarkan Rekomendasi Jadwal Imunisasi IDAI 2024: Untuk anak usia 12–23 bulan yang belum pernah mendapat PCV (catch-up/imunisasi kejar), regimen yang direkomendasikan adalah pemberian 2 dosis PCV dengan interval minimal 2 bulan (8 minggu) antar dosis.",
-        referensi: "Jadwal Imunisasi Anak Usia 0–18 Tahun Rekomendasi IDAI 2024.",
-        linkAlatTerkait: {
-          label: "Buka Jadwal & Pelacak Imunisasi IDAI",
-          href: "/preview/imunisasi",
-        },
-      },
-      {
-        id: "to-2-04",
-        nomor: 4,
-        subdivisi: "nutrisi-metabolik",
-        subdivisiLabel: "Nutrisi & Metabolik",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak perempuan berusia 24 bulan dibawa ibunya karena postur tubuhnya tampak jauh lebih pendek dibanding teman sebayanya. Pada pemeriksaan antropometri: Panjang Badan 79 cm (Z-score PB/U -2,8 SD menurut kurva WHO), Berat Badan 9,8 kg (Z-score BB/PB -0,8 SD / gizi baik). Proporsi tubuh normal (segmen atas/bawah sesuai usia), riwayat kelahiran cukup bulan dengan PB lahir 49 cm.",
-        pertanyaan: "Interpretasi status pertumbuhan anak tersebut menurut kriteria WHO/Kemenkes adalah?",
-        opsi: [
-          { id: "a", teks: "Pendek (Stunted) dengan status gizi baik (gizi normal)" },
-          { id: "b", teks: "Sangat Pendek (Severely Stunted) dengan gizi kurang" },
-          { id: "c", teks: "Normal dengan perawakan pendek familial" },
-          { id: "d", teks: "Gagal tumbuh (Failure to thrive) akut" },
-          { id: "e", teks: "Perawakan pendek disproporsional (Achondroplasia)" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Berdasarkan standar antropometri WHO (Permenkes 2020): Indeks PB/U atau TB/U di antara -2 SD hingga -3 SD diklasifikasikan sebagai Pendek (Stunted). Indeks BB/PB berada di antara -2 SD hingga +1 SD yang menunjukkan status Gizi Baik (Normal).",
-        referensi: "Permenkes RI No 2 Tahun 2020 tentang Standar Antropometri Anak; WHO Child Growth Standards.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Kurva Pertumbuhan WHO",
-          href: "/preview/pertumbuhan",
-        },
-      },
-      {
-        id: "to-2-05",
-        nomor: 5,
-        subdivisi: "nefrologi",
-        subdivisiLabel: "Nefrologi",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak laki-laki berusia 7 tahun mengeluh nyeri saat berkemih (disuria), sering kencing sedikit-sedikit (polakisuria), dan nyeri pada perut bagian bawah sejak 2 hari lalu. Demam dialami (38,1°C). Pada pemeriksaan urinalisis didapatkan leukosituria 25-30/LPB, nitrit (+), dan leukosit esterase (+). Diagnosis kerja adalah Infeksi Saluran Kemih (ISK) pertama kali.",
-        pertanyaan: "Pilihan antibiotik oral lini pertama yang direkomendasikan untuk ISK tanpa komplikasi pada anak adalah?",
-        opsi: [
-          { id: "a", teks: "Sefiksim oral 8 mg/kgBB/hari dibagi 2 dosis selama 7–10 hari" },
-          { id: "b", teks: "Siprofloksasin oral 30 mg/kgBB/hari selama 14 hari" },
-          { id: "c", teks: "Metronidazol oral 30 mg/kgBB/hari selama 5 hari" },
-          { id: "d", teks: "Gentamisin intravena bolus harian selama 14 hari" },
-          { id: "e", teks: "Eritromisin oral 40 mg/kgBB/hari selama 3 hari" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Menurut Konsensus Infeksi Saluran Kemih pada Anak (IDAI), lini pertama terapi antimikroba oral empiris untuk ISK akut tanpa komplikasi (sistitis/pielonefritis ringan) adalah golongan sefalosporin generasi ke-3 oral seperti Sefiksim (8 mg/kgBB/hari terbagi 2 dosis) atau Amoksisilin-Klavulanat selama 7–10 hari.",
-        referensi: "Konsensus Infeksi Saluran Kemih pada Anak IDAI (2011/Revisi 2021).",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Dosis Obat Pediatri",
-          href: "/preview/obat",
-        },
-      },
-    ],
-  },
-  {
-    id: "ukmppd-stase-anak-3",
-    slug: "ukmppd-stase-anak-3",
-    judul: "Try Out UKNPDPD Pediatri — Paket 3 (Gawat Darurat, Kardiologi & Nefrologi)",
-    deskripsi: "Latihan fokus: Resusitasi Syok Anafilaksis, Tetralogy of Fallot Spell Hipoksia, Sindrom Nefrotik Akut, PALS & Aritmia Pediatri, dan TPN Neonatus.",
-    durasiMenit: 15,
-    passingGradePersen: 66,
-    kategori: "ukmppd",
-    kategoriLabel: "Simulasi UKNPDPD",
-    badge: "SKDI 4A / 3B",
-    daftarSoal: [
-      {
-        id: "to-3-01",
-        nomor: 1,
-        subdivisi: "gawat-darurat",
-        subdivisiLabel: "Gawat Darurat",
-        tingkatSKDI: "4A",
-        vignette:
-          "Anak laki-laki berusia 6 tahun (BB 20 kg) tiba-tiba mengalami sesak napas berat, stridor inspiratoir, urtikaria menyeluruh di kulit, serta bibir bengkak 10 menit setelah disuntik antibiotik di poliklinik. Pada pemeriksaan: TD 70/40 mmHg, laju nadi 145 x/menit halus, CRT 4 detik, suara napas terdengar wheezing bilateral.",
-        pertanyaan: "Langkah medikamentosa darurat pertama yang harus segera diberikan adalah?",
-        opsi: [
-          { id: "a", teks: "Injeksi Epinefrin (1:1.000) 0,2 mL (0,01 mg/kgBB) secara Intramuskular (IM) di paha anterolateral" },
-          { id: "b", teks: "Injeksi Deksametason IV 10 mg bolus lambat" },
-          { id: "c", teks: "Injeksi Difenhidramin IM 20 mg" },
-          { id: "d", teks: "Inhalasi nebulisasi budesonid 0,5 mg" },
-          { id: "e", teks: "Infus dopamine continue 5 mcg/kg/menit" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Pasien mengalami Syok Anafilaksis (kegawatan mengancam nyawa). Terapi lini pertama yang mutlak dan tidak boleh ditunda adalah Epinefrin (Adrenalin) larutan 1:1.000 dengan dosis 0,01 mg/kgBB (maks 0,3 mg pada anak) secara Intramuskular di regio paha anterolateral (vastus lateralis). Antihistamin dan kortikosteroid hanya merupakan terapi lini kedua.",
-        referensi: "Pedoman Tata Laksana Anafilaksis IDAI / World Allergy Organization (WAO) Anaphylaxis Guidelines.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Obat Darurat & Resusitasi",
-          href: "/preview/darurat",
-        },
-      },
-      {
-        id: "to-3-02",
-        nomor: 2,
-        subdivisi: "kardiologi",
-        subdivisiLabel: "Kardiologi",
-        tingkatSKDI: "3B",
-        vignette:
-          "Bayi laki-laki berusia 11 bulan dengan riwayat penyakit jantung bawaan sianotik dibawa ibunya ke IGD karena tiba-tiba menjadi sangat biru (sianosis hebat), napas cepat dan dalam (hiperpnea), serta gelisah setelah menangis kencang. Pasien didiagnosis mengalami Tetralogy of Fallot (ToF) tet spell / spell hipoksia.",
-        pertanyaan: "Tindakan posisi awal dan medikamentosa lini pertama yang tepat untuk mengatasi serangan sianotik ini adalah?",
-        opsi: [
-          { id: "a", teks: "Posisikan Knee-Chest (lutut ke dada) + Oksigenasi + Morfin sulfat 0,1 mg/kgBB SC/IM" },
-          { id: "b", teks: "Posisikan Trendelenburg + Bolus Furosemid 2 mg/kgBB IV" },
-          { id: "c", teks: "Posisikan telentang elevasi kepala 45 derajat + Injeksi Digoksin IV" },
-          { id: "d", teks: "Injeksi Kalsium Glukonas 10% IV bolus lambat" },
-          { id: "e", teks: "Inhalasi Salbutamol nebulisasi dosis tinggi" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Tatalaksana awal Hypercyanotic Spell pada Tetralogy of Fallot adalah memposisikan anak dalam Knee-Chest position untuk meningkatkan Systemic Vascular Resistance (SVR) dan mengurangi right-to-left shunt, berikan O2 100%, serta injeksi Morfin Sulfat 0,1 mg/kgBB SC/IM/IV guna menenangkan anak dan menekan pusat napas yang hiperpnea serta relaksasi infundibular spasme.",
-        referensi: "Park's Pediatric Cardiology for Practitioners (7th ed); Panduan Praktik Klinis Kardiologi Anak IDAI.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Penanganan Darurat Pediatri",
-          href: "/preview/darurat",
-        },
-      },
-      {
-        id: "to-3-03",
-        nomor: 3,
-        subdivisi: "nefrologi",
-        subdivisiLabel: "Nefrologi",
-        tingkatSKDI: "3A",
-        vignette:
-          "Anak laki-laki berusia 4 tahun (BB 16 kg) dibawa orang tuanya karena kedua kelopak mata tampak bengkak (edema periorbital) terutama saat bangun pagi sejak 5 hari lalu, yang kemudian menjalar ke perut (asites) dan tungkai. Hasil pemeriksaan laboratorium menunjukkan: Proteinuria masif +++ (kuantitatif > 40 mg/m2/jam), Hipoalbuminemia berat (Serum Albumin 1,6 g/dL), dan Hiperkolesterolemia (Kolesterol total 360 mg/dL).",
-        pertanyaan: "Diagnosis klinis dan terapi medikamentosa inisial lini pertama menurut konsensus IDAI adalah?",
-        opsi: [
-          { id: "a", teks: "Sindrom Nefrotik Idiopatik Inisial → Prednison dosis penuh 60 mg/m2 LPB/hari (atau 2 mg/kgBB/hari) selama 4 minggu" },
-          { id: "b", teks: "Glomerulonefritis Akut Pasca Streptokokus (GNAPS) → Antibiotik Eritromisin oral" },
-          { id: "c", teks: "Gagal Ginjal Akut Prerenal → Infus albumin 20% rutin tanpa kortikosteroid" },
-          { id: "d", teks: "Sindrom Nefrotik Resisten Steroid → Siklofosfamid oral langsung" },
-          { id: "e", teks: "Kwarshiorkor Gizi Buruk → F-75 formula stabilisasi" },
-        ],
-        jawabanBenar: "a",
-        pembahasan:
-          "Tetrad sindrom nefrotik: proteinuria masif, hipoalbuminemia (< 2,5 g/dL), edema anasarka, dan hiperkolesterolemia. Berdasarkan Konsensus Tata Laksana Sindrom Nefrotik Idiopatik IDAI, terapi inisial serangan pertama adalah Prednison dosis penuh (full dose) 60 mg/m2 LPB/hari (atau 2 mg/kgBB/hari, maks 80 mg/hari) dibagi 3 dosis setiap hari selama 4 minggu pertama.",
-        referensi: "Konsensus Tata Laksana Sindrom Nefrotik Idiopatik pada Anak IDAI (2012/Revisi).",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator Laju Filtrasi Glomerulus (eGFR)",
-          href: "/preview/egfr",
-        },
-      },
-      {
-        id: "to-3-04",
+        id: "p1-soal-04",
         nomor: 4,
         subdivisi: "neonatologi",
         subdivisiLabel: "Neonatologi",
         tingkatSKDI: "4A",
         vignette:
-          "Bayi baru lahir perempuan dari ibu dengan Diabetes Melitus Gestasional tidak terkontrol, lahir pada usia gestasi 39 minggu dengan BBL 4.200 gram (Makrosomia/LGA). Pada usia 2 jam pascalahir, bayi tampak jittery (gemetar), letargis, dan hipotermia. Pemeriksaan gula darah sewaktu (GDS/bedside glucose) menunjukkan hasil 28 mg/dL.",
-        pertanyaan: "Tatalaksana koreksi hipoglikemia simtomatik neonatus yang tepat adalah?",
+          "Seorang bayi perempuan berusia 3 hari datang dibawa orang tuanya karena mengalami demam tinggi. Keluhan disertai mual, muntah, BAB cair, dan kesulitan bernapas. Ibu memiliki riwayat ketuban pecah dan berbau. Pemeriksaan tanda vital didapatkan TD 80/60, HR 140, RR 70, T 39,1°C. Pemeriksaan fisik didapatkan retraksi intercostal (+), distensi abdomen (+), bising usus menurun. Pada pemeriksaan laboratorium didapatkan leukosit 25.000.",
+        pertanyaan: "Pernyataan yang tepat pada kondisi pasien adalah?",
         opsi: [
-          { id: "a", teks: "Bolus Dektrosa 10% (D10) 2 mL/kgBB intravena kecepatan 1 mL/menit dilanjutkan infus D10 dengan GIR 6–8 mg/kg/menit" },
-          { id: "b", teks: "Bolus Dektrosa 40% (D40) 5 mL/kgBB secepatnya" },
-          { id: "c", teks: "Berikan air gula 50 mL per oral dengan sendok" },
-          { id: "d", teks: "Injeksi insulin regular 0,1 unit/kgBB" },
-          { id: "e", teks: "Infus Ringer Asetat kecepatan rumatan" },
+          { id: "a", teks: "Pasien tidak diberikan antibiotik karena penyakit dapat sembuh tanpa antibiotik" },
+          { id: "b", teks: "Faktor risiko terjadinya keluhan pasien adalah ibu tidak melakukan imunisasi tetanus" },
+          { id: "c", teks: "Diagnosis pasien adalah sepsis neonatorum early onset" },
+          { id: "d", teks: "Pasien hanya perlu observasi karena tingkat mortalitas pasien rendah" },
+          { id: "e", teks: "Pemberian antibiotik dapat diberikan dengan menunggu hasil kultur" },
         ],
-        jawabanBenar: "a",
+        jawabanBenar: "c",
         pembahasan:
-          "Pada neonatus dengan hipoglikemia simtomatik atau GDS < 30-35 mg/dL, terapi darurat berupa bolus Dextrose 10% (D10W) sebanyak 2 mL/kgBB (200 mg/kg) secara IV pelan (1 mL/menit), diikuti infus glukosa kontinu dengan Glucose Infusion Rate (GIR) awal 6–8 mg/kg/menit. Dilarang menggunakan konsentrasi tinggi seperti D40 pada neonatus karena risiko hiperosmolaritas dan nekrosis jaringan.",
-        referensi: "Panduan Tata Laksana Hipoglikemia pada Neonatus IDAI; AAP Pediatric Hypoglycemia Guidelines.",
-        linkAlatTerkait: {
-          label: "Buka Kalkulator GIR & TPN Neonatus",
-          href: "/preview/tpn-neonatus",
-        },
+          "Sepsis yang timbul dalam 72 jam pertama kehidupan (usia 3 hari) dengan faktor risiko korioamnionitis maternal (ketuban pecah dan berbau) diklasifikasikan sebagai Early Onset Sepsis (EOS). Infeksi umumnya didapat secara vertikal intrapartum.",
+        referensi: "Pedoman Pelayanan Medis Sepsis Neonatorum IDAI."
       },
       {
-        id: "to-3-05",
+        id: "p1-soal-05",
         nomor: 5,
-        subdivisi: "gawat-darurat",
-        subdivisiLabel: "Gawat Darurat",
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
         tingkatSKDI: "4A",
         vignette:
-          "Anak perempuan berusia 3 tahun (BB 14 kg) mengalami henti napas dan henti jantung di ruang rawat inap. Tim resusitasi memulai RJP (CPR kualitas tinggi) dan memasang monitor defibrilator. Monitor menunjukkan irama Ventricular Fibrillation (VF) yang refrakter. Tim bersiap melakukan defibrilasi manual asinkron (shock).",
-        pertanyaan: "Berdasarkan pedoman Pediatric Advanced Life Support (PALS 2020), dosis energi kejut listrik (shock) pertama yang tepat adalah?",
+          "Seorang bayi laki-laki berusia 5 hari dirujuk oleh bidan ke rumah sakit karena tidak mau menyusu, disertai mengalami kekakuan pada mulut hingga badan. Riwayat bayi lahir ditolong dukun beranak. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 60, T 38°C. Pada pemeriksaan fisik didapatkan tonus otot spasme (+), trismus (+), mulut mencucu, dan umbilikus bayi tercium bau busuk, disertai pus (+).",
+        pertanyaan: "Etiologi yang menyebabkan kondisi pasien tersebut adalah?",
         opsi: [
-          { id: "a", teks: "2 Joule/kgBB (28 Joule) asinkron, dilanjutkan segera CPR 2 menit" },
-          { id: "b", teks: "10 Joule/kgBB (140 Joule) sinkron" },
-          { id: "c", teks: "0,5 Joule/kgBB sinkron (Kardioversi)" },
-          { id: "d", teks: "200 Joule monofasik tetap tanpa hitungan BB" },
-          { id: "e", teks: "Tidak boleh shock, berikan Amiodaron bolus dulu" },
+          { id: "a", teks: "Corynebacterium diphtheriae" },
+          { id: "b", teks: "Streptococcus grup B" },
+          { id: "c", teks: "Clostridium tetani" },
+          { id: "d", teks: "Haemophilus influenzae" },
+          { id: "e", teks: "Escherichia coli" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Gejala trismus (sulit menyusu/mulut mencucu seperti ikan/risus sardonicus), spasme otot menyeluruh, dan infeksi tali pusat pascapersalinan non-steril adalah tanda patognomonik Tetanus Neonatorum yang disebabkan oleh eksotoksin (tetanospasmin) dari bakteri Clostridium tetani.",
+        referensi: "Buku Ajar Infeksi & Pediatri Tropis IDAI."
+      },
+      {
+        id: "p1-soal-06",
+        nomor: 6,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang anak perempuan berusia 16 tahun dengan keluhan pertumbuhan yang tidak normal jika dibandingkan teman seusianya. Perawakan anak pendek. Pertumbuhan seks sekunder (-) dan menstruasi (-). Pemeriksaan tanda vital TD 120/80, HR 80, RR 18, T 36,4°C. Pemeriksaan fisik didapatkan dada lebar, leher pendek. Pada pemeriksaan jantung didapatkan kelainan.",
+        pertanyaan: "Diagnosis yang tepat adalah?",
+        opsi: [
+          { id: "a", teks: "Sindrom Prader-Willi" },
+          { id: "b", teks: "Sindrom Marfan" },
+          { id: "c", teks: "Sindrom Klinefelter" },
+          { id: "d", teks: "Sindrom Turner" },
+          { id: "e", teks: "Sindrom Jones" },
+        ],
+        jawabanBenar: "d",
+        pembahasan:
+          "Perawakan pendek (short stature), amenore primer dengan ketiadaan tanda seks sekunder (infantilisme seksual), leher bersayap/pendek (webbed neck), dada perisai (broad shield chest), dan kelainan kardiovaskular (seperti koarktasio aorta) merupakan karakteristik klasik Sindrom Turner (kariotipe 45,X0).",
+        referensi: "Buku Ajar Endokrinologi Anak IDAI."
+      },
+      {
+        id: "p1-soal-07",
+        nomor: 7,
+        subdivisi: "nutrisi-metabolik",
+        subdivisiLabel: "Nutrisi & Metabolik",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang anak laki-laki berusia 4 tahun diantar oleh orang tuanya ke poliklinik anak dengan keluhan perkembangan anak yang terlambat dibandingkan dengan teman-temannya. Kulit pasien tampak lebih cerah dibanding keluarga, namun keluarga berkulit sawo matang. Pemeriksaan tanda vital TD 90/60, HR 90, RR 26, T 36,2°C. Pada pemeriksaan fisik didapatkan kulit cerah, rambut seperti warna jagung, serta pemeriksaan urin terdapat mousy odor.",
+        pertanyaan: "Pernyataan yang tepat terkait kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Adanya defisiensi phenylalanine hydroxylase" },
+          { id: "b", teks: "Diturunkan secara autosomal dominan" },
+          { id: "c", teks: "Ekskresi fenilalanin pada tubuh yang berlebihan" },
+          { id: "d", teks: "Tatalaksana berupa diet tinggi fenilalanin" },
+          { id: "e", teks: "Terdapat penurunan kadar fenilalanin" },
         ],
         jawabanBenar: "a",
         pembahasan:
-          "Berdasarkan AHA PALS Guidelines (2020): Pada ritme shockable (VF / pulseless VT), energi defibrilasi kejut pertama adalah 2 J/kgBB. Jika tetap refrakter pada shock kedua berikan 4 J/kgBB (dan dosis selanjutnya minimal 4 J/kgBB hingga maksimal 10 J/kgBB atau dosis dewasa). Segera lanjutkan siklus CPR 2 menit pasca-defibrilasi tanpa menunda untuk cek nadi/ritme.",
-        referensi: "American Heart Association (AHA) Pediatric Advanced Life Support (PALS) Guidelines 2020.",
-        linkAlatTerkait: {
-          label: "Buka Algoritma Resusitasi & PALS Pediatri",
-          href: "/preview/darurat",
-        },
+          "Kasus menggambarkan Fenilketonuria (PKU), penyakit kelainan metabolisme inborn yang disebabkan oleh mutasi/defisiensi enzim fenilalanin hidroksilase (PAH), menyebabkan akumulasi fenilalanin yang menimbulkan gangguan perkembangan saraf, hipopigmentasi kulit/rambut, dan aroma urin khas apek (mousy/musty odor).",
+        referensi: "Nelson Textbook of Pediatrics, Inborn Errors of Amino Acid Metabolism."
+      },
+      {
+        id: "p1-soal-08",
+        nomor: 8,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 24 bulan datang diantar kedua orang tuanya ke puskesmas untuk melihat pertumbuhan dan perkembangan anak. Keluhan pada anak disangkal. Pemeriksaan tanda vital TD 90/60, HR 120, RR 40, T 36,4°C. Pemeriksaan fisik dalam batas normal. Pada pemeriksaan antropometri didapatkan hasil sesuai dengan usia dan berada di garis hijau. Pada saat pemeriksaan KPSP didapatkan total skor 10.",
+        pertanyaan: "Interpretasi dan tatalaksana lanjutan untuk pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Meragukan, sehingga beri nasihat ibu untuk stimulasi dan cek ulang 2 minggu lagi" },
+          { id: "b", teks: "Meragukan, namun dianggap tidak ada gangguan" },
+          { id: "c", teks: "Terdapat penyimpangan dan perlu rujuk ke Sp.A" },
+          { id: "d", teks: "Sesuai usia dan perlu rujuk ke Sp.A" },
+          { id: "e", teks: "Sesuai usia dan periksa ulang pada usia selanjutnya" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Pada interpretasi skrining KPSP Kemenkes RI: Jawaban 'YA' berjumlah 9 atau 10 berarti perkembangan anak Sesuai dengan Tahap Perkembangannya (S). Tatalaksananya adalah pujilah orang tua/pengasuh, teruskan pola asuh sesuai tahap perkembangan, dan jadwalkan pemeriksaan KPSP rutin pada kelompok umur selanjutnya.",
+        referensi: "Pedoman Pelaksanaan SDIDTK Kemenkes RI."
+      },
+      {
+        id: "p1-soal-09",
+        nomor: 9,
+        subdivisi: "nutrisi-metabolik",
+        subdivisiLabel: "Nutrisi & Metabolik",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 2 tahun dibawa ke IGD karena penurunan kesadaran. Anak tidak mau makan apa pun sejak 1 hari terakhir. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 30, T 36,2°C. Pada pemeriksaan fisik anak tampak apatis, sangat kurus, iga gambang (+), baggy pants (+), edema (-). Saat dilakukan pemeriksaan GDS 42 mg/dL.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Berikan 50 mL glukosa 10% atau sukrosa 10% per oral" },
+          { id: "b", teks: "Berikan RL 30 cc/kg dalam 30 menit, lanjut 70 cc/kg dalam 2,5 jam" },
+          { id: "c", teks: "Berikan oralit 200 cc" },
+          { id: "d", teks: "Berikan IV D10% 5 cc/kgBB, lanjutkan dengan F75" },
+          { id: "e", teks: "Berikan Resomal 5 mL/kgBB tiap 30 menit dalam 2 jam pertama" },
+        ],
+        jawabanBenar: "d",
+        pembahasan:
+          "Anak mengalami gizi buruk tipe marasmus dengan komplikasi hipoglikemia berat disertai penurunan kesadaran (apatis/letargis) dan GDS < 54 mg/dL. Menurut Protokol 10 Langkah Tata Laksana Gizi Buruk WHO/Kemenkes: bila tidak sadar/letargis, berikan Glukosa/Dekstrosa 10% IV secara steril 5 mL/kgBB, kemudian segera lanjutkan pemberian formula F-75.",
+        referensi: "Buku Pedoman Pelayanan Anak Gizi Buruk Kemenkes RI / WHO."
+      },
+      {
+        id: "p1-soal-10",
+        nomor: 10,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 1 bulan datang dibawa orang tua ke dokter anak atas saran dari bidan. Ibu pasien mengatakan bahwa saat pemeriksaan ANC di puskesmas HIV ibu reaktif, tetapi belum melakukan pengobatan lebih lanjut. Anak saat ini terdapat putih-putih di mulutnya disertai demam sumer-sumer yang dirasakan sejak sekitar 3 minggu. Pemeriksaan fisik HR 130, RR 28, suhu 37,8°C, candidiasis oral. Pada pemeriksaan serologis HIV pada anak didapatkan hasil reaktif.",
+        pertanyaan: "Imunisasi apa saja yang tidak dapat diberikan untuk anak?",
+        opsi: [
+          { id: "a", teks: "Semua dapat diberikan dengan observasi ketat" },
+          { id: "b", teks: "Tidak boleh diberikan vaksin BCG dan pentabio" },
+          { id: "c", teks: "Tidak boleh diberikan vaksin BCG dan OPV" },
+          { id: "d", teks: "Tidak boleh diberikan vaksin pentabio dan IPV" },
+          { id: "e", teks: "Tidak boleh diberikan vaksin pentabio dan BCG" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pada anak yang terkonfirmasi terinfeksi HIV simtomatik atau imunokompromais berat, vaksin hidup yang dilemahkan (live attenuated) dikontraindikasikan, khususnya vaksin BCG (karena risiko diseminasi BCG-itis) dan Oral Polio Vaccine (OPV diganti dengan Inactivated Polio Vaccine / IPV).",
+        referensi: "Pedoman Imunisasi pada Anak dengan Kondisi Khusus IDAI 2024."
+      },
+      {
+        id: "p1-soal-11",
+        nomor: 11,
+        subdivisi: "gastrohepatologi",
+        subdivisiLabel: "Gastrohepatologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 12 bulan datang ke IGD dibawa oleh kedua orang tuanya dengan keluhan BAB cair sering dengan frekuensi sekitar 8–10 kali sehari sejak kemarin. Keluhan tinja disertai darah maupun lendir disangkal. Anak juga mengalami muntah dengan frekuensi sekitar 5 kali sehari. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 40, T 36,5°C. Pada pemeriksaan fisik didapatkan anak tampak gelisah, ubun-ubun besar teraba cekung, mata cowong, turgor kulit kembali lambat, dan BB 10 kg.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Dipulangkan, banyak minum di rumah" },
+          { id: "b", teks: "Memberikan rehidrasi melalui IV line 300 mL dalam 30 menit pertama" },
+          { id: "c", teks: "Memberikan rehidrasi dengan oralit 200 mL setiap BAB" },
+          { id: "d", teks: "Memberikan rehidrasi melalui IV line 300 mL dalam 1 jam pertama" },
+          { id: "e", teks: "Memberikan rehidrasi dengan oralit 750 mL dalam 3 jam" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Pasien mengalami diare akut dengan Dehidrasi Tak Berat / Ringan-Sedang (gelisah, mata cowong, turgor lambat). Sesuai Rencana Terapi B WHO/Kemenkes: Rehidrasi oralit dalam 3 jam pertama dihitung dengan rumus 75 mL/kgBB = 75 x 10 kg = 750 mL oralit dalam 3 jam.",
+        referensi: "Panduan Praktik Klinis Gastroenterologi Anak IDAI / WHO Diarrhoea Guidelines."
+      },
+      {
+        id: "p1-soal-12",
+        nomor: 12,
+        subdivisi: "gastrohepatologi",
+        subdivisiLabel: "Gastrohepatologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang bayi laki-laki berusia 9 bulan dibawa oleh orang tuanya ke puskesmas dengan keluhan BAB cair sejak 2 hari yang lalu. Pasien diare sebanyak 7–8 kali dalam sehari. Keluhan diare disertai darah dan lendir disangkal. Riwayat konsumsi susu formula yang berbeda dari susu formula sebelumnya. Pemeriksaan tanda vital didapatkan TD 80/60, HR 90, RR 37, T 36,5°C. Pada pemeriksaan fisik didapatkan distensi abdomen (+), anus hiperemis, dan feses berbau asam.",
+        pertanyaan: "Pernyataan yang kurang tepat terkait dengan keluhan pasien di atas adalah?",
+        opsi: [
+          { id: "a", teks: "Tatalaksana yang diberikan berupa susu bebas laktosa" },
+          { id: "b", teks: "Diagnosis pasien adalah alergi susu sapi" },
+          { id: "c", teks: "Adanya defisiensi enzim laktase" },
+          { id: "d", teks: "Pemeriksaan penunjang yang dilakukan adalah hydrogen breath test" },
+          { id: "e", teks: "Kelainan pasien bukan merupakan reaksi imunologis" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Feses berbau asam (fermentasi karbohidrat), eritema natum/ruam popok perianal akibat pH asam tinja, dan kembung pascasusu formula adalah gambaran klasik Intoleransi Laktosa (bukan reaksi imunologik alergi protein susu sapi/CMPA). Maka pernyataan yang TIDAK tepat adalah 'Diagnosis pasien adalah alergi susu sapi'.",
+        referensi: "Rekomendasi Diagnosis dan Tata Laksana Alergi Susu Sapi IDAI."
+      },
+      {
+        id: "p1-soal-13",
+        nomor: 13,
+        subdivisi: "nutrisi-metabolik",
+        subdivisiLabel: "Nutrisi & Metabolik",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 18 bulan dibawa ke IGD karena anak tampak lemas. Anak mengalami BAB cair dan mual muntah sejak kemarin, BAB cair kurang lebih 6 kali dalam sehari. Pemeriksaan tanda vital didapatkan TD 90/60, HR 120, RR 24, T 36,2°C. Pemeriksaan fisik didapatkan anak tampak sadar dan kehausan, terlihat sangat kurus, mata cowong (+), iga gambang (+), baggy pants (+), BB 10 kg. Pada pemeriksaan GDS 85 mg/dL.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Berikan Resomal 50 mL tiap 30 menit dalam 2 jam pertama" },
+          { id: "b", teks: "Berikan RL 300 cc dalam 30 menit, lanjut RL 700 cc dalam 2,5 jam" },
+          { id: "c", teks: "Berikan oralit 750 cc dalam 3 jam pertama" },
+          { id: "d", teks: "Berikan oralit 200 cc/BAB cair" },
+          { id: "e", teks: "Berikan 50 mL glukosa 10% atau sukrosa 10% per oral" },
+        ],
+        jawabanBenar: "a",
+        pembahasan:
+          "Pada anak gizi buruk yang sadar dengan dehidrasi, rehidrasi diberikan menggunakan ReSoMal (Rehydration Solution for Malnutrition) sebanyak 5 mL/kgBB setiap 30 menit selama 2 jam pertama (untuk BB 10 kg = 50 mL tiap 30 menit). Oralit standar tidak boleh digunakan karena risiko kelebihan natrium dan gagal jantung.",
+        referensi: "Pedoman Pelayanan Anak Gizi Buruk Kemenkes RI."
+      },
+      {
+        id: "p1-soal-14",
+        nomor: 14,
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang bayi laki-laki berusia 2 minggu datang dibawa oleh orang tuanya ke IGD RS karena mengalami BAB darah. Keluhan disertai muntah. Bayi lahir dari seorang ibu G1P0A0 usia kehamilan 32 minggu. Riwayat konsumsi susu formula sejak lahir. Pemeriksaan tanda vital didapatkan TD 80/60, HR 140, RR 70, T 39°C. Pada pemeriksaan fisik didapatkan retraksi intercostal (+), distensi abdomen (+), penurunan bising usus. Pemeriksaan foto abdomen didapatkan gambaran pneumatosis intestinalis.",
+        pertanyaan: "Pernyataan yang tepat pada kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Riwayat lahir postterm merupakan faktor risiko dari keluhan pasien" },
+          { id: "b", teks: "Faktor risiko pemberian makanan sesuai usia" },
+          { id: "c", teks: "Terjadi kerusakan dinding intestinal berat akibat proses inflamasi" },
+          { id: "d", teks: "Diagnosis pasien adalah intususepsi" },
+          { id: "e", teks: "Tatalaksana awal berupa pemberian antibiotik" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pneumatosis intestinalis (adanya gas di dinding usus) pada bayi prematur dengan distensi abdomen dan hematokezia adalah tanda patognomonik Necrotizing Enterocolitis (NEC), di mana terjadi inflamasi transmural dan iskemia nekrotik pada mukosa usus.",
+        referensi: "Gomella's Neonatology; Pedoman Pelayanan Medis Neonatus IDAI."
+      },
+      {
+        id: "p1-soal-15",
+        nomor: 15,
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 1 bulan datang dibawa oleh kedua orang tuanya ke IGD RS dengan keluhan anak tidak dapat dibangunkan sejak 1 hari yang lalu. Dua hari sebelumnya anak sempat mengalami kejang pada sisi kanan tubuh. Riwayat anak lahir cukup bulan, ditolong dukun beranak. Pemeriksaan tanda vital TD 80/60, HR 100, RR 40, T 36,5°C. Pemeriksaan fisik didapatkan konjungtiva anemis, ubun-ubun menonjol. Pada pemeriksaan faal hemostasis didapatkan PT dan aPTT memanjang.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Hidrosefalus" },
+          { id: "b", teks: "Tetanus neonatorum" },
+          { id: "c", teks: "Vit K deficiency bleeding" },
+          { id: "d", teks: "Ensefalitis" },
+          { id: "e", teks: "Epilepsi" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Bayi usia 1 bulan pascapersalinan dukun (tidak mendapat profilaksis vitamin K injeksi saat lahir) yang datang dengan tanda perdarahan intrakranial (ubun-ubun menonjol, kejang fokal, penurunan kesadaran) serta pemanjangan PT dan aPTT mengalami APBD (Acquired Prothrombin Complex Deficiency) / Vitamin K Deficiency Bleeding (VKDB) tipe lambat.",
+        referensi: "Panduan Praktik Klinis Hematologi Anak IDAI."
+      },
+    ],
+  },
+  {
+    id: "drill-pediatri-paket-2",
+    slug: "drill-pediatri-paket-2",
+    judul: "Try Out UKMPPD Pediatri — Paket 2 (Komprehensif)",
+    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Endokrin, Infeksi Eksantema, Respirologi, Neurologi, dan Kelainan Kongenital.",
+    durasiMenit: 15,
+    passingGradePersen: 66,
+    kategori: "ukmppd",
+    kategoriLabel: "Simulasi Komprehensif",
+    badge: "15 Soal / 15 Menit",
+    daftarSoal: [
+      {
+        id: "p2-soal-16",
+        nomor: 1,
+        subdivisi: "endokrinologi",
+        subdivisiLabel: "Endokrinologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 8 tahun dibawa oleh orang tuanya ke poliklinik anak dengan keluhan anak tampak sangat kurus. Pasien memiliki keluhan merasa sering haus, sehingga minum terus-menerus. Kemudian pasien sering sekali makan. Pasien juga sering terbangun untuk buang air kecil. Keluhan ini sudah dirasakan sejak 3 bulan yang lalu. Pemeriksaan tanda vital TD 90/70, HR 90, RR 24, T 36,2°C. Pemeriksaan GDS didapatkan hasil 350 mg/dL.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Akarbose" },
+          { id: "b", teks: "Insulin" },
+          { id: "c", teks: "Glibenklamid" },
+          { id: "d", teks: "Glimepirid" },
+          { id: "e", teks: "Metformin" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Gejala klasik polidipsia, polifagia, poliuria, dan penurunan BB disertai hiperglikemia (GDS 350 mg/dL) pada anak usia 8 tahun merupakan manifestasi Diabetes Melitus Tipe 1. Terapi mutlak dan esensial yang wajib diberikan seumur hidup adalah Insulin eksogen.",
+        referensi: "Konsensus Nasional Pengelolaan Diabetes Melitus Tipe 1 IDAI / ISPAD Guidelines."
+      },
+      {
+        id: "p2-soal-17",
+        nomor: 2,
+        subdivisi: "endokrinologi",
+        subdivisiLabel: "Endokrinologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 6 tahun datang dibawa oleh orang tuanya dengan keluhan lemas sejak 3 jam yang lalu. Riwayat orang tua pasien menderita Diabetes melitus. Pada pemeriksaan fisik tampak mengantuk dengan TD 80/60, HR 120, RR 36, T 36,2°C. Pada pemeriksaan GDS didapatkan hasil 35 mg/dL.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Berikan glukosa oral ditambah dengan glukosa 5% dan cek ulang 1 jam kemudian" },
+          { id: "b", teks: "Berikan glukosa oral dan cek ulang 1 jam kemudian" },
+          { id: "c", teks: "Bolus glukosa 10% 2 mL/kgBB dan cek ulang 1 jam kemudian" },
+          { id: "d", teks: "Infus NaCl 0,9% 20 mL/kgBB" },
+          { id: "e", teks: "Injeksi insulin short acting subkutan" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Pada anak sadar/kooperatif yang mengalami hipoglikemia, terapi lini pertama adalah pemberian karbohidrat kerja cepat per oral (glukosa oral 10–20 gram) kemudian evaluasi ulang kadar gula darah berkala.",
+        referensi: "Konsensus Tata Laksana Hipoglikemia pada Anak IDAI."
+      },
+      {
+        id: "p2-soal-18",
+        nomor: 3,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang anak perempuan berusia 3,5 tahun datang dibawa oleh orang tuanya ke poliklinik anak dengan keluhan anak tidak respons terhadap suara panggilan. Riwayat anak lahir secara normal dengan BBL 3000 gram di bidan. Pemeriksaan tanda vital TD 80/60, HR 100, RR 30, T 36,3°C. Pemeriksaan fisik dijumpai adanya kekeruhan pada kedua lensa mata, auskultasi jantung terdengar murmur sistolik pada apex. Pada pemeriksaan menggunakan garpu tala dijumpai Rinne (+/+), Weber tidak ada lateralisasi, Schwabach memendek di kedua telinga.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Tuli konduktif" },
+          { id: "b", teks: "Rubeola" },
+          { id: "c", teks: "Toxoplasmosis" },
+          { id: "d", teks: "Herpes simplex" },
+          { id: "e", teks: "Rubella" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Trias Klasik Gregg (Congenital Rubella Syndrome): Katarak kongenital bilateral (kekeruhan lensa), Tuli sensorineural (Schwabach memendek), dan Penyakit Jantung Bawaan (PDA/stenosis arteri pulmonalis).",
+        referensi: "Buku Ajar Infeksi & Pediatri Tropis IDAI."
+      },
+      {
+        id: "p2-soal-19",
+        nomor: 4,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 4 tahun datang diantar oleh orang tuanya ke rumah sakit dengan keluhan ruam pada seluruh tubuh. Ruam kemerahan muncul sejak dua hari lalu. Keluhan disertai demam, nyeri kepala, dan nyeri tenggorok. Pemeriksaan tanda vital TD 80/60, HR 120, RR 30, T 39°C. Pada pemeriksaan fisik didapatkan ruam makulopapular generalisata, lidah edema dan eritema.",
+        pertanyaan: "Etiologi pada keluhan pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Autoimun" },
+          { id: "b", teks: "Parvovirus B19" },
+          { id: "c", teks: "Streptococcus BHGA" },
+          { id: "d", teks: "Human herpes virus 6" },
+          { id: "e", teks: "Staphylococcus aureus" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Faringitis eksudatif yang disertai demam, ruam skarlatiniform (sandpaper appearance), dan strawberry tongue (lidah bengkak eritematosa) disebabkan oleh eksotoksin pirogenik Streptococcus beta hemolyticus grup A (SBHGA) pada penyakit Scarlet Fever.",
+        referensi: "Red Book: Report of the Committee on Infectious Diseases AAP."
+      },
+      {
+        id: "p2-soal-20",
+        nomor: 5,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 18 bulan datang dibawa orang tuanya ke puskesmas dengan keluhan demam, batuk pilek, dan muncul ruam kulit sejak 4 hari yang lalu. Ruam awalnya muncul pada mulut berupa bercak kemerahan yang kemudian menjadi lenting berisi air. Pasien selalu menangis ketika makan karena merasa nyeri saat menelan, sehingga tidak mau makan. Pemeriksaan tanda vital TD 80/60, HR 100, RR 30, T 39,2°C. Pada pemeriksaan fisik ditemukan lesi vesikel eritematosa pada palmar, plantar, gluteus, dan ditemukan lesi aftosa multipel dengan tepi eritema pada mukosa bukal.",
+        pertanyaan: "Pernyataan yang tepat pada kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Diagnosis pasien adalah roseola infantum" },
+          { id: "b", teks: "Shingles merupakan nama lain dari penyakit pasien" },
+          { id: "c", teks: "Penyakit pasien tidak dapat sembuh sendiri" },
+          { id: "d", teks: "Etiologi kondisi pasien adalah coxsackievirus A61" },
+          { id: "e", teks: "Terapi suportif merupakan tatalaksana yang dapat diberikan" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Hand, Foot, and Mouth Disease (HFMD / Flu Singapura) disebabkan oleh enterovirus (umumnya Coxsackievirus A16 atau Enterovirus 71). Penyakit ini bersifat self-limiting sehingga terapi utamanya adalah terapi suportif dan simtomatik (antipiretik, hidrasi adekuat, dan pereda nyeri mukosa).",
+        referensi: "Pedoman Tata Laksana Infeksi Tropis IDAI."
+      },
+      {
+        id: "p2-soal-21",
+        nomor: 6,
+        subdivisi: "endokrinologi",
+        subdivisiLabel: "Endokrinologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 8 bulan datang dibawa oleh orang tuanya ke rumah sakit dengan keluhan anak tidak mau minum ASI sejak lahir. Jika menangis terdengar suara serak. Saat ini pasien hanya bisa mengangkat kepalanya. Pemeriksaan tanda vital TD 80/60, HR 120, RR 40, T 36,2°C. Pemeriksaan fisik dijumpai makroglossia, wajah dismorfik, kulit kering, serta hernia umbilikalis.",
+        pertanyaan: "Pemeriksaan penunjang awal yang dapat dilakukan untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "fT4" },
+          { id: "b", teks: "TSH" },
+          { id: "c", teks: "LH" },
+          { id: "d", teks: "FSH" },
+          { id: "e", teks: "fT3" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Gejala tangisan serak, makroglosia, hernia umbilikalis, keterlambatan motorik, dan hipotonia sangat mengarah pada Hipotiroid Kongenital. Pemeriksaan laboratorium skrining dan penunjang awal utama yang paling sensitif adalah Thyroid Stimulating Hormone (TSH).",
+        referensi: "Pedoman Skrining Hipotiroid Kongenital Kemenkes RI / IDAI."
+      },
+      {
+        id: "p2-soal-22",
+        nomor: 7,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 12 bulan dibawa ke rumah sakit oleh orang tuanya dengan keluhan timbul ruam merah di seluruh tubuh sejak 2 hari yang lalu. Ruam muncul diawali pada daerah belakang telinga, kemudian menyebar ke seluruh tubuh. Riwayat pasien memiliki batuk, pilek, dan demam sejak 3 hari yang lalu serta mata berair. Pemeriksaan tanda vital TD 80/60, HR 100, RR 30, T 39,2°C. Pada pemeriksaan fisik didapatkan konjungtivitis (+), mukosa mulut ditemukan Koplik spot, iga gambang (+), dan baggy pants (+).",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Vitamin A 50.000 IU pada hari 1 dan 2" },
+          { id: "b", teks: "Vitamin A 100.000 IU pada hari 1 dan 2" },
+          { id: "c", teks: "Vitamin A 200.000 IU pada hari 1 dan 2" },
+          { id: "d", teks: "Vitamin A 100.000 IU pada hari 1, 2, dan 2–4 minggu setelah pemberian kedua" },
+          { id: "e", teks: "Vitamin A 200.000 IU pada hari 1, 2, dan 2–4 minggu setelah pemberian kedua" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Pasien mengalami Campak/Morbili pada anak usia ≥ 12 bulan disertai komplikasi gizi buruk (iga gambang, baggy pants). Pada kondisi campak dengan malnutrisi berat/defisiensi vitamin A nyata, dosis Vitamin A adalah 200.000 IU kapsul merah pada hari ke-1, hari ke-2, dan dosis ketiga diberikan 2–4 minggu kemudian.",
+        referensi: "Buku Saku Pelayanan Kesehatan Anak di Rumah Sakit WHO / Kemenkes RI."
+      },
+      {
+        id: "p2-soal-23",
+        nomor: 8,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 12 bulan datang dibawa orang tuanya ke IGD karena anak tampak sesak. Pasien juga mengeluhkan batuk pilek sejak 3 hari yang lalu dan belum diberikan obat apa pun. Riwayat keluhan serupa disangkal. Pemeriksaan tanda vital didapatkan TD 80/60, HR 100, RR 60, T 38°C. Pemeriksaan fisik paru didapatkan wheezing (+/+), fine inspiratory crackles (+). Pemeriksaan foto toraks didapatkan gambaran air trapping (+) dan hiperaerasi (+).",
+        pertanyaan: "Etiologi yang tepat pada kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Haemophilus influenzae tipe b" },
+          { id: "b", teks: "Respiratory syncytial virus" },
+          { id: "c", teks: "Bordetella pertussis" },
+          { id: "d", teks: "Streptococcus pneumoniae" },
+          { id: "e", teks: "Parainfluenza virus" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Episode pertama mengi ekspiratoir dan ronki halus pada bayi < 2 tahun yang diawali ISPA atas disertai tanda hiperinflasi paru pada rontgen adalah gambaran klinis Bronkiolitis Akut. Agen etiologi tersering (> 80% kasus) adalah Respiratory Syncytial Virus (RSV).",
+        referensi: "Konsensus Penanganan Bronkiolitis Akut pada Anak IDAI."
+      },
+      {
+        id: "p2-soal-24",
+        nomor: 9,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 6 tahun datang ke IGD diantar oleh orang tuanya dengan keluhan sesak napas. Sesak dialami sejak 1 jam yang lalu. Keluhan sesak sudah dialami pasien sebanyak tiga kali dalam seminggu. Pasien hanya bisa menjawab pertanyaan dalam kata yang terputus-putus dan lebih nyaman dengan posisi duduk. Tanda vital TD 90/60, HR 90, RR 50, T 37°C, SpO2 96%. Pada pemeriksaan fisik didapatkan pasien tampak gelisah dengan otot bantu pernapasan (+), retraksi dinding dada (+), wheezing (+) seluruh lapang paru, sianosis (-).",
+        pertanyaan: "Diagnosis yang tepat pada pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Asma intermiten serangan sedang" },
+          { id: "b", teks: "Asma persisten sedang serangan berat" },
+          { id: "c", teks: "Asma persisten sedang serangan sedang" },
+          { id: "d", teks: "Asma intermiten serangan berat" },
+          { id: "e", teks: "Asma persisten ringan serangan sedang" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Derajat Asma: Gejala > 2x/minggu tetapi tidak setiap hari mengindikasikan Asma Persisten Sedang. Derajat Serangan Akut: Berbicara terputus-putus dalam kata (words), posisi duduk bertumpu, gelisah, napas cepat 50 x/menit, dan retraksi nyata mengindikasikan Serangan Asma Berat.",
+        referensi: "Pedoman Nasional Asma Anak (PNAA) IDAI 2022."
+      },
+      {
+        id: "p2-soal-25",
+        nomor: 10,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 4 tahun datang ke puskesmas dibawa oleh orang tuanya dengan keluhan batuk sejak 10 hari yang lalu. Batuk disertai bunyi melengking. Keluhan lain disertai adanya muntah setelah batuk. Riwayat imunisasi tidak lengkap. Pemeriksaan tanda vital TD 90/60, HR 100, RR 50, T 37,4°C. Pada pemeriksaan fisik keadaan umum pasien tampak sesak dengan perdarahan subkonjungtiva dan sianosis pada bibir.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Observasi karena bersifat self-limiting" },
+          { id: "b", teks: "Ceftriaxone 1 gram/hari" },
+          { id: "c", teks: "Eritromisin 40–50 mg/kgBB dibagi 4 dosis" },
+          { id: "d", teks: "Kloramfenikol 50 mg/kgBB dibagi 4 dosis" },
+          { id: "e", teks: "Dexamethasone 0,3–0,6 mg/kgBB/hari" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pasien mengalami Pertusis (Whooping Cough / Batuk 100 Hari) pada fase paroksismal (batuk paroksismal, whoop inspiratoir, post-tussive vomiting, subconjunctival bleeding). Terapi antibiotik lini pertama pilihan adalah golongan makrolida, yaitu Eritromisin oral dosis 40–50 mg/kgBB/hari terbagi 4 dosis selama 14 hari.",
+        referensi: "Pedoman Pengendalian Pertusis Kemenkes RI / WHO."
+      },
+      {
+        id: "p2-soal-26",
+        nomor: 11,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 6 tahun datang ke poliklinik dibawa oleh orang tuanya karena anak mengalami sesak napas. Keluhan disertai demam, batuk seperti menggonggong, dan suara serak. Pemeriksaan tanda vital TD 90/60, HR 100, RR 50, T 38,4°C. Pada pemeriksaan fisik didapatkan stridor inspirasi, retraksi intercostal (+), dan pemeriksaan rontgen servikal didapatkan gambaran steeple sign.",
+        pertanyaan: "Diagnosis yang tepat pada pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Pertussis" },
+          { id: "b", teks: "Asma bronkial" },
+          { id: "c", teks: "Croup" },
+          { id: "d", teks: "Laryngomalacia" },
+          { id: "e", teks: "Epiglottitis" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Trias klinis Croup (Laringotrakeobronkitis Akut): batuk menggonggong (barking cough), suara parau (hoarseness), dan stridor inspiratorik. Pada rontgen leher AP didapatkan penyempitan trakea subglotis khas menyerupai menara gereja (Steeple sign).",
+        referensi: "Nelson Essentials of Pediatrics; Panduan Praktik Klinis Respirologi Anak IDAI."
+      },
+      {
+        id: "p2-soal-27",
+        nomor: 12,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang anak laki-laki berusia 4 tahun datang dibawa oleh orang tuanya ke IGD karena anak tampak sesak napas. Keluhan sesak disertai demam sejak 3 hari yang lalu, kemudian pasien juga mengeluhkan nyeri menelan, suara yang berubah, dan lebih sering mengeluarkan air liur. Pemeriksaan tanda vital didapatkan TD 80/60, HR 100, RR 40, T 38,5°C. Pada pemeriksaan fisik didapatkan retraksi intercostal (+).",
+        pertanyaan: "Agen yang menyebabkan keluhan pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Haemophilus influenzae tipe b" },
+          { id: "b", teks: "Bordetella pertussis" },
+          { id: "c", teks: "Parainfluenza virus" },
+          { id: "d", teks: "Mycobacterium tuberculosis" },
+          { id: "e", teks: "Respiratory syncytial virus" },
+        ],
+        jawabanBenar: "a",
+        pembahasan:
+          "Gejala 4D (Dysphagia, Dysphonia, Drooling, Distress pernapasan) yang progresif cepat dengan posisi tripod adalah gambaran khas Epiglotitis Akut. Etiologi tersering pada anak yang belum divaksinasi adalah Haemophilus influenzae type b (Hib).",
+        referensi: "Pediatric Emergency Medicine; Red Book AAP."
+      },
+      {
+        id: "p2-soal-28",
+        nomor: 13,
+        subdivisi: "neurologi",
+        subdivisiLabel: "Neurologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 1 tahun datang ke IGD dibawa oleh orang tuanya karena mengalami kejang 15 menit yang lalu. Sebelum kejang, pasien mengalami demam. Pasien mengalami kejang seluruh tubuh dengan durasi 1 menit. Pasien belum diberikan obat apa pun dan saat ini pasien mengalami kejang kembali. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 30, T 40°C. Pada pemeriksaan fisik didapatkan anak sadar, kaku kuduk (-), Brudzinski (-), Lasègue (-), Kernig (-), BB 11 kg. Saat sedang diperiksa, anak kembali kejang.",
+        pertanyaan: "Tatalaksana yang dapat diberikan untuk kasus pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Fenobarbital IV 20 mg/kgBB" },
+          { id: "b", teks: "Diazepam IV 10 mg" },
+          { id: "c", teks: "Diazepam rektal 5 mg suppositoria" },
+          { id: "d", teks: "Fenitoin IV 20 mg/kgBB" },
+          { id: "e", teks: "Diazepam rektal 10 mg suppositoria" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pada tata laksana kejang akut anak di mana belum terpasang akses intravena, lini pertama adalah pemberian Diazepam per rektal: Dosis 5 mg untuk anak dengan BB < 12 kg (atau 10 mg untuk BB ≥ 12 kg). Pada soal BB anak 11 kg, maka dosis yang tepat adalah Diazepam rektal 5 mg.",
+        referensi: "Konsensus Penatalaksanaan Kejang Demam IDAI."
+      },
+      {
+        id: "p2-soal-29",
+        nomor: 14,
+        subdivisi: "neurologi",
+        subdivisiLabel: "Neurologi",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang anak laki-laki berusia 2 tahun dibawa oleh orang tuanya ke poliklinik karena perkembangan anaknya tidak sesuai dengan teman seusianya. Pasien sulit untuk berjalan dan perlu dibantu untuk berdiri. Komunikasi pasien terhadap lingkungan sekitar kurang dan pasien kesulitan dalam makan dan minum. Riwayat kehamilan dan persalinan normal pervaginam, menangis spontan namun mengalami partus lama. Pemeriksaan tanda vital TD 90/70, HR 100, RR 30, T 36,3°C. Pada pemeriksaan fisik didapatkan kontak mata kurang baik, scissors gait (+), hipertonus pada ekstremitas superior-inferior dextra.",
+        pertanyaan: "Diagnosis yang tepat pada kondisi pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Cerebral palsy spastik tipe hemiplegik" },
+          { id: "b", teks: "Cerebral palsy tipe athetoid" },
+          { id: "c", teks: "Cerebral palsy spastik tipe quadriplegi" },
+          { id: "d", teks: "Cerebral palsy spastik tipe diplegik" },
+          { id: "e", teks: "Cerebral palsy tipe ataxic" },
+        ],
+        jawabanBenar: "a",
+        pembahasan:
+          "Adanya gangguan motorik non-progresif sejak dini disertai hipertonisitas/spastisitas yang mengenai satu sisi tubuh (ekstremitas superior dan inferior dextra) mengarah pada Cerebral Palsy Spastik tipe Hemiplegik.",
+        referensi: "Buku Ajar Neurologi Anak IDAI."
+      },
+      {
+        id: "p2-soal-30",
+        nomor: 15,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang anak laki-laki berusia 3 tahun datang ke poliklinik anak diantar oleh orang tuanya karena anak belum dapat berjalan seperti anak seusianya. Keluhan lain didapatkan pasien mengalami kesulitan ketika berdiri. Pasien harus bertumpu pada paha menggunakan tangan agar dapat berdiri. Riwayat paman dari ibu pernah ada yang mengalami hal serupa. Pemeriksaan tanda vital didapatkan TD 90/60, HR 100, RR 30, T 37°C. Pemeriksaan fisik didapatkan waddling gait, Gowers sign (+), otot betis terlihat hipertrofi, hiporefleksia (+).",
+        pertanyaan: "Etiologi pada kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Mutasi gen dystrophin yang diproduksi secara parsial" },
+          { id: "b", teks: "Adanya suatu infeksi akibat virus/bakteri" },
+          { id: "c", teks: "Mutasi gen dystrophin yang tidak diproduksi" },
+          { id: "d", teks: "Keluhan terjadi akibat suatu autoimun" },
+          { id: "e", teks: "Pelaksanaan imunisasi yang tidak lengkap" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Tanda khas Gowers sign (+), pseudohipertrofi betis (calf pseudohypertrophy), waddling gait, dan pewarisan X-linked resesif merupakan ciri Duchenne Muscular Dystrophy (DMD), di mana mutasi gen dystrophin menyebabkan ketiadaan total (absence) produksi protein distrofin fungsional.",
+        referensi: "Nelson Textbook of Pediatrics; Neuromuscular Disorders in Children."
+      },
+    ],
+  },
+  {
+    id: "drill-pediatri-paket-3",
+    slug: "drill-pediatri-paket-3",
+    judul: "Try Out UKMPPD Pediatri — Paket 3 (Komprehensif)",
+    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Neonatus Lanjut, Imunologi (Kawasaki), Respirologi (Pneumonia/Laringomalasia), Gastroenterologi, dan Pertumbuhan.",
+    durasiMenit: 15,
+    passingGradePersen: 66,
+    kategori: "ukmppd",
+    kategoriLabel: "Simulasi Komprehensif",
+    badge: "15 Soal / 15 Menit",
+    daftarSoal: [
+      {
+        id: "p3-soal-31",
+        nomor: 1,
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang bayi laki-laki baru lahir beberapa jam yang lalu di RS dari seorang ibu G1P0A0 dengan usia kehamilan 32 minggu dengan BBL 2.100 gram. Bayi tidak menangis spontan setelah lahir. Lalu pasien dilakukan pemasangan ventilator selama 1 bulan untuk mengatasi sesak pada pasien. Pemeriksaan tanda vital TD 80/60, HR 120, RR 70, T 37°C. Pada pemeriksaan fisik didapatkan retraksi intercostal (+), pernapasan cuping hidung (+), sianosis perioral (+).",
+        pertanyaan: "Diagnosis yang tepat pada kondisi pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Bronchiolitis" },
+          { id: "b", teks: "Transient Tachypnea of the Newborn" },
+          { id: "c", teks: "Bronchopulmonary dysplasia" },
+          { id: "d", teks: "Hyaline membrane disease" },
+          { id: "e", teks: "Meconium aspiration syndrome" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Bayi prematur dengan riwayat RDS yang membutuhkan bantuan oksigen dan ventilasi mekanik jangka panjang (> 28 hari) serta masih mengalami ketergantungan oksigen/distres napas kronik didiagnosis sebagai Bronchopulmonary Dysplasia (BPD) / Chronic Lung Disease of Prematurity.",
+        referensi: "Pedoman Pelayanan Medis Neonatus IDAI."
+      },
+      {
+        id: "p3-soal-32",
+        nomor: 2,
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang anak laki-laki berusia 2 minggu datang dibawa oleh orang tuanya ke IGD RS dengan keluhan anak tampak lemas dan tidak mau menyusu, bahkan sempat kejang kelojotan 1 kali dengan durasi 30 detik dan tidak sadar setelah kejang. Selain itu orang tuanya mengeluhkan anak terlihat kuning sejak hari pertama lahir. Anak mendapatkan ASI sejak lahir sebanyak 8 kali per hari. BAB seperti dempul dan BAK seperti warna teh disangkal. Ibu memiliki golongan darah B. Pemeriksaan tanda vital TD 80/60, HR 100, RR 40, T 37°C. Pada pemeriksaan fisik anak tampak tidak aktif dan terus tertidur walaupun diberi rangsangan. Pemeriksaan laboratorium didapatkan golongan darah anak B, bilirubin total 21 mg/dL.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Breastmilk jaundice" },
+          { id: "b", teks: "Kern icterus" },
+          { id: "c", teks: "Atresia bilier" },
+          { id: "d", teks: "Breastfeeding jaundice" },
+          { id: "e", teks: "Inkompatibilitas golongan darah" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Hiperbilirubinemia berat (bilirubin 21 mg/dL) yang disertai manifestasi neurologis (letargi, penurunan kesadaran, kejang, penolakan minum) menandakan telah terjadi deposisi bilirubin indirek di basal ganglia (ensefalopati bilirubin kronis / Kernicterus).",
+        referensi: "Tata Laksana Hiperbilirubinemia Neonatus IDAI."
+      },
+      {
+        id: "p3-soal-33",
+        nomor: 3,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 2,5 tahun dibawa ke dokter anak karena belum dapat berbicara dan tumbuh kembang tidak sesuai dengan teman seusianya. Pemeriksaan tanda vital TD 90/60, HR 100, RR 30, T 36,8°C. Pada pemeriksaan fisik didapatkan kepala microcephalic dengan bagian anteroposterior mendatar, sela hidung datar, macroglossia, mata sipit dengan sudut bagian bawah-tengah membentuk lipatan, jarak antara jari pertama dan kedua pada tangan dan kaki melebar.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Sindrom Edward" },
+          { id: "b", teks: "Sindrom Down" },
+          { id: "c", teks: "Sindrom Patau" },
+          { id: "d", teks: "Sindrom Klinefelter" },
+          { id: "e", teks: "Sindrom Turner" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Stigma dismorfik khas: brakisefali dengan oksiput mendatar, epicanthal folds pada mata, jembatan hidung datar (flat nasal bridge), makroglosia, dan sandal gap (jarak lebar ibu jari kaki ke jari kedua) merupakan ciri patognomonik Sindrom Down (Trisomi 21).",
+        referensi: "Nelson Textbook of Pediatrics; Panduan Tumbuh Kembang Anak IDAI."
+      },
+      {
+        id: "p3-soal-34",
+        nomor: 4,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang anak laki-laki berusia 3 tahun datang dibawa oleh orang tuanya ke poliklinik dengan keluhan kepala anak terlihat miring ke sisi kiri. Hal ini telah disadari sejak lahir. Anak lahir secara normal dengan berat 2.600 gram, cukup bulan, dan anak menangis spontan. Riwayat demam tinggi dan trauma disangkal. Riwayat vaksinasi lengkap. Perkembangan anak baik dan sesuai dengan usia. Pemeriksaan tanda vital TD 90/60, HR 100, RR 30, T 37°C. Pada pemeriksaan fisik terdapat kepala yang miring ke sisi kiri, garis rambut posterior rendah dan leher pendek, disertai ROM terbatas.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Sindroma Turner" },
+          { id: "b", teks: "Tortikolis didapat" },
+          { id: "c", teks: "Sindroma Klippel-Feil" },
+          { id: "d", teks: "Fraktur clavicula" },
+          { id: "e", teks: "Tortikolis kongenital" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Trias klasik Klippel-Feil Syndrome: leher pendek (short neck), batas garis rambut posterior yang rendah (low posterior hairline), dan keterbatasan rentang gerak leher (limited cervical range of motion) akibat fusi kongenital vertebra servikalis.",
+        referensi: "Nelson Textbook of Pediatrics; Orthopaedic Pediatrics."
+      },
+      {
+        id: "p3-soal-35",
+        nomor: 5,
+        subdivisi: "nutrisi-metabolik",
+        subdivisiLabel: "Nutrisi & Metabolik",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 3 tahun diantar oleh ibunya ke posyandu balita untuk melakukan pengukuran rutin tinggi badan dan berat badan anak, serta melakukan skrining pada perkembangan anak. Anak tidak memiliki keluhan apa pun. Pemeriksaan tanda vital TD 90/60, HR 100, RR 30, T 36,3°C. Pada hasil pengukuran didapatkan BB menurut usia di bawah -3, TB menurut usia di antara -2 dan -1, dan BB menurut TB < -3 SD.",
+        pertanyaan: "Interpretasi pertumbuhan pada anak tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "BB normal, Gizi buruk, Pendek" },
+          { id: "b", teks: "BB sangat kurang, Gizi buruk, Tinggi normal" },
+          { id: "c", teks: "BB normal, Gizi baik, Tinggi normal" },
+          { id: "d", teks: "BB kurang, Gizi buruk, Tinggi normal" },
+          { id: "e", teks: "BB kurang, Gizi kurang, Pendek" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Berdasarkan Kurva Antropometri Standar WHO (Permenkes No. 2/2020): BB/U < -3 SD = Berat Badan Sangat Kurang (Severely Underweight); TB/U antara -2 SD s.d. -1 SD = Tinggi Normal; BB/TB < -3 SD = Gizi Buruk (Severely Wasted).",
+        referensi: "Permenkes RI No 2 Tahun 2020 tentang Standar Antropometri Anak."
+      },
+      {
+        id: "p3-soal-36",
+        nomor: 6,
+        subdivisi: "tumbuh-kembang",
+        subdivisiLabel: "Tumbuh Kembang",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 24 bulan datang diantar kedua orang tuanya ke puskesmas untuk melihat pertumbuhan dan perkembangan anak. Keluhan pada anak disangkal. Pemeriksaan tanda vital TD 80/60, HR 100, RR 30, T 37,2°C. Pemeriksaan fisik dalam batas normal. Pada pemeriksaan antropometri didapatkan hasil sesuai dengan usia dan berada di garis hijau. Pada saat pemeriksaan KPSP didapatkan total skor 9.",
+        pertanyaan: "Interpretasi dan tatalaksana lanjutan untuk pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Sesuai usia dan perlu rujuk ke Sp.A" },
+          { id: "b", teks: "Meragukan, namun dianggap tidak ada gangguan" },
+          { id: "c", teks: "Meragukan, sehingga beri nasihat ibu untuk stimulasi dan cek ulang 2 minggu lagi" },
+          { id: "d", teks: "Terdapat penyimpangan dan perlu rujuk ke Sp.A" },
+          { id: "e", teks: "Sesuai usia dan periksa ulang pada usia selanjutnya" },
+        ],
+        jawabanBenar: "e",
+        pembahasan:
+          "Skor KPSP 9 atau 10 berarti perkembangan anak Sesuai Tahap Perkembangan (S). Tatalaksana yang tepat adalah melanjutkan stimulasi perkembangan anak dan menjadwalkan pemeriksaan KPSP berkala pada usia skrining berikutnya.",
+        referensi: "Buku Panduan SDIDTK Kemenkes RI."
+      },
+      {
+        id: "p3-soal-37",
+        nomor: 7,
+        subdivisi: "nutrisi-metabolik",
+        subdivisiLabel: "Nutrisi & Metabolik",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 24 bulan datang dibawa oleh orang tuanya ke IGD karena anak tampak lemas. Anak mengalami BAB cair dan mual muntah sejak kemarin, BAB cair kurang lebih 10 kali dalam sehari. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 30, T 36,7°C. Pemeriksaan fisik didapatkan anak tampak gelisah dan kehausan, terlihat sangat kurus, mata cowong (+), iga gambang (+), baggy pants (+). Pada pemeriksaan GDS 90 mg/dL.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Berikan RL 30 cc/kg dalam 30 menit, lanjut 70 cc/kg dalam 2,5 jam" },
+          { id: "b", teks: "Berikan oralit 200 cc/BAB cair" },
+          { id: "c", teks: "Berikan Resomal 5 mL/kgBB tiap 30 menit dalam 2 jam pertama" },
+          { id: "d", teks: "Berikan 50 mL glukosa 10% atau 10% sukrosa (1 sdt gula + 50 mL air) per oral" },
+          { id: "e", teks: "Berikan oralit 75 cc/kg dalam 3 jam pertama" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pada anak gizi buruk (marasmus) dengan dehidrasi yang masih sadar, rehidrasi cairan oral dilakukan secara bertahap dengan larutan ReSoMal sebanyak 5 mL/kgBB setiap 30 menit selama 2 jam pertama, kemudian dilanjutkan evaluasi tanda hidrasi.",
+        referensi: "Pedoman Tata Laksana Gizi Buruk Kemenkes RI / WHO."
+      },
+      {
+        id: "p3-soal-38",
+        nomor: 8,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 1 tahun datang ke poliklinik dibawa oleh orang tuanya dengan keluhan batuk sejak 2 minggu yang lalu. Batuk disertai bunyi melengking. Terkadang pasien muntah setelah batuk. Riwayat imunisasi tidak lengkap. Pemeriksaan tanda vital didapatkan TD 80/60, HR 120, RR 50, T 39,1°C. Pada pemeriksaan fisik didapatkan keadaan umum tampak sesak, perdarahan subkonjungtiva (+), dan sianosis pada bibir (+).",
+        pertanyaan: "Vaksinasi yang seharusnya diberikan untuk mencegah penyakit ini adalah?",
+        opsi: [
+          { id: "a", teks: "MMR" },
+          { id: "b", teks: "Polio" },
+          { id: "c", teks: "DPT" },
+          { id: "d", teks: "Hepatitis B" },
+          { id: "e", teks: "PCV" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pasien menderita Pertusis (Batuk Rejan). Imunisasi pencegahan primer yang wajib diberikan dalam program nasional adalah vaksin DPT (Difteri, Pertusis, Tetanus) yang diberikan pada usia 2, 3, 4 bulan dan booster pada usia 18 bulan.",
+        referensi: "Jadwal Imunisasi Anak Rekomendasi IDAI 2024."
+      },
+      {
+        id: "p3-soal-39",
+        nomor: 9,
+        subdivisi: "alergi-imunologi",
+        subdivisiLabel: "Alergi & Imunologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang bayi laki-laki berusia 8 bulan datang dibawa oleh orang tua ke IGD rumah sakit karena mengalami diare sejak 3 hari lalu. Keluhan disertai adanya ruam-ruam pada kulit. Pasien baru saja konsumsi susu formula dikarenakan sudah selesai ASI eksklusif. Pemeriksaan fisik didapatkan tanda vital TD 80/60, HR 100, RR 36, T 36,5°C. Pada pemeriksaan fisik didapatkan bising usus meningkat dan terdapat makula eritema multipel generalisata.",
+        pertanyaan: "Pernyataan yang tepat untuk pasien tersebut adalah?",
+        opsi: [
+          { id: "a", teks: "Etiologi berupa defisiensi enzim laktase" },
+          { id: "b", teks: "Tatalaksana yang diberikan berupa susu terhidrolisis sempurna" },
+          { id: "c", teks: "Diagnosis pasien adalah intoleransi laktosa" },
+          { id: "d", teks: "Pemeriksaan penunjang yang dilakukan adalah hydrogen breath test" },
+          { id: "e", teks: "Kelainan pasien bukan merupakan reaksi imunologis" },
+        ],
+        jawabanBenar: "b",
+        pembahasan:
+          "Manifestasi diare disertai kelainan kulit (urtikaria/makula eritematosa multipel) yang timbul setelah pengenalan susu sapi merupakan tanda Alergi Susu Sapi (CMA / Cow's Milk Allergy - reaksi imunologis). Tatalaksana lini pertama pada bayi non-ASI adalah penggantian susu formula dengan formula terhidrolisat ekstensif/sempurna (Extensively Hydrolyzed Formula / eHF).",
+        referensi: "Rekomendasi Diagnosis dan Tata Laksana Alergi Susu Sapi IDAI."
+      },
+      {
+        id: "p3-soal-40",
+        nomor: 10,
+        subdivisi: "neonatologi",
+        subdivisiLabel: "Neonatologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang bayi laki-laki baru lahir dibantu oleh bidan dan dibawa ke RS dengan keluhan bayi tampak sesak dan biru. Bayi lahir dari seorang ibu P1A0 usia kandungan 42 minggu dengan BBL 3.000 gram. Bayi tidak menangis spontan setelah lahir. Pemeriksaan tanda vital TD 80/60, HR 130, RR 70, T 37°C. Pada pemeriksaan fisik didapatkan pernapasan cuping hidung (+), sianosis perioral (+), retraksi intercostal (+).",
+        pertanyaan: "Mekanisme penyebab terjadinya keluhan pada pasien?",
+        opsi: [
+          { id: "a", teks: "Ventilasi oksigen jangka panjang" },
+          { id: "b", teks: "Imaturitas struktur paru dan insufisiensi produksi surfaktan" },
+          { id: "c", teks: "Adanya retensi cairan di paru" },
+          { id: "d", teks: "Aspirasi cairan amnion yang mengandung meconium" },
+          { id: "e", teks: "Penyerapan dan pengeluaran cairan alveolar paru yang terhambat" },
+        ],
+        jawabanBenar: "d",
+        pembahasan:
+          "Pada kehamilan lewat waktu / postterm (42 minggu), hipoksia intrauterin memicu pasase mekonium ke dalam cairan ketuban. Bayi lahir asfiksia dengan distres pernapasan berat menunjukkan Sindrom Aspirasi Mekonium (SAM/MAS) akibat aspirasi cairan amnion bercampur mekonium ke saluran napas bawah.",
+        referensi: "Pedoman Pelayanan Medis Neonatus IDAI."
+      },
+      {
+        id: "p3-soal-41",
+        nomor: 11,
+        subdivisi: "endokrinologi",
+        subdivisiLabel: "Endokrinologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 2 bulan datang dibawa oleh orang tuanya ke rumah sakit dengan keluhan anak tidak mau minum ASI sejak lahir. Ketika menangis terdapat suara serak. Saat ini pasien belum bisa mengangkat kepalanya. Pemeriksaan tanda vital TD 80/60, N 120, RR 40, T 37,2°C. Pemeriksaan fisik dijumpai makroglossia, wajah dismorfik, dan hernia umbilikalis.",
+        pertanyaan: "Pernyataan yang benar berdasarkan kasus di atas adalah?",
+        opsi: [
+          { id: "a", teks: "Diagnosis pasien adalah Down syndrome" },
+          { id: "b", teks: "Keluhan pasien muncul karena kekurangan zat besi" },
+          { id: "c", teks: "Pemeriksaan penunjang yang diperlukan adalah FSH" },
+          { id: "d", teks: "Skoring yang digunakan dalam menegakkan diagnosis adalah Quebec score" },
+          { id: "e", teks: "Tatalaksana yang diberikan adalah Metimazol" },
+        ],
+        jawabanBenar: "d",
+        pembahasan:
+          "Klinis menggambarkan Hipotiroid Kongenital (makroglosia, hernia umbilikalis, suara serak, hipotonia/keterlambatan motorik). Salah satu sistem skoring klinis yang digunakan untuk skrining/evaluasi kecurigaan hipotiroid kongenital pada bayi adalah Skor Quebec (Quebec Clinical Scoring System).",
+        referensi: "Panduan Praktik Klinis Endokrinologi Anak IDAI."
+      },
+      {
+        id: "p3-soal-42",
+        nomor: 12,
+        subdivisi: "respirologi",
+        subdivisiLabel: "Respirologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak laki-laki berusia 9 tahun datang ke puskesmas dibawa oleh orang tuanya dengan keluhan batuk yang melengking sejak 14 hari yang lalu. Orang tua pasien mengatakan pasien akan muntah setelah batuk dan tarik napas dalam sebelum batuk. Riwayat imunisasi tidak lengkap. Pemeriksaan tanda vital TD 90/60, HR 120, RR 60, T 39°C. Pada pemeriksaan fisik anak tampak sesak, serta ditemukan mata merah dan sianosis pada bibir.",
+        pertanyaan: "Fase yang dialami pasien berdasarkan tanda dan gejala pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Fase inisiasi" },
+          { id: "b", teks: "Fase konvalesens" },
+          { id: "c", teks: "Fase kataralis" },
+          { id: "d", teks: "Fase paroksismal" },
+          { id: "e", teks: "Fase maturasi" },
+        ],
+        jawabanBenar: "d",
+        pembahasan:
+          "Pertusis memiliki 3 fase klinis: (1) Fase kataral (1-2 minggu pertama, batuk ringan/pilek), (2) Fase paroksismal (minggu ke 2-6, batuk paroksismal beruntun diakhiri inspirasi melengking/whoop, muntah post-tussive, sianosis, perdarahan subkonjungtiva), dan (3) Fase konvalesens (resolusi berangsur-angsur). Pasien berada pada Fase Paroksismal.",
+        referensi: "Buku Ajar Respirologi Anak IDAI."
+      },
+      {
+        id: "p3-soal-43",
+        nomor: 13,
+        subdivisi: "infeksi-tropis",
+        subdivisiLabel: "Infeksi Tropis",
+        tingkatSKDI: "3A",
+        vignette:
+          "Seorang bayi perempuan berusia 1 minggu dibawa oleh orang tuanya ke IGD karena anak tidak bangun sejak kemarin. Anak lahir secara pervaginam. Riwayat ibu pasien mengalami demam saat hamil. Saat hamil ibu pasien memelihara kucing di rumah. Pemeriksaan tanda vital TD 80/60, HR 120, RR 30, T 36,4°C. Pemeriksaan fisik anak tampak somnolen dan terdapat hidrosefalus. Pemeriksaan mata tampak adanya korioretinitis dan CT scan tampak kalsifikasi intrakranial difus.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Toxoplasmosis" },
+          { id: "b", teks: "Rubella" },
+          { id: "c", teks: "Cytomegalovirus" },
+          { id: "d", teks: "Sifilis" },
+          { id: "e", teks: "Herpes simplex" },
+        ],
+        jawabanBenar: "a",
+        pembahasan:
+          "Trias Klasik Sabin (Toksoplasmosis Kongenital): Hidrosefalus, Korioretinitis, dan Kalsifikasi intrakranial difus/intraserebral. Didukung riwayat kontak hewan inang definitif (kucing) selama kehamilan ibu.",
+        referensi: "Buku Ajar Infeksi & Pediatri Tropis IDAI."
+      },
+      {
+        id: "p3-soal-44",
+        nomor: 14,
+        subdivisi: "alergi-imunologi",
+        subdivisiLabel: "Alergi & Imunologi",
+        tingkatSKDI: "3B",
+        vignette:
+          "Seorang anak laki-laki berusia 6 tahun datang ke poliklinik dibawa oleh orang tuanya dengan keluhan kemerahan di tangan dan kaki sekitar 1 minggu terakhir. Keluhan disertai mata merah berair dan demam. Pemeriksaan tanda vital TD 90/60, HR 120, RR 30, T 39,2°C. Pemeriksaan fisik didapatkan injeksi konjungtiva ODS, strawberry tongue, dan pembesaran KGB colli. Pemeriksaan laboratorium didapatkan Hb 13, PCV 35%, leukosit 18.000, trombosit 200.000 dan LED 60, PT dan aPTT normal.",
+        pertanyaan: "Diagnosis yang tepat pada pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Measles" },
+          { id: "b", teks: "Scarlet fever" },
+          { id: "c", teks: "Kawasaki disease" },
+          { id: "d", teks: "Eritema infeksiosum" },
+          { id: "e", teks: "Exanthema subitum" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Kriteria Penyakit Kawasaki: Demam ≥ 5 hari disertai minimal 4 dari 5 kriteria utama: (1) Perubahan ekstremitas (eritema/edema tangan-kaki), (2) Eksantema polimorfik, (3) Injeksi konjungtiva bulbar non-eksudatif bilateral, (4) Perubahan bibir dan rongga mulut (strawberry tongue, bibir pecah eritema), dan (5) Limfadenopati servikal akut unilateral (KGB colli).",
+        referensi: "Pedoman Diagnosis dan Tata Laksana Penyakit Kawasaki IDAI / AHA Guidelines."
+      },
+      {
+        id: "p3-soal-45",
+        nomor: 15,
+        subdivisi: "gastrohepatologi",
+        subdivisiLabel: "Gastrohepatologi",
+        tingkatSKDI: "4A",
+        vignette:
+          "Seorang anak perempuan berusia 5 tahun datang ke IGD dibawa oleh kedua orang tuanya dengan keluhan BAB cair dengan frekuensi sekitar 6 kali dalam sehari sejak 2 hari yang lalu. Keluhan BAB disertai darah maupun lendir disangkal. Orang tua pasien mengatakan anak banyak minum air. Pemeriksaan tanda vital TD 85/60, HR 100, RR 30, T 36,8°C. Pada pemeriksaan fisik anak tampak gelisah, mata cekung, turgor kulit kembali lambat, dan BB 25 kg.",
+        pertanyaan: "Tatalaksana yang tepat untuk pasien adalah?",
+        opsi: [
+          { id: "a", teks: "Dipulangkan, banyak minum di rumah" },
+          { id: "b", teks: "Memberikan rehidrasi dengan oralit 200 mL setiap BAB" },
+          { id: "c", teks: "Memberikan rehidrasi dengan oralit 1.875 mL dalam 3 jam" },
+          { id: "d", teks: "Memberikan rehidrasi melalui IV line 750 mL dalam 30 menit pertama" },
+          { id: "e", teks: "Memberikan rehidrasi melalui IV line 750 mL dalam 1 jam pertama" },
+        ],
+        jawabanBenar: "c",
+        pembahasan:
+          "Pasien mengalami Diare Akut dengan Dehidrasi Ringan-Sedang (Dehidrasi Tak Berat) dengan BB 25 kg. Sesuai Rencana Terapi B WHO: Berikan oralit 75 mL/kgBB dalam 3 jam pertama = 75 x 25 kg = 1.875 mL larutan oralit dalam 3 jam pertama di sarana kesehatan.",
+        referensi: "Buku Saku Pelayanan Kesehatan Anak di Rumah Sakit WHO / Kemenkes RI."
       },
     ],
   },
 ];
 
 export function getPaketTryoutById(id: string): PaketTryOut | undefined {
-  return PAKET_TRYOUT_LIST.find((p) => p.id === id || p.slug === id);
+  return PAKET_TRYOUT_LIST.find((p) => p.id === id);
 }

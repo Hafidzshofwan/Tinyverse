@@ -12,6 +12,17 @@ export type SoalKuis = {
   jawabanBenar: string;   // id opsi yang benar
   penjelasan: string;     // ditampilkan setelah submit
   referensi?: string;     // mis. "IDAI 2023" atau "AAP 2022"
+  divisi?: string;        // divisi pediatri, mis. "Respirologi", "Neonatologi", "Gastrohepatologi"
+};
+
+export type StatistikDivisiKuis = {
+  divisi: string;
+  total: number;
+  benar: number;
+  salah: number;
+  persentase: number;
+  status: "bagus" | "cukup" | "kurang";
+  saranEvaluasi: string;
 };
 
 export type KuisModul = {

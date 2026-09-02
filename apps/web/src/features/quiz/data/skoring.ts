@@ -8,6 +8,7 @@ export const kuisSkoring: KuisModul = {
   soal: [
     {
       id: "sk-01",
+      divisi: "Respirologi",
       pertanyaan:
         "Anak 3 tahun dibawa karena suara serak dan batuk seperti gonggongan anjing. Pemeriksaan: stridor inspirasi terdengar saat istirahat, retraksi suprasternal ringan, tidak ada sianosis, air entry sedikit berkurang, anak compos mentis. Berdasarkan Skor Westley, derajat keparahan croup anak ini adalah…",
       opsi: [
@@ -23,6 +24,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-02",
+      divisi: "Neonatologi",
       pertanyaan:
         "Neonatus 2 jam dengan distres napas. Skor Downes dinilai: RR 74×/menit (skor 1), retraksi ringan (skor 1), tidak sianosis (skor 0), air entry bilateral sedikit berkurang (skor 1), tidak terdengar grunting (skor 0). Interpretasi dan tindakan yang tepat adalah…",
       opsi: [
@@ -38,6 +40,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-03",
+      divisi: "Neonatologi",
       pertanyaan:
         "Bayi baru lahir dinilai APGAR menit ke-1: warna tubuh biru di ekstremitas saja (1), denyut jantung 88×/menit (1), meringis saat dirangsang (1), tonus fleksi minimal (1), napas tidak teratur (1). Nilai APGAR dan tindakan yang sesuai adalah…",
       opsi: [
@@ -53,6 +56,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-04",
+      divisi: "Infeksi & Tropis",
       pertanyaan:
         "Sistem skoring TB anak IDAI menggunakan ambang nilai berapa untuk memutuskan dimulainya terapi OAT pada anak yang belum terkonfirmasi bakteriologis?",
       opsi: [
@@ -68,6 +72,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-05",
+      divisi: "Respirologi",
       pertanyaan:
         "Anak 8 tahun datang dengan mengi dan sesak. Berdasarkan Pediatric Asthma Score (PAS), kombinasi temuan mana yang menandakan serangan BERAT dan memerlukan manajemen intensif segera?",
       opsi: [
@@ -83,6 +88,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-06",
+      divisi: "Infeksi & Tropis",
       pertanyaan:
         "Anak 10 tahun dengan nyeri tenggorokan dan demam 38,8°C. Pemeriksaan: eksudat tonsil bilateral, adenopati servikal anterior nyeri tekan, tidak ada batuk, tidak ada rinitis. Berdasarkan skor McIsaac, penanganan yang paling tepat adalah…",
       opsi: [
@@ -98,6 +104,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-07",
+      divisi: "Kardiologi",
       pertanyaan:
         "Anak 4 tahun, demam 40°C selama 7 hari tidak respons antibiotik. Ditemukan: konjungtivitis non-purulenta bilateral, ruam polimorfik di badan, eritema dan fisura bibir, limfadenopati servikal unilateral 1,8 cm. Dasar penetapan diagnosis Kawasaki Disease adalah…",
       opsi: [
@@ -113,6 +120,7 @@ export const kuisSkoring: KuisModul = {
     },
     {
       id: "sk-08",
+      divisi: "Neonatologi",
       pertanyaan:
         "New Ballard Score (NBS) digunakan dalam praktik neonatologi untuk tujuan apa?",
       opsi: [

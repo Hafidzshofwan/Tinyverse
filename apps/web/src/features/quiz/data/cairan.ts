@@ -8,6 +8,7 @@ export const kuisCairan: KuisModul = {
   soal: [
     {
       id: "ca-01",
+      divisi: "Nefrologi & Rumatan",
       pertanyaan:
         "Berdasarkan rumus Holliday–Segar, berapa kebutuhan cairan rumatan harian untuk anak dengan berat badan 25 kg?",
       opsi: [
@@ -23,6 +24,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-02",
+      divisi: "Gastrohepatologi",
       pertanyaan:
         "Anak 18 bulan BB 10 kg datang dengan diare cair 6×/hari, minum masih mau, tidak ada tanda dehidrasi. Tatalaksana WHO Rencana A yang benar adalah…",
       opsi: [
@@ -38,6 +40,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-03",
+      divisi: "Gastrohepatologi",
       pertanyaan:
         "Anak 2 tahun BB 12 kg datang dengan diare, mata cekung, haus berlebihan, dan turgor kulit kembali lambat. Berapa volume dan durasi rehidrasi oral WHO Rencana B?",
       opsi: [
@@ -53,6 +56,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-04",
+      divisi: "Gastrohepatologi",
       pertanyaan:
         "Bayi 8 bulan BB 7 kg dengan diare berat, letargis, tidak mampu minum, turgor sangat buruk. Berdasarkan WHO Rencana C, pilihan cairan dan regimen yang PALING TEPAT untuk bayi <12 bulan adalah…",
       opsi: [
@@ -68,6 +72,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-05",
+      divisi: "Nefrologi & Rumatan",
       pertanyaan:
         "Anak 5 tahun pasca-operasi appendektomi, tidak bisa minum oral, memerlukan cairan rumatan IV. Berdasarkan rekomendasi terkini (WHO/NICE/AAP), pilihan cairan rumatan yang PALING AMAN adalah…",
       opsi: [
@@ -83,6 +88,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-06",
+      divisi: "Gawat Darurat",
       pertanyaan:
         "Anak 20 kg mengalami luka bakar 40% TBSA (total body surface area). Berapa volume cairan total yang diberikan dalam 24 jam pertama menurut formula Parkland?",
       opsi: [
@@ -98,6 +104,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-07",
+      divisi: "Prosedur & Terapi",
       pertanyaan:
         "Set infus makro memiliki faktor tetes 20 gtt/mL. Dokter menginstruksikan cairan 1.200 mL dalam 8 jam. Berapa tetes per menit yang harus diatur?",
       opsi: [
@@ -113,6 +120,7 @@ export const kuisCairan: KuisModul = {
     },
     {
       id: "ca-08",
+      divisi: "Nefrologi & Elektrolit",
       pertanyaan:
         "Anak 4 tahun dengan diare dan demam tinggi, kadar Na+ serum 162 mEq/L (hipernatremia). Kecepatan koreksi natrium yang AMAN adalah…",
       opsi: [

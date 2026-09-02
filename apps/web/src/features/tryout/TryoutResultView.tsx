@@ -181,7 +181,8 @@ export function TryoutResultView({
                     <span className={`tv-tryout-no-badge ${isBenar ? "benar" : "salah"}`}>
                       No. {soal.nomor}
                     </span>
-                    <span className="tv-tryout-item-subdiv">{soal.subdivisiLabel}</span>
+                    <span className="tv-tryout-item-subdiv">Divisi: {soal.subdivisiLabel}</span>
+                    <span className="tv-tryout-soal-skdi-badge">SKDI {soal.tingkatSKDI}</span>
                     {userState?.raguRagu && (
                       <span className="tv-tryout-item-ragu">
                         <TryoutFlagIcon size={12} />

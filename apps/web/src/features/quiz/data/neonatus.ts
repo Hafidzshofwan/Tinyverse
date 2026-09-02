@@ -8,6 +8,7 @@ export const kuisNeonatus: KuisModul = {
   soal: [
     {
       id: "ne-01",
+      divisi: "Nutrisi & Metabolik",
       pertanyaan:
         "Bayi prematur 28 minggu, berat lahir 1 kg, mendapat infus Dextrose 10% dengan kecepatan 3 mL/jam. Berapa GIR (Glucose Infusion Rate) bayi tersebut dalam mg/kgBB/menit?",
       opsi: [
@@ -23,6 +24,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-02",
+      divisi: "Nutrisi & Metabolik",
       pertanyaan:
         "Pada TPN neonatus prematur (<32 minggu), dosis awal asam amino yang direkomendasikan sejak hari pertama kehidupan adalah…",
       opsi: [
@@ -38,6 +40,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-03",
+      divisi: "Nutrisi & Metabolik",
       pertanyaan:
         "Kapan emulsi lipid intravena sebaiknya dimulai pada neonatus prematur dalam program TPN?",
       opsi: [
@@ -53,6 +56,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-04",
+      divisi: "Neonatologi",
       pertanyaan:
         "Bayi usia gestasi 36 minggu, lahir tanpa komplikasi, usia 30 jam, bilirubin total 13,5 mg/dL, tidak ada faktor risiko neurotoksisitas. Berdasarkan panduan AAP (nomogram Bhutani), tindakan yang paling tepat adalah…",
       opsi: [
@@ -68,6 +72,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-05",
+      divisi: "Neonatologi",
       pertanyaan:
         "Manakah yang BUKAN termasuk faktor risiko neurotoksisitas bilirubin sehingga menurunkan ambang batas fototerapi/transfusi tukar?",
       opsi: [
@@ -83,6 +88,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-06",
+      divisi: "Neonatologi",
       pertanyaan:
         "Bayi prematur 34 minggu dengan hiperbilirubinemia berat. Indikasi utama transfusi tukar (exchange transfusion) adalah…",
       opsi: [
@@ -98,6 +104,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-07",
+      divisi: "Nutrisi & Metabolik",
       pertanyaan:
         "GIR (Glucose Infusion Rate) fisiologis pada neonatus cukup bulan yang mencerminkan produksi glukosa hepatik endogen adalah…",
       opsi: [
@@ -113,6 +120,7 @@ export const kuisNeonatus: KuisModul = {
     },
     {
       id: "ne-08",
+      divisi: "Gastrohepatologi",
       pertanyaan:
         "Ambang batas bilirubin direk (terkonjugasi) yang menunjukkan kolestasis neonatus dan memerlukan evaluasi lanjutan adalah…",
       opsi: [
