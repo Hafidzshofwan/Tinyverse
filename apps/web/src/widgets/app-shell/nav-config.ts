@@ -127,7 +127,7 @@ const DESKRIPSI: Record<string, string> = {
   "/preview/guideline": "Panduan tata laksana penyakit anak.",
   "/preview/imunisasi": "Jadwal imunisasi anak sesuai usia dan informasi tiap vaksin.",
   "/preview/ringkasan": "Kumpulkan poin klinis dari berbagai alat jadi satu catatan siap salin.",
-  "/preview/pembelajaran": "Dua mode belajar dalam satu tempat: Uji Pemahaman MCQ per modul dan Pembelajaran Berbasis Kasus klinis step-by-step.",
+  "/preview/pembelajaran": "Simulasi CBT Try Out UKNPDPD, Uji Pemahaman MCQ per modul, dan Kasus Klinis interaktif.",
 };
 
 // Deskripsi mendalam fungsi alat untuk tooltip hover.
@@ -150,7 +150,7 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
   "/preview/guideline": "Panduan klinis & protokol resmi: Ringkasan praktis alur diagnosa dan tata laksana penyakit anak tersering berdasarkan rekomendasi IDAI dan WHO.",
   "/preview/imunisasi": "Jadwal & panduan imunisasi IDAI: Tabel jadwal imunisasi anak sesuai rekomendasi IDAI terbaru beserta rekomendasi jadwal kejar (Catch-Up Vaccine).",
   "/preview/ringkasan": "Generator ringkasan medis & SOAP: Otomatisasi kompilasi data pemeriksaan, perhitungan dosis, dan catatan klinis menjadi resume medis SOAP siap cetak/salin.",
-  "/preview/pembelajaran": "Pembelajaran dua mode: (1) Uji Pemahaman — soal MCQ klinis per modul (Skoring, Cairan, Neonatus) level koas dengan skor tersimpan otomatis. (2) Berbasis Kasus — 5 kasus pediatri realistis step-by-step (dehidrasi berat, ikterus neonatus, asma akut, FTT, kejang demam) dengan penjelasan dokter senior di tiap langkah.",
+  "/preview/pembelajaran": "Pusat pembelajaran 3 mode: (1) Try Out UKNPDPD — simulasi CBT ujian stase pediatri lengkap dengan timer, navigasi soal, & pembahasan; (2) Uji Pemahaman — MCQ klinis per modul dengan evaluasi performa divisi; (3) Berbasis Kasus — 5 simulasi kasus pediatri realistis step-by-step dengan penjelasan ilmiah.",
 
 };
 
@@ -159,6 +159,12 @@ const DETAIL_DESKRIPSI: Record<string, string> = {
 // terlihat walau belum punya riwayat pemakaian. Hapus entri dari daftar ini
 // begitu fiturnya sudah dianggap "lama" oleh tim produk.
 const FITUR_BARU: ReadonlyArray<string> = ["/preview/tekanan-darah", "/preview/neonatus", "/preview/egfr", "/preview/pembelajaran"];
+
+// Fitur tetap yang selalu disematkan di Quick Access beranda
+export const FITUR_TETAP_QUICK_ACCESS: ReadonlyArray<string> = [
+  "/preview/pertumbuhan",   // Tumbuh Kembang
+  "/preview/pembelajaran",  // Ruang Belajar
+];
 
 // Daftar fitur yang SUDAH jadi (selain Beranda). Ini sumber tunggal untuk Quick
 // Access & Favorit di beranda. Urutan Quick Access ditentukan SISTEM berdasarkan

@@ -2,17 +2,16 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { FITUR_TERSEDIA } from "@/widgets/app-shell/nav-config";
+import { FITUR_TERSEDIA, FITUR_TETAP_QUICK_ACCESS, type FiturMeta } from "@/widgets/app-shell/nav-config";
 import { usePemakaian, useFavorit, toggleFavorit } from "@/shared/lib/personalisasi";
 import { SidebarIcon } from "@/shared/ui";
 
 const JUMLAH_TAMPIL = 6;
 
 /**
- * Quick Access beranda. Urutan kartu ditentukan SISTEM: fitur yang paling
- * sering dibuka user berada paling depan (data dari shared/lib/personalisasi).
- * Sumber daftarnya adalah fitur asli di menu (FITUR_TERSEDIA), sehingga tidak
- * ada lagi halaman review lepasan seperti GCS/AGD di sini.
+ * Quick Access beranda.
+ * - Menu Tetap: Tumbuh Kembang & Ruang Belajar selalu disematkan di awal.
+ * - Sisa Slot: Diurutkan berdasarkan fitur yang paling sering dibuka oleh user (pemakaian).
  */
 export function HomeQuickAccess() {
   const [isMounted, setIsMounted] = useState(false);
@@ -23,20 +22,24 @@ export function HomeQuickAccess() {
     setIsMounted(true);
   }, []);
 
-  // Fitur yang ditandai "baru" (lihat FITUR_BARU di nav-config) selalu
-  // disisipkan di depan walau belum punya riwayat pemakaian, supaya
-  // kemunculan fitur baru tidak tertutup fitur lama yang sering dibuka.
-  // Sisa slot tetap diisi berdasarkan urutan pemakaian seperti sebelumnya.
-  const fiturBaru = FITUR_TERSEDIA.filter((f) => f.baru);
-  const fiturLama = FITUR_TERSEDIA.map((f, i) => ({
-    f,
-    i,
-    hitung: pemakaian[f.href] ?? 0,
-  }))
-    .filter((x) => !x.f.baru)
+  // 1. Menu Tetap (Pinned): Tumbuh Kembang & Ruang Belajar selalu ada di Quick Access.
+  const fiturTetap = FITUR_TETAP_QUICK_ACCESS
+    .map((href) => FITUR_TERSEDIA.find((f) => f.href === href))
+    .filter((f): f is FiturMeta => Boolean(f));
+
+  // 2. Menu lainnya diurutkan berdasarkan frekuensi dibuka oleh user (pemakaian terbanyak).
+  const sisaFitur = FITUR_TERSEDIA
+    .filter((f) => !FITUR_TETAP_QUICK_ACCESS.includes(f.href))
+    .map((f, i) => ({
+      f,
+      i,
+      hitung: pemakaian[f.href] ?? 0,
+    }))
     .sort((a, b) => b.hitung - a.hitung || a.i - b.i)
     .map((x) => x.f);
-  const daftar = [...fiturBaru, ...fiturLama].slice(0, JUMLAH_TAMPIL);
+
+  // Gabungkan menu tetap di posisi awal, kemudian sisanya diisi menu yang paling banyak dibuka.
+  const daftar = [...fiturTetap, ...sisaFitur].slice(0, JUMLAH_TAMPIL);
 
   const adaData = Object.keys(pemakaian).length > 0;
 
@@ -98,7 +101,6 @@ export function HomeQuickAccess() {
               className="tv-tool-card"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              {item.baru ? <span className="tv-badge-baru">Baru</span> : null}
               <div className="tv-tool-actions">
                 <div className="tv-tool-tooltip-wrapper">
                   <button
