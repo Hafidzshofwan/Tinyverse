@@ -89,7 +89,9 @@ const TKIMG = {
   who_m_imtu: "/assets/images/who-male-imtu.jpg",
   who_f_imtu: "/assets/images/who-female-imtu.jpg",
   cdc_m: "/assets/images/cdc-male.jpg",
-  cdc_f: "/assets/images/cdc-female.jpg"
+  cdc_f: "/assets/images/cdc-female.jpg",
+  who_m_lkbu: "/assets/images/who-male-lkbu.jpg",
+  who_f_lkbu: "/assets/images/who-female-lkbu.jpg"
 };
 
 export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
@@ -148,6 +150,16 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                 series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbtb", warna: "#E63946" } ],
                 calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.49,x1:1490.00,y0:249.49,y1:1055.00},xRange:[65,120],yRange:[4.99,30.98]} } }
             ]
+          },
+          lkbu: {
+            label: "LK/U \u2014 Lingkar Kepala menurut Umur", emoji: "\u{1F535}", combined: true,
+            xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
+            charts: [
+              { id: "lkbu", title: "LK/U \u2014 Lingkar Kepala menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
+                image: TKIMG.who_m_lkbu,
+                series: [ { key: "lk", yField: "lk", yLabel: "Lingkar Kepala (cm)", yUnit: "cm", emoji: "\u{1F535}", zKey: "hcfa", warna: "#0277BD" } ],
+                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:294,y1:1324},xRange:[0,60],yRange:[28.61,56.21]} } }
+            ]
           }
         }
       },
@@ -201,6 +213,16 @@ export const GROWTH_CHART_CONFIG: Record<string, KonfigStandar> = {
                 image: TKIMG.who_f_bbtb,
                 series: [ { key: "berat", yField: "berat", yLabel: "Berat Badan (kg)", yUnit: "kg", emoji: "\u2696\ufe0f", zKey: "bbtb", warna: "#E63946" } ],
                 calibration: { berat: {imgWidth:1754,imgHeight:1241,plot:{x0:230.49,x1:1490.00,y0:249.49,y1:1055.00},xRange:[65,120],yRange:[4.47,31.97]} } }
+            ]
+          },
+          lkbu: {
+            label: "LK/U \u2014 Lingkar Kepala menurut Umur", emoji: "\u{1F535}", combined: true,
+            xField: "usia", xLabel: "Usia (bulan)", xUnit: "bln",
+            charts: [
+              { id: "lkbu", title: "LK/U \u2014 Lingkar Kepala menurut Umur", ageLabel: "0\u201360 bulan", zAge: "0-60",
+                image: TKIMG.who_f_lkbu,
+                series: [ { key: "lk", yField: "lk", yLabel: "Lingkar Kepala (cm)", yUnit: "cm", emoji: "\u{1F535}", zKey: "hcfa", warna: "#0277BD" } ],
+                calibration: { lk: {imgWidth:2198,imgHeight:1550,plot:{x0:296,x1:1852,y0:294,y1:1324},xRange:[0,60],yRange:[28.69,55.22]} } }
             ]
           }
         }

@@ -11,6 +11,7 @@
  * jadi tabel milik alat ini dipertahankan apa adanya.
  */
 import type { ZscoreTable } from "./zscore";
+import { WHO_HCFA_MALE_0_60, WHO_HCFA_FEMALE_0_60 } from "./hcfaTabel";
 
 export const WHO_BBU_MALE_0_60: ZscoreTable = {
   0:  [2.1, 2.5, 3.0, 3.3, 3.9, 4.4, 5.0],
@@ -404,4 +405,7 @@ export const TK_ZSCORE_TABLES: Record<string, ZscoreTable> = {
   "who_female_tbu_0-60": WHO_TBU_FEMALE_0_60,
   "who_male_imtu_0-60": WHO_IMTU_MALE_0_60,
   "who_female_imtu_0-60": WHO_IMTU_FEMALE_0_60,
+  // --- Lingkar Kepala menurut Umur (HCFA) ---
+  "who_male_hcfa_0-60": WHO_HCFA_MALE_0_60,
+  "who_female_hcfa_0-60": WHO_HCFA_FEMALE_0_60,
 };

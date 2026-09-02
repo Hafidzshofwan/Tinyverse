@@ -150,6 +150,24 @@ export function tkInterpretasiZscore(
       statusGizi = "Obesitas (Obese)";
       statusColor = "#B22222";
     }
+  } else if (indikator === "hcfa") {
+    // Klasifikasi Lingkar Kepala — WHO Child Growth Standards (2006)
+    if (z < -3) {
+      statusGizi = "Mikrosefali Berat (Severe Microcephaly)";
+      statusColor = "#B22222";
+    } else if (z < -2) {
+      statusGizi = "Mikrosefali";
+      statusColor = "#E06000";
+    } else if (z <= 2) {
+      statusGizi = "Lingkar Kepala Normal";
+      statusColor = "#1A7A1A";
+    } else if (z <= 3) {
+      statusGizi = "Makrosefali";
+      statusColor = "#E06000";
+    } else {
+      statusGizi = "Makrosefali Berat";
+      statusColor = "#B22222";
+    }
   }
 
   let rentang = "";
@@ -168,6 +186,12 @@ export function tkInterpretasiZscore(
     else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
     else if (z <= 1) rentang = "\u22122 SD s/d +1 SD";
     else if (z <= 2) rentang = "> +1 SD s/d +2 SD";
+    else if (z <= 3) rentang = "> +2 SD s/d +3 SD";
+    else rentang = "> +3 SD";
+  } else if (indikator === "hcfa") {
+    if (z < -3) rentang = "< \u22123 SD";
+    else if (z < -2) rentang = "\u22123 SD s/d < \u22122 SD";
+    else if (z <= 2) rentang = "\u22122 SD s/d +2 SD";
     else if (z <= 3) rentang = "> +2 SD s/d +3 SD";
     else rentang = "> +3 SD";
   }

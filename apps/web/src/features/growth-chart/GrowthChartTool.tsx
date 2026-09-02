@@ -25,6 +25,7 @@ import { addRingkasanItem } from "@/shared/lib/ringkasan";
 import { usePatientProfile, usePatientKey } from "@/shared/lib/patient";
 import {
   IkonBmi,
+  IkonLingkarKepala,
   IkonBook,
   IkonCalendar,
   IkonCdc,
@@ -199,6 +200,8 @@ export function GrowthChartTool() {
   const [inputX, setInputX] = useState("");
   const [inputBerat, setInputBerat] = useState("");
   const [inputTinggi, setInputTinggi] = useState("");
+  /** Lingkar Kepala — tidak ada di profil pasien, selalu diinput manual. */
+  const [inputLK, setInputLK] = useState("");
   /** Menandai nilai yang diisi otomatis dari profil pasien (boleh ditimpa isi terbaru). */
   const auto = useRef({ x: true, berat: true, tinggi: true });
 
@@ -293,6 +296,8 @@ export function GrowthChartTool() {
     if (pasien.usiaBulan != null) setCaraUkur(caraUkurDariUsia(pasien.usiaBulan));
     setInputBerat(pasien.bb != null ? String(pasien.bb) : "");
     setInputTinggi(pasien.tb != null ? String(pasien.tb) : "");
+    // LK tidak ada di profil pasien — selalu kosong saat pasien berganti.
+    setInputLK("");
     // Hasil plot milik pasien sebelumnya wajib ikut hilang; bila dibiarkan, ia
     // terbaca seolah-olah hasil pasien yang baru saja dipilih.
     setHasil(null);
@@ -486,14 +491,20 @@ export function GrowthChartTool() {
     const seriVal: Record<string, number> = {};
     const berat = parseFloat(inputBerat);
     const tinggi = parseFloat(inputTinggi);
+    const lk = parseFloat(inputLK);
     if (isFinite(berat)) seriVal.berat = berat;
     if (isFinite(tinggi)) seriVal.tinggi = tinggi;
+    if (isFinite(lk)) seriVal.lk = lk;
     // IMT/U tidak diinput manual — dihitung dari BB & TB, sama seperti v17.
     const imt = hitungIMT(berat, tinggi);
     if (imt != null) seriVal.imt = imt;
 
     if (!Object.values(seriVal).some((v) => isFinite(v))) {
-      setHasil({ pesan: "Mohon isi minimal salah satu data (berat atau tinggi badan)." });
+      const aktifLkbu = ind.charts.some((c) => c.series?.some((s) => s.key === "lk"));
+      const pesanError = aktifLkbu
+        ? "Mohon isi data lingkar kepala."
+        : "Mohon isi minimal salah satu data (berat atau tinggi badan).";
+      setHasil({ pesan: pesanError });
       return;
     }
 
@@ -1267,20 +1278,36 @@ export function GrowthChartTool() {
             {seriInput.map((s) => (
               <div className="form-group" key={s.key}>
                 <label htmlFor={`tkInput_${s.key}`} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  {s.key === "berat" ? <IkonScale /> : s.key === "tinggi" ? <IkonRuler /> : <IkonBmi />} {s.yLabel}
+                  {s.key === "berat"
+                    ? <IkonScale />
+                    : s.key === "tinggi"
+                    ? <IkonRuler />
+                    : s.key === "lk"
+                    ? <IkonLingkarKepala />
+                    : <IkonBmi />} {s.yLabel}
                 </label>
                 <input
                   type="number"
                   id={`tkInput_${s.key}`}
-                  placeholder={s.key === "berat" ? "cth: 12.5" : "cth: 80"}
+                  placeholder={
+                    s.key === "berat" ? "cth: 12.5"
+                    : s.key === "lk" ? "cth: 45.0"
+                    : "cth: 80"
+                  }
                   min="0"
                   step="0.1"
                   inputMode="decimal"
-                  value={s.key === "berat" ? inputBerat : inputTinggi}
+                  value={
+                    s.key === "berat" ? inputBerat
+                    : s.key === "lk" ? inputLK
+                    : inputTinggi
+                  }
                   onChange={(e) => {
                     if (s.key === "berat") {
                       auto.current.berat = false;
                       setInputBerat(e.target.value);
+                    } else if (s.key === "lk") {
+                      setInputLK(e.target.value);
                     } else {
                       auto.current.tinggi = false;
                       setInputTinggi(e.target.value);

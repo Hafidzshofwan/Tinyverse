@@ -278,3 +278,34 @@ export function IkonJudulTumbuhKembang() {
     </svg>
   );
 }
+
+/**
+ * Ikon lingkar kepala: siluet kepala anak dengan garis ukur melingkar.
+ * Warna mengikuti warna seri "lk" di chartConfig (#0277BD).
+ */
+export function IkonLingkarKepala() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#0277BD"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{
+        display: "inline-block",
+        verticalAlign: "middle",
+        marginRight: 4,
+      }}
+    >
+      {/* Kepala */}
+      <path d="M12 3a7 7 0 0 1 7 7c0 3.2-1.6 5.8-4 6.8V19H9v-2.2C6.6 15.8 5 13.2 5 10a7 7 0 0 1 7-7z" />
+      {/* Garis ukur melingkar (dashed) */}
+      <path d="M5.3 8A7.3 7.3 0 0 1 18.7 8" strokeDasharray="2 1.5" />
+      {/* Leher / alas */}
+      <line x1="9" y1="21" x2="15" y2="21" />
+    </svg>
+  );
+}
