@@ -591,7 +591,7 @@ export function GrowthChartTool() {
             interpretasi.push(
               <div className="tk-zscore-block" key={`z-${c.id}-${s.key}`}>
                 <div className="tk-zscore-row">
-                  <span className="tk-zscore-label">{s.yLabel} \u2014 Z-score</span>
+                  <span className="tk-zscore-label">{s.yLabel} — Z-score</span>
                   <span className="tk-zscore-nilai">
                     {zSign}
                     {z.z}
@@ -1525,7 +1525,7 @@ export function GrowthChartTool() {
               >
                 <span className="nomor">{l.step + 1}</span>
                 <span>{l.teks}</span>
-                <span className="nilai-px">{kalPx[l.step] !== null ? `${kalPx[l.step]} px` : "\u2014"}</span>
+                <span className="nilai-px">{kalPx[l.step] !== null ? `${kalPx[l.step]} px` : "—"}</span>
               </div>
             ))}
             <div className="tk-kalibrasi-aksi">
