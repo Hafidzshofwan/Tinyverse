@@ -34,6 +34,7 @@ export interface SoalTryOut {
   linkAlatTerkait?: {
     label: string;
     href: string;
+    icon?: string;
     iconSlug?: string;
   };
 }

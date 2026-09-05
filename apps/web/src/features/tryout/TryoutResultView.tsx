@@ -350,7 +350,7 @@ export function TryoutResultView({
                             slug={dapatkanIconSlugUntukMenu(
                               soal.linkAlatTerkait.href,
                               soal.linkAlatTerkait.label,
-                              soal.linkAlatTerkait.icon
+                              soal.linkAlatTerkait.iconSlug || soal.linkAlatTerkait.icon
                             )}
                             size={18}
                           />
