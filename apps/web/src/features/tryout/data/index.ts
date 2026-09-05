@@ -70,10 +70,10 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
           { id: "d", teks: "Fototerapi" },
           { id: "e", teks: "Transfusi tukar" },
         ],
-        jawabanBenar: "e",
+        jawabanBenar: "d",
         pembahasan:
-          "Kadar bilirubin total mencapai 21 mg/dL pada usia 14 hari dengan ikterus Kramer V (sampai telapak tangan dan kaki) telah melewati batas aman neurotoksisitas dan memenuhi indikasi segera untuk Transfusi Tukar (Exchange Transfusion) guna mencegah terjadinya Ensefalopati Bilirubin Akut / Kernikterus.",
-        referensi: "Tata Laksana Hiperbilirubinemia Neonatus IDAI / AAP Hyperbilirubinemia Guidelines."
+          "Pada bayi cukup bulan usia 14 hari dengan bilirubin 21 mg/dL namun TANPA tanda ensefalopati bilirubin akut (masih aktif, menyusu baik, tidak ada opistotonos/high-pitched cry/letargi), tatalaksana yang tepat adalah Fototerapi Intensif terlebih dahulu. Menurut nomogram AAP 2022 dan panduan IDAI, ambang Transfusi Tukar pada bayi term tanpa faktor risiko di atas usia 7 hari adalah sekitar 25 mg/dL. Bilirubin 21 mg/dL belum mencapai ambang tersebut. Transfusi Tukar hanya diindikasikan jika bilirubin mencapai ambang exchange atau muncul tanda ensefalopati akut.",
+        referensi: "AAP Clinical Practice Guideline Hyperbilirubinemia 2022; Tata Laksana Hiperbilirubinemia Neonatus IDAI."
       },
       {
         id: "p1-soal-04",
@@ -522,12 +522,12 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
           { id: "b", teks: "Asma persisten sedang serangan berat" },
           { id: "c", teks: "Asma persisten sedang serangan sedang" },
           { id: "d", teks: "Asma intermiten serangan berat" },
-          { id: "e", teks: "Asma persisten ringan serangan sedang" },
+          { id: "e", teks: "Asma persisten ringan serangan berat" },
         ],
-        jawabanBenar: "b",
+        jawabanBenar: "e",
         pembahasan:
-          "Derajat Asma: Gejala > 2x/minggu tetapi tidak setiap hari mengindikasikan Asma Persisten Sedang. Derajat Serangan Akut: Berbicara terputus-putus dalam kata (words), posisi duduk bertumpu, gelisah, napas cepat 50 x/menit, dan retraksi nyata mengindikasikan Serangan Asma Berat.",
-        referensi: "Pedoman Nasional Asma Anak (PNAA) IDAI 2022."
+          "Klasifikasi derajat penyakit asma (GINA/IDAI): gejala >2×/minggu tetapi TIDAK setiap hari = Persisten Ringan (bukan persisten sedang; persisten sedang = gejala hampir setiap hari). Derajat serangan akut: bicara terputus per kata, posisi duduk bertumpu, gelisah, RR 50×/mnt, SpO₂ 96%, retraksi nyata, wheezing seluruh lapang paru = Serangan Berat. Sehingga diagnosis lengkap yang tepat adalah Asma Persisten Ringan Serangan Berat.",
+        referensi: "Pedoman Nasional Asma Anak (PNAA) IDAI 2022; GINA Global Strategy for Asthma Management 2023."
       },
       {
         id: "p2-soal-25",

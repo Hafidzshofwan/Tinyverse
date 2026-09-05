@@ -1391,8 +1391,8 @@ export function GrowthChartTool() {
           {/* ===== KARTU PREDIKSI TINGGI (MPH) — collapsible ===== */}
           <details className="kartu tk-mph-card" id="mphCard" style={{ marginTop: 16 }}>
             <summary className="tk-mph-summary">
-              <span className="dx-sub-h" style={{ margin: 0 }}>
-                {"   "}Prediksi Tinggi (MPH)
+              <span className="dx-sub-h" style={{ margin: 0, fontFamily: "'Fredoka', sans-serif" }}>
+                Prediksi Tinggi (MPH)
               </span>
               <span className="tk-mph-chevron" aria-hidden="true">
                 ▸
