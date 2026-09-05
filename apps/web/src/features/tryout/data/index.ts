@@ -1,11 +1,13 @@
 import type { PaketTryOut } from "../types";
+import { PAKET_PREDIKSI_JITU } from "./prediksiJitu";
 
 export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
+  PAKET_PREDIKSI_JITU,
   {
     id: "drill-pediatri-paket-1",
     slug: "drill-pediatri-paket-1",
-    judul: "Try Out UKMPPD Pediatri — Paket 1 (Komprehensif)",
-    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Neonatologi, Infeksi Tropis, Nutrisi, Genetik & Tumbuh Kembang, serta Kegawatdaruratan.",
+    judul: "Try Out UKMPPD Pediatri — Paket 2 (Komprehensif A)",
+    deskripsi: "Neonatologi, Gastrohepatologi, Infeksi Tropis, Tumbuh Kembang, Nutrisi & Metabolik",
     durasiMenit: 15,
     passingGradePersen: 66,
     kategori: "ukmppd",
@@ -332,8 +334,8 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   {
     id: "drill-pediatri-paket-2",
     slug: "drill-pediatri-paket-2",
-    judul: "Try Out UKMPPD Pediatri — Paket 2 (Komprehensif)",
-    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Endokrin, Infeksi Eksantema, Respirologi, Neurologi, dan Kelainan Kongenital.",
+    judul: "Try Out UKMPPD Pediatri — Paket 3 (Komprehensif B)",
+    deskripsi: "Endokrinologi, Infeksi Tropis, Respirologi, Neurologi, Tumbuh Kembang",
     durasiMenit: 15,
     passingGradePersen: 66,
     kategori: "ukmppd",
@@ -660,8 +662,8 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   {
     id: "drill-pediatri-paket-3",
     slug: "drill-pediatri-paket-3",
-    judul: "Try Out UKMPPD Pediatri — Paket 3 (Komprehensif)",
-    deskripsi: "Simulasi 15 soal CBT (15 menit): Meliputi Neonatus Lanjut, Imunologi (Kawasaki), Respirologi (Pneumonia/Laringomalasia), Gastroenterologi, dan Pertumbuhan.",
+    judul: "Try Out UKMPPD Pediatri — Paket 4 (Komprehensif C)",
+    deskripsi: "Neonatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Gastrohepatologi",
     durasiMenit: 15,
     passingGradePersen: 66,
     kategori: "ukmppd",
