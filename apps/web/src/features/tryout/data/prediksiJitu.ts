@@ -103,6 +103,10 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
       pembahasan:
         "Sepsis neonatorum ditegakkan dari tanda infeksi sistemik pada neonatus (letargi/penurunan kesadaran, takipnea, demam tinggi, dan leukositosis nyata 23.000/µL). Usia 4 hari masih berada dalam spektrum early-onset neonatal sepsis (EOS) yang muncul pada hari-hari awal kehidupan pascapersalinan, sering kali bersumber dari transmisi vertikal saat proses persalinan.",
       referensi: "WHO — Neonatal Sepsis / Infection Guidance; Pedoman Pelayanan Medis IDAI.",
+      linkAlatTerkait: {
+        label: "Tools Neonatus & Perinatologi",
+        href: "/preview/neonatus",
+      },
     },
     {
       id: "pj-soal-05",
@@ -168,7 +172,8 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
       referensi: "Kementerian Kesehatan RI — Pedoman Pelaksanaan SDIDTK / KPSP.",
       linkAlatTerkait: {
         label: "Skrining Perkembangan (KPSP)",
-        href: "/preview/skoring",
+        href: "/preview/pertumbuhan?tab=skrining&tool=kpsp",
+        icon: "kpsp",
       },
     },
     {
@@ -191,10 +196,6 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
       pembahasan:
         "Pasien mengalami severe acute malnutrition (SAM) tipe marasmus dengan komplikasi hipoglikemia (GDS 40 mg/dL, di bawah batas waspada 54 mg/dL pada anak malnutrisi berat). Menurut Protokol 10 Langkah Tata Laksana Gizi Buruk WHO/Kemenkes: jika anak masih sadar dan mampu minum, berikan 50 mL larutan glukosa 10% per oral (atau melalui NGT bila sulit menelan), lalu segera lanjutkan dengan formula F-75. (Pemberian glukosa IV 10% 5 mL/kg diindikasikan bila anak tidak sadar, letargis berat, atau mengalami kejang).",
       referensi: "WHO — Inpatient Management of Severe Acute Malnutrition; Pedoman Gizi Buruk Kemenkes RI.",
-      linkAlatTerkait: {
-        label: "Kalkulator Nutrisi & Gizi Buruk",
-        href: "/preview/nutrisi",
-      },
     },
     {
       id: "pj-soal-09",

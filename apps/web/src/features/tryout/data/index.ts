@@ -33,7 +33,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "d",
         pembahasan:
           "Bayi prematur (32 minggu, BBL 2000 g) yang mengalami distres pernapasan progresif pascalahir (takipnea, retraksi, cuping hidung, sianosis) memiliki gambaran klasik Hyaline Membrane Disease (HMD) / Respiratory Distress Syndrome (RDS) tipe 1 yang disebabkan oleh defisiensi surfaktan akibat imaturitas paru.",
-        referensi: "Pedoman Pelayanan Medis Neonatus IDAI; Nelson Textbook of Pediatrics."
+        referensi: "Pedoman Pelayanan Medis Neonatus IDAI; Nelson Textbook of Pediatrics.",
+        linkAlatTerkait: {
+          label: "Tools Neonatus & Perinatologi",
+          href: "/preview/neonatus",
+        },
       },
       {
         id: "p1-soal-02",
@@ -54,7 +58,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "c",
         pembahasan:
           "Pada alur resusitasi neonatus (IDAI / AHA Neonatal Resuscitation Program), jika setelah langkah awal bayi masih megap-megap (gasping) atau apneu atau HR < 100 x/menit, langkah mutlak selanjutnya adalah segera melakukan Ventilasi Tekanan Positif (VTP) dengan balon dan sungkup.",
-        referensi: "Pedoman Resusitasi Neonatus IDAI / AHA NRP Guidelines."
+        referensi: "Pedoman Resusitasi Neonatus IDAI / AHA NRP Guidelines.",
+        linkAlatTerkait: {
+          label: "Mode Darurat & Resusitasi",
+          href: "/preview/darurat",
+        },
       },
       {
         id: "p1-soal-03",
@@ -75,7 +83,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "d",
         pembahasan:
           "Pada bayi cukup bulan usia 14 hari dengan bilirubin 21 mg/dL namun TANPA tanda ensefalopati bilirubin akut (masih aktif, menyusu baik, tidak ada opistotonos/high-pitched cry/letargi), tatalaksana yang tepat adalah Fototerapi Intensif terlebih dahulu. Menurut nomogram AAP 2022 dan panduan IDAI, ambang Transfusi Tukar pada bayi term tanpa faktor risiko di atas usia 7 hari adalah sekitar 25 mg/dL. Bilirubin 21 mg/dL belum mencapai ambang tersebut. Transfusi Tukar hanya diindikasikan jika bilirubin mencapai ambang exchange atau muncul tanda ensefalopati akut.",
-        referensi: "AAP Clinical Practice Guideline Hyperbilirubinemia 2022; Tata Laksana Hiperbilirubinemia Neonatus IDAI."
+        referensi: "AAP Clinical Practice Guideline Hyperbilirubinemia 2022; Tata Laksana Hiperbilirubinemia Neonatus IDAI.",
+        linkAlatTerkait: {
+          label: "Kalkulator Bilirubin Neonatus (AAP 2022)",
+          href: "/preview/bilirubin",
+        },
       },
       {
         id: "p1-soal-04",
@@ -180,7 +192,12 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "e",
         pembahasan:
           "Pada interpretasi skrining KPSP Kemenkes RI: Jawaban 'YA' berjumlah 9 atau 10 berarti perkembangan anak Sesuai dengan Tahap Perkembangannya (S). Tatalaksananya adalah pujilah orang tua/pengasuh, teruskan pola asuh sesuai tahap perkembangan, dan jadwalkan pemeriksaan KPSP rutin pada kelompok umur selanjutnya.",
-        referensi: "Pedoman Pelaksanaan SDIDTK Kemenkes RI."
+        referensi: "Pedoman Pelaksanaan SDIDTK Kemenkes RI.",
+        linkAlatTerkait: {
+          label: "Skrining Perkembangan (KPSP)",
+          href: "/preview/pertumbuhan?tab=skrining&tool=kpsp",
+          icon: "kpsp",
+        },
       },
       {
         id: "p1-soal-09",
@@ -201,7 +218,7 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "d",
         pembahasan:
           "Anak mengalami gizi buruk tipe marasmus dengan komplikasi hipoglikemia berat disertai penurunan kesadaran (apatis/letargis) dan GDS < 54 mg/dL. Menurut Protokol 10 Langkah Tata Laksana Gizi Buruk WHO/Kemenkes: bila tidak sadar/letargis, berikan Glukosa/Dekstrosa 10% IV secara steril 5 mL/kgBB, kemudian segera lanjutkan pemberian formula F-75.",
-        referensi: "Buku Pedoman Pelayanan Anak Gizi Buruk Kemenkes RI / WHO."
+        referensi: "Buku Pedoman Pelayanan Anak Gizi Buruk Kemenkes RI / WHO.",
       },
       {
         id: "p1-soal-10",
@@ -222,7 +239,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "c",
         pembahasan:
           "Pada anak yang terkonfirmasi terinfeksi HIV simtomatik atau imunokompromais berat, vaksin hidup yang dilemahkan (live attenuated) dikontraindikasikan, khususnya vaksin BCG (karena risiko diseminasi BCG-itis) dan Oral Polio Vaccine (OPV diganti dengan Inactivated Polio Vaccine / IPV).",
-        referensi: "Pedoman Imunisasi pada Anak dengan Kondisi Khusus IDAI 2024."
+        referensi: "Pedoman Imunisasi pada Anak dengan Kondisi Khusus IDAI 2024.",
+        linkAlatTerkait: {
+          label: "Jadwal & Panduan Imunisasi IDAI",
+          href: "/preview/imunisasi",
+        },
       },
       {
         id: "p1-soal-11",
@@ -243,7 +264,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "e",
         pembahasan:
           "Pasien mengalami diare akut dengan Dehidrasi Tak Berat / Ringan-Sedang (gelisah, mata cowong, turgor lambat). Sesuai Rencana Terapi B WHO/Kemenkes: Rehidrasi oralit dalam 3 jam pertama dihitung dengan rumus 75 mL/kgBB = 75 x 10 kg = 750 mL oralit dalam 3 jam.",
-        referensi: "Panduan Praktik Klinis Gastroenterologi Anak IDAI / WHO Diarrhoea Guidelines."
+        referensi: "Panduan Praktik Klinis Gastroenterologi Anak IDAI / WHO Diarrhoea Guidelines.",
+        linkAlatTerkait: {
+          label: "Kalkulator Rehidrasi Cairan Diare",
+          href: "/preview/fluids",
+        },
       },
       {
         id: "p1-soal-12",
@@ -361,7 +386,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "b",
         pembahasan:
           "Gejala klasik polidipsia, polifagia, poliuria, dan penurunan BB disertai hiperglikemia (GDS 350 mg/dL) pada anak usia 8 tahun merupakan manifestasi Diabetes Melitus Tipe 1. Terapi mutlak dan esensial yang wajib diberikan seumur hidup adalah Insulin eksogen.",
-        referensi: "Konsensus Nasional Pengelolaan Diabetes Melitus Tipe 1 IDAI / ISPAD Guidelines."
+        referensi: "Konsensus Nasional Pengelolaan Diabetes Melitus Tipe 1 IDAI / ISPAD Guidelines.",
+        linkAlatTerkait: {
+          label: "Kalkulator Dosis Obat Pediatri",
+          href: "/preview/obat",
+        },
       },
       {
         id: "p2-soal-17",
@@ -529,7 +558,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "e",
         pembahasan:
           "Klasifikasi derajat penyakit asma (GINA/IDAI): gejala >2×/minggu tetapi TIDAK setiap hari = Persisten Ringan (bukan persisten sedang; persisten sedang = gejala hampir setiap hari). Derajat serangan akut: bicara terputus per kata, posisi duduk bertumpu, gelisah, RR 50×/mnt, SpO₂ 96%, retraksi nyata, wheezing seluruh lapang paru = Serangan Berat. Sehingga diagnosis lengkap yang tepat adalah Asma Persisten Ringan Serangan Berat.",
-        referensi: "Pedoman Nasional Asma Anak (PNAA) IDAI 2022; GINA Global Strategy for Asthma Management 2023."
+        referensi: "Pedoman Nasional Asma Anak (PNAA) IDAI 2022; GINA Global Strategy for Asthma Management 2023.",
+        linkAlatTerkait: {
+          label: "Alur Tatalaksana Serangan Asma",
+          href: "/preview/alur",
+        },
       },
       {
         id: "p2-soal-25",
@@ -550,7 +583,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "c",
         pembahasan:
           "Pasien mengalami Pertusis (Whooping Cough / Batuk 100 Hari) pada fase paroksismal (batuk paroksismal, whoop inspiratoir, post-tussive vomiting, subconjunctival bleeding). Terapi antibiotik lini pertama pilihan adalah golongan makrolida, yaitu Eritromisin oral dosis 40–50 mg/kgBB/hari terbagi 4 dosis selama 14 hari.",
-        referensi: "Pedoman Pengendalian Pertusis Kemenkes RI / WHO."
+        referensi: "Pedoman Pengendalian Pertusis Kemenkes RI / WHO.",
+        linkAlatTerkait: {
+          label: "Kalkulator Dosis Antibiotik Pediatri",
+          href: "/preview/obat",
+        },
       },
       {
         id: "p2-soal-26",
@@ -613,7 +650,11 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         jawabanBenar: "c",
         pembahasan:
           "Pada tata laksana kejang akut anak di mana belum terpasang akses intravena, lini pertama adalah pemberian Diazepam per rektal: Dosis 5 mg untuk anak dengan BB < 12 kg (atau 10 mg untuk BB ≥ 12 kg). Pada soal BB anak 11 kg, maka dosis yang tepat adalah Diazepam rektal 5 mg.",
-        referensi: "Konsensus Penatalaksanaan Kejang Demam IDAI."
+        referensi: "Konsensus Penatalaksanaan Kejang Demam IDAI.",
+        linkAlatTerkait: {
+          label: "Mode Darurat & Alur Kejang Akut",
+          href: "/preview/darurat",
+        },
       },
       {
         id: "p2-soal-29",

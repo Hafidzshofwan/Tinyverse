@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { PaketTryOut, HasilTryOut } from "./types";
-import { ClinicalSvgIcon } from "@/shared/ui";
+import { ClinicalSvgIcon, SidebarIcon, type SidebarIconSlug } from "@/shared/ui";
 import {
   TryoutAnalyticsIcon,
   TryoutReviewDiscussionIcon,
@@ -13,6 +13,91 @@ import {
   TryoutFlagIcon,
 } from "./TryoutIcons";
 import Link from "next/link";
+
+function dapatkanIconSlugUntukMenu(
+  href: string,
+  label?: string,
+  explicitIcon?: string
+): SidebarIconSlug {
+  if (explicitIcon) {
+    const validSlugs: SidebarIconSlug[] = [
+      "beranda",
+      "ai-assistant",
+      "darurat",
+      "alur",
+      "dosis",
+      "cairan",
+      "puyer",
+      "obat",
+      "tekanan-darah",
+      "egfr",
+      "neonatus",
+      "tumbuh-kembang",
+      "kpsp",
+      "skoring",
+      "lab",
+      "protokol",
+      "imunisasi",
+      "ringkasan",
+      "pembelajaran",
+    ];
+    if (validSlugs.includes(explicitIcon as SidebarIconSlug)) {
+      return explicitIcon as SidebarIconSlug;
+    }
+  }
+
+  const path = (href || "").toLowerCase();
+  const lbl = (label || "").toLowerCase();
+
+  // 1. Prioritas pemetaan spesifik KPSP (Skrining Perkembangan Anak / SDIDTK)
+  if (
+    path.includes("kpsp") ||
+    lbl.includes("kpsp") ||
+    lbl.includes("skrining perkembangan") ||
+    lbl.includes("sdidtk")
+  ) {
+    return "kpsp";
+  }
+
+  // 2. Prioritas pemetaan berdasarkan rute halaman / path URL
+  if (path.includes("/skoring")) return "skoring";
+  if (path.includes("/bilirubin") || path.includes("/tpn-neonatus") || path.includes("/neonatus")) return "neonatus";
+  if (path.includes("/fluids") || path.includes("/cairan") || path.includes("/burn")) return "cairan";
+  if (path.includes("/puyer")) return "puyer";
+  if (path.includes("/dosis") || path.includes("/dosing")) return "dosis";
+  if (path.includes("/obat")) return "obat";
+  if (path.includes("/pertumbuhan") || path.includes("/tumbuh-kembang")) return "tumbuh-kembang";
+  if (path.includes("/imunisasi")) return "imunisasi";
+  if (path.includes("/darurat") || path.includes("/gcs")) return "darurat";
+  if (path.includes("/tekanan-darah")) return "tekanan-darah";
+  if (path.includes("/egfr")) return "egfr";
+  if (path.includes("/lab") || path.includes("/agd")) return "lab";
+  if (path.includes("/guideline") || path.includes("/protokol")) return "protokol";
+  if (path.includes("/ringkasan")) return "ringkasan";
+  if (path.includes("/ai-assistant")) return "ai-assistant";
+  if (path.includes("/pembelajaran") || path.includes("/kasus") || path.includes("/kuis")) return "pembelajaran";
+  if (path.includes("/alur")) return "alur";
+
+  // 3. Pemetaan sekunder berdasarkan teks judul/label tautan alat
+  if (lbl.includes("skoring") || lbl.includes("downes") || lbl.includes("score")) return "skoring";
+  if (lbl.includes("neonatus") || lbl.includes("bilirubin") || lbl.includes("ikterus") || lbl.includes("bayi")) return "neonatus";
+  if (lbl.includes("cairan") || lbl.includes("rehidrasi") || lbl.includes("dehidrasi") || lbl.includes("diare")) return "cairan";
+  if (lbl.includes("puyer") || lbl.includes("racik")) return "puyer";
+  if (lbl.includes("obat") || lbl.includes("dosis") || lbl.includes("farmakologi") || lbl.includes("antibiotik")) return "obat";
+  if (lbl.includes("tumbuh") || lbl.includes("kembang") || lbl.includes("gizi") || lbl.includes("antropometri") || lbl.includes("pertumbuhan")) return "tumbuh-kembang";
+  if (lbl.includes("imunisasi") || lbl.includes("vaksin")) return "imunisasi";
+  if (lbl.includes("darurat") || lbl.includes("resusitasi") || lbl.includes("emergency") || lbl.includes("pals")) return "darurat";
+  if (lbl.includes("tekanan darah") || lbl.includes("tensi") || lbl.includes("hipertensi")) return "tekanan-darah";
+  if (lbl.includes("egfr") || lbl.includes("ginjal") || lbl.includes("schwartz")) return "egfr";
+  if (lbl.includes("lab") || lbl.includes("hematologi") || lbl.includes("analisis gas")) return "lab";
+  if (lbl.includes("guideline") || lbl.includes("pedoman") || lbl.includes("protokol")) return "protokol";
+  if (lbl.includes("ringkasan") || lbl.includes("resume")) return "ringkasan";
+  if (lbl.includes("asisten") || lbl.includes("ai")) return "ai-assistant";
+  if (lbl.includes("ruang belajar") || lbl.includes("pembelajaran") || lbl.includes("tryout") || lbl.includes("drill")) return "pembelajaran";
+  if (lbl.includes("alur") || lbl.includes("tatalaksana") || lbl.includes("tata laksana") || lbl.includes("algoritma")) return "alur";
+
+  return "alur";
+}
 
 interface TryoutResultViewProps {
   paket: PaketTryOut;
@@ -261,9 +346,16 @@ export function TryoutResultView({
                           href={soal.linkAlatTerkait.href}
                           className="tv-tryout-tool-link-btn"
                         >
-                          <ClinicalSvgIcon name="alur" size={16} />
+                          <SidebarIcon
+                            slug={dapatkanIconSlugUntukMenu(
+                              soal.linkAlatTerkait.href,
+                              soal.linkAlatTerkait.label,
+                              soal.linkAlatTerkait.icon
+                            )}
+                            size={18}
+                          />
                           <span>{soal.linkAlatTerkait.label}</span>
-                          <span>→</span>
+                          <span aria-hidden="true" className="tv-tryout-tool-arrow">→</span>
                         </Link>
                       </div>
                     )}

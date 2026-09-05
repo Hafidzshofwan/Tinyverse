@@ -16,6 +16,7 @@ export type SidebarIconSlug =
   | "egfr"
   | "neonatus"
   | "tumbuh-kembang"
+  | "kpsp"
   | "skoring"
   | "lab"
   | "protokol"
@@ -138,6 +139,7 @@ const DEFAULT_VARIANTS: IconVariantMap = {
   "egfr": "v1",
   "neonatus": "v1",
   "tumbuh-kembang": "v1", // Always fixed as ScreeningIcon
+  "kpsp": "v1",
   "skoring": "v1",
   "lab": "v1",
   "protokol": "v1",
@@ -221,6 +223,25 @@ export const SidebarIcon: React.FC<SidebarIconProps> = ({
   // --- TUMBUH KEMBANG: FIXED SVG (No replacement option allowed) ---
   if (slug === "tumbuh-kembang") {
     return <ScreeningIcon id="single" size={size} className={className} />;
+  }
+
+  // --- KPSP: KUESIONER PRA SKRINING PERKEMBANGAN (SDIDTK) ---
+  if (slug === "kpsp") {
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" className={className}>
+        <rect width="24" height="24" rx="6" fill="#ECFDF5" />
+        {/* Papan Skrining / Clipboard Kuesioner */}
+        <rect x="4.5" y="4" width="15" height="16" rx="3" fill="#D1FAE5" stroke="#059669" strokeWidth="1.4" />
+        <rect x="9" y="2.5" width="6" height="3" rx="1.5" fill="#047857" />
+        {/* Tunas Tumbuh Kembang (Perkembangan Anak) */}
+        <path d="M12 16V10" stroke="#059669" strokeWidth="1.6" strokeLinecap="round" />
+        <path d="M12 11.5C10.2 11.5 8.8 10 9 8.2C10.8 8 12.2 9.5 12 11.5Z" fill="#10B981" />
+        <path d="M12 10C13.8 10 15.2 8.5 15 6.7C13.2 6.5 11.8 8 12 10Z" fill="#34D399" />
+        {/* Checkmark checklist skrining di kanan bawah */}
+        <circle cx="16" cy="16" r="3.2" fill="#059669" />
+        <path d="M14.6 16L15.6 17L17.6 15" stroke="#FFFFFF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
   }
 
   // --- 1. BERANDA ---

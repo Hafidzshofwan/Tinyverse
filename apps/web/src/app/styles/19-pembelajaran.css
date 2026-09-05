@@ -1037,12 +1037,12 @@
 }
 
 .tv-tryout-result-banner.lulus {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.12) 0%, rgba(10, 11, 95, 0.05) 100%);
+  background: #f0fdf4;
   border: 2px solid #86efac;
 }
 
 .tv-tryout-result-banner.evaluasi {
-  background: linear-gradient(135deg, rgba(245, 158, 11, 0.12) 0%, rgba(10, 11, 95, 0.05) 100%);
+  background: #fffbeb;
   border: 2px solid #fcd34d;
 }
 
@@ -1053,12 +1053,14 @@
 }
 
 .tv-tryout-chip-kategori {
-  background: var(--tv-navy);
-  color: #fff;
+  background: #0a0b5f;
+  color: #ffffff;
   font-size: 0.72rem;
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 6px;
+  display: inline-block;
+  line-height: 1.4;
 }
 
 .tv-tryout-chip-skdi {
@@ -1463,19 +1465,21 @@
 .tv-tryout-tool-link-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  background: rgba(217, 54, 166, 0.1);
+  gap: 0.5rem;
+  background: rgba(217, 54, 166, 0.08);
+  border: 1px solid rgba(217, 54, 166, 0.2);
   color: var(--tv-magenta);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  padding: 5px 10px;
+  padding: 5px 12px;
   border-radius: 8px;
   text-decoration: none;
-  transition: background 150ms;
+  transition: all 150ms ease;
 }
 
 .tv-tryout-tool-link-btn:hover {
-  background: rgba(217, 54, 166, 0.2);
+  background: rgba(217, 54, 166, 0.16);
+  border-color: rgba(217, 54, 166, 0.35);
 }
 
 .tv-tryout-result-actions {
@@ -1501,20 +1505,67 @@
 
 /* ══ DARK MODE ═══════════════════════════════════════════════════ */
 
-[data-theme="dark"] .tv-pembelajaran-tab-indicator {
+[data-theme="dark"] .tv-pembelajaran-tab-indicator,
+html.dark .tv-pembelajaran-tab-indicator {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .tv-tryout-explanation-box {
+[data-theme="dark"] .tv-tryout-result-banner.lulus,
+html.dark .tv-tryout-result-banner.lulus {
+  background: #142a1d;
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+[data-theme="dark"] .tv-tryout-result-banner.evaluasi,
+html.dark .tv-tryout-result-banner.evaluasi {
+  background: #2a2012;
+  border-color: rgba(251, 191, 36, 0.45);
+}
+
+[data-theme="dark"] .tv-tryout-chip-kategori,
+html.dark .tv-tryout-chip-kategori {
+  background: #334155;
+  color: #f8fafc;
+  border: 1px solid #475569;
+}
+
+[data-theme="dark"] .tv-tryout-stat-pill.benar,
+html.dark .tv-tryout-stat-pill.benar {
+  background: rgba(34, 197, 94, 0.2);
+  color: #86efac;
+}
+
+[data-theme="dark"] .tv-tryout-stat-pill.salah,
+html.dark .tv-tryout-stat-pill.salah {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+}
+
+[data-theme="dark"] .tv-tryout-stat-pill.kosong,
+html.dark .tv-tryout-stat-pill.kosong {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .tv-tryout-stat-pill.waktu,
+html.dark .tv-tryout-stat-pill.waktu {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-tryout-explanation-box,
+html.dark .tv-tryout-explanation-box {
   background: #1e293b;
   border-color: #334155;
 }
 
-[data-theme="dark"] .tv-tryout-exp-title {
+[data-theme="dark"] .tv-tryout-exp-title,
+html.dark .tv-tryout-exp-title {
   color: #f1f5f9;
 }
 
-[data-theme="dark"] .tv-tryout-exp-body {
+[data-theme="dark"] .tv-tryout-exp-body,
+html.dark .tv-tryout-exp-body {
   color: #cbd5e1;
 }
 
