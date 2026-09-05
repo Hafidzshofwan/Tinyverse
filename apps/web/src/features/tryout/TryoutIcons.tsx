@@ -421,7 +421,40 @@ export const TryoutWarningAlertIcon: React.FC<IconProps> = ({
 );
 
 /**
- * 16. Trofi Riwayat Skor Tertinggi
+ * 16. Akurasi Jawaban — Target / Precision Gauge
+ * Dedicated metric icon for accuracy statistics in the Try Out dashboard.
+ */
+export const TryoutAccuracyIcon: React.FC<IconProps> = ({
+  size = 16,
+  className = "",
+  style,
+}) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 16 16"
+    fill="none"
+    className={className}
+    style={style}
+  >
+    {/* Circular gauge */}
+    <circle cx="8" cy="8" r="6.5" fill="#ECFDF5" stroke="#059669" strokeWidth="1.2" />
+    <path
+      d="M4.5 10.2C5.25 11.45 6.55 12.2 8 12.2C10.32 12.2 12.2 10.32 12.2 8C12.2 5.68 10.32 3.8 8 3.8C6.55 3.8 5.25 4.55 4.5 5.8"
+      stroke="#10B981"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+    />
+    {/* Precision needle */}
+    <path d="M8 8L10.7 5.5" stroke="#047857" strokeWidth="1.4" strokeLinecap="round" />
+    <circle cx="8" cy="8" r="1.35" fill="#047857" />
+    {/* Accuracy check */}
+    <path d="M4.9 5.1L5.7 5.9L7.1 4.5" stroke="#065F46" strokeWidth="1.05" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+/**
+ * 17. Trofi Riwayat Skor Tertinggi
  */
 export const TryoutTrophyScoreIcon: React.FC<IconProps> = ({
   size = 14,
