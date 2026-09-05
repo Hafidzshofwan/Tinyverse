@@ -5,16 +5,16 @@ import { PAKET_TRYOUT_LIST } from "./data";
 import { TryoutExamRunner } from "./TryoutExamRunner";
 import { TryoutResultView } from "./TryoutResultView";
 import { useTryoutStorage } from "./useTryoutStorage";
+import { TryoutEvaluationDashboard } from "./TryoutEvaluationDashboard";
 import type { PaketTryOut, HasilTryOut } from "./types";
 import {
   TryoutExamCardIcon,
   TryoutPlayCbtIcon,
   TryoutStudyModeIcon,
   TryoutDocumentIcon,
-  TryoutTimerIcon,
-  TryoutTargetIcon,
   TryoutTrophyScoreIcon,
   TryoutCheckIcon,
+  TryoutAnalyticsIcon,
 } from "./TryoutIcons";
 
 function PaketKartu({
@@ -50,12 +50,8 @@ function PaketKartu({
             <span><strong>{paket.daftarSoal.length}</strong> Soal Kasus</span>
           </span>
           <span className="tv-tryout-meta-item">
-            <TryoutTimerIcon size={16} />
-            <span><strong>{paket.durasiMenit}</strong> Menit</span>
-          </span>
-          <span className="tv-tryout-meta-item">
-            <TryoutTargetIcon size={16} />
-            <span>Passing Grade <strong>{paket.passingGradePersen}%</strong></span>
+            <TryoutCheckIcon size={16} />
+            <span>Evaluasi Akurasi & Pembahasan</span>
           </span>
         </div>
 
@@ -64,14 +60,14 @@ function PaketKartu({
             <div className="tv-tryout-history-row">
               <span className="tv-tryout-history-label">
                 <TryoutTrophyScoreIcon size={15} />
-                <span>Skor Tertinggi:</span>
+                <span>Akurasi Tertinggi:</span>
               </span>
               <span
                 className={`tv-tryout-history-score ${
-                  skorTerbaik >= paket.passingGradePersen ? "lulus" : "evaluasi"
+                  skorTerbaik >= 80 ? "lulus" : "evaluasi"
                 }`}
               >
-                {skorTerbaik}% {skorTerbaik >= paket.passingGradePersen ? "(Lulus)" : "(Perlu Evaluasi)"}
+                {skorTerbaik}% Akurasi Benar
               </span>
             </div>
             <div className="tv-tryout-history-sub">
@@ -125,6 +121,7 @@ export function TryoutGrid({
   const [paketAktif, setPaketAktif] = useState<PaketTryOut | null>(null);
   const [modeAktif, setModeAktif] = useState<"cbt" | "latihan">("cbt");
   const [hasilAktif, setHasilAktif] = useState<HasilTryOut | null>(null);
+  const [tabAktif, setTabAktif] = useState<"paket" | "evaluasi">("paket");
 
   const { simpanHasil } = useTryoutStorage(paketAktif?.id || "");
 
@@ -213,25 +210,71 @@ export function TryoutGrid({
         </div>
       </div>
 
-      {/* ── Header Bagian Paket ─────────────────────────────────────── */}
-      <div className="tv-tryout-grid-section-head">
-        <h3 className="tv-tryout-grid-sec-title">Daftar Paket Try Out</h3>
-        <span className="tv-tryout-grid-count-badge">
-          {PAKET_TRYOUT_LIST.length} Paket Ujian
-        </span>
+      {/* ── Tab Switcher: Paket Try Out vs Evaluasi Klinis ───────── */}
+      <div className="tv-tryout-main-tab-wrap" role="tablist">
+        <button
+          id="btn-tab-paket-tryout"
+          type="button"
+          role="tab"
+          aria-selected={tabAktif === "paket"}
+          className={`tv-tryout-main-tab-btn ${tabAktif === "paket" ? "active" : ""}`}
+          onClick={() => setTabAktif("paket")}
+        >
+          <div className="tv-tryout-tab-icon">
+            <TryoutPlayCbtIcon size={20} />
+          </div>
+          <div className="tv-tryout-tab-text-group">
+            <span className="tv-tryout-tab-title">Daftar Paket Ujian</span>
+            <span className="tv-tryout-tab-sub">Simulasi CBT & Latihan Mandiri</span>
+          </div>
+          <span className="tv-tryout-tab-badge">{PAKET_TRYOUT_LIST.length} Paket</span>
+        </button>
+
+        <button
+          id="btn-tab-evaluasi-tryout"
+          type="button"
+          role="tab"
+          aria-selected={tabAktif === "evaluasi"}
+          className={`tv-tryout-main-tab-btn ${tabAktif === "evaluasi" ? "active" : ""}`}
+          onClick={() => setTabAktif("evaluasi")}
+        >
+          <div className="tv-tryout-tab-icon">
+            <TryoutAnalyticsIcon size={20} />
+          </div>
+          <div className="tv-tryout-tab-text-group">
+            <span className="tv-tryout-tab-title">Dashboard & Evaluasi</span>
+            <span className="tv-tryout-tab-sub">Akurasi, Subdivisi & Tren Skor</span>
+          </div>
+          <span className="tv-tryout-tab-badge">Analitik</span>
+        </button>
       </div>
 
-      {/* ── Daftar Grid Paket ────────────────────────────────────────── */}
-      <div className="tv-tryout-paket-grid">
-        {PAKET_TRYOUT_LIST.map((paket) => (
-          <PaketKartu
-            key={paket.id}
-            paket={paket}
-            onMulaiCBT={handleMulaiCBT}
-            onMulaiLatihan={handleMulaiLatihan}
-          />
-        ))}
-      </div>
+      {/* ── Konten Sesuai Tab Aktif ──────────────────────────────────── */}
+      {tabAktif === "evaluasi" ? (
+        <TryoutEvaluationDashboard onBukaDaftarPaket={() => setTabAktif("paket")} />
+      ) : (
+        <>
+          {/* ── Header Bagian Paket ─────────────────────────────────────── */}
+          <div className="tv-tryout-grid-section-head">
+            <h3 className="tv-tryout-grid-sec-title">Pilih Paket Ujian</h3>
+            <span className="tv-tryout-grid-count-badge">
+              {PAKET_TRYOUT_LIST.length} Paket Tersedia
+            </span>
+          </div>
+
+          {/* ── Daftar Grid Paket ────────────────────────────────────────── */}
+          <div className="tv-tryout-paket-grid">
+            {PAKET_TRYOUT_LIST.map((paket) => (
+              <PaketKartu
+                key={paket.id}
+                paket={paket}
+                onMulaiCBT={handleMulaiCBT}
+                onMulaiLatihan={handleMulaiLatihan}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

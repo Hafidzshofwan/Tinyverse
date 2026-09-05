@@ -240,6 +240,116 @@
   font-weight: 800;
 }
 
+/* ── Try Out Navigation Tabs (Pemisahan Paket vs Evaluasi) ──── */
+.tv-tryout-main-tab-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--tv-soft);
+  border: 1.5px solid var(--tv-line);
+  border-radius: 16px;
+  padding: 5px;
+  gap: 8px;
+  margin-top: 0.25rem;
+}
+
+.tv-tryout-main-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  color: var(--tv-soft-teks);
+  font-family: "Quicksand", sans-serif;
+  cursor: pointer;
+  transition: all 180ms ease;
+  text-align: left;
+}
+
+.tv-tryout-main-tab-btn:hover {
+  color: var(--tv-navy);
+  background: rgba(255, 255, 255, 0.65);
+}
+
+.tv-tryout-main-tab-btn.active {
+  background: var(--tv-card);
+  border-color: var(--tv-line);
+  color: var(--tv-navy);
+  box-shadow: 0 2px 8px rgba(10, 11, 95, 0.06);
+}
+
+.tv-tryout-tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(10, 11, 95, 0.04);
+  color: var(--tv-navy);
+  transition: all 180ms ease;
+}
+
+.tv-tryout-main-tab-btn.active .tv-tryout-tab-icon {
+  background: linear-gradient(135deg, rgba(217, 54, 166, 0.12) 0%, rgba(10, 11, 95, 0.06) 100%);
+  color: var(--tv-magenta);
+}
+
+.tv-tryout-tab-text-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.tv-tryout-tab-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: inherit;
+}
+
+.tv-tryout-tab-sub {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tv-soft-teks);
+  margin-top: 2px;
+}
+
+.tv-tryout-main-tab-btn.active .tv-tryout-tab-sub {
+  color: var(--tv-magenta);
+}
+
+.tv-tryout-tab-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  background: rgba(10, 11, 95, 0.05);
+  color: var(--tv-soft-teks);
+}
+
+.tv-tryout-main-tab-btn.active .tv-tryout-tab-badge {
+  background: #fdf2f8;
+  color: var(--tv-magenta);
+  border: 1px solid #fbcfe8;
+}
+
+@media (max-width: 680px) {
+  .tv-tryout-main-tab-wrap {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .tv-tryout-main-tab-btn {
+    padding: 0.65rem 0.85rem;
+  }
+}
+
 /* ── Section Head ────────────────────────────────────────────── */
 .tv-tryout-grid-section-head {
   display: flex;
@@ -1036,11 +1146,18 @@
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
 
+.tv-tryout-result-banner.tinggi,
 .tv-tryout-result-banner.lulus {
   background: #f0fdf4;
   border: 2px solid #86efac;
 }
 
+.tv-tryout-result-banner.sedang {
+  background: #eff6ff;
+  border: 2px solid #93c5fd;
+}
+
+.tv-tryout-result-banner.perlu-evaluasi,
 .tv-tryout-result-banner.evaluasi {
   background: #fffbeb;
   border: 2px solid #fcd34d;
@@ -1050,11 +1167,23 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .tv-tryout-chip-kategori {
   background: #0a0b5f;
   color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  line-height: 1.4;
+}
+
+.tv-tryout-chip-eval {
+  background: rgba(217, 54, 166, 0.12);
+  color: var(--tv-magenta);
   font-size: 0.72rem;
   font-weight: 700;
   padding: 3px 8px;
@@ -1154,19 +1283,511 @@
 .tv-tryout-stat-pill.benar { background: #dcfce7; color: #15803d; }
 .tv-tryout-stat-pill.salah { background: #fee2e2; color: #b91c1c; }
 .tv-tryout-stat-pill.kosong { background: #f1f5f9; color: #475569; }
+.tv-tryout-stat-pill.total { background: rgba(10, 11, 95, 0.08); color: var(--tv-navy); }
 .tv-tryout-stat-pill.waktu { background: rgba(10, 11, 95, 0.08); color: var(--tv-navy); }
 
-/* ── Breakdown Subdivisi Card ─────────────────────────────────── */
-.tv-tryout-subdivisi-card {
+/* ── Analisis Soal Ragu-Ragu ─────────────────────────────────── */
+/* ── Dashboard Evaluasi & Statistik Klinis di Menu Awal ──────── */
+.tv-tryout-dashboard-container {
   background: var(--tv-card);
   border: 1.5px solid var(--tv-line);
-  border-radius: 18px;
-  padding: 1.4rem 1.5rem;
+  border-radius: 20px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  box-shadow: 0 4px 18px rgba(10, 11, 95, 0.03);
+  margin-bottom: 0.5rem;
+}
+
+.tv-tryout-dash-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tv-tryout-dash-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  flex: 1;
+  min-width: 280px;
+}
+
+.tv-tryout-dash-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #16a34a;
+}
+
+.tv-tryout-dash-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.tv-tryout-dash-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-tryout-badge-sample {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.2px;
+}
+
+.tv-tryout-dash-subtitle {
+  font-size: 0.83rem;
+  color: var(--tv-soft-teks);
+  margin: 0.35rem 0 0;
+  line-height: 1.5;
+  max-width: 720px;
+}
+
+.tv-tryout-toggle-sample-btn {
+  background: var(--tv-soft);
+  border: 1.2px solid var(--tv-line);
+  border-radius: 10px;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.tv-tryout-toggle-sample-btn:hover {
+  background: #ffffff;
+  border-color: var(--tv-magenta);
+  color: var(--tv-magenta);
+  box-shadow: 0 2px 8px rgba(217, 54, 166, 0.08);
+}
+
+.tv-tryout-toggle-sample-btn.active {
+  background: #fdf2f8;
+  border-color: #fbcfe8;
+  color: var(--tv-magenta);
+}
+
+/* State Saat Belum Ada Data Evaluasi */
+.tv-tryout-empty-eval-box {
+  background: #f8fafc;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.tv-tryout-empty-eval-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #64748b;
+}
+
+.tv-tryout-empty-eval-content {
+  flex: 1;
+  min-width: 260px;
+}
+
+.tv-tryout-empty-eval-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-tryout-empty-eval-desc {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--tv-soft-teks);
+  margin: 0.35rem 0 0.85rem;
+  max-width: 680px;
+}
+
+.tv-tryout-empty-eval-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+/* ── KPI Grid ─────────────────────────────────────────────────── */
+.tv-tryout-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.95rem;
+}
+
+.tv-tryout-kpi-card {
+  background: #ffffff;
+  border: 1.2px solid var(--tv-line);
+  border-radius: 14px;
+  padding: 1rem 1.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.tv-tryout-kpi-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(10, 11, 95, 0.06);
+}
+
+.tv-tryout-kpi-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tv-tryout-kpi-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tv-soft-teks);
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.tv-tryout-kpi-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+.tv-tryout-kpi-badge.tinggi { background: #dcfce7; color: #15803d; }
+.tv-tryout-kpi-badge.sedang { background: #fef3c7; color: #b45309; }
+.tv-tryout-kpi-badge.kurang { background: #fee2e2; color: #b91c1c; }
+.tv-tryout-kpi-badge.warning { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+
+.tv-tryout-kpi-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.tv-tryout-kpi-number {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  line-height: 1;
+}
+
+.tv-tryout-kpi-sub {
+  font-size: 0.76rem;
+  color: var(--tv-soft-teks);
+}
+
+.tv-tryout-kpi-bar-mini {
+  height: 6px;
+  background: var(--tv-soft);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.15rem;
+}
+
+.tv-tryout-kpi-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 400ms ease;
+}
+.tv-tryout-kpi-bar-fill.tinggi { background: #16a34a; }
+.tv-tryout-kpi-bar-fill.sedang { background: #d97706; }
+.tv-tryout-kpi-bar-fill.kurang { background: #dc2626; }
+
+.tv-tryout-kpi-note {
+  font-size: 0.72rem;
+  color: var(--tv-soft-teks);
+  margin: 0;
+}
+
+.tv-tryout-kpi-ratio-line {
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  margin-top: 0.2rem;
+}
+
+.tv-tryout-ratio-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+.tv-tryout-ratio-pill.benar { background: #dcfce7; color: #15803d; }
+.tv-tryout-ratio-pill.salah { background: #fee2e2; color: #b91c1c; }
+
+.tv-tryout-kpi-title-focus {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #dc2626;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.tv-tryout-kpi-note-focus {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: #7f1d1d;
+  margin: 0;
+}
+
+/* ── Charts Grid (Bar & Line) ─────────────────────────────────── */
+.tv-tryout-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+
+.tv-tryout-chart-card {
+  background: #ffffff;
+  border: 1.2px solid var(--tv-line);
+  border-radius: 16px;
+  padding: 1.35rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
 }
 
+.tv-tryout-chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tv-tryout-chart-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+  margin: 0;
+}
+
+.tv-tryout-chart-desc {
+  font-size: 0.78rem;
+  color: var(--tv-soft-teks);
+  margin: 0.2rem 0 0;
+}
+
+.tv-tryout-chart-legend {
+  display: flex;
+  gap: 0.65rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--tv-soft-teks);
+  flex-wrap: wrap;
+}
+
+.tv-tryout-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tv-tryout-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.tv-tryout-legend-dot.hijau { background: #16a34a; }
+.tv-tryout-legend-dot.kuning { background: #d97706; }
+.tv-tryout-legend-dot.merah { background: #dc2626; }
+
+/* ── Bar Chart Body ───────────────────────────────────────────── */
+.tv-tryout-bar-chart-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.tv-tryout-bar-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.tv-tryout-bar-label-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--tv-navy);
+}
+
+.tv-tryout-bar-subdiv-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tv-tryout-bar-ratio {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tv-soft-teks);
+  flex-shrink: 0;
+}
+
+.tv-tryout-bar-track-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.tv-tryout-bar-track {
+  position: relative;
+  flex: 1;
+  height: 11px;
+  background: var(--tv-soft);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.tv-tryout-bar-threshold {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #10b981;
+  z-index: 2;
+  border-left: 1px dashed #059669;
+}
+
+.tv-tryout-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.tv-tryout-bar-fill.hijau {
+  background: linear-gradient(90deg, #4ade80, #16a34a);
+}
+.tv-tryout-bar-fill.kuning {
+  background: linear-gradient(90deg, #fcd34d, #d97706);
+}
+.tv-tryout-bar-fill.merah {
+  background: linear-gradient(90deg, #fca5a5, #dc2626);
+}
+
+.tv-tryout-bar-percent-label {
+  font-family: "Fredoka", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  width: 44px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.tv-tryout-bar-percent-label.hijau { color: #15803d; }
+.tv-tryout-bar-percent-label.kuning { color: #b45309; }
+.tv-tryout-bar-percent-label.merah { color: #b91c1c; }
+
+.tv-tryout-chart-footer-note {
+  font-size: 0.72rem;
+  color: var(--tv-soft-teks);
+  margin-top: 0.2rem;
+  line-height: 1.4;
+}
+
+/* ── Line Chart / Trend Curve ─────────────────────────────────── */
+.tv-tryout-trend-badge {
+  background: #f1f5f9;
+  color: #475569;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.tv-tryout-line-chart-container {
+  width: 100%;
+  height: 270px;
+  min-height: 250px;
+  position: relative;
+  background: #f8fafc;
+  border: 1.2px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.tv-tryout-trend-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  display: block;
+}
+
+.tv-tryout-hover-detail {
+  background: #0a0b5f;
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  margin-top: 0.25rem;
+  animation: tv-fade-in 150ms ease;
+}
+
+.tv-tryout-hover-title strong {
+  color: #fbcfe8;
+}
+
+.tv-tryout-hover-badge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+.tv-tryout-hover-badge.lulus { background: #059669; color: #ffffff; }
+.tv-tryout-hover-badge.evaluasi { background: #e11d48; color: #ffffff; }
+
+/* ── Section Head Reusable ────────────────────────────────────── */
 .tv-tryout-section-head {
   display: flex;
   align-items: center;
@@ -1187,46 +1808,18 @@
   margin: 0;
 }
 
-.tv-tryout-subdivisi-list {
+.tv-tryout-review-empty {
+  padding: 2rem;
+  text-align: center;
+  background: var(--tv-card);
+  border: 1px dashed var(--tv-line);
+  border-radius: 14px;
+  color: var(--tv-soft-teks);
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.75rem;
 }
-
-.tv-tryout-sub-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.tv-tryout-sub-header {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--tv-navy);
-}
-
-.tv-tryout-sub-ratio {
-  color: var(--tv-soft-teks);
-  font-weight: 600;
-}
-
-.tv-tryout-progress-track {
-  height: 8px;
-  background: var(--tv-soft);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.tv-tryout-progress-fill {
-  height: 100%;
-  border-radius: 4px;
-  transition: width 300ms ease;
-}
-.tv-tryout-progress-fill.bagus { background: #22c55e; }
-.tv-tryout-progress-fill.sedang { background: #f59e0b; }
-.tv-tryout-progress-fill.kurang { background: #ef4444; }
 
 /* ── Review Section ───────────────────────────────────────────── */
 .tv-tryout-review-section {
@@ -1510,12 +2103,22 @@ html.dark .tv-pembelajaran-tab-indicator {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
+[data-theme="dark"] .tv-tryout-result-banner.tinggi,
+html.dark .tv-tryout-result-banner.tinggi,
 [data-theme="dark"] .tv-tryout-result-banner.lulus,
 html.dark .tv-tryout-result-banner.lulus {
   background: #142a1d;
   border-color: rgba(74, 222, 128, 0.45);
 }
 
+[data-theme="dark"] .tv-tryout-result-banner.sedang,
+html.dark .tv-tryout-result-banner.sedang {
+  background: #172554;
+  border-color: rgba(96, 165, 250, 0.45);
+}
+
+[data-theme="dark"] .tv-tryout-result-banner.perlu-evaluasi,
+html.dark .tv-tryout-result-banner.perlu-evaluasi,
 [data-theme="dark"] .tv-tryout-result-banner.evaluasi,
 html.dark .tv-tryout-result-banner.evaluasi {
   background: #2a2012;
@@ -1527,6 +2130,13 @@ html.dark .tv-tryout-chip-kategori {
   background: #334155;
   color: #f8fafc;
   border: 1px solid #475569;
+}
+
+[data-theme="dark"] .tv-tryout-chip-eval,
+html.dark .tv-tryout-chip-eval {
+  background: rgba(217, 54, 166, 0.25);
+  color: #f472b6;
+  border: 1px solid rgba(217, 54, 166, 0.4);
 }
 
 [data-theme="dark"] .tv-tryout-stat-pill.benar,
@@ -1547,10 +2157,139 @@ html.dark .tv-tryout-stat-pill.kosong {
   color: #cbd5e1;
 }
 
+[data-theme="dark"] .tv-tryout-stat-pill.total,
+html.dark .tv-tryout-stat-pill.total,
 [data-theme="dark"] .tv-tryout-stat-pill.waktu,
 html.dark .tv-tryout-stat-pill.waktu {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   color: #f8fafc;
+}
+
+/* Dark mode for ragu card */
+[data-theme="dark"] .tv-tryout-eval-ragu-card,
+html.dark .tv-tryout-eval-ragu-card {
+  background: #261d11;
+  border-color: #78350f;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-icon-wrap,
+html.dark .tv-tryout-ragu-icon-wrap {
+  background: #451a03;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-title,
+html.dark .tv-tryout-ragu-title {
+  color: #fcd34d;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-sub,
+html.dark .tv-tryout-ragu-sub {
+  color: #fbbf24;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-metric-item,
+html.dark .tv-tryout-ragu-metric-item {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-metric-label,
+html.dark .tv-tryout-ragu-metric-label {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .tv-tryout-ragu-insight,
+html.dark .tv-tryout-ragu-insight {
+  background: rgba(69, 26, 3, 0.4);
+  color: #fde68a;
+}
+
+/* Dark mode for recommendation cards */
+[data-theme="dark"] .tv-tryout-rek-item,
+html.dark .tv-tryout-rek-item {
+  background: #1e293b;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .tv-tryout-rek-item.prioritas-tinggi,
+html.dark .tv-tryout-rek-item.prioritas-tinggi {
+  background: #27171d;
+  border-color: #9f1239;
+}
+
+[data-theme="dark"] .tv-tryout-rek-title,
+html.dark .tv-tryout-rek-title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-tryout-rek-filter-btn,
+html.dark .tv-tryout-rek-filter-btn {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .tv-tryout-rek-filter-btn:hover,
+html.dark .tv-tryout-rek-filter-btn:hover {
+  background: var(--tv-magenta);
+  border-color: var(--tv-magenta);
+  color: #ffffff;
+}
+
+[data-theme="dark"] .tv-tryout-rek-fokus-box,
+html.dark .tv-tryout-rek-fokus-box {
+  background: #0f172a;
+  border-color: #334155;
+}
+
+[data-theme="dark"] .tv-tryout-rek-fokus-text,
+html.dark .tv-tryout-rek-fokus-text {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .tv-tryout-rek-pearl-box,
+html.dark .tv-tryout-rek-pearl-box {
+  background: #2a1220;
+  border-color: #831843;
+  color: #f472b6;
+}
+
+[data-theme="dark"] .tv-tryout-rek-pearl-text,
+html.dark .tv-tryout-rek-pearl-text {
+  color: #fbcfe8;
+}
+
+[data-theme="dark"] .tv-tryout-rek-tool-link,
+html.dark .tv-tryout-rek-tool-link {
+  background: #0f172a;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-tryout-rek-tool-name,
+html.dark .tv-tryout-rek-tool-name {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tv-tryout-rek-tool-desc,
+html.dark .tv-tryout-rek-tool-desc {
+  color: #94a3b8;
+}
+
+[data-theme="dark"] .tv-tryout-rek-sempurna-box,
+html.dark .tv-tryout-rek-sempurna-box {
+  background: #142a1d;
+  border-color: rgba(74, 222, 128, 0.45);
+}
+
+[data-theme="dark"] .tv-tryout-rek-sempurna-title,
+html.dark .tv-tryout-rek-sempurna-title {
+  color: #86efac;
+}
+
+[data-theme="dark"] .tv-tryout-rek-sempurna-desc,
+html.dark .tv-tryout-rek-sempurna-desc {
+  color: #bbf7d0;
 }
 
 [data-theme="dark"] .tv-tryout-explanation-box,
