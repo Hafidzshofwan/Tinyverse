@@ -186,7 +186,7 @@
 
 /* ── Intro Card ──────────────────────────────────────────────── */
 .tv-tryout-intro-card {
-  background: linear-gradient(135deg, rgba(217, 54, 166, 0.08) 0%, rgba(10, 11, 95, 0.05) 100%);
+  background: rgba(217, 54, 166, 0.08);
   border: 1.5px solid rgba(217, 54, 166, 0.2);
   border-radius: 18px;
   padding: 1.4rem 1.5rem;
