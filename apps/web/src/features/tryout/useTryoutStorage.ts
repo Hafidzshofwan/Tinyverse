@@ -444,7 +444,7 @@ function hitungRingkasan(
     subdivisiTerendah: subdivisiStats[0] ?? null,
     subdivisiTertinggi:
       subdivisiStats.length > 0
-        ? subdivisiStats[subdivisiStats.length - 1]
+        ? subdivisiStats[subdivisiStats.length - 1] ?? null
         : null,
   };
 }
