@@ -98,10 +98,13 @@ export function ResusTab({
   nama,
   noRm,
   bb,
+  onRunningChange,
 }: {
   nama: string;
   noRm: string;
   bb: number | null;
+  /** Dipanggil setiap kali status timer berubah — dipakai DaruratPanel untuk guard navigasi. */
+  onRunningChange?: (running: boolean) => void;
 }) {
   const [jam, setJam] = useState("00:00");
   const [detik, setDetik] = useState(0);
@@ -326,6 +329,7 @@ export function ResusTab({
     mulaiRef.current = Date.now();
     runningRef.current = true;
     setRunning(true);
+    onRunningChange?.(true);
     setLog([]);
     siklusRef.current = 120;
     setJam("00:00");
@@ -347,6 +351,7 @@ export function ResusTab({
     catat("Resusitasi dihentikan");
     runningRef.current = false;
     setRunning(false);
+    onRunningChange?.(false);
     setMetroOn(false);
     if (tickRef.current) clearInterval(tickRef.current);
     setSiklus({

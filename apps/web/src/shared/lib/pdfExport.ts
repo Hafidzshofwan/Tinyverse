@@ -536,6 +536,7 @@ export function printSoapSummary(data: {
         <div class="pasien-item"><strong>No. RM / ID:</strong> ${data.noRm || "-"}</div>
         <div class="pasien-item"><strong>Usia / BB:</strong> ${data.umurBb || "-"}</div>
         <div class="pasien-item"><strong>Tgl Pemeriksaan:</strong> ${new Date().toLocaleDateString("id-ID")}</div>
+        <div class="pasien-item"><strong>Waktu Cetak:</strong> ${new Date().toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" })} WIB</div>
       </div>
 
       ${

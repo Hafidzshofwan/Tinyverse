@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 /*
  * CSS halaman darurat tinggal di lapisan app, sementara panel ini di widgets.
  * Ini impor efek samping berkas gaya, bukan ketergantungan kode antar lapisan,
@@ -23,6 +23,7 @@ import {
   PatTriangleIcon,
   PillCapsuleIcon,
   ResusStopwatchIcon,
+  ConfirmationModal,
 } from "@/shared/ui";
 
 const PASIEN_KEY = "tv_pasien_aktif";
@@ -101,6 +102,39 @@ export function DaruratPanel() {
   const [usia, setUsia] = useState("");
   const [bb, setBb] = useState("");
   const [badge, setBadge] = useState<string | null>(null);
+
+  /* Guard navigasi: cegah keluar tidak sengaja saat timer resusitasi aktif. */
+  const [timerBerjalan, setTimerBerjalan] = useState(false);
+  const [modalGuard, setModalGuard] = useState(false);
+  const tujuanTabRef = useRef<TabId | null>(null);
+
+  /** Intercept pergantian tab: tampilkan konfirmasi bila timer sedang berjalan. */
+  const mintaGantiTab = useCallback((targetTab: TabId) => {
+    if (timerBerjalan && tab === "resus" && targetTab !== "resus") {
+      tujuanTabRef.current = targetTab;
+      setModalGuard(true);
+    } else {
+      setTab(targetTab);
+    }
+  }, [timerBerjalan, tab]);
+
+  /** Konfirmasi: user setuju keluar dari tab resus meski timer jalan. */
+  const konfirmasiGantiTab = useCallback(() => {
+    if (tujuanTabRef.current) {
+      setTab(tujuanTabRef.current);
+      tujuanTabRef.current = null;
+    }
+  }, []);
+
+  /* Cegah refresh / tutup tab browser saat timer aktif. */
+  useEffect(() => {
+    if (!timerBerjalan) return;
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, [timerBerjalan]);
 
   const syncDariPusat = useCallback(() => {
     const p = loadPasien();
@@ -316,7 +350,7 @@ export function DaruratPanel() {
               role="tab"
               aria-selected={tab === t.id}
               className={"drt-tab" + (tab === t.id ? " aktif" : "")}
-              onClick={() => setTab(t.id)}
+              onClick={() => mintaGantiTab(t.id)}
               style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}
             >
               {t.icon}
@@ -330,7 +364,7 @@ export function DaruratPanel() {
           {tab === "pat" ? <PatTab /> : null}
           {tab === "pals" ? <PalsTab bb={bbNum} ub={ubNum} /> : null}
           {tab === "resus" ? (
-            <ResusTab nama={nama} noRm={noRm} bb={bbNum} />
+            <ResusTab nama={nama} noRm={noRm} bb={bbNum} onRunningChange={setTimerBerjalan} />
           ) : null}
         </div>
 
@@ -345,6 +379,23 @@ export function DaruratPanel() {
           </div>
         </div>
       </div>
+
+      <ConfirmationModal
+        isOpen={modalGuard}
+        onClose={() => { setModalGuard(false); tujuanTabRef.current = null; }}
+        onConfirm={konfirmasiGantiTab}
+        variant="warning"
+        title="Timer Resusitasi Masih Berjalan"
+        description="Timer resusitasi sedang aktif. Berpindah tab akan meninggalkan sesi ini. Yakin ingin keluar dari Tab Resusitasi?"
+        confirmText="Keluar dari Tab"
+        cancelText="Tetap di Sini"
+        icon={
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        }
+      />
     </div>
   );
 }

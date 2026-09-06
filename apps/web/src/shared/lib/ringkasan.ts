@@ -199,11 +199,12 @@ export function buildRingkasanText(
     items.forEach((it, i) => {
       lines.push("");
       lines.push(`${i + 1}. ${it.title}${it.source ? ` (${it.source})` : ""}`);
-      lines.push(`Waktu: ${it.time}`);
+      lines.push(`Dihitung pukul: ${it.time}`);
       lines.push(it.body);
     });
   }
   lines.push("");
+  lines.push(`Waktu cetak/ekspor: ${nowLabel()}`);
   lines.push(
     "Catatan: Ringkasan ini adalah alat bantu dokumentasi. Keputusan klinis tetap berdasarkan penilaian tenaga kesehatan.",
   );
