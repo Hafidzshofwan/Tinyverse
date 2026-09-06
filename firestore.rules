@@ -218,12 +218,28 @@ service cloud.firestore {
     match /vouchers/{voucherId}    { allow read, write: if false; }
 
     /* ============================================================
-     *  6. PENOLAKAN BAWAAN
+     *  6. RIWAYAT TRYOUT
+     * ============================================================
+     *
+     * Data disimpan di: tryoutHistory/{uid}/paket/{paketId}
+     * Hanya pemilik akun yang boleh baca dan tulis riwayat tryout-nya sendiri.
+     */
+
+    match /tryoutHistory/{uid} {
+      allow read, write: if pemilik(uid);
+
+      match /paket/{paketId} {
+        allow read, write: if pemilik(uid);
+      }
+    }
+
+    /* ============================================================
+     *  7. PENOLAKAN BAWAAN
      * ============================================================
      *
      * Koleksi apa pun yang tidak disebut di atas ditolak sepenuhnya. Bila
      * suatu fitur tiba-tiba gagal menulis setelah perubahan ini, kemungkinan
-     * besar ia memakai koleksi yang belum terdaftar - tambahkan aturannya di
+     * besar ia memakai koleksi yang belum terdaftar — tambahkan aturannya di
      * sini, jangan longgarkan blok ini.
      */
     match /{document=**} {
