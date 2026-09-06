@@ -21,6 +21,7 @@ import {
   setAkunPasien,
   bersihkanPasienLokal,
 } from "@/shared/lib/patient";
+import { setAkunAiChat } from "@/shared/ai-chat/store";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any;
@@ -363,6 +364,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             // harus diberitahu SEBELUM komponen mulai membaca. Bila terlambat,
             // pembacaan pertama jatuh ke jalur tanpa akun.
             setAkunPasien(user.uid);
+            setAkunAiChat(user.uid);
             handleMasuk(user);
           } else {
             const tadinyaMasuk = uidRef.current !== null;
@@ -372,6 +374,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             setEmailVerified(false);
             terapkanPref(null);
             setAkunPasien(null);
+            setAkunAiChat(null);
             bersihkanPasienLokal();
             void keluarAuthData();
             setStatus("signedOut");
@@ -395,7 +398,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       cancelled = true;
       if (unsub) unsub();
     };
-  }, [handleMasuk, router]);
+  }, [handleMasuk]);
 
   const masuk = useCallback(async (email: string, pass: string) => {
     const auth = authRef.current;
@@ -588,6 +591,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     bersihkanPasienLokal();
     setAkunPasien(null);
+    setAkunAiChat(null);
     if (authRef.current) authRef.current.signOut();
   }, []);
 

@@ -16,6 +16,7 @@
  *
  * CHANGELOG (dari versi sebelumnya):
  * - Ditambahkan: Katalog Vaksin (KIPI, kontraindikasi, cara pemberian)
+ * - Ditambahkan: Kalkulator Nutrisi Enteral / Susu Formula (/preview/nutri)
  * - Dilengkapi: Detail operasional KPSP, Denver II, M-CHAT-R
  * - Dilengkapi: Detail Rehidrasi WHO Rencana A, B, dan C
  * - Dilengkapi: Lund-Browder + Rule of Nines pada Rehidrasi Luka Bakar
@@ -30,6 +31,43 @@ import { statusAksesSaatIni } from "@/server/entitlementServer";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+/**
+ * Rate limiter in-memory per akun untuk endpoint AI chat.
+ *
+ * WHY in-memory, bukan Redis/KV:
+ *   Vercel Fluid menjalankan fungsi ini sebagai proses tunggal yang hidup
+ *   selama ada permintaan masuk. Untuk skala web ini (ratusan user, bukan
+ *   jutaan), window per-proses sudah cukup mencegah penyalahgunaan tanpa
+ *   menambah dependensi atau biaya tambahan.
+ *
+ * Strategi sliding-window: tiap accountId menyimpan timestamp permintaan dalam
+ * 60 detik terakhir. Jika sudah >= BATAS_PER_MENIT, permintaan ditolak.
+ * Entri lama (>60 detik) dibersihkan tiap kali akun tersebut diperiksa agar
+ * Map tidak tumbuh tak terbatas sepanjang proses hidup.
+ */
+const BATAS_PER_MENIT = 10; // maks 10 pesan/menit per akun
+const WINDOW_MS = 60_000;   // 60 detik
+
+const _rateMap = new Map<string, number[]>();
+
+function cekRateLimit(accountId: string): { ditolak: boolean; sisaDetik: number } {
+  const sekarang = Date.now();
+  const riwayat = (_rateMap.get(accountId) ?? []).filter(
+    (t) => sekarang - t < WINDOW_MS,
+  );
+
+  if (riwayat.length >= BATAS_PER_MENIT) {
+    const tertua = riwayat[0]!;
+    const sisaDetik = Math.ceil((WINDOW_MS - (sekarang - tertua)) / 1000);
+    _rateMap.set(accountId, riwayat);
+    return { ditolak: true, sisaDetik };
+  }
+
+  riwayat.push(sekarang);
+  _rateMap.set(accountId, riwayat);
+  return { ditolak: false, sisaDetik: 0 };
+}
 
 const SYSTEM_INSTRUCTION = `Anda adalah Asisten AI Klinis Tinyverse (Tinyverse Clinical AI Co-pilot), asisten medis pediatri terintegrasi di platform Tinyverse.
 
@@ -73,7 +111,7 @@ PERAN & KEMAMPUAN UTAMA:
      * Tab Bilirubin Neonatus: Ambang batas fototerapi, peningkatan perawatan, dan transfusi tukar berdasarkan usia gestasi (minggu), jam usia, dan faktor risiko neurotoksisitas (isoimmune hemolytic disease, G6PD, asfiksia, letargi, instabilitas suhu, sepsis, albumin kurang dari 3 g/dL).
      Rute lama /preview/tpn-neonatus dan /preview/bilirubin tetap aktif sebagai pengalih ke tab yang sesuai.
 
-   - Rehidrasi Luka Bakar — Halaman Mandiri (/preview/burn): Halaman khusus perhitungan luka bakar yang bisa diakses langsung. Fitur identik dengan Tab Rehidrasi Luka Bakar di /preview/fluids — tersedia dua metode penilaian luas luka bakar: chart Lund-Browder (akurat berbasis usia, mengoreksi proporsi kepala dan kaki) dan Rule of Nines anak (Wallace/Rule of 9). Rumus cairan Parkland: 4 mL x %TBSA x BB (kg), separuh diberikan 8 jam pertama sejak luka bakar, separuh 16 jam berikutnya, menggunakan Ringer Laktat. Halaman ini juga dapat diakses melalui tab Burn di /preview/fluids.
+   - Kalkulator Nutrisi Enteral (/preview/nutri): Menghitung kebutuhan susu formula bayi dan anak secara enteral — total volume per hari (mL/hari) berbasis patokan 150 mL/kg/hari untuk full enteral feeds, volume per kali pemberian berdasarkan frekuensi makan per hari, estimasi asupan kalori total berdasarkan konsentrasi energi susu formula (kkal/mL). Catatan penting: alat ini berbeda dari Tab TPN Neonatus yang untuk nutrisi parenteral; Kalkulator Nutrisi Enteral khusus untuk pemberian susu/formula via oral atau NGT.
 
    - Penilaian pGCS (/preview/gcs): Pediatric Glasgow Coma Scale berdasarkan kelompok usia — penilaian respons Eye (E1-4), Verbal (V1-5), dan Motor (M1-6), total skor 3 sampai 15.
 
@@ -83,7 +121,7 @@ PERAN & KEMAMPUAN UTAMA:
      * Tab Bagan Jadwal: Jadwal imunisasi rekomendasi IDAI & Kemenkes terbaru sesuai usia — Hepatitis B, Polio OPV/IPV, BCG, DPT-HB-Hib, PCV, Rotavirus, MR/MMR, Influenza, Varisela, Hepatitis A, Td/Tdap, HPV, JE — beserta strategi imunisasi kejar (catch-up) per vaksin.
      * Tab Katalog Vaksin: Detail lengkap tiap vaksin — penyakit yang dicegah, jenis vaksin (live attenuated, inactivated, toksoid, subunit, dll.), cara pemberian (IM, SC, oral, ID), jadwal dan dosis lengkap per kelompok usia, efek samping (KIPI — Kejadian Ikutan Pasca Imunisasi), kontraindikasi absolut dan relatif, serta catatan penyimpanan dan interval minimal antar dosis.
 
-   - Ringkasan Klinis & Catatan SOAP (/preview/ringkasan): Pembuat resume medis otomatis berbasis data kalkulator yang diinput dari berbagai alat Tinyverse. Mengompilasi hasil menjadi catatan SOAP (Subjective, Objective, Assessment, Plan) siap salin atau diekspor. Data pasien yang bisa diisi: nama/inisial, No. RM/ID, usia, BB/TB, dan catatan klinis bebas. Tersedia tiga opsi output: (1) Salin ke Clipboard langsung ke papan klip, (2) Export TXT untuk mengunduh ringkasan sebagai file teks, (3) Cetak PDF ber-Kop Surat — mencetak ringkasan dalam format PDF dengan kop surat klinik/rumah sakit yang dapat dikustomisasi melalui modal Pengaturan Kop Surat (nama fasilitas, alamat, dokter).
+   - Ringkasan Klinis & Catatan SOAP (/preview/ringkasan): Pembuat resumee medis otomatis berbasis data kalkulator yang diinput dari berbagai alat Tinyverse. Mengompilasi hasil menjadi catatan SOAP (Subjective, Objective, Assessment, Plan) siap salin atau cetak. Data pasien yang bisa diisi: nama/inisial, No. RM/ID, usia, BB/TB, dan catatan klinis bebas.
 
 PRINSIP RESPON & FORMAT TEKS:
 - Gunakan Bahasa Indonesia medis yang santun, profesional, jelas, dan runtut.
@@ -114,6 +152,19 @@ export async function POST(req: Request) {
         },
         { status: 403 },
       );
+    }
+
+    /* Rate limiting: tolak bila akun ini sudah mengirim >= 10 pesan/menit. */
+    if (status.accountId) {
+      const rl = cekRateLimit(status.accountId);
+      if (rl.ditolak) {
+        return NextResponse.json(
+          {
+            error: `Terlalu banyak permintaan. Silakan tunggu ${rl.sisaDetik} detik sebelum mengirim pesan berikutnya.`,
+          },
+          { status: 429 },
+        );
+      }
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
