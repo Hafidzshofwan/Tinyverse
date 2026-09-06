@@ -23,8 +23,8 @@ export default function SegeraPage() {
       <div className="tv-card tv-stack">
         <p style={pStyle}>
           Terima kasih sudah menelusuri. Alat yang sudah aktif dapat dibuka dari
-          Beranda atau menu di samping: Dosis Obat, Terapi Cairan, Kalkulator
-          Nutrisi, Luka Bakar, GCS, dan AGD.
+          Beranda atau menu di samping: Dosis Obat, Terapi Cairan, Luka Bakar,
+          GCS, dan AGD.
         </p>
       </div>
     </ToolShell>

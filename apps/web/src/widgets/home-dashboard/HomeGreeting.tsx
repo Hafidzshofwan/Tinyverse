@@ -4,8 +4,24 @@ import { useAuth } from "@/widgets/user-account";
 import { SidebarIcon } from "@/shared/ui";
 
 /**
+ * Menghasilkan sapaan berdasarkan jam lokal perangkat.
+ * 05:00-11:59  Selamat pagi
+ * 12:00-14:59  Selamat siang
+ * 15:00-17:59  Selamat sore
+ * 18:00-04:59  Selamat malam
+ */
+function sapaanWaktu(): string {
+  const jam = new Date().getHours();
+  if (jam >= 5 && jam < 12) return "Selamat pagi";
+  if (jam >= 12 && jam < 15) return "Selamat siang";
+  if (jam >= 15 && jam < 18) return "Selamat sore";
+  return "Selamat malam";
+}
+
+/**
  * Header sapaan beranda. Nama diambil DINAMIS dari akun yang sedang login
- * (profil.nama), mis. "Halo, dr. Ajeng". Jika nama belum ada, tampil "Dokter".
+ * (profil.nama), mis. "Selamat pagi, dr. Ajeng". Jika nama belum ada, tampil
+ * "Dokter". Sapaan berubah otomatis sesuai jam lokal perangkat.
  */
 export function HomeGreeting() {
   const { profil } = useAuth();
@@ -19,7 +35,7 @@ export function HomeGreeting() {
         <span>Tinyverse Home Dashboard</span>
       </span>
       <h1 style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-        <span>{"Halo, " + sapaan}</span>
+        <span>{sapaanWaktu() + ", " + sapaan}</span>
         <svg
           width="32"
           height="32"
