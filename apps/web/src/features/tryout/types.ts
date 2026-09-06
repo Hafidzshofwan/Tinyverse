@@ -46,7 +46,7 @@ export interface PaketTryOut {
   deskripsi: string;
   durasiMenit: number;
   passingGradePersen: number;
-  kategori: "ukmppd" | "stase-anak" | "mini-cbt";
+  kategori: "uknpdpd" | "stase-anak" | "mini-cbt";
   kategoriLabel: string;
   badge: string;
   daftarSoal: SoalTryOut[];
