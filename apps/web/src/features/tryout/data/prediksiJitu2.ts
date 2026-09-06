@@ -3,7 +3,7 @@ import type { PaketTryOut } from "../types";
 export const PAKET_PREDIKSI_JITU_2: PaketTryOut = {
   id: "drill-pediatri-prediksi-jitu-2",
   slug: "drill-pediatri-prediksi-jitu-2",
-  judul: "Try Out UKMPPD Pediatri — Paket 2 (Prediksi Jitu 25 Soal)",
+  judul: "Try Out UKNPDPD Pediatri — Paket 2 (Prediksi Jitu 25 Soal)",
   deskripsi:
     "Neonatologi, Gastrohepatologi, Infeksi Tropis, Respirologi, Gawat Darurat, Neurologi, Tumbuh Kembang, Nutrisi, Endokrinologi",
   durasiMenit: 25,

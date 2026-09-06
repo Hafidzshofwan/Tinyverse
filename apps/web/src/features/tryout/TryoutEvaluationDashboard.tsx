@@ -83,7 +83,7 @@ const CONTOH_EVALUASI_MOCK: RingkasanEvaluasiGlobal = {
     {
       id: "sim-2",
       paketId: "paket-2",
-      paketJudul: "Drill Prediksi UKMPPD 1",
+      paketJudul: "Drill Prediksi UKNPDPD 1",
       tanggalISO: new Date(Date.now() - 4 * 86400000).toISOString(),
       labelTanggal: "Sesi 2",
       skorPersen: 73,

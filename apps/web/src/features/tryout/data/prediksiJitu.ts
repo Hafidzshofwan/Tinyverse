@@ -3,7 +3,7 @@ import type { PaketTryOut } from "../types";
 export const PAKET_PREDIKSI_JITU: PaketTryOut = {
   id: "drill-pediatri-prediksi-jitu",
   slug: "drill-pediatri-prediksi-jitu",
-  judul: "Try Out UKMPPD Pediatri — Paket 1 (Prediksi Jitu 25 Soal)",
+  judul: "Try Out UKNPDPD Pediatri — Paket 1 (Prediksi Jitu 25 Soal)",
   deskripsi:
     "Neonatologi, Gastrohepatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Neurologi",
   durasiMenit: 25,
@@ -99,9 +99,9 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
         { id: "d", teks: "Late onset sepsis neonatal" },
         { id: "e", teks: "Kejang demam kompleks" },
       ],
-      jawabanBenar: "c",
+      jawabanBenar: "d",
       pembahasan:
-        "Sepsis neonatorum ditegakkan dari tanda infeksi sistemik pada neonatus (letargi/penurunan kesadaran, takipnea, demam tinggi, dan leukositosis nyata 23.000/µL). Usia 4 hari masih berada dalam spektrum early-onset neonatal sepsis (EOS) yang muncul pada hari-hari awal kehidupan pascapersalinan, sering kali bersumber dari transmisi vertikal saat proses persalinan.",
+        "Sepsis neonatorum ditegakkan dari tanda infeksi sistemik pada neonatus (letargi/penurunan kesadaran, takipnea, demam tinggi, dan leukositosis nyata 23.000/µL). Usia 4 hari sudah berada dalam spektrum late-onset neonatal sepsis (EOS) yang muncul pada hari-hari awal kehidupan pascapersalinan, sering kali bersumber dari transmisi vertikal saat proses persalinan.",
       referensi: "WHO — Neonatal Sepsis / Infection Guidance; Pedoman Pelayanan Medis IDAI.",
       linkAlatTerkait: {
         label: "Tools Neonatus & Perinatologi",
