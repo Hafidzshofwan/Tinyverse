@@ -10,7 +10,9 @@ export type SubdivisiSKDI =
   | "endokrinologi"
   | "alergi-imunologi"
   | "nefrologi"
-  | "gawat-darurat";
+  | "gawat-darurat"
+  | "hematologi"
+  | "imunisasi";
 
 export type OpsiId = "a" | "b" | "c" | "d" | "e";
 

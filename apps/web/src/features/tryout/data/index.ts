@@ -2,24 +2,26 @@ import type { PaketTryOut } from "../types";
 import { PAKET_PREDIKSI_JITU } from "./prediksiJitu";
 import { PAKET_PREDIKSI_JITU_2 } from "./prediksiJitu2";
 import { PAKET_PREDIKSI_JITU_3 } from "./prediksiJitu3";
+import { PAKET_PREDIKSI_JITU_4 } from "./prediksiJitu4";
 
-export { PAKET_PREDIKSI_JITU, PAKET_PREDIKSI_JITU_2, PAKET_PREDIKSI_JITU_3 };
-
-export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
+export {
   PAKET_PREDIKSI_JITU,
   PAKET_PREDIKSI_JITU_2,
   PAKET_PREDIKSI_JITU_3,
-  {
-    id: "drill-pediatri-paket-1",
-    slug: "drill-pediatri-paket-1",
-    judul: "Try Out UKNPDPD Pediatri — Paket 4 (Komprehensif A)",
-    deskripsi: "Neonatologi, Gastrohepatologi, Infeksi Tropis, Tumbuh Kembang, Nutrisi & Metabolik",
-    durasiMenit: 15,
-    passingGradePersen: 66,
-    kategori: "uknpdpd",
-    kategoriLabel: "Simulasi Komprehensif",
-    badge: "15 Soal / 15 Menit",
-    daftarSoal: [
+  PAKET_PREDIKSI_JITU_4,
+};
+
+export const PAKET_MINI_CBT_1: PaketTryOut = {
+  id: "drill-pediatri-paket-1",
+  slug: "mini-cbt-pediatri-paket-1",
+  judul: "Mini CBT Pediatri — Paket 1 (Komprehensif A)",
+  deskripsi: "Neonatologi, Gastrohepatologi, Infeksi Tropis, Tumbuh Kembang, Nutrisi & Metabolik",
+  durasiMenit: 15,
+  passingGradePersen: 66,
+  kategori: "mini-cbt",
+  kategoriLabel: "Mini CBT Pediatri",
+  badge: "15 Soal / 15 Menit",
+  daftarSoal: [
       {
         id: "p1-soal-01",
         nomor: 1,
@@ -361,18 +363,19 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         referensi: "Panduan Praktik Klinis Hematologi Anak IDAI."
       },
     ],
-  },
-  {
-    id: "drill-pediatri-paket-2",
-    slug: "drill-pediatri-paket-2",
-    judul: "Try Out UKNPDPD Pediatri — Paket 5 (Komprehensif B)",
-    deskripsi: "Endokrinologi, Infeksi Tropis, Respirologi, Neurologi, Tumbuh Kembang",
-    durasiMenit: 15,
-    passingGradePersen: 66,
-    kategori: "uknpdpd",
-    kategoriLabel: "Simulasi Komprehensif",
-    badge: "15 Soal / 15 Menit",
-    daftarSoal: [
+  };
+
+export const PAKET_MINI_CBT_2: PaketTryOut = {
+  id: "drill-pediatri-paket-2",
+  slug: "mini-cbt-pediatri-paket-2",
+  judul: "Mini CBT Pediatri — Paket 2 (Komprehensif B)",
+  deskripsi: "Endokrinologi, Infeksi Tropis, Respirologi, Neurologi, Tumbuh Kembang",
+  durasiMenit: 15,
+  passingGradePersen: 66,
+  kategori: "mini-cbt",
+  kategoriLabel: "Mini CBT Pediatri",
+  badge: "15 Soal / 15 Menit",
+  daftarSoal: [
       {
         id: "p2-soal-16",
         nomor: 1,
@@ -705,18 +708,19 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         referensi: "Nelson Textbook of Pediatrics; Neuromuscular Disorders in Children."
       },
     ],
-  },
-  {
-    id: "drill-pediatri-paket-3",
-    slug: "drill-pediatri-paket-3",
-    judul: "Try Out UKNPDPD Pediatri — Paket 6 (Komprehensif C)",
-    deskripsi: "Neonatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Gastrohepatologi",
-    durasiMenit: 15,
-    passingGradePersen: 66,
-    kategori: "uknpdpd",
-    kategoriLabel: "Simulasi Komprehensif",
-    badge: "15 Soal / 15 Menit",
-    daftarSoal: [
+  };
+
+export const PAKET_MINI_CBT_3: PaketTryOut = {
+  id: "drill-pediatri-paket-3",
+  slug: "mini-cbt-pediatri-paket-3",
+  judul: "Mini CBT Pediatri — Paket 3 (Komprehensif C)",
+  deskripsi: "Neonatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Gastrohepatologi",
+  durasiMenit: 15,
+  passingGradePersen: 66,
+  kategori: "mini-cbt",
+  kategoriLabel: "Mini CBT Pediatri",
+  badge: "15 Soal / 15 Menit",
+  daftarSoal: [
       {
         id: "p3-soal-31",
         nomor: 1,
@@ -1033,7 +1037,24 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
         referensi: "Buku Saku Pelayanan Kesehatan Anak di Rumah Sakit WHO / Kemenkes RI."
       },
     ],
-  },
+  };
+
+export const PAKET_PREDIKSI_JITU_LIST: PaketTryOut[] = [
+  PAKET_PREDIKSI_JITU,
+  PAKET_PREDIKSI_JITU_2,
+  PAKET_PREDIKSI_JITU_3,
+  PAKET_PREDIKSI_JITU_4,
+];
+
+export const PAKET_MINI_CBT_LIST: PaketTryOut[] = [
+  PAKET_MINI_CBT_1,
+  PAKET_MINI_CBT_2,
+  PAKET_MINI_CBT_3,
+];
+
+export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
+  ...PAKET_MINI_CBT_LIST,
+  ...PAKET_PREDIKSI_JITU_LIST,
 ];
 
 export function getPaketTryoutById(id: string): PaketTryOut | undefined {

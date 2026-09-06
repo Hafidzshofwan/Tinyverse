@@ -1,7 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { PAKET_TRYOUT_LIST } from "./data";
+import {
+  PAKET_TRYOUT_LIST,
+  PAKET_MINI_CBT_LIST,
+  PAKET_PREDIKSI_JITU_LIST,
+} from "./data";
 import { TryoutExamRunner } from "./TryoutExamRunner";
 import { TryoutResultView } from "./TryoutResultView";
 import { useTryoutStorage } from "./useTryoutStorage";
@@ -28,6 +32,7 @@ function PaketKartu({
 }) {
   const { skorTerbaik, jumlahPercobaan, riwayat } = useTryoutStorage(paket.id);
   const hasilTerakhir = riwayat[0];
+  const isMini = paket.kategori === "mini-cbt";
 
   return (
     <div id={`tv-tryout-card-${paket.id}`} className="tv-tryout-paket-card">
@@ -36,7 +41,12 @@ function PaketKartu({
           <TryoutExamCardIcon size={38} />
         </div>
         <div className="tv-tryout-paket-badge-group">
-          <span className="tv-tryout-badge-kategori">{paket.kategoriLabel}</span>
+          <span className={`tv-tryout-badge-kategori ${isMini ? "mini-cbt" : "uknpdpd"}`}>
+            {paket.kategoriLabel}
+          </span>
+          <span className="tv-tryout-badge-durasi">
+            {paket.badge}
+          </span>
         </div>
       </div>
 
@@ -98,7 +108,7 @@ function PaketKartu({
           onClick={() => onMulaiCBT(paket)}
         >
           <TryoutPlayCbtIcon size={18} />
-          <span>Mulai Try Out CBT</span>
+          <span>{isMini ? "Mulai Mini CBT" : "Mulai Try Out CBT"}</span>
         </button>
         <button
           id={`btn-mulai-latihan-${paket.id}`}
@@ -122,6 +132,7 @@ export function TryoutGrid({
   const [modeAktif, setModeAktif] = useState<"cbt" | "latihan">("cbt");
   const [hasilAktif, setHasilAktif] = useState<HasilTryOut | null>(null);
   const [tabAktif, setTabAktif] = useState<"paket" | "evaluasi">("paket");
+  const [filterKategori, setFilterKategori] = useState<"semua" | "mini-cbt" | "prediksi-jitu">("semua");
 
   const { simpanHasil } = useTryoutStorage(paketAktif?.id || "");
 
@@ -254,25 +265,125 @@ export function TryoutGrid({
         <TryoutEvaluationDashboard onBukaDaftarPaket={() => setTabAktif("paket")} />
       ) : (
         <>
-          {/* ── Header Bagian Paket ─────────────────────────────────────── */}
+          {/* ── Header Bagian Paket & Filter Seri ────────────────────────── */}
           <div className="tv-tryout-grid-section-head">
             <h3 className="tv-tryout-grid-sec-title">Pilih Paket Ujian</h3>
-            <span className="tv-tryout-grid-count-badge">
-              {PAKET_TRYOUT_LIST.length} Paket Tersedia
+            <span
+              className="tv-tryout-grid-count-badge"
+              style={{ whiteSpace: "nowrap", flexShrink: 0 }}
+            >
+              {filterKategori === "semua"
+                ? `${PAKET_TRYOUT_LIST.length} Paket Tersedia`
+                : filterKategori === "mini-cbt"
+                ? `${PAKET_MINI_CBT_LIST.length} Paket Mini CBT`
+                : `${PAKET_PREDIKSI_JITU_LIST.length} Paket Prediksi Jitu`}
             </span>
           </div>
 
-          {/* ── Daftar Grid Paket ────────────────────────────────────────── */}
-          <div className="tv-tryout-paket-grid">
-            {PAKET_TRYOUT_LIST.map((paket) => (
-              <PaketKartu
-                key={paket.id}
-                paket={paket}
-                onMulaiCBT={handleMulaiCBT}
-                onMulaiLatihan={handleMulaiLatihan}
-              />
-            ))}
+          <div className="tv-tryout-series-filter-wrap" role="group" aria-label="Filter kategori paket">
+            <button
+              id="btn-filter-semua-paket"
+              type="button"
+              className={`tv-tryout-series-btn ${filterKategori === "semua" ? "active" : ""}`}
+              onClick={() => setFilterKategori("semua")}
+            >
+              <span>Semua Paket</span>
+              <span className="tv-tryout-series-pill-count">{PAKET_TRYOUT_LIST.length}</span>
+            </button>
+
+            <button
+              id="btn-filter-mini-cbt"
+              type="button"
+              className={`tv-tryout-series-btn ${filterKategori === "mini-cbt" ? "active" : ""}`}
+              onClick={() => setFilterKategori("mini-cbt")}
+            >
+              <span>Mini CBT (15 Soal)</span>
+              <span className="tv-tryout-series-pill-count">{PAKET_MINI_CBT_LIST.length}</span>
+            </button>
+
+            <button
+              id="btn-filter-prediksi-jitu"
+              type="button"
+              className={`tv-tryout-series-btn ${filterKategori === "prediksi-jitu" ? "active" : ""}`}
+              onClick={() => setFilterKategori("prediksi-jitu")}
+            >
+              <span>Prediksi Jitu UKNPDPD (25 Soal)</span>
+              <span className="tv-tryout-series-pill-count">{PAKET_PREDIKSI_JITU_LIST.length}</span>
+            </button>
           </div>
+
+          {/* ── Urutan Seri 1: Mini CBT Pediatri (15 Soal) ──────────────── */}
+          {(filterKategori === "semua" || filterKategori === "mini-cbt") && (
+            <div className="tv-tryout-series-block">
+              {filterKategori === "semua" && (
+                <div className="tv-tryout-series-section-header">
+                  <div className="tv-tryout-series-section-title-group">
+                    <h4 className="tv-tryout-series-section-title">
+                      Mini CBT Pediatri
+                    </h4>
+                    <p className="tv-tryout-series-section-desc">
+                      Latihan cepat 15 soal klinis (durasi 15 menit) dengan urutan Paket 1 – 3 untuk penguatan konsep harian.
+                    </p>
+                  </div>
+                  <span
+                    className="tv-tryout-grid-count-badge"
+                    style={{ whiteSpace: "nowrap", flexShrink: 0 }}
+                  >
+                    {PAKET_MINI_CBT_LIST.length} Paket
+                  </span>
+                </div>
+              )}
+
+              <div className="tv-tryout-paket-grid">
+                {PAKET_MINI_CBT_LIST.map((paket) => (
+                  <PaketKartu
+                    key={paket.id}
+                    paket={paket}
+                    onMulaiCBT={handleMulaiCBT}
+                    onMulaiLatihan={handleMulaiLatihan}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Urutan Seri 2: Try Out Prediksi Jitu UKNPDPD (25 Soal) ────── */}
+          {(filterKategori === "semua" || filterKategori === "prediksi-jitu") && (
+            <div
+              className="tv-tryout-series-block"
+              style={{ marginTop: filterKategori === "semua" ? "1.5rem" : "0.5rem" }}
+            >
+              {filterKategori === "semua" && (
+                <div className="tv-tryout-series-section-header">
+                  <div className="tv-tryout-series-section-title-group">
+                    <h4 className="tv-tryout-series-section-title">
+                      Try Out Prediksi Jitu UKNPDPD
+                    </h4>
+                    <p className="tv-tryout-series-section-desc">
+                      Simulasi intensif 25 soal kasus klinis komprehensif (durasi 25 menit) dengan urutan Paket 1 – 4 berstandar SKDI.
+                    </p>
+                  </div>
+                  <span
+                    className="tv-tryout-grid-count-badge"
+                    style={{ whiteSpace: "nowrap", flexShrink: 0 }}
+                  >
+                    {PAKET_PREDIKSI_JITU_LIST.length} Paket
+                  </span>
+                </div>
+              )}
+
+              <div className="tv-tryout-paket-grid">
+                {PAKET_PREDIKSI_JITU_LIST.map((paket) => (
+                  <PaketKartu
+                    key={paket.id}
+                    paket={paket}
+                    onMulaiCBT={handleMulaiCBT}
+                    onMulaiLatihan={handleMulaiLatihan}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </>
       )}
     </div>

@@ -371,8 +371,106 @@
   font-weight: 700;
   color: var(--tv-magenta);
   background: rgba(217, 54, 166, 0.1);
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+/* ── Filter Kategori Seri Paket ──────────────────────────────── */
+.tv-tryout-series-filter-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.tv-tryout-series-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--tv-soft-teks);
+  background: var(--tv-card);
+  border: 1.5px solid var(--tv-line);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 160ms ease;
+  white-space: nowrap;
+}
+
+.tv-tryout-series-btn:hover {
+  border-color: rgba(10, 11, 95, 0.25);
+  color: var(--tv-navy);
+}
+
+.tv-tryout-series-btn.active {
+  background: var(--tv-navy);
+  color: #ffffff;
+  border-color: var(--tv-navy);
+  box-shadow: 0 3px 10px rgba(10, 11, 95, 0.16);
+}
+
+.tv-tryout-series-pill-count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 9999px;
+  background: rgba(10, 11, 95, 0.08);
+  color: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tv-tryout-series-btn.active .tv-tryout-series-pill-count {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+.tv-tryout-series-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.15rem;
+  background: #f8fafc;
+  border: 1px solid var(--tv-line);
+  border-radius: 14px;
+  margin-top: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+.tv-tryout-series-section-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.tv-tryout-series-section-title {
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--tv-navy);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.tv-tryout-series-section-desc {
+  font-size: 0.78rem;
+  color: var(--tv-soft-teks);
+  margin: 0;
 }
 
 /* ── Paket Grid & Cards ───────────────────────────────────────── */
@@ -428,6 +526,24 @@
   font-weight: 700;
   padding: 3px 8px;
   border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tv-tryout-badge-kategori.mini-cbt {
+  background: rgba(14, 165, 233, 0.12);
+  color: #0284c7;
+}
+
+.tv-tryout-badge-durasi {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .tv-tryout-badge-skdi {
