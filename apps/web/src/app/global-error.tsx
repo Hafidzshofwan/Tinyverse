@@ -16,7 +16,6 @@
  * sengaja dihindari dengan menulis gaya yang berdiri sendiri.
  */
 export default function GlobalErrorBoundary({
-  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };

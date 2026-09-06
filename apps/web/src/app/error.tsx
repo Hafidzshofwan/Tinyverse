@@ -12,10 +12,8 @@
 import gaya from "./ErrorBoundary.module.css";
 
 export default function ErrorBoundary({
-  error,
   reset,
 }: {
-  error: Error & { digest?: string };
   reset: () => void;
 }) {
   return (
@@ -26,9 +24,8 @@ export default function ErrorBoundary({
         </div>
         <h1 className={gaya.judul}>Ada yang tidak beres</h1>
         <p className={gaya.pesan}>
-          Halaman ini mengalami error yang tidak terduga. Tim sudah otomatis
-          menerima catatannya. Coba muat ulang — bila masih terjadi, kembali ke
-          beranda dan coba lagi dari sana.
+          Halaman ini mengalami error yang tidak terduga. Coba muat ulang — bila
+          masih terjadi, kembali ke beranda dan coba lagi dari sana.
         </p>
         <div className={gaya.aksi}>
           <button type="button" className="tv-btn" onClick={() => reset()}>
