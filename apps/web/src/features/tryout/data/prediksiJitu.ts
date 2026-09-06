@@ -8,8 +8,8 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
     "Neonatologi, Gastrohepatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Neurologi",
   durasiMenit: 25,
   passingGradePersen: 66,
-  kategori: "ukmppd",
-  kategoriLabel: "Prediksi Jitu UKMPPD",
+  kategori: "uknpdpd",
+  kategoriLabel: "Prediksi Jitu UKNPDPD",
   badge: "25 Soal / 25 Menit",
   daftarSoal: [
     {
@@ -349,7 +349,7 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
       ],
       jawabanBenar: "a",
       pembahasan:
-        "Dalam literatur tradisional pediatri dan bank soal UKMPPD, batas diagnosis hipoglikemia yang memerlukan intervensi klinis dinyatakan bila kadar glukosa plasma < 45 mg/dL (atau < 2,5 mmol/L). Pada pedoman modern, batas kewaspadaan klinis sering digunakan pada angka < 54–60 mg/dL tergantung konteks komorbiditas.",
+        "Dalam literatur tradisional pediatri dan bank soal UKNPDPD, batas diagnosis hipoglikemia yang memerlukan intervensi klinis dinyatakan bila kadar glukosa plasma < 45 mg/dL (atau < 2,5 mmol/L). Pada pedoman modern, batas kewaspadaan klinis sering digunakan pada angka < 54–60 mg/dL tergantung konteks komorbiditas.",
       referensi: "WHO — Hypoglycaemia in Children; Konsensus Tata Laksana Hipoglikemia pada Anak IDAI.",
     },
     {
@@ -433,7 +433,7 @@ export const PAKET_PREDIKSI_JITU: PaketTryOut = {
       ],
       jawabanBenar: "d",
       pembahasan:
-        "Kondisi ini merupakan Omfalitis (infeksi umbilikus pada neonatus) akibat praktik perawatan tali pusat yang tidak higienis. Sesuai penandaan kunci jawaban bank soal UKMPPD, tindakan perawatan tali pusat lokal yang ditekankan adalah membersihkan dengan larutan antiseptik Chlorhexidine 4% setiap hari. (Catatan evidensi klinis: Pada praktik klinis nyata, bila omfalitis telah disertai manifestasi sistemik seperti demam tinggi dan rewel/letargi, tatalaksana wajib mengombinasikan perawatan lokal dengan antibiotik parenteral spektrum luas seperti ampisilin dan gentamisin untuk mencegah sepsis neonatal).",
+        "Kondisi ini merupakan Omfalitis (infeksi umbilikus pada neonatus) akibat praktik perawatan tali pusat yang tidak higienis. Sesuai penandaan kunci jawaban bank soal UKNPDPD, tindakan perawatan tali pusat lokal yang ditekankan adalah membersihkan dengan larutan antiseptik Chlorhexidine 4% setiap hari. (Catatan evidensi klinis: Pada praktik klinis nyata, bila omfalitis telah disertai manifestasi sistemik seperti demam tinggi dan rewel/letargi, tatalaksana wajib mengombinasikan perawatan lokal dengan antibiotik parenteral spektrum luas seperti ampisilin dan gentamisin untuk mencegah sepsis neonatal).",
       referensi: "WHO — Umbilical Cord Care / Neonatal Infection Prevention; Pedoman Pelayanan Medis IDAI.",
     },
     {
