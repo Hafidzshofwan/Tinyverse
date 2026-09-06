@@ -37,13 +37,25 @@ type BarisPengguna = {
   aktif: boolean;
   saya: boolean;
   accountId: string | null;
+  terakhirLogin: number;
+  totalPemakaian: number;
   langganan: RingkasLangganan;
 };
+
+type KolomUrut = "dibuat" | "terakhirLogin" | "totalPemakaian";
 
 const FORMAT_TANGGAL = new Intl.DateTimeFormat("id-ID", {
   day: "numeric",
   month: "short",
   year: "numeric",
+});
+
+const FORMAT_TANGGAL_JAM = new Intl.DateTimeFormat("id-ID", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
 });
 
 const FORMAT_JAM = new Intl.DateTimeFormat("id-ID", {
@@ -54,6 +66,30 @@ const FORMAT_JAM = new Intl.DateTimeFormat("id-ID", {
 function tanggalPendek(iso: string): string {
   const t = new Date(iso);
   return Number.isNaN(t.getTime()) ? "-" : FORMAT_TANGGAL.format(t);
+}
+
+/**
+ * Mengubah timestamp milidetik menjadi waktu relatif singkat.
+ * Contoh: "2 jam lalu", "3 hari lalu", "Belum pernah".
+ */
+function waktuRelatif(ms: number): string {
+  if (!ms) return "Belum pernah";
+  const detik = Math.floor((Date.now() - ms) / 1000);
+  if (detik < 60) return "Baru saja";
+  const menit = Math.floor(detik / 60);
+  if (menit < 60) return menit + " menit lalu";
+  const jam = Math.floor(menit / 60);
+  if (jam < 24) return jam + " jam lalu";
+  const hari = Math.floor(jam / 24);
+  if (hari < 30) return hari + " hari lalu";
+  const bulan = Math.floor(hari / 30);
+  if (bulan < 12) return bulan + " bulan lalu";
+  return Math.floor(bulan / 12) + " tahun lalu";
+}
+
+function tanggalJamPendek(ms: number): string {
+  if (!ms) return "-";
+  return FORMAT_TANGGAL_JAM.format(new Date(ms));
 }
 
 function tampilanLangganan(l: RingkasLangganan): {
@@ -95,6 +131,7 @@ export function KelolaPenggunaPanel() {
   const [diperbarui, setDiperbarui] = useState("");
   const [sinkronSedang, setSinkronSedang] = useState(false);
   const [sinkronPesan, setSinkronPesan] = useState("");
+  const [urutDari, setUrutDari] = useState<KolomUrut>("dibuat");
 
   const muat = useCallback(() => {
     setGalat("");
@@ -141,7 +178,22 @@ export function KelolaPenggunaPanel() {
      baris yang tombolnya lupa dipasang. Di luar tabel, ketiadaan tombol itu
      justru masuk akal. */
   const saya = useMemo(() => (rows || []).find((r) => r.saya) ?? null, [rows]);
-  const lain = useMemo(() => (rows || []).filter((r) => !r.saya), [rows]);
+  const lain = useMemo(() => {
+    const base = (rows || []).filter((r) => !r.saya);
+    if (urutDari === "terakhirLogin") {
+      /* Belum pernah login (0) selalu paling bawah. */
+      return [...base].sort((a, b) =>
+        b.terakhirLogin !== a.terakhirLogin
+          ? (b.terakhirLogin || -1) - (a.terakhirLogin || -1)
+          : b.totalPemakaian - a.totalPemakaian,
+      );
+    }
+    if (urutDari === "totalPemakaian") {
+      return [...base].sort((a, b) => b.totalPemakaian - a.totalPemakaian);
+    }
+    /* default: terbaru duluan (urutan dari server) */
+    return base;
+  }, [rows, urutDari]);
   const tampilSaya = saya ? tampilanLangganan(saya.langganan) : null;
 
   async function onToggleAktif(id: string, aktif: boolean) {
@@ -272,8 +324,16 @@ export function KelolaPenggunaPanel() {
           <div className={gaya.bar}>
             <span>
               {lain.length} pengguna lain. Dimuat
-              {diperbarui ? " pukul " + diperbarui : ""}, akun terbaru di
-              urutan atas.
+              {diperbarui ? " pukul " + diperbarui : ""}. Urut:{" "}
+              <select
+                className={gaya.selectUrut}
+                value={urutDari}
+                onChange={(e) => setUrutDari(e.target.value as KolomUrut)}
+              >
+                <option value="dibuat">Terbaru daftar</option>
+                <option value="terakhirLogin">Terakhir login</option>
+                <option value="totalPemakaian">Paling aktif</option>
+              </select>
             </span>
             <span className={gaya.barTombol}>
               <button
@@ -303,6 +363,28 @@ export function KelolaPenggunaPanel() {
                   <th>Pengguna</th>
                   <th>Peran</th>
                   <th>Langganan</th>
+                  <th
+                    className={gaya.thKlikabel}
+                    title="Klik untuk mengurutkan berdasarkan terakhir login"
+                    onClick={() => setUrutDari("terakhirLogin")}
+                    aria-sort={urutDari === "terakhirLogin" ? "descending" : "none"}
+                  >
+                    Terakhir Login
+                    {urutDari === "terakhirLogin" && (
+                      <span className={gaya.urutAktif}> ↓</span>
+                    )}
+                  </th>
+                  <th
+                    className={gaya.thKlikabel}
+                    title="Klik untuk mengurutkan berdasarkan total pemakaian fitur"
+                    onClick={() => setUrutDari("totalPemakaian")}
+                    aria-sort={urutDari === "totalPemakaian" ? "descending" : "none"}
+                  >
+                    Pemakaian
+                    {urutDari === "totalPemakaian" && (
+                      <span className={gaya.urutAktif}> ↓</span>
+                    )}
+                  </th>
                   <th>Akun</th>
                 </tr>
               </thead>
@@ -333,6 +415,30 @@ export function KelolaPenggunaPanel() {
                         >
                           <span className={gaya.status}>{tampil.teks}</span>
                           <span className={gaya.catatan}>{tampil.catatan}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div className={gaya.loginInfo}>
+                          <span className={gaya.loginRelatif}>
+                            {waktuRelatif(r.terakhirLogin)}
+                          </span>
+                          {r.terakhirLogin ? (
+                            <span className={gaya.catatan}>
+                              {tanggalJamPendek(r.terakhirLogin)}
+                            </span>
+                          ) : null}
+                        </div>
+                      </td>
+                      <td>
+                        <div className={gaya.pemakaianInfo}>
+                          <span className={gaya.pemakaianAngka}>
+                            {r.totalPemakaian > 0
+                              ? r.totalPemakaian.toLocaleString("id-ID")
+                              : "–"}
+                          </span>
+                          {r.totalPemakaian > 0 && (
+                            <span className={gaya.catatan}>penggunaan fitur</span>
+                          )}
                         </div>
                       </td>
                       <td>

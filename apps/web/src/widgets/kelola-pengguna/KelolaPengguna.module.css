@@ -282,6 +282,63 @@
   gap: 8px;
 }
 
+/* Dropdown urut di dalam bar */
+.selectUrut {
+  border: 1px solid var(--tv-line, #E2E8F0);
+  background: transparent;
+  color: inherit;
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.selectUrut:hover {
+  background: var(--tv-hover, rgba(148, 163, 184, 0.14));
+}
+
+/* Header kolom yang bisa diklik untuk urut */
+.thKlikabel {
+  cursor: pointer;
+  user-select: none;
+}
+.thKlikabel:hover {
+  color: var(--tv-navy-2, #2563EB);
+}
+
+.urutAktif {
+  color: var(--tv-navy-2, #2563EB);
+}
+
+/* Sel terakhir login */
+.loginInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 110px;
+}
+
+.loginRelatif {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tv-teks, #0F172A);
+  line-height: 1.25;
+}
+
+/* Sel pemakaian */
+.pemakaianInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 80px;
+}
+
+.pemakaianAngka {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--tv-teks, #0F172A);
+}
+
 .sinkronPesan {
   margin: -4px 0 14px;
   font-size: 12px;

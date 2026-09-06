@@ -33,7 +33,7 @@ import { KOLEKSI } from "@/server/accountsAdmin";
 import { KOLEKSI_BILLING } from "@/server/billingCollections";
 import { adminAuth, adminDb } from "@/server/firebaseAdmin";
 import { NAMA_COOKIE_SESI } from "@/server/session";
-import { ambilWaktuBuatAuth } from "@/server/authUsers";
+import { ambilMetadataAuth } from "@/server/authUsers";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +56,10 @@ export type BarisPenggunaAdmin = {
   saya: boolean;
   accountId: string | null;
   dibuat: number;
+  /** Waktu login terakhir dalam milidetik epoch. 0 bila belum pernah login. */
+  terakhirLogin: number;
+  /** Jumlah total pemakaian fitur (sum semua nilai di userSettings.pemakaian). */
+  totalPemakaian: number;
   langganan: RingkasLangganan;
 };
 
@@ -85,16 +89,37 @@ export async function GET() {
   const db = adminDb();
   const sekarang = new Date().toISOString();
 
-  /* Empat pembacaan menyeluruh sekaligus, lalu dijodohkan di memori. Alternatifnya
-     satu query langganan per pengguna, yang berarti N perjalanan ke Firestore
-     untuk satu kali buka modal. */
-  const [snapUsers, snapMemberships, snapSubs, waktuBuatAuth] = await Promise.all([
+  /*
+   * Lima pembacaan menyeluruh sekaligus, lalu dijodohkan di memori.
+   * Alternatifnya satu query langganan per pengguna, yang berarti N
+   * perjalanan ke Firestore untuk satu kali buka modal.
+   *
+   * WHY userSettings dibaca di sini: koleksi ini hanya boleh ditulis oleh
+   * pengguna masing-masing (Security Rules), tetapi Admin SDK melewati rules
+   * sehingga membacanya aman dari server. Melakukan N get() terpisah per
+   * pengguna jauh lebih mahal daripada satu getAll() di sini.
+   */
+  const [snapUsers, snapMemberships, snapSubs, metaAuth, snapSettings] = await Promise.all([
     db.collection(KOLEKSI.users).get(),
     db.collection(KOLEKSI.memberships).get(),
     db.collection(KOLEKSI_BILLING.subscriptions).get(),
-    ambilWaktuBuatAuth(),
+    ambilMetadataAuth(),
+    db.collection("userSettings").get(),
   ]);
-  const uidAuth = new Set(waktuBuatAuth.keys());
+  const uidAuth = new Set(metaAuth.keys());
+
+  /* Hitung total pemakaian per UID dari koleksi userSettings. */
+  const pemakaianPerUid = new Map<string, number>();
+  snapSettings.forEach((d) => {
+    const data = d.data() as { pemakaian?: Record<string, unknown> };
+    if (data.pemakaian && typeof data.pemakaian === "object") {
+      const total = Object.values(data.pemakaian).reduce<number>(
+        (s, v) => s + (typeof v === "number" ? v : 0),
+        0,
+      );
+      pemakaianPerUid.set(d.id, total);
+    }
+  });
 
   /* Dokumen users/{uid} TIDAK otomatis ikut terhapus saat akun
      Authentication-nya dihapus manual (mis. lewat Firebase Console). Baris
@@ -104,6 +129,9 @@ export async function GET() {
   const dokumenPenggunaAktif = snapUsers.docs.filter((doc) =>
     uidAuth.has(doc.id),
   );
+
+  const waktuBuatAuth = new Map<string, number>();
+  metaAuth.forEach((v, uid) => waktuBuatAuth.set(uid, v.dibuat));
 
   const akunPerUid = new Map<string, string>();
   snapMemberships.forEach((d) => {
@@ -143,7 +171,9 @@ export async function GET() {
       aktif: d.aktif !== false,
       saya: doc.id === klaim.uid,
       accountId,
-      dibuat: waktuBuatAuth.get(doc.id) ?? 0,
+      dibuat: metaAuth.get(doc.id)?.dibuat ?? 0,
+      terakhirLogin: metaAuth.get(doc.id)?.terakhirLogin ?? 0,
+      totalPemakaian: pemakaianPerUid.get(doc.id) ?? 0,
       langganan: {
         status: ent.status,
         percobaan:
