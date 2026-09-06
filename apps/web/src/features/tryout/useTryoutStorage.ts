@@ -110,6 +110,7 @@ export function useTryoutStorage(paketId: string) {
   const [skorTerbaik, setSkorTerbaik] = useState<number | null>(null);
   const [jumlahPercobaan, setJumlahPercobaan] = useState(0);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [uid, setUid] = useState<string | null>(null);
 
   // Baca uid dari firebase auth secara langsung (tanpa hook)
   useEffect(() => {
