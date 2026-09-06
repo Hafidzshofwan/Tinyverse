@@ -26,17 +26,6 @@ import {
   ambilSemuaRiwayat,
 } from "./tryoutFirestore";
 
-// Impor useAuth secara dinamis untuk menghindari sirkular dependency di SSR.
-// useAuth melempar error di luar AuthProvider; kita tangkap dengan try/catch.
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type UseAuthFn = () => { profil: { uid: string } | null; status: string };
-let _useAuth: UseAuthFn | null = null;
-async function getUseAuth(): Promise<UseAuthFn> {
-  if (_useAuth) return _useAuth;
-  const mod = await import("@/widgets/user-account");
-  _useAuth = mod.useAuth as UseAuthFn;
-  return _useAuth;
-}
 
 // ---------------------------------------------------------------------------
 // Konstanta & helper localStorage (dipertahankan untuk mode offline/tamu)
@@ -121,6 +110,25 @@ export function useTryoutStorage(paketId: string) {
   const [skorTerbaik, setSkorTerbaik] = useState<number | null>(null);
   const [jumlahPercobaan, setJumlahPercobaan] = useState(0);
   const [isSyncing, setIsSyncing] = useState(false);
+
+  // Ambil uid dari AuthProvider; null jika belum login / SSR
+  const [uid, setUid] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Ambil uid secara async agar tidak memblokir render awal
+    getUseAuth()
+      .then((useAuth) => {
+        try {
+          // Ini akan dijalankan oleh React — hanya valid di dalam komponen.
+          // Namun karena kita berada di dalam useEffect yang sudah mount,
+          // kita tidak bisa memanggil hook di sini. Gunakan pendekatan berbeda:
+          // baca langsung dari window firebase auth.
+        } catch {
+          /* abaikan */
+        }
+      })
+      .catch(() => {/* abaikan */});
+  }, []);
 
   // Baca uid dari firebase auth secara langsung (tanpa hook)
   useEffect(() => {
