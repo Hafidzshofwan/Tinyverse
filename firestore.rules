@@ -90,6 +90,22 @@ service cloud.firestore {
     }
 
     /* ============================================================
+     *  1b. DATA CHAT AI PER AKUN
+     * ============================================================
+     *
+     * Sesi chat AI disimpan di: userAiChat/{uid}
+     * Satu dokumen per pengguna, berisi array sesi (maks 20) dan
+     * activeSessionId. Hanya pemilik akun yang boleh baca dan tulis
+     * data chatnya sendiri.
+     *
+     * Dokumen ini TIDAK boleh berisi data medis sensitif — hanya
+     * percakapan antara pengguna dan asisten AI Tinyverse.
+     */
+    match /userAiChat/{uid} {
+      allow read, write: if pemilik(uid);
+    }
+
+    /* ============================================================
      *  2. DATA KLINIS PER AKUN
      * ============================================================
      *

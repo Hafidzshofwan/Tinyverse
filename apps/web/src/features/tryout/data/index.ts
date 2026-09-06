@@ -1,16 +1,18 @@
 import type { PaketTryOut } from "../types";
 import { PAKET_PREDIKSI_JITU } from "./prediksiJitu";
 import { PAKET_PREDIKSI_JITU_2 } from "./prediksiJitu2";
+import { PAKET_PREDIKSI_JITU_3 } from "./prediksiJitu3";
 
-export { PAKET_PREDIKSI_JITU, PAKET_PREDIKSI_JITU_2 };
+export { PAKET_PREDIKSI_JITU, PAKET_PREDIKSI_JITU_2, PAKET_PREDIKSI_JITU_3 };
 
 export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   PAKET_PREDIKSI_JITU,
   PAKET_PREDIKSI_JITU_2,
+  PAKET_PREDIKSI_JITU_3,
   {
     id: "drill-pediatri-paket-1",
     slug: "drill-pediatri-paket-1",
-    judul: "Try Out UKNPDPD Pediatri — Paket 3 (Komprehensif A)",
+    judul: "Try Out UKNPDPD Pediatri — Paket 4 (Komprehensif A)",
     deskripsi: "Neonatologi, Gastrohepatologi, Infeksi Tropis, Tumbuh Kembang, Nutrisi & Metabolik",
     durasiMenit: 15,
     passingGradePersen: 66,
@@ -363,7 +365,7 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   {
     id: "drill-pediatri-paket-2",
     slug: "drill-pediatri-paket-2",
-    judul: "Try Out UKNPDPD Pediatri — Paket 4 (Komprehensif B)",
+    judul: "Try Out UKNPDPD Pediatri — Paket 5 (Komprehensif B)",
     deskripsi: "Endokrinologi, Infeksi Tropis, Respirologi, Neurologi, Tumbuh Kembang",
     durasiMenit: 15,
     passingGradePersen: 66,
@@ -707,7 +709,7 @@ export const PAKET_TRYOUT_LIST: PaketTryOut[] = [
   {
     id: "drill-pediatri-paket-3",
     slug: "drill-pediatri-paket-3",
-    judul: "Try Out UKNPDPD Pediatri — Paket 5 (Komprehensif C)",
+    judul: "Try Out UKNPDPD Pediatri — Paket 6 (Komprehensif C)",
     deskripsi: "Neonatologi, Tumbuh Kembang, Nutrisi & Metabolik, Infeksi Tropis, Alergi & Imunologi, Endokrinologi, Respirologi, Gastrohepatologi",
     durasiMenit: 15,
     passingGradePersen: 66,
