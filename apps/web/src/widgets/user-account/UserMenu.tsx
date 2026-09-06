@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useAuth } from "./AuthProvider";
 import { avatarProps } from "./avatar";
 import { ShieldUserIcon } from "@/shared/ui/icons/ShieldUserIcon";
-import { BugIcon } from "@/shared/ui/icons/BugIcon";
 
 function UserIcon({ size = 16, color = "currentColor" }: { size?: number; color?: string }) {
   return (
@@ -123,16 +122,6 @@ export function UserMenu({ id }: { id?: string } = {}) {
               onClick={() => setBuka(false)}
             >
               <ShieldUserIcon size={16} /> <span>Kelola pengguna</span>
-            </Link>
-          )}
-          {admin && (
-            <Link
-              href="/admin/error-logs"
-              className="tv-drop-item"
-              style={{ textDecoration: "none" }}
-              onClick={() => setBuka(false)}
-            >
-              <BugIcon size={16} /> <span>Pemantauan error</span>
             </Link>
           )}
           <button

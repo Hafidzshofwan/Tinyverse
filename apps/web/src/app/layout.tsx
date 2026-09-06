@@ -15,7 +15,6 @@ import {
   SITE_URL,
 } from "@/shared/seo/siteConfig";
 import { StructuredData } from "@/shared/seo/StructuredData";
-import { ErrorMonitorMount } from "@/shared/lib/errorMonitoring";
 import "@tinyverse/ui-kit/tokens.css";
 import "./globals.css";
 
@@ -109,7 +108,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <StructuredData />
-        <ErrorMonitorMount />
         {/*
          * WHY pengingat dibungkus Suspense, bukan lagi di-`await` di sini:
          * lihat catatan lengkap di widgets/app-shell/PengingatSlot.tsx.

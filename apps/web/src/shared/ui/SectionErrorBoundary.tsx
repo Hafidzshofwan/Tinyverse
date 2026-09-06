@@ -1,7 +1,6 @@
 "use client";
 
-import { Component, type ErrorInfo, type ReactNode } from "react";
-import { catatErrorProduksi } from "@/shared/lib/errorMonitoring";
+import { Component, type ReactNode } from "react";
 
 /**
  * Batas error untuk SATU bagian UI, dipakai di dalam AppShell.
@@ -46,12 +45,8 @@ export class SectionErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
-  override componentDidCatch(error: Error, info: ErrorInfo) {
-    catatErrorProduksi({
-      message: `[${this.props.label}] ${error.message}`,
-      stack: error.stack || info.componentStack || undefined,
-      type: "boundary",
-    });
+  override componentDidCatch() {
+    // Error sudah ditangkap oleh getDerivedStateFromError.
   }
 
   private cobaLagi = () => {

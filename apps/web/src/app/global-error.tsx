@@ -15,24 +15,13 @@
  * dibutuhkan, sumber daya yang gagal itu masih tersedia — taruhan yang
  * sengaja dihindari dengan menulis gaya yang berdiri sendiri.
  */
-import { useEffect } from "react";
-import { catatErrorProduksi } from "@/shared/lib/errorMonitoring";
-
 export default function GlobalErrorBoundary({
-  error,
+  error: _error,
   reset,
 }: {
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    catatErrorProduksi({
-      message: error.message,
-      stack: error.stack,
-      type: "boundary",
-    });
-  }, [error]);
-
   return (
     <html lang="id">
       <body

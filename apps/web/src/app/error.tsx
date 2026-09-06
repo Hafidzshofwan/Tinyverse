@@ -9,8 +9,6 @@
  * AppShell (header, sidebar) tetap ada di sekitarnya — pengguna tidak
  * kehilangan seluruh konteks navigasi hanya karena satu halaman gagal.
  */
-import { useEffect } from "react";
-import { catatErrorProduksi } from "@/shared/lib/errorMonitoring";
 import gaya from "./ErrorBoundary.module.css";
 
 export default function ErrorBoundary({
@@ -20,14 +18,6 @@ export default function ErrorBoundary({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
-  useEffect(() => {
-    catatErrorProduksi({
-      message: error.message,
-      stack: error.stack,
-      type: "boundary",
-    });
-  }, [error]);
-
   return (
     <div className={gaya.bungkus}>
       <div className={gaya.kartu}>
