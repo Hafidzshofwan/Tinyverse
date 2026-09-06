@@ -15,7 +15,6 @@ import { useState, useEffect, useCallback } from "react";
 import type { ChatSession, Message } from "@/shared/ai-chat/types";
 import { DEFAULT_AI_WELCOME_MESSAGE } from "@/shared/ai-chat/types";
 import {
-  bacaSesi,
   bacaIdAktif,
   tulisSemuaSesi,
   buatSesiBaru,
