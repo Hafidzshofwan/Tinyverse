@@ -17,7 +17,7 @@
  *  lalu localStorage dihapus agar tidak terjadi duplikasi di sesi berikutnya.
  */
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { HasilTryOut } from "./types";
 import { PAKET_TRYOUT_LIST } from "./data";
 import {
@@ -121,25 +121,6 @@ export function useTryoutStorage(paketId: string) {
   const [skorTerbaik, setSkorTerbaik] = useState<number | null>(null);
   const [jumlahPercobaan, setJumlahPercobaan] = useState(0);
   const [isSyncing, setIsSyncing] = useState(false);
-
-  // Ambil uid dari AuthProvider; null jika belum login / SSR
-  const [uid, setUid] = useState<string | null>(null);
-
-  useEffect(() => {
-    // Ambil uid secara async agar tidak memblokir render awal
-    getUseAuth()
-      .then((useAuth) => {
-        try {
-          // Ini akan dijalankan oleh React — hanya valid di dalam komponen.
-          // Namun karena kita berada di dalam useEffect yang sudah mount,
-          // kita tidak bisa memanggil hook di sini. Gunakan pendekatan berbeda:
-          // baca langsung dari window firebase auth.
-        } catch {
-          /* abaikan */
-        }
-      })
-      .catch(() => {/* abaikan */});
-  }, []);
 
   // Baca uid dari firebase auth secara langsung (tanpa hook)
   useEffect(() => {
