@@ -8,8 +8,8 @@ export const PAKET_PREDIKSI_JITU_2: PaketTryOut = {
     "Neonatologi, Gastrohepatologi, Infeksi Tropis, Respirologi, Gawat Darurat, Neurologi, Tumbuh Kembang, Nutrisi, Endokrinologi",
   durasiMenit: 25,
   passingGradePersen: 66,
-  kategori: "ukmppd",
-  kategoriLabel: "Prediksi Jitu UKMPPD",
+  kategori: "uknpdpd",
+  kategoriLabel: "Prediksi Jitu UKNPDPD",
   badge: "25 Soal / 25 Menit",
   daftarSoal: [
     {
